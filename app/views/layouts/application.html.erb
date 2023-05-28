@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title><%= @page_title %></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1">
+		<style>
+			#api-data {
+				background-color: #ccc;
+				padding: 2em;
+				
+			}
+		</style>
+		<%= csrf_meta_tags %>
+		<%= csp_meta_tag %>
+	</head>
+	<body>
+		<%= render :partial => 'layouts/header' %>
+		<%= content_tag( 'h1', @page_title ) %>
+		<div id="api-data">
+			<%= yield %>
+		</div>
+		<%= render :partial => 'layouts/footer' %>
+	</body>
+</html>
