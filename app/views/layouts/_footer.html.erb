@@ -1,3 +1,4 @@
 <footer>
-	this is the footer
+	<%= content_tag( 'p', "Made available by the #{link_to( 'House of Commons Library', 'https://commonslibrary.parliament.uk/' )} under an #{link_to( 'Open Parliament Licence', 'https://www.parliament.uk/site-information/copyright-parliament/open-parliament-licence/')}.".html_safe ) %>
+	<%= content_tag( 'p', "#{link_to( 'Meta', meta_list_url )}: #{link_to( 'About', meta_about_url )} - #{link_to( 'Content coverage', meta_coverage_url )} - #{link_to( 'Contact', meta_contact_url )}".html_safe ) %>
 </footer>
