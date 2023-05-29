@@ -1,0 +1,8 @@
+<ol>
+	<%= render :partial => 'result', :collection => @result_set.results %>
+</ol>
+
+
+<%= content_tag( 'p', "Result count: #{@result_set.result_count}" ) %>
+<%= content_tag( 'p', "Results per page: #{@result_set.limit}" ) %>
+<%= content_tag( 'p', "Results offset: #{@result_set.offset}" ) %>
