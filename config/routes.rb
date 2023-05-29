@@ -7,4 +7,9 @@ Rails.application.routes.draw do
   get 'search-prototype/search' => 'search#form', :as => 'form'
   get 'search-prototype/results' => 'search#results', :as => 'results'
   get 'search-prototype/objects/:object' => 'search#object', :as => 'object_show'
+  
+  get 'search-prototype/meta' => 'meta#index', :as => 'meta_list'
+  get 'search-prototype/meta/about' => 'meta#about', :as => 'meta_about'
+  get 'search-prototype/meta/coverage' => 'meta#coverage', :as => 'meta_coverage'
+  get 'search-prototype/meta/contact' => 'meta#contact', :as => 'meta_contact'
 end
