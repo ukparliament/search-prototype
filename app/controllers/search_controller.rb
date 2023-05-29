@@ -74,9 +74,7 @@ class SearchController < ApplicationController
     @search_object.description = json['description']
     @search_object.link = json['link']
     
+    # We set the page title to the title of the object.
     @page_title = @search_object.title
-    
-    
-    
   end
 end
