@@ -5,4 +5,5 @@ Rails.application.routes.draw do
   # root "articles#index"
   
   get 'search' => 'search#form', :as => 'form'
+  get 'results' => 'search#results', :as => 'results'
 end
