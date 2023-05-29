@@ -55,4 +55,28 @@ class SearchController < ApplicationController
       @result_set.results << result
     end
   end
+  
+  def object
+    object = params[:object]
+    
+    # We construct the URL to grab the data from.
+    uri = "#{BASE_API_URI}objects/#{object}"
+    
+    # We load the data.
+    json = JSON.load( URI.open( uri ) )
+    
+    # We create a new search object.
+    @search_object = SearchObject.new
+      
+    # ... and assign it's attributes.
+    @search_object.id = json['id']
+    @search_object.title = json['title']
+    @search_object.description = json['description']
+    @search_object.link = json['link']
+    
+    @page_title = @search_object.title
+    
+    
+    
+  end
 end
