@@ -1,4 +1,5 @@
 class Result
+  attr_accessor :display_title
   attr_accessor :xml
   
   #attr_accessor :id
