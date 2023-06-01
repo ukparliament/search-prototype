@@ -1,8 +1,13 @@
+<%= content_tag( 'p', "Query: #{@result_set.query}" ) %>
+
+<%= content_tag( 'p', "#{@result_set.result_count} results found in #{@result_set.query_time}ms." ) %>
+
+
+<%= content_tag( 'p', "Results per page: #{@result_set.limit}" ) %>
+<%= content_tag( 'p', "Results offset: #{@result_set.offset}" ) %>
+<%= content_tag( 'p', "Status (of SOLR?): #{@result_set.status}" ) %>
+<%= content_tag( 'p', "Version (of SOLR?): #{@result_set.version}" ) %>
+
 <ol>
 	<%= render :partial => 'result', :collection => @result_set.results %>
 </ol>
-
-
-<%= content_tag( 'p', "Result count: #{@result_set.result_count}" ) %>
-<%= content_tag( 'p', "Results per page: #{@result_set.limit}" ) %>
-<%= content_tag( 'p', "Results offset: #{@result_set.offset}" ) %>
