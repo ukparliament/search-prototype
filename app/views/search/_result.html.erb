@@ -1,5 +1,7 @@
 <li>
-	<%= content_tag( 'h2', link_to( result.title, object_show_url( :object => result.id ) ) ) %>
-	<%= content_tag( 'p', result.description ) %>
-	<%= content_tag( 'p', result.link ) %>
+	<%= content_tag( 'h2', 'Result' ) %>
+	<details>
+		<%= content_tag( 'summary', 'SOLR XML' ) %>
+	    <%= result.xml %>
+	</details>
 </li>
