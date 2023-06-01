@@ -49,13 +49,10 @@ class SearchController < ApplicationController
       
       # ... we create a new result ...
       result = Result.new
-      result.xml = result_document
       
-      # ... assign it's attributes ...
-      #result.id = result_item['id']
-      #result.title = result_item['title']
-      #result.description = result_item['description']
-      #result.link = result_item['link']
+      # We assign the returned variables.
+      result.display_title = result_document.xpath( 'str[@name="title_t"]/text()' ).to_s
+      result.xml = result_document
       
       # ... and add the result to the resultset array.
       @result_set.results << result
