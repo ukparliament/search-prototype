@@ -1,8 +1,19 @@
 <li>
 	<%= content_tag( 'h2', result.display_title ) %>
-	<ul>
-		<%= render :partial => 'result_uri', :collection => result.uris %>
-	</ul>
+	<% unless result.uris.empty? %>
+		<%= content_tag( 'h3', 'URIs' ) %>
+		<ul>
+			<%= render :partial => 'result_uri', :collection => result.uris %>
+		</ul>
+	<% end -%>
+	<% unless result.bibliographic_citations.empty? %>
+		<%= content_tag( 'h3', 'Bibliographic citations' ) %>
+		<ul>
+			<%= render :partial => 'result_bibliographic_citation', :collection => result.bibliographic_citations %>
+		</ul>
+	<% end -%>
+	
+	
 	<details>
 		<%= content_tag( 'summary', 'SOLR XML' ) %>
 	    <%= result.xml %>
