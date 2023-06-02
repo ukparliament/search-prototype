@@ -13,4 +13,5 @@ Rails.application.routes.draw do
   get 'search-prototype/meta/about' => 'meta#about', :as => 'meta_about'
   get 'search-prototype/meta/coverage' => 'meta#coverage', :as => 'meta_coverage'
   get 'search-prototype/meta/contact' => 'meta#contact', :as => 'meta_contact'
+  get 'search-prototype/meta/adding-document-types' => 'meta#adding_document_types', :as => 'meta_adding_document_types'
 end
