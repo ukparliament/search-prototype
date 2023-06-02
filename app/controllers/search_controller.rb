@@ -51,7 +51,7 @@ class SearchController < ApplicationController
     # We create a new search object.
     @search_object = SearchObject.new
       
-    # ... and assign it's attributes.
+    # ... and assign its attributes.
     @search_object.id = json['id']
     @search_object.title = json['title']
     @search_object.description = json['description']
@@ -112,8 +112,18 @@ class SearchController < ApplicationController
     # For each URI item returned ...
     result_document.xpath( 'arr[@name="all_uri"]' ).each do |uri_document|
       
-      # ... we parse a uri item.
+      # ... we parse the uri item.
       parse_uri_item( uri_document )
+    end
+    
+    # We create an array of bibliographic citations.
+    @result.bibliographic_citations = []
+    
+    # For each bibiographic citation item returned ...
+    result_document.xpath( 'arr[@name="bibliographicCitation_t"]' ).each do |bibligraphic_citation_document|
+      
+      # ... we parse the bibliographic citation item.
+      parse_bibligraphic_citation_item( bibligraphic_citation_document )
     end
     
     # We add the result to the result set results array.
@@ -134,5 +144,21 @@ class SearchController < ApplicationController
     
     # We add the uri to the result uris array.
     @result.uris << uri
+  end
+  
+  # ## A method to parse the bibliographic citation item XML.
+  def parse_bibligraphic_citation_item( bibligraphic_citation_document )
+    
+    # We store the returned variables.
+    bibliographic_citation_text = bibligraphic_citation_document.xpath( 'str/text()' ).to_s
+    
+    # We create a new bibliographic citation object.
+    bibliographic_citation = BibliographicCitation.new
+    
+    # We assign properties to the result object.
+    bibliographic_citation.bibliographic_citation = bibliographic_citation_text
+    
+    # We add the bibliographic citation to the result bibliographic citations array.
+    @result.bibliographic_citations << bibliographic_citation
   end
 end
