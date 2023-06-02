@@ -1,9 +1,8 @@
 class Result
-  attr_accessor :display_title
+  attr_accessor :title
   attr_accessor :xml
   
-  #attr_accessor :id
-  #attr_accessor :title
-  #attr_accessor :description
-  #attr_accessor :link
+  def display_title
+    self.title || 'Untitled'
+  end
 end
