@@ -99,14 +99,40 @@ class SearchController < ApplicationController
     # We store the returned variables.
     title = result_document.xpath( 'str[@name="title_t"]/text()' ).to_s
     
-    # ... we create a new result object ...
-    result = Result.new
+    # We create a new result object.
+    @result = Result.new
     
     # We assign properties to the result object.
-    result.title = title
-    result.xml = result_document
+    @result.title = title
+    @result.xml = result_document
     
-    # ... and add the result to the resultset array.
-    @result_set.results << result
+    # We create an array to hold the URIs.
+    @result.uris = []
+    
+    # For each URI item returned ...
+    result_document.xpath( 'arr[@name="all_uri"]' ).each do |uri_document|
+      
+      # ... we parse a uri item.
+      parse_uri_item( uri_document )
+    end
+    
+    # We add the result to the result set results array.
+    @result_set.results << @result
+  end
+  
+  # ## A method to parse the URI item XML.
+  def parse_uri_item( uri_document )
+    
+    # We store the returned variables.
+    uri_text = uri_document.xpath( 'str/text()' ).to_s
+    
+    # We create a new result URI object.
+    uri = ResultUri.new
+    
+    # We assign properties to the result object.
+    uri.uri = uri_text
+    
+    # We add the uri to the result uris array.
+    @result.uris << uri
   end
 end
