@@ -27,7 +27,7 @@ class SearchController < ApplicationController
     document_type = params[:document_type]
     
     # We construct the URI to grab the XML from.
-    uri = "#{BASE_API_URI}results/#{document_type}"
+    uri = "#{BASE_API_URI}results/#{document_type}.xml"
     
     # We load the data.
     xml = Nokogiri::XML( URI.open( uri ) )
