@@ -48,7 +48,7 @@
           <rect x="560" y="434.5" width="300" height="52" stroke="#b9c0c1" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
           <text transform="translate(566 440.5)" fill="#515556">
             <tspan font-family="Avenir" font-size="13" fill="#515556" x="0" y="13">title</tspan>
-            <tspan font-family="Avenir" font-size="13" fill="#515556" x="0" y="35">xml</tspan>
+            <tspan font-family="Avenir" font-size="13" fill="#515556" x="0" y="35">Data</tspan>
           </text>
         </g>
         <g id="Graphic_7">
