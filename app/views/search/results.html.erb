@@ -1,13 +1,17 @@
-<%= content_tag( 'p', "Query: #{@result_set.query}" ) %>
+<div id="query-meta">
+	<%= content_tag( 'p', "Query: #{results['responseHeader']['params']['q']}" ) %>
+	<%= content_tag( 'p', "#{results['response']['numFound']} results found in #{results['responseHeader']['QTime']}ms." ) %>
+	<%= content_tag( 'p', "Results offset: #{results['response']['start']}" ) %>
+	<%= content_tag( 'p', "Status (of SOLR?): #{results['responseHeader']['status']}" ) %>
+</div>
 
-<%= content_tag( 'p', "#{@result_set.result_count} results found in #{@result_set.query_time}ms?" ) %>
-
-
-<%= content_tag( 'p', "Results per page: #{@result_set.limit}" ) %>
-<%= content_tag( 'p', "Results offset: #{@result_set.offset}" ) %>
-<%= content_tag( 'p', "Status (of SOLR?): #{@result_set.status}" ) %>
-<%= content_tag( 'p', "Version (of SOLR?): #{@result_set.version}" ) %>
-
-<ol>
-	<%= render :partial => 'result', :collection => @result_set.results %>
-</ol>
+<div id="results">
+	<%= content_tag( 'h2', 'Results' ) %>
+	<% if results['response']['docs'].empty? -%>
+		<%= content_tag( 'p', 'No results found for your search.' ) %>
+	<% else -%>
+		<ol>
+			<%= render :partial => 'result', :collection => results['response']['docs'] %>
+		</ol>
+	<% end -%>
+</div>

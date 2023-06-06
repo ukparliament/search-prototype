@@ -1,21 +1,22 @@
 <li>
-	<%= content_tag( 'h2', result.display_title ) %>
-	<% unless result.uris.empty? %>
-		<%= content_tag( 'h3', 'URIs' ) %>
+	<%= content_tag( 'h3', result['title_t'] ) %>
+
+	<% unless result['all_uri'].empty? %>
+		<%= content_tag( 'h4', 'URIs' ) %>
 		<ul>
-			<%= render :partial => 'result_uri', :collection => result.uris %>
+			<%= render :partial => 'result_uri', :collection => result['all_uri'] %>
 		</ul>
 	<% end -%>
-	<% unless result.bibliographic_citations.empty? %>
-		<%= content_tag( 'h3', 'Bibliographic citations' ) %>
+
+	<% unless result['bibliographicCitation_t'].empty? %>
+		<%= content_tag( 'h4', 'Bibliographic citations' ) %>
 		<ul>
-			<%= render :partial => 'result_bibliographic_citation', :collection => result.bibliographic_citations %>
+			<%= render :partial => 'result_bibliographic_citation', :collection => result['bibliographicCitation_t'] %>
 		</ul>
 	<% end -%>
-	
 	
 	<details>
 		<%= content_tag( 'summary', 'SOLR data' ) %>
-	    <%= result.data %>
+	    <%= result %>
 	</details>
 </li>
