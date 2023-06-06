@@ -1,5 +1,5 @@
 <li>
-	<%= content_tag( 'h3', result['title_t'] ) %>
+	<%= content_tag( 'h3', link_to( result['title_t'], object_show_url( :object => CGI.escape( result['uri'] ) ) ) ) %>
 
 	<% unless result['all_uri'].empty? %>
 		<%= content_tag( 'h4', 'URIs' ) %>
