@@ -30,40 +30,40 @@ class SearchController < ApplicationController
     # We get the document type from the URL parameter.
     document_type = params[:document_type]
     
-    # We construct the URI to grab the XML from.
-    uri = "#{BASE_API_URI}results/#{document_type}.rb"
+    # We construct the URL string to grab the XML from.
+    url = "#{BASE_API_URI}results/#{document_type}.rb"
     
+    # We turn the URL string into a RUBY URI.
+    uri = URI( url )
     
-      
+    # We get the body of the response from deferencing the URI.
+    response_body = Net::HTTP.get_response( uri ).body
     
+    # We evaluate the body and construct a Ruby hash.
+    evaluated = eval( response_body )
     
-    
-
-    uri = URI( uri )
-    body = Net::HTTP.get_response( uri ).body
-    evaluated = eval(body)
+    # We render the search results template, passing the evaluated response body as results.
     render :template => 'search/results', :locals => { :results => evaluated }
   end
   
   def object
-    object = params[:object]
     
-    # We construct the URL to grab the data from.
-    uri = "#{BASE_API_URI}objects/#{object}"
+    # We get the object URI passed as a parameter.
+    object_uri = params[:object]
     
-    # We load the data.
-    json = JSON.load( URI.open( uri ) )
+    # We construct the URL string to grab the XML from.
+    url = "#{BASE_API_URI}object/#{object_uri}.rb"
     
-    # We create a new search object.
-    @search_object = SearchObject.new
-      
-    # ... and assign its attributes.
-    @search_object.id = json['id']
-    @search_object.title = json['title']
-    @search_object.description = json['description']
-    @search_object.link = json['link']
+    # We turn the URL string into a RUBY URI.
+    uri = URI( url )
     
-    # We set the page title to the title of the object.
-    @page_title = @search_object.title
+    # We get the body of the response from deferencing the URI.
+    response_body = Net::HTTP.get_response( uri ).body
+    
+    # We evaluate the body and construct a Ruby hash.
+    evaluated = eval( response_body )
+    
+    # We render the object template, passing the evaluated response body as object.
+    render :template => 'search/object', :locals => { :object => evaluated }
   end
 end
