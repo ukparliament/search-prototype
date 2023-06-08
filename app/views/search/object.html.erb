@@ -1,17 +1,27 @@
-<!-- NOTE: Missing ifs for no answer -->
-
-
-
 <div id="question">
 	<%= content_tag( 'h2', "Question to the #{object['response']['docs'].first['departmentPrinted_s'].last}" ) %>
 	<%= content_tag( 'p', "Tabled by #{object['response']['docs'].first['askingMemberPrinted_s'].last} (#{object['response']['docs'].first['tablingMember_ses'].first}) on #{object['response']['docs'].first['dateTabled_dt'].first.to_date.strftime( ApplicationHelper::DATE_DISPLAY_FORMAT )}.", :class => 'tabling' ) %>
 	<%= content_tag( 'div', object['response']['docs'].first['questionText_t'].first.html_safe, :class => 'question-text' ) %>
 </div>
+
+<!-- NOTE: Missing ifs for no answer -->
+
 <div id="answer">
 	<%= content_tag( 'h2', 'Answer' ) %>
 	<%= content_tag( 'p', "Answered by #{object['response']['docs'].first['answeringMemberPrinted_s'].last} (#{object['response']['docs'].first['answeringMember_ses'].first}) on #{object['response']['docs'].first['dateOfAnswer_dt'].last.to_date.strftime( ApplicationHelper::DATE_DISPLAY_FORMAT )}.", :class => 'answering' ) %>
 	<%= content_tag( 'div', object['response']['docs'].first['answerText_t'].first.html_safe, :class => 'answer-text' ) %>
 </div>
+
+<% unless object['response']['docs'].first['all_uri'].empty? %>
+	<div id="links">
+		<%= content_tag( 'h2', 'Links' ) %>
+		<ul>
+			<%= render :partial => 'result_uri', :collection => object['response']['docs'].first['all_uri'] %>
+		</ul>
+	</div>
+<% end -%>
+
+
 
 <details>
 	<%= content_tag( 'summary', 'SOLR data' ) %>
