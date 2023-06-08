@@ -3,16 +3,21 @@
 	<head>
 		<title>Parliamentary search - <%= @page_title %></title>
 		<meta name="viewport" content="width=device-width,initial-scale=1">
-		<%= csrf_meta_tags %>
-		<%= csp_meta_tag %>
 		<%= stylesheet_link_tag "https://ukparliament.github.io/design-system/trrb.css" %>
 	</head>
-	<body>
-		<%= render :partial => 'layouts/header' %>
+	<body id="search-prototype">
+		<header>
+			<%= content_tag( 'p', link_to( 'Parliamentary search', form_url ) ) %>
+		</header>
+		<main>
 		<%= content_tag( 'h1', @page_title ) %>
 		<div id="api-data">
 			<%= yield %>
 		</div>
-		<%= render :partial => 'layouts/footer' %>
+		</main>
+		<footer>
+			<%= content_tag( 'p', "Made available by the #{link_to( 'House of Commons Library', 'https://commonslibrary.parliament.uk/' )} under an #{link_to( 'Open Parliament Licence', 'https://www.parliament.uk/site-information/copyright-parliament/open-parliament-licence/')}.".html_safe ) %>
+			<%= content_tag( 'p', "#{link_to( 'Meta', meta_list_url )}: #{link_to( 'About', meta_about_url )} - #{link_to( 'Content coverage', meta_coverage_url )} - #{link_to( 'Contact', meta_contact_url )} - #{link_to( 'Schema', meta_schema_url )} - #{link_to( 'Adding document types', meta_adding_document_types_url )}".html_safe ) %>
+		</footer>
 	</body>
 </html>
