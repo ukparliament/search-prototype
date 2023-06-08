@@ -3,7 +3,7 @@
 
 
 <div id="question">
-	<%= content_tag( 'h2', "Question to #{object['response']['docs'].first['departmentPrinted_s'].last}" ) %>
+	<%= content_tag( 'h2', "Question to the #{object['response']['docs'].first['departmentPrinted_s'].last}" ) %>
 	<%= content_tag( 'p', "Tabled by #{object['response']['docs'].first['askingMemberPrinted_s'].last} (#{object['response']['docs'].first['tablingMember_ses'].first}) on #{object['response']['docs'].first['dateTabled_dt'].first.to_date.strftime( ApplicationHelper::DATE_DISPLAY_FORMAT )}.", :class => 'tabling' ) %>
 	<%= content_tag( 'div', object['response']['docs'].first['questionText_t'].first.html_safe, :class => 'question-text' ) %>
 </div>
