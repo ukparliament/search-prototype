@@ -1,3 +1,5 @@
+require 'URI'
+
 # # The one and only search controller.
 class SearchController < ApplicationController
   
