@@ -1,12 +1,7 @@
-require 'nokogiri'
-require 'json'
-require 'open-uri'
-require 'uri'
-require 'net/http'
-require 'pp'
-
+# # The one and only search controller.
 class SearchController < ApplicationController
   
+  # A method to render the search form.
   def form
     @page_title = 'Search'
     
@@ -24,6 +19,7 @@ class SearchController < ApplicationController
     @form.description = json['description']
   end
   
+  # ## A method to render a results page.
   def results
     @page_title = 'Search results'
     
@@ -46,16 +42,17 @@ class SearchController < ApplicationController
     render :template => 'search/results', :locals => { :results => evaluated }
   end
   
+  # A method to render the object page.
   def object
     
     # We get the object URI passed as a parameter.
     object_uri = params[:object]
     
     # We construct the URL string to grab the XML from.
-    url = "#{BASE_API_URI}object/#{object_uri}.rb"
+    url = "#{BASE_API_URI}objects.rb?object=#{object_uri}"
     
-    # We turn the URL string into a RUBY URI.
-    uri = URI( url )
+    # We parse the URL string into a Ruby URI.
+    uri = URI.parse( url )
     
     # We get the body of the response from deferencing the URI.
     response_body = Net::HTTP.get_response( uri ).body
