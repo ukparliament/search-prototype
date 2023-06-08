@@ -1,7 +1,7 @@
 <li>
 	<%= content_tag( 'h3', link_to( result['title_t'], object_show_url( :object => result['uri'] ) ) ) %>
 	
-	<%= content_tag( 'p', "Date: #{result['date_dt'].to_date.strftime( '%A, %e %B %Y')}" ) %>
+	<%= content_tag( 'p', "Date: #{result['date_dt'].to_date.strftime( ApplicationHelper::DATE_DISPLAY_FORMAT )}" ) %>
 
 	<% unless result['all_uri'].empty? %>
 		<%= content_tag( 'h4', 'URIs' ) %>
