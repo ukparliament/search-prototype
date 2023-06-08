@@ -62,6 +62,9 @@ class SearchController < ApplicationController
     # We evaluate the body and construct a Ruby hash.
     evaluated = eval( response_body )
     
+    # We set the page title.
+    @page_title = evaluated['response']['docs'].first['title_t']
+    
     # We render the object template, passing the evaluated response body as object.
     render :template => 'search/object', :locals => { :object => evaluated }
   end
