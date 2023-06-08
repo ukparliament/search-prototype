@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   get 'search-prototype/' => 'search#form', :as => 'home'
   get 'search-prototype/search' => 'search#form', :as => 'form'
   get 'search-prototype/results/:document_type' => 'search#results', :as => 'results'
-  get 'search-prototype/object' => 'search#object', :as => 'object_show'
+  get 'search-prototype/objects' => 'search#object', :as => 'object_show'
   
   get 'search-prototype/meta' => 'meta#index', :as => 'meta_list'
   get 'search-prototype/meta/about' => 'meta#about', :as => 'meta_about'
