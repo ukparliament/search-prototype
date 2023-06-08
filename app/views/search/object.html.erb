@@ -1,3 +1,18 @@
+
+
+<%= content_tag( 'p', "Date updated: #{object['response']['docs'].first['date_dt'].to_date.strftime( ApplicationHelper::DATE_DISPLAY_FORMAT )}" ) %>
+
+<%= content_tag( 'p', "Date tabled: #{object['response']['docs'].first['dateTabled_dt'].first.to_date.strftime( ApplicationHelper::DATE_DISPLAY_FORMAT )}" ) %>
+
+<div id="question">
+	<%= content_tag( 'h2', 'Question' ) %>
+	<%= content_tag( 'p', object['response']['docs'].first['questionText_t'].first.html_safe ) %>
+</div>
+<div id="answer">
+	<%= content_tag( 'h2', 'Answer' ) %>
+	<%= content_tag( 'p', object['response']['docs'].first['answerText_t'].first.html_safe ) %>
+</div>
+
 <details>
 	<%= content_tag( 'summary', 'SOLR data' ) %>
     <%= object %>
