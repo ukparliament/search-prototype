@@ -16,9 +16,9 @@
 			<%= render :partial => 'result_bibliographic_citation', :collection => result['bibliographicCitation_t'] %>
 		</ul>
 	<% end -%>
-	
-	<details>
+
+	<details class="solr-data">
 		<%= content_tag( 'summary', 'SOLR data' ) %>
-	    <%= result %>
+	    <code><%= result %></code>
 	</details>
 </li>
