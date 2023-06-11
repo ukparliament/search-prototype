@@ -1,19 +1,14 @@
 <li>
 	<%= content_tag( 'h3', link_to( result['title_t'], object_show_url( :object => result['uri'] ) ) ) %>
 	
+	<%= render :partial => 'document_type', :object => result['type_ses'].first %>
+	
 	<%= content_tag( 'p', "Date: #{result['date_dt'].to_date.strftime( ApplicationHelper::DATE_DISPLAY_FORMAT )}" ) %>
-
-	<% unless result['all_uri'].empty? %>
-		<%= content_tag( 'h4', 'URIs' ) %>
-		<ul>
-			<%= render :partial => 'result_uri', :collection => result['all_uri'] %>
-		</ul>
-	<% end -%>
 
 	<% unless result['bibliographicCitation_t'].empty? %>
 		<%= content_tag( 'h4', 'Bibliographic citations' ) %>
 		<ul>
-			<%= render :partial => 'result_bibliographic_citation', :collection => result['bibliographicCitation_t'] %>
+			<%= render :partial => 'bibliographic_citation', :collection => result['bibliographicCitation_t'] %>
 		</ul>
 	<% end -%>
 
