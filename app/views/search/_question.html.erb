@@ -1,0 +1,5 @@
+<div id="question">
+	<%= content_tag( 'h2', "Question to the #{question['departmentPrinted_s'].last}" ) %>
+	<%= content_tag( 'p', "Tabled by #{question['askingMemberPrinted_s'].last} (#{question['tablingMember_ses'].first}) on #{question['dateTabled_dt'].first.to_date.strftime( ApplicationHelper::DATE_DISPLAY_FORMAT )}.", :id => 'tabling' ) %>
+	<%= content_tag( 'div', question['questionText_t'].first.html_safe, :id => 'question-text' ) %>
+</div>
