@@ -1,4 +1,5 @@
 require 'open-uri'
+require 'net/http'
 
 # # The one and only search controller.
 class SearchController < ApplicationController
