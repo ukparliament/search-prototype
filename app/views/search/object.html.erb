@@ -1,3 +1,16 @@
+<%= render :partial => 'document_type', :object => object['response']['docs'].first['type_ses'].first %>
+
+
+<% if object['response']['docs'].first['bibliographicCitation_s'] -%>
+	<div id="bibliographic-citations">
+		<%= content_tag( 'h2', 'Bibliographic citations' ) %>
+		<ul>
+			<%= render :partial => 'bibliographic_citation', :collection => object['response']['docs'].first['bibliographicCitation_s'] %>
+		</ul>
+	</div>
+<% end -%>
+
+
 <div id="question">
 	<%= content_tag( 'h2', "Question to the #{object['response']['docs'].first['departmentPrinted_s'].last}" ) %>
 	<%= content_tag( 'p', "Tabled by #{object['response']['docs'].first['askingMemberPrinted_s'].last} (#{object['response']['docs'].first['tablingMember_ses'].first}) on #{object['response']['docs'].first['dateTabled_dt'].first.to_date.strftime( ApplicationHelper::DATE_DISPLAY_FORMAT )}.", :id => 'tabling' ) %>
@@ -16,7 +29,7 @@
 	<div id="links">
 		<%= content_tag( 'h2', 'Links' ) %>
 		<ul>
-			<%= render :partial => 'result_uri', :collection => object['response']['docs'].first['all_uri'] %>
+			<%= render :partial => 'uri', :collection => object['response']['docs'].first['all_uri'] %>
 		</ul>
 	</div>
 <% end -%>
