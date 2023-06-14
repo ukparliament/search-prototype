@@ -1,18 +1,32 @@
+<%# We render the document type. %>
 <%= render :partial => 'document_type', :object => object['response']['docs'].first['type_ses'].first %>
 
+<%# If the document has bibliographic references, we render them. %>
 <%= render :partial => 'bibliographic_citations', :object => object['response']['docs'].first['bibliographicCitation_s'] if object['response']['docs'].first['bibliographicCitation_s'] %>
 
-<%= render :partial => 'question', :object => object['response']['docs'].first if object['response']['docs'].first['questionText_s'] -%>
+<%# If the document has a question ... %>
+<% if object['response']['docs'].first['questionText_s'] %>
 
+	<%# ... we render it. %>
+	<%= render :partial => 'question', :object => object['response']['docs'].first -%>
+	
+<%# Otherwise, if the document has content ...%>
+<% elsif object['response']['docs'].first['content_t'] -%>
+	
+	<%# ... we render it. %>
+	<%= render :partial => 'content', :object => object['response']['docs'].first['content_t'] -%>
+<% end -%>
+
+<%# If the document has an answer, we render it. %>
 <%= render :partial => 'answer', :object => object['response']['docs'].first if object['response']['docs'].first['answerText_t'] -%>
 
+<%# If the document has URIs, we render them. %>
 <%= render :partial => 'uris', :object => object['response']['docs'].first['all_uri'] if object['response']['docs'].first['all_uri'] %>
 
 
 
 
-
-
+<%# We show the raw SOLR data. %>
 <details class="solr-data">
 	<%= content_tag( 'summary', 'SOLR data' ) %>
     <code><%= object %></code>
