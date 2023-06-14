@@ -4,6 +4,12 @@
 <%# We render the document type. %>
 <%= render :partial => 'document_type', :object => object['response']['docs'].first['type_ses'].first %>
 
+<%# If the document is a written statement ... %>
+<% if object['response']['docs'].first['type_ses'].first == 352211 %>
+
+	<%# ... we render its making %>
+	<%= render :partial => 'making', :object => object['response']['docs'].first %>
+<% end -%>
 
 <%# If the document has publishers, we render them. %>
 <%= render :partial => 'publishers', :object => object['response']['docs'].first['publisherSnapshot_s'] if object['response']['docs'].first['publisherSnapshot_s'] %>
@@ -32,11 +38,6 @@
 
 <%# If the document has URIs, we render them. %>
 <%= render :partial => 'uris', :object => object['response']['docs'].first['all_uri'] if object['response']['docs'].first['all_uri'] %>
-
-
-<!-- description_s
-htmlsummary_s -->
-
 
 
 <%# We show the raw SOLR data. %>
