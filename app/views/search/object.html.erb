@@ -1,6 +1,12 @@
 <%# We render the document type. %>
 <%= render :partial => 'document_type', :object => object['response']['docs'].first['type_ses'].first %>
 
+<%# If the document has publishers, we render them. %>
+<%= render :partial => 'publishers', :object => object['response']['docs'].first['publisherSnapshot_s'] if object['response']['docs'].first['publisherSnapshot_s'] %>
+
+<%# If the document has sections, we render them. %>
+<%= render :partial => 'sections', :object => object['response']['docs'].first['sectionSnapshot_s'] if object['response']['docs'].first['sectionSnapshot_s'] %>
+
 <%# If the document has bibliographic references, we render them. %>
 <%= render :partial => 'bibliographic_citations', :object => object['response']['docs'].first['bibliographicCitation_s'] if object['response']['docs'].first['bibliographicCitation_s'] %>
 
@@ -23,6 +29,9 @@
 <%# If the document has URIs, we render them. %>
 <%= render :partial => 'uris', :object => object['response']['docs'].first['all_uri'] if object['response']['docs'].first['all_uri'] %>
 
+
+<!-- description_s
+htmlsummary_s -->
 
 
 
