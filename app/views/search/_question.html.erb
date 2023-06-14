@@ -24,7 +24,7 @@
 	<% else -%>
 	
 		<%# ... we just show the tabling Member. %>
-		<%= content_tag( 'p', "Tabled by #{question['askingMemberPrinted_s'].last} (#{question['tablingMember_ses'].first}) .", :id => 'tabling' ) %>
+		<%= content_tag( 'p', "Tabled by #{question['askingMemberPrinted_s'].last} (#{question['tablingMember_ses'].first}).", :id => 'tabling' ) %>
 	<% end -%>
 	<%= question['dateTabled_dt'] %>
 	<%= content_tag( 'div', question['questionText_t'].first.html_safe, :id => 'question-text' ) %>
