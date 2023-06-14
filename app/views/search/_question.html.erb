@@ -1,5 +1,31 @@
 <div id="question">
-	<%= content_tag( 'h2', "Question to the #{question['departmentPrinted_s'].last}" ) %>
-	<%= content_tag( 'p', "Tabled by #{question['askingMemberPrinted_s'].last} (#{question['tablingMember_ses'].first}) on #{question['dateTabled_dt'].first.to_date.strftime( ApplicationHelper::DATE_DISPLAY_FORMAT )}.", :id => 'tabling' ) %>
+	
+	<%# If the question has a department printed ... %>
+	<% if question['departmentPrinted_s'] -%>
+	
+		<%# ... we show the heading with department. %>
+		<%= content_tag( 'h2', "Question to the #{question['departmentPrinted_s'].last}" )  %>
+		
+	<%# Otherwise ...%>
+	<% else -%>
+	
+		<%# ... we show the question heading .%>
+		<%= content_tag( 'h2', "Question" )  %>
+	<% end -%>
+	
+	<%# Some questions - orals and older writtens in the Lords do not have a tabled date. %>
+	<%# If the data has a tabled date ... %>
+	<% if question['dateTabled_dt'] -%>
+	
+		<%# ... we show the tabling Member and the tabled date. %>
+		<%= content_tag( 'p', "Tabled by #{question['askingMemberPrinted_s'].last} (#{question['tablingMember_ses'].first}) on #{question['dateTabled_dt'].first.to_date.strftime( ApplicationHelper::DATE_DISPLAY_FORMAT )}.", :id => 'tabling' ) %>
+		
+	<%# If the data does not have a tabled date ... %>
+	<% else -%>
+	
+		<%# ... we just show the tabling Member. %>
+		<%= content_tag( 'p', "Tabled by #{question['askingMemberPrinted_s'].last} (#{question['tablingMember_ses'].first}) .", :id => 'tabling' ) %>
+	<% end -%>
+	<%= question['dateTabled_dt'] %>
 	<%= content_tag( 'div', question['questionText_t'].first.html_safe, :id => 'question-text' ) %>
 </div>
