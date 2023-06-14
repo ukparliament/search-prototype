@@ -5,10 +5,11 @@
 	
 	<%= content_tag( 'p', "Date: #{result['date_dt'].to_date.strftime( ApplicationHelper::DATE_DISPLAY_FORMAT )}" ) %>
 
-	<% unless result['bibliographicCitation_t'].empty? %>
+	<% if ( result['bibliographicCitation_t'] && !result['bibliographicCitation_t'].empty? ) || ( result['identifier_s'] ) %>
 		<%= content_tag( 'h4', 'Bibliographic citations' ) %>
 		<ul>
 			<%= render :partial => 'bibliographic_citation', :collection => result['bibliographicCitation_t'] %>
+			<%= render :partial => 'bibliographic_citation', :collection => result['identifier_s'] %>
 		</ul>
 	<% end -%>
 
