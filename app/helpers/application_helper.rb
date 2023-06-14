@@ -13,6 +13,8 @@ module ApplicationHelper
       'Written question'
     when 352211
       'Written statement'
+    when 346697
+      'Research Briefing'
     else
       'Document type unknown'
     end
