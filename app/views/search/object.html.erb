@@ -1,5 +1,9 @@
+<%# If the document has a description, we render it. %>
+<%= render :partial => 'description', :object => object['response']['docs'].first['description_s'] if object['response']['docs'].first['description_s'] %>
+
 <%# We render the document type. %>
 <%= render :partial => 'document_type', :object => object['response']['docs'].first['type_ses'].first %>
+
 
 <%# If the document has publishers, we render them. %>
 <%= render :partial => 'publishers', :object => object['response']['docs'].first['publisherSnapshot_s'] if object['response']['docs'].first['publisherSnapshot_s'] %>
