@@ -6,6 +6,6 @@
 
 <%= render :partial => 'search/fragments/meta', :object => object %>
 
-<%= render :partial => 'search/fragments/uris', :object => object %>
+<%= render :partial => 'search/fragments/link', :object => object['externalLocation_uri'].first if object['externalLocation_uri'] %>
 
 <%= render :partial => 'search/fragments/data', :object => object %>
