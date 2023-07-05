@@ -11,7 +11,7 @@
 		<%= content_tag( 'p', 'No results found for your search.' ) %>
 	<% else -%>
 		<ol>
-			<%= render :partial => 'result', :collection => results['response']['docs'] %>
+			<%= render :partial => 'search/results/result', :collection => results['response']['docs'] %>
 		</ol>
 	<% end -%>
 </div>
