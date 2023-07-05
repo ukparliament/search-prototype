@@ -42,7 +42,7 @@ class SearchController < ApplicationController
     evaluated = eval( response_body )
     
     # We render the search results template, passing the evaluated response body as results.
-    render :template => 'search/results', :locals => { :results => evaluated }
+    render :template => 'search/results/results', :locals => { :results => evaluated }
   end
   
   # A method to render the object page.
