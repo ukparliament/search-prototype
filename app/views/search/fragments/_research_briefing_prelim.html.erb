@@ -1,1 +1,4 @@
-<%= content_tag( 'p', "A #{link_to( 'research briefing', object_show_url( :object => @object_uri, :anchor => @content_type ) )} last updated on on #{research_briefing_prelim['date_dt'].to_date.strftime( ApplicationHelper::DATE_DISPLAY_FORMAT )}, published by #{research_briefing_prelim['sectionSnapshot_t'].first} in the #{research_briefing_prelim['publisherSnapshot_t'].first}.".html_safe, :class => 'prelim' ) %>
+<%= content_tag( 'p', "A #{link_to( 'research briefing', object_show_url( :object => @object_uri, :anchor => @content_type ) )} last updated on on #{research_briefing_prelim['date_dt'].to_date.strftime( ApplicationHelper::DATE_DISPLAY_FORMAT )}, published by #{link_to( research_briefing_prelim['sectionSnapshot_t'].first, object_show_url( :object => @object_uri, :anchor => research_briefing_prelim['section_ses'].first ) )} in the #{link_to( research_briefing_prelim['publisherSnapshot_t'].first, object_show_url( :object => @object_uri, :anchor => research_briefing_prelim['publisher_ses'].first ) )}.".html_safe, :class => 'prelim' ) %>
+
+
+
