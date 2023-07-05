@@ -1,0 +1,15 @@
+<%= render :partial => 'search/fragments/research_briefing_prelim', :object => object %>
+
+<div class="abstract">
+	<%= content_tag( 'p', object['abstract_t'] ) %>
+</div>
+
+<div class="content">
+	<%= content_tag( 'p', object['content_t'].first ) %>
+</div>
+
+<%= render :partial => 'search/fragments/meta', :object => object %>
+
+<%= render :partial => 'search/fragments/uris', :object => object %>
+
+<%= render :partial => 'search/fragments/data', :object => object %>

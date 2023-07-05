@@ -1,0 +1,11 @@
+<%= render :partial => 'search/fragments/written_question_prelim', :object => object %>
+
+<%= render :partial => 'search/fragments/question', :object => object -%>
+
+<%= render :partial => 'search/fragments/answer', :object => object if object['answerText_t'] -%>
+
+<%= render :partial => 'search/fragments/meta', :object => object %>
+
+<%= render :partial => 'search/fragments/uris', :object => object %>
+
+<%= render :partial => 'search/fragments/data', :object => object %>
