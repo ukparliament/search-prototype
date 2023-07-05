@@ -1,1 +1,1 @@
-<%= content_tag( 'li', subject ) %>
+<%= content_tag( 'li', link_to( subject, object_show_url( :object => @object_uri, :anchor => subject ) ) ) %>
