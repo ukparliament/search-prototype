@@ -1,0 +1,1 @@
+<%= content_tag( 'p', "A written statement made by #{written_statement_prelim['memberPrinted_s'].first} on #{written_statement_prelim['date_dt'].to_date.strftime( ApplicationHelper::DATE_DISPLAY_FORMAT )}, on behalf of #{written_statement_prelim['departmentPrinted_s'].first}." ) %>

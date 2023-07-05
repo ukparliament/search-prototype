@@ -1,0 +1,4 @@
+<div id="meta">
+		<%= render :partial => 'search/fragments/bibliographic_citations', :object => meta['bibliographicCitation_s'] if meta['bibliographicCitation_s'] %>
+		<%= render :partial => 'search/fragments/subjects', :object => meta['subject_sesrollup'] if meta['subject_sesrollup'] %>
+</div>

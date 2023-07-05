@@ -1,5 +1,5 @@
 <div id="answer">
 	<%= content_tag( 'h2', 'Answer' ) %>
 	<%= content_tag( 'p', "Answered by #{answer['answeringMemberPrinted_s'].last} (#{answer['answeringMember_ses'].first}) on #{answer['dateOfAnswer_dt'].last.to_date.strftime( ApplicationHelper::DATE_DISPLAY_FORMAT )}.", :id => 'answering' ) %>
-	<%= content_tag( 'div', answer['answerText_t'].first.html_safe, :id => 'answer-text' ) %>
+	<%= content_tag( 'div', answer['answerText_t'].first.html_safe, :id => 'answer-text', :class => 'content' ) %>
 </div>
