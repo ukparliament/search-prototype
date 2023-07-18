@@ -1,6 +1,3 @@
-require 'open-uri'
-require 'net/http'
-
 # # The one and only search controller.
 class SearchController < ApplicationController
   
@@ -36,7 +33,7 @@ class SearchController < ApplicationController
     uri = URI( url )
     
     # We get the body of the response from deferencing the URI.
-    response_body = Net::HTTP.get_response( uri ).body
+    response_body = Net::HTTP.get( uri )
     
     # We evaluate the body and construct a Ruby hash.
     evaluated = eval( response_body )
@@ -58,7 +55,7 @@ class SearchController < ApplicationController
     uri = URI.parse( url )
     
     # We get the body of the response from deferencing the URI.
-    response_body = Net::HTTP.get_response( uri ).body
+    response_body = Net::HTTP.get( uri )
     
     # We evaluate the body and construct a Ruby hash.
     evaluated = eval( response_body )
