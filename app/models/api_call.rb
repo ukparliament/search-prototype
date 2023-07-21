@@ -2,43 +2,38 @@ class ApiCall
   require 'open-uri'
   require 'net/http'
 
-  # attr_reader :object_uri
+  attr_reader :object_uri
 
   BASE_API_URI = "https://api.parliament.uk/search-mock/"
   #BASE_API_URI = "http://localhost:3000/search-mock/"
 
-  def initialize(object_uri)
-    @object_uri = object_uri
+  def initialize(params)
+    @object_uri = params[:object_uri]
   end
 
-  def object
-    # We construct the URL string to grab the XML from.
-    url = full_url(@object_uri)
+  def object_data
+    evaluated_response['response']['docs'].first
+  end
 
-    # We parse the URL string into a Ruby URI.
-    uri = ruby_uri(url)
-
-    # We get the body of the response from deferencing the URI.
-    response_body = get_response(uri)
-
-    # We evaluate the body and construct a Ruby hash.
-    evaluated = eval(response_body)
-
-    # We return the object.
-    evaluated['response']['docs'].first
+  def ruby_uri
+    build_uri("#{BASE_API_URI}objects.json?object=#{object_uri}")
   end
 
   private
 
-  def full_url(uri)
-    "#{BASE_API_URI}objects.rb?object=#{uri[:object_uri]}"
+  def response_body
+    get_api_response(ruby_uri)
   end
 
-  def ruby_uri(url)
+  def evaluated_response
+    JSON.parse(response_body)
+  end
+
+  def build_uri(url)
     URI.parse(url)
   end
 
-  def get_response(uri)
+  def get_api_response(uri)
     Net::HTTP.get(uri)
   end
 end
