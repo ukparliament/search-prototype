@@ -9,7 +9,7 @@ class ContentObject
   def self.generate(content_object_data)
     # takes object data as an argument and returns an instance of the correct object subclass
 
-    content_type_ses_id = content_object_data['type_ses'].first
+    content_type_ses_id = content_object_data['type_ses']&.first
 
     content_object_class(content_type_ses_id).classify.constantize.new(content_object_data)
   end
@@ -32,7 +32,7 @@ class ContentObject
     when 352211
       'WrittenStatement'
     else
-      'Fallback'
+      'ContentObject'
     end
   end
 
