@@ -12,7 +12,7 @@ class ContentObjectsController < ApplicationController
     @object = ContentObject.generate(object_data)
 
     # Temporarily passing object data to the template directly ahead of refactoring it
-    render template: @object.template, :locals => { :object => object_data }
+    render template: @object.template, :locals => { :object => @object }
   end
 
 end
