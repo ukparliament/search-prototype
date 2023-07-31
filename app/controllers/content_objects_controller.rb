@@ -11,7 +11,7 @@ class ContentObjectsController < ApplicationController
     # We pass the received data to the object class
     @object = ContentObject.generate(object_data)
 
-    # Temporarily passing object data to the template directly ahead of refactoring it
+    # Pass the object data to the template
     render template: @object.template, :locals => { :object => @object }
   end
 

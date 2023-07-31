@@ -1,4 +1,4 @@
 <div id="meta">
   <%= render 'search/fragments/bibliographic_citations', bibliographic_citations: object.bibliographic_citations if object.bibliographic_citations %>
-  <%= render 'search/fragments/subjects', subjects: object.subjects if object.subjects.any? %>
+  <%= render 'search/fragments/subjects', subjects: object.subjects if object.subjects %>
 </div>
