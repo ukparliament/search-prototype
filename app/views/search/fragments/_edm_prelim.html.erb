@@ -1,4 +1,9 @@
-<p class="prelim">
-  An <%= object_link('Early Day Motion', '/') %> tabled by <%= object_link(object.primary_sponsor, '/') %>
-  on <%= object.date_tabled&.strftime(ApplicationHelper::DATE_DISPLAY_FORMAT) %>.
-</p>
+<div class="prelim-container">
+  <div class="prelim-text-container">
+    <div class="prelim-text">
+      An <%= object_link('Early Day Motion', '/') %> tabled by <%= object_link(object.primary_sponsor, '/') %>
+      on <%= object.date_tabled&.strftime(ApplicationHelper::DATE_DISPLAY_FORMAT) %>.
+    </div>
+  </div>
+</div>
+
