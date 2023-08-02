@@ -6,9 +6,7 @@
 <main style="max-width: 1200px;">
   <%= yield :before_title if content_for?(:before_title) %>
   <%= yield :title if content_for?(:title) %>
-  <div id="api-data">
-    <%= yield %>
-  </div>
+  <%= yield %>
 </main>
 <%#= render '/layouts/footer' %>
 </body>
