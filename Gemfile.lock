@@ -68,10 +68,19 @@ GEM
       tzinfo (~> 2.0)
     addressable (2.8.4)
       public_suffix (>= 2.0.2, < 6.0)
+    better_errors (2.10.1)
+      erubi (>= 1.0.0)
+      rack (>= 0.9.0)
+      rouge (>= 1.0.0)
     bindex (0.8.1)
+    binding_of_caller (1.0.0)
+      debug_inspector (>= 0.0.1)
     bootsnap (1.16.0)
       msgpack (~> 1.2)
     builder (3.2.4)
+    bundler-audit (0.9.1)
+      bundler (>= 1.2.0, < 3)
+      thor (~> 1.0)
     capybara (3.39.1)
       addressable
       matrix
@@ -87,7 +96,17 @@ GEM
     debug (1.8.0)
       irb (>= 1.5.0)
       reline (>= 0.3.1)
+    debug_inspector (1.1.0)
+    diff-lcs (1.5.0)
+    docile (1.4.0)
     erubi (1.12.0)
+    factory_bot (6.2.1)
+      activesupport (>= 5.0.0)
+    factory_bot_rails (6.2.0)
+      factory_bot (~> 6.2.0)
+      railties (>= 5.0.0)
+    faker (3.2.0)
+      i18n (>= 1.8.11, < 2)
     globalid (1.1.0)
       activesupport (>= 5.0)
     i18n (1.13.0)
@@ -169,11 +188,35 @@ GEM
     reline (0.3.3)
       io-console (~> 0.5)
     rexml (3.2.5)
+    rouge (4.1.2)
+    rspec-core (3.12.2)
+      rspec-support (~> 3.12.0)
+    rspec-expectations (3.12.3)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.12.0)
+    rspec-mocks (3.12.6)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.12.0)
+    rspec-rails (6.0.3)
+      actionpack (>= 6.1)
+      activesupport (>= 6.1)
+      railties (>= 6.1)
+      rspec-core (~> 3.12)
+      rspec-expectations (~> 3.12)
+      rspec-mocks (~> 3.12)
+      rspec-support (~> 3.12)
+    rspec-support (3.12.1)
     rubyzip (2.3.2)
     selenium-webdriver (4.9.1)
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2, < 3.0)
       websocket (~> 1.0)
+    simplecov (0.22.0)
+      docile (~> 1.1)
+      simplecov-html (~> 0.11)
+      simplecov_json_formatter (~> 0.1)
+    simplecov-html (0.12.3)
+    simplecov_json_formatter (0.1.4)
     sprockets (4.2.0)
       concurrent-ruby (~> 1.0)
       rack (>= 2.2.4, < 4)
@@ -217,14 +260,21 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
+  better_errors
+  binding_of_caller
   bootsnap
+  bundler-audit
   capybara
   debug
+  factory_bot_rails
+  faker
   importmap-rails
   jbuilder
   puma (~> 5.0)
   rails (~> 7.0.4, >= 7.0.4.3)
+  rspec-rails
   selenium-webdriver
+  simplecov
   sprockets-rails
   sqlite3 (~> 1.4)
   stimulus-rails

@@ -1,17 +1,17 @@
-<%= content_tag( 'p', @form.title ) %>
-<%= content_tag( 'p', @form.description ) %>
+<%= content_tag('p', @form.title) %>
+<%= content_tag('p', @form.description) %>
 
-<%= content_tag( 'h2', 'Search results' ) %>
+<%= content_tag('h2', 'Search results') %>
 <ul>
-	<%= content_tag( 'li', link_to( 'Research briefings', results_url( :document_type => 'research-briefings' ) ) ) %>
-	<%= content_tag( 'li', link_to( 'Written questions', results_url( :document_type => 'written-questions' ) ) ) %>
-	<%= content_tag( 'li', link_to( 'Written statements', results_url( :document_type => 'written-statements' ) ) ) %>
+  <%= content_tag('li', link_to('Research briefings', results_url(:document_type => 'research-briefings'))) %>
+  <%= content_tag('li', link_to('Written questions', results_url(:document_type => 'written-questions'))) %>
+  <%= content_tag('li', link_to('Written statements', results_url(:document_type => 'written-statements'))) %>
 </ul>
 
-<%= content_tag( 'h2', 'Objects' ) %>
+<%= content_tag('h2', 'Objects') %>
 <ul>
-	<%= content_tag( 'li', link_to( 'An EDM', object_show_url( :object => 'http://data.parliament.uk/edms/22468' ) ) ) %>
-	<%= content_tag( 'li', link_to( 'A research briefing', object_show_url( :object => 'http://data.parliament.uk/resources/342599' ) ) ) %>
-	<%= content_tag( 'li', link_to( 'A written question', object_show_url( :object => 'http://hansard.intranet.data.parliament.uk/Lords/2012-12-10/1212106000156' ) ) ) %>
-	<%= content_tag( 'li', link_to( 'A written statement', object_show_url( :object => 'http://hansard.intranet.data.parliament.uk/Commons/2012-12-18/12121863000016' ) ) ) %>
+  <%= content_tag('li', link_to('An EDM', object_show_url(object: 'http://data.parliament.uk/edms/22468'))) %>
+  <%= content_tag('li', link_to('A research briefing', object_show_url(:object => 'http://data.parliament.uk/resources/342599'))) %>
+  <%= content_tag('li', link_to('A written question', object_show_url(:object => 'http://hansard.intranet.data.parliament.uk/Lords/2012-12-10/1212106000156'))) %>
+  <%= content_tag('li', link_to('A written statement', object_show_url(:object => 'http://hansard.intranet.data.parliament.uk/Commons/2012-12-18/12121863000016'))) %>
 </ul>

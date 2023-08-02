@@ -1,11 +1,11 @@
 <%= render :partial => 'search/fragments/edm_prelim', :object => object %>
 
 <div class="content">
-	<%= content_tag( 'p', object['motionText_t'].first ) %>
+	<%= content_tag( 'p', object['motionText_t']&.first ) %>
 </div>
 
 <%= render :partial => 'search/fragments/meta', :object => object %>
 
-<%= render :partial => 'search/fragments/link', :object => object['externalLocation_uri'].first if object['externalLocation_uri'] %>
+<%= render :partial => 'search/fragments/link', :object => object['externalLocation_uri']&.first if object['externalLocation_uri'] %>
 
 <%= render :partial => 'search/fragments/data', :object => object %>
