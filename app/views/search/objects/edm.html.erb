@@ -22,37 +22,35 @@
   <div class=content-about>
     <div class="content-about-inner">
       <h2 class="content-heading">About this early day motion</h2>
+
+      <!--      generic items-->
       <div class="content-about-text">
-<!--        <h3>Reference</h3>-->
-        <div style="align-self: stretch; height: 79px; padding-bottom: 16px; flex-direction: column; justify-content: flex-start; align-items: flex-start; gap: 4px; display: flex">
-          <div style="align-self: stretch; color: #181818; font-size: 22px; font-family: Helvetica; font-weight: 700; line-height: 30.80px; word-wrap: break-word">Reference</div>
-          <div style="align-self: stretch; color: #181818; font-size: 20px; font-family: Helvetica; font-weight: 400; line-height: 28px; word-wrap: break-word">1937</div>
-        </div>
+        <h3 class="content-heading">Reference</h3>
+        1937
       </div>
-      <div style="align-self: stretch; height: 79px; flex-direction: column; justify-content: flex-start; align-items: flex-start; gap: 8px; display: flex">
-        <div style="align-self: stretch; height: 79px; padding-bottom: 16px; flex-direction: column; justify-content: flex-start; align-items: flex-start; gap: 4px; display: flex">
-          <div style="align-self: stretch; color: #181818; font-size: 22px; font-family: Helvetica; font-weight: 700; line-height: 30.80px; word-wrap: break-word">Session</div>
-          <div style="align-self: stretch; color: #181818; font-size: 20px; font-family: Helvetica; font-weight: 400; line-height: 28px; word-wrap: break-word">2023-24</div>
-        </div>
+
+      <div class="content-about-text">
+        <h3 class="content-heading">Session</h3>
+        2023-24
       </div>
-      <div style="align-self: stretch; height: 163px; padding-bottom: 16px; flex-direction: column; justify-content: flex-start; align-items: flex-start; display: flex">
-        <div style="align-self: stretch; height: 147px; flex-direction: column; justify-content: flex-start; align-items: flex-start; gap: 4px; display: flex">
-          <div style="align-self: stretch; color: #181818; font-size: 22px; font-family: Helvetica; font-weight: 700; line-height: 30.80px; word-wrap: break-word">Other
-            supporters
-          </div>
-          <div style="align-self: stretch">
-            <span style="color: #181818; font-size: 20px; font-family: Helvetica; font-weight: 400; line-height: 28px; word-wrap: break-word">- </span><span style="color: #2B57AB; font-size: 20px; font-family: National-LFSN; font-weight: 350; text-decoration: underline; line-height: 28px; word-wrap: break-word">Leland Meeks<br/></span><span style="color: #181818; font-size: 20px; font-family: Helvetica; font-weight: 400; line-height: 28px; word-wrap: break-word">- </span><span style="color: #2B57AB; font-size: 20px; font-family: National-LFSN; font-weight: 350; text-decoration: underline; line-height: 28px; word-wrap: break-word">Dick Stensland<br/></span><span style="color: #181818; font-size: 20px; font-family: Helvetica; font-weight: 400; line-height: 28px; word-wrap: break-word">- </span><span style="color: #2B57AB; font-size: 20px; font-family: National-LFSN; font-weight: 350; text-decoration: underline; line-height: 28px; word-wrap: break-word">Johnny Stompanato<br/></span><span style="color: #181818; font-size: 20px; font-family: Helvetica; font-weight: 400; line-height: 28px; word-wrap: break-word">- </span><span style="color: #2B57AB; font-size: 20px; font-family: National-LFSN; font-weight: 350; text-decoration: underline; line-height: 28px; word-wrap: break-word">Pierce Patchett</span>
-          </div>
-        </div>
+
+      <!--      Other supporters / generic list partial -->
+      <div class="content-about-text">
+        <h3 class="content-heading">Other supporters</h3>
+        <ul class="content-about-list">
+          <li class="content-about-list-item">- <%= link_to 'Leland Meeks', '/' %></li>
+          <li class="content-about-list-item">- <%= link_to 'Dick Stensland', '/' %></li>
+          <li class="content-about-list-item">- <%= link_to 'Johnny Stompanato', '/' %></li>
+          <li class="content-about-list-item">- <%= link_to 'Pierce Patchett', '/' %></li>
+        </ul>
       </div>
-      <div style="align-self: stretch; height: 79px; flex-direction: column; justify-content: flex-start; align-items: flex-start; display: flex">
-        <div style="align-self: stretch; height: 79px; padding-bottom: 16px; flex-direction: column; justify-content: flex-start; align-items: flex-start; gap: 4px; display: flex">
-          <div style="align-self: stretch; color: #181818; font-size: 22px; font-family: Helvetica; font-weight: 700; line-height: 30.80px; word-wrap: break-word">Registered
-            interest declared
-          </div>
-          <div style="align-self: stretch; color: #181818; font-size: 20px; font-family: Helvetica; font-weight: 400; line-height: 28px; word-wrap: break-word">No</div>
-        </div>
+
+      <div class="content-about-text">
+        <h3 class="content-heading">Registered interest declared</h3>
+        No
       </div>
+
+      <!--      amendments partial-->
       <div style="align-self: stretch; height: 303px; padding-bottom: 16px; flex-direction: column; justify-content: flex-start; align-items: flex-start; display: flex">
         <div style="align-self: stretch; height: 31px; flex-direction: column; justify-content: flex-start; align-items: flex-start; gap: 4px; display: flex">
           <div style="align-self: stretch; color: #181818; font-size: 22px; font-family: Helvetica; font-weight: 700; line-height: 30.80px; word-wrap: break-word">Amendments</div>
@@ -94,6 +92,8 @@
           </div>
         </div>
       </div>
+
+      <!--      related items partial-->
       <div style="align-self: stretch; height: 179px; padding-bottom: 16px; flex-direction: column; justify-content: flex-start; align-items: flex-start; gap: 8px; display: flex">
         <div style="align-self: stretch; height: 95px; flex-direction: column; justify-content: flex-start; align-items: flex-start; gap: 4px; display: flex">
           <div style="align-self: stretch; color: #181818; font-size: 22px; font-family: Helvetica; font-weight: 700; line-height: 30.80px; word-wrap: break-word">Related
@@ -119,55 +119,55 @@
           </div>
         </div>
       </div>
-      <div style="align-self: stretch; height: 82px; padding-bottom: 16px; flex-direction: column; justify-content: flex-start; align-items: flex-start; gap: 8px; display: flex">
-        <div style="align-self: stretch; height: 66px; flex-direction: column; justify-content: flex-start; align-items: flex-start; gap: 4px; display: flex">
-          <div style="width: 160px; color: #181818; font-size: 22px; font-family: Helvetica; font-weight: 700; line-height: 30.80px; word-wrap: break-word">Subjects</div>
-          <div style="align-self: stretch; justify-content: flex-start; align-items: flex-start; gap: 8px; display: inline-flex">
-            <div style="padding-left: 8px; padding-right: 8px; padding-top: 4px; padding-bottom: 4px; background: #555555; border-radius: 4px; justify-content: flex-start; align-items: center; gap: 4px; display: flex">
-              <div style="text-align: center; color: white; font-size: 16px; font-family: Helvetica; font-weight: 400; line-height: 22.48px; word-wrap: break-word">Privacy</div>
+
+      <!--      subjects partial-->
+
+      <div class="content-about-text">
+        <h3 class="content-heading">Subjects</h3>
+        <div class="pill-section">
+          <div class="pill-wrapper">
+            <div class="subject-pill">Privacy</div>
+          </div>
+          <div class="pill-wrapper">
+            <div class="subject-pill">Crime</div>
+          </div>
+          <div class="pill-wrapper">
+            <div class="subject-pill">Food and drink
             </div>
-            <div style="padding-left: 8px; padding-right: 8px; padding-top: 4px; padding-bottom: 4px; background: #555555; border-radius: 4px; justify-content: flex-start; align-items: center; gap: 4px; display: flex">
-              <div style="text-align: center; color: white; font-size: 16px; font-family: Helvetica; font-weight: 400; line-height: 22.48px; word-wrap: break-word">Crime</div>
+          </div>
+          <div class="pill-wrapper">
+            <div class="subject-pill">Police</div>
+          </div>
+          <div class="pill-wrapper">
+            <div class="subject-pill">Young people
             </div>
-            <div style="padding-left: 8px; padding-right: 8px; padding-top: 4px; padding-bottom: 4px; background: #555555; border-radius: 4px; justify-content: flex-start; align-items: center; gap: 4px; display: flex">
-              <div style="text-align: center; color: white; font-size: 16px; font-family: Helvetica; font-weight: 400; line-height: 22.48px; word-wrap: break-word">Food
-                and drink
-              </div>
+          </div>
+          <div class="pill-wrapper">
+            <div class="subject-pill">Schools</div>
+          </div>
+          <div class="pill-wrapper">
+            <div class="subject-pill">Teachers</div>
+          </div>
+          <div class="pill-wrapper">
+            <div class="subject-pill">Pay</div>
+          </div>
+          <div class="pill-wrapper">
+            <div class="subject-pill">World economy
             </div>
-            <div style="padding-left: 8px; padding-right: 8px; padding-top: 4px; padding-bottom: 4px; background: #555555; border-radius: 4px; justify-content: flex-start; align-items: center; gap: 4px; display: flex">
-              <div style="text-align: center; color: white; font-size: 16px; font-family: Helvetica; font-weight: 400; line-height: 22.48px; word-wrap: break-word">Police</div>
-            </div>
-            <div style="padding-left: 8px; padding-right: 8px; padding-top: 4px; padding-bottom: 4px; background: #555555; border-radius: 4px; justify-content: flex-start; align-items: center; gap: 4px; display: flex">
-              <div style="text-align: center; color: white; font-size: 16px; font-family: Helvetica; font-weight: 400; line-height: 22.48px; word-wrap: break-word">Young
-                people
-              </div>
-            </div>
-            <div style="padding-left: 8px; padding-right: 8px; padding-top: 4px; padding-bottom: 4px; background: #555555; border-radius: 4px; justify-content: flex-start; align-items: center; gap: 4px; display: flex">
-              <div style="text-align: center; color: white; font-size: 16px; font-family: Helvetica; font-weight: 400; line-height: 22.48px; word-wrap: break-word">Schools</div>
-            </div>
-            <div style="padding-left: 8px; padding-right: 8px; padding-top: 4px; padding-bottom: 4px; background: #555555; border-radius: 4px; justify-content: flex-start; align-items: center; gap: 4px; display: flex">
-              <div style="text-align: center; color: white; font-size: 16px; font-family: Helvetica; font-weight: 400; line-height: 22.48px; word-wrap: break-word">Teachers</div>
-            </div>
-            <div style="padding-left: 8px; padding-right: 8px; padding-top: 4px; padding-bottom: 4px; background: #555555; border-radius: 4px; justify-content: flex-start; align-items: center; gap: 4px; display: flex">
-              <div style="text-align: center; color: white; font-size: 16px; font-family: Helvetica; font-weight: 400; line-height: 22.48px; word-wrap: break-word">Pay</div>
-            </div>
-            <div style="padding-left: 8px; padding-right: 8px; padding-top: 4px; padding-bottom: 4px; background: #555555; border-radius: 4px; justify-content: flex-start; align-items: center; gap: 4px; display: flex">
-              <div style="text-align: center; color: white; font-size: 16px; font-family: Helvetica; font-weight: 400; line-height: 22.48px; word-wrap: break-word">World
-                economy
-              </div>
-            </div>
-            <div style="padding-left: 8px; padding-right: 8px; padding-top: 4px; padding-bottom: 4px; background: #555555; border-radius: 4px; justify-content: flex-start; align-items: center; gap: 4px; display: flex">
-              <div style="text-align: center; color: white; font-size: 16px; font-family: Helvetica; font-weight: 400; line-height: 22.48px; word-wrap: break-word">Inflation</div>
-            </div>
-            <div style="padding-left: 8px; padding-right: 8px; padding-top: 4px; padding-bottom: 4px; background: #555555; border-radius: 4px; justify-content: flex-start; align-items: center; gap: 4px; display: flex">
-              <div style="text-align: center; color: white; font-size: 16px; font-family: Helvetica; font-weight: 400; line-height: 22.48px; word-wrap: break-word">Education</div>
-            </div>
-            <div style="padding-left: 8px; padding-right: 8px; padding-top: 4px; padding-bottom: 4px; background: #555555; border-radius: 4px; justify-content: flex-start; align-items: center; gap: 4px; display: flex">
-              <div style="text-align: center; color: white; font-size: 16px; font-family: Helvetica; font-weight: 400; line-height: 22.48px; word-wrap: break-word">Students</div>
-            </div>
+          </div>
+          <div class="pill-wrapper">
+            <div class="subject-pill">Inflation</div>
+          </div>
+          <div class="pill-wrapper">
+            <div class="subject-pill">Education</div>
+          </div>
+          <div class="pill-wrapper">
+            <div class="subject-pill">Students</div>
           </div>
         </div>
       </div>
+
+      <!--      legislation partial-->
       <div style="align-self: stretch; height: 115px; padding-bottom: 16px; flex-direction: column; justify-content: flex-start; align-items: flex-start; gap: 8px; display: flex">
         <div style="height: 63px; flex-direction: column; justify-content: center; align-items: flex-start; gap: 4px; display: flex">
           <div style="align-self: stretch; color: #181818; font-size: 22px; font-family: Helvetica; font-weight: 700; line-height: 30.80px; word-wrap: break-word">Legislation</div>
@@ -185,6 +185,8 @@
           </div>
         </div>
       </div>
+
+      <!--      links partial-->
       <div style="align-self: stretch; height: 79px; flex-direction: column; justify-content: flex-start; align-items: flex-start; gap: 8px; display: flex">
         <div style="align-self: stretch; height: 79px; padding-bottom: 16px; flex-direction: column; justify-content: center; align-items: flex-start; gap: 4px; display: flex">
           <div style="width: 776px; color: #181818; font-size: 22px; font-family: Helvetica; font-weight: 700; line-height: 30.80px; word-wrap: break-word">Links</div>
@@ -201,6 +203,7 @@
     </div>
   </div>
 </div>
+
 <%#= render '/search/fragments/back_to_top_button' %>
 
 </div>
