@@ -1,6 +1,8 @@
 <div id="bibliographic-citations">
-	<%= content_tag( 'h2', 'Bibliographic citations' ) %>
-	<ul>
-		<%= render :partial => 'search/fragments/bibliographic_citation', :collection => bibliographic_citations %>
-	</ul>
+  <h2>Bibliographic citations</h2>
+  <ul>
+    <% bibliographic_citations.each do |citation| %>
+      <li><%= citation %></li>
+    <% end %>
+  </ul>
 </div>

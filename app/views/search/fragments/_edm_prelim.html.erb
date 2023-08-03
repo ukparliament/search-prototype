@@ -1,7 +1,9 @@
-<%= content_tag( 'p', "An #{
-  link_to( 'Early Day Motion', object_show_url( :object => @object_uri, :anchor => @content_type ) )
-} tabled by #{
-  link_to( edm_prelim['primarySponsorPrinted_s']&.first, object_show_url( :object => @object_uri, :anchor => edm_prelim['primarySponsor_ses'] ) )
-} on #{
-  edm_prelim['dateTabled_dt']&.first&.to_date&.strftime( ApplicationHelper::DATE_DISPLAY_FORMAT )
-}.".html_safe, :class => 'prelim' ) %>
+<div class="content-prelim-box">
+  <div class="content-prelim-inner">
+    <div class="content-prelim-text">
+      An <%= object_link('Early Day Motion', '/') %> tabled by <%= object_link(object.primary_sponsor, '/') %>
+      on <%= object.date_tabled&.strftime(ApplicationHelper::DATE_DISPLAY_FORMAT) %>.
+    </div>
+  </div>
+</div>
+

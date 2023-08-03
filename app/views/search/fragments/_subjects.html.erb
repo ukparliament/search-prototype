@@ -1,6 +1,8 @@
 <div id="subjects">
-	<%= content_tag( 'h2', 'Subjects' ) %>
-	<ul>
-		<%= render :partial => 'search/fragments/subject', :collection => subjects %>
-	</ul>
+  <h2>Subjects</h2>
+  <ul>
+    <% subjects.each do |subject| %>
+      <li><%= object_link(subject, '/') %></li>
+    <% end %>
+  </ul>
 </div>

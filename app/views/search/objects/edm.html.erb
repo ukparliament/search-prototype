@@ -1,11 +1,173 @@
-<%= render :partial => 'search/fragments/edm_prelim', :object => object %>
+<%#= render 'search/fragments/meta', object: object %>
+
+<%#= render 'search/fragments/link', link: object.external_location_uri %>
+
+<%#= render 'search/fragments/data', data: object.content_object_data %>
+
+<% if @page_title %>
+  <% content_for(:title) do %>
+    <%= content_tag('h1', @page_title) %>
+  <% end %>
+<% end %>
 
 <div class="content">
-	<%= content_tag( 'p', object['motionText_t']&.first ) %>
+  <%= render 'search/fragments/edm_prelim', object: object %>
+  <div class="content-text-wrapper">
+    <div class="content-text">
+      <%= object.motion_text %>
+      <%#= render '/search/fragments/copy_text_button' %>
+    </div>
+  </div>
+
+  <div class=content-about>
+    <div class="content-about-inner">
+      <h2 class="content-heading">About this early day motion</h2>
+
+      <!--      generic items-->
+      <div class="content-about-text">
+        <h3 class="content-heading">Reference</h3>
+        1937
+      </div>
+
+      <div class="content-about-text">
+        <h3 class="content-heading">Session</h3>
+        2023-24
+      </div>
+
+      <!--      Other supporters / generic list partial -->
+      <div class="content-about-text">
+        <h3 class="content-heading">Other supporters</h3>
+        <ul class="content-about-list">
+          <li class="content-about-list-item">- <%= link_to 'Leland Meeks', '/' %></li>
+          <li class="content-about-list-item">- <%= link_to 'Dick Stensland', '/' %></li>
+          <li class="content-about-list-item">- <%= link_to 'Johnny Stompanato', '/' %></li>
+          <li class="content-about-list-item">- <%= link_to 'Pierce Patchett', '/' %></li>
+        </ul>
+      </div>
+
+      <div class="content-about-text">
+        <h3 class="content-heading">Registered interest declared</h3>
+        No
+      </div>
+
+      <!--      amendments partial-->
+      <div class="content-about-text">
+        <h3 class="content-heading">Amendments</h3>
+        <div>
+          <!--amendment title-->
+          <span class="amendment-title">Amendment 1 - STATE VISIT OF THE PRESIDENT OF THE U.S.A.</span><span style="color: #181818; font-size: 20px; font-family: National-LFSN; font-weight: 350; line-height: 28px; word-wrap: break-word"> (1937A1)</span><br/>
+          <!--          amendment-->
+          <div class="amendment-text-wrapper">
+            <div class="amendment-text">Line
+              1, after 'welcomes' insert 'the large peaceful protest against the visit of'
+            </div>
+          </div>
+          <!--          sponsors-->
+          <div class="amendment-sponsors-wrapper">
+            <div>
+              Sponsored by
+              <%= link_to 'Sid Hudgens', '/' %> (primary, <%= link_to 'Labour Party', '/' %>),
+              <%= link_to 'Brett Chase', '/' %> on Monday, 4 September 2023. It has been signed by two Members in total.
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <!--amendment title-->
+          <span class="amendment-title">Amendment 2 - STATE VISIT OF THE PRESIDENT OF THE U.S.A.</span><span style="color: #181818; font-size: 20px; font-family: National-LFSN; font-weight: 350; line-height: 28px; word-wrap: break-word"> (1937A1)</span><br/>
+          <!--          amendment-->
+          <div class="amendment-text-wrapper">
+            <div class="amendment-text">Line
+              2, leave out from 'Kingdom' to end.
+            </div>
+          </div>
+          <!--          sponsors-->
+          <div class="amendment-sponsors-wrapper">
+            <div>
+              Sponsored by
+              <%= link_to 'Sid Hudgens', '/' %> (primary, <%= link_to 'Labour Party', '/' %>),
+              <%= link_to 'Brett Chase', '/' %> on Monday, 4 September 2023. It has been signed by two Members in total.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!--      related items partial-->
+      <div class="content-about-text">
+        <h3 class="content-heading">Related items</h3>
+        <div>
+          <%= link_to 'Food and Drink Act 2023', '/' %><br/>
+          Thursday, 2 February 2023 | Public acts
+        </div>
+        <div>
+          <%= link_to 'Privacy Act 2023', '/' %><br/>
+          Thursday, 2 February 2023 | Public acts
+        </div>
+      </div>
+
+      <!--      subjects partial-->
+      <div class="content-about-text">
+        <h3 class="content-heading">Subjects</h3>
+        <div class="pill-section">
+          <div class="pill-wrapper">
+            <div class="subject-pill">Privacy</div>
+          </div>
+          <div class="pill-wrapper">
+            <div class="subject-pill">Crime</div>
+          </div>
+          <div class="pill-wrapper">
+            <div class="subject-pill">Food and drink
+            </div>
+          </div>
+          <div class="pill-wrapper">
+            <div class="subject-pill">Police</div>
+          </div>
+          <div class="pill-wrapper">
+            <div class="subject-pill">Young people
+            </div>
+          </div>
+          <div class="pill-wrapper">
+            <div class="subject-pill">Schools</div>
+          </div>
+          <div class="pill-wrapper">
+            <div class="subject-pill">Teachers</div>
+          </div>
+          <div class="pill-wrapper">
+            <div class="subject-pill">Pay</div>
+          </div>
+          <div class="pill-wrapper">
+            <div class="subject-pill">World economy
+            </div>
+          </div>
+          <div class="pill-wrapper">
+            <div class="subject-pill">Inflation</div>
+          </div>
+          <div class="pill-wrapper">
+            <div class="subject-pill">Education</div>
+          </div>
+          <div class="pill-wrapper">
+            <div class="subject-pill">Students</div>
+          </div>
+        </div>
+      </div>
+
+      <!--      legislation partial-->
+      <div class="content-about-text">
+        <h3 class="content-heading">Legislation</h3>
+        <%= link_to 'Privacy Act 2023', '/' %>
+        <%= link_to 'Food and Drink Act 2023', '/' %>
+      </div>
+
+      <!--      links partial-->
+      <div class="content-about-text">
+        <h3 class="content-heading">Links</h3>
+        <%= link_to 'View this early day motion on edm.parliament.uk', '/' %>
+      </div>
+
+    </div>
+  </div>
 </div>
 
-<%= render :partial => 'search/fragments/meta', :object => object %>
+<%#= render '/search/fragments/back_to_top_button' %>
 
-<%= render :partial => 'search/fragments/link', :object => object['externalLocation_uri']&.first if object['externalLocation_uri'] %>
-
-<%= render :partial => 'search/fragments/data', :object => object %>
+</div>
