@@ -8,6 +8,25 @@ class Edm < ContentObject
     'search/objects/edm'
   end
 
+  def other_supporters
+    # requires a SES lookup to fetch names
+    return if content_object_data['signedMember_ses'].blank?
+
+    content_object_data['signedMember_ses']
+  end
+
+  def session
+    return if content_object_data['session_t'].blank?
+
+    content_object_data['session_t'].first
+  end
+
+  def reference
+    return if content_object_data['identifier_t'].blank?
+
+    content_object_data['identifier_t'].first
+  end
+
   def motion_text
     return if content_object_data['motionText_t'].blank?
 

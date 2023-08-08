@@ -2,7 +2,7 @@
 
 <%#= render 'search/fragments/link', link: object.external_location_uri %>
 
-<%#= render 'search/fragments/data', data: object.content_object_data %>
+<%= render 'search/fragments/data', data: object.content_object_data %>
 
 <% if @page_title %>
   <% content_for(:title) do %>
@@ -10,15 +10,20 @@
   <% end %>
 <% end %>
 
-<div class="content">
+<section id="prelim">
   <%= render 'search/fragments/edm_prelim', object: object %>
+</section>
+
+<section id="text">
   <div class="content-text-wrapper">
     <div class="content-text">
       <%= object.motion_text %>
       <%#= render '/search/fragments/copy_text_button' %>
     </div>
   </div>
+</section>
 
+<section id="about">
   <div class=content-about>
     <div class="content-about-inner">
       <h2 class="content-heading">About this early day motion</h2>
@@ -26,12 +31,12 @@
       <!--      generic items-->
       <div class="content-about-text">
         <h3 class="content-heading">Reference</h3>
-        1937
+        <%= object.reference %>
       </div>
 
       <div class="content-about-text">
         <h3 class="content-heading">Session</h3>
-        2023-24
+        <%= object.session %>
       </div>
 
       <!--      Other supporters / generic list partial -->
@@ -55,7 +60,7 @@
         <h3 class="content-heading">Amendments</h3>
         <div>
           <!--amendment title-->
-          <span class="amendment-title">Amendment 1 - STATE VISIT OF THE PRESIDENT OF THE U.S.A.</span><span style="color: #181818; font-size: 20px; font-family: National-LFSN; font-weight: 350; line-height: 28px; word-wrap: break-word"> (1937A1)</span><br/>
+          <span class="amendment-title">Amendment 1 - STATE VISIT OF THE PRESIDENT OF THE U.S.A.</span><span class="amendment-title-ref"> (1937A1)</span><br/>
           <!--          amendment-->
           <div class="amendment-text-wrapper">
             <div class="amendment-text">Line
@@ -166,8 +171,6 @@
 
     </div>
   </div>
-</div>
+</section>
 
 <%#= render '/search/fragments/back_to_top_button' %>
-
-</div>

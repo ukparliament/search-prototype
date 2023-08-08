@@ -74,6 +74,11 @@ html {
 main {
     display: block;
     margin: 0 auto;
+    font-family: Helvetica, serif;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    padding: 16px 0;
 }
 
 body {
@@ -86,195 +91,185 @@ body {
     padding: 1em;
 }
 
-.content {
-    font-family: Helvetica, serif;
+/* content */
+/* content prelim section */
+
+.content-prelim-box {
     width: 100%;
-    height: 100%;
-    flex-direction: column;
+    box-sizing: border-box;
+    align-self: stretch;
+    padding: 16px 32px;
     justify-content: flex-start;
     align-items: flex-start;
     display: inline-flex;
-    box-sizing: border-box;
-    padding: 16px 0;
 
-    /* prelim section */
-
-    .content-prelim-box {
-        align-self: stretch;
-        padding: 16px 32px;
-        justify-content: flex-start;
+    .content-prelim-inner {
+        flex: 1 1 0;
+        padding: 16px;
+        background: #EBEBEB;
+        justify-content: space-between;
         align-items: flex-start;
-        display: inline-flex;
+        gap: 10px;
+        display: flex;
 
-        .content-prelim-inner {
+        .content-prelim-text {
             flex: 1 1 0;
-            padding: 16px;
-            background: #EBEBEB;
-            justify-content: space-between;
-            align-items: flex-start;
-            gap: 10px;
-            display: flex;
-
-            .content-prelim-text {
-                flex: 1 1 0;
-                font-size: 20px;
-                font-weight: 400;
-                line-height: 28px;
-                word-wrap: break-word;
-            }
+            font-size: 20px;
+            font-weight: 400;
+            line-height: 28px;
+            word-wrap: break-word;
         }
     }
+}
 
-    /* main text of content */
+/* main text of content */
 
-    .content-text-wrapper {
+.content-text-wrapper {
+    align-self: stretch;
+    height: 220px;
+    padding: 16px 32px 32px 32px;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 16px;
+    display: flex;
+
+    .content-text {
+        color: #181818;
+        font-size: 20px;
+        font-weight: 400;
+        line-height: 28px;
+        word-wrap: break-word
+    }
+}
+
+/* about section */
+
+.content-about {
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    display: flex;
+    padding: 16px 32px;
+
+    .content-about-inner {
         align-self: stretch;
-        height: 220px;
-        padding: 16px 32px 32px 32px;
+        padding: 16px;
+        background: #EBEBEB;
         flex-direction: column;
         justify-content: flex-start;
         align-items: flex-start;
         gap: 16px;
         display: flex;
 
-        .content-text {
+        .content-about-text {
+            align-self: stretch;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: flex-start;
+            gap: 8px;
+            display: flex;
             color: #181818;
             font-size: 20px;
+            font-family: Helvetica, serif;
+            font-weight: 400;
+            line-height: 28px;
+            word-wrap: break-word;
+            margin-bottom: 16px;
+        }
+
+        .content-about-list {
+            padding: 0;
+            margin: 0;
+
+            .content-about-list-item {
+                list-style-type: none;
+            }
+        }
+
+        .pill-section {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: flex-start;
+            align-items: flex-start;
+            gap: 8px;
+        }
+
+        .pill-wrapper {
+            padding: 4px 8px;
+            background: #555555;
+            border-radius: 4px;
+            justify-content: flex-start;
+            align-items: center;
+            gap: 4px;
+            display: flex;
+        }
+
+        .subject-pill {
+            text-align: center;
+            color: white;
+            font-size: 16px;
+            font-family: Helvetica;
+            font-weight: 400;
+            line-height: 22.48px;
+        }
+
+        .amendment-title {
+            color: #181818;
+            font-size: 20px;
+            font-family: Helvetica;
+            font-weight: 700;
+            line-height: 28px;
+            word-wrap: break-word;
+        }
+
+        .amendment-title-ref {
+            color: #181818;
+            font-size: 20px;
+            font-family: National-LFSN;
+            font-weight: 350;
+            line-height: 28px;
+            word-wrap: break-word
+        }
+
+        .amendment-text-wrapper {
+            align-self: stretch;
+            height: 28px;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: flex-start;
+            gap: 4px;
+            display: flex
+        }
+
+        .amendment-text {
+            align-self: stretch;
+            color: #181818;
+            font-size: 20px;
+            font-family: Helvetica;
             font-weight: 400;
             line-height: 28px;
             word-wrap: break-word
         }
-    }
 
-    /* about section */
-
-    .content-about {
-        flex-direction: column;
-        justify-content: flex-start;
-        align-items: flex-start;
-        display: flex;
-        padding: 16px 32px;
-
-        .content-about-inner {
+        .amendment-sponsors-wrapper {
             align-self: stretch;
-            padding: 16px;
-            background: #EBEBEB;
+            height: 56px;
             flex-direction: column;
             justify-content: flex-start;
             align-items: flex-start;
-            gap: 16px;
+            gap: 4px;
             display: flex;
 
-            .content-about-text {
-                align-self: stretch;
-                flex-direction: column;
-                justify-content: flex-start;
-                align-items: flex-start;
-                gap: 8px;
-                display: flex;
+            .amendment-sponsor {
                 color: #181818;
                 font-size: 20px;
-                font-family: Helvetica, serif;
+                font-family: Helvetica;
                 font-weight: 400;
                 line-height: 28px;
                 word-wrap: break-word;
-                margin-bottom: 16px;
             }
-
-            .content-about-list {
-                padding: 0;
-                margin: 0;
-
-                .content-about-list-item {
-                    list-style-type: none;
-                }
-            }
-
-            .pill-section {
-                display: flex;
-                flex-direction: row;
-                flex-wrap: wrap;
-                justify-content: flex-start;
-                align-items: flex-start;
-                gap: 8px;
-            }
-
-            .pill-wrapper {
-                padding: 4px 8px;
-                background: #555555;
-                border-radius: 4px;
-                justify-content: flex-start;
-                align-items: center;
-                gap: 4px;
-                display: flex;
-            }
-
-            .subject-pill {
-                text-align: center;
-                color: white;
-                font-size: 16px;
-                font-family: Helvetica;
-                font-weight: 400;
-                line-height: 22.48px;
-            }
-
-            .amendment-title {
-                color: #181818;
-                font-size: 20px;
-                font-family: Helvetica;
-                font-weight: 700;
-                line-height: 28px;
-                word-wrap: break-word;
-            }
-
-            .amendment-title-ref {
-                color: #181818;
-                font-size: 20px;
-                font-family: National-LFSN;
-                font-weight: 350;
-                line-height: 28px;
-                word-wrap: break-word
-            }
-
-            .amendment-text-wrapper {
-                align-self: stretch;
-                height: 28px;
-                flex-direction: column;
-                justify-content: flex-start;
-                align-items: flex-start;
-                gap: 4px;
-                display: flex
-            }
-
-            .amendment-text {
-                align-self: stretch;
-                color: #181818;
-                font-size: 20px;
-                font-family: Helvetica;
-                font-weight: 400;
-                line-height: 28px;
-                word-wrap: break-word
-            }
-
-            .amendment-sponsors-wrapper {
-                align-self: stretch;
-                height: 56px;
-                flex-direction: column;
-                justify-content: flex-start;
-                align-items: flex-start;
-                gap: 4px;
-                display: flex;
-
-                .amendment-sponsor {
-                    color: #181818;
-                    font-size: 20px;
-                    font-family: Helvetica;
-                    font-weight: 400;
-                    line-height: 28px;
-                    word-wrap: break-word;
-                }
-            }
-
         }
     }
 }
