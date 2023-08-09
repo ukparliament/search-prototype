@@ -72,6 +72,7 @@ html {
 }
 
 main {
+    max-width: 1200px;
     display: block;
     margin: 0 auto;
     font-family: Helvetica, serif;
@@ -79,6 +80,10 @@ main {
     height: 100%;
     box-sizing: border-box;
     padding: 16px 0;
+}
+
+header {
+    padding: 16px 32px;
 }
 
 body {
@@ -176,15 +181,6 @@ body {
             line-height: 28px;
             word-wrap: break-word;
             margin-bottom: 16px;
-        }
-
-        .content-about-list {
-            padding: 0;
-            margin: 0;
-
-            .content-about-list-item {
-                list-style-type: none;
-            }
         }
 
         .pill-section {
@@ -302,6 +298,16 @@ h3.content-heading {
     line-height: 30.80px;
     margin-top: 0;
     margin-bottom: 0;
+}
+
+/*Remove all list styling*/
+ul {
+    padding: 0;
+    margin: 0;
+}
+
+li {
+    list-style-type: none;
 }
 
 details.solr-data {

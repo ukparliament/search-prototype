@@ -3,7 +3,7 @@
 <%= render '/layouts/head' %>
 <body>
 <%= render '/layouts/nav' %>
-<main style="max-width: 1200px;">
+<main>
   <%= yield :before_title if content_for?(:before_title) %>
   <%= yield :title if content_for?(:title) %>
   <%= yield %>
