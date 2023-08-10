@@ -63,53 +63,25 @@
       <div class="content-about-text">
         <h3 class="content-heading">Amendments</h3>
         <div>
-          <%= object.amendments %>
           <ul>
             <% object.amendments.each do |amendment| %>
+
               <li>
-                <strong>
-                  Amendment <%= amendment[:index] + 1 %> - <%= object.page_title %>
-                </strong>
-                <span class="amendment-title-ref">(<%= amendment[:reference] %>)</span>
+                <div class="amendment-title">
+                  <strong>Amendment <%= amendment[:index] + 1 %> - <%= object.page_title %></strong>
+                  <span class="amendment-title-ref">(<%= amendment[:reference] %>)</span>
+                </div>
+                <div class="amendment-text"><%= amendment[:text] %></div>
+                <div class="amendment-sponsors-wrapper">
+                  Sponsored by <%= amendment[:primary_sponsor] %> (primary, <%= amendment[:primary_sponsor_party] %>)
+                  on <%= amendment[:date_tabled]&.to_date&.strftime(ApplicationHelper::DATE_DISPLAY_FORMAT) %>. It has
+                  been signed by <%= amendment[:number_of_signatures] %> members total.
+                </div>
               </li>
+
             <% end %>
+
           </ul>
-
-          <!--amendment title-->
-          <span class="amendment-title">Amendment 1 - STATE VISIT OF THE PRESIDENT OF THE U.S.A.</span><span class="amendment-title-ref"> (1937A1)</span><br/>
-          <!--          amendment-->
-          <div class="amendment-text-wrapper">
-            <div class="amendment-text">Line
-              1, after 'welcomes' insert 'the large peaceful protest against the visit of'
-            </div>
-          </div>
-          <!--          sponsors-->
-          <div class="amendment-sponsors-wrapper">
-            <div>
-              Sponsored by
-              <%= link_to 'Sid Hudgens', '/' %> (primary, <%= link_to 'Labour Party', '/' %>),
-              <%= link_to 'Brett Chase', '/' %> on Monday, 4 September 2023. It has been signed by two Members in total.
-            </div>
-          </div>
-        </div>
-
-        <div>
-          <!--amendment title-->
-          <span class="amendment-title">Amendment 2 - STATE VISIT OF THE PRESIDENT OF THE U.S.A.</span><span class="amendment-title-ref"> (1937A1)</span><br/>
-          <!--          amendment-->
-          <div class="amendment-text-wrapper">
-            <div class="amendment-text">Line
-              2, leave out from 'Kingdom' to end.
-            </div>
-          </div>
-          <!--          sponsors-->
-          <div class="amendment-sponsors-wrapper">
-            <div>
-              Sponsored by
-              <%= link_to 'Sid Hudgens', '/' %> (primary, <%= link_to 'Labour Party', '/' %>),
-              <%= link_to 'Brett Chase', '/' %> on Monday, 4 September 2023. It has been signed by two Members in total.
-            </div>
-          </div>
         </div>
       </div>
 

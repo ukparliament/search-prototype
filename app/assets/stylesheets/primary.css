@@ -229,16 +229,6 @@ body {
             word-wrap: break-word
         }
 
-        .amendment-text-wrapper {
-            align-self: stretch;
-            height: 28px;
-            flex-direction: column;
-            justify-content: flex-start;
-            align-items: flex-start;
-            gap: 4px;
-            display: flex
-        }
-
         .amendment-text {
             align-self: stretch;
             color: #181818;

@@ -21,20 +21,26 @@ class Edm < ContentObject
       text: content_object_data['amendmentText_t'],
       number_of_signatures: content_object_data['amendment_numberOfSignatures_s'],
       primary_sponsor: content_object_data['amendment_primarySponsorPrinted_t'],
+      primary_sponsor_party: content_object_data['amendment_primarySponsorParty_ses'],
       reference: content_object_data['identifier_t'].drop(1),
+      date_tabled: content_object_data['amendment_dateTabled_dt'],
     }
 
     result_hashes = original_hash[:text].zip(
       original_hash[:number_of_signatures],
       original_hash[:primary_sponsor],
-      original_hash[:reference]
+      original_hash[:primary_sponsor_party],
+      original_hash[:reference],
+      original_hash[:date_tabled],
     ).map.with_index do |values, index|
       {
         index: index,
         text: values[0],
         number_of_signatures: values[1],
         primary_sponsor: values[2],
-        reference: values[3]
+        primary_sponsor_party: values[3],
+        reference: values[4],
+        date_tabled: values[5],
       }
     end
 
