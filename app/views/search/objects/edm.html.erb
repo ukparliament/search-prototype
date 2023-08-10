@@ -114,14 +114,15 @@
       <!--      legislation partial-->
       <div class="content-about-text">
         <h3 class="content-heading">Legislation</h3>
-        <%= link_to 'Privacy Act 2023', '/' %>
-        <%= link_to 'Food and Drink Act 2023', '/' %>
+        <% object.legislation.each do |legislation| %>
+          <%= link_to legislation.to_s.titleize, '/' %>
+        <% end %>
       </div>
 
       <!--      links partial-->
       <div class="content-about-text">
         <h3 class="content-heading">Links</h3>
-        <%= link_to 'View this early day motion on edm.parliament.uk', '/' %>
+        <%= link_to 'View this early day motion on edm.parliament.uk', object.external_location_uri %>
       </div>
 
     </div>

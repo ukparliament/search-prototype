@@ -108,6 +108,12 @@ class Edm < ContentObject
     content_object_data['subject_sesrollup']
   end
 
+  def legislation
+    return if content_object_data['legislature_ses'].blank?
+
+    content_object_data['legislature_ses']
+  end
+
   def external_location_uri
     return if content_object_data['externalLocation_uri'].blank?
 
