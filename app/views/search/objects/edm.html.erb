@@ -102,45 +102,12 @@
       <div class="content-about-text">
         <h3 class="content-heading">Subjects</h3>
         <div class="pill-section">
-          <div class="pill-wrapper">
-            <div class="subject-pill">Privacy</div>
-          </div>
-          <div class="pill-wrapper">
-            <div class="subject-pill">Crime</div>
-          </div>
-          <div class="pill-wrapper">
-            <div class="subject-pill">Food and drink
+          <% object.subjects.each do |subject| %>
+            <div class="pill-wrapper">
+              <!--              SES lookup will return string?-->
+              <div class="subject-pill"><%= subject.to_s.titleize %></div>
             </div>
-          </div>
-          <div class="pill-wrapper">
-            <div class="subject-pill">Police</div>
-          </div>
-          <div class="pill-wrapper">
-            <div class="subject-pill">Young people
-            </div>
-          </div>
-          <div class="pill-wrapper">
-            <div class="subject-pill">Schools</div>
-          </div>
-          <div class="pill-wrapper">
-            <div class="subject-pill">Teachers</div>
-          </div>
-          <div class="pill-wrapper">
-            <div class="subject-pill">Pay</div>
-          </div>
-          <div class="pill-wrapper">
-            <div class="subject-pill">World economy
-            </div>
-          </div>
-          <div class="pill-wrapper">
-            <div class="subject-pill">Inflation</div>
-          </div>
-          <div class="pill-wrapper">
-            <div class="subject-pill">Education</div>
-          </div>
-          <div class="pill-wrapper">
-            <div class="subject-pill">Students</div>
-          </div>
+          <% end %>
         </div>
       </div>
 
