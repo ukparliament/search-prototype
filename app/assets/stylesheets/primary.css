@@ -4,6 +4,7 @@ html {
     scroll-behavior: smooth;
 }
 
+/*nav bar*/
 .nav-width-container {
     max-width: 100%;
     background: black;
@@ -83,7 +84,7 @@ main {
 }
 
 header {
-    padding: 16px 32px;
+    padding: 16px 32px 0 32px;
 }
 
 body {
@@ -155,7 +156,7 @@ body {
     justify-content: flex-start;
     align-items: flex-start;
     display: flex;
-    padding: 16px 32px;
+    padding: 32px;
 
     .content-about-inner {
         align-self: stretch;
@@ -237,25 +238,6 @@ body {
             font-weight: 400;
             line-height: 28px;
             word-wrap: break-word
-        }
-
-        .amendment-sponsors-wrapper {
-            align-self: stretch;
-            height: 56px;
-            flex-direction: column;
-            justify-content: flex-start;
-            align-items: flex-start;
-            gap: 4px;
-            display: flex;
-
-            .amendment-sponsor {
-                color: #181818;
-                font-size: 20px;
-                font-family: Helvetica;
-                font-weight: 400;
-                line-height: 28px;
-                word-wrap: break-word;
-            }
         }
     }
 }
