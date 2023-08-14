@@ -245,6 +245,28 @@ li {
     list-style-type: none;
 }
 
+.button-container{
+    margin: 32px;
+    justify-content: center;
+    gap: 16px;
+    display: flex;
+    box-sizing: border-box;
+}
+
+.button-link {
+    border: 1px #2B57AB solid;
+    background: white;
+    border-radius: 4px;
+    color: #2B57AB;
+    text-decoration: none;
+    font-size: 20px;
+    font-family: Helvetica, sans-serif;
+    font-weight: 400;
+    line-height: 28px;
+    word-wrap: break-word;
+    padding: 8px 16px;
+}
+
 details.solr-data {
     padding-top: 1em;
 }

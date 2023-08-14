@@ -3,6 +3,7 @@
 <% content_for(:before_title) do %>
   <%= link_to('UK Parliament') %> / <%= link_to('Open data') %><br/>
   <%= link_to('< Back to search results') %>
+  <div id="top"></div>
 <% end %>
 
 <% if object.page_title %>
@@ -49,4 +50,4 @@
 
 </section>
 
-<%#= render '/search/fragments/back_to_top_button' %>
+<%= render '/search/fragments/back_to_top_button' %>
