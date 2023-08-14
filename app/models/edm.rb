@@ -17,6 +17,13 @@ class Edm < ContentObject
 
     # TODO: genericise this approach
 
+    return if content_object_data['amendmentText_t'].blank?
+    return if content_object_data['amendment_numberOfSignatures_s'].blank?
+    return if content_object_data['amendment_primarySponsorPrinted_t'].blank?
+    return if content_object_data['amendment_primarySponsorParty_ses'].blank?
+    return if content_object_data['identifier_t'].blank?
+    return if content_object_data['amendment_dateTabled_dt'].blank?
+
     original_hash = {
       text: content_object_data['amendmentText_t'],
       number_of_signatures: content_object_data['amendment_numberOfSignatures_s'],
@@ -63,7 +70,7 @@ class Edm < ContentObject
   def registered_interest_declared
     return if content_object_data['registeredInterest_b'].blank?
 
-    content_object_data['registeredInterest_b'].first ? 'Yes' : 'No'
+    content_object_data['registeredInterest_b'].first == 'true' ? 'Yes' : 'No'
   end
 
   def session

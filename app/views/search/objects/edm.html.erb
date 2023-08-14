@@ -1,4 +1,4 @@
-<%#= render 'search/fragments/data', data: object.content_object_data %>
+<%= render 'search/fragments/data', data: object.content_object_data %>
 
 <% content_for(:before_title) do %>
   <%= link_to('UK Parliament') %> / <%= link_to('Open data') %><br/>
@@ -15,111 +15,104 @@
   <%= render 'search/fragments/edm_prelim', object: object %>
 </section>
 
-<section id="text">
-  <div class="content-text-wrapper">
-    <div class="content-text">
-      <%= object.motion_text %>
-    </div>
+<section id="text" class="content-section">
+  <div class="about-item">
+    <%= object.motion_text %>
   </div>
-  <%= render '/search/fragments/copy_text_button' %>
 </section>
 
-<section id="about">
-  <div class=content-about>
-    <div class="content-about-inner">
-      <h2 class="content-heading">About this early day motion</h2>
+<section id="about" class="content-section grey">
+  <h2 class="content-heading">About this early day motion</h2>
 
-      <!--      generic items-->
-      <div class="content-about-text">
-        <h3 class="content-heading">Reference</h3>
-        <%= object.reference %>
-      </div>
+  <div class="about-item">
+    <h3 class="content-heading">Reference</h3>
+    <%= object.reference %>
+  </div>
 
-      <div class="content-about-text">
-        <h3 class="content-heading">Session</h3>
-        <%= object.session %>
-      </div>
+  <div class="about-item">
+    <h3 class="content-heading">Session</h3>
+    <%= object.session %>
+  </div>
 
-      <!--      Other supporters / generic list partial -->
-      <div class="content-about-text">
-        <h3 class="content-heading">Other supporters</h3>
-        <ul class="content-about-list">
-          <% object.other_supporters.each do |supporter| %>
-            <li class="content-about-list-item">- <%= link_to supporter, '/' %></li>
-          <% end %>
-        </ul>
-      </div>
+  <!--      Other supporters / generic list partial -->
+  <div class="about-item">
+    <h3 class="content-heading">Other supporters</h3>
+    <ul>
+      <% object.other_supporters.each do |supporter| %>
+        <li>- <%= link_to supporter, '/' %></li>
+      <% end %>
+    </ul>
+  </div>
 
-      <div class="content-about-text">
-        <h3 class="content-heading">Registered interest declared</h3>
-        <%= object.registered_interest_declared %>
-      </div>
+  <div class="about-item">
+    <h3 class="content-heading">Registered interest declared</h3>
+    <%= object.registered_interest_declared %>
+  </div>
 
-      <!--      amendments partial-->
-      <div class="content-about-text">
-        <h3 class="content-heading">Amendments</h3>
-        <div>
-          <ul>
-            <% object.amendments.each do |amendment| %>
+  <!--      amendments partial-->
+  <div class="about-item">
+    <h3 class="content-heading">Amendments</h3>
+    <div>
+      <ul>
+        <% object.amendments.each do |amendment| %>
 
-              <li>
-                <div class="amendment-title">
-                  <strong>Amendment <%= amendment[:index] + 1 %> - <%= object.page_title %></strong>
-                  <span class="amendment-title-ref">(<%= amendment[:reference] %>)</span>
-                </div>
-                <div class="amendment-text"><%= amendment[:text] %></div>
-                Sponsored by <%= amendment[:primary_sponsor] %> (primary, <%= amendment[:primary_sponsor_party] %>)
-                on <%= amendment[:date_tabled]&.to_date&.strftime(ApplicationHelper::DATE_DISPLAY_FORMAT) %>. It has
-                been signed by <%= amendment[:number_of_signatures] %> members total.<br><br>
-              </li>
-
-            <% end %>
-
-          </ul>
-        </div>
-      </div>
-
-      <!--      related items partial-->
-      <div class="content-about-text">
-        <h3 class="content-heading">Related items</h3>
-        <div>
-          <%= link_to 'Food and Drink Act 2023', '/' %><br/>
-          Thursday, 2 February 2023 | Public acts
-        </div>
-        <div>
-          <%= link_to 'Privacy Act 2023', '/' %><br/>
-          Thursday, 2 February 2023 | Public acts
-        </div>
-      </div>
-
-      <!--      subjects partial-->
-      <div class="content-about-text">
-        <h3 class="content-heading">Subjects</h3>
-        <div class="pill-section">
-          <% object.subjects.each do |subject| %>
-            <div class="pill-wrapper">
-              <!--              SES lookup will return string?-->
-              <div class="subject-pill"><%= subject.to_s.titleize %></div>
+          <li>
+            <div class="amendment-title">
+              <strong>Amendment <%= amendment[:index] + 1 %> - <%= object.page_title %></strong>
+              <span class="amendment-title-ref">(<%= amendment[:reference] %>)</span>
             </div>
-          <% end %>
-        </div>
-      </div>
+            <div class="amendment-text"><%= amendment[:text] %></div>
+            Sponsored by <%= amendment[:primary_sponsor] %> (primary, <%= amendment[:primary_sponsor_party] %>)
+            on <%= amendment[:date_tabled]&.to_date&.strftime(ApplicationHelper::DATE_DISPLAY_FORMAT) %>. It has
+            been signed by <%= amendment[:number_of_signatures] %> members total.<br><br>
+          </li>
 
-      <!--      legislation partial-->
-      <div class="content-about-text">
-        <h3 class="content-heading">Legislation</h3>
-        <% object.legislation.each do |legislation| %>
-          <%= link_to legislation.to_s.titleize, '/' %>
         <% end %>
-      </div>
 
-      <!--      links partial-->
-      <div class="content-about-text">
-        <h3 class="content-heading">Links</h3>
-        <%= link_to 'View this early day motion on edm.parliament.uk', object.external_location_uri %>
-      </div>
-
+      </ul>
     </div>
+  </div>
+
+  <!--      related items partial-->
+  <div class="about-item">
+    <h3 class="content-heading">Related items</h3>
+    <div>
+      <%= link_to 'Food and Drink Act 2023', '/' %><br/>
+      Thursday, 2 February 2023 | Public acts
+    </div>
+    <div>
+      <%= link_to 'Privacy Act 2023', '/' %><br/>
+      Thursday, 2 February 2023 | Public acts
+    </div>
+  </div>
+
+  <!--      subjects partial-->
+  <div class="about-item">
+    <h3 class="content-heading">Subjects</h3>
+    <div class="pill-section">
+      <% object.subjects.each do |subject| %>
+        <div class="pill-wrapper">
+          <!--              SES lookup will return string?-->
+          <div class="subject-pill"><%= subject.to_s.titleize %></div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <!--      legislation partial-->
+  <div class="about-item">
+    <h3 class="content-heading">Legislation</h3>
+    <% object.legislation.each do |legislation| %>
+      <%= link_to legislation.to_s.titleize, '/' %>
+    <% end %>
+  </div>
+
+  <!--      links partial-->
+  <div class="about-item">
+    <h3 class="content-heading">Links</h3>
+    <%= link_to 'View this early day motion on edm.parliament.uk', object.external_location_uri %>
+  </div>
+
   </div>
 </section>
 
