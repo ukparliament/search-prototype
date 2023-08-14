@@ -55,6 +55,108 @@ RSpec.describe Edm, type: :model do
     end
   end
 
+  describe 'session' do
+    context 'where there is no data' do
+      it 'returns nil' do
+        expect(edm.session).to be_nil
+      end
+    end
+
+    context 'where there is an empty array' do
+      let!(:edm) { Edm.new({ 'session_t' => [] }) }
+      it 'returns nil' do
+        expect(edm.session).to be_nil
+      end
+    end
+
+    context 'where data exists' do
+      let!(:edm) { Edm.new({ 'session_t' => ['first item', 'second item'] }) }
+
+      it 'returns the first item' do
+        expect(edm.session).to eq('first item')
+      end
+    end
+  end
+
+  describe 'reference' do
+    context 'where there is no data' do
+      it 'returns nil' do
+        expect(edm.reference).to be_nil
+      end
+    end
+
+    context 'where there is an empty array' do
+      let!(:edm) { Edm.new({ 'identifier_t' => [] }) }
+      it 'returns nil' do
+        expect(edm.reference).to be_nil
+      end
+    end
+
+    context 'where data exists' do
+      let!(:edm) { Edm.new({ 'identifier_t' => ['first item', 'second item'] }) }
+
+      it 'returns the first item' do
+        expect(edm.reference).to eq('first item')
+      end
+    end
+  end
+
+  describe 'other_supporters' do
+    context 'where there is no data' do
+      it 'returns nil' do
+        expect(edm.other_supporters).to be_nil
+      end
+    end
+
+    context 'where there is an empty array' do
+      let!(:edm) { Edm.new({ 'signedMember_ses' => [] }) }
+      it 'returns nil' do
+        expect(edm.other_supporters).to be_nil
+      end
+    end
+
+    context 'where data exists' do
+      let!(:edm) { Edm.new({ 'signedMember_ses' => ['first item', 'second item'] }) }
+
+      it 'returns all items' do
+        expect(edm.other_supporters).to eq(['first item', 'second item'])
+      end
+    end
+  end
+
+  describe 'registered_interest_declared' do
+    context 'where there is no data' do
+      it 'returns nil' do
+        expect(edm.registered_interest_declared).to be_nil
+      end
+    end
+
+    context 'where there is an empty array' do
+      let!(:edm) { Edm.new({ 'registeredInterest_b' => [] }) }
+      it 'returns nil' do
+        expect(edm.registered_interest_declared).to be_nil
+      end
+    end
+
+    context 'where data exists' do
+      context 'where first item is false' do
+        let!(:edm) { Edm.new({ 'registeredInterest_b' => ['false'] }) }
+
+        it 'returns "no"' do
+          expect(edm.registered_interest_declared).to eq('No')
+        end
+      end
+      context 'where first item is true' do
+        let!(:edm) { Edm.new({ 'registeredInterest_b' => ['true'] }) }
+
+        it 'returns "yes"' do
+          expect(edm.registered_interest_declared).to eq('Yes')
+        end
+      end
+
+    end
+  end
+
   describe 'date_tabled' do
     context 'where there is no data' do
       it 'returns nil' do
@@ -70,7 +172,6 @@ RSpec.describe Edm, type: :model do
     end
 
     context 'where data exists' do
-
       context 'where data is a valid date' do
         let!(:edm) { Edm.new({ 'dateTabled_dt' => [Date.today, Date.yesterday] }) }
         it 'returns the first item' do
@@ -132,6 +233,29 @@ RSpec.describe Edm, type: :model do
     end
   end
 
+  describe 'legislation' do
+    context 'where there is no data' do
+      it 'returns nil' do
+        expect(edm.legislation).to be_nil
+      end
+    end
+
+    context 'where there is an empty array' do
+      let!(:edm) { Edm.new({ 'legislature_ses' => [] }) }
+      it 'returns nil' do
+        expect(edm.legislation).to be_nil
+      end
+    end
+
+    context 'where data exists' do
+      let!(:edm) { Edm.new({ 'legislature_ses' => ['first item', 'second item'] }) }
+
+      it 'returns all items as an array' do
+        expect(edm.legislation).to eq(['first item', 'second item'])
+      end
+    end
+  end
+
   describe 'external_location_uri' do
     context 'where there is no data' do
       it 'returns nil' do
@@ -151,6 +275,74 @@ RSpec.describe Edm, type: :model do
 
       it 'returns the first item' do
         expect(edm.external_location_uri).to eq('first item')
+      end
+    end
+  end
+
+  describe 'amendment_text' do
+    context 'where there is no data' do
+      it 'returns nil' do
+        expect(edm.amendment_text).to be_nil
+      end
+    end
+
+    context 'where there is an empty array' do
+      let!(:edm) { Edm.new({ 'amendmentText_t' => [] }) }
+      it 'returns nil' do
+        expect(edm.amendment_text).to be_nil
+      end
+    end
+
+    context 'where data exists' do
+      let!(:edm) { Edm.new({ 'amendmentText_t' => ['first item', 'second item'] }) }
+
+      it 'returns all items' do
+        expect(edm.amendment_text).to eq(['first item', 'second item'])
+      end
+    end
+  end
+
+  describe 'amendments' do
+    context 'where there  is missing data' do
+      let!(:edm) { Edm.new({}) }
+
+      it 'returns nil' do
+        expect(edm.amendments).to eq(nil)
+      end
+    end
+
+    context 'where all data is present' do
+      let!(:edm) { Edm.new({
+                             'amendmentText_t' => ['first item', 'second item'],
+                             'amendment_numberOfSignatures_s' => [20, 10],
+                             'amendment_primarySponsorPrinted_t' => ['sponsor one', 'sponsor two'],
+                             'amendment_primarySponsorParty_ses' => [12345, 54321],
+                             'identifier_t' => ['main id', 'amendment 1 id', 'amendment 2 id'],
+                             'amendment_dateTabled_dt' => [DateTime.commercial(2022), DateTime.commercial(2021)],
+                           }) }
+
+      it 'returns all data grouped by amendment' do
+        expect(edm.amendments).to eq(
+                                    [{
+                                       date_tabled: DateTime.commercial(2022),
+                                       index: 0,
+                                       number_of_signatures: 20,
+                                       primary_sponsor: 'sponsor one',
+                                       primary_sponsor_party: 12345,
+                                       reference: 'amendment 1 id',
+                                       text: 'first item'
+                                     },
+                                     {
+                                       index: 1,
+                                       date_tabled: DateTime.commercial(2021),
+                                       number_of_signatures: 10,
+                                       primary_sponsor: 'sponsor two',
+                                       primary_sponsor_party: 54321,
+                                       reference: 'amendment 2 id',
+                                       text: 'second item'
+                                     }
+                                    ]
+                                  )
       end
     end
   end

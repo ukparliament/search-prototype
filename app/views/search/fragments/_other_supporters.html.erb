@@ -1,0 +1,8 @@
+<div class="about-item">
+  <h3 class="content-heading">Other supporters</h3>
+  <ul>
+    <% supporters.each do |supporter| %>
+      <li>- <%= link_to supporter, '/' %></li>
+    <% end %>
+  </ul>
+</div>

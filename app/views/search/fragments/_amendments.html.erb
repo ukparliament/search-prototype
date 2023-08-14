@@ -1,0 +1,19 @@
+<div class="about-item">
+  <h3 class="content-heading">Amendments</h3>
+  <div>
+    <ul>
+      <% amendments.each do |amendment| %>
+        <li>
+          <div class="amendment-title">
+            <strong>Amendment <%= amendment[:index] + 1 %> - <%= title %></strong>
+            <span class="amendment-title-ref">(<%= amendment[:reference] %>)</span>
+          </div>
+          <div class="amendment-text"><%= amendment[:text] %></div>
+          Sponsored by <%= amendment[:primary_sponsor] %> (primary, <%= amendment[:primary_sponsor_party] %>)
+          on <%= amendment[:date_tabled]&.to_date&.strftime(ApplicationHelper::DATE_DISPLAY_FORMAT) %>. It has
+          been signed by <%= amendment[:number_of_signatures] %> members total.<br><br>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+</div>
