@@ -1,8 +1,10 @@
-<div id="subjects">
-  <h2>Subjects</h2>
-  <ul>
+<div class="about-item">
+  <h3 class="content-heading">Subjects</h3>
+  <div class="pill-section">
     <% subjects.each do |subject| %>
-      <li><%= object_link(subject, '/') %></li>
+      <div class="pill-wrapper">
+        <div class="subject-pill"><%= subject.to_s.titleize %></div>
+      </div>
     <% end %>
-  </ul>
+  </div>
 </div>

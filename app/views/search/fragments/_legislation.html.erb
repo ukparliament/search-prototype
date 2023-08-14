@@ -1,0 +1,6 @@
+<div class="about-item">
+  <h3 class="content-heading">Legislation</h3>
+  <% legislation.each do |legislation| %>
+    <%= link_to legislation.to_s.titleize, '/' %>
+  <% end %>
+</div>
