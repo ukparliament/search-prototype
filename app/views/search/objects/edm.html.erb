@@ -1,4 +1,4 @@
-<%= render 'search/fragments/data', data: object.content_object_data %>
+<%#= render 'search/fragments/data', data: object.content_object_data %>
 
 <% content_for(:before_title) do %>
   <%= link_to('UK Parliament') %> / <%= link_to('Open data') %><br/>
@@ -44,7 +44,7 @@
 
   <%= render 'search/fragments/amendments', title: object.page_title, amendments: object.amendments unless object.amendments.blank? %>
   <%= render 'search/fragments/related_items' %>
-  <%= render 'search/fragments/subjects', subjects: object.subjects unless object.subjects.blank? %>
+  <%= render 'search/fragments/pills',  pills_heading: 'Subjects', pills: object.subjects unless object.subjects.blank? %>
   <%= render 'search/fragments/legislation', legislation: object.legislation unless object.legislation.blank? %>
   <%= render 'search/fragments/links', object: object %>
 

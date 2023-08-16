@@ -1,0 +1,10 @@
+<div class="about-item">
+  <h3 class="content-heading"><%= pills_heading %></h3>
+  <div class="pill-section">
+    <% pills.each do |pill| %>
+      <div class="pill-wrapper">
+        <div class="pill"><%= pill.to_s.titleize %></div>
+      </div>
+    <% end %>
+  </div>
+</div>

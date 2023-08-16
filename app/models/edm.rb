@@ -8,6 +8,10 @@ class Edm < ContentObject
     'search/objects/edm'
   end
 
+  def object_name
+    "early day motion"
+  end
+
   def amendments
     # number of signatures won't necessarily match - need to confirm how to handle missing data
     # initial suggestion is that where missing, use the previous one (as that seems to be why they're missing)
