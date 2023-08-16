@@ -17,6 +17,10 @@ main {
     height: 100%;
     box-sizing: border-box;
     padding: 16px 0;
+    font-size: 20px;
+    font-weight: 400;
+    word-wrap: break-word;
+    line-height: 28px;
 }
 
 /*nav bar*/
@@ -36,6 +40,7 @@ main {
             align-items: center;
             display: inline-flex;
             box-sizing: border-box;
+            font-family: Helvetica, sans-serif;
 
             .nav-logo-wrapper {
                 width: 185.92px;
@@ -69,7 +74,6 @@ main {
             .nav-label {
                 color: white;
                 font-size: 20px;
-                font-family: Helvetica, sans-serif;
                 font-weight: 700;
                 line-height: 28px;
                 word-wrap: break-word;
@@ -88,14 +92,14 @@ main {
     width: 100%;
     box-sizing: border-box;
     align-self: stretch;
-    padding: 16px 0;
+    padding: 0;
     justify-content: flex-start;
     align-items: flex-start;
     display: inline-flex;
 
     .content-prelim-inner {
         flex: 1 1 0;
-        padding: 16px;
+        padding: 16px 16px;
         background: #EBEBEB;
         justify-content: space-between;
         align-items: flex-start;
@@ -104,10 +108,6 @@ main {
 
         .content-prelim-text {
             flex: 1 1 0;
-            font-size: 20px;
-            font-weight: 400;
-            line-height: 28px;
-            word-wrap: break-word;
         }
     }
 }
@@ -135,11 +135,11 @@ main {
     box-sizing: border-box;
 
     .about-item {
-        font-size: 20px;
         color: #181818;
-        font-weight: 400;
-        line-height: 28px;
-        word-wrap: break-word
+    }
+
+    .content-text {
+        padding: 16px 0px;
     }
 
     .pill-section {
@@ -165,55 +165,39 @@ main {
         text-align: center;
         color: white;
         font-size: 16px;
-        font-family: Helvetica, sans-serif;
-        font-weight: 400;
         line-height: 22.48px;
     }
 
     .amendment-title {
         color: #181818;
-        font-size: 20px;
-        font-family: Helvetica, sans-serif;
         font-weight: 700;
-        line-height: 28px;
-        word-wrap: break-word;
     }
 
     .amendment-title-ref {
         color: #181818;
-        font-size: 20px;
-        font-family: National-LFSN;
+        font-family: National-LFSN, sans-serif;
         font-weight: 350;
-        line-height: 28px;
-        word-wrap: break-word
     }
 
     .amendment-text {
         align-self: stretch;
         color: #181818;
-        font-size: 20px;
-        font-family: Helvetica, sans-serif;
-        font-weight: 400;
-        line-height: 28px;
-        word-wrap: break-word
     }
 }
 
 a {
     color: #2B57AB;
-    font-size: 20px;
-    font-family: National-LFSN, serif;
     font-weight: 350;
     text-decoration: underline;
-    line-height: 28px;
-    word-wrap: break-word
 }
 
 h1, h2, h3 {
     color: #181818;
-    font-family: Helvetica, sans-serif;
     font-weight: 700;
-    word-wrap: break-word;
+}
+
+h1 {
+    line-height: 42.00px;
 }
 
 h2.content-heading {
@@ -253,11 +237,6 @@ li {
     border-radius: 4px;
     color: #2B57AB;
     text-decoration: none;
-    font-size: 20px;
-    font-family: Helvetica, sans-serif;
-    font-weight: 400;
-    line-height: 28px;
-    word-wrap: break-word;
     padding: 8px 16px;
 }
 
