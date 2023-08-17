@@ -24,21 +24,12 @@
 
 <section id="about" class="content-section grey">
   <h2 class="content-heading">About this <%= object.object_name %></h2>
-
-  <div class="about-item">
-    <h3 class="content-heading">Reference</h3>
-    <%= object.reference %>
-  </div>
-
+  <%= render 'search/fragments/reference', reference: object.reference unless object.reference.blank? %>
   <%= render 'search/fragments/pills', pills_heading: 'Subjects', pills: object.subjects unless object.subjects.blank? %>
-
   <%#= render 'search/fragments/pills',  pills_heading: 'Topics', pills: object.topics unless object.topics.blank? %>
-
   <%= render 'search/fragments/legislation', legislation: object.legislation unless object.legislation.blank? %>
-
   <%= render 'search/fragments/links', object: object if object.has_any_links? %>
   <%= render 'search/fragments/published_by', object: object if object.published? %>
-
 </section>
 
 <%= render '/search/fragments/back_to_top_button' %>

@@ -24,30 +24,15 @@
 
 <section id="about" class="content-section grey">
   <h2 class="content-heading">About this early day motion</h2>
-
-  <div class="about-item">
-    <h3 class="content-heading">Reference</h3>
-    <%= object.reference %>
-  </div>
-
-  <div class="about-item">
-    <h3 class="content-heading">Session</h3>
-    <%= object.session %>
-  </div>
-
+  <%= render 'search/fragments/reference', reference: object.reference unless object.reference.blank? %>
+  <%= render 'search/fragments/session', session: object.session unless object.session.blank? %>
+  <%= render 'search/fragments/registered_interest_declared', registered_interest_declared: object.registered_interest_declared unless object.registered_interest_declared.blank? %>
   <%= render 'search/fragments/other_supporters', supporters: object.other_supporters unless object.other_supporters.blank? %>
-
-  <div class="about-item">
-    <h3 class="content-heading">Registered interest declared</h3>
-    <%= object.registered_interest_declared %>
-  </div>
-
   <%= render 'search/fragments/amendments', title: object.page_title, amendments: object.amendments unless object.amendments.blank? %>
   <%= render 'search/fragments/related_items' %>
   <%= render 'search/fragments/pills', pills_heading: 'Subjects', pills: object.subjects unless object.subjects.blank? %>
   <%= render 'search/fragments/legislation', legislation: object.legislation unless object.legislation.blank? %>
   <%= render 'search/fragments/links', object: object if object.has_any_links? %>
-
 </section>
 
 <%= render '/search/fragments/back_to_top_button' %>
