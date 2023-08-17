@@ -1,53 +1,44 @@
-<%= render 'search/fragments/data', data: object.content_object_data %>
+<%#= render 'search/fragments/data', data: object.content_object_data %>
 
 <% content_for(:before_title) do %>
-	<%= link_to('UK Parliament') %> / <%= link_to('Open data') %><br/>
-	<%= link_to('< Back to search results') %>
-	<div id="top"></div>
+  <%= link_to('UK Parliament') %> / <%= link_to('Open data') %><br/>
+  <%= link_to('< Back to search results') %>
+  <div id="top"></div>
 <% end %>
 
 <% if object.page_title %>
-	<% content_for(:title) do %>
-		<%= object.page_title %>
-	<% end %>
+  <% content_for(:title) do %>
+    <%= object.page_title %>
+  <% end %>
 <% end %>
 
 <section id="prelim">
-	<%= render 'search/fragments/research_briefing_prelim', object: object %>
+  <%= render 'search/fragments/research_briefing_prelim', object: object %>
 </section>
 
 <section id="text" class="content-section">
-	<div class="about-item">
-		<%= simple_format(object.content) %>
-	</div>
+  <div class="about-item">
+    <%= simple_format(object.content) %>
+  </div>
 </section>
 
-<!--<section id="about" class="content-section grey">-->
-<!--	<h2 class="content-heading">About this <%#= object.object_name %></h2>-->
+<section id="about" class="content-section grey">
+  <h2 class="content-heading">About this <%= object.object_name %></h2>
 
-<!--	<div class="about-item">-->
-<!--		<h3 class="content-heading">Reference</h3>-->
-		<%#= object.reference %>
-<!--	</div>-->
+  <div class="about-item">
+    <h3 class="content-heading">Reference</h3>
+    <%= object.reference %>
+  </div>
 
-<!--	<div class="about-item">-->
-<!--		<h3 class="content-heading">Session</h3>-->
-		<%#= object.session %>
-<!--	</div>-->
+  <%= render 'search/fragments/pills', pills_heading: 'Subjects', pills: object.subjects unless object.subjects.blank? %>
 
-	<%#= render 'search/fragments/other_supporters', supporters: object.other_supporters unless object.other_supporters.blank? %>
+  <%#= render 'search/fragments/pills',  pills_heading: 'Topics', pills: object.topics unless object.topics.blank? %>
 
-<!--	<div class="about-item">-->
-<!--		<h3 class="content-heading">Registered interest declared</h3>-->
-		<%#= object.registered_interest_declared %>
-<!--	</div>-->
+  <%= render 'search/fragments/legislation', legislation: object.legislation unless object.legislation.blank? %>
 
-	<%#= render 'search/fragments/amendments', title: object.page_title, amendments: object.amendments unless object.amendments.blank? %>
-	<%#= render 'search/fragments/related_items' %>
-	<%#= render 'search/fragments/pills',  pills_heading: 'Subjects', pills: object.subjects unless object.subjects.blank? %>
-	<%#= render 'search/fragments/legislation', legislation: object.legislation unless object.legislation.blank? %>
-	<%#= render 'search/fragments/links', object: object %>
+  <%= render 'search/fragments/links', object: object if object.has_any_links? %>
+  <%= render 'search/fragments/published_by', object: object if object.published? %>
 
-<!--</section>-->
+</section>
 
 <%= render '/search/fragments/back_to_top_button' %>

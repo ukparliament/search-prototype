@@ -44,9 +44,9 @@
 
   <%= render 'search/fragments/amendments', title: object.page_title, amendments: object.amendments unless object.amendments.blank? %>
   <%= render 'search/fragments/related_items' %>
-  <%= render 'search/fragments/pills',  pills_heading: 'Subjects', pills: object.subjects unless object.subjects.blank? %>
+  <%= render 'search/fragments/pills', pills_heading: 'Subjects', pills: object.subjects unless object.subjects.blank? %>
   <%= render 'search/fragments/legislation', legislation: object.legislation unless object.legislation.blank? %>
-  <%= render 'search/fragments/links', object: object %>
+  <%= render 'search/fragments/links', object: object if object.has_any_links? %>
 
 </section>
 

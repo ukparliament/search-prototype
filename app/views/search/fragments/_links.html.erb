@@ -1,4 +1,5 @@
 <div class="about-item">
   <h3 class="content-heading">Links</h3>
-  <%= link_to 'View this early day motion on edm.parliament.uk', object.external_location_uri %>
+  <%= link_to "View this #{object.object_name} on #{ URI.parse(object.external_location_uri).host}", object.external_location_uri unless object.external_location_uri.blank? %>
+  <%= link_to "View this #{object.object_name} on #{ URI.parse(object.content_location_uri).host}", object.content_location_uri unless object.content_location_uri.blank? %>
 </div>

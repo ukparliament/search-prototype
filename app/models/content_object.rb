@@ -19,6 +19,40 @@ class ContentObject
     content_object_data['title_t']
   end
 
+  def reference
+    return if content_object_data['identifier_t'].blank?
+
+    content_object_data['identifier_t'].first
+  end
+
+  def subjects
+    return if content_object_data['subject_sesrollup'].blank?
+
+    content_object_data['subject_sesrollup']
+  end
+
+  def legislation
+    return if content_object_data['legislature_ses'].blank?
+
+    content_object_data['legislature_ses']
+  end
+
+  def external_location_uri
+    return if content_object_data['externalLocation_uri'].blank?
+
+    content_object_data['externalLocation_uri'].first
+  end
+  def content_location_uri
+    return if content_object_data['contentLocation_uri'].blank?
+
+    content_object_data['contentLocation_uri'].first
+  end
+
+  def has_any_links?
+    content_object_data['externalLocation_uri'].present?
+    content_object_data['contentLocation_uri'].present?
+  end
+
   private
 
   def self.content_object_class(ses_id)

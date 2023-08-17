@@ -83,12 +83,6 @@ class Edm < ContentObject
     content_object_data['session_t'].first
   end
 
-  def reference
-    return if content_object_data['identifier_t'].blank?
-
-    content_object_data['identifier_t'].first
-  end
-
   def motion_text
     return if content_object_data['motionText_t'].blank?
 
@@ -111,18 +105,6 @@ class Edm < ContentObject
     return if content_object_data['bibliographicCitation_s'].blank?
 
     content_object_data['bibliographicCitation_s']
-  end
-
-  def subjects
-    return if content_object_data['subject_sesrollup'].blank?
-
-    content_object_data['subject_sesrollup']
-  end
-
-  def legislation
-    return if content_object_data['legislature_ses'].blank?
-
-    content_object_data['legislature_ses']
   end
 
   def external_location_uri
