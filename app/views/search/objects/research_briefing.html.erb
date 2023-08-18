@@ -1,15 +1,35 @@
-<%= render :partial => 'search/fragments/research_briefing_prelim', :object => object %>
+<%#= render 'search/fragments/data', data: object.content_object_data %>
 
-<div class="abstract">
-	<%= content_tag( 'p', object['abstract_t'] ) %>
-</div>
+<% content_for(:before_title) do %>
+  <%= link_to('UK Parliament') %> / <%= link_to('Open data') %><br/>
+  <%= link_to('< Back to search results') %>
+  <div id="top"></div>
+<% end %>
 
-<div class="content">
-	<%= content_tag( 'p', object['content_t'].first ) %>
-</div>
+<% if object.page_title %>
+  <% content_for(:title) do %>
+    <%= object.page_title %>
+  <% end %>
+<% end %>
 
-<%= render :partial => 'search/fragments/meta', :object => object %>
+<section id="prelim">
+  <%= render 'search/fragments/research_briefing_prelim', object: object %>
+</section>
 
-<%= render :partial => 'search/fragments/link', :object => object['externalLocation_uri'].first if object['externalLocation_uri'] %>
+<section id="text" class="content-section">
+  <div class="about-item">
+    <%= simple_format(object.content) %>
+  </div>
+</section>
 
-<%= render :partial => 'search/fragments/data', :object => object %>
+<section id="about" class="content-section grey">
+  <h2 class="content-heading">About this <%= object.object_name %></h2>
+  <%= render 'search/fragments/reference', reference: object.reference unless object.reference.blank? %>
+  <%= render 'search/fragments/pills', pills_heading: 'Subjects', pills: object.subjects unless object.subjects.blank? %>
+  <%#= render 'search/fragments/pills',  pills_heading: 'Topics', pills: object.topics unless object.topics.blank? %>
+  <%= render 'search/fragments/legislation', legislation: object.legislation unless object.legislation.blank? %>
+  <%= render 'search/fragments/links', object: object if object.has_any_links? %>
+  <%= render 'search/fragments/published_by', object: object if object.published? %>
+</section>
+
+<%= render '/search/fragments/back_to_top_button' %>

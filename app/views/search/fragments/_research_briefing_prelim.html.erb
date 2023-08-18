@@ -1,4 +1,13 @@
-<%= content_tag( 'p', "A #{link_to( 'research briefing', object_show_url( :object => @object_uri, :anchor => @content_type ) )} last updated on on #{research_briefing_prelim['date_dt'].to_date.strftime( ApplicationHelper::DATE_DISPLAY_FORMAT )}, published by #{link_to( research_briefing_prelim['sectionSnapshot_t'].first, object_show_url( :object => @object_uri, :anchor => research_briefing_prelim['section_ses'].first ) )} in the #{link_to( research_briefing_prelim['publisherSnapshot_t'].first, object_show_url( :object => @object_uri, :anchor => research_briefing_prelim['publisher_ses'].first ) )}.".html_safe, :class => 'prelim' ) %>
-
-
+<div class="content-prelim-box">
+  <div class="content-prelim-inner">
+    <div class="content-prelim-text">
+      An <%= object_link("#{object.object_name.titleize}", '/') %> published
+      by <%= object_link("#{object.published_by}", '/') %>
+      on <strong><%= object.published_on&.strftime(ApplicationHelper::DATE_DISPLAY_FORMAT) %></strong>.
+      <% if object.updated_on %>
+        It was updated on <strong><%= object.updated_on&.strftime(ApplicationHelper::DATE_DISPLAY_FORMAT) %></strong>.
+      <% end %>
+    </div>
+  </div>
+</div>
 
