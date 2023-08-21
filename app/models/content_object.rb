@@ -42,6 +42,7 @@ class ContentObject
 
     content_object_data['externalLocation_uri'].first
   end
+
   def content_location_uri
     return if content_object_data['contentLocation_uri'].blank?
 

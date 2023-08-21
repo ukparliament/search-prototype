@@ -27,7 +27,9 @@ class ResearchBriefing < ContentObject
   def published?
     return if content_object_data['published_b'].blank?
 
-    content_object_data['published_b'].first
+    return false unless content_object_data['published_b'].first == 'true'
+
+    true
   end
 
   def published_by
@@ -43,6 +45,8 @@ class ResearchBriefing < ContentObject
   end
 
   def publisher_logo_partial
+    # TODO: validate publisher names against accepted list?
+
     return unless publisher
 
     "/search/logo_svgs/#{publisher.parameterize}"
@@ -51,13 +55,19 @@ class ResearchBriefing < ContentObject
   def published_on
     return if content_object_data['created_dt'].blank?
 
-    content_object_data['created_dt'].first.to_date
+    valid_date_string = validate_date(content_object_data['created_dt'].first)
+    return unless valid_date_string
+
+    valid_date_string.to_date
   end
 
   def updated_on
     return if content_object_data['dateLastModified_dt'].blank?
 
-    content_object_data['dateLastModified_dt'].first.to_date
+    valid_date_string = validate_date(content_object_data['dateLastModified_dt'].first)
+    return unless valid_date_string
+
+    valid_date_string.to_date
   end
 
   # topics data missing
@@ -66,5 +76,17 @@ class ResearchBriefing < ContentObject
   #
   #   content_object_data['']
   # end
+
+  private
+
+  def validate_date(date)
+    begin
+      date_string = Date.parse(date)
+    rescue Date::Error
+      return nil
+    end
+
+    date_string
+  end
 
 end
