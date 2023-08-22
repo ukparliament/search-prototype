@@ -335,4 +335,26 @@ RSpec.describe ResearchBriefing, type: :model do
       end
     end
   end
+
+  describe 'has_any_links?' do
+    context 'no links are present' do
+      let!(:research_briefing) { ResearchBriefing.new({ 'contentLocation_uri' => [], 'externalLocation_uri' => [] }) }
+
+      it 'returns false' do
+        expect(research_briefing.has_any_links?).to eq(false)
+      end
+    end
+
+    context 'any links are present' do
+      let!(:research_briefing1) { ResearchBriefing.new({ 'contentLocation_uri' => ['www.example.com'], 'externalLocation_uri' => [] }) }
+      let!(:research_briefing2) { ResearchBriefing.new({ 'contentLocation_uri' => [], 'externalLocation_uri' => ['www.example.com'] }) }
+      let!(:research_briefing3) { ResearchBriefing.new({ 'contentLocation_uri' => ['www.example.com'], 'externalLocation_uri' => ['www.example.com'] }) }
+
+      it 'returns true' do
+        expect(research_briefing1.has_any_links?).to eq(true)
+        expect(research_briefing2.has_any_links?).to eq(true)
+        expect(research_briefing3.has_any_links?).to eq(true)
+      end
+    end
+  end
 end

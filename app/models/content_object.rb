@@ -50,7 +50,7 @@ class ContentObject
   end
 
   def has_any_links?
-    content_object_data['externalLocation_uri'].present?
+    content_object_data['externalLocation_uri'].present? ||
     content_object_data['contentLocation_uri'].present?
   end
 
