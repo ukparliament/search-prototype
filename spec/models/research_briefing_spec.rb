@@ -101,32 +101,55 @@ RSpec.describe ResearchBriefing, type: :model do
     end
 
     context 'where there is an empty array' do
-      let!(:research_briefing) { ResearchBriefing.new({ 'creator_ses' => [] }) }
+      let!(:research_briefing) { ResearchBriefing.new({ 'publisher_ses' => [] }) }
       it 'returns nil' do
         expect(research_briefing.published_by).to be_nil
       end
     end
 
     context 'where data exists' do
-      let!(:research_briefing) { ResearchBriefing.new({ 'creator_ses' => ['first item', 'second item'] }) }
+      let!(:research_briefing) { ResearchBriefing.new({ 'publisher_ses' => [12345, 54321] }) }
 
       it 'returns the first item' do
-        expect(research_briefing.published_by).to eq('first item')
+        expect(research_briefing.published_by).to eq(12345)
       end
     end
   end
 
-  describe 'publisher' do
+  describe 'creator' do
     context 'where there is no data' do
       it 'returns nil' do
-        expect(research_briefing.publisher).to be_nil
+        expect(research_briefing.creator).to be_nil
+      end
+    end
+
+    context 'where there is an empty array' do
+      let!(:research_briefing) { ResearchBriefing.new({ 'creator_ses' => [] }) }
+      it 'returns nil' do
+        expect(research_briefing.creator).to be_nil
+      end
+    end
+
+    context 'where data exists' do
+      let!(:research_briefing) { ResearchBriefing.new({ 'creator_ses' => [12345, 54321] }) }
+
+      it 'returns the first item' do
+        expect(research_briefing.creator).to eq(12345)
+      end
+    end
+  end
+
+  describe 'publisher_string' do
+    context 'where there is no data' do
+      it 'returns nil' do
+        expect(research_briefing.publisher_string).to be_nil
       end
     end
 
     context 'where there is an empty array' do
       let!(:research_briefing) { ResearchBriefing.new({ 'publisherSnapshot_s' => [] }) }
       it 'returns nil' do
-        expect(research_briefing.publisher).to be_nil
+        expect(research_briefing.publisher_string).to be_nil
       end
     end
 
@@ -134,7 +157,7 @@ RSpec.describe ResearchBriefing, type: :model do
       let!(:research_briefing) { ResearchBriefing.new({ 'publisherSnapshot_s' => ['first item', 'second item'] }) }
 
       it 'returns the first item' do
-        expect(research_briefing.publisher).to eq('first item')
+        expect(research_briefing.publisher_string).to eq('first item')
       end
     end
   end
@@ -336,24 +359,36 @@ RSpec.describe ResearchBriefing, type: :model do
     end
   end
 
-  describe 'has_any_links?' do
+  describe 'display_link' do
     context 'no links are present' do
-      let!(:research_briefing) { ResearchBriefing.new({ 'contentLocation_uri' => [], 'externalLocation_uri' => [] }) }
+      let!(:research_briefing) { ResearchBriefing.new({ 'internalLocation_uri' => [], 'externalLocation_uri' => [] }) }
 
-      it 'returns false' do
-        expect(research_briefing.has_any_links?).to eq(false)
+      it 'returns nil' do
+        expect(research_briefing.display_link).to be_nil
       end
     end
 
-    context 'any links are present' do
-      let!(:research_briefing1) { ResearchBriefing.new({ 'contentLocation_uri' => ['www.example.com'], 'externalLocation_uri' => [] }) }
-      let!(:research_briefing2) { ResearchBriefing.new({ 'contentLocation_uri' => [], 'externalLocation_uri' => ['www.example.com'] }) }
-      let!(:research_briefing3) { ResearchBriefing.new({ 'contentLocation_uri' => ['www.example.com'], 'externalLocation_uri' => ['www.example.com'] }) }
+    context 'internal link is present, external link is not present' do
+      let!(:research_briefing) { ResearchBriefing.new({ 'internalLocation_uri' => ['www.example.com'], 'externalLocation_uri' => [] }) }
 
-      it 'returns true' do
-        expect(research_briefing1.has_any_links?).to eq(true)
-        expect(research_briefing2.has_any_links?).to eq(true)
-        expect(research_briefing3.has_any_links?).to eq(true)
+      it 'returns the internal link' do
+        expect(research_briefing.display_link).to eq('www.example.com')
+      end
+    end
+
+    context 'internal link is present, external link is present' do
+      let!(:research_briefing) { ResearchBriefing.new({ 'internalLocation_uri' => ['www.example.com'], 'externalLocation_uri' => ['www.test.com'] }) }
+
+      it 'returns the external link' do
+        expect(research_briefing.display_link).to eq('www.test.com')
+      end
+    end
+
+    context 'internal link is not present, external link is present' do
+      let!(:research_briefing) { ResearchBriefing.new({ 'internalLocation_uri' => [], 'externalLocation_uri' => ['www.test.com'] }) }
+
+      it 'returns the external link' do
+        expect(research_briefing.display_link).to eq('www.test.com')
       end
     end
   end
