@@ -44,4 +44,26 @@ RSpec.describe ContentObject, type: :model do
     end
   end
 
+  describe 'has_link?' do
+    context 'when display link is nil' do
+      let!(:content_object) { ContentObject.new(test_data) }
+      let!(:test_data) { { "some_data" => [12345] } }
+
+      it 'returns false' do
+        allow(content_object).to receive(:display_link).and_return(nil)
+        expect(content_object.has_link?).to eq(false)
+      end
+    end
+
+    context 'when display link is populated' do
+      let!(:content_object) { ContentObject.new(test_data) }
+      let!(:test_data) { { "some_data" => [12345] } }
+
+      it 'returns true' do
+        allow(content_object).to receive(:display_link).and_return('www.example.com')
+        expect(content_object.has_link?).to eq(true)
+      end
+    end
+  end
+
 end

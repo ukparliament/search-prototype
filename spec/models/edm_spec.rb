@@ -347,4 +347,38 @@ RSpec.describe Edm, type: :model do
     end
   end
 
+  describe 'display_link' do
+    context 'no links are present' do
+      let!(:edm) { Edm.new({ 'internalLocation_uri' => [], 'externalLocation_uri' => [] }) }
+
+      it 'returns nil' do
+        expect(edm.display_link).to be_nil
+      end
+    end
+
+    context 'internal link is present, external link is not present' do
+      let!(:edm) { Edm.new({ 'internalLocation_uri' => ['www.example.com'], 'externalLocation_uri' => [] }) }
+
+      it 'returns nil' do
+        expect(edm.display_link).to be_nil
+      end
+    end
+
+    context 'internal link is present, external link is present' do
+      let!(:edm) { Edm.new({ 'internalLocation_uri' => ['www.example.com'], 'externalLocation_uri' => ['www.test.com'] }) }
+
+      it 'returns the external link' do
+        expect(edm.display_link).to eq('www.test.com')
+      end
+    end
+
+    context 'internal link is not present, external link is present' do
+      let!(:edm) { Edm.new({ 'internalLocation_uri' => [], 'externalLocation_uri' => ['www.test.com'] }) }
+
+      it 'returns the external link' do
+        expect(edm.display_link).to eq('www.test.com')
+      end
+    end
+  end
+
 end

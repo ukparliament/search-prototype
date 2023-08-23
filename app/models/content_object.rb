@@ -31,6 +31,13 @@ class ContentObject
     content_object_data['subject_sesrollup']
   end
 
+  def topics
+    # note - have not yet verified key as missing from test data
+    return if content_object_data['topic_sesrollup'].blank?
+
+    content_object_data['topic_sesrollup']
+  end
+
   def legislation
     return if content_object_data['legislature_ses'].blank?
 
@@ -42,15 +49,29 @@ class ContentObject
 
     content_object_data['externalLocation_uri'].first
   end
+
+  def internal_location_uri
+    return if content_object_data['internalLocation_uri'].blank?
+
+    content_object_data['internalLocation_uri'].first
+  end
+
   def content_location_uri
     return if content_object_data['contentLocation_uri'].blank?
 
     content_object_data['contentLocation_uri'].first
   end
 
-  def has_any_links?
-    content_object_data['externalLocation_uri'].present?
-    content_object_data['contentLocation_uri'].present?
+  def display_link
+    # For everything else, where there is no externalLocation, no Link, internalLocation is not surfaced in new Search
+
+    external_location_uri.blank? ? nil : external_location_uri
+  end
+
+  def has_link?
+    # based on discussions, we are only displaying one link
+
+    !display_link.blank?
   end
 
   private

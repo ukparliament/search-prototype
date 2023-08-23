@@ -1,8 +1,8 @@
-<%#= render 'search/fragments/data', data: object.content_object_data %>
+<%= render 'search/fragments/data', data: object.content_object_data %>
 
 <% content_for(:before_title) do %>
   <%= link_to('UK Parliament') %> / <%= link_to('Open data') %><br/>
-  <%= link_to('< Back to search results') %>
+  <%= link_to('< Back to search results', root_path) %>
   <div id="top"></div>
 <% end %>
 
@@ -18,7 +18,7 @@
 
 <section id="text" class="content-section">
   <div class="about-item">
-    <%= simple_format(object.content) %>
+    <%= raw(object.html_summary) %>
   </div>
 </section>
 
@@ -26,9 +26,9 @@
   <h2 class="content-heading">About this <%= object.object_name %></h2>
   <%= render 'search/fragments/reference', reference: object.reference unless object.reference.blank? %>
   <%= render 'search/fragments/pills', pills_heading: 'Subjects', pills: object.subjects unless object.subjects.blank? %>
-  <%#= render 'search/fragments/pills',  pills_heading: 'Topics', pills: object.topics unless object.topics.blank? %>
+  <%= render 'search/fragments/pills',  pills_heading: 'Topics', pills: object.topics unless object.topics.blank? %>
   <%= render 'search/fragments/legislation', legislation: object.legislation unless object.legislation.blank? %>
-  <%= render 'search/fragments/links', object: object if object.has_any_links? %>
+  <%= render 'search/fragments/links', object: object if object.has_link? %>
   <%= render 'search/fragments/published_by', object: object if object.published? %>
 </section>
 

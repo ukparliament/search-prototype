@@ -2,7 +2,7 @@
 
 <% content_for(:before_title) do %>
   <%= link_to('UK Parliament') %> / <%= link_to('Open data') %><br/>
-  <%= link_to('< Back to search results') %>
+  <%= link_to('< Back to search results', root_path) %>
   <div id="top"></div>
 <% end %>
 
@@ -32,7 +32,7 @@
   <%= render 'search/fragments/related_items' %>
   <%= render 'search/fragments/pills', pills_heading: 'Subjects', pills: object.subjects unless object.subjects.blank? %>
   <%= render 'search/fragments/legislation', legislation: object.legislation unless object.legislation.blank? %>
-  <%= render 'search/fragments/links', object: object if object.has_any_links? %>
+  <%= render 'search/fragments/links', object: object if object.has_link? %>
 </section>
 
 <%= render '/search/fragments/back_to_top_button' %>

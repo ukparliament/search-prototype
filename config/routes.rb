@@ -2,9 +2,8 @@ Rails.application.routes.draw do
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Defines the root path route ("/")
-  root "search#form"
+  root 'search#form'
 
-  get 'search-prototype/' => 'search#form', :as => 'home'
   get 'search-prototype/search' => 'search#form', :as => 'form'
   get 'search-prototype/results/:document_type' => 'search#results', :as => 'results'
   get 'search-prototype/objects' => 'content_objects#show', :as => 'object_show'

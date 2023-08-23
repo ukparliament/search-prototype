@@ -21,50 +21,85 @@ class ResearchBriefing < ContentObject
   def html_summary
     return if content_object_data['htmlsummary_t'].blank?
 
-    content_object_data['htmlsummary_t'].first
+    CGI::unescapeHTML(content_object_data['htmlsummary_t'].first)
   end
 
   def published?
     return if content_object_data['published_b'].blank?
 
-    content_object_data['published_b'].first
+    return false unless content_object_data['published_b'].first == 'true'
+
+    true
   end
 
-  def published_by
+  def creator
+    # this is for the prelim 'by...'
+
     return if content_object_data['creator_ses'].blank?
 
     content_object_data['creator_ses'].first
   end
 
-  def publisher
+  def published_by
+    # this is the publishing organisation and is to be used in the secondary attributes
+    # currently unused as we're showing a graphic as per the wireframes, & working with publisherSnapshot_s to do that
+
+    return if content_object_data['publisher_ses'].blank?
+
+    content_object_data['publisher_ses'].first
+  end
+
+  def publisher_string
+    # this is looking at a string (rather than SES id) for publisher in order to pick the correct graphic
+    # this feels quite fragile and should be given further thought
+
     return if content_object_data['publisherSnapshot_s'].blank?
 
     content_object_data['publisherSnapshot_s'].first
   end
 
   def publisher_logo_partial
-    return unless publisher
+    # TODO: validate publisher names against accepted list?
 
-    "/search/logo_svgs/#{publisher.parameterize}"
+    return unless publisher_string
+
+    "/search/logo_svgs/#{publisher_string.parameterize}"
   end
 
   def published_on
     return if content_object_data['created_dt'].blank?
 
-    content_object_data['created_dt'].first.to_date
+    valid_date_string = validate_date(content_object_data['created_dt'].first)
+    return unless valid_date_string
+
+    valid_date_string.to_date
   end
 
   def updated_on
     return if content_object_data['dateLastModified_dt'].blank?
 
-    content_object_data['dateLastModified_dt'].first.to_date
+    valid_date_string = validate_date(content_object_data['dateLastModified_dt'].first)
+    return unless valid_date_string
+
+    valid_date_string.to_date
   end
 
-  # topics data missing
-  # def topics
-  #   return if content_object_data[''].blank?
-  #
-  #   content_object_data['']
-  # end
+  def display_link
+    # For Research briefings link to externalLocation if present, internalLocation if no externalLocation is available.
+
+    external_location_uri.blank? ? internal_location_uri : external_location_uri
+  end
+
+  private
+
+  def validate_date(date)
+    begin
+      date_string = Date.parse(date)
+    rescue Date::Error
+      return nil
+    end
+
+    date_string
+  end
 
 end
