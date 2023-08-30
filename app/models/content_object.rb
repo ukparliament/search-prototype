@@ -19,6 +19,12 @@ class ContentObject
     content_object_data['title_t']
   end
 
+  def content
+    return if content_object_data['content_t'].blank?
+
+    CGI::unescapeHTML(content_object_data['content_t'].first)
+  end
+
   def reference
     return if content_object_data['identifier_t'].blank?
 
@@ -74,6 +80,43 @@ class ContentObject
     !display_link.blank?
   end
 
+  def related_items
+    # no data for related items currently available
+    nil
+  end
+
+  def creator
+    # this is for the prelim 'by...'
+
+    return if content_object_data['creator_ses'].blank?
+
+    content_object_data['creator_ses'].first
+  end
+
+  def published_on
+    return if content_object_data['created_dt'].blank?
+
+    valid_date_string = validate_date(content_object_data['created_dt'].first)
+    return unless valid_date_string
+
+    valid_date_string.to_date
+  end
+
+  def publisher_string
+    # this is looking at a string (rather than SES id) for publisher in order to pick the correct graphic
+    # this feels quite fragile and should be given further thought
+
+    return if content_object_data['publisherSnapshot_s'].blank?
+
+    content_object_data['publisherSnapshot_s'].first
+  end
+
+  def session
+    return if content_object_data['session_t'].blank?
+
+    content_object_data['session_t'].first
+  end
+
   private
 
   def self.content_object_class(ses_id)
@@ -89,6 +132,16 @@ class ContentObject
     else
       'ContentObject'
     end
+  end
+
+  def validate_date(date)
+    begin
+      date_string = Date.parse(date)
+    rescue Date::Error
+      return nil
+    end
+
+    date_string
   end
 
 end

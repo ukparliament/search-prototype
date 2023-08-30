@@ -77,12 +77,6 @@ class Edm < ContentObject
     content_object_data['registeredInterest_b'].first == 'true' ? 'Yes' : 'No'
   end
 
-  def session
-    return if content_object_data['session_t'].blank?
-
-    content_object_data['session_t'].first
-  end
-
   def motion_text
     return if content_object_data['motionText_t'].blank?
 
