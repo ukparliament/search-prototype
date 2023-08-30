@@ -26,13 +26,13 @@ class ResearchBriefing < ContentObject
     true
   end
 
-  def published_by
-    # this is the publishing organisation and is to be used in the secondary attributes
-    # currently unused as we're showing a graphic as per the wireframes, & working with publisherSnapshot_s to do that
+  def published_on
+    return if content_object_data['created_dt'].blank?
 
-    return if content_object_data['publisher_ses'].blank?
+    valid_date_string = validate_date(content_object_data['created_dt'].first)
+    return unless valid_date_string
 
-    content_object_data['publisher_ses'].first
+    valid_date_string.to_date
   end
 
   def publisher_logo_partial

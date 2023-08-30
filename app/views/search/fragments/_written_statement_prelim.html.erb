@@ -2,12 +2,12 @@
   <div class="content-prelim-inner">
     <div class="content-prelim-text">
       An <%= object_link("#{object.object_name.titleize}", '/') %>
-      was made by <%= object_link("#{object.creator}", '/') %>
-      on <strong><%= object.published_on&.strftime(ApplicationHelper::DATE_DISPLAY_FORMAT) %></strong>
-      in the <%= object_link("#{object.publisher_string&.titleize}", '/') %>, on behalf of the
-      <%= object_link("#{object.publisher_string&.titleize}", '/') %>.
+      was made by <%= object_link("#{object.member}", '/') %>
+      on <strong><%= object.statement_date&.strftime(ApplicationHelper::DATE_DISPLAY_FORMAT) %></strong>
+      in the <%= object_link("#{object.published_by}", '/') %>, on behalf of the
+      <%= object_link("#{object.department}", '/') %>.
       <% if object.correction? %>
-        It has been made to correct a <%= object_link("previous statement", '/') %>.</strong>.
+        It has been made to correct a <%= object_link("previous statement", '/') %>.</strong>
       <% end %>
     </div>
   </div>

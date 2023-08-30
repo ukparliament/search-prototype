@@ -10,6 +10,7 @@ class ContentObjectsController < ApplicationController
 
     # We pass the received data to the object class
     @object = ContentObject.generate(object_data)
+    @page_title = @object.page_title
 
     # Pass the object data to the template
     render template: @object.template, :locals => { :object => @object }

@@ -93,13 +93,13 @@ class ContentObject
     content_object_data['creator_ses'].first
   end
 
-  def published_on
-    return if content_object_data['created_dt'].blank?
+  def published_by
+    # this is the publishing organisation and is to be used in the secondary attributes
+    # currently unused as we're showing a graphic as per the wireframes, & working with publisherSnapshot_s to do that
 
-    valid_date_string = validate_date(content_object_data['created_dt'].first)
-    return unless valid_date_string
+    return if content_object_data['publisher_ses'].blank?
 
-    valid_date_string.to_date
+    content_object_data['publisher_ses'].first
   end
 
   def publisher_string

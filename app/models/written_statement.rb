@@ -24,6 +24,27 @@ class WrittenStatement < ContentObject
     content_object_data['notes_t'].first
   end
 
+  def member
+    return if content_object_data['memberPrinted_t'].blank?
+
+    content_object_data['memberPrinted_t'].first
+  end
+
+  def department
+    return if content_object_data['department_ses'].blank?
+
+    content_object_data['department_ses'].first
+  end
+
+  def statement_date
+    return if content_object_data['date_dt'].blank?
+
+    valid_date_string = validate_date(content_object_data['date_dt'])
+    return unless valid_date_string
+
+    valid_date_string.to_date
+  end
+
   def correction?
     # TODO: based on what?
     true
