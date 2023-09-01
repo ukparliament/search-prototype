@@ -25,9 +25,15 @@ class WrittenStatement < ContentObject
   end
 
   def member
-    return if content_object_data['memberPrinted_t'].blank?
+    return if content_object_data['member_ses'].blank?
 
-    content_object_data['memberPrinted_t'].first
+    content_object_data['member_ses'].first
+  end
+
+  def member_party
+    return if content_object_data['memberParty_ses'].blank?
+
+    content_object_data['memberParty_ses'].first
   end
 
   def department

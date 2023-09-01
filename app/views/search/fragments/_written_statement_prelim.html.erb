@@ -1,8 +1,8 @@
 <div class="content-prelim-box">
   <div class="content-prelim-inner">
     <div class="content-prelim-text">
-      An <%= object_link("#{object.object_name.titleize}", '/') %>
-      was made by <%= object_link("#{object.member}", '/') %>
+      An <%= object_link("#{object.object_name}", '/') %>
+      was made by <%= object_link("#{object.member}", '/') %> (<%= object_link("#{object.member_party}", '/') %>)
       on <strong><%= object.statement_date&.strftime(ApplicationHelper::DATE_DISPLAY_FORMAT) %></strong>
       in the <%= object_link("#{object.published_by}", '/') %>, on behalf of the
       <%= object_link("#{object.department}", '/') %>.
