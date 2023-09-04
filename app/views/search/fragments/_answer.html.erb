@@ -1,5 +1,5 @@
-<div id="answer">
-	<%= content_tag( 'h2', 'Answer' ) %>
-	<%= content_tag( 'p', "Answered by #{link_to( answer['answeringMemberPrinted_t'].last, object_show_url( :object => @object_uri, :anchor => answer['answeringMember_ses'].first ) )} on #{answer['dateOfAnswer_dt'].last.to_date.strftime( ApplicationHelper::DATE_DISPLAY_FORMAT )}.".html_safe, :id => 'answering' ) %>
-	<%= content_tag( 'div', answer['answerText_t'].first.html_safe, :id => 'answer-text', :class => 'content' ) %>
-</div>
+<section id="text" class="content-section">
+  <div class="about-item">
+    <%= raw(object.answer_text) %>
+  </div>
+</section>

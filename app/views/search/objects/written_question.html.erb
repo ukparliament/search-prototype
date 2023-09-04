@@ -16,19 +16,28 @@
   <%= render 'search/fragments/written_question_prelim', object: object %>
 </section>
 
-<section id="text" class="content-section">
-  <div class="about-item">
-    <%= raw(object.content) %>
-  </div>
-</section>
+<%= render 'search/fragments/question', object: object %>
+<%= render 'search/fragments/answer', object: object if object.answered? || object.answered_was_holding? %>
+
+<!--Currently no data present for these categories of written question-->
+<%#= render 'search/fragments/holding_answer', object: object if object.holding? %>
+<%#= render 'search/fragments/corrected_answer', object: object if object.corrected? %>
 
 <section id="about" class="content-section grey">
   <h2 class="content-heading">About this <%= object.object_name %></h2>
-  <%= render 'search/fragments/reference', reference: object.reference unless object.reference.blank? %>
+  <%#= render 'search/fragments/uin', uin: object.uin unless object.uin.blank? %>
   <%= render 'search/fragments/session', session: object.session unless object.session.blank? %>
+  <%#= render 'search/fragments/procedure', procedure: object.procedure unless object.procedure.blank? %>
   <%= render 'search/fragments/related_items', related_items: object.related_items unless object.related_items.blank? %>
-  <%#= render 'search/fragments/attachment', attachment: object.attachment unless object.attachment.blank? %>
   <%#= render 'search/fragments/notes', notes: object.notes unless object.notes.blank? %>
+<!--  registered interest-->
+  <%#= render 'search/fragments/attachment', attachment: object.attachment unless object.attachment.blank? %>
+<!--  unless tabled or withdrawn-->
+<!--  grouped for answer-->
+<!--  transferred-->
+<!--  end-->
+<!--  failed oral-->
+<!--  unstarred-->
   <%= render 'search/fragments/pills', pills_heading: 'Subjects', pills: object.subjects unless object.subjects.blank? %>
   <%= render 'search/fragments/legislation', legislation: object.legislation unless object.legislation.blank? %>
   <%= render 'search/fragments/links', object: object if object.has_link? %>
