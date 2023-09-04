@@ -13,7 +13,7 @@
 <% end %>
 
 <section id="prelim">
-  <%= render 'search/fragments/written_question_prelim', object: object %>
+  <%= render object.prelim_partial, object: object %>
 </section>
 
 <%= render 'search/fragments/question', object: object %>
@@ -30,14 +30,14 @@
   <%#= render 'search/fragments/procedure', procedure: object.procedure unless object.procedure.blank? %>
   <%= render 'search/fragments/related_items', related_items: object.related_items unless object.related_items.blank? %>
   <%#= render 'search/fragments/notes', notes: object.notes unless object.notes.blank? %>
-<!--  registered interest-->
+  <!--  registered interest-->
   <%#= render 'search/fragments/attachment', attachment: object.attachment unless object.attachment.blank? %>
-<!--  unless tabled or withdrawn-->
-<!--  grouped for answer-->
-<!--  transferred-->
-<!--  end-->
-<!--  failed oral-->
-<!--  unstarred-->
+  <!--  unless tabled or withdrawn-->
+  <!--  grouped for answer-->
+  <!--  transferred-->
+  <!--  end-->
+  <!--  failed oral-->
+  <!--  unstarred-->
   <%= render 'search/fragments/pills', pills_heading: 'Subjects', pills: object.subjects unless object.subjects.blank? %>
   <%= render 'search/fragments/legislation', legislation: object.legislation unless object.legislation.blank? %>
   <%= render 'search/fragments/links', object: object if object.has_link? %>

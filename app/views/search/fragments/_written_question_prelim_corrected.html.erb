@@ -3,17 +3,17 @@
     <div class="content-prelim-text">
       A <%= object_link("#{object.object_name.titleize}", '/') %>
       was asked by <%= object_link("#{object.tabling_member}", '/') %>
-      on <strong><%= object.published_on&.strftime(ApplicationHelper::DATE_DISPLAY_FORMAT) %></strong>,
-      in the <%= object_link("#{object.published_by}", '/') %>.
+      on <strong><%= object.date_of_question&.strftime(ApplicationHelper::DATE_DISPLAY_FORMAT) %></strong>,
+      in the <%= object_link("#{object.department}", '/') %>.
       It was due for answer
       on <strong><%= object.date_of_answer&.strftime(ApplicationHelper::DATE_DISPLAY_FORMAT) %></strong>
       (named day).
       It was answered by <%= object_link("#{object.answering_member}", '/') %>
       on <strong><%= object.date_of_answer&.strftime(ApplicationHelper::DATE_DISPLAY_FORMAT) %></strong>
-      on behalf of <%= object_link("#{object.department}", '/') %>.
+      on behalf of <%= object_link("#{object.legislature}", '/') %>.
       The answer was corrected by <%= object_link("#{object.answering_member}", '/') %>
       on <strong><%= object.date_of_answer&.strftime(ApplicationHelper::DATE_DISPLAY_FORMAT) %></strong>
-      on behalf of <%= object_link("#{object.department}", '/') %>.
+      on behalf of <%= object_link("#{object.legislature}", '/') %>.
     </div>
   </div>
 </div>

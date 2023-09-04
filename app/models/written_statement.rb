@@ -36,12 +36,6 @@ class WrittenStatement < ContentObject
     content_object_data['memberParty_ses'].first
   end
 
-  def department
-    return if content_object_data['department_ses'].blank?
-
-    content_object_data['department_ses'].first
-  end
-
   def statement_date
     return if content_object_data['date_dt'].blank?
 

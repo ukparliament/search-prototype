@@ -45,9 +45,23 @@ class ContentObject
   end
 
   def legislation
+    nil
+    # no field for this currently
+    # return if content_object_data[''].blank?
+
+    # content_object_data['']
+  end
+
+  def department
+    return if content_object_data['department_ses'].blank?
+
+    content_object_data['department_ses'].first
+  end
+
+  def legislature
     return if content_object_data['legislature_ses'].blank?
 
-    content_object_data['legislature_ses']
+    content_object_data['legislature_ses'].first
   end
 
   def external_location_uri

@@ -15,53 +15,65 @@ class WrittenQuestion < ContentObject
   def state
     return if content_object_data['pqStatus_t'].blank?
 
-    state = content_object_data['pqStatus_t']
+    state = content_object_data['pqStatus_t'].first
   end
 
   def tabled?
-    state == 'tabled'
+    state == 'Tabled'
   end
 
   def answered?
-    state == 'answered'
+    state == 'Answered'
   end
 
   def holding?
-    state == 'holding'
+    state == 'Holding'
   end
 
   def answered_was_holding?
-    state == 'answered_was_holding'
+    state == 'Answered was holding'
   end
 
   def withdrawn?
-    state == 'withdrawn'
+    state == 'Withdrawn'
   end
 
   def corrected?
-    state == 'corrected'
+    state == 'Corrected'
   end
 
   def prelim_partial
-    return 'app/views/search/fragments/_written_question_prelim_tabled.html.erb' if tabled?
+    return '/search/fragments/written_question_prelim_tabled' if tabled?
 
-    return 'app/views/search/fragments/_written_question_prelim_answered.html.erb' if answered?
+    return '/search/fragments/written_question_prelim_answered' if answered?
 
-    return 'app/views/search/fragments/_written_question_prelim_holding.html.erb' if holding?
+    return '/search/fragments/_written_question_prelim_holding' if holding?
 
-    return 'app/views/search/fragments/_written_question_prelim_answered_was_holding.html.erb' if answered_was_holding?
+    return '/search/fragments/_written_question_prelim_answered_was_holding' if answered_was_holding?
 
-    return 'app/views/search/fragments/_written_question_prelim_withdrawn.html.erb' if withdrawn?
+    return '/search/fragments/_written_question_prelim_withdrawn' if withdrawn?
 
-    return 'app/views/search/fragments/_written_question_prelim_corrected.html.erb' if corrected?
+    return '/search/fragments/_written_question_prelim_corrected' if corrected?
 
     nil
+  end
+
+  def date_of_question
+    return if content_object_data['date_dt'].blank?
+
+    valid_date_string = validate_date(content_object_data['date_dt'].first)
+    return unless valid_date_string
+
+    valid_date_string.to_date
   end
 
   def date_of_answer
     return if content_object_data['dateOfAnswer_dt'].blank?
 
-    content_object_data['dateOfAnswer_dt'].first
+    valid_date_string = validate_date(content_object_data['dateOfAnswer_dt'].first)
+    return unless valid_date_string
+
+    valid_date_string.to_date
   end
 
   def tabling_member

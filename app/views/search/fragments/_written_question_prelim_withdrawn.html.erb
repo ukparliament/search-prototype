@@ -3,8 +3,8 @@
     <div class="content-prelim-text">
       A <%= object_link("#{object.object_name.titleize}", '/') %>
       was asked by <%= object_link("#{object.tabling_member}", '/') %>
-      on <strong><%= object.published_on&.strftime(ApplicationHelper::DATE_DISPLAY_FORMAT) %></strong>,
-      in the <%= object_link("#{object.published_by}", '/') %>.
+      on <strong><%= object.date_of_question&.strftime(ApplicationHelper::DATE_DISPLAY_FORMAT) %></strong>,
+      in the <%= object_link("#{object.department}", '/') %>.
       The asking Member has subsequently withdrawn this question and no longer needs to be answered by
       the <%= object_link("#{object.department}", '/') %>.
     </div>

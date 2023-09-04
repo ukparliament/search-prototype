@@ -4,7 +4,7 @@
       An <%= object_link("#{object.object_name}", '/') %>
       was made by <%= object_link("#{object.member}", '/') %> (<%= object_link("#{object.member_party}", '/') %>)
       on <strong><%= object.statement_date&.strftime(ApplicationHelper::DATE_DISPLAY_FORMAT) %></strong>
-      in the <%= object_link("#{object.published_by}", '/') %>, on behalf of the
+      in the <%= object_link("#{object.legislature}", '/') %>, on behalf of the
       <%= object_link("#{object.department}", '/') %>.
       <% if object.correction? %>
         It has been made to correct a <%= object_link("previous statement", '/') %>.</strong>

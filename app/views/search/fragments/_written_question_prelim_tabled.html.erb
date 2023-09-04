@@ -3,9 +3,9 @@
     <div class="content-prelim-text">
       A <%= object_link("#{object.object_name.titleize}", '/') %>
       was tabled by <%= object_link("#{object.tabling_member}", '/') %>
-      on <strong><%= object.published_on&.strftime(ApplicationHelper::DATE_DISPLAY_FORMAT) %></strong>,
-      in the <%= object_link("#{object.published_by}", '/') %> for the
-      <%= object_link("#{object.department}", '/') %>.
+      on <strong><%= object.date_of_question&.strftime(ApplicationHelper::DATE_DISPLAY_FORMAT) %></strong>,
+      in the <%= object_link("#{object.department}", '/') %> for the
+      <%= object_link("#{object.legislature}", '/') %>.
       It is due for answer
       on <strong><%= object.date_of_answer&.strftime(ApplicationHelper::DATE_DISPLAY_FORMAT) %></strong>
       (named day).
