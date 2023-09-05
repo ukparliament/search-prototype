@@ -107,4 +107,13 @@ class WrittenQuestion < ContentObject
 
     false
   end
+
+  def attachment
+    # this is the title of the attachment, rather than a link to the resource
+    # TODO: establish whether there can be multiple attachments
+
+    return if content_object_data['attachmentTitle_t'].blank?
+
+    content_object_data['attachmentTitle_t'].first
+  end
 end

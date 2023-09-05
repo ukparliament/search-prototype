@@ -46,7 +46,15 @@ class WrittenStatement < ContentObject
   end
 
   def correction?
-    # TODO: based on what?
-    true
+    # there isn't really a way to know this, apparently?
+    false
+  end
+
+  def corrected?
+    return if content_object_data['correctedWmsMc_b'].blank?
+
+    return true if content_object_data['correctedWmsMc_b'] == 'true'
+
+    false
   end
 end

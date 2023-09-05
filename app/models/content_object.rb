@@ -64,6 +64,12 @@ class ContentObject
     content_object_data['legislature_ses'].first
   end
 
+  def registered_interest_declared
+    return if content_object_data['registeredInterest_b'].blank?
+
+    content_object_data['registeredInterest_b'].first == 'true' ? 'Yes' : 'No'
+  end
+
   def external_location_uri
     return if content_object_data['externalLocation_uri'].blank?
 
@@ -94,35 +100,19 @@ class ContentObject
     !display_link.blank?
   end
 
+  def notes
+    return if content_object_data['searcherNote_t'].blank?
+
+    content_object_data['searcherNote_t']
+  end
+
   def related_items
-    # no data for related items currently available
-    nil
-  end
+    # no test data for related items currently available
+    # based on provided information, this will return one or more URIs of related item object pages
 
-  def creator
-    # this is for the prelim 'by...'
+    return if content_object_data['relation_t'].blank?
 
-    return if content_object_data['creator_ses'].blank?
-
-    content_object_data['creator_ses'].first
-  end
-
-  def published_by
-    # this is the publishing organisation and is to be used in the secondary attributes
-    # currently unused as we're showing a graphic as per the wireframes, & working with publisherSnapshot_s to do that
-
-    return if content_object_data['publisher_ses'].blank?
-
-    content_object_data['publisher_ses'].first
-  end
-
-  def publisher_string
-    # this is looking at a string (rather than SES id) for publisher in order to pick the correct graphic
-    # this feels quite fragile and should be given further thought
-
-    return if content_object_data['publisherSnapshot_s'].blank?
-
-    content_object_data['publisherSnapshot_s'].first
+    content_object_data['relation_t']
   end
 
   def session

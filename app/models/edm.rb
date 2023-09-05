@@ -72,12 +72,6 @@ class Edm < ContentObject
     content_object_data['signedMember_ses']
   end
 
-  def registered_interest_declared
-    return if content_object_data['registeredInterest_b'].blank?
-
-    content_object_data['registeredInterest_b'].first == 'true' ? 'Yes' : 'No'
-  end
-
   def motion_text
     return if content_object_data['motionText_t'].blank?
 

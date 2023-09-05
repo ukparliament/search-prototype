@@ -18,6 +18,32 @@ class ResearchBriefing < ContentObject
     CGI::unescapeHTML(content_object_data['htmlsummary_t'].first)
   end
 
+  def creator
+    # this is for the prelim 'by...'
+
+    return if content_object_data['creator_ses'].blank?
+
+    content_object_data['creator_ses'].first
+  end
+
+  def published_by
+    # this is the publishing organisation and is to be used in the secondary attributes
+    # currently unused as we're showing a graphic as per the wireframes, & working with publisherSnapshot_s to do that
+
+    return if content_object_data['publisher_ses'].blank?
+
+    content_object_data['publisher_ses'].first
+  end
+
+  def publisher_string
+    # this is looking at a string (rather than SES id) for publisher in order to pick the correct graphic
+    # this feels quite fragile and should be given further thought
+
+    return if content_object_data['publisherSnapshot_s'].blank?
+
+    content_object_data['publisherSnapshot_s'].first
+  end
+
   def published?
     return if content_object_data['published_b'].blank?
 
