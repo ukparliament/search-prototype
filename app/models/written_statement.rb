@@ -45,11 +45,6 @@ class WrittenStatement < ContentObject
     valid_date_string.to_date
   end
 
-  def correction?
-    # there isn't really a way to know this, apparently?
-    false
-  end
-
   def corrected?
     return if content_object_data['correctedWmsMc_b'].blank?
 
