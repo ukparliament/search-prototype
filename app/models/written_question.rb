@@ -58,6 +58,11 @@ class WrittenQuestion < ContentObject
     nil
   end
 
+  def uin
+    # return if content_object_data['date_dt'].blank?
+    nil
+  end
+
   def date_of_question
     return if content_object_data['date_dt'].blank?
 
