@@ -12,24 +12,10 @@ class ResearchBriefing < ContentObject
     "research briefing"
   end
 
-  def content
-    return if content_object_data['content_t'].blank?
-
-    content_object_data['content_t'].first
-  end
-
   def html_summary
     return if content_object_data['htmlsummary_t'].blank?
 
     CGI::unescapeHTML(content_object_data['htmlsummary_t'].first)
-  end
-
-  def published?
-    return if content_object_data['published_b'].blank?
-
-    return false unless content_object_data['published_b'].first == 'true'
-
-    true
   end
 
   def creator
@@ -58,12 +44,12 @@ class ResearchBriefing < ContentObject
     content_object_data['publisherSnapshot_s'].first
   end
 
-  def publisher_logo_partial
-    # TODO: validate publisher names against accepted list?
+  def published?
+    return if content_object_data['published_b'].blank?
 
-    return unless publisher_string
+    return false unless content_object_data['published_b'].first == 'true'
 
-    "/search/logo_svgs/#{publisher_string.parameterize}"
+    true
   end
 
   def published_on
@@ -73,6 +59,14 @@ class ResearchBriefing < ContentObject
     return unless valid_date_string
 
     valid_date_string.to_date
+  end
+
+  def publisher_logo_partial
+    # TODO: validate publisher names against accepted list?
+
+    return unless publisher_string
+
+    "/search/logo_svgs/#{publisher_string.parameterize}"
   end
 
   def updated_on
@@ -89,17 +83,4 @@ class ResearchBriefing < ContentObject
 
     external_location_uri.blank? ? internal_location_uri : external_location_uri
   end
-
-  private
-
-  def validate_date(date)
-    begin
-      date_string = Date.parse(date)
-    rescue Date::Error
-      return nil
-    end
-
-    date_string
-  end
-
 end

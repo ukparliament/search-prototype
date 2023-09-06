@@ -19,6 +19,12 @@ class ContentObject
     content_object_data['title_t']
   end
 
+  def content
+    return if content_object_data['content_t'].blank?
+
+    CGI::unescapeHTML(content_object_data['content_t'].first)
+  end
+
   def reference
     return if content_object_data['identifier_t'].blank?
 
@@ -39,9 +45,29 @@ class ContentObject
   end
 
   def legislation
+    nil
+    # no field for this currently
+    # return if content_object_data[''].blank?
+
+    # content_object_data['']
+  end
+
+  def department
+    return if content_object_data['department_ses'].blank?
+
+    content_object_data['department_ses'].first
+  end
+
+  def legislature
     return if content_object_data['legislature_ses'].blank?
 
-    content_object_data['legislature_ses']
+    content_object_data['legislature_ses'].first
+  end
+
+  def registered_interest_declared
+    return if content_object_data['registeredInterest_b'].blank?
+
+    content_object_data['registeredInterest_b'].first == 'true' ? 'Yes' : 'No'
   end
 
   def external_location_uri
@@ -74,6 +100,27 @@ class ContentObject
     !display_link.blank?
   end
 
+  def notes
+    return if content_object_data['searcherNote_t'].blank?
+
+    content_object_data['searcherNote_t']
+  end
+
+  def related_items
+    # no test data for related items currently available
+    # based on provided information, this will return one or more URIs of related item object pages
+
+    return if content_object_data['relation_t'].blank?
+
+    content_object_data['relation_t']
+  end
+
+  def session
+    return if content_object_data['session_t'].blank?
+
+    content_object_data['session_t'].first
+  end
+
   private
 
   def self.content_object_class(ses_id)
@@ -89,6 +136,16 @@ class ContentObject
     else
       'ContentObject'
     end
+  end
+
+  def validate_date(date)
+    begin
+      date_string = Date.parse(date)
+    rescue Date::Error
+      return nil
+    end
+
+    date_string
   end
 
 end

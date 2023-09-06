@@ -1,1 +1,15 @@
-<%= content_tag( 'p', "A #{link_to( 'written statement', object_show_url( :object => @object_uri, :anchor => @content_type ) )} made by #{link_to( written_statement_prelim['memberPrinted_s'].first, object_show_url( :object => @object_uri, :anchor => written_statement_prelim['member_ses'].first ) )} on #{written_statement_prelim['date_dt'].to_date.strftime( ApplicationHelper::DATE_DISPLAY_FORMAT )}, on behalf of #{link_to( written_statement_prelim['departmentPrinted_s'].first, object_show_url( :object => @object_uri, :anchor => written_statement_prelim['department_ses'].first ) )}.".html_safe ) %>
+<div class="content-prelim-box">
+  <div class="content-prelim-inner">
+    <div class="content-prelim-text">
+      An <%= object_link("#{object.object_name}", '/') %>
+      made by <%= object_link("#{object.member}", '/') %> (<%= object_link("#{object.member_party}", '/') %>)
+      on <strong><%= object.statement_date&.strftime(ApplicationHelper::DATE_DISPLAY_FORMAT) %></strong>
+      in the <%= object_link("#{object.legislature}", '/') %>, on behalf of the
+      <%= object_link("#{object.department}", '/') %>.
+      <% if object.corrected? %>
+        It has since been corrected.
+      <% end %>
+    </div>
+  </div>
+</div>
+

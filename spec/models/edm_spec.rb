@@ -311,7 +311,7 @@ RSpec.describe Edm, type: :model do
       end
     end
 
-    context 'where all data is present' do
+    context 'where there is more than one amendment' do
       let!(:edm) { Edm.new({
                              'amendmentText_t' => ['first item', 'second item'],
                              'amendment_numberOfSignatures_s' => [20, 10],
@@ -319,6 +319,21 @@ RSpec.describe Edm, type: :model do
                              'amendment_primarySponsorParty_ses' => [12345, 54321],
                              'identifier_t' => ['main id', 'amendment 1 id', 'amendment 2 id'],
                              'amendment_dateTabled_dt' => [DateTime.commercial(2022), DateTime.commercial(2021)],
+                           }) }
+
+      it 'returns nil' do
+        expect(edm.amendments).to be_nil
+      end
+    end
+
+    context 'where all data is present for one amendment' do
+      let!(:edm) { Edm.new({
+                             'amendmentText_t' => ['first item'],
+                             'amendment_numberOfSignatures_s' => [20],
+                             'amendment_primarySponsorPrinted_t' => ['sponsor one'],
+                             'amendment_primarySponsorParty_ses' => [12345],
+                             'identifier_t' => ['main id', 'amendment 1 id'],
+                             'amendment_dateTabled_dt' => [DateTime.commercial(2022)],
                            }) }
 
       it 'returns all data grouped by amendment' do
@@ -331,15 +346,6 @@ RSpec.describe Edm, type: :model do
                                        primary_sponsor_party: 12345,
                                        reference: 'amendment 1 id',
                                        text: 'first item'
-                                     },
-                                     {
-                                       index: 1,
-                                       date_tabled: DateTime.commercial(2021),
-                                       number_of_signatures: 10,
-                                       primary_sponsor: 'sponsor two',
-                                       primary_sponsor_party: 54321,
-                                       reference: 'amendment 2 id',
-                                       text: 'second item'
                                      }
                                     ]
                                   )

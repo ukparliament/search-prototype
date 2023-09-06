@@ -1,0 +1,15 @@
+<div class="content-prelim-box">
+  <div class="content-prelim-inner">
+    <div class="content-prelim-text">
+      A <%= object_link("#{object.object_name.titleize}", '/') %>
+      was tabled by <%= object_link("#{object.tabling_member}", '/') %>
+      on <strong><%= object.date_of_question&.strftime(ApplicationHelper::DATE_DISPLAY_FORMAT) %></strong>,
+      in the <%= object_link("#{object.department}", '/') %> for the
+      <%= object_link("#{object.legislature}", '/') %>.
+      It is due for answer
+      on <strong><%= object.date_of_answer&.strftime(ApplicationHelper::DATE_DISPLAY_FORMAT) %></strong>
+      (named day).
+    </div>
+  </div>
+</div>
+

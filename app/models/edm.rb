@@ -13,13 +13,12 @@ class Edm < ContentObject
   end
 
   def amendments
-    # number of signatures won't necessarily match - need to confirm how to handle missing data
-    # initial suggestion is that where missing, use the previous one (as that seems to be why they're missing)
+    # amendments fields do not include duplicates, which means the data can not be reliably used
+    # to avoid misrepresentation, we will not show amendments where there are more than one
+    # this can be changed when the underlying data issue is resolved
 
     # Title is the title of the motion itself, with 'Amendment N' on the front
     # Reference is taken from identifier_t, after removing the first item
-
-    # TODO: genericise this approach
 
     return if content_object_data['amendmentText_t'].blank?
     return if content_object_data['amendment_numberOfSignatures_s'].blank?
@@ -27,6 +26,8 @@ class Edm < ContentObject
     return if content_object_data['amendment_primarySponsorParty_ses'].blank?
     return if content_object_data['identifier_t'].blank?
     return if content_object_data['amendment_dateTabled_dt'].blank?
+
+    return if content_object_data['amendmentText_t'].size > 1
 
     original_hash = {
       text: content_object_data['amendmentText_t'],
@@ -69,18 +70,6 @@ class Edm < ContentObject
     return if content_object_data['signedMember_ses'].blank?
 
     content_object_data['signedMember_ses']
-  end
-
-  def registered_interest_declared
-    return if content_object_data['registeredInterest_b'].blank?
-
-    content_object_data['registeredInterest_b'].first == 'true' ? 'Yes' : 'No'
-  end
-
-  def session
-    return if content_object_data['session_t'].blank?
-
-    content_object_data['session_t'].first
   end
 
   def motion_text

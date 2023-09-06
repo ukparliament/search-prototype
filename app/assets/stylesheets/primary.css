@@ -23,7 +23,7 @@ main {
     line-height: 28px;
 }
 
-/*nav bar*/
+/* Main nav bar */
 .nav-width-container {
     max-width: 100%;
     background: black;
@@ -53,8 +53,8 @@ main {
                 .div.nav-logo {
                     width: 185.92px;
                     height: 46px;
-                    left: 0px;
-                    top: 0px;
+                    left: 0;
+                    top: 0;
                     background: white
                 }
             }
@@ -88,6 +88,8 @@ main {
     }
 }
 
+/* Object views */
+/* Object view preliminary text */
 .content-prelim-box {
     width: 100%;
     box-sizing: border-box;
@@ -112,6 +114,7 @@ main {
     }
 }
 
+/* Object view custom lists (e.g. amendments) */
 .content-list {
     flex-direction: column;
     justify-content: flex-start;
@@ -121,6 +124,8 @@ main {
     box-sizing: border-box;
 }
 
+/* Object view sections */
+/* TODO: some classes could probably be renamed */
 .content-section {
     &.grey {
         background: #EBEBEB;
@@ -189,12 +194,14 @@ main {
     }
 }
 
+/* Link formatting */
 a {
     color: #2B57AB;
     font-weight: 350;
     text-decoration: underline;
 }
 
+/* Headings */
 h1, h2, h3 {
     color: #181818;
     font-weight: 700;
@@ -217,7 +224,8 @@ h3.content-heading {
     margin-bottom: 0;
 }
 
-/*Remove all list styling*/
+/* Lists */
+/* Remove all list styling */
 ul {
     padding: 0;
     margin: 0;
@@ -227,6 +235,7 @@ li {
     list-style-type: none;
 }
 
+/* Back to top & any other on-page buttons */
 .button-container {
     margin: 32px;
     justify-content: center;
@@ -244,10 +253,10 @@ li {
     padding: 8px 16px;
 }
 
-details.solr-data {
-    padding-top: 1em;
-}
-
+/* Reactivity */
+/* Mobile View */
+/* Below 360px width, reduce padding & margins and hide the nav menu */
+/* TODO: add nav menu to show in its place */
 @media only screen and (max-width: 360px) {
 
     header {
@@ -277,7 +286,39 @@ details.solr-data {
 
 }
 
-@media only screen and (min-width: 1280px) {
+/* Between 360px and 1200px widths, use larger margins & padding but use mobile menu */
+/* Wireframes don't cover these screen sizes so this may need some adjustments later */
+@media only screen and (min-width: 360px) and (max-width: 1200px) {
+
+    header {
+        padding: 16px 32px 0 32px;
+    }
+
+    /*nav bar*/
+    .nav-container {
+        max-width: 1200px;
+
+        .nav-bar {
+            padding: 24px 32px;
+
+            .nav-item-container {
+                display: none;
+            }
+        }
+    }
+
+    main {
+        max-width: 1200px;
+    }
+
+    section {
+        margin: 16px 32px
+    }
+
+}
+
+/* Above 1200px width, show the nav menu in full desktop mode */
+@media only screen and (min-width: 1200px) {
 
     header {
         padding: 16px 32px 0 32px;
