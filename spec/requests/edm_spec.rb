@@ -32,16 +32,22 @@ RSpec.describe 'ContentObjects', type: :request do
           expect(CGI::unescapeHTML(response.body)).to include(edm_instance.primary_sponsor)
           expect(CGI::unescapeHTML(response.body)).to include(edm_instance.display_link)
 
-          edm_instance.other_supporters.each do |supporter|
-            expect(CGI::unescapeHTML(response.body)).to include(supporter.to_s)
+          unless edm_instance.other_supporters.blank?
+            edm_instance.other_supporters.each do |supporter|
+              expect(CGI::unescapeHTML(response.body)).to include(supporter.to_s)
+            end
           end
 
-          edm_instance.subjects.each do |subject|
-            expect(CGI::unescapeHTML(response.body)).to include(subject.to_s)
+          unless edm_instance.subjects.blank?
+            edm_instance.subjects.each do |subject|
+              expect(CGI::unescapeHTML(response.body)).to include(subject.to_s)
+            end
           end
 
-          edm_instance.legislation.each do |legislation|
-            expect(CGI::unescapeHTML(response.body)).to include(legislation.to_s)
+          unless edm_instance.legislation.blank?
+            edm_instance.legislation.each do |legislation|
+              expect(CGI::unescapeHTML(response.body)).to include(legislation.to_s)
+            end
           end
         end
       end
