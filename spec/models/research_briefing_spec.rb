@@ -39,6 +39,7 @@ RSpec.describe ResearchBriefing, type: :model do
   end
 
   describe 'html_summary' do
+    # TODO: test html handling
     context 'where there is no data' do
       it 'returns nil' do
         expect(research_briefing.html_summary).to be_nil

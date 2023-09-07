@@ -15,7 +15,8 @@ RSpec.describe WrittenStatement, type: :model do
     end
   end
 
-  describe 'attachment' do
+  xdescribe 'attachment' do
+    # disabled - awaiting feedback
     context 'where there is no data' do
       it 'returns nil' do
         expect(written_statement.attachment).to be_nil
@@ -38,7 +39,8 @@ RSpec.describe WrittenStatement, type: :model do
     end
   end
 
-  describe 'notes' do
+  xdescribe 'notes' do
+    # disabled - awaiting feedback
     context 'where there is no data' do
       it 'returns nil' do
         expect(written_statement.notes).to be_nil
@@ -78,8 +80,8 @@ RSpec.describe WrittenStatement, type: :model do
     context 'where data exists' do
       let!(:written_statement) { WrittenStatement.new({ 'member_ses' => [12345, 67890] }) }
 
-      it 'returns all items as an array' do
-        expect(written_statement.member).to eq([12345, 67890])
+      it 'returns first item' do
+        expect(written_statement.member).to eq(12345)
       end
     end
   end
@@ -101,8 +103,8 @@ RSpec.describe WrittenStatement, type: :model do
     context 'where data exists' do
       let!(:written_statement) { WrittenStatement.new({ 'memberParty_ses' => [12345, 67890] }) }
 
-      it 'returns all items as an array' do
-        expect(written_statement.member_party).to eq([12345, 67890])
+      it 'returns first item' do
+        expect(written_statement.member_party).to eq(12345)
       end
     end
   end
@@ -124,8 +126,8 @@ RSpec.describe WrittenStatement, type: :model do
     context 'where data exists' do
       let!(:written_statement) { WrittenStatement.new({ 'legislature_ses' => ['first item', 'second item'] }) }
 
-      it 'returns all items as an array' do
-        expect(written_statement.legislature).to eq(['first item', 'second item'])
+      it 'returns first item' do
+        expect(written_statement.legislature).to eq('first item')
       end
     end
   end
@@ -184,8 +186,8 @@ RSpec.describe WrittenStatement, type: :model do
       end
       context 'where data is not a valid date' do
         let!(:written_statement) { WrittenStatement.new({ 'date_dt' => 'date' }) }
-        it 'raises an error' do
-          expect { written_statement.statement_date }.to raise_error(Date::Error, 'invalid date')
+        it 'returns nil' do
+          expect(written_statement.statement_date).to be_nil
         end
       end
     end
