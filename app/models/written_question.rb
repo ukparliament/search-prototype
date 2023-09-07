@@ -15,9 +15,11 @@ class WrittenQuestion < ContentObject
   def state
     return if content_object_data['pqStatus_t'].blank?
 
-    state = content_object_data['pqStatus_t'].first
+    content_object_data['pqStatus_t'].first
   end
 
+  # Note that with the exception of 'Answered' these are guesses until
+  # the state names can be confirmed
   def tabled?
     state == 'Tabled'
   end
@@ -47,13 +49,13 @@ class WrittenQuestion < ContentObject
 
     return '/search/fragments/written_question_prelim_answered' if answered?
 
-    return '/search/fragments/_written_question_prelim_holding' if holding?
+    return '/search/fragments/written_question_prelim_holding' if holding?
 
-    return '/search/fragments/_written_question_prelim_answered_was_holding' if answered_was_holding?
+    return '/search/fragments/written_question_prelim_answered_was_holding' if answered_was_holding?
 
-    return '/search/fragments/_written_question_prelim_withdrawn' if withdrawn?
+    return '/search/fragments/written_question_prelim_withdrawn' if withdrawn?
 
-    return '/search/fragments/_written_question_prelim_corrected' if corrected?
+    return '/search/fragments/written_question_prelim_corrected' if corrected?
 
     nil
   end
@@ -66,7 +68,7 @@ class WrittenQuestion < ContentObject
   def date_of_question
     return if content_object_data['date_dt'].blank?
 
-    valid_date_string = validate_date(content_object_data['date_dt'].first)
+    valid_date_string = validate_date(content_object_data['date_dt'])
     return unless valid_date_string
 
     valid_date_string.to_date

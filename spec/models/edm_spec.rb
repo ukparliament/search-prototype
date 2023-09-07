@@ -174,7 +174,7 @@ RSpec.describe Edm, type: :model do
     context 'where data exists' do
       context 'where data is a valid date' do
         let!(:edm) { Edm.new({ 'dateTabled_dt' => [Date.today, Date.yesterday] }) }
-        it 'returns the first item' do
+        it 'returns a date object for the first item' do
           expect(edm.date_tabled).to eq(Date.today)
         end
       end
