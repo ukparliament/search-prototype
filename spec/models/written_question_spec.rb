@@ -38,127 +38,133 @@ RSpec.describe WrittenQuestion, type: :model do
     end
   end
 
-  def tabled?
+  describe 'tabled?' do
+    let!(:written_question) { WrittenQuestion.new({ 'pqStatus_t' => '' }) }
     context 'where state is tabled' do
-      let!(:written_question) { WrittenQuestion.new({ 'pqStatus_t' => 'Tabled' }) }
       it 'returns true' do
+        allow(written_question).to receive(:state).and_return('Tabled')
         expect(written_question.tabled?).to eq(true)
       end
     end
     context 'where state is missing' do
-      let!(:written_question) { WrittenQuestion.new({ 'pqStatus_t' => '' }) }
       it 'returns false' do
+        allow(written_question).to receive(:state).and_return(nil)
         expect(written_question.tabled?).to eq(false)
       end
     end
     context 'where state is present but not tabled' do
-      let!(:written_question) { WrittenQuestion.new({ 'pqStatus_t' => 'Answered' }) }
       it 'returns false' do
+        allow(written_question).to receive(:state).and_return('Answered')
         expect(written_question.tabled?).to eq(false)
       end
     end
   end
 
-  def answered?
+  describe 'answered?' do
+    let!(:written_question) { WrittenQuestion.new({ 'pqStatus_t' => '' }) }
     context 'where state is tabled' do
-      let!(:written_question) { WrittenQuestion.new({ 'pqStatus_t' => 'Answered' }) }
       it 'returns true' do
+        allow(written_question).to receive(:state).and_return('Answered')
         expect(written_question.answered?).to eq(true)
       end
     end
     context 'where state is missing' do
-      let!(:written_question) { WrittenQuestion.new({ 'pqStatus_t' => '' }) }
       it 'returns false' do
+        allow(written_question).to receive(:state).and_return(nil)
         expect(written_question.answered?).to eq(false)
       end
     end
     context 'where state is present but not answered' do
-      let!(:written_question) { WrittenQuestion.new({ 'pqStatus_t' => 'Holding' }) }
       it 'returns false' do
+        allow(written_question).to receive(:state).and_return('Holding')
         expect(written_question.answered?).to eq(false)
       end
     end
   end
 
-  def holding?
+  describe 'holding?' do
+    let!(:written_question) { WrittenQuestion.new({ 'pqStatus_t' => '' }) }
     context 'where state is tabled' do
-      let!(:written_question) { WrittenQuestion.new({ 'pqStatus_t' => 'Holding' }) }
       it 'returns true' do
+        allow(written_question).to receive(:state).and_return('Holding')
         expect(written_question.holding?).to eq(true)
       end
     end
     context 'where state is missing' do
-      let!(:written_question) { WrittenQuestion.new({ 'pqStatus_t' => '' }) }
       it 'returns false' do
+        allow(written_question).to receive(:state).and_return(nil)
         expect(written_question.holding?).to eq(false)
       end
     end
     context 'where state is present but not holding' do
-      let!(:written_question) { WrittenQuestion.new({ 'pqStatus_t' => 'Answered Was Holding' }) }
       it 'returns false' do
+        allow(written_question).to receive(:state).and_return('Answered was holding')
         expect(written_question.holding?).to eq(false)
       end
     end
   end
 
-  def answered_was_holding?
+  describe 'answered_was_holding?' do
     context 'where state is tabled' do
-      let!(:written_question) { WrittenQuestion.new({ 'pqStatus_t' => 'Answered Was Holding' }) }
+      let!(:written_question) { WrittenQuestion.new({ 'pqStatus_t' => '' }) }
       it 'returns true' do
+        allow(written_question).to receive(:state).and_return('Answered was holding')
         expect(written_question.answered_was_holding?).to eq(true)
       end
     end
     context 'where state is missing' do
-      let!(:written_question) { WrittenQuestion.new({ 'pqStatus_t' => '' }) }
       it 'returns false' do
+        allow(written_question).to receive(:state).and_return(nil)
         expect(written_question.answered_was_holding?).to eq(false)
       end
     end
     context 'where state is present but not answered_was_holding' do
-      let!(:written_question) { WrittenQuestion.new({ 'pqStatus_t' => 'Withdrawn' }) }
       it 'returns false' do
+        allow(written_question).to receive(:state).and_return('Withdrawn')
         expect(written_question.answered_was_holding?).to eq(false)
       end
     end
   end
 
-  def withdrawn?
+  describe 'withdrawn?' do
     context 'where state is tabled' do
-      let!(:written_question) { WrittenQuestion.new({ 'pqStatus_t' => 'Withdrawn' }) }
+      let!(:written_question) { WrittenQuestion.new({ 'pqStatus_t' => '' }) }
       it 'returns true' do
+        allow(written_question).to receive(:state).and_return('Withdrawn')
         expect(written_question.withdrawn?).to eq(true)
       end
     end
     context 'where state is missing' do
-      let!(:written_question) { WrittenQuestion.new({ 'pqStatus_t' => '' }) }
       it 'returns false' do
+        allow(written_question).to receive(:state).and_return(nil)
         expect(written_question.withdrawn?).to eq(false)
       end
     end
     context 'where state is present but not withdrawn' do
-      let!(:written_question) { WrittenQuestion.new({ 'pqStatus_t' => 'Corrected' }) }
       it 'returns false' do
+        allow(written_question).to receive(:state).and_return('Corrected')
         expect(written_question.withdrawn?).to eq(false)
       end
     end
   end
 
-  def corrected?
+  describe 'corrected?' do
     context 'where state is tabled' do
-      let!(:written_question) { WrittenQuestion.new({ 'pqStatus_t' => 'Corrected' }) }
+      let!(:written_question) { WrittenQuestion.new({ 'pqStatus_t' => '' }) }
       it 'returns true' do
+        allow(written_question).to receive(:state).and_return('Corrected')
         expect(written_question.corrected?).to eq(true)
       end
     end
     context 'where state is missing' do
-      let!(:written_question) { WrittenQuestion.new({ 'pqStatus_t' => '' }) }
       it 'returns false' do
+        allow(written_question).to receive(:state).and_return(nil)
         expect(written_question.corrected?).to eq(false)
       end
     end
     context 'where state is present but not corrected' do
-      let!(:written_question) { WrittenQuestion.new({ 'pqStatus_t' => 'Tabled' }) }
       it 'returns false' do
+        allow(written_question).to receive(:state).and_return('Tabled')
         expect(written_question.corrected?).to eq(false)
       end
     end
