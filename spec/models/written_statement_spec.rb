@@ -163,6 +163,29 @@ RSpec.describe WrittenStatement, type: :model do
     end
   end
 
+  describe 'department' do
+    context 'where there is no data' do
+      it 'returns nil' do
+        expect(written_statement.department).to be_nil
+      end
+    end
+
+    context 'where there is an empty array' do
+      let!(:written_statement) { WrittenStatement.new({ 'department_ses' => [] }) }
+      it 'returns nil' do
+        expect(written_statement.department).to be_nil
+      end
+    end
+
+    context 'where data exists' do
+      let!(:written_statement) { WrittenStatement.new({ 'department_ses' => [12345, 67890] }) }
+
+      it 'returns first item' do
+        expect(written_statement.department).to eq(12345)
+      end
+    end
+  end
+
   describe 'statement_date' do
     context 'where there is no data' do
       it 'returns nil' do

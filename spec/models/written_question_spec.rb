@@ -170,6 +170,29 @@ RSpec.describe WrittenQuestion, type: :model do
     end
   end
 
+  describe 'department' do
+    context 'where there is no data' do
+      it 'returns nil' do
+        expect(written_question.department).to be_nil
+      end
+    end
+
+    context 'where there is an empty array' do
+      let!(:written_question) { WrittenQuestion.new({ 'department_ses' => [] }) }
+      it 'returns nil' do
+        expect(written_question.department).to be_nil
+      end
+    end
+
+    context 'where data exists' do
+      let!(:written_question) { WrittenQuestion.new({ 'department_ses' => [12345, 67890] }) }
+
+      it 'returns first item' do
+        expect(written_question.department).to eq(12345)
+      end
+    end
+  end
+
   describe 'prelim_partial' do
     let!(:written_question) { WrittenQuestion.new({ 'pqStatus_t' => '' }) }
     context 'where tabled' do
