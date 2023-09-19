@@ -14,7 +14,7 @@
       <img src="./assets/0.12.3/loading.gif" alt="loading"/>
     </div>
     <div id="wrapper" class="hide">
-      <div class="timestamp">Generated <abbr class="timeago" title="2023-09-07T15:46:44+01:00">2023-09-07T15:46:44+01:00</abbr></div>
+      <div class="timestamp">Generated <abbr class="timeago" title="2023-09-19T16:32:43+01:00">2023-09-19T16:32:43+01:00</abbr></div>
       <ul class="group_tabs"></ul>
 
       <div id="content">
@@ -23,14 +23,14 @@
     <span class="group_name">All Files</span>
     (<span class="covered_percent">
       <span class="red">
-  48.84%
+  59.83%
 </span>
 
      </span>
      covered at
      <span class="covered_strength">
-       <span class="red">
-         0.5
+       <span class="green">
+         1.15
        </span>
     </span> hits/line
     )
@@ -43,11 +43,11 @@
   </div>
 
   <div class="t-line-summary">
-    <b>344</b> relevant lines,
-    <span class="green"><b>168</b> lines covered</span> and
-    <span class="red"><b>176</b> lines missed. </span>
+    <b>356</b> relevant lines,
+    <span class="green"><b>213</b> lines covered</span> and
+    <span class="red"><b>143</b> lines missed. </span>
     (<span class="red">
-  48.84%
+  59.83%
 </span>
 )
   </div>
@@ -138,12 +138,12 @@
         
           <tr class="t-file">
             <td class="strong t-file__name"><a href="#905b6e9b10254dc0d6b80aa4b294aa33db207cc2" class="src_link" title="app/helpers/application_helper.rb">app/helpers/application_helper.rb</a></td>
-            <td class="green strong cell--number t-file__coverage">100.00 %</td>
-            <td class="cell--number">11</td>
+            <td class="red strong cell--number t-file__coverage">60.00 %</td>
+            <td class="cell--number">12</td>
             <td class="cell--number">5</td>
-            <td class="cell--number">5</td>
-            <td class="cell--number">0</td>
-            <td class="cell--number">1.60</td>
+            <td class="cell--number">3</td>
+            <td class="cell--number">2</td>
+            <td class="cell--number">0.60</td>
             
           </tr>
         
@@ -226,12 +226,12 @@
         
           <tr class="t-file">
             <td class="strong t-file__name"><a href="#a8074314ec42e9d18f2a1b7a8a8b6aa16ff9617f" class="src_link" title="app/models/content_object.rb">app/models/content_object.rb</a></td>
-            <td class="red strong cell--number t-file__coverage">36.92 %</td>
+            <td class="red strong cell--number t-file__coverage">46.15 %</td>
             <td class="cell--number">151</td>
             <td class="cell--number">65</td>
-            <td class="cell--number">24</td>
-            <td class="cell--number">41</td>
-            <td class="cell--number">0.37</td>
+            <td class="cell--number">30</td>
+            <td class="cell--number">35</td>
+            <td class="cell--number">1.43</td>
             
           </tr>
         
@@ -270,12 +270,12 @@
         
           <tr class="t-file">
             <td class="strong t-file__name"><a href="#66805d5eb74de111a35e6e0ea6b17d9030c3a53e" class="src_link" title="app/models/written_question.rb">app/models/written_question.rb</a></td>
-            <td class="red strong cell--number t-file__coverage">35.59 %</td>
-            <td class="cell--number">126</td>
-            <td class="cell--number">59</td>
-            <td class="cell--number">21</td>
-            <td class="cell--number">38</td>
-            <td class="cell--number">0.36</td>
+            <td class="yellow strong cell--number t-file__coverage">87.32 %</td>
+            <td class="cell--number">150</td>
+            <td class="cell--number">71</td>
+            <td class="cell--number">62</td>
+            <td class="cell--number">9</td>
+            <td class="cell--number">2.75</td>
             
           </tr>
         
@@ -1674,8 +1674,8 @@
   <div class="header">
     <h3>app/helpers/application_helper.rb</h3>
     <h4>
-      <span class="green">
-  100.0%
+      <span class="red">
+  60.0%
 </span>
 
       lines covered
@@ -1685,8 +1685,8 @@
 
     <div class="t-line-summary">
       <b>5</b> relevant lines.
-      <span class="green"><b>5</b> lines covered</span> and
-      <span class="red"><b>0</b> lines missed.</span>
+      <span class="green"><b>3</b> lines covered</span> and
+      <span class="red"><b>2</b> lines missed.</span>
     </div>
 
     
@@ -1758,13 +1758,24 @@
 
             
 
-            <code class="ruby">    # outputs &#39;Yes&#39; or &#39;No&#39; strings from a boolean</code>
+            <code class="ruby">    # outputs &#39;Yes&#39; or &#39;No&#39; strings from a boolean (an instance of Ruby TrueClass or FalseClass)</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="3" data-linenumber="7">
-            <span class="hits">3</span>
+          <li class="never" data-hits="" data-linenumber="7">
+            
+            
+
+            
+
+            <code class="ruby">    # for presenting output of methods such as WrittenQuestion transferred?</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="missed" data-hits="0" data-linenumber="8">
+            
             
 
             
@@ -1774,7 +1785,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="8">
+          <li class="never" data-hits="" data-linenumber="9">
             
             
 
@@ -1785,8 +1796,8 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="2" data-linenumber="9">
-            <span class="hits">2</span>
+          <li class="missed" data-hits="0" data-linenumber="10">
+            
             
 
             
@@ -1796,7 +1807,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="10">
+          <li class="never" data-hits="" data-linenumber="11">
             
             
 
@@ -1807,7 +1818,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="11">
+          <li class="never" data-hits="" data-linenumber="12">
             
             
 
@@ -2759,7 +2770,7 @@
     <h3>app/models/content_object.rb</h3>
     <h4>
       <span class="red">
-  36.92%
+  46.15%
 </span>
 
       lines covered
@@ -2769,8 +2780,8 @@
 
     <div class="t-line-summary">
       <b>65</b> relevant lines.
-      <span class="green"><b>24</b> lines covered</span> and
-      <span class="red"><b>41</b> lines missed.</span>
+      <span class="green"><b>30</b> lines covered</span> and
+      <span class="red"><b>35</b> lines missed.</span>
     </div>
 
     
@@ -2836,8 +2847,8 @@
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="6">
-            
+          <li class="covered" data-hits="57" data-linenumber="6">
+            <span class="hits">57</span>
             
 
             
@@ -3386,8 +3397,8 @@
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="56">
-            
+          <li class="covered" data-hits="3" data-linenumber="56">
+            <span class="hits">3</span>
             
 
             
@@ -3408,8 +3419,8 @@
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="58">
-            
+          <li class="covered" data-hits="1" data-linenumber="58">
+            <span class="hits">1</span>
             
 
             
@@ -4343,8 +4354,8 @@
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="143">
-            
+          <li class="covered" data-hits="4" data-linenumber="143">
+            <span class="hits">4</span>
             
 
             
@@ -4365,8 +4376,8 @@
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="145">
-            
+          <li class="covered" data-hits="2" data-linenumber="145">
+            <span class="hits">2</span>
             
 
             
@@ -4398,8 +4409,8 @@
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="148">
-            
+          <li class="covered" data-hits="2" data-linenumber="148">
+            <span class="hits">2</span>
             
 
             
@@ -6677,8 +6688,8 @@
   <div class="header">
     <h3>app/models/written_question.rb</h3>
     <h4>
-      <span class="red">
-  35.59%
+      <span class="yellow">
+  87.32%
 </span>
 
       lines covered
@@ -6687,9 +6698,9 @@
     
 
     <div class="t-line-summary">
-      <b>59</b> relevant lines.
-      <span class="green"><b>21</b> lines covered</span> and
-      <span class="red"><b>38</b> lines missed.</span>
+      <b>71</b> relevant lines.
+      <span class="green"><b>62</b> lines covered</span> and
+      <span class="red"><b>9</b> lines missed.</span>
     </div>
 
     
@@ -6733,8 +6744,8 @@
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="4">
-            
+          <li class="covered" data-hits="57" data-linenumber="4">
+            <span class="hits">57</span>
             
 
             
@@ -6777,8 +6788,8 @@
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="8">
-            
+          <li class="covered" data-hits="1" data-linenumber="8">
+            <span class="hits">1</span>
             
 
             
@@ -6821,8 +6832,8 @@
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="12">
-            
+          <li class="covered" data-hits="1" data-linenumber="12">
+            <span class="hits">1</span>
             
 
             
@@ -6865,8 +6876,8 @@
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="16">
-            
+          <li class="covered" data-hits="6" data-linenumber="16">
+            <span class="hits">6</span>
             
 
             
@@ -6887,8 +6898,8 @@
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="18">
-            
+          <li class="covered" data-hits="1" data-linenumber="18">
+            <span class="hits">1</span>
             
 
             
@@ -6920,29 +6931,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="21">
-            
-            
-
-            
-
-            <code class="ruby">  # Note that with the exception of &#39;Answered&#39; these are guesses until</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="22">
-            
-            
-
-            
-
-            <code class="ruby">  # the state names can be confirmed</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="covered" data-hits="1" data-linenumber="23">
+          <li class="covered" data-hits="1" data-linenumber="21">
             <span class="hits">1</span>
             
 
@@ -6953,8 +6942,8 @@
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="24">
-            
+          <li class="covered" data-hits="9" data-linenumber="22">
+            <span class="hits">9</span>
             
 
             
@@ -6964,7 +6953,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="25">
+          <li class="never" data-hits="" data-linenumber="23">
             
             
 
@@ -6975,7 +6964,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="26">
+          <li class="never" data-hits="" data-linenumber="24">
             
             
 
@@ -6986,7 +6975,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="27">
+          <li class="covered" data-hits="1" data-linenumber="25">
             <span class="hits">1</span>
             
 
@@ -6997,8 +6986,8 @@
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="28">
-            
+          <li class="covered" data-hits="8" data-linenumber="26">
+            <span class="hits">8</span>
             
 
             
@@ -7008,7 +6997,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="29">
+          <li class="never" data-hits="" data-linenumber="27">
             
             
 
@@ -7019,7 +7008,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="30">
+          <li class="never" data-hits="" data-linenumber="28">
             
             
 
@@ -7030,7 +7019,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="31">
+          <li class="covered" data-hits="1" data-linenumber="29">
             <span class="hits">1</span>
             
 
@@ -7041,8 +7030,8 @@
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="32">
-            
+          <li class="covered" data-hits="7" data-linenumber="30">
+            <span class="hits">7</span>
             
 
             
@@ -7052,7 +7041,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="33">
+          <li class="never" data-hits="" data-linenumber="31">
             
             
 
@@ -7063,7 +7052,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="34">
+          <li class="never" data-hits="" data-linenumber="32">
             
             
 
@@ -7074,7 +7063,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="35">
+          <li class="covered" data-hits="1" data-linenumber="33">
             <span class="hits">1</span>
             
 
@@ -7085,24 +7074,46 @@
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="36">
+          <li class="never" data-hits="" data-linenumber="34">
             
             
 
             
 
-            <code class="ruby">    state == &#39;Answered was holding&#39;</code>
+            <code class="ruby">    # There is no state string for this, it must be derived</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="37">
+          <li class="covered" data-hits="6" data-linenumber="35">
+            <span class="hits">6</span>
+            
+
+            
+
+            <code class="ruby">    return false unless state == &#39;Answered&#39;</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="36">
             
             
 
             
 
-            <code class="ruby">  end</code>
+            <code class="ruby"></code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="2" data-linenumber="37">
+            <span class="hits">2</span>
+            
+
+            
+
+            <code class="ruby">    return false unless holding_answer?</code>
           </li>
         </div>
       
@@ -7124,29 +7135,29 @@
 
             
 
-            <code class="ruby">  def withdrawn?</code>
+            <code class="ruby">    return false if date_of_holding_answer.blank?</code>
           </li>
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="40">
+          <li class="never" data-hits="" data-linenumber="40">
             
             
 
             
 
-            <code class="ruby">    state == &#39;Withdrawn&#39;</code>
+            <code class="ruby"></code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="41">
-            
-            
-
+          <li class="covered" data-hits="1" data-linenumber="41">
+            <span class="hits">1</span>
             
 
-            <code class="ruby">  end</code>
+            
+
+            <code class="ruby">    true</code>
           </li>
         </div>
       
@@ -7157,40 +7168,40 @@
 
             
 
+            <code class="ruby">  end</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="43">
+            
+            
+
+            
+
             <code class="ruby"></code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="43">
+          <li class="covered" data-hits="1" data-linenumber="44">
             <span class="hits">1</span>
             
 
             
 
-            <code class="ruby">  def corrected?</code>
+            <code class="ruby">  def withdrawn?</code>
           </li>
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="44">
-            
-            
-
-            
-
-            <code class="ruby">    state == &#39;Corrected&#39;</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="45">
-            
+          <li class="covered" data-hits="5" data-linenumber="45">
+            <span class="hits">5</span>
             
 
             
 
-            <code class="ruby">  end</code>
+            <code class="ruby">    state == &#39;Withdrawn&#39;</code>
           </li>
         </div>
       
@@ -7201,29 +7212,29 @@
 
             
 
+            <code class="ruby">  end</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="47">
+            
+            
+
+            
+
             <code class="ruby"></code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="47">
+          <li class="covered" data-hits="1" data-linenumber="48">
             <span class="hits">1</span>
             
 
             
 
-            <code class="ruby">  def prelim_partial</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="missed" data-hits="0" data-linenumber="48">
-            
-            
-
-            
-
-            <code class="ruby">    return &#39;/search/fragments/written_question_prelim_tabled&#39; if tabled?</code>
+            <code class="ruby">  def corrected?</code>
           </li>
         </div>
       
@@ -7234,40 +7245,40 @@
 
             
 
-            <code class="ruby"></code>
+            <code class="ruby">    # There is no state string for this, it must be derived</code>
           </li>
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="50">
+          <li class="never" data-hits="" data-linenumber="50">
             
             
 
             
 
-            <code class="ruby">    return &#39;/search/fragments/written_question_prelim_answered&#39; if answered?</code>
+            <code class="ruby">    # This wasn&#39;t mentioned in Anya&#39;s email. Need to confirm whether it&#39;s been dropped.</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="51">
-            
-            
-
+          <li class="covered" data-hits="4" data-linenumber="51">
+            <span class="hits">4</span>
             
 
-            <code class="ruby"></code>
+            
+
+            <code class="ruby">    state == &#39;Corrected&#39;</code>
           </li>
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="52">
+          <li class="never" data-hits="" data-linenumber="52">
             
             
 
             
 
-            <code class="ruby">    return &#39;/search/fragments/written_question_prelim_holding&#39; if holding?</code>
+            <code class="ruby">  end</code>
           </li>
         </div>
       
@@ -7283,18 +7294,29 @@
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="54">
-            
-            
-
+          <li class="covered" data-hits="1" data-linenumber="54">
+            <span class="hits">1</span>
             
 
-            <code class="ruby">    return &#39;/search/fragments/written_question_prelim_answered_was_holding&#39; if answered_was_holding?</code>
+            
+
+            <code class="ruby">  def prelim_partial</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="55">
+          <li class="covered" data-hits="6" data-linenumber="55">
+            <span class="hits">6</span>
+            
+
+            
+
+            <code class="ruby">    return &#39;/search/fragments/written_question_prelim_tabled&#39; if tabled?</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="56">
             
             
 
@@ -7305,18 +7327,18 @@
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="56">
-            
-            
-
+          <li class="covered" data-hits="5" data-linenumber="57">
+            <span class="hits">5</span>
             
 
-            <code class="ruby">    return &#39;/search/fragments/written_question_prelim_withdrawn&#39; if withdrawn?</code>
+            
+
+            <code class="ruby">    return &#39;/search/fragments/written_question_prelim_answered&#39; if answered?</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="57">
+          <li class="never" data-hits="" data-linenumber="58">
             
             
 
@@ -7327,24 +7349,13 @@
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="58">
-            
-            
-
-            
-
-            <code class="ruby">    return &#39;/search/fragments/written_question_prelim_corrected&#39; if corrected?</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="59">
-            
+          <li class="covered" data-hits="4" data-linenumber="59">
+            <span class="hits">4</span>
             
 
             
 
-            <code class="ruby"></code>
+            <code class="ruby">    return &#39;/search/fragments/written_question_prelim_holding&#39; if holding?</code>
           </li>
         </div>
       
@@ -7355,18 +7366,18 @@
 
             
 
-            <code class="ruby">    nil</code>
+            <code class="ruby"></code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="61">
-            
-            
-
+          <li class="covered" data-hits="3" data-linenumber="61">
+            <span class="hits">3</span>
             
 
-            <code class="ruby">  end</code>
+            
+
+            <code class="ruby">    return &#39;/search/fragments/written_question_prelim_answered_was_holding&#39; if answered_was_holding?</code>
           </li>
         </div>
       
@@ -7382,13 +7393,13 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="63">
-            <span class="hits">1</span>
+          <li class="covered" data-hits="2" data-linenumber="63">
+            <span class="hits">2</span>
             
 
             
 
-            <code class="ruby">  def uin</code>
+            <code class="ruby">    return &#39;/search/fragments/written_question_prelim_withdrawn&#39; if withdrawn?</code>
           </li>
         </div>
       
@@ -7399,18 +7410,18 @@
 
             
 
-            <code class="ruby">    # return if content_object_data[&#39;date_dt&#39;].blank?</code>
+            <code class="ruby"></code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="65">
-            
-            
-
+          <li class="covered" data-hits="1" data-linenumber="65">
+            <span class="hits">1</span>
             
 
-            <code class="ruby">    nil</code>
+            
+
+            <code class="ruby">    return &#39;/search/fragments/written_question_prelim_corrected&#39; if corrected?</code>
           </li>
         </div>
       
@@ -7421,7 +7432,7 @@
 
             
 
-            <code class="ruby">  end</code>
+            <code class="ruby"></code>
           </li>
         </div>
       
@@ -7432,89 +7443,12 @@
 
             
 
-            <code class="ruby"></code>
+            <code class="ruby">    nil</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="68">
-            <span class="hits">1</span>
-            
-
-            
-
-            <code class="ruby">  def date_of_question</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="missed" data-hits="0" data-linenumber="69">
-            
-            
-
-            
-
-            <code class="ruby">    return if content_object_data[&#39;date_dt&#39;].blank?</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="70">
-            
-            
-
-            
-
-            <code class="ruby"></code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="missed" data-hits="0" data-linenumber="71">
-            
-            
-
-            
-
-            <code class="ruby">    valid_date_string = validate_date(content_object_data[&#39;date_dt&#39;])</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="missed" data-hits="0" data-linenumber="72">
-            
-            
-
-            
-
-            <code class="ruby">    return unless valid_date_string</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="73">
-            
-            
-
-            
-
-            <code class="ruby"></code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="missed" data-hits="0" data-linenumber="74">
-            
-            
-
-            
-
-            <code class="ruby">    valid_date_string.to_date</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="75">
+          <li class="never" data-hits="" data-linenumber="68">
             
             
 
@@ -7525,7 +7459,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="76">
+          <li class="never" data-hits="" data-linenumber="69">
             
             
 
@@ -7536,13 +7470,90 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="77">
+          <li class="covered" data-hits="1" data-linenumber="70">
             <span class="hits">1</span>
             
 
             
 
-            <code class="ruby">  def date_of_answer</code>
+            <code class="ruby">  def uin</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="71">
+            
+            
+
+            
+
+            <code class="ruby">    # return if content_object_data[&#39;date_dt&#39;].blank?</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="72">
+            
+            
+
+            
+
+            <code class="ruby">    nil</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="73">
+            
+            
+
+            
+
+            <code class="ruby">  end</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="74">
+            
+            
+
+            
+
+            <code class="ruby"></code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="1" data-linenumber="75">
+            <span class="hits">1</span>
+            
+
+            
+
+            <code class="ruby">  def holding_answer?</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="1" data-linenumber="76">
+            <span class="hits">1</span>
+            
+
+            
+
+            <code class="ruby">    return if content_object_data[&#39;holdingAnswer_b&#39;].blank?</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="77">
+            
+            
+
+            
+
+            <code class="ruby"></code>
           </li>
         </div>
       
@@ -7553,7 +7564,7 @@
 
             
 
-            <code class="ruby">    return if content_object_data[&#39;dateOfAnswer_dt&#39;].blank?</code>
+            <code class="ruby">    return true if content_object_data[&#39;holdingAnswer_b&#39;] == &#39;true&#39;</code>
           </li>
         </div>
       
@@ -7575,18 +7586,18 @@
 
             
 
-            <code class="ruby">    valid_date_string = validate_date(content_object_data[&#39;dateOfAnswer_dt&#39;].first)</code>
+            <code class="ruby">    false</code>
           </li>
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="81">
+          <li class="never" data-hits="" data-linenumber="81">
             
             
 
             
 
-            <code class="ruby">    return unless valid_date_string</code>
+            <code class="ruby">  end</code>
           </li>
         </div>
       
@@ -7602,24 +7613,24 @@
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="83">
-            
-            
-
+          <li class="covered" data-hits="1" data-linenumber="83">
+            <span class="hits">1</span>
             
 
-            <code class="ruby">    valid_date_string.to_date</code>
+            
+
+            <code class="ruby">  def date_of_question</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="84">
-            
-            
-
+          <li class="covered" data-hits="4" data-linenumber="84">
+            <span class="hits">4</span>
             
 
-            <code class="ruby">  end</code>
+            
+
+            <code class="ruby">    return if content_object_data[&#39;date_dt&#39;].blank?</code>
           </li>
         </div>
       
@@ -7635,24 +7646,24 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="86">
-            <span class="hits">1</span>
+          <li class="covered" data-hits="2" data-linenumber="86">
+            <span class="hits">2</span>
             
 
             
 
-            <code class="ruby">  def tabling_member</code>
+            <code class="ruby">    valid_date_string = validate_date(content_object_data[&#39;date_dt&#39;])</code>
           </li>
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="87">
-            
-            
-
+          <li class="covered" data-hits="2" data-linenumber="87">
+            <span class="hits">2</span>
             
 
-            <code class="ruby">    return if content_object_data[&#39;tablingMember_ses&#39;].blank?</code>
+            
+
+            <code class="ruby">    return unless valid_date_string</code>
           </li>
         </div>
       
@@ -7668,13 +7679,13 @@
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="89">
-            
-            
-
+          <li class="covered" data-hits="1" data-linenumber="89">
+            <span class="hits">1</span>
             
 
-            <code class="ruby">    content_object_data[&#39;tablingMember_ses&#39;].first</code>
+            
+
+            <code class="ruby">    valid_date_string.to_date</code>
           </li>
         </div>
       
@@ -7707,18 +7718,18 @@
 
             
 
-            <code class="ruby">  def answering_member</code>
+            <code class="ruby">  def date_of_answer</code>
           </li>
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="93">
-            
-            
-
+          <li class="covered" data-hits="4" data-linenumber="93">
+            <span class="hits">4</span>
             
 
-            <code class="ruby">    return if content_object_data[&#39;answeringMember_ses&#39;].blank?</code>
+            
+
+            <code class="ruby">    return if content_object_data[&#39;dateOfAnswer_dt&#39;].blank?</code>
           </li>
         </div>
       
@@ -7734,24 +7745,24 @@
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="95">
-            
-            
-
+          <li class="covered" data-hits="2" data-linenumber="95">
+            <span class="hits">2</span>
             
 
-            <code class="ruby">    content_object_data[&#39;answeringMember_ses&#39;].first</code>
+            
+
+            <code class="ruby">    valid_date_string = validate_date(content_object_data[&#39;dateOfAnswer_dt&#39;].first)</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="96">
-            
-            
-
+          <li class="covered" data-hits="2" data-linenumber="96">
+            <span class="hits">2</span>
             
 
-            <code class="ruby">  end</code>
+            
+
+            <code class="ruby">    return unless valid_date_string</code>
           </li>
         </div>
       
@@ -7773,18 +7784,18 @@
 
             
 
-            <code class="ruby">  def answer_text</code>
+            <code class="ruby">    valid_date_string.to_date</code>
           </li>
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="99">
+          <li class="never" data-hits="" data-linenumber="99">
             
             
 
             
 
-            <code class="ruby">    return if content_object_data[&#39;answerText_t&#39;].blank?</code>
+            <code class="ruby">  end</code>
           </li>
         </div>
       
@@ -7800,24 +7811,24 @@
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="101">
-            
-            
-
+          <li class="covered" data-hits="1" data-linenumber="101">
+            <span class="hits">1</span>
             
 
-            <code class="ruby">    CGI::unescapeHTML(content_object_data[&#39;answerText_t&#39;].first)</code>
+            
+
+            <code class="ruby">  def date_of_holding_answer</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="102">
+          <li class="missed" data-hits="0" data-linenumber="102">
             
             
 
             
 
-            <code class="ruby">  end</code>
+            <code class="ruby">    return if content_object_data[&#39;dateOfHoldingAnswer_dt&#39;].blank?</code>
           </li>
         </div>
       
@@ -7833,13 +7844,13 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="104">
-            <span class="hits">1</span>
+          <li class="missed" data-hits="0" data-linenumber="104">
+            
             
 
             
 
-            <code class="ruby">  def question_text</code>
+            <code class="ruby">    valid_date_string = validate_date(content_object_data[&#39;dateOfHoldingAnswer_dt&#39;].first)</code>
           </li>
         </div>
       
@@ -7850,7 +7861,7 @@
 
             
 
-            <code class="ruby">    return if content_object_data[&#39;questionText_t&#39;].blank?</code>
+            <code class="ruby">    return unless valid_date_string</code>
           </li>
         </div>
       
@@ -7872,7 +7883,7 @@
 
             
 
-            <code class="ruby">    CGI::unescapeHTML(content_object_data[&#39;questionText_t&#39;].first)</code>
+            <code class="ruby">    valid_date_string.to_date</code>
           </li>
         </div>
       
@@ -7905,18 +7916,18 @@
 
             
 
-            <code class="ruby">  def transferred?</code>
+            <code class="ruby">  def tabling_member</code>
           </li>
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="111">
-            
-            
-
+          <li class="covered" data-hits="3" data-linenumber="111">
+            <span class="hits">3</span>
             
 
-            <code class="ruby">    return if content_object_data[&#39;transferredQuestion_b&#39;].blank?</code>
+            
+
+            <code class="ruby">    return if content_object_data[&#39;tablingMember_ses&#39;].blank?</code>
           </li>
         </div>
       
@@ -7932,13 +7943,13 @@
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="113">
-            
-            
-
+          <li class="covered" data-hits="1" data-linenumber="113">
+            <span class="hits">1</span>
             
 
-            <code class="ruby">    return true if content_object_data[&#39;transferredQuestion_b&#39;] == &#39;true&#39;</code>
+            
+
+            <code class="ruby">    content_object_data[&#39;tablingMember_ses&#39;].first</code>
           </li>
         </div>
       
@@ -7949,34 +7960,12 @@
 
             
 
-            <code class="ruby"></code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="missed" data-hits="0" data-linenumber="115">
-            
-            
-
-            
-
-            <code class="ruby">    false</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="116">
-            
-            
-
-            
-
             <code class="ruby">  end</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="117">
+          <li class="never" data-hits="" data-linenumber="115">
             
             
 
@@ -7987,24 +7976,46 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="118">
+          <li class="covered" data-hits="1" data-linenumber="116">
             <span class="hits">1</span>
             
 
             
 
-            <code class="ruby">  def attachment</code>
+            <code class="ruby">  def answering_member</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="119">
+          <li class="covered" data-hits="4" data-linenumber="117">
+            <span class="hits">4</span>
+            
+
+            
+
+            <code class="ruby">    return if content_object_data[&#39;answeringMember_ses&#39;].blank?</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="118">
             
             
 
             
 
-            <code class="ruby">    # this is the title of the attachment, rather than a link to the resource</code>
+            <code class="ruby"></code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="2" data-linenumber="119">
+            <span class="hits">2</span>
+            
+
+            
+
+            <code class="ruby">    content_object_data[&#39;answeringMember_ses&#39;].first</code>
           </li>
         </div>
       
@@ -8015,7 +8026,7 @@
 
             
 
-            <code class="ruby">    # TODO: establish whether there can be multiple attachments</code>
+            <code class="ruby">  end</code>
           </li>
         </div>
       
@@ -8031,18 +8042,29 @@
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="122">
-            
-            
-
+          <li class="covered" data-hits="1" data-linenumber="122">
+            <span class="hits">1</span>
             
 
-            <code class="ruby">    return if content_object_data[&#39;attachmentTitle_t&#39;].blank?</code>
+            
+
+            <code class="ruby">  def answer_text</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="123">
+          <li class="missed" data-hits="0" data-linenumber="123">
+            
+            
+
+            
+
+            <code class="ruby">    return if content_object_data[&#39;answerText_t&#39;].blank?</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="124">
             
             
 
@@ -8053,18 +8075,18 @@
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="124">
+          <li class="missed" data-hits="0" data-linenumber="125">
             
             
 
             
 
-            <code class="ruby">    content_object_data[&#39;attachmentTitle_t&#39;].first</code>
+            <code class="ruby">    CGI::unescapeHTML(content_object_data[&#39;answerText_t&#39;].first)</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="125">
+          <li class="never" data-hits="" data-linenumber="126">
             
             
 
@@ -8075,7 +8097,260 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="126">
+          <li class="never" data-hits="" data-linenumber="127">
+            
+            
+
+            
+
+            <code class="ruby"></code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="1" data-linenumber="128">
+            <span class="hits">1</span>
+            
+
+            
+
+            <code class="ruby">  def question_text</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="2" data-linenumber="129">
+            <span class="hits">2</span>
+            
+
+            
+
+            <code class="ruby">    return if content_object_data[&#39;questionText_t&#39;].blank?</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="130">
+            
+            
+
+            
+
+            <code class="ruby"></code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="missed" data-hits="0" data-linenumber="131">
+            
+            
+
+            
+
+            <code class="ruby">    CGI::unescapeHTML(content_object_data[&#39;questionText_t&#39;].first)</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="132">
+            
+            
+
+            
+
+            <code class="ruby">  end</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="133">
+            
+            
+
+            
+
+            <code class="ruby"></code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="1" data-linenumber="134">
+            <span class="hits">1</span>
+            
+
+            
+
+            <code class="ruby">  def transferred?</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="4" data-linenumber="135">
+            <span class="hits">4</span>
+            
+
+            
+
+            <code class="ruby">    return if content_object_data[&#39;transferredQuestion_b&#39;].blank?</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="136">
+            
+            
+
+            
+
+            <code class="ruby"></code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="2" data-linenumber="137">
+            <span class="hits">2</span>
+            
+
+            
+
+            <code class="ruby">    return true if content_object_data[&#39;transferredQuestion_b&#39;] == &#39;true&#39;</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="138">
+            
+            
+
+            
+
+            <code class="ruby"></code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="1" data-linenumber="139">
+            <span class="hits">1</span>
+            
+
+            
+
+            <code class="ruby">    false</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="140">
+            
+            
+
+            
+
+            <code class="ruby">  end</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="141">
+            
+            
+
+            
+
+            <code class="ruby"></code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="1" data-linenumber="142">
+            <span class="hits">1</span>
+            
+
+            
+
+            <code class="ruby">  def attachment</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="143">
+            
+            
+
+            
+
+            <code class="ruby">    # this is the title of the attachment, rather than a link to the resource</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="144">
+            
+            
+
+            
+
+            <code class="ruby">    # there can be multiple titles, all of which will be displayed</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="145">
+            
+            
+
+            
+
+            <code class="ruby"></code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="3" data-linenumber="146">
+            <span class="hits">3</span>
+            
+
+            
+
+            <code class="ruby">    return if content_object_data[&#39;attachmentTitle_t&#39;].blank?</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="147">
+            
+            
+
+            
+
+            <code class="ruby"></code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="1" data-linenumber="148">
+            <span class="hits">1</span>
+            
+
+            
+
+            <code class="ruby">    content_object_data[&#39;attachmentTitle_t&#39;]</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="149">
+            
+            
+
+            
+
+            <code class="ruby">  end</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="150">
             
             
 

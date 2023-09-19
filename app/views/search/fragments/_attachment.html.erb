@@ -1,8 +1,6 @@
-<!--No data currently available to test-->
-
-<!--<div class="about-item">-->
-<!--  <h3 class="content-heading">Attachment</h3>-->
-<!--  <div>-->
-<!--    UK Statistics Authority-->
-<!--  </div>-->
-<!--</div>-->
+<div class="about-item">
+  <h3 class="content-heading">Attachment</h3>
+  <% attachments.each_with_index do |attachment, index| %>
+    <%= index.zero? ? attachment : "#{attachment};&nbsp;" %>
+  <% end %>
+</div>

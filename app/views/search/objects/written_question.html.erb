@@ -31,7 +31,7 @@
   <%= render 'search/fragments/related_items', related_items: object.related_items unless object.related_items.blank? %>
   <%= render 'search/fragments/notes', notes: object.notes unless object.notes.blank? %>
   <%= render 'search/fragments/registered_interest_declared', registered_interest_declared: object.registered_interest_declared unless object.registered_interest_declared.blank? %>
-  <%= render 'search/fragments/attachment', attachment: object.attachment unless object.attachment.blank? %>
+  <%= render 'search/fragments/attachment', attachments: object.attachment unless object.attachment.blank? %>
   <% unless object.tabled? || object.withdrawn? %>
     <%#= render 'search/fragments/grouped_for_answer', grouped: object.grouped_for_answer? %>
     <%= render 'search/fragments/transferred', transferred: object.transferred? %>
