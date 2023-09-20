@@ -45,11 +45,9 @@ class ContentObject
   end
 
   def legislation
-    nil
-    # no field for this currently
-    # return if content_object_data[''].blank?
+    return if content_object_data['legislationTitle_ses'].blank?
 
-    # content_object_data['']
+    content_object_data['legislationTitle_ses'].first
   end
 
   def department
