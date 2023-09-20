@@ -26,6 +26,7 @@ class ContentObject
   end
 
   def reference
+    # typically used for Hansard col refs
     return if content_object_data['identifier_t'].blank?
 
     content_object_data['identifier_t'].first
@@ -45,11 +46,9 @@ class ContentObject
   end
 
   def legislation
-    nil
-    # no field for this currently
-    # return if content_object_data[''].blank?
+    return if content_object_data['legislationTitle_ses'].blank?
 
-    # content_object_data['']
+    content_object_data['legislationTitle_ses'].first
   end
 
   def department

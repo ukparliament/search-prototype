@@ -1,7 +1,7 @@
 <%#= render 'search/fragments/data', data: object.content_object_data %>
 
 <% content_for(:before_title) do %>
-  <%= link_to('UK Parliament') %> / <%= link_to('Open data') %><br/>
+  <%= link_to('UK Parliament', root_path) %> / <%= link_to('Open data', root_path) %><br/>
   <%#= link_to('< Back to search results', root_path) %>
   <div id="top"></div>
 <% end %>
@@ -25,13 +25,13 @@
 
 <section id="about" class="content-section grey">
   <h2 class="content-heading">About this <%= object.object_name %></h2>
-  <%= render 'search/fragments/uin', uin: object.uin unless object.uin.blank? %>
+  <%= render 'search/fragments/uin', uins: object.uin unless object.uin.blank? %>
   <%= render 'search/fragments/session', session: object.session unless object.session.blank? %>
   <%#= render 'search/fragments/procedure', procedure: object.procedure unless object.procedure.blank? %>
   <%= render 'search/fragments/related_items', related_items: object.related_items unless object.related_items.blank? %>
   <%= render 'search/fragments/notes', notes: object.notes unless object.notes.blank? %>
   <%= render 'search/fragments/registered_interest_declared', registered_interest_declared: object.registered_interest_declared unless object.registered_interest_declared.blank? %>
-  <%= render 'search/fragments/attachment', attachment: object.attachment unless object.attachment.blank? %>
+  <%= render 'search/fragments/attachment', attachments: object.attachment unless object.attachment.blank? %>
   <% unless object.tabled? || object.withdrawn? %>
     <%#= render 'search/fragments/grouped_for_answer', grouped: object.grouped_for_answer? %>
     <%= render 'search/fragments/transferred', transferred: object.transferred? %>

@@ -18,8 +18,6 @@ class WrittenQuestion < ContentObject
     content_object_data['pqStatus_t'].first
   end
 
-  # Note that with the exception of 'Answered' these are guesses until
-  # the state names can be confirmed
   def tabled?
     state == 'Tabled'
   end
@@ -33,7 +31,14 @@ class WrittenQuestion < ContentObject
   end
 
   def answered_was_holding?
-    state == 'Answered was holding'
+    # There is no state string for this, it must be derived
+    return false unless state == 'Answered'
+
+    return false unless holding_answer?
+
+    return false if date_of_holding_answer.blank?
+
+    true
   end
 
   def withdrawn?
@@ -41,6 +46,9 @@ class WrittenQuestion < ContentObject
   end
 
   def corrected?
+    # There is no state string for this, it must be derived
+    # Prior to July 2014, correctedWmsMc_b flag + related links will contain a link to the correction
+    # After July 2014, correctedWmsMc_b + correctingItem_uri OR correctingItem_t
     state == 'Corrected'
   end
 
@@ -61,8 +69,18 @@ class WrittenQuestion < ContentObject
   end
 
   def uin
-    # return if content_object_data['date_dt'].blank?
-    nil
+    # UIN with optional Hansard reference in same field
+    return if content_object_data['identifier_t'].blank?
+
+    content_object_data['identifier_t']
+  end
+
+  def holding_answer?
+    return if content_object_data['holdingAnswer_b'].blank?
+
+    return true if content_object_data['holdingAnswer_b'] == 'true'
+
+    false
   end
 
   def date_of_question
@@ -78,6 +96,15 @@ class WrittenQuestion < ContentObject
     return if content_object_data['dateOfAnswer_dt'].blank?
 
     valid_date_string = validate_date(content_object_data['dateOfAnswer_dt'].first)
+    return unless valid_date_string
+
+    valid_date_string.to_date
+  end
+
+  def date_of_holding_answer
+    return if content_object_data['dateOfHoldingAnswer_dt'].blank?
+
+    valid_date_string = validate_date(content_object_data['dateOfHoldingAnswer_dt'].first)
     return unless valid_date_string
 
     valid_date_string.to_date
@@ -117,10 +144,14 @@ class WrittenQuestion < ContentObject
 
   def attachment
     # this is the title of the attachment, rather than a link to the resource
-    # TODO: establish whether there can be multiple attachments
+    # there can be multiple titles, all of which will be displayed
 
     return if content_object_data['attachmentTitle_t'].blank?
 
-    content_object_data['attachmentTitle_t'].first
+    content_object_data['attachmentTitle_t']
+  end
+
+  def procedure
+    # no data on this currently
   end
 end

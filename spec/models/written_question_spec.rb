@@ -62,7 +62,7 @@ RSpec.describe WrittenQuestion, type: :model do
 
   describe 'answered?' do
     let!(:written_question) { WrittenQuestion.new({ 'pqStatus_t' => '' }) }
-    context 'where state is tabled' do
+    context 'where state is answered' do
       it 'returns true' do
         allow(written_question).to receive(:state).and_return('Answered')
         expect(written_question.answered?).to eq(true)
@@ -84,7 +84,7 @@ RSpec.describe WrittenQuestion, type: :model do
 
   describe 'holding?' do
     let!(:written_question) { WrittenQuestion.new({ 'pqStatus_t' => '' }) }
-    context 'where state is tabled' do
+    context 'where state is holding' do
       it 'returns true' do
         allow(written_question).to receive(:state).and_return('Holding')
         expect(written_question.holding?).to eq(true)
@@ -105,11 +105,21 @@ RSpec.describe WrittenQuestion, type: :model do
   end
 
   describe 'answered_was_holding?' do
-    context 'where state is tabled' do
-      let!(:written_question) { WrittenQuestion.new({ 'pqStatus_t' => '' }) }
-      it 'returns true' do
-        allow(written_question).to receive(:state).and_return('Answered was holding')
-        expect(written_question.answered_was_holding?).to eq(true)
+    let!(:written_question) { WrittenQuestion.new({ 'pqStatus_t' => '' }) }
+    context 'where state is answered' do
+      context 'where answer is marked as holding and there is a holding answer date' do
+        it 'returns true' do
+          allow(written_question).to receive(:holding_answer?).and_return(true)
+          allow(written_question).to receive(:date_of_holding_answer).and_return(Date.yesterday)
+          allow(written_question).to receive(:state).and_return('Answered')
+          expect(written_question.answered_was_holding?).to eq(true)
+        end
+      end
+      context 'where other required fields are missing' do
+        it 'returns false' do
+          allow(written_question).to receive(:state).and_return('Answered')
+          expect(written_question.answered_was_holding?).to eq(false)
+        end
       end
     end
     context 'where state is missing' do
@@ -127,7 +137,7 @@ RSpec.describe WrittenQuestion, type: :model do
   end
 
   describe 'withdrawn?' do
-    context 'where state is tabled' do
+    context 'where state is withdrawn' do
       let!(:written_question) { WrittenQuestion.new({ 'pqStatus_t' => '' }) }
       it 'returns true' do
         allow(written_question).to receive(:state).and_return('Withdrawn')
@@ -149,7 +159,7 @@ RSpec.describe WrittenQuestion, type: :model do
   end
 
   describe 'corrected?' do
-    context 'where state is tabled' do
+    context 'where state is corrected' do
       let!(:written_question) { WrittenQuestion.new({ 'pqStatus_t' => '' }) }
       it 'returns true' do
         allow(written_question).to receive(:state).and_return('Corrected')
@@ -215,7 +225,7 @@ RSpec.describe WrittenQuestion, type: :model do
     end
     context 'where answered_was_holding' do
       it 'returns the correct path' do
-        allow(written_question).to receive(:state).and_return('Answered was holding')
+        allow(written_question).to receive(:answered_was_holding?).and_return(true)
         expect(written_question.prelim_partial).to eq('/search/fragments/written_question_prelim_answered_was_holding')
       end
     end
@@ -405,8 +415,8 @@ RSpec.describe WrittenQuestion, type: :model do
     context 'where data exists' do
       let!(:written_question) { WrittenQuestion.new({ 'attachmentTitle_t' => ['first item', 'second item'] }) }
 
-      it 'returns first item' do
-        expect(written_question.attachment).to eq('first item')
+      it 'returns all items' do
+        expect(written_question.attachment).to eq(['first item', 'second item'])
       end
     end
   end

@@ -1,13 +1,8 @@
-<!--No data currently available to test-->
-
-<!--<div class="about-item">-->
-<!--  <h3 class="content-heading">Related items</h3>-->
-<!--  <div>-->
-<!--    <%#= link_to 'Food and Drink Act 2023', '/' %><br/>-->
-<!--    Thursday, 2 February 2023 | Public acts-->
-<!--  </div>-->
-<!--  <div>-->
-<!--    <%#= link_to 'Privacy Act 2023', '/' %><br/>-->
-<!--    Thursday, 2 February 2023 | Public acts-->
-<!--  </div>-->
-<!--</div>-->
+<div class="about-item">
+  <h3 class="content-heading">Related items</h3>
+  <% related_items.each do |related_item| %>
+  <div>
+    <%= link_to related_item, '/' %><br/>
+  </div>
+  <% end %>
+</div>
