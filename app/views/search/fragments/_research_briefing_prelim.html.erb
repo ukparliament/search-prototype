@@ -1,6 +1,6 @@
 <div class="content-prelim-box">
   <div class="content-prelim-inner">
-    <div class="content-prelim-text">
+    <div class="content-prelim-text" id="prelim-text">
       An <%= object_link("#{object.object_name.titleize}", '/') %>
       by <%= object_link("#{object.creator}", '/') %>
       published on <strong><%= object.published_on&.strftime(ApplicationHelper::DATE_DISPLAY_FORMAT) %></strong>.
