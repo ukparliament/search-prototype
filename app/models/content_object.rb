@@ -26,6 +26,7 @@ class ContentObject
   end
 
   def reference
+    # typically used for Hansard col refs
     return if content_object_data['identifier_t'].blank?
 
     content_object_data['identifier_t'].first

@@ -1,6 +1,4 @@
 <div class="about-item">
   <h3 class="content-heading">Attachment</h3>
-  <% attachments.each_with_index do |attachment, index| %>
-    <%= index.zero? ? attachment : "#{attachment};&nbsp;" %>
-  <% end %>
+  <%= attachments.join('; ') %>
 </div>

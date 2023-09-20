@@ -47,7 +47,8 @@ class WrittenQuestion < ContentObject
 
   def corrected?
     # There is no state string for this, it must be derived
-    # This wasn't mentioned in Anya's email. Need to confirm whether it's been dropped.
+    # Prior to July 2014, correctedWmsMc_b flag + related links will contain a link to the correction
+    # After July 2014, correctedWmsMc_b + correctingItem_uri OR correctingItem_t
     state == 'Corrected'
   end
 
@@ -68,8 +69,10 @@ class WrittenQuestion < ContentObject
   end
 
   def uin
-    # return if content_object_data['date_dt'].blank?
-    nil
+    # UIN with optional Hansard reference in same field
+    return if content_object_data['identifier_t'].blank?
+
+    content_object_data['identifier_t']
   end
 
   def holding_answer?
@@ -146,5 +149,9 @@ class WrittenQuestion < ContentObject
     return if content_object_data['attachmentTitle_t'].blank?
 
     content_object_data['attachmentTitle_t']
+  end
+
+  def procedure
+    # no data on this currently
   end
 end
