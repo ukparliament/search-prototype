@@ -48,8 +48,35 @@ class WrittenQuestion < ContentObject
   def corrected?
     # There is no state string for this, it must be derived
     # Prior to July 2014, correctedWmsMc_b flag + related links will contain a link to the correction
-    # After July 2014, correctedWmsMc_b + correctingItem_uri OR correctingItem_t
-    state == 'Corrected'
+    # After July 2014, correctedWmsMc_b + correctingItem_uri OR correctingItem_t / s as a fallback
+
+    # There's the potential for some confusion here at this is not mutually exclusive with the other states
+    # e.g. a written question could, under this model, be answered and corrected, or tabled and corrected
+
+    return false unless content_object_data['correctedWmsMc_b'] == 'true'
+
+    true
+  end
+
+  def correcting_object
+    # Note - this is experimental and sets up correcting_object as a written question in its own right.
+    #
+    # In the view, we can then call object.correcting_object.department, object.correcting_object.date_of_question and
+    # object.correcting_object.correcting_member to get the information we need regarding the correction.
+    #
+    # This only applies to corrections before July 2014, and for corrected written questions after this date
+    # this method should return nil as content_object_data['correctingItem_uri'] will be blank. We can therefore
+    # check correcting_object is not nil to determine whether or not we attempt to show its data in the view.
+    #
+    # May need to adjust this to cache response first time around
+    # Also worth noting here: we're assuming that the correcting object is a written question
+
+    return unless corrected?
+
+    return if content_object_data['correctingItem_uri'].blank?
+
+    correcting_item_data = ApiCall.new(object_uri: content_object_data['correctingItem_uri']).object_data
+    ContentObject.generate(correcting_item_data)
   end
 
   def prelim_partial
@@ -120,6 +147,12 @@ class WrittenQuestion < ContentObject
     return if content_object_data['answeringMember_ses'].blank?
 
     content_object_data['answeringMember_ses'].first
+  end
+
+  def correcting_member
+    return if content_object_data['correctingMember_ses'].blank?
+
+    content_object_data['correctingMember_ses'].first
   end
 
   def answer_text
