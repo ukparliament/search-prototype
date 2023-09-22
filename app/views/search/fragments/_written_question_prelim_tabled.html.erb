@@ -2,12 +2,12 @@
   <div class="content-prelim-inner">
     <div class="content-prelim-text" id="prelim-text">
       A <%= object_link("#{object.object_name.titleize}", '/') %>
-      was tabled by <%= object_link("#{object.tabling_member}", '/') %>
+      was tabled by <%= object_link("#{object.tabling_member}", '/') %> (<%= object.tabling_member_party %>)
       on <strong><%= object.date_of_question&.strftime(ApplicationHelper::DATE_DISPLAY_FORMAT) %></strong>,
-      in the <%= object_link("#{object.department}", '/') %> for the
-      <%= object_link("#{object.legislature}", '/') %>.
+      in the <%= object_link("#{object.legislature}", '/') %> for the
+      <%= object_link("#{object.department}", '/') %>.
       It is due for answer
-      on <strong><%= object.date_of_answer&.strftime(ApplicationHelper::DATE_DISPLAY_FORMAT) %></strong>
+      on <strong><%= object.date_for_answer&.strftime(ApplicationHelper::DATE_DISPLAY_FORMAT) %></strong>
       (named day).
     </div>
   </div>

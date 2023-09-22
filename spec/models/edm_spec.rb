@@ -233,8 +233,7 @@ RSpec.describe Edm, type: :model do
     end
   end
 
-  # disabled due to lack of test data
-  xdescribe 'legislation' do
+  describe 'legislation' do
     context 'where there is no data' do
       it 'returns nil' do
         expect(edm.legislation).to be_nil

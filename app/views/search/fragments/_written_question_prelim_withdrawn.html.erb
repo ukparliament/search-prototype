@@ -4,8 +4,8 @@
       A <%= object_link("#{object.object_name.titleize}", '/') %>
       was asked by <%= object_link("#{object.tabling_member}", '/') %>
       on <strong><%= object.date_of_question&.strftime(ApplicationHelper::DATE_DISPLAY_FORMAT) %></strong>,
-      in the <%= object_link("#{object.department}", '/') %>.
-      The asking Member has subsequently withdrawn this question and no longer needs to be answered by
+      in the <%= object_link("#{object.legislature}", '/') %>.
+      The Member has subsequently withdrawn this question. An answer is no longer expected from
       the <%= object_link("#{object.department}", '/') %>.
     </div>
   </div>

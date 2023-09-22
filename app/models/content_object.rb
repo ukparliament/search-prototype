@@ -106,7 +106,6 @@ class ContentObject
   end
 
   def related_items
-    # no test data for related items currently available
     # based on provided information, this will return one or more URIs of related item object pages
 
     return if content_object_data['relation_t'].blank?
