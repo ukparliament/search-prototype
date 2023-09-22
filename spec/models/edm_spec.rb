@@ -241,17 +241,17 @@ RSpec.describe Edm, type: :model do
     end
 
     context 'where there is an empty array' do
-      let!(:edm) { Edm.new({ '' => [] }) }
+      let!(:edm) { Edm.new({ 'legislationTitle_ses' => [] }) }
       it 'returns nil' do
         expect(edm.legislation).to be_nil
       end
     end
 
     context 'where data exists' do
-      let!(:edm) { Edm.new({ '' => ['first item', 'second item'] }) }
+      let!(:edm) { Edm.new({ 'legislationTitle_ses' => [12345, 67890] }) }
 
       it 'returns all items as an array' do
-        expect(edm.legislation).to eq(['first item', 'second item'])
+        expect(edm.legislation).to eq([12345, 67890])
       end
     end
   end

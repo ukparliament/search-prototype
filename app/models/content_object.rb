@@ -48,7 +48,7 @@ class ContentObject
   def legislation
     return if content_object_data['legislationTitle_ses'].blank?
 
-    content_object_data['legislationTitle_ses'].first
+    content_object_data['legislationTitle_ses']
   end
 
   def department

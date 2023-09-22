@@ -15,7 +15,7 @@ class WrittenStatement < ContentObject
   def attachment
     return if content_object_data['attachment_t'].blank?
 
-    content_object_data['attachment_t'].first
+    content_object_data['attachment_t']
   end
 
   def notes
