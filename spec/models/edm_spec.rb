@@ -47,10 +47,10 @@ RSpec.describe Edm, type: :model do
     end
 
     context 'where data exists' do
-      let!(:edm) { Edm.new({ 'primarySponsorPrinted_s' => ['first item', 'second item'] }) }
+      let!(:edm) { Edm.new({ 'primarySponsor_ses' => [12345, 67890] }) }
 
       it 'returns the first item' do
-        expect(edm.primary_sponsor).to eq('first item')
+        expect(edm.primary_sponsor).to eq(12345)
       end
     end
   end
@@ -218,14 +218,14 @@ RSpec.describe Edm, type: :model do
     end
 
     context 'where there is an empty array' do
-      let!(:edm) { Edm.new({ 'subject_sesrollup' => [] }) }
+      let!(:edm) { Edm.new({ 'subject_ses' => [] }) }
       it 'returns nil' do
         expect(edm.subjects).to be_nil
       end
     end
 
     context 'where data exists' do
-      let!(:edm) { Edm.new({ 'subject_sesrollup' => ['first item', 'second item'] }) }
+      let!(:edm) { Edm.new({ 'subject_ses' => ['first item', 'second item'] }) }
 
       it 'returns all items as an array' do
         expect(edm.subjects).to eq(['first item', 'second item'])

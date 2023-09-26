@@ -29,7 +29,7 @@ RSpec.describe 'ContentObjects', type: :request do
           expect(CGI::unescapeHTML(response.body)).to include(edm_instance.reference)
           expect(CGI::unescapeHTML(response.body)).to include(edm_instance.session)
           expect(CGI::unescapeHTML(response.body)).to include(edm_instance.motion_text)
-          expect(CGI::unescapeHTML(response.body)).to include(edm_instance.primary_sponsor)
+          expect(CGI::unescapeHTML(response.body)).to include(edm_instance.primary_sponsor.to_s)
           expect(CGI::unescapeHTML(response.body)).to include(edm_instance.display_link)
 
           unless edm_instance.other_supporters.blank?

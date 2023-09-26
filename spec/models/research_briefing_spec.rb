@@ -258,14 +258,14 @@ RSpec.describe ResearchBriefing, type: :model do
     end
 
     context 'where there is an empty array' do
-      let!(:research_briefing) { ResearchBriefing.new({ 'subject_sesrollup' => [] }) }
+      let!(:research_briefing) { ResearchBriefing.new({ 'subject_ses' => [] }) }
       it 'returns nil' do
         expect(research_briefing.subjects).to be_nil
       end
     end
 
     context 'where data exists' do
-      let!(:research_briefing) { ResearchBriefing.new({ 'subject_sesrollup' => ['first item', 'second item'] }) }
+      let!(:research_briefing) { ResearchBriefing.new({ 'subject_ses' => ['first item', 'second item'] }) }
 
       it 'returns all items as an array' do
         expect(research_briefing.subjects).to eq(['first item', 'second item'])

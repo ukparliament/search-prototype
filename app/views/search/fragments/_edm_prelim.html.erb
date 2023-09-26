@@ -3,8 +3,10 @@
     <div class="content-prelim-text" id="prelim-text">
       An <%= object_link('Early Day Motion', '/') %> sponsored by <%= object_link(object.primary_sponsor, '/') %>
       (primary sponsor, <%= object_link(object.primary_sponsor_party, '/') %>)
-      <% object.other_supporters.each do |supporter| %>
-        <%= object_link(supporter, '/') %>,
+      <% unless object.other_supporters.blank? %>
+        <% object.other_supporters.each do |supporter| %>
+          <%= object_link(supporter, '/') %>,
+        <% end %>
       <% end %>
       and tabled on <strong><%= object.date_tabled&.strftime(ApplicationHelper::DATE_DISPLAY_FORMAT) %></strong>
       in the <%= object_link(object.legislature, '/') %>.
