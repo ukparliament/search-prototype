@@ -47,10 +47,10 @@ RSpec.describe Edm, type: :model do
     end
 
     context 'where data exists' do
-      let!(:edm) { Edm.new({ 'primarySponsorPrinted_s' => ['first item', 'second item'] }) }
+      let!(:edm) { Edm.new({ 'primarySponsor_ses' => [12345, 67890] }) }
 
       it 'returns the first item' do
-        expect(edm.primary_sponsor).to eq('first item')
+        expect(edm.primary_sponsor).to eq(12345)
       end
     end
   end
@@ -218,14 +218,14 @@ RSpec.describe Edm, type: :model do
     end
 
     context 'where there is an empty array' do
-      let!(:edm) { Edm.new({ 'subject_sesrollup' => [] }) }
+      let!(:edm) { Edm.new({ 'subject_ses' => [] }) }
       it 'returns nil' do
         expect(edm.subjects).to be_nil
       end
     end
 
     context 'where data exists' do
-      let!(:edm) { Edm.new({ 'subject_sesrollup' => ['first item', 'second item'] }) }
+      let!(:edm) { Edm.new({ 'subject_ses' => ['first item', 'second item'] }) }
 
       it 'returns all items as an array' do
         expect(edm.subjects).to eq(['first item', 'second item'])
@@ -233,8 +233,7 @@ RSpec.describe Edm, type: :model do
     end
   end
 
-  # disabled due to lack of test data
-  xdescribe 'legislation' do
+  describe 'legislation' do
     context 'where there is no data' do
       it 'returns nil' do
         expect(edm.legislation).to be_nil
@@ -242,17 +241,17 @@ RSpec.describe Edm, type: :model do
     end
 
     context 'where there is an empty array' do
-      let!(:edm) { Edm.new({ '' => [] }) }
+      let!(:edm) { Edm.new({ 'legislationTitle_ses' => [] }) }
       it 'returns nil' do
         expect(edm.legislation).to be_nil
       end
     end
 
     context 'where data exists' do
-      let!(:edm) { Edm.new({ '' => ['first item', 'second item'] }) }
+      let!(:edm) { Edm.new({ 'legislationTitle_ses' => [12345, 67890] }) }
 
       it 'returns all items as an array' do
-        expect(edm.legislation).to eq(['first item', 'second item'])
+        expect(edm.legislation).to eq([12345, 67890])
       end
     end
   end

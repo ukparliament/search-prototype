@@ -33,22 +33,22 @@ class ContentObject
   end
 
   def subjects
-    return if content_object_data['subject_sesrollup'].blank?
+    return if content_object_data['subject_ses'].blank?
 
-    content_object_data['subject_sesrollup']
+    content_object_data['subject_ses']
   end
 
   def topics
     # note - have not yet verified key as missing from test data
-    return if content_object_data['topic_sesrollup'].blank?
+    return if content_object_data['topic_ses'].blank?
 
-    content_object_data['topic_sesrollup']
+    content_object_data['topic_ses']
   end
 
   def legislation
     return if content_object_data['legislationTitle_ses'].blank?
 
-    content_object_data['legislationTitle_ses'].first
+    content_object_data['legislationTitle_ses']
   end
 
   def department
@@ -106,7 +106,6 @@ class ContentObject
   end
 
   def related_items
-    # no test data for related items currently available
     # based on provided information, this will return one or more URIs of related item object pages
 
     return if content_object_data['relation_t'].blank?

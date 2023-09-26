@@ -159,23 +159,49 @@ RSpec.describe WrittenQuestion, type: :model do
   end
 
   describe 'corrected?' do
-    context 'where state is corrected' do
-      let!(:written_question) { WrittenQuestion.new({ 'pqStatus_t' => '' }) }
+    context 'where corrected boolean is true' do
+      let!(:written_question) { WrittenQuestion.new({ 'correctedWmsMc_b' => 'true' }) }
       it 'returns true' do
-        allow(written_question).to receive(:state).and_return('Corrected')
         expect(written_question.corrected?).to eq(true)
       end
     end
-    context 'where state is missing' do
+    context 'where corrected boolean is missing' do
       it 'returns false' do
-        allow(written_question).to receive(:state).and_return(nil)
         expect(written_question.corrected?).to eq(false)
       end
     end
-    context 'where state is present but not corrected' do
+    context 'where state is present but not true' do
+      let!(:written_question) { WrittenQuestion.new({ 'correctedWmsMc_b' => 'false' }) }
       it 'returns false' do
-        allow(written_question).to receive(:state).and_return('Tabled')
         expect(written_question.corrected?).to eq(false)
+      end
+    end
+  end
+
+  describe 'correcting_object' do
+    context 'where corrected' do
+      context 'where URI is missing' do
+        let!(:written_question) { WrittenQuestion.new({ 'correctingItem_uri' => '' }) }
+        it 'returns nil' do
+          allow(written_question).to receive(:corrected?).and_return(true)
+          expect(written_question.correcting_object).to be_nil
+        end
+      end
+      context 'where URI is present' do
+        let!(:written_question) { WrittenQuestion.new({ 'correctingItem_uri' => 'test' }) }
+        let!(:test_data) { { "type_ses" => [93522] } }
+
+        it 'returns a written question object' do
+          allow(written_question).to receive(:corrected?).and_return(true)
+          allow_any_instance_of(ApiCall).to receive(:object_data).and_return(test_data)
+          expect(written_question.correcting_object).to be_an_instance_of(WrittenQuestion)
+        end
+      end
+    end
+    context 'where not corrected' do
+      it 'returns nil' do
+        allow(written_question).to receive(:corrected?).and_return(false)
+        expect(written_question.correcting_object).to be_nil
       end
     end
   end
@@ -237,14 +263,13 @@ RSpec.describe WrittenQuestion, type: :model do
     end
     context 'where corrected' do
       it 'returns the correct path' do
-        allow(written_question).to receive(:state).and_return('Corrected')
+        allow(written_question).to receive(:corrected?).and_return(true)
         expect(written_question.prelim_partial).to eq('/search/fragments/written_question_prelim_corrected')
       end
     end
   end
 
-  xdescribe 'uin' do
-    # disabled - no data
+  describe 'uin' do
     context 'where there is no data' do
       it 'returns nil' do
         expect(written_question.uin).to be_nil
@@ -252,17 +277,17 @@ RSpec.describe WrittenQuestion, type: :model do
     end
 
     context 'where there is an empty array' do
-      let!(:written_question) { WrittenQuestion.new({ '' => [] }) }
+      let!(:written_question) { WrittenQuestion.new({ 'identifier_t' => [] }) }
       it 'returns nil' do
         expect(written_question.uin).to be_nil
       end
     end
 
     context 'where data exists' do
-      let!(:written_question) { WrittenQuestion.new({ '' => [12345, 67890] }) }
+      let!(:written_question) { WrittenQuestion.new({ 'identifier_t' => ['item one', 'item two'] }) }
 
-      it 'returns first item' do
-        expect(written_question.uin).to eq(12345)
+      it 'returns all items' do
+        expect(written_question.uin).to eq(['item one', 'item two'])
       end
     end
   end

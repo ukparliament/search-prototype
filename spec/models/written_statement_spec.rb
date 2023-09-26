@@ -15,7 +15,7 @@ RSpec.describe WrittenStatement, type: :model do
     end
   end
 
-  xdescribe 'attachment' do
+  describe 'attachment' do
     # disabled - awaiting feedback
     context 'where there is no data' do
       it 'returns nil' do
@@ -39,8 +39,7 @@ RSpec.describe WrittenStatement, type: :model do
     end
   end
 
-  xdescribe 'notes' do
-    # disabled - awaiting feedback
+  describe 'notes' do
     context 'where there is no data' do
       it 'returns nil' do
         expect(written_statement.notes).to be_nil
@@ -57,8 +56,8 @@ RSpec.describe WrittenStatement, type: :model do
     context 'where data exists' do
       let!(:written_statement) { WrittenStatement.new({ 'notes_t' => ['first item', 'second item'] }) }
 
-      it 'returns all items as an array' do
-        expect(written_statement.notes).to eq(['first item', 'second item'])
+      it 'returns the first item' do
+        expect(written_statement.notes).to eq('first item')
       end
     end
   end

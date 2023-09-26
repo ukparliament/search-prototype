@@ -1,4 +1,4 @@
-<%#= render 'search/fragments/data', data: object.content_object_data %>
+<%= render 'search/fragments/data', data: object.content_object_data %>
 
 <% content_for(:before_title) do %>
   <%= link_to('UK Parliament', root_path) %> / <%= link_to('Open data', root_path) %><br/>
@@ -20,7 +20,9 @@
 <%= render 'search/fragments/answer', object: object if object.answered? || object.answered_was_holding? %>
 
 <!--Currently no data present for these categories of written question-->
+<!--the holding answer is just the answer if the state is holding?-->
 <%#= render 'search/fragments/holding_answer', object: object if object.holding? %>
+<!--need to confirm whether this is corrected or correcting answer-->
 <%#= render 'search/fragments/corrected_answer', object: object if object.corrected? %>
 
 <section id="about" class="content-section grey">

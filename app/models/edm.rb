@@ -59,6 +59,25 @@ class Edm < ContentObject
     result_hashes
   end
 
+  def amendments_count
+    return if amendments.blank?
+
+    amendments.size
+  end
+
+  def withdrawn?
+    return false unless state == 'Withdrawn'
+
+    true
+  end
+
+  def state
+    # e.g. 'Open'
+    return if content_object_data['edmStatus_t'].blank?
+
+    content_object_data['edmStatus_t']
+  end
+
   def amendment_text
     return if content_object_data['amendmentText_t'].blank?
 
@@ -72,6 +91,12 @@ class Edm < ContentObject
     content_object_data['signedMember_ses']
   end
 
+  def number_of_signatures
+    return if content_object_data['numberOfSignatures_t'].blank?
+
+    content_object_data['numberOfSignatures_t'].first
+  end
+
   def motion_text
     return if content_object_data['motionText_t'].blank?
 
@@ -79,9 +104,15 @@ class Edm < ContentObject
   end
 
   def primary_sponsor
-    return if content_object_data['primarySponsorPrinted_s'].blank?
+    return if content_object_data['primarySponsor_ses'].blank?
 
-    content_object_data['primarySponsorPrinted_s'].first
+    content_object_data['primarySponsor_ses'].first
+  end
+
+  def primary_sponsor_party
+    return if content_object_data['primarySponsorParty_ses'].blank?
+
+    content_object_data['primarySponsorParty_ses'].first
   end
 
   def date_tabled

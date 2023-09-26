@@ -25,6 +25,13 @@ class ResearchBriefing < ContentObject
 
     content_object_data['creator_ses'].first
   end
+  def creator_party
+    # this is for the prelim 'by...'
+
+    return if content_object_data['creatorParty_ses'].blank?
+
+    content_object_data['creatorParty_ses'].first
+  end
 
   def published_by
     # this is the publishing organisation and is to be used in the secondary attributes
