@@ -33,16 +33,16 @@ class ContentObject
   end
 
   def subjects
-    return if content_object_data['subject_sesrollup'].blank?
+    return if content_object_data['subject_ses'].blank?
 
-    content_object_data['subject_sesrollup']
+    content_object_data['subject_ses']
   end
 
   def topics
     # note - have not yet verified key as missing from test data
-    return if content_object_data['topic_sesrollup'].blank?
+    return if content_object_data['topic_ses'].blank?
 
-    content_object_data['topic_sesrollup']
+    content_object_data['topic_ses']
   end
 
   def legislation

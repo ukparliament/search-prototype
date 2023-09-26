@@ -1,8 +1,21 @@
 <div class="content-prelim-box">
   <div class="content-prelim-inner">
     <div class="content-prelim-text" id="prelim-text">
-      An <%= object_link('Early Day Motion', '/') %> tabled by <%= object_link(object.primary_sponsor, '/') %>
-      on <strong><%= object.date_tabled&.strftime(ApplicationHelper::DATE_DISPLAY_FORMAT) %></strong>.
+      An <%= object_link('Early Day Motion', '/') %> sponsored by <%= object_link(object.primary_sponsor, '/') %>
+      (primary sponsor, <%= object_link(object.primary_sponsor_party, '/') %>)
+      <% object.other_supporters.each do |supporter| %>
+        <%= object_link(supporter, '/') %>,
+      <% end %>
+      and tabled on <strong><%= object.date_tabled&.strftime(ApplicationHelper::DATE_DISPLAY_FORMAT) %></strong>
+      in the <%= object_link(object.legislature, '/') %>.
+      It is a fatal prayer
+      <strong>signed by <%= object.number_of_signatures %> members in total</strong><%= object.amendments_count ? \
+                                                                                          ',' : '.' %>
+      <% if object.amendments_count %> and has received <%= object_link(object.amendments_count, '#amendments') %>.
+      <% end %>
+      <% if object.withdrawn? %>
+        The primary sponsor has subsequently withdrawn this motion.
+      <% end %>
     </div>
   </div>
 </div>
