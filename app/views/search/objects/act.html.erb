@@ -1,4 +1,4 @@
-<%#= render 'search/fragments/data', data: object.content_object_data %>
+<%= render 'search/fragments/data', data: object.content_object_data %>
 
 <% content_for(:before_title) do %>
   <%= link_to('UK Parliament', root_path) %> / <%= link_to('Open data', root_path) %><br/>
@@ -13,7 +13,7 @@
 <% end %>
 
 <section id="prelim">
-  <%= render 'search/fragments/edm_prelim', object: object %>
+  <%= render 'search/fragments/act_prelim', object: object %>
 </section>
 
 <section id="text" class="content-section">
@@ -25,11 +25,8 @@
 <section id="about" class="content-section grey">
   <h2 class="content-heading">About this <%= object.object_name %></h2>
   <%= render 'search/fragments/reference', reference: object.reference unless object.reference.blank? %>
-  <%= render 'search/fragments/session', session: object.session unless object.session.blank? %>
-  <%= render 'search/fragments/registered_interest_declared', registered_interest_declared: object.registered_interest_declared unless object.registered_interest_declared.blank? %>
-  <%= render 'search/fragments/other_supporters', supporters: object.other_supporters unless object.other_supporters.blank? %>
-  <%= render 'search/fragments/amendments', title: object.page_title, amendments: object.amendments unless object.amendments.blank? %>
   <%= render 'search/fragments/related_items', related_items: object.related_items unless object.related_items.blank? %>
+  <%= render 'search/fragments/notes', registered_interest_declared: object.notes unless object.notes.blank? %>
   <%= render 'search/fragments/pills', pills_heading: 'Subjects', pills: object.subjects unless object.subjects.blank? %>
   <%= render 'search/fragments/legislation', legislation: object.legislation unless object.legislation.blank? %>
   <%= render 'search/fragments/links', object: object if object.has_link? %>
