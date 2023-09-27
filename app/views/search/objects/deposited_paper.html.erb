@@ -1,0 +1,38 @@
+<%= render 'search/fragments/data', data: object.content_object_data %>
+
+<% content_for(:before_title) do %>
+  <%= link_to('UK Parliament', root_path) %> / <%= link_to('Open data', root_path) %><br/>
+  <%#= link_to('< Back to search results', root_path) %>
+  <div id="top"></div>
+<% end %>
+
+<% if object.page_title %>
+  <% content_for(:title) do %>
+    <%= object.page_title %>
+  <% end %>
+<% end %>
+
+<section id="prelim">
+  <%= render 'search/fragments/deposited_paper_prelim', object: object %>
+</section>
+
+<section id="text" class="content-section">
+  <div class="content-text">
+    <%= object.motion_text %>
+  </div>
+</section>
+
+<section id="about" class="content-section grey">
+  <h2 class="content-heading">About this <%= object.object_name %></h2>
+  <%= render 'search/fragments/reference', reference: object.reference unless object.reference.blank? %>
+  <!--  date originated-->
+  <%= render 'search/fragments/related_items', related_items: object.related_items unless object.related_items.blank? %>
+  <!--  corporate author-->
+  <!--  personal author-->
+  <%= render 'search/fragments/pills', pills_heading: 'Subjects', pills: object.subjects unless object.subjects.blank? %>
+  <%= render 'search/fragments/legislation', legislation: object.legislation unless object.legislation.blank? %>
+  <!--  library location-->
+  <!--  contains statistics-->
+</section>
+
+<%= render '/search/fragments/back_to_top_button' %>
