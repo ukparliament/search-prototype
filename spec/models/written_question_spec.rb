@@ -234,37 +234,37 @@ RSpec.describe WrittenQuestion, type: :model do
     context 'where tabled' do
       it 'returns the correct path' do
         allow(written_question).to receive(:state).and_return('Tabled')
-        expect(written_question.prelim_partial).to eq('/search/fragments/written_question_prelim_tabled')
+        expect(written_question.prelim_partial).to eq('/search/preliminary_sentences/written_question_tabled')
       end
     end
     context 'where answered' do
       it 'returns the correct path' do
         allow(written_question).to receive(:state).and_return('Answered')
-        expect(written_question.prelim_partial).to eq('/search/fragments/written_question_prelim_answered')
+        expect(written_question.prelim_partial).to eq('/search/preliminary_sentences/written_question_answered')
       end
     end
     context 'where holding' do
       it 'returns the correct path' do
         allow(written_question).to receive(:state).and_return('Holding')
-        expect(written_question.prelim_partial).to eq('/search/fragments/written_question_prelim_holding')
+        expect(written_question.prelim_partial).to eq('/search/preliminary_sentences/written_question_holding')
       end
     end
     context 'where answered_was_holding' do
       it 'returns the correct path' do
         allow(written_question).to receive(:answered_was_holding?).and_return(true)
-        expect(written_question.prelim_partial).to eq('/search/fragments/written_question_prelim_answered_was_holding')
+        expect(written_question.prelim_partial).to eq('/search/preliminary_sentences/written_question_answered_was_holding')
       end
     end
     context 'where withdrawn' do
       it 'returns the correct path' do
         allow(written_question).to receive(:state).and_return('Withdrawn')
-        expect(written_question.prelim_partial).to eq('/search/fragments/written_question_prelim_withdrawn')
+        expect(written_question.prelim_partial).to eq('/search/preliminary_sentences/written_question_withdrawn')
       end
     end
     context 'where corrected' do
       it 'returns the correct path' do
         allow(written_question).to receive(:corrected?).and_return(true)
-        expect(written_question.prelim_partial).to eq('/search/fragments/written_question_prelim_corrected')
+        expect(written_question.prelim_partial).to eq('/search/preliminary_sentences/written_question_corrected')
       end
     end
   end
