@@ -84,17 +84,17 @@ class WrittenQuestion < ContentObject
   end
 
   def prelim_partial
-    return '/search/fragments/written_question_prelim_tabled' if tabled?
+    return '/search/preliminary_sentences/written_question_tabled' if tabled?
 
-    return '/search/fragments/written_question_prelim_answered' if answered?
+    return '/search/preliminary_sentences/written_question_answered' if answered?
 
-    return '/search/fragments/written_question_prelim_holding' if holding?
+    return '/search/preliminary_sentences/written_question_holding' if holding?
 
-    return '/search/fragments/written_question_prelim_answered_was_holding' if answered_was_holding?
+    return '/search/preliminary_sentences/written_question_answered_was_holding' if answered_was_holding?
 
-    return '/search/fragments/written_question_prelim_withdrawn' if withdrawn?
+    return '/search/preliminary_sentences/written_question_withdrawn' if withdrawn?
 
-    return '/search/fragments/written_question_prelim_corrected' if corrected?
+    return '/search/preliminary_sentences/written_question_corrected' if corrected?
 
     nil
   end
