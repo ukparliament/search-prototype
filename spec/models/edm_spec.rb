@@ -9,6 +9,12 @@ RSpec.describe Edm, type: :model do
     end
   end
 
+  describe 'object_name' do
+    it 'returns a string' do
+      expect(edm.object_name).to be_a(String)
+    end
+  end
+
   describe 'motion_text' do
     context 'where there is no data' do
       it 'returns nil' do
@@ -383,6 +389,138 @@ RSpec.describe Edm, type: :model do
 
       it 'returns the external link' do
         expect(edm.display_link).to eq('www.test.com')
+      end
+    end
+  end
+
+  describe 'amendments_count' do
+    context 'where there are amendments' do
+      it 'returns the number of amendments' do
+        allow(edm).to receive(:amendments).and_return([{ name: 'amendment one' }, { name: 'amendment two' }, { name: 'amendment three' }])
+        expect(edm.amendments_count).to eq(3)
+      end
+    end
+    context 'where there are no amendments' do
+      it 'returns nil' do
+        expect(edm.amendments_count).to be_nil
+      end
+    end
+  end
+
+  describe 'open?' do
+    context 'when state is open' do
+      it 'returns true' do
+        allow(edm).to receive(:state).and_return('Open')
+        expect(edm.open?).to eq(true)
+      end
+    end
+    context 'in any other state' do
+      it 'returns true' do
+        allow(edm).to receive(:state).and_return('Closed')
+        expect(edm.open?).to eq(false)
+      end
+    end
+  end
+
+  describe 'closed?' do
+    context 'when state is closed' do
+      it 'returns true' do
+        allow(edm).to receive(:state).and_return('Closed')
+        expect(edm.closed?).to eq(true)
+      end
+    end
+    context 'in any other state' do
+      it 'returns true' do
+        allow(edm).to receive(:state).and_return('Open')
+        expect(edm.closed?).to eq(false)
+      end
+    end
+  end
+
+  describe 'withdrawn?' do
+    context 'when state is withdrawn' do
+      it 'returns true' do
+        allow(edm).to receive(:state).and_return('Withdrawn')
+        expect(edm.withdrawn?).to eq(true)
+      end
+    end
+    context 'in any other state' do
+      it 'returns true' do
+        allow(edm).to receive(:state).and_return('Open')
+        expect(edm.withdrawn?).to eq(false)
+      end
+    end
+  end
+
+  describe 'suspended?' do
+    context 'when state is withdrawn' do
+      it 'returns true' do
+        allow(edm).to receive(:state).and_return('Suspended')
+        expect(edm.suspended?).to eq(true)
+      end
+    end
+    context 'in any other state' do
+      it 'returns true' do
+        allow(edm).to receive(:state).and_return('Open')
+        expect(edm.suspended?).to eq(false)
+      end
+    end
+  end
+
+  describe 'number_of_signatures' do
+    context 'where field is populated' do
+      let!(:edm) { Edm.new({ 'numberOfSignatures_t' => ['10'] }) }
+      it 'returns a string' do
+        expect(edm.number_of_signatures).to eq('10')
+      end
+    end
+    context 'where field is not populated' do
+      it 'returns a string' do
+        expect(edm.number_of_signatures).to be_nil
+      end
+    end
+  end
+
+  describe 'fatal_prayer?' do
+    context 'where subtype is fatal prayer' do
+      let!(:edm) { Edm.new({ 'subtype_ses' => [445873] }) }
+      it 'returns true' do
+        expect(edm.fatal_prayer?).to eq(true)
+      end
+    end
+    context 'for any other subtype' do
+      let!(:edm) { Edm.new({ 'subtype_ses' => [445875] }) }
+      it 'returns false' do
+        expect(edm.fatal_prayer?).to eq(false)
+      end
+    end
+  end
+
+  describe 'fatal_prayer?' do
+    context 'where subtype is fatal prayer' do
+      let!(:edm) { Edm.new({ 'subtype_ses' => [445875] }) }
+      it 'returns true' do
+        expect(edm.non_fatal_prayer?).to eq(true)
+      end
+    end
+    context 'for any other subtype' do
+      let!(:edm) { Edm.new({ 'subtype_ses' => [445873] }) }
+      it 'returns false' do
+        expect(edm.non_fatal_prayer?).to eq(false)
+      end
+    end
+  end
+
+  describe 'subtype' do
+    context 'where field is populated' do
+      let!(:edm) { Edm.new({ 'subtype_ses' => [12345] }) }
+      it 'returns a type ID' do
+        expect(edm.subtype).to eq(12345)
+      end
+    end
+    context 'where field is not populated' do
+      it 'returns a string' do
+        expect(edm.subtype).to be_nil
       end
     end
   end
