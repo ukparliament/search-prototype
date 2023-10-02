@@ -1,0 +1,12 @@
+<div class="content-prelim-box">
+  <div class="content-prelim-inner">
+    <div class="content-prelim-text" id="prelim-text">
+      A <%= object_link('legislative formal proceeding', '/') %> (<%= object_link(object.reading, '/') %>)
+      on <strong><%= object.date&.strftime(ApplicationHelper::DATE_DISPLAY_FORMAT) %></strong>,
+      in the <%= object_link(object.legislature, '/') %> led by <%= object_link(object.lead_member, '/') %>
+      on behalf of the <%= object_link(object.department, '/') %>. The answering member was
+      <%= object_link(object.answering_member, '/') %>.
+    </div>
+  </div>
+</div>
+

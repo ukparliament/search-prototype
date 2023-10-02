@@ -1,0 +1,15 @@
+<div class="content-prelim-box">
+  <div class="content-prelim-inner">
+    <div class="content-prelim-text" id="prelim-text">
+      A <%= object_link(object.instrument_type, '/') %> laid in the
+      <%= object_link(object.legislature, '/') %>, on
+      <strong><%= object.date&.strftime(ApplicationHelper::DATE_DISPLAY_FORMAT) %></strong>
+      by <%= object_link(object.primary_sponsor, '/') %> on behalf of the
+      <%= object_link(object.department, '/') %>. It was approved by the House of Commons on
+      <strong><%= object.approval_date&.strftime(ApplicationHelper::DATE_DISPLAY_FORMAT) %></strong>.
+      It was made on
+      <strong><%= object.approval_date&.strftime(ApplicationHelper::DATE_DISPLAY_FORMAT) %></strong>.
+    </div>
+  </div>
+</div>
+

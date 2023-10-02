@@ -1,0 +1,9 @@
+<div class="content-prelim-box">
+  <div class="content-prelim-inner">
+    <div class="content-prelim-text" id="prelim-text">
+      A <%= object_link('paper petition', '/') %> presented in the <%= object_link(object.legislature, '/') %> on
+      <strong><%= object.date&.strftime(ApplicationHelper::DATE_DISPLAY_FORMAT) %></strong> by
+      <%= object_link(object.presented_by, '/') %>.
+    </div>
+  </div>
+</div>

@@ -1,0 +1,15 @@
+<div class="content-prelim-box">
+  <div class="content-prelim-inner">
+    <div class="content-prelim-text" id="prelim-text">
+      A <%= object_link(object.proceeding_type, '/') %> on
+      <strong><%= object.date&.strftime(ApplicationHelper::DATE_DISPLAY_FORMAT) %></strong>,
+      in the <%= object_link(object.legislature, '/') %>, in the
+      in the <%= object_link(object.location, '/') %> led by
+      <%= object_link(object.lead_member, '/') %>. The answering members were
+      <% object.answering_members.each do |member| %>
+        <%= object_link(member, '/') %>
+      <% end %>.
+    </div>
+  </div>
+</div>
+
