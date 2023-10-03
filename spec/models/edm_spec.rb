@@ -525,4 +525,18 @@ RSpec.describe Edm, type: :model do
     end
   end
 
+  describe 'has_subtype?' do
+    context 'where field is populated' do
+      let!(:edm) { Edm.new({ 'subtype_ses' => [12345] }) }
+      it 'returns a type ID' do
+        expect(edm.has_subtype?).to eq(true)
+      end
+    end
+    context 'where field is not populated' do
+      it 'returns a string' do
+        expect(edm.has_subtype?).to eq(false)
+      end
+    end
+  end
+
 end
