@@ -71,8 +71,59 @@ class Edm < ContentObject
     true
   end
 
+  def open?
+    return false unless state == 'Open'
+
+    true
+  end
+
+  def closed?
+    return false unless state == 'Closed'
+
+    true
+  end
+
+  def suspended?
+    return false unless state == 'Suspended'
+
+    true
+  end
+
+  def subtype
+    # the majority of EDMs have no subtype
+    return if content_object_data['subtype_ses'].blank?
+
+    content_object_data['subtype_ses'].first
+  end
+
+  def fatal_prayer?
+    return false unless subtype == 445873
+
+    true
+  end
+
+  def non_fatal_prayer?
+    return false unless subtype == 445875
+
+    true
+  end
+
+  def has_subtype?
+    return false if subtype.blank?
+
+    true
+  end
+
+  def subtype_name
+    return 'fatal prayer' if fatal_prayer?
+
+    return 'non-fatal prayer' if non_fatal_prayer?
+
+    nil
+  end
+
   def state
-    # e.g. 'Open'
+    # 'Open', 'Closed', 'Withdrawn', 'Suspended'
     return if content_object_data['edmStatus_t'].blank?
 
     content_object_data['edmStatus_t']

@@ -4,13 +4,17 @@
       An <%= object_link('Early Day Motion', '/') %> sponsored by <%= object_link(object.primary_sponsor, '/') %>
       (primary sponsor, <%= object_link(object.primary_sponsor_party, '/') %>)
       <% unless object.other_supporters.blank? %>
-        <% object.other_supporters.each do |supporter| %>
+        <% object.other_supporters.first(5).each do |supporter| %>
           <%= object_link(supporter, '/') %>,
         <% end %>
       <% end %>
       and tabled on <strong><%= object.date_tabled&.strftime(ApplicationHelper::DATE_DISPLAY_FORMAT) %></strong>
       in the <%= object_link(object.legislature, '/') %>.
-      It is a fatal prayer
+      <% if object.has_subtype? %>
+      It is a <%= object.subtype_name %>
+      <% else %>
+      It is
+      <% end %>
       <strong>signed by <%= object.number_of_signatures %> members in total</strong><%= object.amendments_count ? \
                                                                                           ',' : '.' %>
       <% if object.amendments_count %> and has received <%= object_link(object.amendments_count, '#amendments') %>.
@@ -21,4 +25,3 @@
     </div>
   </div>
 </div>
-
