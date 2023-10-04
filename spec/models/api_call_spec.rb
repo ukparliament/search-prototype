@@ -26,7 +26,8 @@ RSpec.describe ApiCall, type: :model do
   describe 'ruby_uri' do
     it 'returns a ruby uri with the base prepended' do
       expect(api_call.ruby_uri).to be_a(URI)
-      expect(api_call.ruby_uri.to_s).to eq('https://api.parliament.uk/search-mock/objects.json?object=test_uri')
+      # expect(api_call.ruby_uri.to_s).to eq('https://api.parliament.uk/search-mock/objects.json?object=test_uri')
+      expect(api_call.ruby_uri.to_s).to eq('https://api.parliament.uk/new-solr/select?q=uri:%22test_uri%22')
     end
   end
 end
