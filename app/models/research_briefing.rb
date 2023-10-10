@@ -69,6 +69,7 @@ class ResearchBriefing < ContentObject
   end
 
   def publisher_logo_partial
+    # TODO: investigate CSS approach
     # TODO: validate publisher names against accepted list?
 
     return unless publisher_string

@@ -354,6 +354,38 @@ RSpec.describe WrittenQuestion, type: :model do
     end
   end
 
+  describe 'date_for_answer' do
+    context 'where there is no data' do
+      it 'returns nil' do
+        expect(written_question.date_for_answer).to be_nil
+      end
+    end
+
+    context 'where there is an empty array' do
+      let!(:written_question) { WrittenQuestion.new({ 'dateForAnswer_dt' => [] }) }
+      it 'returns nil' do
+        expect(written_question.date_for_answer).to be_nil
+      end
+    end
+
+    context 'where data exists' do
+      let!(:written_question) { WrittenQuestion.new({ 'dateForAnswer_dt' => [Date.yesterday.to_s, Date.today.to_s] }) }
+
+      context 'where data is a valid date' do
+        let!(:written_question) { WrittenQuestion.new({ 'dateForAnswer_dt' => [Date.yesterday.to_s, Date.today.to_s] }) }
+        it 'returns the first object as a date' do
+          expect(written_question.date_for_answer).to eq(Date.yesterday)
+        end
+      end
+      context 'where data is not a valid date' do
+        let!(:written_question) { WrittenQuestion.new({ 'dateForAnswer_dt' => 'date' }) }
+        it 'returns nil' do
+          expect(written_question.date_for_answer).to be_nil
+        end
+      end
+    end
+  end
+
   describe 'tabling_member' do
     context 'where there is no data' do
       it 'returns nil' do

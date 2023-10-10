@@ -4,8 +4,11 @@
       A <%= object_link("#{object.object_name.titleize}", '/') %>
       tabled by <%= object_link("#{object.tabling_member}", '/') %> (<%= object.tabling_member_party %>)
       on <strong><%= object.date_of_question&.strftime(ApplicationHelper::DATE_DISPLAY_FORMAT) %></strong>,
-      in the <%= object_link("#{object.legislature}", '/') %> for the
-      <%= object_link("#{object.department}", '/') %>.
+      in the <%= object_link("#{object.legislature}", '/') %>
+      <% unless object.department.blank? %>
+        for the <%= object_link("#{object.department}", '/') %>
+      <% end %>
+      .
       It is due for answer
       on <strong><%= object.date_for_answer&.strftime(ApplicationHelper::DATE_DISPLAY_FORMAT) %></strong>
       (named day).

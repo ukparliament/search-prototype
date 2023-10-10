@@ -108,6 +108,10 @@ class ContentObject
   def related_items
     # based on provided information, this will return one or more URIs of related item object pages
 
+    # if relation_t and relation_uri, gets a related item
+    # fields might be inconsistent
+    # link through to the item landing page
+
     return if content_object_data['relation_t'].blank?
 
     content_object_data['relation_t']

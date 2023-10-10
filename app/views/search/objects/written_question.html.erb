@@ -35,11 +35,11 @@
   <%= render 'search/fragments/registered_interest_declared', registered_interest_declared: object.registered_interest_declared unless object.registered_interest_declared.blank? %>
   <%= render 'search/fragments/attachment', attachments: object.attachment unless object.attachment.blank? %>
   <% unless object.tabled? || object.withdrawn? %>
-    <%#= render 'search/fragments/grouped_for_answer', grouped: object.grouped_for_answer? %>
+    <%= render 'search/fragments/grouped_for_answer', grouped: object.grouped_for_answer? %>
     <%= render 'search/fragments/transferred', transferred: object.transferred? %>
   <% end %>
-  <!--  failed oral-->
-  <!--  unstarred-->
+  <%= render 'search/fragments/failed_oral', transferred: object.failed_oral? %>
+  <%= render 'search/fragments/unstarred', transferred: object.unstarred? %>
   <%= render 'search/fragments/pills', pills_heading: 'Subjects', pills: object.subjects unless object.subjects.blank? %>
   <%= render 'search/fragments/legislation', legislation: object.legislation unless object.legislation.blank? %>
   <%= render 'search/fragments/links', object: object if object.has_link? %>
