@@ -1,8 +1,8 @@
 <div class="content-prelim-box">
   <div class="content-prelim-inner">
     <div class="content-prelim-text" id="prelim-text">
-      A <%= object_link("#{object.object_name.titleize}", '/') %>
-      by <%= object_link("#{object.creator}", '/') %>
+      A <%= object_link(@ses_data[object.type].singularize.downcase, '/') %>
+      by <%= ses_object_link(object.creator) %>
       published on <strong><%= object.published_on&.strftime(ApplicationHelper::DATE_DISPLAY_FORMAT) %></strong>.
       <% if object.updated_on %>
         It was updated on <strong><%= object.updated_on&.strftime(ApplicationHelper::DATE_DISPLAY_FORMAT) %></strong>.

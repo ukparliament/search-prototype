@@ -8,8 +8,5 @@ class Contribution < ContentObject
     'search/objects/contribution'
   end
 
-  def object_name
-    "Contribution"
-  end
 
 end

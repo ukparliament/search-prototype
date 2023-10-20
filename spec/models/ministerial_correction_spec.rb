@@ -9,12 +9,6 @@ RSpec.describe MinisterialCorrection, type: :model do
     end
   end
 
-  describe 'object_name' do
-    it 'returns a string' do
-      expect(ministerial_correction.object_name).to be_a(String)
-    end
-  end
-
   describe 'reference' do
     context 'where there is no data' do
       it 'returns nil' do

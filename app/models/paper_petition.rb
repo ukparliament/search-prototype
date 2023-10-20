@@ -8,8 +8,4 @@ class PaperPetition < ContentObject
     'search/objects/paper_petition'
   end
 
-  def object_name
-    "Paper petition"
-  end
-
 end

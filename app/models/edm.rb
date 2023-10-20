@@ -8,8 +8,18 @@ class Edm < ContentObject
     'search/objects/edm'
   end
 
-  def object_name
-    "early day motion"
+  def ses_lookup_ids
+    [
+      type,
+      subtype,
+      other_supporters,
+      other_sponsors,
+      primary_sponsor,
+      primary_sponsor_party,
+      subjects,
+      legislation,
+      legislature
+    ]
   end
 
   def amendments
@@ -136,10 +146,17 @@ class Edm < ContentObject
   end
 
   def other_supporters
-    # requires a SES lookup to fetch names
+    # This is all other supporters and includes other sponsors
     return if content_object_data['signedMember_ses'].blank?
 
     content_object_data['signedMember_ses']
+  end
+
+  def other_sponsors
+    # this is for the prelim sentence
+    return if content_object_data['sponsor_ses'].blank?
+
+    content_object_data['sponsor_ses']
   end
 
   def number_of_signatures

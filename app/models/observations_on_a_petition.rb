@@ -7,9 +7,4 @@ class ObservationsOnAPetition < ContentObject
   def template
     'search/objects/observations_on_a_petition'
   end
-
-  def object_name
-    "Observations on a Petition"
-  end
-
 end

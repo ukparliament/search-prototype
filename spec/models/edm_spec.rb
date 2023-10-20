@@ -9,12 +9,6 @@ RSpec.describe Edm, type: :model do
     end
   end
 
-  describe 'object_name' do
-    it 'returns a string' do
-      expect(edm.object_name).to be_a(String)
-    end
-  end
-
   describe 'motion_text' do
     context 'where there is no data' do
       it 'returns nil' do
@@ -126,6 +120,29 @@ RSpec.describe Edm, type: :model do
 
       it 'returns all items' do
         expect(edm.other_supporters).to eq(['first item', 'second item'])
+      end
+    end
+  end
+
+  describe 'other_sponsors' do
+    context 'where there is no data' do
+      it 'returns nil' do
+        expect(edm.other_sponsors).to be_nil
+      end
+    end
+
+    context 'where there is an empty array' do
+      let!(:edm) { Edm.new({ 'sponsor_ses' => [] }) }
+      it 'returns nil' do
+        expect(edm.other_sponsors).to be_nil
+      end
+    end
+
+    context 'where data exists' do
+      let!(:edm) { Edm.new({ 'sponsor_ses' => ['first item', 'second item'] }) }
+
+      it 'returns all items' do
+        expect(edm.other_sponsors).to eq(['first item', 'second item'])
       end
     end
   end

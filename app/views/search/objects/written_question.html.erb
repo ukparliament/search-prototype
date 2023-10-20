@@ -1,4 +1,5 @@
-<%= render 'search/fragments/data', data: object.content_object_data %>
+<%#= render 'search/fragments/data', data: object.content_object_data, title: 'SOLR Data' %>
+<%#= render 'search/fragments/data', data: @ses_data, title: 'SES Data' %>
 
 <% content_for(:before_title) do %>
   <%= link_to('UK Parliament', root_path) %> / <%= link_to('Open data', root_path) %><br/>
@@ -16,17 +17,17 @@
   <%= render object.prelim_partial, object: object %>
 </section>
 
+<!--for tabled / answered / holding / answered was holding / corrected -->
 <%= render 'search/fragments/question', object: object %>
+
+<!--for answered / holding / withdrawn (? unsure why a withdrawn question would have an answer) / corrected -->
 <%= render 'search/fragments/answer', object: object if object.answered? || object.answered_was_holding? %>
 
-<!--Currently no data present for these categories of written question-->
-<!--the holding answer is just the answer if the state is holding?-->
-<%#= render 'search/fragments/holding_answer', object: object if object.holding? %>
-<!--need to confirm whether this is corrected or correcting answer-->
-<%#= render 'search/fragments/corrected_answer', object: object if object.corrected? %>
+<!--for corrected-->
+<%= render 'search/fragments/corrected_answer', object: object if object.corrected? %>
 
 <section id="about" class="content-section grey">
-  <h2 class="content-heading">About this <%= object.object_name %></h2>
+  <h2 class="content-heading">About this  <%= @ses_data[object.type].singularize.downcase %></h2>
   <%= render 'search/fragments/uin', uins: object.uin unless object.uin.blank? %>
   <%= render 'search/fragments/session', session: object.session unless object.session.blank? %>
   <%#= render 'search/fragments/procedure', procedure: object.procedure unless object.procedure.blank? %>
@@ -35,11 +36,11 @@
   <%= render 'search/fragments/registered_interest_declared', registered_interest_declared: object.registered_interest_declared unless object.registered_interest_declared.blank? %>
   <%= render 'search/fragments/attachment', attachments: object.attachment unless object.attachment.blank? %>
   <% unless object.tabled? || object.withdrawn? %>
-    <%#= render 'search/fragments/grouped_for_answer', grouped: object.grouped_for_answer? %>
+    <%= render 'search/fragments/grouped_for_answer', grouped: object.grouped_for_answer? %>
     <%= render 'search/fragments/transferred', transferred: object.transferred? %>
   <% end %>
-  <!--  failed oral-->
-  <!--  unstarred-->
+  <%= render 'search/fragments/failed_oral', failed_oral: object.failed_oral? %>
+  <%= render 'search/fragments/unstarred', unstarred: object.unstarred_question? %>
   <%= render 'search/fragments/pills', pills_heading: 'Subjects', pills: object.subjects unless object.subjects.blank? %>
   <%= render 'search/fragments/legislation', legislation: object.legislation unless object.legislation.blank? %>
   <%= render 'search/fragments/links', object: object if object.has_link? %>

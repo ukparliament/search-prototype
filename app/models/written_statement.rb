@@ -8,8 +8,17 @@ class WrittenStatement < ContentObject
     'search/objects/written_statement'
   end
 
-  def object_name
-    "written statement"
+  def ses_lookup_ids
+    [
+      member,
+      member_party,
+      type,
+      subtype,
+      subjects,
+      legislation,
+      legislature,
+      department
+    ]
   end
 
   def attachment

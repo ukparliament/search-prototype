@@ -7,9 +7,4 @@ class ParliamentaryPaperReported < ContentObject
   def template
     'search/objects/parliamentary_paper_reported'
   end
-
-  def object_name
-    "Parliamentary paper - reported"
-  end
-
 end

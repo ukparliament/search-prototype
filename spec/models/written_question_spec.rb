@@ -9,12 +9,6 @@ RSpec.describe WrittenQuestion, type: :model do
     end
   end
 
-  describe 'object_name' do
-    it 'returns a string' do
-      expect(written_question.object_name).to be_a(String)
-    end
-  end
-
   describe 'state' do
     context 'where there is no data' do
       it 'returns nil' do
@@ -349,6 +343,38 @@ RSpec.describe WrittenQuestion, type: :model do
         let!(:written_question) { WrittenQuestion.new({ 'dateOfAnswer_dt' => 'date' }) }
         it 'returns nil' do
           expect(written_question.date_of_answer).to be_nil
+        end
+      end
+    end
+  end
+
+  describe 'date_for_answer' do
+    context 'where there is no data' do
+      it 'returns nil' do
+        expect(written_question.date_for_answer).to be_nil
+      end
+    end
+
+    context 'where there is an empty array' do
+      let!(:written_question) { WrittenQuestion.new({ 'dateForAnswer_dt' => [] }) }
+      it 'returns nil' do
+        expect(written_question.date_for_answer).to be_nil
+      end
+    end
+
+    context 'where data exists' do
+      let!(:written_question) { WrittenQuestion.new({ 'dateForAnswer_dt' => [Date.yesterday.to_s, Date.today.to_s] }) }
+
+      context 'where data is a valid date' do
+        let!(:written_question) { WrittenQuestion.new({ 'dateForAnswer_dt' => [Date.yesterday.to_s, Date.today.to_s] }) }
+        it 'returns the first object as a date' do
+          expect(written_question.date_for_answer).to eq(Date.yesterday)
+        end
+      end
+      context 'where data is not a valid date' do
+        let!(:written_question) { WrittenQuestion.new({ 'dateForAnswer_dt' => 'date' }) }
+        it 'returns nil' do
+          expect(written_question.date_for_answer).to be_nil
         end
       end
     end

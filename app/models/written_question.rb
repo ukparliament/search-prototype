@@ -8,8 +8,19 @@ class WrittenQuestion < ContentObject
     'search/objects/written_question'
   end
 
-  def object_name
-    "written question"
+  def ses_lookup_ids
+    [
+      type,
+      subtype,
+      answering_member,
+      answering_member_party,
+      tabling_member,
+      tabling_member_party,
+      subjects,
+      legislation,
+      legislature,
+      department
+    ]
   end
 
   def state
@@ -54,8 +65,8 @@ class WrittenQuestion < ContentObject
     # Prior to July 2014, correctedWmsMc_b flag + related links will contain a link to the correction
     # After July 2014, correctedWmsMc_b + correctingItem_uri OR correctingItem_t / s as a fallback
 
-    # There's the potential for some confusion here at this is not mutually exclusive with the other states
-    # e.g. a written question could, under this model, be answered and corrected, or tabled and corrected
+    # corrected 'written questions' are written questions with corrected answers, and will have a state
+    # of 'answered'
 
     return false unless content_object_data['correctedWmsMc_b'] == 'true'
 
@@ -71,9 +82,6 @@ class WrittenQuestion < ContentObject
     # This only applies to corrections before July 2014, and for corrected written questions after this date
     # this method should return nil as content_object_data['correctingItem_uri'] will be blank. We can therefore
     # check correcting_object is not nil to determine whether or not we attempt to show its data in the view.
-    #
-    # May need to adjust this to cache response first time around
-    # Also worth noting here: we're assuming that the correcting object is a written question
 
     return unless corrected?
 
@@ -81,6 +89,12 @@ class WrittenQuestion < ContentObject
 
     correcting_item_data = ApiCall.new(object_uri: content_object_data['correctingItem_uri']).object_data
     ContentObject.generate(correcting_item_data)
+  end
+
+  def written_question_type
+    return if content_object_data['wpqType_t'].blank?
+
+    content_object_data['wpqType_t']
   end
 
   def prelim_partial
@@ -133,11 +147,13 @@ class WrittenQuestion < ContentObject
   end
 
   def date_for_answer
-    # This is required by the views as currently wireframed:
-    # 'it was due for answer on <date>'
-    # Currently unclear on the field holding this information
+    # will be missing for Lords questions 2005-2014
+    return if content_object_data['dateForAnswer_dt'].blank?
 
-    nil
+    valid_date_string = validate_date(content_object_data['dateForAnswer_dt'].first)
+    return unless valid_date_string
+
+    valid_date_string.to_date
   end
 
   def date_of_holding_answer
@@ -179,6 +195,11 @@ class WrittenQuestion < ContentObject
     CGI::unescapeHTML(content_object_data['answerText_t'].first)
   end
 
+  def corrected_answer
+    # TODO: data for this not currently determined
+    nil
+  end
+
   def question_text
     return if content_object_data['questionText_t'].blank?
 
@@ -189,6 +210,30 @@ class WrittenQuestion < ContentObject
     return if content_object_data['transferredQuestion_b'].blank?
 
     return true if content_object_data['transferredQuestion_b'] == 'true'
+
+    false
+  end
+
+  def unstarred_question?
+    return if content_object_data['unstarredQuestion_b'].blank?
+
+    return true if content_object_data['unstarredQuestion_b'] == 'true'
+
+    false
+  end
+
+  def failed_oral?
+    return if content_object_data['failedOral_b'].blank?
+
+    return true if content_object_data['failedOral_b'] == 'true'
+
+    false
+  end
+
+  def grouped_for_answer?
+    return if content_object_data['groupedAnswer_b'].blank?
+
+    return true if content_object_data['groupedAnswer_b'] == 'true'
 
     false
   end

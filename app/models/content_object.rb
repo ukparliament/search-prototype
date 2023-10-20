@@ -14,9 +14,37 @@ class ContentObject
     content_object_class(content_type_ses_id).classify.constantize.new(content_object_data)
   end
 
+  def ses_lookup_ids
+    # TODO: refactor so subclasses access this method rather than simply override it
+    [
+      type,
+      subtype,
+      subjects,
+      legislation,
+      legislature,
+      department
+    ]
+  end
+
+  def subtype
+    return if content_object_data['subtype_ses'].blank?
+
+    content_object_data['subtype_ses'].first
+  end
+
+  def type
+    return if content_object_data['type_ses'].blank?
+
+    content_object_data['type_ses'].first
+  end
+
   def page_title
     # We set the page title and the content type.
     content_object_data['title_t']
+  end
+
+  def ses_data
+    SesLookup.new(ses_lookup_ids).data
   end
 
   def content
@@ -107,6 +135,10 @@ class ContentObject
 
   def related_items
     # based on provided information, this will return one or more URIs of related item object pages
+
+    # if relation_t and relation_uri, gets a related item
+    # fields might be inconsistent
+    # link through to the item landing page
 
     return if content_object_data['relation_t'].blank?
 

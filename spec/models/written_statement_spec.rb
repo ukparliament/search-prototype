@@ -9,12 +9,6 @@ RSpec.describe WrittenStatement, type: :model do
     end
   end
 
-  describe 'object_name' do
-    it 'returns a string' do
-      expect(written_statement.object_name).to be_a(String)
-    end
-  end
-
   describe 'attachment' do
     # disabled - awaiting feedback
     context 'where there is no data' do
