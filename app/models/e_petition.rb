@@ -8,8 +8,4 @@ class EPetition < ContentObject
     'search/objects/e_petition'
   end
 
-  def object_name
-    "e-Petition"
-  end
-
 end

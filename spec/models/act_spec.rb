@@ -9,12 +9,6 @@ RSpec.describe Act, type: :model do
     end
   end
 
-  describe 'object_name' do
-    it 'returns a string' do
-      expect(act.object_name).to be_a(String)
-    end
-  end
-
   describe 'reference' do
     context 'where there is no data' do
       it 'returns nil' do

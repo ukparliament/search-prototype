@@ -1,7 +1,7 @@
 <div class="content-prelim-box">
   <div class="content-prelim-inner">
     <div class="content-prelim-text" id="prelim-text">
-      A <%= object_link('Transport and Works Act order application', '/') %> was deposited in Parliament
+      A <%= object_link(@ses_data[object.type].singularize.downcase, '/') %> was deposited in Parliament
       by <%= object_link(object.depositing_agent, '/') %> as the agent, for
       <%= object_link(object.depositing_applicant, '/') %> as the applicant,
       on <strong><%= object.date&.strftime(ApplicationHelper::DATE_DISPLAY_FORMAT) %></strong>.

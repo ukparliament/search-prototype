@@ -1,7 +1,7 @@
 <div class="content-prelim-box">
   <div class="content-prelim-inner">
     <div class="content-prelim-text" id="prelim-text">
-      A <%= object_link('public act', '/') %> became law on
+      A <%= object_link(@ses_data[object.type].singularize.downcase, '/') %> became law on
       <strong><%= object.date&.strftime(ApplicationHelper::DATE_DISPLAY_FORMAT) %></strong>,
       when the <%= object_link(object.bill_name, '/') %> received Royal Assent.
     </div>

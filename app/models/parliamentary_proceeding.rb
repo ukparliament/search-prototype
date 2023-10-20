@@ -8,8 +8,4 @@ class ParliamentaryProceeding < ContentObject
     'search/objects/parliamentary_proceeding'
   end
 
-  def object_name
-    "Parliamentary proceeding"
-  end
-
 end

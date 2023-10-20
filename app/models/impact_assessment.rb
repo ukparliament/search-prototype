@@ -8,8 +8,4 @@ class ImpactAssessment < ContentObject
     'search/objects/impact_assessment'
   end
 
-  def object_name
-    "Impact assessment"
-  end
-
 end

@@ -8,8 +8,4 @@ class MinisterialCorrection < ContentObject
     'search/objects/ministerial_correction'
   end
 
-  def object_name
-    "Ministerial correction"
-  end
-
 end

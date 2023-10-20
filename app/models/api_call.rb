@@ -13,7 +13,6 @@ class ApiCall
   end
 
   def object_data
-    puts "evaluated_response: #{evaluated_response}"
     evaluated_response['response']['docs'].first
   end
 

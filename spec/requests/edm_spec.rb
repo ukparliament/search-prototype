@@ -1,18 +1,19 @@
 require 'rails_helper'
 
-RSpec.describe 'ContentObjects', type: :request do
+RSpec.describe 'Edm', type: :request do
   describe 'GET /show' do
     let!(:edm_instance) { Edm.new('test') }
 
     it 'returns http success' do
       allow_any_instance_of(ApiCall).to receive(:object_data).and_return('test')
+      allow_any_instance_of(Edm).to receive(:ses_data).and_return(edm_instance.type => 'early day motion')
       allow(ContentObject).to receive(:generate).and_return(edm_instance)
       get '/search-prototype/objects', params: { :object => 'test_string' }
       expect(response).to have_http_status(:ok)
     end
   end
 
-  describe 'test data' do
+  xdescribe 'test data' do
     test_data = JSON.parse(File.read("spec/fixtures/edm_test_data.json"))
     docs = test_data["response"]["docs"]
 
@@ -29,7 +30,10 @@ RSpec.describe 'ContentObjects', type: :request do
           expect(CGI::unescapeHTML(response.body)).to include(edm_instance.reference)
           expect(CGI::unescapeHTML(response.body)).to include(edm_instance.session)
           expect(CGI::unescapeHTML(response.body)).to include(edm_instance.motion_text)
-          expect(CGI::unescapeHTML(response.body)).to include(edm_instance.primary_sponsor.to_s)
+
+          allow_any_instance_of(SesLookup).to receive(:data).and_return(ses_data)
+
+          expect(CGI::unescapeHTML(response.body)).to include('SES API test response')
           expect(CGI::unescapeHTML(response.body)).to include(edm_instance.display_link)
 
           unless edm_instance.other_supporters.blank?

@@ -8,10 +8,6 @@ class OralQuestion < ContentObject
     'search/objects/oral_question'
   end
 
-  def object_name
-    "Oral question"
-  end
-
   def prelim_partial
     return '/search/preliminary_sentences/oral_question_tabled' if tabled?
 

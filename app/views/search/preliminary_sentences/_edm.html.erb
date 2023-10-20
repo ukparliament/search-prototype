@@ -1,15 +1,15 @@
 <div class="content-prelim-box">
   <div class="content-prelim-inner">
     <div class="content-prelim-text" id="prelim-text">
-      An <%= object_link('Early Day Motion', '/') %> sponsored by <%= object_link(object.primary_sponsor, '/') %>
-      (primary sponsor, <%= object_link(object.primary_sponsor_party, '/') %>)
+      An <%= object_link(@ses_data[object.type].singularize.downcase, '/') %> sponsored by <%= ses_object_link(object.primary_sponsor) %>
+      (primary sponsor, <%= ses_object_link(object.primary_sponsor_party) %>)
       <% unless object.other_sponsors.blank? %>
         <% object.other_sponsors.each do |supporter| %>
-          <%= object_link(supporter, '/') %>,
+          <%= ses_object_link(supporter) %>,
         <% end %>
       <% end %>
       and tabled on <strong><%= object.date_tabled&.strftime(ApplicationHelper::DATE_DISPLAY_FORMAT) %></strong>
-      in the <%= object_link(object.legislature, '/') %>.
+      in the <%= ses_object_link(object.legislature) %>.
       <% if object.has_subtype? %>
         It is a <%= object.subtype_name %>
       <% else %>

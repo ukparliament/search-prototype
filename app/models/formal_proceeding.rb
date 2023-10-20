@@ -8,8 +8,4 @@ class FormalProceeding < ContentObject
     'search/objects/formal_proceeding'
   end
 
-  def object_name
-    "Formal proceeding"
-  end
-
 end

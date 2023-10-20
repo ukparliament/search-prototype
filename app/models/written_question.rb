@@ -8,8 +8,19 @@ class WrittenQuestion < ContentObject
     'search/objects/written_question'
   end
 
-  def object_name
-    "written question"
+  def ses_lookup_ids
+    [
+      type,
+      subtype,
+      answering_member,
+      answering_member_party,
+      tabling_member,
+      tabling_member_party,
+      subjects,
+      legislation,
+      legislature,
+      department
+    ]
   end
 
   def state
@@ -78,6 +89,12 @@ class WrittenQuestion < ContentObject
 
     correcting_item_data = ApiCall.new(object_uri: content_object_data['correctingItem_uri']).object_data
     ContentObject.generate(correcting_item_data)
+  end
+
+  def written_question_type
+    return if content_object_data['wpqType_t'].blank?
+
+    content_object_data['wpqType_t']
   end
 
   def prelim_partial
@@ -176,6 +193,11 @@ class WrittenQuestion < ContentObject
     return if content_object_data['answerText_t'].blank?
 
     CGI::unescapeHTML(content_object_data['answerText_t'].first)
+  end
+
+  def corrected_answer
+    # TODO: data for this not currently determined
+    nil
   end
 
   def question_text

@@ -8,8 +8,17 @@ class ResearchBriefing < ContentObject
     'search/objects/research_briefing'
   end
 
-  def object_name
-    "research briefing"
+  def ses_lookup_ids
+    [
+      subjects,
+      legislation,
+      legislature,
+      department,
+      type,
+      subtype,
+      creator,
+      creator_party
+    ]
   end
 
   def html_summary
@@ -25,6 +34,7 @@ class ResearchBriefing < ContentObject
 
     content_object_data['creator_ses'].first
   end
+
   def creator_party
     # this is for the prelim 'by...'
 

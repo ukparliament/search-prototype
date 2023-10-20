@@ -23,7 +23,7 @@
 </section>
 
 <section id="about" class="content-section grey">
-  <h2 class="content-heading">About this <%= object.object_name %></h2>
+  <h2 class="content-heading">About this  <%= @ses_data[object.type].singularize.downcase %></h2>
   <%= render 'search/fragments/reference', reference: object.reference unless object.reference.blank? %>
   <!--  procedure-->
   <%= render 'search/fragments/related_items', related_items: object.related_items unless object.related_items.blank? %>
