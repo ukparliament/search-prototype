@@ -1,7 +1,7 @@
 <div class="content-prelim-box">
   <div class="content-prelim-inner">
     <div class="content-prelim-text" id="prelim-text">
-      A <%= object_link(@ses_data[object.type].singularize.downcase, '/') %> from
+      A <%= object_link(object.object_name, '/') %> from
       <%= object_link(object.primary_member, '/') %> (<%= object_link(object.primary_member_party, '/') %>)
       in the <%= object_link(object.legislature, '/') %>, in the
       <%= object_link(object.location, '/') %> on

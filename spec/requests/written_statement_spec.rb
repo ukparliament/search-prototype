@@ -13,7 +13,7 @@ RSpec.describe 'Written Statement', type: :request do
     end
   end
 
-  xdescribe 'test data' do
+  describe 'test data' do
     test_data = JSON.parse(File.read("spec/fixtures/written_statement_test_data.json"))
     docs = test_data["response"]["docs"]
 
@@ -23,8 +23,26 @@ RSpec.describe 'Written Statement', type: :request do
 
         it 'displays the expected data' do
           written_statement_instance = WrittenStatement.new(data)
+
+          # SES response mocking requires the correct IDs so we're populating it during the test
+          test_ses_data = { }
+
+          unless written_statement_instance.subjects.blank?
+            written_statement_instance.subjects.each do |subject|
+              test_ses_data[subject] = "SES response for #{subject}"
+            end
+          end
+
+          unless written_statement_instance.legislation.blank?
+            written_statement_instance.legislation.each do |legislation|
+              test_ses_data[legislation] = "SES response for #{legislation}"
+            end
+          end
+
           allow_any_instance_of(ApiCall).to receive(:object_data).and_return('test')
           allow(ContentObject).to receive(:generate).and_return(written_statement_instance)
+          allow_any_instance_of(SesLookup).to receive(:data).and_return(test_ses_data)
+
           get '/search-prototype/objects', params: { :object => written_statement_instance }
 
           expect(CGI::unescapeHTML(response.body)).to include(written_statement_instance.reference)

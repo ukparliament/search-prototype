@@ -8,6 +8,10 @@ class ResearchBriefing < ContentObject
     'search/objects/research_briefing'
   end
 
+  def object_name
+    'research briefing'
+  end
+
   def ses_lookup_ids
     [
       subjects,

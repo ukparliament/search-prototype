@@ -22,6 +22,10 @@ class Edm < ContentObject
     ]
   end
 
+  def object_name
+    'early day motion'
+  end
+
   def amendments
     # amendments fields do not include duplicates, which means the data can not be reliably used
     # to avoid misrepresentation, we will not show amendments where there are more than one
