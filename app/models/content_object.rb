@@ -61,6 +61,7 @@ class ContentObject
   end
 
   def subjects
+    # TODO: may sometimes also be subject_t instead of subject_ses, need to handle this
     return if content_object_data['subject_ses'].blank?
 
     content_object_data['subject_ses']
@@ -74,6 +75,9 @@ class ContentObject
   end
 
   def legislation
+    # TODO: sometimes leigislation text will be all that is present & we need to handle this
+    # by displaying it instead of a labelled link
+
     return if content_object_data['legislationTitle_ses'].blank?
 
     content_object_data['legislationTitle_ses']
@@ -154,6 +158,7 @@ class ContentObject
   private
 
   def self.content_object_class(ses_id)
+    # TODO - expand with all IDs
     case ses_id
     when 90996
       'Edm'
@@ -163,6 +168,67 @@ class ContentObject
       'WrittenQuestion'
     when 352211
       'WrittenStatement'
+    when 347125
+      'ChurchOfEnglandMeasure'
+    when 352234
+      'PrivateAct'
+    when 347135
+      'PublicAct'
+    when 92034
+      'MinisterialCorrection'
+    when 91613
+      'ImpactAssessment'
+    when 347163
+      'DepositedPaper'
+    when 360977
+      'TransportAndWorksActOrderApplication'
+    when 347122
+      'Bill'
+    when 92435
+      'Petition'
+    when 347207
+      'FormalProceeding'
+    when 90587
+      'CommandPaper'
+    when 91561
+      'HouseOfCommonsPaper'
+    when 420548
+      'EPetition'
+    when 92347
+      'ParliamentaryPaper'
+    when 352156
+      'ParliamentaryCommittee'
+    when 51288
+      'UnprintedPaper'
+    when 352261
+      'UnprintedCommandPaper'
+    when 363376
+      'ResearchMaterial'
+    when 92277
+      'OralQuestion'
+    when 286676
+      'OralAnswerToQuestion'
+    when 356750
+      'ProceedingContribution'
+    when 352161
+      'GrandCommitteeProceeding'
+    when 352151
+      'CommitteeProceeding'
+    when 352179
+      'ParliamentaryProceeding'
+    when 347226
+      'StatutoryInstrument'
+    when 347028
+      'EuropeanDepositedDocument'
+    when 347036
+      'EuropeanScrutinyExplanatoryMemorandum'
+    when 347040
+      'EuropeanScrutinyMinisterialCorrespondence'
+    when 347032
+      'EuropeanScrutinyRecommendation'
+    when 347010
+      'EuropeanMaterial'
+
     else
       'ContentObject'
     end

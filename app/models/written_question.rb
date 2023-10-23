@@ -8,6 +8,10 @@ class WrittenQuestion < ContentObject
     'search/objects/written_question'
   end
 
+  def object_name
+    'written question'
+  end
+
   def ses_lookup_ids
     [
       type,

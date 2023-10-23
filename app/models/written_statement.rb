@@ -8,6 +8,10 @@ class WrittenStatement < ContentObject
     'search/objects/written_statement'
   end
 
+  def object_name
+    'written statement'
+  end
+
   def ses_lookup_ids
     [
       member,

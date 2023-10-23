@@ -13,7 +13,7 @@ RSpec.describe 'Research Briefing', type: :request do
     end
   end
 
-  xdescribe 'test data' do
+  describe 'test data' do
     test_data = JSON.parse(File.read("spec/fixtures/research_briefing_test_data.json"))
     docs = test_data["response"]["docs"]
 
@@ -23,8 +23,32 @@ RSpec.describe 'Research Briefing', type: :request do
 
         it 'displays the expected data' do
           research_briefing_instance = ResearchBriefing.new(data)
+
+          # SES response mocking requires the correct IDs so we're populating it during the test
+          test_ses_data = {}
+
+          unless research_briefing_instance.topics.blank?
+            research_briefing_instance.topics.each do |topic|
+              test_ses_data[topic] = "SES response for #{topic}"
+            end
+          end
+
+          unless research_briefing_instance.subjects.blank?
+            research_briefing_instance.subjects.each do |subject|
+              test_ses_data[subject] = "SES response for #{subject}"
+            end
+          end
+
+          unless research_briefing_instance.legislation.blank?
+            research_briefing_instance.legislation.each do |legislation|
+              test_ses_data[legislation] = "SES response for #{legislation}"
+            end
+          end
+          
           allow_any_instance_of(ApiCall).to receive(:object_data).and_return('test')
           allow(ContentObject).to receive(:generate).and_return(research_briefing_instance)
+          allow_any_instance_of(SesLookup).to receive(:data).and_return(test_ses_data)
+
           get '/search-prototype/objects', params: { :object => research_briefing_instance }
 
           expect(CGI::unescapeHTML(response.body)).to include(research_briefing_instance.reference)
