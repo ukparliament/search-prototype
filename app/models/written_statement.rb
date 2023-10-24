@@ -12,19 +12,6 @@ class WrittenStatement < ContentObject
     'written statement'
   end
 
-  def ses_lookup_ids
-    [
-      member,
-      member_party,
-      type,
-      subtype,
-      subjects,
-      legislation,
-      legislature,
-      department
-    ]
-  end
-
   def attachment
     return if content_object_data['attachment_t'].blank?
 

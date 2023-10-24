@@ -12,21 +12,6 @@ class WrittenQuestion < ContentObject
     'written question'
   end
 
-  def ses_lookup_ids
-    [
-      type,
-      subtype,
-      answering_member,
-      answering_member_party,
-      tabling_member,
-      tabling_member_party,
-      subjects,
-      legislation,
-      legislature,
-      department
-    ]
-  end
-
   def state
     return if content_object_data['pqStatus_t'].blank?
 

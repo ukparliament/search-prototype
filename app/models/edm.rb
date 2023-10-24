@@ -8,20 +8,6 @@ class Edm < ContentObject
     'search/objects/edm'
   end
 
-  def ses_lookup_ids
-    [
-      type,
-      subtype,
-      other_supporters,
-      other_sponsors,
-      primary_sponsor,
-      primary_sponsor_party,
-      subjects,
-      legislation,
-      legislature
-    ]
-  end
-
   def object_name
     'early day motion'
   end

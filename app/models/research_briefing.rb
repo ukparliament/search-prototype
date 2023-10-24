@@ -12,19 +12,6 @@ class ResearchBriefing < ContentObject
     'research briefing'
   end
 
-  def ses_lookup_ids
-    [
-      subjects,
-      legislation,
-      legislature,
-      department,
-      type,
-      subtype,
-      creator,
-      creator_party
-    ]
-  end
-
   def html_summary
     return if content_object_data['htmlsummary_t'].blank?
 
@@ -63,23 +50,6 @@ class ResearchBriefing < ContentObject
     return if content_object_data['publisherSnapshot_s'].blank?
 
     content_object_data['publisherSnapshot_s'].first
-  end
-
-  def published?
-    return if content_object_data['published_b'].blank?
-
-    return false unless content_object_data['published_b'].first == 'true'
-
-    true
-  end
-
-  def published_on
-    return if content_object_data['created_dt'].blank?
-
-    valid_date_string = validate_date(content_object_data['created_dt'].first)
-    return unless valid_date_string
-
-    valid_date_string.to_date
   end
 
   def publisher_logo_partial

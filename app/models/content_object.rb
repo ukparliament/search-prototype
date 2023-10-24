@@ -15,15 +15,9 @@ class ContentObject
   end
 
   def ses_lookup_ids
-    # TODO: refactor so subclasses access this method rather than simply override it
-    [
-      type,
-      subtype,
-      subjects,
-      legislation,
-      legislature,
-      department
-    ]
+    return if content_object_data['all_ses'].blank?
+
+    content_object_data['all_ses']
   end
 
   def subtype
@@ -47,10 +41,33 @@ class ContentObject
     SesLookup.new(ses_lookup_ids).data
   end
 
+  def html_summary
+    return if content_object_data['htmlsummary_t'].blank?
+
+    CGI::unescapeHTML(content_object_data['htmlsummary_t'].first)
+  end
+
   def content
     return if content_object_data['content_t'].blank?
 
     CGI::unescapeHTML(content_object_data['content_t'].first)
+  end
+
+  def published?
+    return if content_object_data['published_b'].blank?
+
+    return false unless content_object_data['published_b'].first == 'true'
+
+    true
+  end
+
+  def published_on
+    return if content_object_data['created_dt'].blank?
+
+    valid_date_string = validate_date(content_object_data['created_dt'].first)
+    return unless valid_date_string
+
+    valid_date_string.to_date
   end
 
   def reference
