@@ -11,7 +11,7 @@ class SesLookup
   end
 
   def lookup_string
-    lookup_ids.compact.flatten.join(',')
+    lookup_ids.uniq.compact.flatten.join(',')
   end
 
   def data

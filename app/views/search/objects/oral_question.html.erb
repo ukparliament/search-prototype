@@ -20,7 +20,7 @@
 <%= render 'search/fragments/answer', object: object if object.answered? || object.answered_was_holding? %>
 
 <section id="about" class="content-section grey">
-  <h2 class="content-heading">About this  <%= object_link(object.object_name, '/') %></h2>
+  <h2 class="content-heading">About this <%= object.object_name %></h2>
   <%= render 'search/fragments/reference', reference: object.reference unless object.reference.blank? %>
   <%= render 'search/fragments/session', session: object.session unless object.session.blank? %>
 
