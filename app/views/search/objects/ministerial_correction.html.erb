@@ -1,8 +1,10 @@
-<%= render 'search/fragments/data', data: object.content_object_data %>
+<% if Rails.env.development? %>
+  <%= render 'search/fragments/data', data: object.content_object_data, title: 'SOLR Data' %>
+  <%= render 'search/fragments/data', data: @ses_data, title: 'SES Data' %>
+<% end %>
 
 <% content_for(:before_title) do %>
   <%= link_to('UK Parliament', root_path) %> / <%= link_to('Open data', root_path) %><br/>
-  <%#= link_to('< Back to search results', root_path) %>
   <div id="top"></div>
 <% end %>
 
@@ -18,14 +20,14 @@
 
 <section id="text" class="content-section">
   <div class="content-text">
-    <%= object.motion_text %>
+    <%= object.correction_text %>
   </div>
 </section>
 
 <section id="about" class="content-section grey">
   <h2 class="content-heading">About this <%= object.object_name %></h2>
   <%= render 'search/fragments/reference', reference: object.reference unless object.reference.blank? %>
-  <%= render 'search/fragments/session', reference: object.session unless object.session.blank? %>
+  <%= render 'search/fragments/session', session: object.parliamentary_session unless object.parliamentary_session.blank? %>
   <%= render 'search/fragments/related_items', related_items: object.related_items unless object.related_items.blank? %>
   <%= render 'search/fragments/notes', registered_interest_declared: object.notes unless object.notes.blank? %>
   <%= render 'search/fragments/pills', pills_heading: 'Subjects', pills: object.subjects unless object.subjects.blank? %>

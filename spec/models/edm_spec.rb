@@ -58,14 +58,14 @@ RSpec.describe Edm, type: :model do
   describe 'session' do
     context 'where there is no data' do
       it 'returns nil' do
-        expect(edm.session).to be_nil
+        expect(edm.parliamentary_session).to be_nil
       end
     end
 
     context 'where there is an empty array' do
       let!(:edm) { Edm.new({ 'session_t' => [] }) }
       it 'returns nil' do
-        expect(edm.session).to be_nil
+        expect(edm.parliamentary_session).to be_nil
       end
     end
 
@@ -73,7 +73,7 @@ RSpec.describe Edm, type: :model do
       let!(:edm) { Edm.new({ 'session_t' => ['first item', 'second item'] }) }
 
       it 'returns the first item' do
-        expect(edm.session).to eq('first item')
+        expect(edm.parliamentary_session).to eq('first item')
       end
     end
   end

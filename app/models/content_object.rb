@@ -53,6 +53,12 @@ class ContentObject
     CGI::unescapeHTML(content_object_data['content_t'].first)
   end
 
+  def abstract_text
+    return if content_object_data['abstract_t'].blank?
+
+    CGI::unescapeHTML(content_object_data['abstract_t'])
+  end
+
   def published?
     return if content_object_data['published_b'].blank?
 
@@ -104,6 +110,32 @@ class ContentObject
     return if content_object_data['department_ses'].blank?
 
     content_object_data['department_ses'].first
+  end
+
+  def library_location
+    # this is for the commons library, but there's also lordsLibraryLocation_t
+    # assume there's some logic needed for how to combine or conditionally present these
+    return if content_object_data['commonsLibraryLocation_t'].blank?
+
+    content_object_data['commonsLibraryLocation_t'].first
+  end
+
+  def motion_text
+    return if content_object_data['motionText_t'].blank?
+
+    content_object_data['motionText_t'].first
+  end
+
+  def primary_sponsor
+    return if content_object_data['primarySponsor_ses'].blank?
+
+    content_object_data['primarySponsor_ses'].first
+  end
+
+  def primary_sponsor_party
+    return if content_object_data['primarySponsorParty_ses'].blank?
+
+    content_object_data['primarySponsorParty_ses'].first
   end
 
   def legislature
@@ -166,10 +198,28 @@ class ContentObject
     content_object_data['relation_t']
   end
 
-  def session
+  def parliamentary_session
     return if content_object_data['session_t'].blank?
 
     content_object_data['session_t'].first
+  end
+
+  def contains_statistics?
+    return if content_object_data['containsStatistics_b'].blank?
+
+    return false unless content_object_data['containsStatistics_b'].first == 'true'
+
+    true
+  end
+
+  def date
+    # generic date field
+    return if content_object_data['date_dt'].blank?
+
+    valid_date_string = validate_date(content_object_data['date_dt'])
+    return unless valid_date_string
+
+    valid_date_string.to_date
   end
 
   private

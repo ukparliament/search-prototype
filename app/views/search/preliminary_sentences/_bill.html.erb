@@ -3,9 +3,9 @@
     <div class="content-prelim-text" id="prelim-text">
       A <%= object_link(object.object_name, '/') %> on
       <strong><%= object.date&.strftime(ApplicationHelper::DATE_DISPLAY_FORMAT) %></strong>,
-      in the <%= object_link(object.legislature, '/') %> sponsored by
-      <%= object_link(object.primary_sponsor, '/') %> (<%= object_link(object.primary_sponsor_party, '/') %>)
-      on behalf of the <%= object_link(object.department, '/') %>.
+      in the <%= ses_object_link(object.legislature) %> sponsored by
+      <%= ses_object_link(object.primary_sponsor) %> (<%= ses_object_link(object.primary_sponsor_party) %>)
+      on behalf of the <%= ses_object_link(object.department) %>.
     </div>
   </div>
 </div>

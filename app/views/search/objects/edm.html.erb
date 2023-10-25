@@ -27,7 +27,7 @@
 <section id="about" class="content-section grey">
   <h2 class="content-heading">About this <%= object.object_name %></h2>
   <%= render 'search/fragments/reference', reference: object.reference unless object.reference.blank? %>
-  <%= render 'search/fragments/session', session: object.session unless object.session.blank? %>
+  <%= render 'search/fragments/session', session: object.parliamentary_session unless object.parliamentary_session.blank? %>
   <%= render 'search/fragments/registered_interest_declared', registered_interest_declared: object.registered_interest_declared unless object.registered_interest_declared.blank? %>
   <%= render 'search/fragments/other_supporters', supporters: object.other_supporters unless object.other_supporters.blank? %>
   <%= render 'search/fragments/amendments', title: object.page_title, amendments: object.amendments unless object.amendments.blank? %>
