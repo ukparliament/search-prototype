@@ -46,7 +46,7 @@ RSpec.describe 'Written Statement', type: :request do
           get '/search-prototype/objects', params: { :object => written_statement_instance }
 
           expect(CGI::unescapeHTML(response.body)).to include(written_statement_instance.reference)
-          expect(CGI::unescapeHTML(response.body)).to include(written_statement_instance.session)
+          expect(CGI::unescapeHTML(response.body)).to include(written_statement_instance.parliamentary_session)
           expect(CGI::unescapeHTML(response.body)).to include(written_statement_instance.display_link)
 
           unless written_statement_instance.attachment.blank?

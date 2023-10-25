@@ -47,7 +47,7 @@ RSpec.describe 'Written Question', type: :request do
 
           get '/search-prototype/objects', params: { :object => written_question_instance }
           expect(CGI::unescapeHTML(response.body)).to include(written_question_instance.uin.join('; '))
-          expect(CGI::unescapeHTML(response.body)).to include(written_question_instance.session)
+          expect(CGI::unescapeHTML(response.body)).to include(written_question_instance.parliamentary_session)
 
           # procedure
 

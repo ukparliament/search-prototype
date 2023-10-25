@@ -8,4 +8,7 @@ class Bill < ContentObject
     'search/objects/bill'
   end
 
+  def object_name
+    'bill'
+  end
 end

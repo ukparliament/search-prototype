@@ -2,10 +2,10 @@
   <div class="content-prelim-inner">
     <div class="content-prelim-text" id="prelim-text">
       A <%= object_link(object.object_name, '/') %>, deposited in the
-      <%= object_link(object.legislature, '/') %>, by the <%= object_link(object.department, '/') %>
-      on <strong><%= object.date&.strftime(ApplicationHelper::DATE_DISPLAY_FORMAT) %></strong>.
+      <%= ses_object_link(object.legislature) %>, by the <%= ses_object_link(object.department) %>
+      on <strong><%= object.deposited_date&.strftime(ApplicationHelper::DATE_DISPLAY_FORMAT) %></strong>.
       The commitment to deposit was made on
-      <strong><%= object.committed_date&.strftime(ApplicationHelper::DATE_DISPLAY_FORMAT) %></strong>.
+      <strong><%= object.commitment_to_deposit_date&.strftime(ApplicationHelper::DATE_DISPLAY_FORMAT) %></strong>.
     </div>
   </div>
 </div>

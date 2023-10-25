@@ -155,24 +155,6 @@ class Edm < ContentObject
     content_object_data['numberOfSignatures_t'].first
   end
 
-  def motion_text
-    return if content_object_data['motionText_t'].blank?
-
-    content_object_data['motionText_t'].first
-  end
-
-  def primary_sponsor
-    return if content_object_data['primarySponsor_ses'].blank?
-
-    content_object_data['primarySponsor_ses'].first
-  end
-
-  def primary_sponsor_party
-    return if content_object_data['primarySponsorParty_ses'].blank?
-
-    content_object_data['primarySponsorParty_ses'].first
-  end
-
   def date_tabled
     return if content_object_data['dateTabled_dt'].blank?
 

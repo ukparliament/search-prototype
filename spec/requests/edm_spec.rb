@@ -52,7 +52,7 @@ RSpec.describe 'Edm', type: :request do
           get '/search-prototype/objects', params: { :object => edm_instance }
 
           expect(CGI::unescapeHTML(response.body)).to include(edm_instance.reference)
-          expect(CGI::unescapeHTML(response.body)).to include(edm_instance.session)
+          expect(CGI::unescapeHTML(response.body)).to include(edm_instance.parliamentary_session)
           expect(CGI::unescapeHTML(response.body)).to include(edm_instance.motion_text)
           expect(CGI::unescapeHTML(response.body)).to include("SES response for #{edm_instance.primary_sponsor}")
           expect(CGI::unescapeHTML(response.body)).to include(edm_instance.display_link)
