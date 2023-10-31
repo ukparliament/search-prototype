@@ -1,11 +1,12 @@
 <div class="content-prelim-box">
   <div class="content-prelim-inner">
     <div class="content-prelim-text" id="prelim-text">
-      A <%= object_link(object.object_name, '/') %> (<%= object_link(object.reading, '/') %>)
+      A <%= object_link(object.object_name, '/') %>
+      <!--      (<%#= ses_object_link(object.reading) %>)-->
       on <strong><%= object.date&.strftime(ApplicationHelper::DATE_DISPLAY_FORMAT) %></strong>,
-      in the <%= object_link(object.legislature, '/') %> led by <%= object_link(object.lead_member, '/') %>
-      on behalf of the <%= object_link(object.department, '/') %>. The answering member was
-      <%= object_link(object.answering_member, '/') %>.
+      in the <%= ses_object_link(object.legislature) %> led by <%= ses_object_link(object.lead_member) %>
+      on behalf of the <%= ses_object_link(object.department) %>. The answering member was
+      <%= ses_object_link(object.answering_member) %>.
     </div>
   </div>
 </div>

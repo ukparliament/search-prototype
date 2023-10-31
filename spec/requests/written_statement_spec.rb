@@ -8,7 +8,7 @@ RSpec.describe 'Written Statement', type: :request do
       allow_any_instance_of(ApiCall).to receive(:object_data).and_return('test')
       allow(ContentObject).to receive(:generate).and_return(written_statement_instance)
       allow_any_instance_of(WrittenStatement).to receive(:ses_data).and_return(written_statement_instance.type => 'written statement')
-      get '/search-prototype/objects', params: { :object => 'test_string' }
+      get '/objects', params: { :object => 'test_string' }
       expect(response).to have_http_status(:ok)
     end
   end
@@ -43,7 +43,7 @@ RSpec.describe 'Written Statement', type: :request do
           allow(ContentObject).to receive(:generate).and_return(written_statement_instance)
           allow_any_instance_of(SesLookup).to receive(:data).and_return(test_ses_data)
 
-          get '/search-prototype/objects', params: { :object => written_statement_instance }
+          get '/objects', params: { :object => written_statement_instance }
 
           expect(CGI::unescapeHTML(response.body)).to include(written_statement_instance.reference)
           expect(CGI::unescapeHTML(response.body)).to include(written_statement_instance.parliamentary_session)

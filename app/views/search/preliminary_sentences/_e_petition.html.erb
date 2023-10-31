@@ -4,6 +4,9 @@
       An <%= object_link(object.object_name, '/') %> published on
       <strong><%= object.date&.strftime(ApplicationHelper::DATE_DISPLAY_FORMAT) %></strong>.
       It has been signed by <strong><%= object.number_of_signatures %></strong> people.
+      <% if object.closed? %>
+        It is now closed.
+      <% end %>
     </div>
   </div>
 </div>

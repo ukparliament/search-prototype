@@ -8,7 +8,7 @@ RSpec.describe 'Edm', type: :request do
       allow_any_instance_of(ApiCall).to receive(:object_data).and_return('test')
       allow_any_instance_of(Edm).to receive(:ses_data).and_return(edm_instance.type => 'early day motion')
       allow(ContentObject).to receive(:generate).and_return(edm_instance)
-      get '/search-prototype/objects', params: { :object => 'test_string' }
+      get '/objects', params: { :object => 'test_string' }
       expect(response).to have_http_status(:ok)
     end
   end
@@ -49,7 +49,7 @@ RSpec.describe 'Edm', type: :request do
           allow(ContentObject).to receive(:generate).and_return(edm_instance)
           allow_any_instance_of(SesLookup).to receive(:data).and_return(test_ses_data)
 
-          get '/search-prototype/objects', params: { :object => edm_instance }
+          get '/objects', params: { :object => edm_instance }
 
           expect(CGI::unescapeHTML(response.body)).to include(edm_instance.reference)
           expect(CGI::unescapeHTML(response.body)).to include(edm_instance.parliamentary_session)

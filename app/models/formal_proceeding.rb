@@ -8,4 +8,10 @@ class FormalProceeding < ContentObject
     'search/objects/formal_proceeding'
   end
 
+  def object_name
+    # wireframe shows 'legislative formal proceeding (first reading)'
+    # unsure how this applies
+    'formal proceeding'
+  end
+
 end

@@ -9,7 +9,7 @@ RSpec.describe 'Written Question', type: :request do
       allow(ContentObject).to receive(:generate).and_return(written_question_instance)
       allow_any_instance_of(WrittenQuestion).to receive(:ses_data).and_return(written_question_instance.type => 'written question')
       allow(written_question_instance).to receive(:tabled?).and_return(true)
-      get '/search-prototype/objects', params: { :object => 'test_string' }
+      get '/objects', params: { :object => 'test_string' }
       expect(response).to have_http_status(:ok)
     end
   end
@@ -45,7 +45,7 @@ RSpec.describe 'Written Question', type: :request do
           allow(written_question_instance).to receive(:tabled?).and_return(true)
           allow_any_instance_of(SesLookup).to receive(:data).and_return(test_ses_data)
 
-          get '/search-prototype/objects', params: { :object => written_question_instance }
+          get '/objects', params: { :object => written_question_instance }
           expect(CGI::unescapeHTML(response.body)).to include(written_question_instance.uin.join('; '))
           expect(CGI::unescapeHTML(response.body)).to include(written_question_instance.parliamentary_session)
 

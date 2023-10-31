@@ -12,10 +12,4 @@ class ImpactAssessment < ContentObject
     'impact assessment'
   end
 
-  def corporate_author
-    return if content_object_data['corporateAuthor_ses'].blank?
-
-    content_object_data['corporateAuthor_ses'].first
-  end
-
 end

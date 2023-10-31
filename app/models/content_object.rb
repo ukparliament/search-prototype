@@ -9,9 +9,10 @@ class ContentObject
   def self.generate(content_object_data)
     # takes object data as an argument and returns an instance of the correct object subclass
 
-    content_type_ses_id = content_object_data['type_ses']&.first
+    type_id = content_object_data['type_ses']&.first
+    subtype_id = content_object_data['subtype_ses']&.first
 
-    content_object_class(content_type_ses_id).classify.constantize.new(content_object_data)
+    content_object_class(type_id, subtype_id).classify.constantize.new(content_object_data)
   end
 
   def ses_lookup_ids
@@ -33,7 +34,6 @@ class ContentObject
   end
 
   def page_title
-    # We set the page title and the content type.
     content_object_data['title_t']
   end
 
@@ -183,7 +183,7 @@ class ContentObject
   def notes
     return if content_object_data['searcherNote_t'].blank?
 
-    content_object_data['searcherNote_t']
+    content_object_data['searcherNote_t'].first
   end
 
   def related_items
@@ -204,6 +204,30 @@ class ContentObject
     content_object_data['session_t'].first
   end
 
+  def procedure
+    return if content_object_data['procedural_ses'].blank?
+
+    content_object_data['procedural_ses'].first
+  end
+
+  def answering_member
+    return if content_object_data['answeringMember_ses'].blank?
+
+    content_object_data['answeringMember_ses'].first
+  end
+
+  def lead_member
+    return if content_object_data['leadMember_ses'].blank?
+
+    content_object_data['leadMember_ses'].first
+  end
+
+  def corporate_author
+    return if content_object_data['corporateAuthor_ses'].blank?
+
+    content_object_data['corporateAuthor_ses'].first
+  end
+
   def contains_statistics?
     return if content_object_data['containsStatistics_b'].blank?
 
@@ -222,11 +246,19 @@ class ContentObject
     valid_date_string.to_date
   end
 
+  def date_of_royal_assent
+    return if content_object_data['dateOfRoyalAssent_dt'].blank?
+
+    valid_date_string = validate_date(content_object_data['dateOfRoyalAssent_dt'].first)
+    return unless valid_date_string
+
+    valid_date_string.to_date
+  end
+
   private
 
-  def self.content_object_class(ses_id)
-    # TODO - expand with all IDs
-    case ses_id
+  def self.content_object_class(type_id, subtype_id)
+    case type_id
     when 90996
       'Edm'
     when 346697
@@ -252,15 +284,22 @@ class ContentObject
     when 347122
       'Bill'
     when 92435
-      'Petition'
+      case subtype_id
+      when 479373
+        'PaperPetition'
+      when 420548
+        'EPetition'
+      when 347214
+        'ObservationsOnAPetition'
+      else
+        'ContentObject'
+      end
     when 347207
       'FormalProceeding'
     when 90587
       'CommandPaper'
     when 91561
       'HouseOfCommonsPaper'
-    when 420548
-      'EPetition'
     when 92347
       'ParliamentaryPaper'
     when 352156
