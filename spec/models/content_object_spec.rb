@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe ContentObject, type: :model do
+  let!(:content_object) { ContentObject.new({}) }
 
   describe 'self.generate' do
     context 'when passed invalid data' do
@@ -62,6 +63,38 @@ RSpec.describe ContentObject, type: :model do
       it 'returns true' do
         allow(content_object).to receive(:display_link).and_return('www.example.com')
         expect(content_object.has_link?).to eq(true)
+      end
+    end
+  end
+
+  describe 'date_of_royal_assent' do
+    context 'where there is no data' do
+      it 'returns nil' do
+        expect(content_object.date_of_royal_assent).to be_nil
+      end
+    end
+
+    context 'where there is an empty array' do
+      let!(:content_object) { ContentObject.new({ 'dateOfRoyalAssent_dt' => [] }) }
+      it 'returns nil' do
+        expect(content_object.date_of_royal_assent).to be_nil
+      end
+    end
+
+    context 'where data exists' do
+      context 'where data is parsable as a date' do
+        let!(:content_object) { ContentObject.new({ 'dateOfRoyalAssent_dt' => ["2015-06-01T18:00:15.73Z", "2014-06-01T18:00:15.73Z"] }) }
+
+        it 'returns the first string parsed as a date' do
+          expect(content_object.date_of_royal_assent).to eq("Mon, 01 Jun 2015".to_date)
+        end
+      end
+      context 'where data is not parsable as a date' do
+        let!(:content_object) { ContentObject.new({ 'dateOfRoyalAssent_dt' => ["first item", "second item"] }) }
+
+        it 'returns nil' do
+          expect(content_object.date_of_royal_assent).to be_nil
+        end
       end
     end
   end

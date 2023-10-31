@@ -1,7 +1,7 @@
 require 'rails_helper'
 
-RSpec.describe ParliamentaryPaperLaid, type: :model do
-  let!(:parliamentary_paper_laid) { ParliamentaryPaperLaid.new({}) }
+RSpec.describe ParliamentaryPaper, type: :model do
+  let!(:parliamentary_paper_laid) { ParliamentaryPaper.new({}) }
 
   describe 'template' do
     it 'returns a string' do
@@ -17,14 +17,14 @@ RSpec.describe ParliamentaryPaperLaid, type: :model do
     end
 
     context 'where there is an empty array' do
-      let!(:parliamentary_paper_laid) { ParliamentaryPaperLaid.new({ 'identifier_t' => [] }) }
+      let!(:parliamentary_paper_laid) { ParliamentaryPaper.new({ 'identifier_t' => [] }) }
       it 'returns nil' do
         expect(parliamentary_paper_laid.reference).to be_nil
       end
     end
 
     context 'where data exists' do
-      let!(:parliamentary_paper_laid) { ParliamentaryPaperLaid.new({ 'identifier_t' => ['first item', 'second item'] }) }
+      let!(:parliamentary_paper_laid) { ParliamentaryPaper.new({ 'identifier_t' => ['first item', 'second item'] }) }
 
       it 'returns the first item' do
         expect(parliamentary_paper_laid.reference).to eq('first item')
@@ -40,14 +40,14 @@ RSpec.describe ParliamentaryPaperLaid, type: :model do
     end
 
     context 'where there is an empty array' do
-      let!(:parliamentary_paper_laid) { ParliamentaryPaperLaid.new({ 'subject_ses' => [] }) }
+      let!(:parliamentary_paper_laid) { ParliamentaryPaper.new({ 'subject_ses' => [] }) }
       it 'returns nil' do
         expect(parliamentary_paper_laid.subjects).to be_nil
       end
     end
 
     context 'where data exists' do
-      let!(:parliamentary_paper_laid) { ParliamentaryPaperLaid.new({ 'subject_ses' => ['first item', 'second item'] }) }
+      let!(:parliamentary_paper_laid) { ParliamentaryPaper.new({ 'subject_ses' => ['first item', 'second item'] }) }
 
       it 'returns all items as an array' do
         expect(parliamentary_paper_laid.subjects).to eq(['first item', 'second item'])
@@ -63,14 +63,14 @@ RSpec.describe ParliamentaryPaperLaid, type: :model do
     end
 
     context 'where there is an empty array' do
-      let!(:parliamentary_paper_laid) { ParliamentaryPaperLaid.new({ 'legislationTitle_ses' => [] }) }
+      let!(:parliamentary_paper_laid) { ParliamentaryPaper.new({ 'legislationTitle_ses' => [] }) }
       it 'returns nil' do
         expect(parliamentary_paper_laid.legislation).to be_nil
       end
     end
 
     context 'where data exists' do
-      let!(:parliamentary_paper_laid) { ParliamentaryPaperLaid.new({ 'legislationTitle_ses' => [12345, 67890] }) }
+      let!(:parliamentary_paper_laid) { ParliamentaryPaper.new({ 'legislationTitle_ses' => [12345, 67890] }) }
 
       it 'returns all items as an array' do
         expect(parliamentary_paper_laid.legislation).to eq([12345, 67890])

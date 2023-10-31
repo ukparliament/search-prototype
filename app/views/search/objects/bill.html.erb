@@ -29,11 +29,11 @@
   <h2 class="content-heading">About this <%= object.object_name %></h2>
   <%= render 'search/fragments/reference', reference: object.reference unless object.reference.blank? %>
   <%= render 'search/fragments/session', session: object.parliamentary_session unless object.parliamentary_session.blank? %>
-  <!--  certified-->
+  <%= render 'search/fragments/certified_category', certified: object.certified_category unless object.certified_category.blank? %>
   <!--  previous version-->
   <%= render 'search/fragments/related_items', related_items: object.related_items unless object.related_items.blank? %>
   <!--  contains explanatory memorandum-->
-  <%= render 'search/fragments/notes', registered_interest_declared: object.notes unless object.notes.blank? %>
+  <%= render 'search/fragments/notes', notes: object.notes unless object.notes.blank? %>
   <%= render 'search/fragments/pills', pills_heading: 'Subjects', pills: object.subjects unless object.subjects.blank? %>
   <%= render 'search/fragments/legislation', legislation: object.legislation unless object.legislation.blank? %>
   <%= render 'search/fragments/library_location', location: object.library_location unless object.library_location.blank? %>

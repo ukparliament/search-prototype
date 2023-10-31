@@ -2,10 +2,10 @@
   <div class="content-prelim-inner">
     <div class="content-prelim-text" id="prelim-text">
       A <%= object_link(object.object_name, '/') %> laid in the
-      <%= object_link(object.legislature, '/') %> on
+      <%= ses_object_link(object.legislature) %> on
       <strong><%= object.date&.strftime(ApplicationHelper::DATE_DISPLAY_FORMAT) %></strong>
-      by <%= object_link(object.lead_member, '/') %> on behalf of the
-      <%= object_link(object.department, '/') %>.
+      by <%= ses_object_link(object.lead_member) %> on behalf of the
+      <%= ses_object_link(object.department) %>.
     </div>
   </div>
 </div>

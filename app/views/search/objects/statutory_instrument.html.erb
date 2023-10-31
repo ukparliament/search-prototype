@@ -41,7 +41,7 @@
   <!--  contains explanatory memorandum-->
   <!--  contains impact assessment-->
   <!--  library location-->
-  <%= render 'search/fragments/notes', registered_interest_declared: object.notes unless object.notes.blank? %>
+  <%= render 'search/fragments/notes', notes: object.notes unless object.notes.blank? %>
   <%= render 'search/fragments/links', object: object if object.has_link? %>
 </section>
 

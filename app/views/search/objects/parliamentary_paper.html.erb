@@ -16,7 +16,7 @@
 <% end %>
 
 <section id="prelim">
-  <%= render 'search/preliminary_sentences/parliamentary_paper_laid', object: object %>
+  <%= render 'search/preliminary_sentences/parliamentary_paper', object: object %>
 </section>
 
 <section id="text" class="content-section">
@@ -37,7 +37,7 @@
   <!--  laid in draft-->
   <!--  contains explanatory memorandum-->
   <!--  contains impact assessment-->
-  <%= render 'search/fragments/notes', registered_interest_declared: object.notes unless object.notes.blank? %>
+  <%= render 'search/fragments/notes', notes: object.notes unless object.notes.blank? %>
   <%= render 'search/fragments/pills', pills_heading: 'Subjects', pills: object.subjects unless object.subjects.blank? %>
   <%= render 'search/fragments/legislation', legislation: object.legislation unless object.legislation.blank? %>
   <!--  library location-->
