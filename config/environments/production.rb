@@ -33,6 +33,9 @@ Rails.application.configure do
   # Serve assets in production (following Heroku documentation)
   config.serve_static_assets = true
 
+  # Set relative url root for production due to configuration of proxy
+  config.relative_url_root = "/search-prototype"
+
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.
   # config.asset_host = "http://assets.example.com"
 
