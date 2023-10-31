@@ -11,6 +11,8 @@ module Search
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.0
 
+    config.relative_url_root = "/search-prototype"
+
     # Configuration for the application, engines, and railties goes here.
     #
     # These settings can be overridden in specific environments using the files
