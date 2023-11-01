@@ -25,6 +25,8 @@
           null,
           1,
           null,
+          1,
+          null,
           null,
           null,
           null,
@@ -228,15 +230,6 @@
       "/Users/jon.corry/RubymineProjects/search-prototype/app/controllers/application_controller.rb": {
         "lines": [
           1,
-          null,
-          1,
-          826,
-          null,
-          null,
-          null,
-          null,
-          1,
-          null,
           null
         ]
       },
@@ -301,12 +294,17 @@
           null,
           null,
           205,
+          0,
+          null,
+          null,
+          205,
           null,
           205,
           205,
           null,
           null,
           205,
+          null,
           null,
           null,
           null
@@ -777,6 +775,8 @@
           null,
           null,
           1,
+          1,
+          null,
           1,
           null,
           null,
@@ -5713,6 +5713,6 @@
         ]
       }
     },
-    "timestamp": 1698763165
+    "timestamp": 1698833941
   }
 }

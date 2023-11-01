@@ -1,0 +1,12 @@
+<% content_for(:before_title) do %>
+  <%= link_to('UK Parliament', root_path) %> / <%= link_to('Open data', root_path) %><br/>
+  <div id="top"></div>
+<% end %>
+
+<section class="content-section">
+  <h3 class="content-heading">An error occurred</h3>
+  <p>
+    Error code: <%= status %><br/>
+    Message: <%= message %>
+  </p>
+</section>
