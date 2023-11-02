@@ -1,5 +1,10 @@
+require 'open-uri'
+# require 'net/http'
+
+
 def when_online
-  if test_remote_connectivity
+  if URI.open("https://api.parliament.uk/")
+  puts "online!"
     yield
   else
     puts "Skipping test offline."

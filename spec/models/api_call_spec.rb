@@ -1,12 +1,6 @@
 require 'rails_helper'
 require 'api_call_helper'
 
-#def test_facebook
-#  when_online do
-#    .....
-#  end
-#end
-
 RSpec.describe ApiCall, type: :model do
   let!(:api_call) { ApiCall.new({ object_uri: 'test_uri' }) }
   let!(:mock_response) { {
@@ -36,5 +30,13 @@ RSpec.describe ApiCall, type: :model do
       # expect(api_call.ruby_uri.to_s).to eq('https://api.parliament.uk/search-mock/objects.json?object=test_uri')
       expect(api_call.ruby_uri.to_s).to eq('https://api.parliament.uk/new-solr/select?q=uri:%22test_uri%22')
     end
+  end
+
+  describe 'demo' do
+  when_online do
+  	it 'tests something' do
+  		expect("hello world").to eq("hello world")
+  	end
+  end
   end
 end
