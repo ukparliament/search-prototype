@@ -1,4 +1,11 @@
 require 'rails_helper'
+require 'api_call_helper'
+
+#def test_facebook
+#  when_online do
+#    .....
+#  end
+#end
 
 RSpec.describe ApiCall, type: :model do
   let!(:api_call) { ApiCall.new({ object_uri: 'test_uri' }) }
