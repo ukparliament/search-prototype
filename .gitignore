@@ -43,9 +43,7 @@
 /.idea/
 
 # Ignore rspec coverage artefacts
-/coverage/.last_run.json
-/coverage/.resultset.json
-/coverage/index.html
+coverage/*
 
 # Ignore rdoc generated files
-/doc/
+/doc/*
