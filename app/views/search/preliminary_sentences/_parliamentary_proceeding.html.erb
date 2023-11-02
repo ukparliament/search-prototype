@@ -3,11 +3,11 @@
     <div class="content-prelim-text" id="prelim-text">
       A <%= object_link(object.object_name, '/') %> on
       <strong><%= object.date&.strftime(ApplicationHelper::DATE_DISPLAY_FORMAT) %></strong>,
-      in the <%= object_link(object.legislature, '/') %>, in the
-      in the <%= object_link(object.location, '/') %> led by
-      <%= object_link(object.lead_member, '/') %>. The answering members were
+      in the <%= ses_object_link(object.legislature) %>, in the
+      <%= ses_object_link(object.location) %> led by
+      <%= ses_object_link(object.lead_member) %>. The answering members were
       <% object.answering_members.each do |member| %>
-        <%= object_link(member, '/') %>
+        <%= ses_object_link(member) %>
       <% end %>.
     </div>
   </div>

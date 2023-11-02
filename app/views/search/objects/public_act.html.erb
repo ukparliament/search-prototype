@@ -25,7 +25,7 @@
   <%= render 'search/fragments/notes', notes: object.notes unless object.notes.blank? %>
   <%= render 'search/fragments/pills', pills_heading: 'Subjects', pills: object.subjects unless object.subjects.blank? %>
   <%= render 'search/fragments/legislation', legislation: object.legislation unless object.legislation.blank? %>
-  <%= render 'search/fragments/links', object: object if object.has_link? %>
+  <%= render 'search/fragments/link', object: object if object.has_link? %>
   <%= render 'search/fragments/published_by', object: object if object.published? %>
 </section>
 

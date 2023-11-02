@@ -1,7 +1,7 @@
 require 'rails_helper'
 
-RSpec.describe ApiCall, type: :model do
-  let!(:api_call) { ApiCall.new({ object_uri: 'test_uri' }) }
+RSpec.describe SolrQuery, type: :model do
+  let!(:api_call) { SolrQuery.new({ object_uri: 'test_uri' }) }
   let!(:mock_response) { {
     "responseHeader" => {
       "status" => 0,

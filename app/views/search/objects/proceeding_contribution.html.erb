@@ -16,12 +16,12 @@
 <% end %>
 
 <section id="prelim">
-  <%= render 'search/preliminary_sentences/parliamentary_paper', object: object %>
+  <%= render 'search/preliminary_sentences/proceeding_contribution', object: object %>
 </section>
 
 <section id="text" class="content-section">
   <div class="content-text">
-    <%= object.motion_text %>
+    <%= raw object.content %>
   </div>
 </section>
 
@@ -29,20 +29,13 @@
   <h2 class="content-heading">About this <%= object.object_name %></h2>
   <%= render 'search/fragments/reference', reference: object.reference unless object.reference.blank? %>
   <%= render 'search/fragments/session', session: object.parliamentary_session unless object.parliamentary_session.blank? %>
-  <!--  paper type-->
-  <%= render 'search/fragments/procedure', procedure: object.procedure unless object.procedure.blank? %>
-  <%= render 'search/fragments/corporate_author', author: object.corporate_author unless object.corporate_author.blank? %>
+  <!--procedure-->
   <%= render 'search/fragments/related_items', related_items: object.related_items unless object.related_items.blank? %>
-  <!--  laying authority-->
-  <!--  laid in draft-->
-  <!--  contains explanatory memorandum-->
-  <!--  contains impact assessment-->
+  <!--  contains statistics-->
   <%= render 'search/fragments/notes', notes: object.notes unless object.notes.blank? %>
   <%= render 'search/fragments/pills', pills_heading: 'Subjects', pills: object.subjects unless object.subjects.blank? %>
   <%= render 'search/fragments/legislation', legislation: object.legislation unless object.legislation.blank? %>
-  <%= render 'search/fragments/library_location', location: object.library_location unless object.library_location.blank? %>
-  <!--  ISBN-->
-  <%= render 'search/fragments/links', object: object if object.has_link? %>
+  <%= render 'search/fragments/link', object: object if object.has_link? %>
 </section>
 
 <%= render '/search/fragments/back_to_top_button' %>

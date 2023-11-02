@@ -13,9 +13,7 @@ class PaperPetition < ContentObject
   end
 
   def member
-    return if content_object_data['member_ses'].blank?
-
-    content_object_data['member_ses'].first
+    member_ses
   end
 
 end

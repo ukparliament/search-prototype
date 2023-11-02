@@ -42,7 +42,7 @@
   <!--  contains impact assessment-->
   <!--  library location-->
   <%= render 'search/fragments/notes', notes: object.notes unless object.notes.blank? %>
-  <%= render 'search/fragments/links', object: object if object.has_link? %>
+  <%= render 'search/fragments/link', object: object if object.has_link? %>
 </section>
 
 <%= render '/search/fragments/back_to_top_button' %>
