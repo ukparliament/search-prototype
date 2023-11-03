@@ -97,6 +97,12 @@ class ContentObject
     content_object_data['topic_ses']
   end
 
+  def certified_category
+    return if content_object_data['certifiedCategory_ses'].blank?
+
+    content_object_data['certifiedCategory_ses']
+  end
+
   def legislation
     # TODO: sometimes leigislation text will be all that is present & we need to handle this
     # by displaying it instead of a labelled link
@@ -207,13 +213,31 @@ class ContentObject
   def procedure
     return if content_object_data['procedural_ses'].blank?
 
-    content_object_data['procedural_ses'].first
+    content_object_data['procedural_ses']
+  end
+
+  def member
+    return if content_object_data['member_ses'].blank?
+
+    content_object_data['member_ses'].first
+  end
+
+  def member_party
+    return if content_object_data['memberParty_ses'].blank?
+
+    content_object_data['memberParty_ses'].first
   end
 
   def answering_member
     return if content_object_data['answeringMember_ses'].blank?
 
     content_object_data['answeringMember_ses'].first
+  end
+
+  def answering_member_party
+    return if content_object_data['answeringMemberParty_ses'].blank?
+
+    content_object_data['tablingMemberParty_ses'].first
   end
 
   def lead_member
@@ -301,9 +325,9 @@ class ContentObject
     when 91561
       'HouseOfCommonsPaper'
     when 92347
-      'ParliamentaryPaper'
+      'ParliamentaryPaperLaid'
     when 352156
-      'ParliamentaryCommittee'
+      'ParliamentaryPaperReported'
     when 51288
       'UnprintedPaper'
     when 352261

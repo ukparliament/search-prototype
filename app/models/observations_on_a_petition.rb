@@ -11,11 +11,4 @@ class ObservationsOnAPetition < ContentObject
   def object_name
     'observations on a petition'
   end
-
-  def member
-    # unsure which field to use here
-    return if content_object_data['member_ses'].blank?
-
-    content_object_data['member_ses'].first
-  end
 end

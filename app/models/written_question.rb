@@ -166,18 +166,6 @@ class WrittenQuestion < ContentObject
     content_object_data['tablingMemberParty_ses'].first
   end
 
-  def answering_member
-    return if content_object_data['answeringMember_ses'].blank?
-
-    content_object_data['answeringMember_ses'].first
-  end
-
-  def answering_member_party
-    return if content_object_data['answeringMemberParty_ses'].blank?
-
-    content_object_data['tablingMemberParty_ses'].first
-  end
-
   def answer_text
     return if content_object_data['answerText_t'].blank?
 

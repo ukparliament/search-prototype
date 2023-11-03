@@ -19,15 +19,11 @@ class MinisterialCorrection < ContentObject
   end
 
   def correcting_member
-    return if content_object_data['member_ses'].blank?
-
-    content_object_data['member_ses'].first
+    member
   end
 
   def correcting_member_party
-    return if content_object_data['memberParty_ses'].blank?
-
-    content_object_data['memberParty_ses'].first
+    member_party
   end
 
   def correction_date

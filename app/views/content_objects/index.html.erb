@@ -1,5 +1,10 @@
+<% content_for(:before_title) do %>
+  <%= link_to('UK Parliament', root_path) %> / <%= link_to('Open data', root_path) %><br/>
+  <div id="top"></div>
+<% end %>
+
 <section class="content-section">
-  <h3 class="content-heading">Example Objects</h3>
+  <h2 class="content-heading">Example Objects</h2>
   <ul>
     <%= content_tag('li', link_to('An EDM', object_show_url(object: 'http://data.parliament.uk/edms/22468'))) %>
     <%= content_tag('li', link_to('A research briefing', object_show_url(:object => 'http://data.parliament.uk/resources/342599'))) %>
@@ -19,5 +24,9 @@
     <%= content_tag('li', link_to('Observations on a petition', object_show_url(:object => 'http://hansard.intranet.data.parliament.uk/Commons/2022-12-19/2212199000020'))) %>
     <%= content_tag('li', link_to('A formal proceeding', object_show_url(:object => 'http://data.parliament.uk/formalProceedings/7084'))) %>
     <%= content_tag('li', link_to('A parliamentary paper (laid)', object_show_url(:object => 'http://services.paperslaid.parliament.uk/papers/paper/37057'))) %>
+    <%= content_tag('li', link_to('A parliamentary paper (reported)', object_show_url(:object => 'http://data.parliament.uk/selectcommittees/54929'))) %>
+    <%= content_tag('li', link_to('A proceeding contribution', object_show_url(:object => 'http://hansard.intranet.data.parliament.uk/Lords/2022-12-21/2212217000041'))) %>
+    <%= content_tag('li', link_to('A parliamentary proceeding', object_show_url(:object => 'http://hansard.intranet.data.parliament.uk/Lords/2022-12-21/2212217000100'))) %>
+    <%= content_tag('li', link_to('A statutory instrument', object_show_url(:object => 'http://paperslaidpoller.parliament.uk/2015-16/2016-05-11/64828'))) %>
   </ul>
 </section>

@@ -34,7 +34,7 @@
   <%= render 'search/fragments/related_items', related_items: object.related_items unless object.related_items.blank? %>
   <%= render 'search/fragments/pills', pills_heading: 'Subjects', pills: object.subjects unless object.subjects.blank? %>
   <%= render 'search/fragments/legislation', legislation: object.legislation unless object.legislation.blank? %>
-  <%= render 'search/fragments/links', object: object if object.has_link? %>
+  <%= render 'search/fragments/link', object: object if object.has_link? %>
 </section>
 
 <%= render '/search/fragments/back_to_top_button' %>

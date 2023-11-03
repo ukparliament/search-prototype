@@ -1,7 +1,7 @@
 require 'rails_helper'
 
-RSpec.describe Contribution, type: :model do
-  let!(:contribution) { Contribution.new({}) }
+RSpec.describe ProceedingContribution, type: :model do
+  let!(:contribution) { ProceedingContribution.new({}) }
 
   describe 'template' do
     it 'returns a string' do
@@ -17,14 +17,14 @@ RSpec.describe Contribution, type: :model do
     end
 
     context 'where there is an empty array' do
-      let!(:contribution) { Contribution.new({ 'identifier_t' => [] }) }
+      let!(:contribution) { ProceedingContribution.new({ 'identifier_t' => [] }) }
       it 'returns nil' do
         expect(contribution.reference).to be_nil
       end
     end
 
     context 'where data exists' do
-      let!(:contribution) { Contribution.new({ 'identifier_t' => ['first item', 'second item'] }) }
+      let!(:contribution) { ProceedingContribution.new({ 'identifier_t' => ['first item', 'second item'] }) }
 
       it 'returns the first item' do
         expect(contribution.reference).to eq('first item')
@@ -40,14 +40,14 @@ RSpec.describe Contribution, type: :model do
     end
 
     context 'where there is an empty array' do
-      let!(:contribution) { Contribution.new({ 'subject_ses' => [] }) }
+      let!(:contribution) { ProceedingContribution.new({ 'subject_ses' => [] }) }
       it 'returns nil' do
         expect(contribution.subjects).to be_nil
       end
     end
 
     context 'where data exists' do
-      let!(:contribution) { Contribution.new({ 'subject_ses' => ['first item', 'second item'] }) }
+      let!(:contribution) { ProceedingContribution.new({ 'subject_ses' => ['first item', 'second item'] }) }
 
       it 'returns all items as an array' do
         expect(contribution.subjects).to eq(['first item', 'second item'])
@@ -63,14 +63,14 @@ RSpec.describe Contribution, type: :model do
     end
 
     context 'where there is an empty array' do
-      let!(:contribution) { Contribution.new({ 'legislationTitle_ses' => [] }) }
+      let!(:contribution) { ProceedingContribution.new({ 'legislationTitle_ses' => [] }) }
       it 'returns nil' do
         expect(contribution.legislation).to be_nil
       end
     end
 
     context 'where data exists' do
-      let!(:contribution) { Contribution.new({ 'legislationTitle_ses' => [12345, 67890] }) }
+      let!(:contribution) { ProceedingContribution.new({ 'legislationTitle_ses' => [12345, 67890] }) }
 
       it 'returns all items as an array' do
         expect(contribution.legislation).to eq([12345, 67890])

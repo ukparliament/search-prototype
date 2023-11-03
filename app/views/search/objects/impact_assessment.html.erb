@@ -27,7 +27,7 @@
   <!--  library location-->
   <%= render 'search/fragments/contains_statistics', contains_statistics: object.contains_statistics? %>
   <!--  ec documents-->
-  <%= render 'search/fragments/links', object: object if object.has_link? %>
+  <%= render 'search/fragments/link', object: object if object.has_link? %>
 </section>
 
 <%= render '/search/fragments/back_to_top_button' %>

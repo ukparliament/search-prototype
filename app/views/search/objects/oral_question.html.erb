@@ -42,7 +42,7 @@
   <% end %>
 
   <% if object.answered? || object.corrected? %>
-    <%= render 'search/fragments/links', object: object if object.has_link? %>
+    <%= render 'search/fragments/link', object: object if object.has_link? %>
   <% end %>
 </section>
 
