@@ -97,6 +97,12 @@ class ContentObject
     content_object_data['topic_ses']
   end
 
+  def certified_category
+    return if content_object_data['certifiedCategory_ses'].blank?
+
+    content_object_data['certifiedCategory_ses']
+  end
+
   def legislation
     # TODO: sometimes leigislation text will be all that is present & we need to handle this
     # by displaying it instead of a labelled link
