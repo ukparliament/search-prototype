@@ -9,10 +9,21 @@ class ParliamentaryProceeding < ContentObject
   end
 
   def object_name
-    subtype
+    last_subtype
+  end
+
+  def last_subtype
+    # temporary method - need to clear up what this should show & how
+    return if content_object_data['subtype_ses'].blank?
+
+    content_object_data['subtype_ses'].last
   end
 
   def location
+
+  end
+
+  def contributions
 
   end
 

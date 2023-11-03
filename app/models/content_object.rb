@@ -207,7 +207,7 @@ class ContentObject
   def procedure
     return if content_object_data['procedural_ses'].blank?
 
-    content_object_data['procedural_ses'].first
+    content_object_data['procedural_ses']
   end
 
   def member

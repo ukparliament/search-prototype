@@ -16,7 +16,7 @@
 <% end %>
 
 <section id="prelim">
-  <%= render 'search/premiminary_sentences/statutory_instrument', object: object %>
+  <%= render 'search/preliminary_sentences/statutory_instrument', object: object %>
 </section>
 
 <section id="text" class="content-section">
@@ -26,11 +26,11 @@
 </section>
 
 <section id="about" class="content-section grey">
-  <h2 class="content-heading">About this <%= object.object_name %></h2>
+  <h2 class="content-heading">About this <%= ses_object_name(object.object_name) %></h2>
   <%= render 'search/fragments/reference', reference: object.reference unless object.reference.blank? %>
-  <%= render 'search/fragments/session', reference: object.parliamentary_session unless object.parliamentary_session.blank? %>
-  <!--  coming into force-->
-  <!--  procedure-->
+  <%= render 'search/fragments/session', session: object.parliamentary_session unless object.parliamentary_session.blank? %>
+  <%= render 'search/fragments/coming_into_force', notes: object.coming_into_force unless object.coming_into_force.blank? %>
+  <%= render 'search/fragments/procedure', procedure: object.procedure unless object.procedure.blank? %>
   <%= render 'search/fragments/related_items', related_items: object.related_items unless object.related_items.blank? %>
   <%= render 'search/fragments/pills', pills_heading: 'Subjects', pills: object.subjects unless object.subjects.blank? %>
   <%= render 'search/fragments/legislation', legislation: object.legislation unless object.legislation.blank? %>
@@ -40,7 +40,7 @@
   <!--  laid in draft-->
   <!--  contains explanatory memorandum-->
   <!--  contains impact assessment-->
-  <!--  library location-->
+  <%= render 'search/fragments/library_location', location: object.library_location unless object.library_location.blank? %>
   <%= render 'search/fragments/notes', notes: object.notes unless object.notes.blank? %>
   <%= render 'search/fragments/link', object: object if object.has_link? %>
 </section>

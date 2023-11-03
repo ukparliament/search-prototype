@@ -11,4 +11,16 @@ module LinkHelper
     link_to(@ses_data[ses_id.to_i], '/')
   end
 
+  def ses_object_name_link(ses_id)
+    # used where the object type is dynamic
+
+    link_to(@ses_data[ses_id.to_i]&.singularize.downcase, '/')
+  end
+  def ses_object_name(ses_id)
+    # used where the object type is dynamic but we don't actually want a link
+    # e.g. secondary information title
+
+    @ses_data[ses_id.to_i]&.singularize.downcase
+  end
+
 end
