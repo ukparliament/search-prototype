@@ -110,6 +110,12 @@ class Question < ContentObject
     CGI::unescapeHTML(content_object_data['questionText_t'].first)
   end
 
+  def question_type
+    return if content_object_data['wqType_t'].blank?
+
+    content_object_data['wqType_t']
+  end
+
   def procedure
     # no data on this currently
   end

@@ -47,6 +47,13 @@ class WrittenQuestion < Question
     nil
   end
 
+  def uin
+    # UIN with optional Hansard reference in same field
+    return if content_object_data['identifier_t'].blank?
+
+    content_object_data['identifier_t']
+  end
+
   def holding_answer?
     return if content_object_data['holdingAnswer_b'].blank?
 

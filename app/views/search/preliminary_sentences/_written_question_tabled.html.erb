@@ -7,11 +7,10 @@
       in the <%= ses_object_link(object.legislature) %>
       <% unless object.department.blank? %>
         for the <%= ses_object_link(object.department) %>
-      <% end %>
-      .
+      <% end %>.
       It is due for answer
       on <strong><%= object.date_for_answer&.strftime(ApplicationHelper::DATE_DISPLAY_FORMAT) %></strong>
-      (<%= object.written_question_type %>).
+      (<%= object.question_type %>).
     </div>
   </div>
 </div>
