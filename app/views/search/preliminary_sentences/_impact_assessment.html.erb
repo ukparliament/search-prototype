@@ -2,7 +2,7 @@
   <div class="content-prelim-inner">
     <div class="content-prelim-text" id="prelim-text">
       An <%= object_link(object.object_name, '/') %> published by the <%= ses_object_link(object.corporate_author) %>
-      was received by Parliament on
+      received by Parliament on
       <strong><%= object.date&.strftime(ApplicationHelper::DATE_DISPLAY_FORMAT) %></strong>.
     </div>
   </div>
