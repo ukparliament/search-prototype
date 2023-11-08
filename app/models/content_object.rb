@@ -118,6 +118,12 @@ class ContentObject
     content_object_data['department_ses'].first
   end
 
+  def place
+    return if content_object_data['place_ses'].blank?
+
+    content_object_data['place_ses'].first
+  end
+
   def library_location
     # this is for the commons library, but there's also lordsLibraryLocation_t
     # assume there's some logic needed for how to combine or conditionally present these
@@ -234,12 +240,6 @@ class ContentObject
     content_object_data['answeringMember_ses'].first
   end
 
-  def answering_member_party
-    return if content_object_data['answeringMemberParty_ses'].blank?
-
-    content_object_data['tablingMemberParty_ses'].first
-  end
-
   def lead_member
     return if content_object_data['leadMember_ses'].blank?
 
@@ -338,6 +338,8 @@ class ContentObject
       'OralQuestion'
     when 286676
       'OralAnswerToQuestion'
+    when 356748
+      'OralQuestionTimeIntervention'
     when 356750
       'ProceedingContribution'
     when 352161

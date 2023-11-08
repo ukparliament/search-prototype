@@ -2,9 +2,12 @@
   <div class="content-prelim-inner">
     <div class="content-prelim-text" id="prelim-text">
       An <%= object_link(object.object_name, '/') %> asked in the <%= ses_object_link(object.legislature) %>,
-      <!--      in the <%#= ses_object_link(object.location) %>-->
+      <% if object.place %>
+        in the <%= ses_object_link(object.place) %>
+      <% end %>
       by <%= ses_object_link(object.tabling_member) %> (<%= ses_object_link(object.tabling_member_party) %>).
-      It was answered by <%= ses_object_link(object.answering_member) %> (<%= ses_object_link(object.answering_member_party) %>)
+      It was answered by <%= ses_object_link(object.answering_member) %>
+      (<%= ses_object_link(object.answering_member_party) %>)
       on <strong><%= object.date_of_answer&.strftime(ApplicationHelper::DATE_DISPLAY_FORMAT) %></strong>.
     </div>
   </div>

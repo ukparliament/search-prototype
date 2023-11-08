@@ -125,4 +125,10 @@ class Question < ContentObject
 
     content_object_data['answeringDept_ses'].first
   end
+
+  def answering_member_party
+    return if content_object_data['answeringMemberParty_ses'].blank?
+
+    content_object_data['answeringMemberParty_ses'].first
+  end
 end

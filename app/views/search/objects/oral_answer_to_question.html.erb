@@ -1,6 +1,10 @@
 <% if Rails.env.development? %>
   <%= render 'search/fragments/data', data: object.content_object_data, title: 'SOLR Data' %>
   <%= render 'search/fragments/data', data: @ses_data, title: 'SES Data' %>
+
+  <% if object.has_question? %>
+    <%= render 'search/fragments/data', data: object.question_object.content_object_data, title: 'Question object SOLR Data' %>
+  <% end %>
 <% end %>
 
 <% content_for(:before_title) do %>
@@ -15,36 +19,24 @@
 <% end %>
 
 <section id="prelim">
-  <%= render object.prelim_partial, object: object %>
+  <%= render 'search/preliminary_sentences/oral_answer_to_question', object: object %>
 </section>
 
-<!--for tabled / answered / holding / answered was holding / corrected -->
+<%= render 'search/fragments/answer', object: object %>
+<!--a variant of wireframes shows final part of preliminary sentence here instead-->
 <%= render 'search/fragments/question', object: object %>
-
-<!--for answered / holding / withdrawn (? unsure why a withdrawn question would have an answer) / corrected -->
-<%= render 'search/fragments/answer', object: object if object.answered? || object.answered_was_holding? %>
-
-<!--for corrected-->
-<%= render 'search/fragments/corrected_answer', object: object if object.corrected? %>
+<!--oral question lead link-->
 
 <section id="about" class="content-section grey">
-  <h2 class="content-heading">About this <%= object.object_name %></h2>
-  <%= render 'search/fragments/uin', uins: object.uin unless object.uin.blank? %>
+  <h2 class="content-heading">About this oral answer to question</h2>
+  <%= render 'search/fragments/reference', reference: object.reference unless object.reference.blank? %>
   <%= render 'search/fragments/session', session: object.parliamentary_session unless object.parliamentary_session.blank? %>
   <%= render 'search/fragments/procedure', procedure: object.procedure unless object.procedure.blank? %>
   <%= render 'search/fragments/related_items', related_items: object.related_items unless object.related_items.blank? %>
   <%= render 'search/fragments/notes', notes: object.notes unless object.notes.blank? %>
-  <%= render 'search/fragments/registered_interest_declared', registered_interest_declared: object.registered_interest_declared unless object.registered_interest_declared.blank? %>
-  <%= render 'search/fragments/attachment', attachments: object.attachment unless object.attachment.blank? %>
-  <% unless object.tabled? || object.withdrawn? %>
-    <%= render 'search/fragments/grouped_for_answer', grouped: object.grouped_for_answer? %>
-    <%= render 'search/fragments/transferred', transferred: object.transferred? %>
-  <% end %>
-  <%= render 'search/fragments/failed_oral', failed_oral: object.failed_oral? %>
-  <%= render 'search/fragments/unstarred', unstarred: object.unstarred_question? %>
+  <%= render 'search/fragments/contains_statistics', contains_statistics: object.contains_statistics? %>
   <%= render 'search/fragments/pills', pills_heading: 'Subjects', pills: object.subjects unless object.subjects.blank? %>
   <%= render 'search/fragments/legislation', legislation: object.legislation unless object.legislation.blank? %>
-  <%= render 'search/fragments/contains_statistics', contains_statistics: object.contains_statistics? %>
   <%= render 'search/fragments/link', object: object if object.has_link? %>
 </section>
 

@@ -3,9 +3,11 @@
     <div class="content-prelim-text" id="prelim-text">
       A <%= object_link(object.object_name, '/') %> from
       <%= ses_object_link(object.member) %> (<%= ses_object_link(object.member_party) %>)
-      in the <%= ses_object_link(object.legislature) %>, in the
-      <%= ses_object_link(object.location) %> on
-      <strong><%= object.date&.strftime(ApplicationHelper::DATE_DISPLAY_FORMAT) %></strong>.
+      in the <%= ses_object_link(object.legislature) %>,
+      <% if object.place %>
+        in the <%= ses_object_link(object.place) %>
+      <% end %>
+      on <strong><%= object.date&.strftime(ApplicationHelper::DATE_DISPLAY_FORMAT) %></strong>.
       It occurred during <%= ses_object_link(object.proceeding) %> on
       <%= ses_object_link(object.proceeding_type) %>.
     </div>
