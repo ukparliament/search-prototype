@@ -1,4 +1,4 @@
-class OralQuestion < ContentObject
+class OralQuestion < Question
 
   def initialize(content_object_data)
     super
@@ -6,6 +6,10 @@ class OralQuestion < ContentObject
 
   def template
     'search/objects/oral_question'
+  end
+
+  def object_name
+    "oral question"
   end
 
   def prelim_partial
@@ -22,35 +26,9 @@ class OralQuestion < ContentObject
     nil
   end
 
-  def state
-    return if content_object_data['pqStatus_t'].blank?
-
-    content_object_data['pqStatus_t'].first
-  end
-
-  def tabled?
-    state == 'Tabled'
-  end
-
-  def withdrawn?
-    state == 'Withdrawn'
-  end
-
-  def answered?
-    state == 'Answered'
-  end
-
   def lords_answered?
     # placeholder
     state == 'Lords_Answered'
-  end
-
-  def corrected?
-    # Copied from written question
-    # placeholder
-    return false unless content_object_data['correctedWmsMc_b'] == 'true'
-
-    true
   end
 
 end

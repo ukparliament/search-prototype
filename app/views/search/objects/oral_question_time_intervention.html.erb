@@ -1,0 +1,39 @@
+<% if Rails.env.development? %>
+  <%= render 'search/fragments/data', data: object.content_object_data, title: 'SOLR Data' %>
+  <%= render 'search/fragments/data', data: @ses_data, title: 'SES Data' %>
+<% end %>
+
+<% content_for(:before_title) do %>
+  <%= link_to('UK Parliament', root_path) %> / <%= link_to('Open data', root_path) %><br/>
+  <div id="top"></div>
+<% end %>
+
+<% if object.page_title %>
+  <% content_for(:title) do %>
+    <%= object.page_title %>
+  <% end %>
+<% end %>
+
+<section id="prelim">
+  <%= render 'search/preliminary_sentences/oral_question_time_intervention', object: object %>
+</section>
+
+<section id="text" class="content-section">
+  <div class="content-text">
+    <%= raw(object.content) %>
+  </div>
+</section>
+
+<section id="about" class="content-section grey">
+  <h2 class="content-heading">About this <%= object.object_name %></h2>
+  <%= render 'search/fragments/reference', reference: object.reference unless object.reference.blank? %>
+  <%= render 'search/fragments/session', session: object.parliamentary_session unless object.parliamentary_session.blank? %>
+  <%= render 'search/fragments/related_items', related_items: object.related_items unless object.related_items.blank? %>
+  <%= render 'search/fragments/notes', notes: object.notes unless object.notes.blank? %>
+  <%= render 'search/fragments/contains_statistics', contains_statistics: object.contains_statistics? %>
+  <%= render 'search/fragments/pills', pills_heading: 'Subjects', pills: object.subjects unless object.subjects.blank? %>
+  <%= render 'search/fragments/legislation', legislation: object.legislation unless object.legislation.blank? %>
+  <%= render 'search/fragments/link', object: object if object.has_link? %>
+</section>
+
+<%= render '/search/fragments/back_to_top_button' %>
