@@ -21,7 +21,13 @@ module LinkHelper
     # used where the object type is dynamic but we don't actually want a link
     # e.g. secondary information title
 
-    @ses_data[ses_id.to_i]&.singularize.downcase
+    @ses_data[ses_id.to_i]&.singularize&.downcase
+  end
+
+  def ses_name(ses_id)
+    # used where we want an as-is SES name but without a link
+    # TODO: refactor into main helper method using optional parameter?
+    display_name(@ses_data[ses_id.to_i])
   end
 
   def display_name(ses_name)

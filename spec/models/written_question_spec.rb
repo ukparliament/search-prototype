@@ -187,7 +187,7 @@ RSpec.describe WrittenQuestion, type: :model do
 
         it 'returns a written question object' do
           allow(written_question).to receive(:corrected?).and_return(true)
-          allow_any_instance_of(ApiCall).to receive(:object_data).and_return(test_data)
+          allow_any_instance_of(SolrQuery).to receive(:object_data).and_return(test_data)
           expect(written_question.correcting_object).to be_an_instance_of(WrittenQuestion)
         end
       end

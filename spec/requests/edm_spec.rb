@@ -5,7 +5,7 @@ RSpec.describe 'Edm', type: :request do
     let!(:edm_instance) { Edm.new('test') }
 
     it 'returns http success' do
-      allow_any_instance_of(ApiCall).to receive(:object_data).and_return('test')
+      allow_any_instance_of(SolrQuery).to receive(:object_data).and_return('test')
       allow_any_instance_of(Edm).to receive(:ses_data).and_return(edm_instance.type => 'early day motion')
       allow(ContentObject).to receive(:generate).and_return(edm_instance)
       get '/objects', params: { :object => 'test_string' }
@@ -45,7 +45,7 @@ RSpec.describe 'Edm', type: :request do
             end
           end
 
-          allow_any_instance_of(ApiCall).to receive(:object_data).and_return('test')
+          allow_any_instance_of(SolrQuery).to receive(:object_data).and_return('test')
           allow(ContentObject).to receive(:generate).and_return(edm_instance)
           allow_any_instance_of(SesLookup).to receive(:data).and_return(test_ses_data)
 

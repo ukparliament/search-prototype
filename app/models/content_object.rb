@@ -199,15 +199,17 @@ class ContentObject
   end
 
   def related_items
-    # based on provided information, this will return one or more URIs of related item object pages
+    relation_uris = content_object_data['relation_t']
+    return if relation_uris.blank?
 
-    # if relation_t and relation_uri, gets a related item
-    # fields might be inconsistent
-    # link through to the item landing page
+    related_objects = SolrMultiQuery.new(object_uris: relation_uris).object_data
 
-    return if content_object_data['relation_t'].blank?
+    ret = []
+    related_objects.each do |object|
+      ret << ContentObject.generate(object)
+    end
 
-    content_object_data['relation_t']
+    ret
   end
 
   def parliamentary_session
