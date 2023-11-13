@@ -1,8 +1,24 @@
 <div class="about-item">
   <h3 class="content-heading" id="related-items">Related items</h3>
+
+  <!--  relation_t or relation_uri-->
+  <!--we can only provide further information where there's a uri to follow-->
+  <!--  however it's further complicated by relation_t containing uris-->
+  <!--  if we have the uri, we can also add date_dt, type_ses and legislature_ses-->
+
   <% related_items.each do |related_item| %>
-  <div>
-    <%= link_to related_item, '/' %><br/>
-  </div>
+    <div>
+      <%= link_to related_item.page_title, related_item.content_object_data['uri'] %><br/>
+      <% if related_item.date %>
+        <%= related_item.date&.strftime(ApplicationHelper::DATE_DISPLAY_FORMAT) %>
+      <% end %>
+      <% if related_item.type %>
+        <%= ses_name(related_item.type) %><br/>
+      <% end %>
+      <% if related_item.legislature %>
+        <%= ses_name(related_item.legislature) %><br/>
+      <% end %>
+    </div>
+    <br/>
   <% end %>
 </div>

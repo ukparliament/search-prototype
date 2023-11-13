@@ -49,7 +49,7 @@ class Question < ContentObject
 
     return if content_object_data['correctingItem_uri'].blank?
 
-    correcting_item_data = ApiCall.new(object_uri: content_object_data['correctingItem_uri']).object_data
+    correcting_item_data = SolrQuery.new(object_uri: content_object_data['correctingItem_uri']).object_data
     ContentObject.generate(correcting_item_data)
   end
 

@@ -7,7 +7,7 @@ class ContentObjectsController < ApplicationController
 
   def show
     # We get the object URI passed as a parameter and pass to a new instance of ApiCall
-    object_data = ApiCall.new(object_uri: params[:object]).object_data
+    object_data = SolrQuery.new(object_uri: params[:object]).object_data
 
     # TODO: handle other error types
     if object_data['statusCode'] == 500
