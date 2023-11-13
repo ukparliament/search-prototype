@@ -202,6 +202,10 @@ class ContentObject
     relation_uris = content_object_data['relation_t']
     return if relation_uris.blank?
 
+    return unless relation_uris.is_a?(Array)
+
+    return unless relation_uris.map(&:class).uniq.compact == [String]
+
     related_objects = SolrMultiQuery.new(object_uris: relation_uris).object_data
 
     ret = []
