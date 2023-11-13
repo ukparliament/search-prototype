@@ -198,24 +198,6 @@ class ContentObject
     content_object_data['searcherNote_t'].first
   end
 
-  def old_related_items
-    # based on provided information, this will return one or more URIs of related item object pages
-
-    relation_uris = content_object_data['relation_t']
-
-    return if relation_uris.blank?
-
-    relation_objects = []
-
-    relation_uris.each do |relation_uri|
-      relation_data = SolrQuery.new(object_uri: relation_uri).object_data
-      relation_object = ContentObject.generate(relation_data)
-      relation_objects << relation_object
-    end
-
-    relation_objects
-  end
-
   def related_items
     relation_uris = content_object_data['relation_t']
     return if relation_uris.blank?
