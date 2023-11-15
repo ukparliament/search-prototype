@@ -18,7 +18,7 @@
   <%= render 'search/preliminary_sentences/deposited_paper', object: object %>
 </section>
 
-<section id="text" class="content-section">
+<section id="main-content" class="content-section white">
   <h3 class="content-heading" id="available-files">Available files</h3>
   <% object.deposited_file.each do |file| %>
     <%= link_to(file) %>

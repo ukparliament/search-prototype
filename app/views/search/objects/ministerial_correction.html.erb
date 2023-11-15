@@ -18,7 +18,7 @@
   <%= render 'search/preliminary_sentences/ministerial_correction', object: object %>
 </section>
 
-<section id="text" class="content-section">
+<section id="main-content" class="content-section white">
   <div class="content-text">
     <%= raw(object.correction_text) %>
   </div>
@@ -30,7 +30,6 @@
   <!--    link to original, using correctedItem_uri-->
   <!--  </div>-->
 </section>
-
 
 <section id="about" class="content-section grey">
   <h2 class="content-heading">About this <%= object.object_name %></h2>

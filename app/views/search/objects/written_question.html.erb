@@ -18,14 +18,19 @@
   <%= render object.prelim_partial, object: object %>
 </section>
 
-<!--for tabled / answered / holding / answered was holding / corrected -->
-<%= render 'search/fragments/question', object: object %>
+<section id="main-content" class="content-section white">
+  <!--for tabled / answered / holding / answered was holding / corrected -->
+  <%= render 'search/fragments/question', object: object %>
 
-<!--for answered / holding / withdrawn (? unsure why a withdrawn question would have an answer) / corrected -->
-<%= render 'search/fragments/answer', object: object if object.answered? || object.answered_was_holding? %>
+  <!--for answered / holding / withdrawn (? unsure why a withdrawn question would have an answer) / corrected -->
+  <%= render 'search/fragments/answer', object: object if object.answered? || object.answered_was_holding? %>
 
-<!--for corrected-->
-<%= render 'search/fragments/corrected_answer', object: object if object.corrected? %>
+  <!--for corrected-->
+  <%= render 'search/fragments/corrected_answer', object: object if object.corrected? %>
+
+  <!--for prorogation answers-->
+  <%= render 'search/fragments/prorogation_information' %>
+</section>
 
 <section id="about" class="content-section grey">
   <h2 class="content-heading">About this <%= object.object_name %></h2>

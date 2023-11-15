@@ -202,11 +202,18 @@ class ContentObject
     relation_uris = content_object_data['relation_t']
     return if relation_uris.blank?
 
-    related_objects = SolrMultiQuery.new(object_uris: relation_uris).object_data
+    return unless relation_uris.is_a?(Array)
 
-    ret = []
-    related_objects.each do |object|
-      ret << ContentObject.generate(object)
+    return unless relation_uris.map(&:class).uniq.compact == [String]
+
+    ret = {}
+
+    query = SolrMultiQuery.new(object_uris: relation_uris)
+    ret[:ses_lookup] = SesLookup.new(query.all_ses_ids).data unless query.all_ses_ids.blank?
+
+    ret[:items] = []
+    query.object_data.each do |object|
+      ret[:items] << ContentObject.generate(object)
     end
 
     ret
@@ -255,6 +262,10 @@ class ContentObject
   end
 
   def contains_statistics?
+    # TODO: this will be any of three attributes being true
+    # see comments on trello card
+    # Blanket rule proposed for all object views: “Given an object with one or more of the attributes, hasTable OR containsStatistics OR statisticsIndicated, show Yes if at least one of those is true. If all statistical attributes associated with the object are false, do not display.”
+
     return if content_object_data['containsStatistics_b'].blank?
 
     return false unless content_object_data['containsStatistics_b'].first == 'true'
