@@ -147,7 +147,7 @@ RSpec.describe Edm, type: :model do
     end
   end
 
-  describe 'registered_interest_declared' do
+  describe 'registered_interest_declared?' do
     context 'where there is no data' do
       it 'returns nil' do
         expect(edm.registered_interest_declared?).to be_nil
@@ -162,21 +162,20 @@ RSpec.describe Edm, type: :model do
     end
 
     context 'where data exists' do
-      context 'where first item is false' do
-        let!(:edm) { Edm.new({ 'registeredInterest_b' => ['false'] }) }
-
-        it 'returns "no"' do
-          expect(edm.registered_interest_declared?).to eq('No')
-        end
-      end
-      context 'where first item is true' do
+      context 'where a string representing a boolean' do
         let!(:edm) { Edm.new({ 'registeredInterest_b' => ['true'] }) }
 
-        it 'returns "yes"' do
-          expect(edm.registered_interest_declared?).to eq('Yes')
+        it 'returns the relevant boolean' do
+          expect(edm.registered_interest_declared?).to eq(true)
         end
       end
+      context 'where not a boolean value' do
+        let!(:edm) { Edm.new({ 'registeredInterest_b' => ['first item', 'second item'] }) }
 
+        it 'returns false' do
+          expect(edm.registered_interest_declared?).to eq(false)
+        end
+      end
     end
   end
 
