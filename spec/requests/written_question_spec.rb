@@ -57,8 +57,8 @@ RSpec.describe 'Written Question', type: :request do
             expect(CGI::unescapeHTML(response.body)).to include(written_question_instance.notes)
           end
 
-          unless written_question_instance.registered_interest_declared.blank?
-            expect(CGI::unescapeHTML(response.body)).to include(written_question_instance.registered_interest_declared)
+          if written_question_instance.registered_interest_declared?
+            expect(CGI::unescapeHTML(response.body)).to include(written_question_instance.registered_interest_declared?)
           end
 
           expect(CGI::unescapeHTML(response.body)).to include(written_question_instance.display_link)

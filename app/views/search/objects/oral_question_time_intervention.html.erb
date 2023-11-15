@@ -30,7 +30,7 @@
   <%= render 'search/fragments/session', session: object.parliamentary_session unless object.parliamentary_session.blank? %>
   <%= render 'search/fragments/related_items', related_items: object.related_items unless object.related_items.blank? %>
   <%= render 'search/fragments/notes', notes: object.notes unless object.notes.blank? %>
-  <%= render 'search/fragments/contains_statistics', contains_statistics: object.contains_statistics? %>
+  <%= render 'search/fragments/contains_statistics', contains_statistics: object.contains_statistics? if object.contains_statistics? %>
   <%= render 'search/fragments/pills', pills_heading: 'Subjects', pills: object.subjects unless object.subjects.blank? %>
   <%= render 'search/fragments/legislation', legislation: object.legislation unless object.legislation.blank? %>
   <%= render 'search/fragments/link', object: object if object.has_link? %>

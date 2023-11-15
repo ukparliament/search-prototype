@@ -35,7 +35,7 @@
 
   <%= render 'search/fragments/session', session: object.parliamentary_session unless object.parliamentary_session.blank? %>
   <%= render 'search/fragments/related_items', related_items: object.related_items unless object.related_items.blank? %>
-  <%= render 'search/fragments/contains_statistics', contains_statistics: object.contains_statistics? %>
+  <%= render 'search/fragments/contains_statistics', contains_statistics: object.contains_statistics? if object.contains_statistics? %>
   <!--  partial: witnesses - oral evidence only-->
 
   <!--  conditional-->
@@ -45,7 +45,12 @@
 
   <%= render 'search/fragments/pills', pills_heading: 'Subjects', pills: object.subjects unless object.subjects.blank? %>
   <%= render 'search/fragments/legislation', legislation: object.legislation unless object.legislation.blank? %>
-  <!-- partial: library location - oral evidence only -->
+
+  <!--  conditional-->
+  <!--  libary location only shown for oral evidence-->
+  <%= render 'search/fragments/library_location', location: object.library_location unless object.library_location.blank? %>
+  <!--  end conditional-->
+
   <%= render 'search/fragments/link', object: object if object.has_link? %>
 </section>
 

@@ -34,8 +34,8 @@
   <%= render 'search/fragments/personal_author', author: object.personal_author unless object.personal_author.blank? %>
   <%= render 'search/fragments/pills', pills_heading: 'Subjects', pills: object.subjects unless object.subjects.blank? %>
   <%= render 'search/fragments/legislation', legislation: object.legislation unless object.legislation.blank? %>
-  <!--  library location-->
-  <%= render 'search/fragments/contains_statistics', contains_statistics: object.contains_statistics? %>
+  <%= render 'search/fragments/library_location', location: object.library_location unless object.library_location.blank? %>
+  <%= render 'search/fragments/contains_statistics', contains_statistics: object.contains_statistics? if object.contains_statistics? %>
 
 </section>
 

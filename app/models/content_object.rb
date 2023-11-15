@@ -156,10 +156,12 @@ class ContentObject
     content_object_data['legislature_ses'].first
   end
 
-  def registered_interest_declared
+  def registered_interest_declared?
     return if content_object_data['registeredInterest_b'].blank?
 
-    content_object_data['registeredInterest_b'].first == 'true' ? 'Yes' : 'No'
+    return false unless content_object_data['registeredInterest_b'].first == 'true'
+
+    true
   end
 
   def external_location_uri

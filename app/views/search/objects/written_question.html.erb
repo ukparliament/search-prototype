@@ -39,17 +39,17 @@
   <%= render 'search/fragments/procedure', procedure: object.procedure unless object.procedure.blank? %>
   <%= render 'search/fragments/related_items', related_items: object.related_items unless object.related_items.blank? %>
   <%= render 'search/fragments/notes', notes: object.notes unless object.notes.blank? %>
-  <%= render 'search/fragments/registered_interest_declared', registered_interest_declared: object.registered_interest_declared unless object.registered_interest_declared.blank? %>
+  <%= render 'search/fragments/registered_interest_declared', registered_interest: object.registered_interest_declared? if object.registered_interest_declared? %>
   <%= render 'search/fragments/attachment', attachments: object.attachment unless object.attachment.blank? %>
   <% unless object.tabled? || object.withdrawn? %>
-    <%= render 'search/fragments/grouped_for_answer', grouped: object.grouped_for_answer? %>
-    <%= render 'search/fragments/transferred', transferred: object.transferred? %>
+    <%= render 'search/fragments/grouped_for_answer', grouped: object.grouped_for_answer? if object.grouped_for_answer? %>
+    <%= render 'search/fragments/transferred', transferred: object.transferred? if object.transferred? %>
   <% end %>
-  <%= render 'search/fragments/failed_oral', failed_oral: object.failed_oral? %>
-  <%= render 'search/fragments/unstarred', unstarred: object.unstarred_question? %>
+  <%= render 'search/fragments/failed_oral', failed_oral: object.failed_oral? if object.failed_oral? %>
+  <%= render 'search/fragments/unstarred', unstarred: object.unstarred_question? if object.unstarred_question? %>
   <%= render 'search/fragments/pills', pills_heading: 'Subjects', pills: object.subjects unless object.subjects.blank? %>
   <%= render 'search/fragments/legislation', legislation: object.legislation unless object.legislation.blank? %>
-  <%= render 'search/fragments/contains_statistics', contains_statistics: object.contains_statistics? %>
+  <%= render 'search/fragments/contains_statistics', contains_statistics: object.contains_statistics? if object.contains_statistics? %>
   <%= render 'search/fragments/link', object: object if object.has_link? %>
 </section>
 

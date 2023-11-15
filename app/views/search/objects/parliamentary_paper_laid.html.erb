@@ -30,14 +30,13 @@
   <%= render 'search/fragments/reference', reference: object.reference unless object.reference.blank? %>
   <%= render 'search/fragments/session', session: object.parliamentary_session unless object.parliamentary_session.blank? %>
   <%= render 'search/fragments/paper_type', type: object.paper_type  %>
-  <!--  paper type-->
   <%= render 'search/fragments/procedure', procedure: object.procedure unless object.procedure.blank? %>
   <%= render 'search/fragments/corporate_author', author: object.corporate_author unless object.corporate_author.blank? %>
   <%= render 'search/fragments/related_items', related_items: object.related_items unless object.related_items.blank? %>
   <!--  laying authority-->
   <!--  laid in draft-->
-  <!--  contains explanatory memorandum-->
-  <!--  contains impact assessment-->
+  <%= render 'search/fragments/contains_explanatory_memorandum', contains_em: object.contains_explanatory_memo? if object_contains_explanatory_memo? %>
+  <%= render 'search/fragments/contains_impact_assessment', contains_ia: object.contains_impact_assessment? %>
   <%= render 'search/fragments/notes', notes: object.notes unless object.notes.blank? %>
   <%= render 'search/fragments/pills', pills_heading: 'Subjects', pills: object.subjects unless object.subjects.blank? %>
   <%= render 'search/fragments/legislation', legislation: object.legislation unless object.legislation.blank? %>

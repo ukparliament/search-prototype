@@ -25,7 +25,7 @@
   <%= render 'search/fragments/pills', pills_heading: 'Subjects', pills: object.subjects unless object.subjects.blank? %>
   <%= render 'search/fragments/legislation', legislation: object.legislation unless object.legislation.blank? %>
   <%= render 'search/fragments/library_location', location: object.library_location unless object.library_location.blank? %>
-  <%= render 'search/fragments/contains_statistics', contains_statistics: object.contains_statistics? %>
+  <%= render 'search/fragments/contains_statistics', contains_statistics: object.contains_statistics? if object.contains_statistics? %>
   <%= render 'search/fragments/ec_documents', ec_documents: object.ec_documents unless object.ec_documents.blank? %>
   <%= render 'search/fragments/link', object: object if object.has_link? %>
 </section>
