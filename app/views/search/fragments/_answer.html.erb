@@ -1,6 +1,4 @@
-<section id="text" class="content-section">
-  <div class="about-item">
-    <h3 class="content-heading" id="answer">Answer</h3>
-    <%= raw(object.answer_text) %>
-  </div>
-</section>
+<div class="about-item">
+  <h3 class="content-heading" id="answer">Answer</h3>
+  <%= raw sanitize object.answer_text, tags: %w(strong em a br) %>
+</div>

@@ -19,7 +19,7 @@
   <%= render 'search/preliminary_sentences/bill', object: object %>
 </section>
 
-<section id="text" class="content-section">
+<section id="main-content" class="content-section white">
   <div class="content-text">
     <%= object.motion_text %>
   </div>
@@ -32,7 +32,7 @@
   <%= render 'search/fragments/certified_category', certified: object.certified_category unless object.certified_category.blank? %>
   <!--  previous version-->
   <%= render 'search/fragments/related_items', related_items: object.related_items unless object.related_items.blank? %>
-  <!--  contains explanatory memorandum-->
+  <%= render 'search/fragments/contains_explanatory_memorandum', contains_em: object.contains_explanatory_memo? if object.contains_explanatory_memo? %>
   <%= render 'search/fragments/notes', notes: object.notes unless object.notes.blank? %>
   <%= render 'search/fragments/pills', pills_heading: 'Subjects', pills: object.subjects unless object.subjects.blank? %>
   <%= render 'search/fragments/legislation', legislation: object.legislation unless object.legislation.blank? %>

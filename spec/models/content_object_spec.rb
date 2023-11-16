@@ -93,9 +93,11 @@ RSpec.describe ContentObject, type: :model do
         it 'passes the strings to a new instance of SolrMultiQuery' do
           expect(SolrMultiQuery).to receive(:new).with({ :object_uris => ["test1", "test2"] }).and_return(solr_multi_query_object)
           allow_any_instance_of(SolrMultiQuery).to receive(:object_data).and_return(['test'])
+          allow_any_instance_of(SesLookup).to receive(:data).and_return('SES data')
+
           allow(ContentObject).to receive(:generate).and_return(related_item_1)
 
-          expect(content_object.related_items).to eq([related_item_1])
+          expect(content_object.related_items).to eq({ items: [related_item_1], ses_lookup: 'SES data' })
         end
       end
     end

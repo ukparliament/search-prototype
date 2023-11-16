@@ -18,9 +18,11 @@
   <%= render object.prelim_partial, object: object %>
 </section>
 
-<%= render 'search/fragments/question', object: object %>
-<%= render 'search/fragments/answer', object: object unless object.tabled? || object.withdrawn? %>
-<!--answered state shows link here also -->
+<section id="main-content" class="content-section white">
+  <%= render 'search/fragments/question', object: object %>
+  <%= render 'search/fragments/answer', object: object unless object.tabled? || object.withdrawn? %>
+  <!--answered state shows link here also -->
+</section>
 
 <section id="about" class="content-section grey">
   <h2 class="content-heading">About this <%= object.object_name %></h2>
@@ -36,8 +38,8 @@
   <% end %>
 
   <%= render 'search/fragments/notes', notes: object.notes unless object.notes.blank? %>
-  <%= render 'search/fragments/contains_statistics', contains_statistics: object.contains_statistics? %>
-  <%= render 'search/fragments/registered_interest_declared', registered_interest_declared: object.registered_interest_declared unless object.registered_interest_declared.blank? %>
+  <%= render 'search/fragments/contains_statistics', contains_statistics: object.contains_statistics? if object.contains_statistics? %>
+  <%= render 'search/fragments/registered_interest_declared', registered_interest: object.registered_interest_declared? if object.registered_interest_declared? %>
   <%= render 'search/fragments/pills', pills_heading: 'Subjects', pills: object.subjects unless object.subjects.blank? %>
 
   <% if object.corrected? %>

@@ -1,13 +1,6 @@
 class SolrQuery < ApiCall
-  require 'open-uri'
-  require 'net/http'
-
-  attr_reader :object_uri
-
-  BASE_API_URI = "https://api.parliament.uk/new-solr/"
-
   def initialize(params)
-    @object_uri = params[:object_uri]
+    super
   end
 
   def object_data

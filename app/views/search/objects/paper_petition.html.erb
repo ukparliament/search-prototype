@@ -18,7 +18,7 @@
   <%= render 'search/preliminary_sentences/paper_petition', object: object %>
 </section>
 
-<section id="text" class="content-section">
+<section id="main-content" class="content-section white">
   <div class="content-text">
     <%= raw(object.content) %>
   </div>
@@ -28,7 +28,7 @@
   <h2 class="content-heading">About this <%= object.object_name %></h2>
   <%= render 'search/fragments/reference', reference: object.reference unless object.reference.blank? %>
   <%= render 'search/fragments/session', session: object.parliamentary_session unless object.parliamentary_session.blank? %>
-  <!--  procedure-->
+  <%= render 'search/fragments/procedure', procedure: object.procedure unless object.procedure.blank? %>
   <%= render 'search/fragments/related_items', related_items: object.related_items unless object.related_items.blank? %>
   <%= render 'search/fragments/notes', notes: object.notes unless object.notes.blank? %>
   <%= render 'search/fragments/pills', pills_heading: 'Subjects', pills: object.subjects unless object.subjects.blank? %>

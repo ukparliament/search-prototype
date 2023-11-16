@@ -1,18 +1,24 @@
+<!--like content section, this needs to be properly vertically spaced-->
+
 <div class="about-item">
   <h3 class="content-heading" id="related-items">Related items</h3>
-  <% related_items.each do |related_item| %>
-    <div>
-      <%= link_to related_item.page_title, related_item.content_object_data['uri'] %><br/>
-      <% if related_item.date %>
-        <%= related_item.date&.strftime(ApplicationHelper::DATE_DISPLAY_FORMAT) %>
-      <% end %>
-      <% if related_item.type %>
-        <%= ses_name(related_item.type) %><br/>
-      <% end %>
-      <% if related_item.legislature %>
-        <%= ses_name(related_item.legislature) %><br/>
-      <% end %>
-    </div>
-    <br/>
-  <% end %>
+  <div class="flex-list">
+    <% related_items[:items].each do |related_item| %>
+      <div>
+        <% unless related_item.content_object_data['uri'].blank? %>
+          <%= link_to(related_item.page_title, object_show_url(:object => related_item.content_object_data['uri'])) %>
+          <br/>
+        <% end %>
+        <% if related_item.date %>
+          <%= related_item.date&.strftime(ApplicationHelper::DATE_DISPLAY_FORMAT) %><br/>
+        <% end %>
+        <% if related_item.type %>
+          <%= related_items[:ses_lookup][related_item.type] %><br/>
+        <% end %>
+        <% unless related_item.legislature.blank? %>
+          <%= related_items[:ses_lookup][related_item.legislature] %><br/>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
 </div>

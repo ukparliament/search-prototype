@@ -62,6 +62,16 @@ class WrittenQuestion < Question
     false
   end
 
+  def prorogation_answer?
+    #to show conditionally on answered states only (as determined by method)
+
+    return if content_object_data['prorogationAnswer_b'].blank?
+
+    return true if content_object_data['prorogationAnswer_b'] == 'true'
+
+    false
+  end
+
   def date_of_holding_answer
     return if content_object_data['dateOfHoldingAnswer_dt'].blank?
 

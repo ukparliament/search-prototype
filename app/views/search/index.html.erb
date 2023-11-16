@@ -1,0 +1,23 @@
+<% content_for(:before_title) do %>
+  <%= link_to('UK Parliament', root_path) %> / <%= link_to('Open data', root_path) %><br/>
+  <div id="top"></div>
+<% end %>
+
+<section>
+  <h3>Search results</h3>
+
+  <h6>Found <%= @metadata['numFound'] %> results</h6>
+
+  <ul>
+    <% @items.each do |item| %>
+      <li>
+        <%= link_to(item["title_t"], object_show_url(:object => item["uri"])) %>
+      </li>
+    <% end %>
+  </ul>
+
+</section>
+
+<%= button_to "1", search_url(query: params[:query], page: 1), { method: :post } %>
+<%= button_to "2", search_url(query: params[:query], page: 2), { method: :post } %>
+<%= button_to "3", search_url(query: params[:query], page: 3), { method: :post } %>

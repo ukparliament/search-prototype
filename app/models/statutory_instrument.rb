@@ -39,7 +39,7 @@ class StatutoryInstrument < ContentObject
     content_object_data['referral_t'].first
   end
 
-  def reported_by_joint_committee
+  def reported_by_joint_committee?
     return if content_object_data['jointCommitteeOnStatutoryInstruments_b'].blank?
 
     return false unless content_object_data['jointCommitteeOnStatutoryInstruments_b'].first == 'true'

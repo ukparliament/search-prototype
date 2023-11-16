@@ -114,6 +114,12 @@ main {
     }
 }
 
+div.callout {
+    background-color: #E7DFF4;
+    border-left: 6px solid #2B57AB;
+    padding: 16px;
+}
+
 /* Object view custom lists (e.g. amendments) */
 .content-list {
     flex-direction: column;
@@ -132,6 +138,11 @@ main {
         padding: 16px;
     }
 
+    &.white {
+        background: none;
+        padding: 16px 0;
+    }
+
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
@@ -140,6 +151,10 @@ main {
     box-sizing: border-box;
 
     .about-item {
+        .raw-html & p {
+            margin: 0;
+        }
+
         color: #181818;
     }
 
@@ -149,6 +164,15 @@ main {
 
     .publisher-logo {
         padding: 8px 0;
+    }
+
+    .flex-list {
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        gap: 24px;
+        display: flex;
+        box-sizing: border-box;
     }
 
     .pill-section {

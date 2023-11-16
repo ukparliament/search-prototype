@@ -19,7 +19,7 @@
   <%= render 'search/preliminary_sentences/parliamentary_proceeding', object: object %>
 </section>
 
-<section id="text" class="content-section">
+<section id="main-content" class="content-section white">
   <div class="content-text">
     <%= raw object.abstract_text %>
   </div>
@@ -33,7 +33,7 @@
   <%= render 'search/fragments/corporate_author', author: object.corporate_author unless object.corporate_author.blank? %>
   <%= render 'search/fragments/procedure', procedure: object.procedure unless object.procedure.blank? %>
   <%= render 'search/fragments/related_items', related_items: object.related_items unless object.related_items.blank? %>
-  <%= render 'search/fragments/contains_statistics', contains_statistics: object.contains_statistics? %>
+  <%= render 'search/fragments/contains_statistics', contains_statistics: object.contains_statistics? if object.contains_statistics? %>
   <%= render 'search/fragments/notes', notes: object.notes unless object.notes.blank? %>
   <%= render 'search/fragments/pills', pills_heading: 'Subjects', pills: object.subjects unless object.subjects.blank? %>
   <%= render 'search/fragments/legislation', legislation: object.legislation unless object.legislation.blank? %>
