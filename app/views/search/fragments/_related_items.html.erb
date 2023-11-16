@@ -5,17 +5,18 @@
   <div class="flex-list">
     <% related_items[:items].each do |related_item| %>
       <div>
-        <!--        TODO: this should link to the object page (this is a SOLR URI, not a a URL)-->
-        <%= link_to(related_item.page_title, object_show_url(:object => related_item.content_object_data['uri'])) %>
-        <br/>
+        <% unless related_item.content_object_data['uri'].blank? %>
+          <%= link_to(related_item.page_title, object_show_url(:object => related_item.content_object_data['uri'])) %>
+          <br/>
+        <% end %>
         <% if related_item.date %>
           <%= related_item.date&.strftime(ApplicationHelper::DATE_DISPLAY_FORMAT) %><br/>
         <% end %>
         <% if related_item.type %>
           <%= related_items[:ses_lookup][related_item.type] %><br/>
         <% end %>
-        <% if related_item.legislature %>
-          <%= ses_name(related_item.legislature) %><br/>
+        <% unless related_item.legislature.blank? %>
+          <%= related_items[:ses_lookup][related_item.legislature] %><br/>
         <% end %>
       </div>
     <% end %>

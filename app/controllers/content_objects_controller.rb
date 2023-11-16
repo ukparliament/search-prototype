@@ -23,5 +23,4 @@ class ContentObjectsController < ApplicationController
       render template: @object.template, :locals => { :object => @object }
     end
   end
-
 end
