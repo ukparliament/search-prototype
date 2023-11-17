@@ -4,6 +4,6 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   root 'content_objects#index'
 
-  post 'search' => 'search#index'
+  get 'search' => 'search#index'
   get 'objects' => 'content_objects#show', as: 'object_show'
 end

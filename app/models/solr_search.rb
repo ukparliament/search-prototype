@@ -12,9 +12,7 @@ class SolrSearch < ApiCall
   def object_data
     return evaluated_response if evaluated_response['statusCode'] == 500
 
-    res = evaluated_response['response']['docs']
-    puts "response: #{res}"
-    res
+    evaluated_response['response']['docs']
   end
 
   def result_uris
