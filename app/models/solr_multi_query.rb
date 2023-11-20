@@ -12,12 +12,6 @@ class SolrMultiQuery < ApiCall
     @object_uris = params[:object_uris]
   end
 
-  def object_data
-    return evaluated_response if evaluated_response['statusCode'] == 500
-
-    response = evaluated_response['response']['docs']
-  end
-
   def all_ses_ids
     object_data.flat_map{|o| o["all_ses"]}
   end

@@ -7,8 +7,11 @@ module LinkHelper
 
   def ses_object_link(ses_id)
     # these links will take the user to a new search prefiltered by the ses_id
+    # TODO: clarify whether this is supposed to filter to all_ses containing this SES ID
+    # or do a text search using the SES-derived name.
 
-    link_to(display_name(@ses_data[ses_id.to_i]), '/')
+    ses_name = display_name(@ses_data[ses_id.to_i])
+    link_to(ses_name, search_path(query: ses_name))
   end
 
   def ses_object_name_link(ses_id)

@@ -9,7 +9,8 @@ class ParliamentaryProceeding < ContentObject
   end
 
   def object_name
-    last_subtype
+    subtype_id = last_subtype
+    subtype_id.blank? ? type : subtype_id
   end
 
   def last_subtype

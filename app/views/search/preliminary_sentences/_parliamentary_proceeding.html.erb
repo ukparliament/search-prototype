@@ -7,10 +7,13 @@
       <% if object.place %>
         in the <%= ses_object_link(object.place) %>
       <% end %>
-      led by <%= ses_object_link(object.lead_member) %>. The answering members were
-      <% object.answering_members.each do |member| %>
-        <%= ses_object_link(member) %>
-      <% end %>.
+      led by <%= ses_object_link(object.lead_member) %>.
+      <% unless object.answering_members.blank? %>
+        The answering members were
+        <% object.answering_members.each do |member| %>
+          <%= ses_object_link(member) %>
+        <% end %>.
+      <% end %>
     </div>
   </div>
 </div>
