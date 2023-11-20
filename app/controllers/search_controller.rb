@@ -3,15 +3,15 @@ class SearchController < ApplicationController
 
   def index
     @page_title = "Search results"
-    results = SolrSearch.new(search_params)
+    @items = SolrSearch.new(search_params).object_data
 
-    @items = results.object_data
-    @metadata = results.send(:evaluated_response)['response']
+    # TODO: this information should be included with the response, otherwise we're searching multiple times to get it
+    # @metadata = results.send(:evaluated_response)['response']
   end
 
   private
 
   def search_params
-    params.permit(:query, :page, :type_ses)
+    params.permit(:query, :page, :type)
   end
 end

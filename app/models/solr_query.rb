@@ -4,9 +4,7 @@ class SolrQuery < ApiCall
   end
 
   def object_data
-    return evaluated_response if evaluated_response['statusCode'] == 500
-
-    evaluated_response['response']['docs'].first
+    super.first
   end
 
   def ruby_uri

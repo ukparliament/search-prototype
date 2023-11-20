@@ -10,6 +10,13 @@ class ApiCall
     @object_uri = params[:object_uri]
   end
 
+  def object_data
+    response = evaluated_response
+    return response if response['statusCode'] == 500
+
+    response['response']['docs']
+  end
+
   private
 
   def response_body

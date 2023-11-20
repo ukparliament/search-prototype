@@ -6,13 +6,7 @@ class SolrSearch < ApiCall
     super
     @query = params[:query]
     @page = params[:page]
-    @type = params[:type_ses]
-  end
-
-  def object_data
-    return evaluated_response if evaluated_response['statusCode'] == 500
-
-    evaluated_response['response']['docs']
+    @type = params[:type]
   end
 
   def result_uris
@@ -31,10 +25,44 @@ class SolrSearch < ApiCall
     20
   end
 
-  def ruby_uri
-    build_uri("#{BASE_API_URI}select?q=%22#{query}%22&rows=#{rows}&start=#{start}")
+  def query_string
+    # processing the query separately as it can comprise of multiple components and follows its own pattern
+    return unless query || type
+
+    return "q=%22#{query}%22" if type.blank?
+
+    return "q=type_ses:#{type}" if query.blank?
+
+    "q=%22#{query}%22&type_ses:#{type}"
   end
 
-  # TODO: we can search for a specific term / filter by adding to the query string
-  # select?q=type_ses:#{type}
+  def query_chain
+    # we can throw everything we want to query into an array depending on whether or not it exists, eg.
+    array = []
+
+    unless rows == 10
+      array << "rows=#{rows}"
+    end
+
+    unless page.blank?
+      array << "start=#{start}"
+    end
+
+    qs = query_string
+    unless qs.blank?
+      array << qs
+    end
+
+    # return nil if there's nothing in the array
+    return if array.empty?
+
+    # if we have anything to search on, join into a string using &
+    # this should work in any order
+    # e.g. "rows=15&start=40&q="test search query""
+    array.join('&')
+  end
+
+  def ruby_uri
+    build_uri("#{BASE_API_URI}select?#{query_chain}")
+  end
 end
