@@ -29,7 +29,7 @@
   <%= render 'search/fragments/corrected_answer', object: object if object.corrected? %>
 
   <!--for prorogation answers-->
-  <%= render 'search/fragments/prorogation_information' %>
+  <%= render 'search/fragments/prorogation_information' if object.prorogation_answer? %>
 </section>
 
 <section id="about" class="content-section grey">
