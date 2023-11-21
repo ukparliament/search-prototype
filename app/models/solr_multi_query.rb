@@ -13,7 +13,7 @@ class SolrMultiQuery < ApiCall
   end
 
   def all_ses_ids
-    object_data.flat_map{|o| o["all_ses"]}
+    object_data.flat_map{|o| o["all_ses"]}.uniq
   end
 
   def ruby_uri
