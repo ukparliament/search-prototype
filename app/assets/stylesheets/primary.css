@@ -88,6 +88,29 @@ main {
     }
 }
 
+#search-button {
+    padding: 0.5rem 2rem;
+    font-size: 1rem;
+    border: 1px solid #2B57AB;
+    border-radius: 0;
+    background: #2B57AB;
+    color: white;
+    font-family: Helvetica, sans-serif;
+}
+
+#search-input {
+    display: inline-block;
+    width: auto;
+    padding: 0.5rem 0.75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1;
+    color: #212529;
+    background-color: #fff;
+    border: 1px solid #2B57AB;
+    border-radius: 0rem;
+}
+
 /* Object views */
 /* Object view preliminary text */
 .content-prelim-box {
