@@ -21,14 +21,11 @@ class ProceedingContribution < ContentObject
   end
 
   def location
-
   end
 
   def proceeding
-
   end
 
   def proceeding_type
-
   end
 end
