@@ -1,6 +1,8 @@
+<% unless notes[:value].blank? %>
 <div class="about-item">
   <h3 class="content-heading" id="notes">Notes</h3>
   <div>
-    <%= notes %>
+    <%= notes[:value] %>
   </div>
 </div>
+<% end %>

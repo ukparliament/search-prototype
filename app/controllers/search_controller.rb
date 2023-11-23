@@ -12,6 +12,6 @@ class SearchController < ApplicationController
   private
 
   def search_params
-    params.permit(:query, :page, :type)
+    params.permit(:query, :page, :filter)
   end
 end

@@ -12,8 +12,4 @@ class PaperPetition < ContentObject
     'paper petition'
   end
 
-  def member
-    member_ses
-  end
-
 end

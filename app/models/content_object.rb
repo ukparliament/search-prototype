@@ -16,24 +16,19 @@ class ContentObject
   end
 
   def ses_lookup_ids
-    return if content_object_data['all_ses'].blank?
-
-    content_object_data['all_ses']
+    get_all_from('all_ses')
   end
 
   def subtype
-    return if content_object_data['subtype_ses'].blank?
-
-    content_object_data['subtype_ses'].first
+    get_first_from('subtype_ses')
   end
 
   def type
-    return if content_object_data['type_ses'].blank?
-
-    content_object_data['type_ses'].first
+    get_first_from('type_ses')
   end
 
   def page_title
+    # keeping this simple for now
     content_object_data['title_t']
   end
 
@@ -42,165 +37,114 @@ class ContentObject
   end
 
   def html_summary
-    return if content_object_data['htmlsummary_t'].blank?
-
-    CGI::unescapeHTML(content_object_data['htmlsummary_t'].first)
+    get_first_as_html_from('htmlsummary_t')
   end
 
   def content
-    return if content_object_data['content_t'].blank?
-
-    CGI::unescapeHTML(content_object_data['content_t'].first)
+    get_first_as_html_from('content_t')
   end
 
   def abstract_text
-    return if content_object_data['abstract_t'].blank?
-
-    CGI::unescapeHTML(content_object_data['abstract_t'])
+    get_first_as_html_from('abstract_t')
   end
 
   def published?
-    return if content_object_data['published_b'].blank?
-
-    return false unless content_object_data['published_b'].first == 'true'
-
-    true
+    get_first_as_boolean_from('published_b')
   end
 
   def published_on
-    return if content_object_data['created_dt'].blank?
-
-    valid_date_string = validate_date(content_object_data['created_dt'].first)
-    return unless valid_date_string
-
-    valid_date_string.to_date
+    get_first_as_date_from('created_dt')
   end
 
   def reference
-    # typically used for Hansard col refs
-    return if content_object_data['identifier_t'].blank?
-
-    content_object_data['identifier_t'].first
+    get_first_from('identifier_t')
   end
 
   def subjects
     # TODO: may sometimes also be subject_t instead of subject_ses, need to handle this
+    # potentially a handler method for getting first from list that isn't nil?
     return if content_object_data['subject_ses'].blank?
 
     content_object_data['subject_ses']
   end
 
   def topics
-    # note - have not yet verified key as missing from test data
-    return if content_object_data['topic_ses'].blank?
-
-    content_object_data['topic_ses']
+    get_all_from('topic_ses')
   end
 
   def certified_category
-    return if content_object_data['certifiedCategory_ses'].blank?
-
-    content_object_data['certifiedCategory_ses']
+    get_all_from('certifiedCategory_ses')
   end
 
   def legislation
     # TODO: sometimes leigislation text will be all that is present & we need to handle this
     # by displaying it instead of a labelled link
 
-    return if content_object_data['legislationTitle_ses'].blank?
-
-    content_object_data['legislationTitle_ses']
+    get_all_from('legislationTitle_ses')
   end
 
   def department
-    return if content_object_data['department_ses'].blank?
-
-    content_object_data['department_ses'].first
+    get_first_from('department_ses')
   end
 
   def place
-    return if content_object_data['place_ses'].blank?
-
-    content_object_data['place_ses'].first
+    get_first_from('place_ses')
   end
 
   def library_location
-    # this is for the commons library, but there's also lordsLibraryLocation_t
+    # TODO: this is for the commons library, but there's also lordsLibraryLocation_t
     # assume there's some logic needed for how to combine or conditionally present these
-    return if content_object_data['commonsLibraryLocation_t'].blank?
-
-    content_object_data['commonsLibraryLocation_t'].first
+    get_first_from('commonsLibraryLocation_t')
   end
 
   def motion_text
-    return if content_object_data['motionText_t'].blank?
-
-    content_object_data['motionText_t'].first
+    get_first_from('motionText_t')
   end
 
   def primary_sponsor
-    return if content_object_data['primarySponsor_ses'].blank?
-
-    content_object_data['primarySponsor_ses'].first
+    get_first_from('primarySponsor_ses')
   end
 
   def primary_sponsor_party
-    return if content_object_data['primarySponsorParty_ses'].blank?
-
-    content_object_data['primarySponsorParty_ses'].first
+    get_first_from('primarySponsorParty_ses')
   end
 
   def legislature
-    return if content_object_data['legislature_ses'].blank?
-
-    content_object_data['legislature_ses'].first
+    get_first_from('legislature_ses')
   end
 
   def registered_interest_declared?
-    return if content_object_data['registeredInterest_b'].blank?
-
-    return false unless content_object_data['registeredInterest_b'].first == 'true'
-
-    true
+    get_first_as_boolean_from('registeredInterest_b')
   end
 
   def external_location_uri
-    return if content_object_data['externalLocation_uri'].blank?
-
-    content_object_data['externalLocation_uri'].first
+    get_first_from('externalLocation_uri')
   end
 
   def internal_location_uri
-    return if content_object_data['internalLocation_uri'].blank?
-
-    content_object_data['internalLocation_uri'].first
+    get_first_from('internalLocation_uri')
   end
 
   def content_location_uri
-    return if content_object_data['contentLocation_uri'].blank?
-
-    content_object_data['contentLocation_uri'].first
+    get_first_from('contentLocation_uri')
   end
 
   def display_link
     # For everything else, where there is no externalLocation, no Link, internalLocation is not surfaced in new Search
-
     external_location_uri.blank? ? nil : external_location_uri
   end
 
   def has_link?
     # based on discussions, we are only displaying one link
-
     !display_link.blank?
   end
 
   def notes
-    return if content_object_data['searcherNote_t'].blank?
-
-    content_object_data['searcherNote_t'].first
+    get_first_from('searcherNote_t')
   end
 
   def related_items
+    # TODO: this should be its own model
     relation_uris = content_object_data['relation_t']
     return if relation_uris.blank?
 
@@ -222,45 +166,31 @@ class ContentObject
   end
 
   def parliamentary_session
-    return if content_object_data['session_t'].blank?
-
-    content_object_data['session_t'].first
+    get_first_from('session_t')
   end
 
   def procedure
-    return if content_object_data['procedural_ses'].blank?
-
-    content_object_data['procedural_ses']
+    get_all_from('procedural_ses')
   end
 
   def member
-    return if content_object_data['member_ses'].blank?
-
-    content_object_data['member_ses'].first
+    get_first_from('member_ses')
   end
 
   def member_party
-    return if content_object_data['memberParty_ses'].blank?
-
-    content_object_data['memberParty_ses'].first
+    get_first_from('memberParty_ses')
   end
 
   def answering_member
-    return if content_object_data['answeringMember_ses'].blank?
-
-    content_object_data['answeringMember_ses'].first
+    get_first_from('answeringMember_ses')
   end
 
   def lead_member
-    return if content_object_data['leadMember_ses'].blank?
-
-    content_object_data['leadMember_ses'].first
+    get_first_from('leadMember_ses')
   end
 
   def corporate_author
-    return if content_object_data['corporateAuthor_ses'].blank?
-
-    content_object_data['corporateAuthor_ses'].first
+    get_first_from('corporateAuthor_ses')
   end
 
   def contains_statistics?
@@ -268,33 +198,64 @@ class ContentObject
     # see comments on trello card
     # Blanket rule proposed for all object views: “Given an object with one or more of the attributes, hasTable OR containsStatistics OR statisticsIndicated, show Yes if at least one of those is true. If all statistical attributes associated with the object are false, do not display.”
 
-    return if content_object_data['containsStatistics_b'].blank?
-
-    return false unless content_object_data['containsStatistics_b'].first == 'true'
-
-    true
+    get_first_as_boolean_from('containsStatistics_b')
   end
 
   def date
     # generic date field
-    return if content_object_data['date_dt'].blank?
-
-    valid_date_string = validate_date(content_object_data['date_dt'])
-    return unless valid_date_string
-
-    valid_date_string.to_date
+    get_as_date_from('date_dt')
   end
 
   def date_of_royal_assent
-    return if content_object_data['dateOfRoyalAssent_dt'].blank?
-
-    valid_date_string = validate_date(content_object_data['dateOfRoyalAssent_dt'].first)
-    return unless valid_date_string
-
-    valid_date_string.to_date
+    get_first_as_date_from('dateOfRoyalAssent_dt')
   end
 
   private
+
+  def get_first_as_boolean_from(field_name)
+    result = content_object_data[field_name].first == 'true' ? true : false
+    { value: result, field_name: field_name }
+  end
+
+  def get_first_from(field_name)
+    # TODO: this structure could be an object itself, as we're passing it around a lot
+    { value: content_object_data[field_name]&.first, field_name: field_name }
+  end
+
+  def get_first_as_html_from(field_name)
+    return if content_object_data[field_name].blank?
+
+    { value: CGI::unescapeHTML(content_object_data[field_name].first), field_name: field_name }
+  end
+
+  def get_first_as_date_from(field_name)
+    # some dates are single strings stored in arrays
+    return if content_object_data[field_name].blank?
+
+    valid_date_string = validate_date(content_object_data[field_name].first)
+    return unless valid_date_string
+
+    { value: valid_date_string, field_name: field_name }
+  end
+
+  def get_as_date_from(field_name)
+    # some dates are stored as strings
+    return if content_object_data[field_name].blank?
+
+    valid_date_string = validate_date(content_object_data[field_name])
+    return unless valid_date_string
+
+    { value: valid_date_string, field_name: field_name }
+  end
+
+  def get_all_from(field_name)
+    # returns an array of hashes that follow the standard structure
+    # when / if refactored this will be an array of data structure objects
+    # this is done so a view can iterate across the result of get_all_from (e.g. legislation)
+    # and build links for each item using the same helper methods as used for a single data object
+
+    content_object_data[field_name].map { |value| { value: value, field_name: field_name } }
+  end
 
   def self.content_object_class(type_id, subtype_id)
     case type_id

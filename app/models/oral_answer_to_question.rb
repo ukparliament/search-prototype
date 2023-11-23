@@ -19,9 +19,7 @@ class OralAnswerToQuestion < Question
   end
 
   def question_url
-    return if content_object_data['answerFor_uri'].blank?
-
-    content_object_data['answerFor_uri'].first
+    get_first_from('answerFor_uri')
   end
 
   def question_object

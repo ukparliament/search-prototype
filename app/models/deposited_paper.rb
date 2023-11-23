@@ -15,42 +15,23 @@ class DepositedPaper < ContentObject
   def deposited_date
     # uncertain this is the correct field
 
-    return if content_object_data['dateReceived_dt'].blank?
-
-    valid_date_string = validate_date(content_object_data['dateReceived_dt'].first)
-    return unless valid_date_string
-
-    valid_date_string.to_date
+    get_first_as_date_from('dateReceived_dt')
   end
 
   def commitment_to_deposit_date
-    return if content_object_data['dateOfCommittmentToDeposit_dt'].blank?
-
-    valid_date_string = validate_date(content_object_data['dateOfCommittmentToDeposit_dt'].first)
-    return unless valid_date_string
-
-    valid_date_string.to_date
+    get_first_as_date_from('dateOfCommittmentToDeposit_dt')
   end
 
   def date_originated
-    return if content_object_data['dateOfOrigin_dt'].blank?
-
-    valid_date_string = validate_date(content_object_data['dateOfOrigin_dt'].first)
-    return unless valid_date_string
-
-    valid_date_string.to_date
+    get_first_as_date_from('dateOfOrigin_dt')
   end
 
   def deposited_file
-    return if content_object_data['depositedFile_uri'].blank?
-
-    content_object_data['depositedFile_uri']
+    get_all_from('depositedFile_uri')
   end
 
   def corporate_author
-    return if content_object_data['corporateAuthor_ses'].blank?
-
-    content_object_data['corporateAuthor_ses'].first
+    get_first_from('corporateAuthor_ses')
   end
 
   def personal_author

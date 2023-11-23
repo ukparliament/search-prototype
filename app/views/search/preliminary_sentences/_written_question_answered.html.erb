@@ -1,7 +1,7 @@
 <div class="content-prelim-box">
   <div class="content-prelim-inner">
     <div class="content-prelim-text" id="prelim-text">
-      A <%= link_to(object.object_name, search_path(type: object.type)) %>
+      A <%= link_to(object.object_name, search_path(filter: object.type)) %>
       asked by <%= ses_object_link(object.tabling_member) %> (<%= ses_object_link(object.tabling_member_party) %>)
       on <strong><%= object.date_of_question.strftime(ApplicationHelper::DATE_DISPLAY_FORMAT) %></strong>,
       in the <%= ses_object_link(object.legislature) %>.

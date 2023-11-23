@@ -122,7 +122,7 @@ RSpec.describe ContentObject, type: :model do
         let!(:content_object) { ContentObject.new({ 'dateOfRoyalAssent_dt' => ["2015-06-01T18:00:15.73Z", "2014-06-01T18:00:15.73Z"] }) }
 
         it 'returns the first string parsed as a date' do
-          expect(content_object.date_of_royal_assent).to eq("Mon, 01 Jun 2015".to_date)
+          expect(content_object.date_of_royal_assent[:value]).to eq("Mon, 01 Jun 2015".to_date)
         end
       end
       context 'where data is not parsable as a date' do
@@ -131,6 +131,29 @@ RSpec.describe ContentObject, type: :model do
         it 'returns nil' do
           expect(content_object.date_of_royal_assent).to be_nil
         end
+      end
+    end
+  end
+
+  describe 'primary_sponsor' do
+    context 'where there is no data' do
+      it 'returns nil' do
+        expect(content_object.primary_sponsor[:value]).to be_nil
+      end
+    end
+
+    context 'where there is an empty array' do
+      let!(:content_object) { ContentObject.new({ 'primarySponsorPrinted_s' => [] }) }
+      it 'returns nil' do
+        expect(content_object.primary_sponsor[:value]).to be_nil
+      end
+    end
+
+    context 'where data exists' do
+      let!(:content_object) { ContentObject.new({ 'primarySponsor_ses' => [12345, 67890] }) }
+
+      it 'returns the first item' do
+        expect(content_object.primary_sponsor[:value]).to eq(12345)
       end
     end
   end

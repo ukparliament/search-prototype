@@ -5,33 +5,25 @@ module LinkHelper
     link_to(link_text, object_show_url(object: object_uri, anchor: anchor))
   end
 
-  def ses_object_link(ses_id)
-    # these links will take the user to a new search prefiltered by the ses_id
-    # TODO: clarify whether this is supposed to filter to all_ses containing this SES ID
-    # or do a text search using the SES-derived name.
-    return if ses_id.blank?
+  def ses_object_link(data)
+    return if data.blank? || data[:value].blank?
 
-    ses_name = display_name(@ses_data[ses_id.to_i])
-    link_to(ses_name, search_path(query: ses_name))
-  end
-
-  def ses_object_name_link(ses_id)
-    # used where the object type is dynamic
-
-    link_to(@ses_data[ses_id.to_i]&.singularize.downcase, '/')
+    link_to(display_name(ses_data[data[:value].to_i]), search_path(filter: data))
   end
 
   def ses_object_name(ses_id)
     # used where the object type is dynamic but we don't actually want a link
     # e.g. secondary information title
 
-    @ses_data[ses_id.to_i]&.singularize&.downcase
+    ses_data[ses_id.to_i]&.singularize&.downcase
   end
 
-  def ses_name(ses_id)
-    # used where we want an as-is SES name but without a link
-    # TODO: refactor into main helper method using optional parameter?
-    display_name(@ses_data[ses_id.to_i])
+  def ses_object_name_link(ses_id)
+    # used where the object type is dynamic
+    # TODO: update this link to perform a search based on type_ses
+    return if ses_id.blank?
+
+    link_to(ses_data[ses_id.to_i]&.singularize&.downcase, '/')
   end
 
   def display_name(ses_name)
@@ -40,11 +32,31 @@ module LinkHelper
     # only for names containing a comma (?)
     return ses_name unless ses_name.include?(',')
 
-    # we get something like 'Sharpe of Epsom, Lord'
-    components = ses_name.split(',')
+    if ses_name.include?('(')
+      # handle disambiguation brackets
 
-    # we return as 'Lord Sharpe of Epsom'
-    "#{components.last} #{components.first}"
+      disambiguation_components = ses_name.split(' (')
+      # 'Sharpe of Epsom, Lord (Disambiguation)' => ['Sharpe of Epsom, Lord', 'Disambiguation)']
+
+      name_components = disambiguation_components.first.split(',')
+      # ['Sharpe of Epsom', 'Lord']
+
+      # we return as 'Lord Sharpe of Epsom (Disambiguation)'
+      ret = "#{name_components.last} #{name_components.first} (#{disambiguation_components.last}"
+    else
+      # we get something like 'Sharpe of Epsom, Lord'
+      name_components = ses_name.split(',')
+
+      # we return as 'Lord Sharpe of Epsom'
+      ret = "#{name_components.last} #{name_components.first}"
+    end
+    ret.strip
+  end
+
+  private
+
+  def ses_data
+    @ses_data
   end
 
 end
