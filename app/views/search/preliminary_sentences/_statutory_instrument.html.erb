@@ -3,7 +3,7 @@
     <div class="content-prelim-text" id="prelim-text">
       A <%= ses_object_name_link(object.object_name) %>  laid in the
       <%= ses_object_link(object.legislature) %>, on
-      <strong><%= object.date_laid&.strftime(ApplicationHelper::DATE_DISPLAY_FORMAT) %></strong>
+      <strong><%= format_date(object.date_laid) %></strong>
       by <%= object_link(object.member_name, '/') %> on behalf of the
       <%= ses_object_link(object.department) %>.
       <!--      [Don't have dates for these lines yet]-->

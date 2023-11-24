@@ -5,9 +5,9 @@
       <% if object.creator %>
         by <%= ses_object_link(object.creator) %>
       <% end %>
-      published on <strong><%= object.published_on&.strftime(ApplicationHelper::DATE_DISPLAY_FORMAT) %></strong>.
+      published on <strong><%= format_date(object.published_on) %></strong>.
       <% if object.updated_on %>
-        It was updated on <strong><%= object.updated_on&.strftime(ApplicationHelper::DATE_DISPLAY_FORMAT) %></strong>.
+        It was updated on <strong><%= format_date(object.updated_on) %></strong>.
       <% end %>
     </div>
   </div>

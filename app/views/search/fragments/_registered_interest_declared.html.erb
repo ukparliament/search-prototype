@@ -1,4 +1,6 @@
-<div class="about-item">
-  <h3 class="content-heading" id="registered-interest-declared">Registered interest declared</h3>
-  <%= boolean_yes_no(registered_interest) %>
-</div>
+<% if registered_interest %>
+  <div class="about-item">
+    <h3 class="content-heading" id="registered-interest-declared">Registered interest declared</h3>
+    <%= boolean_yes_no(registered_interest) %>
+  </div>
+<% end %>

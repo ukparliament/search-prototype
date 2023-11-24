@@ -4,7 +4,7 @@
       A <%= link_to(object.object_name, search_path(filter: object.type)) %> deposited in Parliament
       by <%= ses_object_link(object.depositing_agent) %> as the agent, for
       <%= ses_object_link(object.depositing_applicant) %> as the applicant,
-      on <strong><%= object.date&.strftime(ApplicationHelper::DATE_DISPLAY_FORMAT) %></strong>.
+      on <strong><%= format_date(object.date) %></strong>.
     </div>
   </div>
 </div>

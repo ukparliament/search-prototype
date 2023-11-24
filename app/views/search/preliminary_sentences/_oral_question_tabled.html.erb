@@ -2,14 +2,14 @@
   <div class="content-prelim-inner">
     <div class="content-prelim-text" id="prelim-text">
       An <%= link_to(object.object_name, search_path(filter: object.type)) %> tabled on
-      <strong><%= object.date_of_question&.strftime(ApplicationHelper::DATE_DISPLAY_FORMAT) %></strong>
+      <strong><%= format_date(object.date_of_question) %></strong>
       <% unless object.department.blank? %>
         in the <%= ses_object_link(object.legislature) %>,
       <% end %>
       by <%= ses_object_link(object.tabling_member) %> (<%= ses_object_link(object.tabling_member_party) %>)
       to the <%= ses_object_link(object.department) %>.
       It is due for answer on
-      <strong><%= object.date_for_answer&.strftime(ApplicationHelper::DATE_DISPLAY_FORMAT) %></strong>.
+      <strong><%= format_date(object.date_for_answer) %></strong>.
     </div>
   </div>
 </div>

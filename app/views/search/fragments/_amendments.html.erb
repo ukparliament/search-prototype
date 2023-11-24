@@ -1,32 +1,34 @@
-<div class="about-item">
-  <h3 class="content-heading" id="amendments">Amendments</h3>
-  <div>
-    <div class="content-list">
-      <% amendments.each do |amendment| %>
-        <div>
+<% unless amendments.blank? %>
+  <div class="about-item">
+    <h3 class="content-heading" id="amendments">Amendments</h3>
+    <div>
+      <div class="content-list">
+        <% amendments.each do |amendment| %>
+          <div>
 
-          <div class="amendment-title">
-            <strong>Amendment <%= amendment[:index] + 1 %> - <%= title %></strong>
-            <span class="amendment-title-ref">(<%= amendment[:reference] %>)</span>
+            <div class="amendment-title">
+              <strong>Amendment <%= amendment[:index] + 1 %> - <%= title %></strong>
+              <span class="amendment-title-ref">(<%= amendment[:reference] %>)</span>
+            </div>
+
+            <div class="amendment-text"><%= amendment[:text] %></div>
+
+            <% unless amendment[:primary_sponsor].blank? %>
+              Sponsored by <%= ses_object_link(amendment[:primary_sponsor]) %>
+              (primary, <%= ses_object_link(amendment[:primary_sponsor_party]) %>)
+            <% end %>
+
+            <% unless amendment[:date_tabled].blank? %>
+              on <%= amendment[:date_tabled]&.to_date&.strftime(ApplicationHelper::DATE_DISPLAY_FORMAT) %>.
+            <% end %>
+
+            <% unless amendment[:number_of_signatures].blank? %>
+              It has been signed by <%= amendment[:number_of_signatures] %> members total.
+            <% end %>
+
           </div>
-
-          <div class="amendment-text"><%= amendment[:text] %></div>
-
-          <% unless amendment[:primary_sponsor].blank? %>
-            Sponsored by <%= ses_object_link(amendment[:primary_sponsor]) %>
-            (primary, <%= ses_object_link(amendment[:primary_sponsor_party]) %>)
-          <% end %>
-
-          <% unless amendment[:date_tabled].blank? %>
-            on <%= amendment[:date_tabled]&.to_date&.strftime(ApplicationHelper::DATE_DISPLAY_FORMAT) %>.
-          <% end %>
-
-          <% unless amendment[:number_of_signatures].blank? %>
-            It has been signed by <%= amendment[:number_of_signatures] %> members total.
-          <% end %>
-
-        </div>
-      <% end %>
+        <% end %>
+      </div>
     </div>
   </div>
-</div>
+<% end %>

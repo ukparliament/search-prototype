@@ -3,14 +3,16 @@
     <div class="content-prelim-text" id="prelim-text">
       A <%= link_to(object.object_name, search_path(filter: object.type)) %>
       asked by <%= ses_object_link(object.tabling_member) %> (<%= ses_object_link(object.tabling_member_party) %>)
-      on <strong><%= object.date_of_question.strftime(ApplicationHelper::DATE_DISPLAY_FORMAT) %></strong>,
+      on <strong><%= format_date(object.date_of_question) %></strong>,
       in the <%= ses_object_link(object.legislature) %>.
-      It was due for answer
-      on <strong><%= object.date_for_answer&.strftime(ApplicationHelper::DATE_DISPLAY_FORMAT) %></strong>
-      (<%= object.question_type %>).
+      <% unless object.date_for_answer.blank? %>
+        It was due for answer
+        on <strong><%= format_date(object.date_for_answer) %></strong>
+        (<%= object.question_type %>).
+      <% end %>
       It was answered by <%= ses_object_link(object.answering_member) %>
       (<%= ses_object_link(object.answering_member_party) %>)
-      on <strong><%= object.date_of_answer.strftime(ApplicationHelper::DATE_DISPLAY_FORMAT) %></strong>
+      on <strong><%= format_date(object.date_of_answer) %></strong>
       <% unless object.department.blank? %>
         on behalf of the <%= ses_object_link(object.department) %>
       <% end %>

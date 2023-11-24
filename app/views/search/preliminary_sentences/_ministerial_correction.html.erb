@@ -3,7 +3,7 @@
     <div class="content-prelim-text" id="prelim-text">
       A <%= link_to(object.object_name, search_path(filter: object.type)) %> made by <%= ses_object_link(object.correcting_member) %>
       (<%= ses_object_link(object.correcting_member_party) %>) on
-      <strong><%= object.correction_date&.strftime(ApplicationHelper::DATE_DISPLAY_FORMAT) %></strong>,
+      <strong><%= format_date(object.correction_date) %></strong>,
       in the <%= ses_object_link(object.legislature) %> on behalf of the
       <%= ses_object_link(object.department) %>.
     </div>

@@ -3,9 +3,9 @@
     <div class="content-prelim-text" id="prelim-text">
       A <%= link_to(object.object_name, search_path(filter: object.type)) %>, deposited in the
       <%= ses_object_link(object.legislature) %>, by the <%= ses_object_link(object.department) %>
-      on <strong><%= object.deposited_date&.strftime(ApplicationHelper::DATE_DISPLAY_FORMAT) %></strong>.
+      on <strong><%= format_date(object.deposited_date) %></strong>.
       The commitment to deposit was made on
-      <strong><%= object.commitment_to_deposit_date&.strftime(ApplicationHelper::DATE_DISPLAY_FORMAT) %></strong>.
+      <strong><%= format_date(object.commitment_to_deposit_date) %></strong>.
     </div>
   </div>
 </div>

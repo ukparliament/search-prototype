@@ -2,7 +2,7 @@
   <div class="content-prelim-inner">
     <div class="content-prelim-text" id="prelim-text">
       <%= object_link(object.object_name.capitalize, '/') %> in the <%= ses_object_link(object.legislature) %> on
-      <strong><%= object.date&.strftime(ApplicationHelper::DATE_DISPLAY_FORMAT) %></strong> from
+      <strong><%= format_date(object.date) %></strong> from
       <%= ses_object_link(object.member) %> on behalf of the <%= ses_object_link(object.department) %>.
     </div>
   </div>

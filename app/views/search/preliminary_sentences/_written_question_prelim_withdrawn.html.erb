@@ -3,7 +3,7 @@
     <div class="content-prelim-text" id="prelim-text">
       A <%= link_to(object.object_name, search_path(filter: object.type)) %>
       asked by <%= object_link("#{object.tabling_member}", '/') %>
-      on <strong><%= object.date_of_question&.strftime(ApplicationHelper::DATE_DISPLAY_FORMAT) %></strong>,
+      on <strong><%= format_date(object.date_of_question) %></strong>,
       in the <%= object_link("#{object.legislature}", '/') %>.
       <% if object.department.present? %>
         The Member has subsequently withdrawn this question. An answer is no longer expected from

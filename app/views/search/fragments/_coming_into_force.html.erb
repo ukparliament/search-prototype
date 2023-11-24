@@ -1,4 +1,6 @@
-<div class="about-item">
-  <h3 class="content-heading" id="coming-into-force">Coming into force</h3>
-  <%= notes %>
-</div>
+<% unless notes.blank? %>
+  <div class="about-item">
+    <h3 class="content-heading" id="coming-into-force">Coming into force</h3>
+    <%= notes %>
+  </div>
+<% end %>

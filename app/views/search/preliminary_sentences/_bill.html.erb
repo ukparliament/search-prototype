@@ -2,7 +2,7 @@
   <div class="content-prelim-inner">
     <div class="content-prelim-text" id="prelim-text">
       A <%= link_to(object.object_name, search_path(filter: object.type)) %> on
-      <strong><%= object.date&.strftime(ApplicationHelper::DATE_DISPLAY_FORMAT) %></strong>,
+      <strong><%= format_date(object.date) %></strong>,
       in the <%= ses_object_link(object.legislature) %> sponsored by
       <%= ses_object_link(object.primary_sponsor) %> (<%= ses_object_link(object.primary_sponsor_party) %>)
       on behalf of the <%= ses_object_link(object.department) %>.

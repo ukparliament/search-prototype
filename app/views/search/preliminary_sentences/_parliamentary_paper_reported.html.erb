@@ -3,7 +3,7 @@
     <div class="content-prelim-text" id="prelim-text">
       A <%= link_to(object.object_name, search_path(filter: object.type)) %> reported in the
       <%= ses_object_link(object.legislature) %> on
-      <strong><%= object.date&.strftime(ApplicationHelper::DATE_DISPLAY_FORMAT) %></strong>
+      <strong><%= format_date(object.date) %></strong>
       by <%= ses_object_link(object.corporate_author) %>.
     </div>
   </div>

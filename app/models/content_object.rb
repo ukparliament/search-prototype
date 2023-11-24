@@ -45,7 +45,7 @@ class ContentObject
   end
 
   def abstract_text
-    get_first_as_html_from('abstract_t')
+    get_as_html_from('abstract_t')
   end
 
   def published?
@@ -155,7 +155,9 @@ class ContentObject
     ret = {}
 
     query = SolrMultiQuery.new(object_uris: relation_uris)
-    ret[:ses_lookup] = SesLookup.new(query.all_ses_ids).data unless query.all_ses_ids.blank?
+    unless query.all_ses_ids.blank?
+      ret[:ses_lookup] = SesLookup.new(query.all_ses_ids).data
+    end
 
     ret[:items] = []
     query.object_data.each do |object|
@@ -169,8 +171,13 @@ class ContentObject
     get_first_from('session_t')
   end
 
+  def ec_documents
+    get_first_from('ecDocument_t')
+  end
+
   def procedure
-    get_all_from('procedural_ses')
+    # TODO: confirm whether this should be first or all (partial will need adjustment)
+    get_first_from('procedural_ses')
   end
 
   def member
@@ -193,6 +200,22 @@ class ContentObject
     get_first_from('corporateAuthor_ses')
   end
 
+  def publisher_string
+    # this is looking at a string (rather than SES id) for publisher in order to pick the correct graphic
+    # this feels quite fragile and should be given further thought
+
+    get_first_from('publisherSnapshot_s')
+  end
+
+  def publisher_logo_partial
+    # TODO: investigate CSS approach
+    # TODO: validate publisher names against accepted list?
+
+    return unless publisher_string
+
+    "/search/logo_svgs/#{publisher_string[:value].parameterize}"
+  end
+
   def contains_statistics?
     # TODO: this will be any of three attributes being true
     # see comments on trello card
@@ -213,19 +236,29 @@ class ContentObject
   private
 
   def get_first_as_boolean_from(field_name)
+    return unless [true, false].include?(content_object_data[field_name]&.first)
+
     result = content_object_data[field_name].first == 'true' ? true : false
     { value: result, field_name: field_name }
   end
 
   def get_first_from(field_name)
     # TODO: this structure could be an object itself, as we're passing it around a lot
-    { value: content_object_data[field_name]&.first, field_name: field_name }
+    return if content_object_data[field_name].blank?
+
+    { value: content_object_data[field_name].first, field_name: field_name }
   end
 
   def get_first_as_html_from(field_name)
     return if content_object_data[field_name].blank?
 
     { value: CGI::unescapeHTML(content_object_data[field_name].first), field_name: field_name }
+  end
+
+  def get_as_html_from(field_name)
+    return if content_object_data[field_name].blank?
+
+    { value: CGI::unescapeHTML(content_object_data[field_name]), field_name: field_name }
   end
 
   def get_first_as_date_from(field_name)
@@ -253,6 +286,7 @@ class ContentObject
     # when / if refactored this will be an array of data structure objects
     # this is done so a view can iterate across the result of get_all_from (e.g. legislation)
     # and build links for each item using the same helper methods as used for a single data object
+    return if content_object_data[field_name].blank?
 
     content_object_data[field_name].map { |value| { value: value, field_name: field_name } }
   end

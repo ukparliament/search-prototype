@@ -91,9 +91,7 @@ class Edm < ContentObject
 
   def subtype
     # the majority of EDMs have no subtype
-    return if content_object_data['subtype_ses'].blank?
-
-    content_object_data['subtype_ses'].first
+    get_first_from('subtype_ses')
   end
 
   def fatal_prayer?

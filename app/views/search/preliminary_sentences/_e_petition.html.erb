@@ -2,8 +2,8 @@
   <div class="content-prelim-inner">
     <div class="content-prelim-text" id="prelim-text">
       An <%= link_to(object.object_name, search_path(filter: object.type)) %> published on
-      <strong><%= object.date&.strftime(ApplicationHelper::DATE_DISPLAY_FORMAT) %></strong>.
-      It has been signed by <strong><%= object.number_of_signatures %></strong> people.
+      <strong><%= format_date(object.date) %></strong>.
+      It has been signed by <strong><%= object.number_of_signatures[:value] %></strong> people.
       <% if object.closed? %>
         It is now closed.
       <% end %>

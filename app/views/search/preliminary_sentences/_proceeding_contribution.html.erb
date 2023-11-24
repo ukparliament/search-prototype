@@ -7,7 +7,7 @@
       <% if object.place %>
         in the <%= ses_object_link(object.place) %>
       <% end %>
-      on <strong><%= object.date&.strftime(ApplicationHelper::DATE_DISPLAY_FORMAT) %></strong>.
+      on <strong><%= format_date(object.date) %></strong>.
       It occurred during <%= ses_object_link(object.proceeding) %> on
       <%= ses_object_link(object.proceeding_type) %>.
     </div>

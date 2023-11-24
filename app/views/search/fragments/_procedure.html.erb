@@ -1,4 +1,6 @@
-<div class="about-item">
-  <h3 class="content-heading" id="procedure">Procedure</h3>
-  <%= procedure.join(', ') %>
-</div>
+<% unless procedure.blank? %>
+  <div class="about-item">
+    <h3 class="content-heading" id="procedure">Procedure</h3>
+    <%= ses_object_link(procedure) %>
+  </div>
+<% end %>

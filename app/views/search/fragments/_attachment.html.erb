@@ -1,4 +1,6 @@
-<div class="about-item">
-  <h3 class="content-heading" id="attachment">Attachment</h3>
-  <%= attachments.join('; ') %>
-</div>
+<% unless attachments.blank? %>
+  <div class="about-item">
+    <h3 class="content-heading" id="attachment">Attachment</h3>
+    <%= attachments.join('; ') %>
+  </div>
+<% end %>

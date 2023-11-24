@@ -28,7 +28,7 @@ class OralQuestion < Question
 
   def lords_answered?
     # placeholder
-    state == 'Lords_Answered'
+    state[:value] == 'Lords_Answered'
   end
 
 end

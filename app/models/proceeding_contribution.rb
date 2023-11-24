@@ -11,13 +11,11 @@ class ProceedingContribution < ContentObject
   def object_name
     # dynamic? examples in wireframes are business question
     # and speaker's ruling
-    contribution_type
+    contribution_type[:value].downcase
   end
 
   def contribution_type
-    return if content_object_data['contributionType_t'].blank?
-
-    content_object_data['contributionType_t'].first.downcase
+    get_first_from('contributionType_t')
   end
 
   def location

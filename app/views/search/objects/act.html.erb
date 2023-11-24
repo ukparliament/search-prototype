@@ -20,18 +20,18 @@
 
 <section id="main-content" class="content-section white">
   <div class="content-text">
-    <%= object.motion_text %>
+    <%= object.motion_text[:value] %>
   </div>
 </section>
 
 <section id="about" class="content-section grey">
   <h2 class="content-heading">About this act</h2>
-  <%= render 'search/fragments/reference', reference: object.reference unless object.reference.blank? %>
-  <%= render 'search/fragments/related_items', related_items: object.related_items unless object.related_items.blank? %>
-  <%= render 'search/fragments/notes', notes: object.notes unless object.notes.blank? %>
-  <%= render 'search/fragments/pills', pills_heading: 'Subjects', pills: object.subjects unless object.subjects.blank? %>
-  <%= render 'search/fragments/legislation', legislation: object.legislation unless object.legislation.blank? %>
-  <%= render 'search/fragments/link', object: object if object.has_link? %>
+  <%= render 'search/fragments/reference', reference: object.reference %>
+  <%= render 'search/fragments/related_items', related_items: object.related_items %>
+  <%= render 'search/fragments/notes', notes: object.notes %>
+  <%= render 'search/fragments/pills', pills_heading: 'Subjects', pills: object.subjects %>
+  <%= render 'search/fragments/legislation', legislation: object.legislation %>
+  <%= render 'search/fragments/link', object: object %>
 </section>
 
 <%= render '/search/fragments/back_to_top_button' %>

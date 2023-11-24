@@ -3,7 +3,7 @@
     <div class="content-prelim-text" id="prelim-text">
       An <%= link_to(object.object_name, search_path(filter: object.type)) %> published by the <%= ses_object_link(object.corporate_author) %>
       received by Parliament on
-      <strong><%= object.date&.strftime(ApplicationHelper::DATE_DISPLAY_FORMAT) %></strong>.
+      <strong><%= format_date(object.date) %></strong>.
     </div>
   </div>
 </div>

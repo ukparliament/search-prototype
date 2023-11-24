@@ -8,7 +8,7 @@
       by <%= ses_object_link(object.tabling_member) %> (<%= ses_object_link(object.tabling_member_party) %>)
       to the <%= ses_object_link(object.department) %>.
       It was answered by <%= ses_object_link(object.answering_member) %> (<%= ses_object_link(object.answering_member_party) %>)
-      on <strong><%= object.date_of_answer&.strftime(ApplicationHelper::DATE_DISPLAY_FORMAT) %></strong> on
+      on <strong><%= format_date(object.date_of_answer) %></strong> on
       behalf of the <%= ses_object_link(object.answering_department) %>.
     </div>
   </div>

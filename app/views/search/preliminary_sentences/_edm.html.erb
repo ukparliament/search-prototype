@@ -1,23 +1,26 @@
 <div class="content-prelim-box">
   <div class="content-prelim-inner">
     <div class="content-prelim-text" id="prelim-text">
-      An <%= link_to(object.object_name, search_path(filter: object.type)) %> sponsored by <%= ses_object_link(object.primary_sponsor) %>
+      An <%= link_to(object.object_name, search_path(filter: object.type)) %> sponsored
+      by <%= ses_object_link(object.primary_sponsor) %>
       (primary sponsor, <%= ses_object_link(object.primary_sponsor_party) %>)
       <% unless object.other_sponsors.blank? %>
         <% object.other_sponsors.each do |supporter| %>
           <%= ses_object_link(supporter) %>,
         <% end %>
       <% end %>
-      and tabled on <strong><%= object.date_tabled&.strftime(ApplicationHelper::DATE_DISPLAY_FORMAT) %></strong>
+      and tabled on <strong><%= format_date(object.date_tabled) %></strong>
       in the <%= ses_object_link(object.legislature) %>.
       <% if object.has_subtype? %>
         It is a <%= object.subtype_name %>
       <% else %>
         It is
       <% end %>
-      <strong>signed by <%= object.number_of_signatures %> members in total</strong><%= object.amendments_count ? \
-                                                                                          ',' : '.' %>
-      <% if object.amendments_count %> and has received <%= object_link(object.amendments_count, '#amendments') %>.
+      <strong>signed by <%= object.number_of_signatures[:value] %> members in
+        total</strong><%= object.amendments_count ? \
+                            ',' : '.' %>
+      <% if object.amendments_count %>
+        and has received <%= object_link(object.amendments_count, '#amendments') %>.
       <% end %>
       <% if object.withdrawn? %>
         The primary sponsor has subsequently withdrawn this motion.
