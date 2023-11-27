@@ -8,10 +8,6 @@ class MinisterialCorrection < ContentObject
     'search/objects/ministerial_correction'
   end
 
-  def object_name
-    'ministerial correction'
-  end
-
   def correction_text
     get_first_from('correctionText_t')
   end

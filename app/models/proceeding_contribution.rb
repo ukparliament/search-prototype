@@ -9,7 +9,7 @@ class ProceedingContribution < ContentObject
   end
 
   def object_name
-    # dynamic? examples in wireframes are business question
+    # TODO: dynamic? examples in wireframes are business question
     # and speaker's ruling
     contribution_type[:value].downcase
   end

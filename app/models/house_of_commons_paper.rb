@@ -8,7 +8,4 @@ class HouseOfCommonsPaper < ContentObject
     'search/objects/house_of_commons_paper'
   end
 
-  def object_name
-    'house of commons paper'
-  end
 end

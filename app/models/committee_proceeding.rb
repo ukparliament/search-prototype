@@ -7,9 +7,4 @@ class CommitteeProceeding < ContentObject
   def template
     'search/objects/committee_proceeding'
   end
-
-  def object_name
-    'committee proceeding'
-  end
-
 end

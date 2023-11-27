@@ -7,8 +7,4 @@ class CommandPaper < ContentObject
   def template
     'search/objects/command_paper'
   end
-
-  def object_name
-    'command paper'
-  end
 end

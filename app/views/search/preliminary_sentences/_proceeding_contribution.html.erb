@@ -1,15 +1,17 @@
 <div class="content-prelim-box">
   <div class="content-prelim-inner">
     <div class="content-prelim-text" id="prelim-text">
-      A <%= link_to(object.object_name, search_path(filter: object.type)) %> from
-      <%= ses_object_link(object.member) %> (<%= ses_object_link(object.member_party) %>)
-      in the <%= ses_object_link(object.legislature) %>,
+      A <%= object_display_name_link(object.object_name) %> from
+      <%= search_link(object.member) %> (<%= search_link(object.member_party) %>)
+      in the <%= search_link(object.legislature) %>,
       <% if object.place %>
-        in the <%= ses_object_link(object.place) %>
+        in the <%= search_link(object.place) %>
       <% end %>
       on <strong><%= format_date(object.date) %></strong>.
-      It occurred during <%= ses_object_link(object.proceeding) %> on
-      <%= ses_object_link(object.proceeding_type) %>.
+      <% unless object.proceeding.blank? %>
+        It occurred during <%= search_link(object.proceeding) %> on
+        <%= search_link(object.proceeding_type) %>.
+      <% end %>
     </div>
   </div>
 </div>

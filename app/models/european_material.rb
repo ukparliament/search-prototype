@@ -7,9 +7,5 @@ class EuropeanMaterial < ContentObject
   def template
     'search/objects/european_material'
   end
-
-  def object_name
-    'european material'
-  end
   
 end

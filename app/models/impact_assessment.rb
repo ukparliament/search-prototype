@@ -7,9 +7,4 @@ class ImpactAssessment < ContentObject
   def template
     'search/objects/impact_assessment'
   end
-
-  def object_name
-    'impact assessment'
-  end
-
 end

@@ -8,10 +8,6 @@ class WrittenStatement < ContentObject
     'search/objects/written_statement'
   end
 
-  def object_name
-    'written statement'
-  end
-
   def attachment
     get_all_from('attachment_t')
   end

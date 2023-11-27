@@ -14,8 +14,8 @@
             <div class="amendment-text"><%= amendment[:text] %></div>
 
             <% unless amendment[:primary_sponsor].blank? %>
-              Sponsored by <%= ses_object_link(amendment[:primary_sponsor]) %>
-              (primary, <%= ses_object_link(amendment[:primary_sponsor_party]) %>)
+              Sponsored by <%= search_link(amendment[:primary_sponsor]) %>
+              (primary, <%= search_link(amendment[:primary_sponsor_party]) %>)
             <% end %>
 
             <% unless amendment[:date_tabled].blank? %>

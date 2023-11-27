@@ -1,7 +1,7 @@
 <div class="content-prelim-box">
   <div class="content-prelim-inner">
     <div class="content-prelim-text" id="prelim-text">
-      A <%= link_to(object.object_name, search_path(filter: object.type)) %> received Royal Assent on
+      A <%= object_display_name_link(object.object_name) %> received Royal Assent on
       <strong><%= format_date(object.date_of_royal_assent) %></strong>.
     </div>
   </div>

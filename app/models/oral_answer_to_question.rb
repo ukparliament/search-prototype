@@ -8,10 +8,6 @@ class OralAnswerToQuestion < Question
     'search/objects/oral_answer_to_question'
   end
 
-  def object_name
-    'oral answer to question'
-  end
-
   def has_question?
     return if question_url.blank?
 

@@ -1,4 +1,6 @@
-<div class="about-item">
-  <h3 class="content-heading" id="paper-type">Paper type</h3>
-  <%= type %>
-</div>
+<% unless type.blank? %>
+  <div class="about-item">
+    <h3 class="content-heading" id="paper-type">Paper type</h3>
+    <%= object_display_name(type) %>
+  </div>
+<% end %>

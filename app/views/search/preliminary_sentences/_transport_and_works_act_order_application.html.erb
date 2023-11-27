@@ -1,9 +1,9 @@
 <div class="content-prelim-box">
   <div class="content-prelim-inner">
     <div class="content-prelim-text" id="prelim-text">
-      A <%= link_to(object.object_name, search_path(filter: object.type)) %> deposited in Parliament
-      by <%= ses_object_link(object.depositing_agent) %> as the agent, for
-      <%= ses_object_link(object.depositing_applicant) %> as the applicant,
+      A <%= object_display_name_link(object.object_name) %> deposited in Parliament
+      by <%= search_link(object.depositing_agent) %> as the agent, for
+      <%= search_link(object.depositing_applicant) %> as the applicant,
       on <strong><%= format_date(object.date) %></strong>.
     </div>
   </div>

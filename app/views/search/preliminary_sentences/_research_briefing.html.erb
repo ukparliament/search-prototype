@@ -1,9 +1,9 @@
 <div class="content-prelim-box">
   <div class="content-prelim-inner">
     <div class="content-prelim-text" id="prelim-text">
-      A <%= link_to(object.object_name, search_path(filter: object.type)) %>
+      A <%= object_display_name_link(object.object_name) %>
       <% if object.creator %>
-        by <%= ses_object_link(object.creator) %>
+        by <%= search_link(object.creator) %>
       <% end %>
       published on <strong><%= format_date(object.published_on) %></strong>.
       <% if object.updated_on %>

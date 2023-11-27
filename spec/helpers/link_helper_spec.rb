@@ -7,13 +7,13 @@ RSpec.describe LinkHelper, type: :helper do
     context 'when given nil' do
       it 'returns nil' do
         allow(helper).to receive(:ses_data).and_return(mock_ses_data)
-        expect(helper.ses_object_link(nil)).to eq(nil)
+        expect(helper.search_link(nil)).to eq(nil)
       end
     end
     context 'when given an integer' do
       it 'returns a link' do
         allow(helper).to receive(:ses_data).and_return(mock_ses_data)
-        expect(helper.ses_object_link(123)).to eq("<a href=\"/search-prototype/search?query=Ses+test+return\">Ses test return</a>")
+        expect(helper.search_link(123)).to eq("<a href=\"/search-prototype/search?query=Ses+test+return\">Ses test return</a>")
       end
     end
   end
@@ -22,13 +22,13 @@ RSpec.describe LinkHelper, type: :helper do
     context 'when given nil' do
       it 'returns nil' do
         allow(helper).to receive(:ses_data).and_return(mock_ses_data)
-        expect(helper.ses_object_name(nil)).to eq(nil)
+        expect(helper.object_display_name(nil)).to eq(nil)
       end
     end
     context 'when given an integer' do
       it 'returns a link' do
         allow(helper).to receive(:ses_data).and_return(mock_ses_data)
-        expect(helper.ses_object_name(123)).to eq('ses test return')
+        expect(helper.object_display_name(123)).to eq('ses test return')
       end
     end
   end
@@ -37,13 +37,13 @@ RSpec.describe LinkHelper, type: :helper do
     context 'when given nil' do
       it 'returns nil' do
         allow(helper).to receive(:ses_data).and_return(mock_ses_data)
-        expect(helper.ses_object_name_link(nil)).to eq(nil)
+        expect(helper.object_display_name_link(nil)).to eq(nil)
       end
     end
     context 'when given an integer' do
       it 'returns a link' do
         allow(helper).to receive(:ses_data).and_return(mock_ses_data)
-        expect(helper.ses_object_name_link(123)).to eq("<a href=\"/\">ses test return</a>")
+        expect(helper.object_display_name_link(123)).to eq("<a href=\"/\">ses test return</a>")
       end
     end
   end

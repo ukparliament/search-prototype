@@ -1,11 +1,11 @@
 <div class="content-prelim-box">
   <div class="content-prelim-inner">
     <div class="content-prelim-text" id="prelim-text">
-      A <%= link_to(object.object_name, search_path(filter: object.type)) %>
-      made by <%= ses_object_link(object.member) %> (<%= ses_object_link(object.member_party) %>)
+      A <%= object_display_name_link(object.object_name) %>
+      made by <%= search_link(object.member) %> (<%= search_link(object.member_party) %>)
       on <strong><%= format_date(object.statement_date) %></strong>
-      in the <%= ses_object_link(object.legislature) %>, on behalf of the
-      <%= ses_object_link(object.department) %>.
+      in the <%= search_link(object.legislature) %>, on behalf of the
+      <%= search_link(object.department) %>.
       <% if object.corrected? %>
         It has since been corrected.
       <% end %>

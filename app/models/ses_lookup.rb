@@ -15,7 +15,7 @@ class SesLookup < ApiCall
   end
 
   def lookup_string
-    lookup_ids.uniq.compact.flatten.join(',')
+    lookup_ids.flatten.uniq.compact.join(',')
   end
 
   def data

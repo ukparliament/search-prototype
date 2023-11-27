@@ -1,0 +1,14 @@
+<!--      for lists:-->
+<% if items.size > 2 %>
+  <!--      any before last two are "item, "-->
+  <% items[0...-2].each do |member| %>
+    <%= search_link(member) %>,
+  <% end %>
+<% else %>
+  <% if items.size == 2 %>
+    <!--      penultimate one is "item and "-->
+    <%= search_link(items.last(2).first) %> and
+  <% end %>
+  <!--      last one is "item."-->
+  <%= search_link(items.last) %>.
+<% end %>

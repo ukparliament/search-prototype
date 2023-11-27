@@ -1,22 +1,22 @@
 <div class="content-prelim-box">
   <div class="content-prelim-inner">
     <div class="content-prelim-text" id="prelim-text">
-      A <%= link_to(object.object_name, search_path(filter: object.type)) %>
-      asked by <%= object_link("#{object.tabling_member}", '/') %> (<%= object.tabling_member_party %>)
+      A <%= object_display_name_link(object.object_name) %>
+      asked by <%= object_show_link("#{object.tabling_member}", '/') %> (<%= object.tabling_member_party %>)
       on <strong><%= format_date(object.date_of_question) %></strong>,
-      in the <%= object_link("#{object.legislature}", '/') %>.
+      in the <%= object_show_link("#{object.legislature}", '/') %>.
       It was due for answer
       on <strong><%= format_date(object.date_of_answer) %></strong>
       (<%= object.question_type %>).
-      It was answered by <%= object_link("#{object.answering_member}", '/') %> (<%= object.answering_member_party %>)
+      It was answered by <%= object_show_link("#{object.answering_member}", '/') %> (<%= object.answering_member_party %>)
       on <strong><%= format_date(object.date_of_answer) %></strong>
-      on behalf of <%= object_link("#{object.department}", '/') %>.
+      on behalf of <%= object_show_link("#{object.department}", '/') %>.
       <% if object.correcting_item? %>
-        The answer was corrected by <%= object_link("#{object.correcting_item.answering_member}", '/') %>
+        The answer was corrected by <%= object_show_link("#{object.correcting_item.answering_member}", '/') %>
         (<%= object.correcting_item.answering_member_party %>) on
         <strong><%= format_date(object.correcting_item.date_of_answer) %></strong>
         <% unless object.department.blank? %>
-          on behalf of <%= object_link("#{object.correcting_item.department}", '/') %>
+          on behalf of <%= object_show_link("#{object.correcting_item.department}", '/') %>
         <% end %>
         .
       <% else %>

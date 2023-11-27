@@ -32,14 +32,6 @@ class StatutoryInstrument < ContentObject
     get_first_from('authority_t')
   end
 
-  def contains_explanatory_memo?
-    get_first_as_boolean_from('containsEM_b')
-  end
-
-  def contains_impact_assessment?
-    get_first_as_boolean_from('containsIA_b')
-  end
-
   def laid_in_draft?
     get_first_as_boolean_from('draft_b')
   end

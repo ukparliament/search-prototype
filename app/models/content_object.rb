@@ -15,6 +15,10 @@ class ContentObject
     content_object_class(type_id, subtype_id).classify.constantize.new(content_object_data)
   end
 
+  def object_name
+    type
+  end
+
   def ses_lookup_ids
     get_all_from('all_ses')
   end
@@ -50,6 +54,14 @@ class ContentObject
 
   def published?
     get_first_as_boolean_from('published_b')
+  end
+
+  def contains_explanatory_memo?
+    get_first_as_boolean_from('containsEM_b')
+  end
+
+  def contains_impact_assessment?
+    get_first_as_boolean_from('containsIA_b')
   end
 
   def published_on

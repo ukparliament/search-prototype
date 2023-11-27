@@ -1,11 +1,11 @@
 <div class="content-prelim-box">
   <div class="content-prelim-inner">
     <div class="content-prelim-text" id="prelim-text">
-      A <%= link_to(object.object_name, search_path(filter: object.type)) %> on
+      A <%= object_display_name_link(object.object_name) %> on
       <strong><%= format_date(object.date) %></strong>,
-      in the <%= ses_object_link(object.legislature) %> sponsored by
-      <%= ses_object_link(object.primary_sponsor) %> (<%= ses_object_link(object.primary_sponsor_party) %>)
-      on behalf of the <%= ses_object_link(object.department) %>.
+      in the <%= search_link(object.legislature) %> sponsored by
+      <%= search_link(object.primary_sponsor) %> (<%= search_link(object.primary_sponsor_party) %>)
+      on behalf of the <%= search_link(object.department) %>.
     </div>
   </div>
 </div>

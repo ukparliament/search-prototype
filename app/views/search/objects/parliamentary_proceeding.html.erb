@@ -21,12 +21,12 @@
 
 <section id="main-content" class="content-section white">
   <div class="content-text">
-    <%= raw object.abstract_text %>
+    <%= raw object.abstract_text[:value] %>
   </div>
 </section>
 
 <section id="about" class="content-section grey">
-  <h2 class="content-heading">About this <%= ses_object_name(object.object_name) %></h2>
+  <h2 class="content-heading">About this <%= object_display_name(object.object_name) %></h2>
   <%= render 'search/fragments/reference', reference: object.reference %>
   <%= render 'search/fragments/session', session: object.parliamentary_session %>
   <%= render 'search/fragments/department', department: object.department %>

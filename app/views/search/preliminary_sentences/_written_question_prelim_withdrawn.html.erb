@@ -1,13 +1,13 @@
 <div class="content-prelim-box">
   <div class="content-prelim-inner">
     <div class="content-prelim-text" id="prelim-text">
-      A <%= link_to(object.object_name, search_path(filter: object.type)) %>
-      asked by <%= object_link("#{object.tabling_member}", '/') %>
+      A <%= object_display_name_link(object.object_name) %>
+      asked by <%= object_show_link("#{object.tabling_member}", '/') %>
       on <strong><%= format_date(object.date_of_question) %></strong>,
-      in the <%= object_link("#{object.legislature}", '/') %>.
+      in the <%= object_show_link("#{object.legislature}", '/') %>.
       <% if object.department.present? %>
         The Member has subsequently withdrawn this question. An answer is no longer expected from
-        the <%= object_link("#{object.department}", '/') %>.
+        the <%= object_show_link("#{object.department}", '/') %>.
       <% else %>
         The Member has subsequently withdrawn this question and it no longer needs to be answered.
       <% end %>

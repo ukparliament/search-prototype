@@ -1,30 +1,74 @@
 module LinkHelper
+  # TODO: not building links correctly
 
-  def object_link(link_text, object_uri, anchor = nil)
-    # not sure what these links are supposed to be doing yet?
-    link_to(link_text, object_show_url(object: object_uri, anchor: anchor))
-  end
+  def object_show_link(data, object_uri, anchor = nil)
+    # this is a link directly to an object, e.g. where we already have a functional URL
+    # this does not generate a search link
+    # takes a standard data hash (so either a string or a SES ID)
+    # performs its own SES lookup by necessity
 
-  def ses_object_link(data)
     return if data.blank? || data[:value].blank?
 
-    link_to(display_name(ses_data[data[:value].to_i]), search_path(filter: data))
+    if data[:value].is_a?(String)
+      link_text = display_name(data[:value])
+    else
+      ses_data = SesLookup.new([data]).data
+      link_text = ses_data[data[:value].to_i]
+    end
+
+    link_to(link_text&.singularize&.downcase, object_show_url(object: object_uri, anchor: anchor))
   end
 
-  def ses_object_name(ses_id)
-    # used where the object type is dynamic but we don't actually want a link
+  def search_link(data)
+    # Accepts either a string or a SES ID, which it resolves into a string
+    # Either option requires a field reference (standard data hash)
+
+    return if data.blank? || data[:value].blank?
+
+    if data[:value].is_a?(String)
+      link_text = data[:value]
+    else
+      link_text = ses_data[data[:value].to_i]
+    end
+
+    link_to(display_name(link_text), search_path(filter: data))
+  end
+
+  def object_display_name(data)
+    # can used where the object type is dynamic by passing a SES ID
+    # alternatively works with string names
+    # uses standard data hash
     # e.g. secondary information title
+    # does not return a link
 
-    ses_data[ses_id.to_i]&.singularize&.downcase
+    return if data.blank? || data[:value].blank?
+
+    if data[:value].is_a?(String)
+      text = display_name(data[:value])
+    else
+      text = ses_data[data[:value].to_i]
+    end
+
+    text&.singularize&.downcase
   end
 
-  def ses_object_name_link(ses_id)
+  def object_display_name_link(data)
     # used where the object type is dynamic
-    # TODO: update this link to perform a search based on type_ses
-    return if ses_id.blank?
+    # accepts a standard data hash containing a SES ID
+    # very similar to a search link, but the link text is singularised etc. to make it suitable
+    # for use with object names
+    return if data.blank? || data[:value].blank?
 
-    link_to(ses_data[ses_id.to_i]&.singularize&.downcase, '/')
+    if data[:value].is_a?(String)
+      link_text = display_name(data[:value])
+    else
+      link_text = ses_data[data[:value].to_i]
+    end
+
+    link_to(link_text&.singularize&.downcase, search_path(filter: data))
   end
+
+  private
 
   def display_name(ses_name)
     return if ses_name.blank?
@@ -52,8 +96,6 @@ module LinkHelper
     end
     ret.strip
   end
-
-  private
 
   def ses_data
     @ses_data

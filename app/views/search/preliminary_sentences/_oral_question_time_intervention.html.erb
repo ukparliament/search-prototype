@@ -1,13 +1,13 @@
 <div class="content-prelim-box">
   <div class="content-prelim-inner">
     <div class="content-prelim-text" id="prelim-text">
-      An <%= link_to(object.object_name, search_path(filter: object.type)) %> made
+      An <%= object_display_name_link(object.object_name) %> made
       on <strong><%= format_date(object.date) %></strong>
-      in the <%= ses_object_link(object.legislature) %>
+      in the <%= search_link(object.legislature) %>
       <% if object.place %>
-        in the <%= ses_object_link(object.place) %>
+        in the <%= search_link(object.place) %>
       <% end %>
-      by <%= ses_object_link(object.member) %> (<%= ses_object_link(object.member_party) %>).
+      by <%= search_link(object.member) %> (<%= search_link(object.member_party) %>).
     </div>
   </div>
 </div>

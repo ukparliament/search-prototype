@@ -8,7 +8,4 @@ class ParliamentaryPaperLaid < ContentObject
     'search/objects/parliamentary_paper_laid'
   end
 
-  def object_name
-    'parliamentary paper'
-  end
 end

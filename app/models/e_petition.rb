@@ -8,10 +8,6 @@ class EPetition < ContentObject
     'search/objects/e_petition'
   end
 
-  def object_name
-    'e-petition'
-  end
-
   def number_of_signatures
     get_first_from('numberOfSignatures_t')
   end

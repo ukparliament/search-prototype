@@ -8,10 +8,6 @@ class WrittenQuestion < Question
     'search/objects/written_question'
   end
 
-  def object_name
-    'written question'
-  end
-
   def holding?
     state[:value] == 'Holding'
   end

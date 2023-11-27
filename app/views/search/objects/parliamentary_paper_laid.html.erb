@@ -19,17 +19,19 @@
   <%= render 'search/preliminary_sentences/parliamentary_paper_laid', object: object %>
 </section>
 
-<section id="main-content" class="content-section white">
-  <div class="content-text">
-    <%= object.motion_text[:value] %>
-  </div>
-</section>
+<% unless object.abstract_text.blank? %>
+  <section id="main-content" class="content-section white">
+    <div class="content-text">
+      <%= object.abstract_text[:value] %>
+    </div>
+  </section>
+<% end %>
 
 <section id="about" class="content-section grey">
-  <h2 class="content-heading">About this <%= object.object_name %></h2>
+  <h2 class="content-heading">About this <%= object_display_name(object.object_name) %></h2>
   <%= render 'search/fragments/reference', reference: object.reference %>
   <%= render 'search/fragments/session', session: object.parliamentary_session %>
-  <%= render 'search/fragments/paper_type', type: object.paper_type  %>
+  <%= render 'search/fragments/paper_type', type: object.subtype %>
   <%= render 'search/fragments/procedure', procedure: object.procedure %>
   <%= render 'search/fragments/corporate_author', author: object.corporate_author %>
   <%= render 'search/fragments/related_items', related_items: object.related_items %>

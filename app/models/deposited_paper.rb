@@ -8,10 +8,6 @@ class DepositedPaper < ContentObject
     'search/objects/deposited_paper'
   end
 
-  def object_name
-    'deposited paper'
-  end
-
   def deposited_date
     # uncertain this is the correct field
 

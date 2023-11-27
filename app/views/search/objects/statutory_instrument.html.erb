@@ -19,14 +19,16 @@
   <%= render 'search/preliminary_sentences/statutory_instrument', object: object %>
 </section>
 
-<section id="main-content" class="content-section white">
-  <div class="content-text">
-    <%= object.motion_text[:value] %>
-  </div>
-</section>
+<% unless object.abstract_text.blank? %>
+  <section id="main-content" class="content-section white">
+    <div class="content-text">
+      <%= object.abstract_text[:value] %>
+    </div>
+  </section>
+<% end %>
 
 <section id="about" class="content-section grey">
-  <h2 class="content-heading">About this <%= ses_object_name(object.object_name) %></h2>
+  <h2 class="content-heading">About this <%= object_display_name(object.object_name) %></h2>
   <%= render 'search/fragments/reference', reference: object.reference %>
   <%= render 'search/fragments/session', session: object.parliamentary_session %>
   <%= render 'search/fragments/coming_into_force', notes: object.coming_into_force %>
