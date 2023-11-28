@@ -15,7 +15,8 @@ class SesLookup < ApiCall
   end
 
   def lookup_string
-    lookup_ids.flatten.uniq.compact.join(',')
+    # TODO: limited to 250 IDs to avoid SES 404
+    lookup_ids.flatten.uniq.compact.first(250).join(',')
   end
 
   def data

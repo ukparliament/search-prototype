@@ -9,11 +9,11 @@ module LinkHelper
 
     return if data.blank? || data[:value].blank?
 
-    if data[:value].is_a?(String)
-      link_text = display_name(data[:value])
-    else
+    if data[:field_name].last(3) == 'ses'
       ses_data = SesLookup.new([data]).data
       link_text = ses_data[data[:value].to_i]
+    else
+      link_text = display_name(data[:value])
     end
 
     link_to(link_text&.singularize&.downcase, object_show_url(object: object_uri, anchor: anchor))
@@ -22,19 +22,21 @@ module LinkHelper
   def search_link(data)
     # Accepts either a string or a SES ID, which it resolves into a string
     # Either option requires a field reference (standard data hash)
+    # TODO: fix this, currently not working
 
     return if data.blank? || data[:value].blank?
 
-    if data[:value].is_a?(String)
-      link_text = data[:value]
-    else
+    if data[:field_name].last(3) == 'ses'
       link_text = ses_data[data[:value].to_i]
+    else
+      link_text = data[:value]
     end
 
     link_to(display_name(link_text), search_path(filter: data))
   end
 
-  def object_display_name(data)
+  def object_display_name(data, singular = true, lowercase = true)
+
     # can used where the object type is dynamic by passing a SES ID
     # alternatively works with string names
     # uses standard data hash
@@ -43,13 +45,24 @@ module LinkHelper
 
     return if data.blank? || data[:value].blank?
 
-    if data[:value].is_a?(String)
-      text = display_name(data[:value])
+    val = data[:value]
+
+    if data[:field_name].last(3) == 'ses'
+      text = display_name(ses_data[val.to_i])
     else
-      text = ses_data[data[:value].to_i]
+      text = display_name(val)
     end
 
-    text&.singularize&.downcase
+    if singular && lowercase
+      text&.singularize&.downcase
+    elsif singular
+      text&.singularize
+    elsif lowercase
+      text&.downcase
+    else
+      text
+    end
+
   end
 
   def object_display_name_link(data)
@@ -59,10 +72,10 @@ module LinkHelper
     # for use with object names
     return if data.blank? || data[:value].blank?
 
-    if data[:value].is_a?(String)
-      link_text = display_name(data[:value])
-    else
+    if data[:field_name].last(3) == 'ses'
       link_text = ses_data[data[:value].to_i]
+    else
+      link_text = display_name(data[:value])
     end
 
     link_to(link_text&.singularize&.downcase, search_path(filter: data))

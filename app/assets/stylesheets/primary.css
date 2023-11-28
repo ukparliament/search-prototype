@@ -111,6 +111,19 @@ main {
     border-radius: 0rem;
 }
 
+#pagination {
+    width: 100%;
+    box-sizing: border-box;
+    align-self: stretch;
+    padding: 1em;
+    justify-content: center;
+    gap: 1em;
+    font-size: large;
+    align-items: flex-start;
+    display: inline-flex;
+    flex-direction: row;
+}
+
 /* Object views */
 /* Object view preliminary text */
 .content-prelim-box {

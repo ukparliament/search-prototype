@@ -1,6 +1,8 @@
 <% if object.answered? || object.answered_was_holding? %>
-  <div class="about-item">
-    <h3 class="content-heading" id="answer">Answer</h3>
-    <%= raw sanitize object.answer_text[:value], tags: %w(strong em a br) %>
-  </div>
+  <% unless object.answer_text.blank? %>
+    <div class="about-item">
+      <h3 class="content-heading" id="answer">Answer</h3>
+      <%= raw sanitize object.answer_text[:value], tags: %w(strong em a br) %>
+    </div>
+  <% end %>
 <% end %>

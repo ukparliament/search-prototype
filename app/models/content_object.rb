@@ -74,10 +74,7 @@ class ContentObject
 
   def subjects
     # TODO: may sometimes also be subject_t instead of subject_ses, need to handle this
-    # potentially a handler method for getting first from list that isn't nil?
-    return if content_object_data['subject_ses'].blank?
-
-    content_object_data['subject_ses']
+    get_all_from('subject_ses')
   end
 
   def topics
