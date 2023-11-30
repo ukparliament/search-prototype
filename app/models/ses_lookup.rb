@@ -12,8 +12,8 @@ class SesLookup < ApiCall
   end
 
   def lookup_ids
-    # extract all of the values (which should be integers) from the hashes
-    input_data.map { |h| h[:value].to_i }
+    # extract all of the sub arrays from the hashes
+    input_data.map { |h| h[:value] }
   end
 
   def lookup_string
