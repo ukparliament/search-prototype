@@ -6,7 +6,12 @@
 <section>
   <h3>Search results</h3>
 
-<!--  <h6>Found <%#= @metadata['numFound'] %> results</h6>-->
+  <% unless params[:filter].blank? %>
+    <p>
+      Results for <%= params[:filter][:field_name] %> of "<%= object_display_name(params[:filter], false, false) %>"
+    </p>
+  <% end %>
+  <!--  <h6>Found <%#= @metadata['numFound'] %> results</h6>-->
 
   <ul>
     <% @items.each do |item| %>
@@ -18,6 +23,8 @@
 
 </section>
 
-<%= button_to "1", search_url(query: params[:query], page: 1), { method: :post } %>
-<%= button_to "2", search_url(query: params[:query], page: 2), { method: :post } %>
-<%= button_to "3", search_url(query: params[:query], page: 3), { method: :post } %>
+<div id="pagination">
+  <%= link_to "1", search_url(query: params[:query], page: 1), { method: :post } %>
+  <%= link_to "2", search_url(query: params[:query], page: 2), { method: :post } %>
+  <%= link_to "3", search_url(query: params[:query], page: 3), { method: :post } %>
+</div>

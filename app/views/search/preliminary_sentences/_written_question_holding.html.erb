@@ -1,18 +1,18 @@
 <div class="content-prelim-box">
   <div class="content-prelim-inner">
     <div class="content-prelim-text" id="prelim-text">
-      A <%= link_to(object.object_name, search_path(type: object.type)) %>
-      asked by <%= object_link("#{object.tabling_member}", '/') %> (<%= object.tabling_member_party %>)
-      on <strong><%= object.date_of_question&.strftime(ApplicationHelper::DATE_DISPLAY_FORMAT) %></strong>,
-      in the <%= object_link("#{object.legislature}", '/') %>.
+      A <%= object_display_name_link(object.object_name) %>
+      asked by <%= object_show_link("#{object.tabling_member}", '/') %> (<%= object.tabling_member_party %>)
+      on <strong><%= format_date(object.date_of_question) %></strong>,
+      in the <%= object_show_link("#{object.legislature}", '/') %>.
       It was due for answer
-      on <strong><%= object.date_for_answer&.strftime(ApplicationHelper::DATE_DISPLAY_FORMAT) %></strong>
+      on <strong><%= format_date(object.date_for_answer) %></strong>
       (<%= object.question_type %>).
-      A holding answer was provided by <%= object_link("#{object.answering_member}", '/') %>
+      A holding answer was provided by <%= object_show_link("#{object.answering_member}", '/') %>
       (<%= object.answering_member_party %>)
-      on <strong><%= object.date_of_holding_answer&.strftime(ApplicationHelper::DATE_DISPLAY_FORMAT) %></strong>
+      on <strong><%= format_date(object.date_of_holding_answer) %></strong>
       <% unless object.department.blank? %>
-        on behalf of <%= object_link("#{object.department}", '/') %>
+        on behalf of <%= object_show_link("#{object.department}", '/') %>
       <% end %>
       .
     </div>

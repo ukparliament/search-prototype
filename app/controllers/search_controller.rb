@@ -3,7 +3,10 @@ class SearchController < ApplicationController
 
   def index
     @page_title = "Search results"
-    @items = SolrSearch.new(search_params).object_data
+    query = SolrSearch.new(params)
+
+    @items = query.object_data
+    @ses_data = SesLookup.new([query.filter]).data unless query.filter.blank?
 
     # TODO: this information should be included with the response, otherwise we're searching multiple times to get it
     # @metadata = results.send(:evaluated_response)['response']
@@ -12,6 +15,6 @@ class SearchController < ApplicationController
   private
 
   def search_params
-    params.permit(:query, :page, :type)
+    params.permit(:query, :page, filter: [])
   end
 end

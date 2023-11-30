@@ -8,17 +8,13 @@ class WrittenQuestion < Question
     'search/objects/written_question'
   end
 
-  def object_name
-    'written question'
-  end
-
   def holding?
-    state == 'Holding'
+    state && state[:value] == 'Holding'
   end
 
   def answered_was_holding?
     # There is no state string for this, it must be derived
-    return false unless state == 'Answered'
+    return false unless state && state[:value] == 'Answered'
 
     # the following correspond to the holding state and their presence allows us to determine that this answered
     # question formerly had the state 'holding':
@@ -49,9 +45,7 @@ class WrittenQuestion < Question
 
   def uin
     # UIN with optional Hansard reference in same field
-    return if content_object_data['identifier_t'].blank?
-
-    content_object_data['identifier_t']
+    get_all_from('identifier_t')
   end
 
   def holding_answer?

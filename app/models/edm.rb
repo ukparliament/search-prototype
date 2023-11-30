@@ -8,10 +8,6 @@ class Edm < ContentObject
     'search/objects/edm'
   end
 
-  def object_name
-    'early day motion'
-  end
-
   def amendments
     # amendments fields do not include duplicates, which means the data can not be reliably used
     # to avoid misrepresentation, we will not show amendments where there are more than one
@@ -47,12 +43,12 @@ class Edm < ContentObject
     ).map.with_index do |values, index|
       {
         index: index,
-        text: values[0],
-        number_of_signatures: values[1],
-        primary_sponsor: values[2],
-        primary_sponsor_party: values[3],
-        reference: values[4],
-        date_tabled: values[5],
+        text: { value: values[0], field_name: 'amendmentText_t' },
+        number_of_signatures: { value: values[1], field_name: 'amendment_numberOfSignatures_s' },
+        primary_sponsor: { value: values[2], field_name: 'amendment_primarySponsorPrinted_t' },
+        primary_sponsor_party: { value: values[3], field_name: 'amendment_primarySponsorParty_ses' },
+        reference: { value: values[4], field_name: 'identifier_t' },
+        date_tabled: { value: values[5].to_date, field_name: 'amendment_dateTabled_dt' },
       }
     end
 
@@ -62,7 +58,7 @@ class Edm < ContentObject
   def amendments_count
     return if amendments.blank?
 
-    amendments.size
+    { value: amendments.size.to_s, field_name: 'amendmentText_t' }
   end
 
   def withdrawn?
@@ -91,19 +87,17 @@ class Edm < ContentObject
 
   def subtype
     # the majority of EDMs have no subtype
-    return if content_object_data['subtype_ses'].blank?
-
-    content_object_data['subtype_ses'].first
+    get_first_from('subtype_ses')
   end
 
   def fatal_prayer?
-    return false unless subtype == 445873
+    return false unless subtype[:value] == 445873
 
     true
   end
 
   def non_fatal_prayer?
-    return false unless subtype == 445875
+    return false unless subtype[:value] == 445875
 
     true
   end
@@ -124,52 +118,35 @@ class Edm < ContentObject
 
   def state
     # 'Open', 'Closed', 'Withdrawn', 'Suspended'
-    return if content_object_data['edmStatus_t'].blank?
-
-    content_object_data['edmStatus_t']
+    get_all_from('edmStatus_t')
   end
 
   def amendment_text
-    return if content_object_data['amendmentText_t'].blank?
-
-    content_object_data['amendmentText_t']
+    get_all_from('amendmentText_t')
   end
 
   def other_supporters
     # This is all other supporters and includes other sponsors
-    return if content_object_data['signedMember_ses'].blank?
-
-    content_object_data['signedMember_ses']
+    get_all_from('signedMember_ses')
   end
 
   def other_sponsors
-    # this is for the prelim sentence
-    return if content_object_data['sponsor_ses'].blank?
-
-    content_object_data['sponsor_ses']
+    get_all_from('sponsor_ses')
   end
 
   def number_of_signatures
-    return if content_object_data['numberOfSignatures_t'].blank?
-
-    content_object_data['numberOfSignatures_t'].first
+    get_first_from('numberOfSignatures_t')
   end
 
   def date_tabled
-    return if content_object_data['dateTabled_dt'].blank?
-
-    content_object_data['dateTabled_dt'].first.to_date
+    get_first_as_date_from('dateTabled_dt')
   end
 
   def bibliographic_citations
-    return if content_object_data['bibliographicCitation_s'].blank?
-
-    content_object_data['bibliographicCitation_s']
+    get_all_from('bibliographicCitation_s')
   end
 
   def external_location_uri
-    return if content_object_data['externalLocation_uri'].blank?
-
-    content_object_data['externalLocation_uri'].first
+    get_first_from('externalLocation_uri')
   end
 end

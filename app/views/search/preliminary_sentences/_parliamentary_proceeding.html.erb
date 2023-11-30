@@ -1,18 +1,16 @@
 <div class="content-prelim-box">
   <div class="content-prelim-inner">
     <div class="content-prelim-text" id="prelim-text">
-      A <%= ses_object_name_link(object.object_name) %> on
-      <strong><%= object.date&.strftime(ApplicationHelper::DATE_DISPLAY_FORMAT) %></strong>,
-      in the <%= ses_object_link(object.legislature) %>,
+      A <%= object_display_name_link(object.object_name) %> on
+      <strong><%= format_date(object.date) %></strong>,
+      in the <%= search_link(object.legislature) %>,
       <% if object.place %>
-        in the <%= ses_object_link(object.place) %>
+        in the <%= search_link(object.place) %>
       <% end %>
-      led by <%= ses_object_link(object.lead_member) %>.
+      led by <%= search_link(object.lead_member) %>.
       <% unless object.answering_members.blank? %>
         The answering members were
-        <% object.answering_members.each do |member| %>
-          <%= ses_object_link(member) %>
-        <% end %>.
+        <%= render 'search/fragments/list', items: object.answering_members %>
       <% end %>
     </div>
   </div>

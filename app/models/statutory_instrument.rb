@@ -13,86 +13,35 @@ class StatutoryInstrument < ContentObject
   end
 
   def coming_into_force
-    return if content_object_data['comingIntoForceNotes_t'].blank?
-
-    content_object_data['comingIntoForceNotes_t'].first
+    get_first_from('comingIntoForceNotes_t')
   end
 
   def date_laid
-    return if content_object_data['dateLaid_dt'].blank?
-
-    valid_date_string = validate_date(content_object_data['dateLaid_dt'].first)
-    return unless valid_date_string
-
-    valid_date_string.to_date
-  end
-
-  def procedure
-    return if content_object_data['procedure_t'].blank?
-
-    content_object_data['procedure_t']
+    get_first_as_date_from('dateLaid_dt')
   end
 
   def referred_to
-    return if content_object_data['referral_t'].blank?
-
-    content_object_data['referral_t'].first
+    get_first_from('referral_t')
   end
 
   def reported_by_joint_committee?
-    return if content_object_data['jointCommitteeOnStatutoryInstruments_b'].blank?
-
-    return false unless content_object_data['jointCommitteeOnStatutoryInstruments_b'].first == 'true'
-
-    true
+    get_first_as_boolean_from('jointCommitteeOnStatutoryInstruments_b')
   end
 
   def laying_authority
-    return if content_object_data['authority_t'].blank?
-
-    content_object_data['authority_t'].first
-  end
-
-  def contains_explanatory_memo?
-    return if content_object_data['containsEM_b'].blank?
-
-    return false unless content_object_data['containsEM_b'].first == 'true'
-
-    true
-  end
-
-  def contains_impact_assessment?
-    return if content_object_data['containsIA_b'].blank?
-
-    return false unless content_object_data['containsIA_b'].first == 'true'
-
-    true
+    get_first_from('authority_t')
   end
 
   def laid_in_draft?
-    return if content_object_data['draft_b'].blank?
-
-    return false unless content_object_data['draft_b'].first == 'true'
-
-    true
+    get_first_as_boolean_from('draft_b')
   end
 
   def member_name
-    return if content_object_data['memberPrinted_t'].blank?
-
-    content_object_data['memberPrinted_t'].first
+    get_first_from('memberPrinted_t')
   end
 
   def isbn
-    return if content_object_data['isbn_t'].blank?
-
-    content_object_data['isbn_t'].first
-  end
-
-  def ec_documents
-    return if content_object_data['ecDocument_t'].blank?
-
-    content_object_data['ecDocument_t'].first
+    get_first_from('isbn_t')
   end
 
   def last_subtype

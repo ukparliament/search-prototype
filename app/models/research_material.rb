@@ -8,8 +8,4 @@ class ResearchMaterial < ContentObject
     'search/objects/research_material'
   end
 
-  def object_name
-    'research material'
-  end
-
 end

@@ -1,14 +1,24 @@
 class SesLookup < ApiCall
-  attr_reader :lookup_ids
+  attr_reader :input_data
 
   BASE_API_URI = "https://api.parliament.uk/ses/"
 
-  def initialize(ses_ids)
-    @lookup_ids = ses_ids
+  # Note that this class has been refactored to operate on the 'standard data structure' (one or more hashes
+  # of value and field_name) used elsewhere in the application:
+  # [{value: w, field_name: 'x'}, { value: 'y', field_name: 'z'}...]
+
+  def initialize(input_data)
+    @input_data = input_data
+  end
+
+  def lookup_ids
+    # extract all of the sub arrays from the hashes
+    input_data.map { |h| h[:value] }
   end
 
   def lookup_string
-    lookup_ids.uniq.compact.flatten.join(',')
+    # TODO: limited to 250 IDs to avoid SES 404
+    lookup_ids.flatten.uniq.compact.first(250).join(',')
   end
 
   def data

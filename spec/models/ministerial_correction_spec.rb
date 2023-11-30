@@ -10,8 +10,9 @@ RSpec.describe MinisterialCorrection, type: :model do
   end
 
   describe 'object_name' do
-    it 'returns a string' do
-      expect(ministerial_correction.object_name).to be_a(String)
+    it 'returns object type' do
+      allow(ministerial_correction).to receive(:type).and_return({ value: 12345, field_name: 'type_ses' })
+      expect(ministerial_correction.object_name).to eq({ value: 12345, field_name: 'type_ses' })
     end
   end
 
@@ -33,7 +34,7 @@ RSpec.describe MinisterialCorrection, type: :model do
       let!(:ministerial_correction) { MinisterialCorrection.new({ 'identifier_t' => ['first item', 'second item'] }) }
 
       it 'returns the first item' do
-        expect(ministerial_correction.reference).to eq('first item')
+        expect(ministerial_correction.reference).to eq({:field_name=>"identifier_t", :value=>"first item"})
       end
     end
   end
@@ -56,7 +57,7 @@ RSpec.describe MinisterialCorrection, type: :model do
       let!(:ministerial_correction) { MinisterialCorrection.new({ 'correctionText_t' => ['first item', 'second item'] }) }
 
       it 'returns the first item' do
-        expect(ministerial_correction.correction_text).to eq('first item')
+        expect(ministerial_correction.correction_text).to eq({:field_name=>"correctionText_t", :value=>"first item"})
       end
     end
   end
@@ -79,7 +80,7 @@ RSpec.describe MinisterialCorrection, type: :model do
       let!(:ministerial_correction) { MinisterialCorrection.new({ 'member_ses' => [12345, 54321] }) }
 
       it 'returns the first item' do
-        expect(ministerial_correction.correcting_member).to eq(12345)
+        expect(ministerial_correction.correcting_member).to eq({:field_name=>"member_ses", :value=>12345})
       end
     end
   end
@@ -102,7 +103,7 @@ RSpec.describe MinisterialCorrection, type: :model do
       let!(:ministerial_correction) { MinisterialCorrection.new({ 'memberParty_ses' => [12345, 54321] }) }
 
       it 'returns the first item' do
-        expect(ministerial_correction.correcting_member_party).to eq(12345)
+        expect(ministerial_correction.correcting_member_party).to eq({:field_name=>"memberParty_ses", :value=>12345})
       end
     end
   end
@@ -125,7 +126,7 @@ RSpec.describe MinisterialCorrection, type: :model do
       let!(:ministerial_correction) { MinisterialCorrection.new({ 'subject_ses' => ['first item', 'second item'] }) }
 
       it 'returns all items as an array' do
-        expect(ministerial_correction.subjects).to eq(['first item', 'second item'])
+        expect(ministerial_correction.subjects).to eq([{:field_name=>"subject_ses", :value=>"first item"}, {:field_name=>"subject_ses", :value=>"second item"}])
       end
     end
   end
@@ -148,7 +149,7 @@ RSpec.describe MinisterialCorrection, type: :model do
       let!(:ministerial_correction) { MinisterialCorrection.new({ 'legislationTitle_ses' => [12345, 67890] }) }
 
       it 'returns all items as an array' do
-        expect(ministerial_correction.legislation).to eq([12345, 67890])
+        expect(ministerial_correction.legislation).to eq([{:field_name=>"legislationTitle_ses", :value=>12345}, {:field_name=>"legislationTitle_ses", :value=>67890}])
       end
     end
   end
@@ -172,7 +173,7 @@ RSpec.describe MinisterialCorrection, type: :model do
         let!(:ministerial_correction) { MinisterialCorrection.new({ 'date_dt' => "2015-06-01T18:00:15.73Z" }) }
 
         it 'returns the string parsed as a date' do
-          expect(ministerial_correction.correction_date).to eq("Mon, 01 Jun 2015".to_date)
+          expect(ministerial_correction.correction_date).to eq({:field_name=>"date_dt", :value=>"Mon, 01 Jun 2015".to_date})
         end
       end
       context 'where data is not parsable as a date' do

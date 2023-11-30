@@ -1,4 +1,6 @@
-<div class="about-item">
-  <h3 class="content-heading" id="ec-documents">EC documents</h3>
-  <%= ec_documents %>
-</div>
+<% unless ec_documents.blank? %>
+  <div class="about-item">
+    <h3 class="content-heading" id="ec-documents">EC documents</h3>
+    <%= ec_documents %>
+  </div>
+<% end %>

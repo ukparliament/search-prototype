@@ -1,4 +1,6 @@
-<div class="about-item">
-  <h3 class="content-heading" id="reference">Reference</h3>
-  <%= reference %>
-</div>
+<% unless reference.blank? %>
+  <div class="about-item">
+    <h3 class="content-heading" id="reference">Reference</h3>
+    <%= reference[:value] %>
+  </div>
+<% end %>

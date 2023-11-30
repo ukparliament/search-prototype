@@ -1,4 +1,6 @@
-<div class="about-item">
-  <h3 class="content-heading" id="contains-explanatory-memorandum">Contains explanatory memorandum</h3>
-  <%= boolean_yes_no(contains_em) %>
-</div>
+<% if contains_em %>
+  <div class="about-item">
+    <h3 class="content-heading" id="contains-explanatory-memorandum">Contains explanatory memorandum</h3>
+    <%= boolean_yes_no(contains_em) %>
+  </div>
+<% end %>

@@ -6,8 +6,8 @@
 <section id="search" class="content-section white">
   <h2 class="content-heading">Search</h2>
   <%= form_with url: search_url, method: :get do |f| %>
-    <%= f.text_field :query %>
-    <%= f.submit 'Search' %>
+    <%= f.text_field :query, id: 'search-input' %>
+    <%= f.submit 'Search', id: 'search-button' %>
   <% end %>
 </section>
 

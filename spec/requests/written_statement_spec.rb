@@ -2,14 +2,14 @@ require 'rails_helper'
 
 RSpec.describe 'Written Statement', type: :request do
   describe 'GET /show' do
-    let!(:written_statement_instance) { WrittenStatement.new('test') }
+    let!(:written_statement_instance) { WrittenStatement.new('type_ses' => [12345]) }
 
     it 'returns http success' do
       allow_any_instance_of(SolrQuery).to receive(:object_data).and_return('test')
       allow_any_instance_of(SolrMultiQuery).to receive(:object_data).and_return([])
       allow(ContentObject).to receive(:generate).and_return(written_statement_instance)
-      allow_any_instance_of(WrittenStatement).to receive(:ses_data).and_return(written_statement_instance.type => 'written statement')
-      allow_any_instance_of(WrittenStatement).to receive(:page_title).and_return(written_statement_instance.type => 'test page title')
+      allow_any_instance_of(WrittenStatement).to receive(:ses_data).and_return(written_statement_instance.type[:value] => 'written statement')
+      allow_any_instance_of(WrittenStatement).to receive(:page_title).and_return(written_statement_instance.type[:value] => 'test page title')
       get '/objects', params: { :object => 'test_string' }
       expect(response).to have_http_status(:ok)
     end
@@ -31,13 +31,13 @@ RSpec.describe 'Written Statement', type: :request do
 
           unless written_statement_instance.subjects.blank?
             written_statement_instance.subjects.each do |subject|
-              test_ses_data[subject] = "SES response for #{subject}"
+              test_ses_data[subject[:value]] = "SES response for #{subject[:value]}"
             end
           end
 
           unless written_statement_instance.legislation.blank?
             written_statement_instance.legislation.each do |legislation|
-              test_ses_data[legislation] = "SES response for #{legislation}"
+              test_ses_data[legislation[:value]] = "SES response for #{legislation[:value]}"
             end
           end
 
@@ -48,16 +48,16 @@ RSpec.describe 'Written Statement', type: :request do
 
           get '/objects', params: { :object => written_statement_instance }
 
-          expect(CGI::unescapeHTML(response.body)).to include(written_statement_instance.reference)
-          expect(CGI::unescapeHTML(response.body)).to include(written_statement_instance.parliamentary_session)
-          expect(CGI::unescapeHTML(response.body)).to include(written_statement_instance.display_link)
+          expect(CGI::unescapeHTML(response.body)).to include(written_statement_instance.reference[:value])
+          expect(CGI::unescapeHTML(response.body)).to include(written_statement_instance.parliamentary_session[:value])
+          expect(CGI::unescapeHTML(response.body)).to include(written_statement_instance.display_link[:value])
 
           unless written_statement_instance.attachment.blank?
-            expect(CGI::unescapeHTML(response.body)).to include(written_statement_instance.attachment)
+            expect(CGI::unescapeHTML(response.body)).to include(written_statement_instance.attachment[:value])
           end
 
           unless written_statement_instance.notes.blank?
-            expect(CGI::unescapeHTML(response.body)).to include(written_statement_instance.notes)
+            expect(CGI::unescapeHTML(response.body)).to include(written_statement_instance.notes[:value])
           end
 
           unless written_statement_instance.related_items.blank?
@@ -68,13 +68,13 @@ RSpec.describe 'Written Statement', type: :request do
 
           unless written_statement_instance.subjects.blank?
             written_statement_instance.subjects.each do |subject|
-              expect(CGI::unescapeHTML(response.body)).to include(subject.to_s)
+              expect(CGI::unescapeHTML(response.body)).to include(subject[:value].to_s)
             end
           end
 
           unless written_statement_instance.legislation.blank?
             written_statement_instance.legislation.each do |legislation|
-              expect(CGI::unescapeHTML(response.body)).to include(legislation.to_s)
+              expect(CGI::unescapeHTML(response.body)).to include(legislation[:value].to_s)
             end
           end
         end

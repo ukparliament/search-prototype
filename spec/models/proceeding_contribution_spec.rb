@@ -9,6 +9,13 @@ RSpec.describe ProceedingContribution, type: :model do
     end
   end
 
+  describe 'object_name' do
+    it 'returns object type from contributionType_t' do
+      allow(contribution).to receive(:contribution_type).and_return({ value: 'A string', field_name: 'contributionType_t' })
+      expect(contribution.object_name).to eq({ value: 'a string', field_name: 'contributionType_t' })
+    end
+  end
+
   describe 'reference' do
     context 'where there is no data' do
       it 'returns nil' do
@@ -27,7 +34,7 @@ RSpec.describe ProceedingContribution, type: :model do
       let!(:contribution) { ProceedingContribution.new({ 'identifier_t' => ['first item', 'second item'] }) }
 
       it 'returns the first item' do
-        expect(contribution.reference).to eq('first item')
+        expect(contribution.reference).to eq({:field_name=>"identifier_t", :value=>"first item"})
       end
     end
   end
@@ -50,7 +57,7 @@ RSpec.describe ProceedingContribution, type: :model do
       let!(:contribution) { ProceedingContribution.new({ 'subject_ses' => ['first item', 'second item'] }) }
 
       it 'returns all items as an array' do
-        expect(contribution.subjects).to eq(['first item', 'second item'])
+        expect(contribution.subjects).to eq([{:field_name=>"subject_ses", :value=>"first item"}, {:field_name=>"subject_ses", :value=>"second item"}])
       end
     end
   end
@@ -73,7 +80,7 @@ RSpec.describe ProceedingContribution, type: :model do
       let!(:contribution) { ProceedingContribution.new({ 'legislationTitle_ses' => [12345, 67890] }) }
 
       it 'returns all items as an array' do
-        expect(contribution.legislation).to eq([12345, 67890])
+        expect(contribution.legislation).to eq([{:field_name=>"legislationTitle_ses", :value=>12345}, {:field_name=>"legislationTitle_ses", :value=>67890}])
       end
     end
   end

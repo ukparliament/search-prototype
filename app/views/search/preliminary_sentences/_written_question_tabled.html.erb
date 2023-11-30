@@ -1,15 +1,15 @@
 <div class="content-prelim-box">
   <div class="content-prelim-inner">
     <div class="content-prelim-text" id="prelim-text">
-      A <%= link_to(object.object_name, search_path(type: object.type)) %>
-      tabled by <%= ses_object_link(object.tabling_member) %> (<%= ses_object_link(object.tabling_member_party) %>)
-      on <strong><%= object.date_of_question&.strftime(ApplicationHelper::DATE_DISPLAY_FORMAT) %></strong>,
-      in the <%= ses_object_link(object.legislature) %>
+      A <%= object_display_name_link(object.object_name) %>
+      tabled by <%= search_link(object.tabling_member) %> (<%= search_link(object.tabling_member_party) %>)
+      on <strong><%= format_date(object.date_of_question) %></strong>,
+      in the <%= search_link(object.legislature) %>
       <% unless object.department.blank? %>
-        for the <%= ses_object_link(object.department) %>
+        for the <%= search_link(object.department) %>
       <% end %>.
       It is due for answer
-      on <strong><%= object.date_for_answer&.strftime(ApplicationHelper::DATE_DISPLAY_FORMAT) %></strong>
+      on <strong><%= format_date(object.date_for_answer) %></strong>
       (<%= object.question_type %>).
     </div>
   </div>

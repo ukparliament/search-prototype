@@ -1,4 +1,6 @@
-<div class="about-item">
-  <h3 class="content-heading" id="reference">Reference</h3>
-  <%= uins.join('; ') %>
-</div>
+<% unless uins.blank? %>
+  <div class="about-item">
+    <h3 class="content-heading" id="reference">Reference</h3>
+    <%= uins.map{|h| h[:value]}.join('; ') %>
+  </div>
+<% end %>

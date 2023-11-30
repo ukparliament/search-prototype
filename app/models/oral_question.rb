@@ -8,10 +8,6 @@ class OralQuestion < Question
     'search/objects/oral_question'
   end
 
-  def object_name
-    "oral question"
-  end
-
   def prelim_partial
     return '/search/preliminary_sentences/oral_question_tabled' if tabled?
 
@@ -28,7 +24,7 @@ class OralQuestion < Question
 
   def lords_answered?
     # placeholder
-    state == 'Lords_Answered'
+    state[:value] == 'Lords_Answered'
   end
 
 end

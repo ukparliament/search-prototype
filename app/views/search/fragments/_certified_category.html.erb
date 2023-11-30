@@ -1,4 +1,6 @@
-<div class="about-item">
-  <h3 class="content-heading" id="certified-category">Certified</h3>
-  <%= certified %>
-</div>
+<% unless certified.blank? %>
+  <div class="about-item">
+    <h3 class="content-heading" id="certified-category">Certified</h3>
+    <%= certified %>
+  </div>
+<% end %>

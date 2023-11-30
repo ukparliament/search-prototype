@@ -1,4 +1,6 @@
-<div class="about-item">
-  <h3 class="content-heading" id="corporate-author">Corporate author</h3>
-  <%= ses_object_link(author) %>
-</div>
+<% unless author.blank? %>
+  <div class="about-item">
+    <h3 class="content-heading" id="corporate-author">Corporate author</h3>
+    <%= search_link(author) %>
+  </div>
+<% end %>

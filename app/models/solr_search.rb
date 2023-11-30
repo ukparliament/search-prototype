@@ -1,12 +1,12 @@
 class SolrSearch < ApiCall
 
-  attr_reader :query, :page, :type
+  attr_reader :query, :page, :filter
 
   def initialize(params)
     super
     @query = params[:query]
     @page = params[:page]
-    @type = params[:type]
+    @filter = params[:filter]
   end
 
   def result_uris
@@ -27,13 +27,13 @@ class SolrSearch < ApiCall
 
   def query_string
     # processing the query separately as it can comprise of multiple components and follows its own pattern
-    return unless query || type
+    return unless query || filter
 
-    return "q=%22#{query}%22" if type.blank?
+    return "q=%22#{query}%22" if filter.blank?
 
-    return "q=type_ses:#{type}" if query.blank?
+    return "q=#{filter[:field_name]}:#{filter[:value]}" if query.blank?
 
-    "q=%22#{query}%22&type_ses:#{type}"
+    "q=%22#{query}%22&#{filter[:field_name]}:#{filter[:value]}"
   end
 
   def query_chain

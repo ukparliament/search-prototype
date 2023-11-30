@@ -1,6 +1,8 @@
-<div class="about-item">
-  <h3 class="content-heading" id="date"><%= title %></h3>
-  <div>
-    <%= date&.strftime(ApplicationHelper::DATE_DISPLAY_FORMAT) %>
+<% unless date.blank? %>
+  <div class="about-item">
+    <h3 class="content-heading" id="date"><%= title %></h3>
+    <div>
+      <%= format_date(date) %>
+    </div>
   </div>
-</div>
+<% end %>

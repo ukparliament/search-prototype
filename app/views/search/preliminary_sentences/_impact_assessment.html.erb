@@ -1,9 +1,9 @@
 <div class="content-prelim-box">
   <div class="content-prelim-inner">
     <div class="content-prelim-text" id="prelim-text">
-      An <%= link_to(object.object_name, search_path(type: object.type)) %> published by the <%= ses_object_link(object.corporate_author) %>
+      An <%= object_display_name_link(object.object_name) %> published by the <%= search_link(object.corporate_author) %>
       received by Parliament on
-      <strong><%= object.date&.strftime(ApplicationHelper::DATE_DISPLAY_FORMAT) %></strong>.
+      <strong><%= format_date(object.date) %></strong>.
     </div>
   </div>
 </div>

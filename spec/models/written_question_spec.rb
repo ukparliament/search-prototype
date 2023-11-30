@@ -9,6 +9,13 @@ RSpec.describe WrittenQuestion, type: :model do
     end
   end
 
+  describe 'object_name' do
+    it 'returns object type' do
+      allow(written_question).to receive(:type).and_return({ value: 12345, field_name: 'type_ses' })
+      expect(written_question.object_name).to eq({ value: 12345, field_name: 'type_ses' })
+    end
+  end
+
   describe 'state' do
     context 'where there is no data' do
       it 'returns nil' do
@@ -27,7 +34,7 @@ RSpec.describe WrittenQuestion, type: :model do
       let!(:written_question) { WrittenQuestion.new({ 'pqStatus_t' => ['Answered'] }) }
 
       it 'returns first item' do
-        expect(written_question.state).to eq('Answered')
+        expect(written_question.state).to eq({ :field_name => "pqStatus_t", :value => "Answered" })
       end
     end
   end
@@ -36,19 +43,19 @@ RSpec.describe WrittenQuestion, type: :model do
     let!(:written_question) { WrittenQuestion.new({ 'pqStatus_t' => '' }) }
     context 'where state is tabled' do
       it 'returns true' do
-        allow(written_question).to receive(:state).and_return('Tabled')
+        allow(written_question).to receive(:state).and_return({ value: 'Tabled', field_name: 'pqStatus_t' })
         expect(written_question.tabled?).to eq(true)
       end
     end
     context 'where state is missing' do
-      it 'returns false' do
+      it 'returns nil' do
         allow(written_question).to receive(:state).and_return(nil)
-        expect(written_question.tabled?).to eq(false)
+        expect(written_question.tabled?).to eq(nil)
       end
     end
     context 'where state is present but not tabled' do
       it 'returns false' do
-        allow(written_question).to receive(:state).and_return('Answered')
+        allow(written_question).to receive(:state).and_return({ value: 'Answered', field_name: 'pqStatus_t' })
         expect(written_question.tabled?).to eq(false)
       end
     end
@@ -58,19 +65,19 @@ RSpec.describe WrittenQuestion, type: :model do
     let!(:written_question) { WrittenQuestion.new({ 'pqStatus_t' => '' }) }
     context 'where state is answered' do
       it 'returns true' do
-        allow(written_question).to receive(:state).and_return('Answered')
+        allow(written_question).to receive(:state).and_return({ value: 'Answered', field_name: 'pqStatus_t' })
         expect(written_question.answered?).to eq(true)
       end
     end
     context 'where state is missing' do
-      it 'returns false' do
+      it 'returns nil' do
         allow(written_question).to receive(:state).and_return(nil)
-        expect(written_question.answered?).to eq(false)
+        expect(written_question.answered?).to eq(nil)
       end
     end
     context 'where state is present but not answered' do
       it 'returns false' do
-        allow(written_question).to receive(:state).and_return('Holding')
+        allow(written_question).to receive(:state).and_return({ value: 'Holding', field_name: 'pqStatus_t' })
         expect(written_question.answered?).to eq(false)
       end
     end
@@ -80,19 +87,19 @@ RSpec.describe WrittenQuestion, type: :model do
     let!(:written_question) { WrittenQuestion.new({ 'pqStatus_t' => '' }) }
     context 'where state is holding' do
       it 'returns true' do
-        allow(written_question).to receive(:state).and_return('Holding')
+        allow(written_question).to receive(:state).and_return({ value: 'Holding', field_name: 'pqStatus_t' })
         expect(written_question.holding?).to eq(true)
       end
     end
     context 'where state is missing' do
-      it 'returns false' do
+      it 'returns nil' do
         allow(written_question).to receive(:state).and_return(nil)
-        expect(written_question.holding?).to eq(false)
+        expect(written_question.holding?).to eq(nil)
       end
     end
     context 'where state is present but not holding' do
       it 'returns false' do
-        allow(written_question).to receive(:state).and_return('Answered was holding')
+        allow(written_question).to receive(:state).and_return({ value: 'Answered was holding', field_name: 'pqStatus_t' })
         expect(written_question.holding?).to eq(false)
       end
     end
@@ -105,13 +112,13 @@ RSpec.describe WrittenQuestion, type: :model do
         it 'returns true' do
           allow(written_question).to receive(:holding_answer?).and_return(true)
           allow(written_question).to receive(:date_of_holding_answer).and_return(Date.yesterday)
-          allow(written_question).to receive(:state).and_return('Answered')
+          allow(written_question).to receive(:state).and_return({ value: 'Answered', field_name: 'pqStatus_t' })
           expect(written_question.answered_was_holding?).to eq(true)
         end
       end
       context 'where other required fields are missing' do
         it 'returns false' do
-          allow(written_question).to receive(:state).and_return('Answered')
+          allow(written_question).to receive(:state).and_return({ value: 'Answered', field_name: 'pqStatus_t' })
           expect(written_question.answered_was_holding?).to eq(false)
         end
       end
@@ -124,7 +131,7 @@ RSpec.describe WrittenQuestion, type: :model do
     end
     context 'where state is present but not answered_was_holding' do
       it 'returns false' do
-        allow(written_question).to receive(:state).and_return('Withdrawn')
+        allow(written_question).to receive(:state).and_return({ value: 'Withdrawn', field_name: 'pqStatus_t' })
         expect(written_question.answered_was_holding?).to eq(false)
       end
     end
@@ -134,19 +141,19 @@ RSpec.describe WrittenQuestion, type: :model do
     context 'where state is withdrawn' do
       let!(:written_question) { WrittenQuestion.new({ 'pqStatus_t' => '' }) }
       it 'returns true' do
-        allow(written_question).to receive(:state).and_return('Withdrawn')
+        allow(written_question).to receive(:state).and_return({ value: 'Withdrawn', field_name: 'pqStatus_t' })
         expect(written_question.withdrawn?).to eq(true)
       end
     end
     context 'where state is missing' do
-      it 'returns false' do
+      it 'returns nil' do
         allow(written_question).to receive(:state).and_return(nil)
-        expect(written_question.withdrawn?).to eq(false)
+        expect(written_question.withdrawn?).to eq(nil)
       end
     end
     context 'where state is present but not withdrawn' do
       it 'returns false' do
-        allow(written_question).to receive(:state).and_return('Corrected')
+        allow(written_question).to receive(:state).and_return({ value: 'Corrected', field_name: 'pqStatus_t' })
         expect(written_question.withdrawn?).to eq(false)
       end
     end
@@ -218,7 +225,7 @@ RSpec.describe WrittenQuestion, type: :model do
       let!(:written_question) { WrittenQuestion.new({ 'department_ses' => [12345, 67890] }) }
 
       it 'returns first item' do
-        expect(written_question.department).to eq(12345)
+        expect(written_question.department).to eq({ :field_name => "department_ses", :value => 12345 })
       end
     end
   end
@@ -227,19 +234,19 @@ RSpec.describe WrittenQuestion, type: :model do
     let!(:written_question) { WrittenQuestion.new({ 'pqStatus_t' => '' }) }
     context 'where tabled' do
       it 'returns the correct path' do
-        allow(written_question).to receive(:state).and_return('Tabled')
+        allow(written_question).to receive(:state).and_return({ value: 'Tabled', field_name: 'pqStatus_t' })
         expect(written_question.prelim_partial).to eq('/search/preliminary_sentences/written_question_tabled')
       end
     end
     context 'where answered' do
       it 'returns the correct path' do
-        allow(written_question).to receive(:state).and_return('Answered')
+        allow(written_question).to receive(:state).and_return({ value: 'Answered', field_name: 'pqStatus_t' })
         expect(written_question.prelim_partial).to eq('/search/preliminary_sentences/written_question_answered')
       end
     end
     context 'where holding' do
       it 'returns the correct path' do
-        allow(written_question).to receive(:state).and_return('Holding')
+        allow(written_question).to receive(:state).and_return({ value: 'Holding', field_name: 'pqStatus_t' })
         expect(written_question.prelim_partial).to eq('/search/preliminary_sentences/written_question_holding')
       end
     end
@@ -251,7 +258,7 @@ RSpec.describe WrittenQuestion, type: :model do
     end
     context 'where withdrawn' do
       it 'returns the correct path' do
-        allow(written_question).to receive(:state).and_return('Withdrawn')
+        allow(written_question).to receive(:state).and_return({ value: 'Withdrawn', field_name: 'pqStatus_t' })
         expect(written_question.prelim_partial).to eq('/search/preliminary_sentences/written_question_withdrawn')
       end
     end
@@ -281,7 +288,7 @@ RSpec.describe WrittenQuestion, type: :model do
       let!(:written_question) { WrittenQuestion.new({ 'identifier_t' => ['item one', 'item two'] }) }
 
       it 'returns all items' do
-        expect(written_question.uin).to eq(['item one', 'item two'])
+        expect(written_question.uin).to eq([{ :field_name => "identifier_t", :value => "item one" }, { :field_name => "identifier_t", :value => "item two" }])
       end
     end
   end
@@ -304,7 +311,7 @@ RSpec.describe WrittenQuestion, type: :model do
       context 'where data is a valid date' do
         let!(:written_question) { WrittenQuestion.new({ 'date_dt' => Date.yesterday.to_s }) }
         it 'returns the first object as a date' do
-          expect(written_question.date_of_question).to eq(Date.yesterday)
+          expect(written_question.date_of_question).to eq({ :field_name => "date_dt", :value => Date.yesterday })
         end
       end
       context 'where data is not a valid date' do
@@ -336,7 +343,7 @@ RSpec.describe WrittenQuestion, type: :model do
       context 'where data is a valid date' do
         let!(:written_question) { WrittenQuestion.new({ 'dateOfAnswer_dt' => [Date.yesterday.to_s, Date.today.to_s] }) }
         it 'returns the first object as a date' do
-          expect(written_question.date_of_answer).to eq(Date.yesterday)
+          expect(written_question.date_of_answer).to eq({:field_name=>"dateOfAnswer_dt", :value=>Date.yesterday})
         end
       end
       context 'where data is not a valid date' do
@@ -368,7 +375,7 @@ RSpec.describe WrittenQuestion, type: :model do
       context 'where data is a valid date' do
         let!(:written_question) { WrittenQuestion.new({ 'dateForAnswer_dt' => [Date.yesterday.to_s, Date.today.to_s] }) }
         it 'returns the first object as a date' do
-          expect(written_question.date_for_answer).to eq(Date.yesterday)
+          expect(written_question.date_for_answer).to eq({:field_name=>"dateForAnswer_dt", :value=>Date.yesterday})
         end
       end
       context 'where data is not a valid date' do
@@ -398,7 +405,7 @@ RSpec.describe WrittenQuestion, type: :model do
       let!(:written_question) { WrittenQuestion.new({ 'tablingMember_ses' => [12345, 67890] }) }
 
       it 'returns first item' do
-        expect(written_question.tabling_member).to eq(12345)
+        expect(written_question.tabling_member).to eq({:field_name=>"tablingMember_ses", :value=>12345})
       end
     end
   end
@@ -421,7 +428,7 @@ RSpec.describe WrittenQuestion, type: :model do
       let!(:written_question) { WrittenQuestion.new({ 'answeringMember_ses' => [12345, 67890] }) }
 
       it 'returns first item' do
-        expect(written_question.answering_member).to eq(12345)
+        expect(written_question.answering_member).to eq({:field_name=>"answeringMember_ses", :value=>12345})
       end
     end
   end
@@ -444,7 +451,7 @@ RSpec.describe WrittenQuestion, type: :model do
       let!(:written_question) { WrittenQuestion.new({ 'answeringMember_ses' => [12345, 67890] }) }
 
       it 'returns first item' do
-        expect(written_question.answering_member).to eq(12345)
+        expect(written_question.answering_member).to eq({:field_name=>"answeringMember_ses", :value=>12345})
       end
     end
   end

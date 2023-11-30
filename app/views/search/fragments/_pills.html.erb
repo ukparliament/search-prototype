@@ -1,10 +1,12 @@
-<div class="about-item">
-  <h3 class="content-heading" id="<%= pills_heading.downcase %>"><%= pills_heading %></h3>
-  <div class="pill-section">
-    <% pills.each do |pill| %>
-      <div class="pill-wrapper">
-        <div class="pill"><%= @ses_data[pill.to_i] %></div>
-      </div>
-    <% end %>
+<% unless pills.blank? %>
+  <div class="about-item">
+    <h3 class="content-heading" id="<%= pills_heading.downcase %>"><%= pills_heading %></h3>
+    <div class="pill-section">
+      <% pills.each do |pill| %>
+        <div class="pill-wrapper">
+          <div class="pill"><%= @ses_data[pill[:value].to_i] %></div>
+        </div>
+      <% end %>
+    </div>
   </div>
-</div>
+<% end %>

@@ -9,15 +9,14 @@ class ParliamentaryProceeding < ContentObject
   end
 
   def object_name
-    subtype_id = last_subtype
+    subtype_id = first_subtype
     subtype_id.blank? ? type : subtype_id
   end
 
-  def last_subtype
-    # temporary method - need to clear up what this should show & how
-    return if content_object_data['subtype_ses'].blank?
-
-    content_object_data['subtype_ses'].last
+  def first_subtype
+    # TODO: temporary method - need to clear up what this should show & how
+    # e.g. should this show last rather than first subtype?
+    get_first_from('subtype_ses')
   end
 
   def location
@@ -29,9 +28,7 @@ class ParliamentaryProceeding < ContentObject
   end
 
   def answering_members
-    return if content_object_data['answeringMember_ses'].blank?
-
-    content_object_data['answeringMember_ses']
+    get_all_from('answeringMember_ses')
   end
 
 end

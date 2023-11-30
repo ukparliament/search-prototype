@@ -1,4 +1,6 @@
-<div class="about-item">
-  <h3 class="content-heading" id="library-location">Library location</h3>
-  <%= location %>
-</div>
+<% unless location.blank? %>
+  <div class="about-item">
+    <h3 class="content-heading" id="library-location">Library location</h3>
+    <%= location[:value] %>
+  </div>
+<% end %>

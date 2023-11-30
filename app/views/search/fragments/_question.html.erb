@@ -1,4 +1,6 @@
-<div class="about-item">
-  <h3 class="content-heading" id="question">Question</h3>
-  <%= raw sanitize object.question_text, tags: %w(strong em a br) %>
-</div>
+<% unless object.question_text.blank? %>
+  <div class="about-item">
+    <h3 class="content-heading" id="question">Question</h3>
+    <%= raw sanitize object.question_text[:value], tags: %w(strong em a br) %>
+  </div>
+<% end %>

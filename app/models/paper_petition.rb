@@ -7,13 +7,4 @@ class PaperPetition < ContentObject
   def template
     'search/objects/paper_petition'
   end
-
-  def object_name
-    'paper petition'
-  end
-
-  def member
-    member_ses
-  end
-
 end

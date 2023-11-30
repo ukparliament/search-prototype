@@ -10,8 +10,9 @@ RSpec.describe PublicAct, type: :model do
   end
 
   describe 'object_name' do
-    it 'returns a string' do
-      expect(public_act.object_name).to be_a(String)
+    it 'returns object type' do
+      allow(public_act).to receive(:type).and_return({ value: 12345, field_name: 'type_ses' })
+      expect(public_act.object_name).to eq({ value: 12345, field_name: 'type_ses' })
     end
   end
 
@@ -33,7 +34,7 @@ RSpec.describe PublicAct, type: :model do
       let!(:public_act) { PublicAct.new({ 'identifier_t' => ['first item', 'second item'] }) }
 
       it 'returns the first item' do
-        expect(public_act.reference).to eq('first item')
+        expect(public_act.reference).to eq({:field_name=>"identifier_t", :value=>"first item"})
       end
     end
   end
@@ -56,7 +57,7 @@ RSpec.describe PublicAct, type: :model do
       let!(:public_act) { PublicAct.new({ 'subject_ses' => ['first item', 'second item'] }) }
 
       it 'returns all items as an array' do
-        expect(public_act.subjects).to eq(['first item', 'second item'])
+        expect(public_act.subjects).to eq([{:field_name=>"subject_ses", :value=>"first item"}, {:field_name=>"subject_ses", :value=>"second item"}])
       end
     end
   end
@@ -79,7 +80,7 @@ RSpec.describe PublicAct, type: :model do
       let!(:public_act) { PublicAct.new({ 'legislationTitle_ses' => [12345, 67890] }) }
 
       it 'returns all items as an array' do
-        expect(public_act.legislation).to eq([12345, 67890])
+        expect(public_act.legislation).to eq([{:field_name=>"legislationTitle_ses", :value=>12345}, {:field_name=>"legislationTitle_ses", :value=>67890}])
       end
     end
   end
@@ -102,7 +103,7 @@ RSpec.describe PublicAct, type: :model do
       let!(:public_act) { PublicAct.new({ 'legislationTitle_ses' => [12345, 67890] }) }
 
       it 'returns the first legislation item' do
-        expect(public_act.bill).to eq(12345)
+        expect(public_act.bill).to eq({:field_name=>"legislationTitle_ses", :value=>12345})
       end
     end
   end

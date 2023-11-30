@@ -9,26 +9,21 @@ class ProceedingContribution < ContentObject
   end
 
   def object_name
-    # dynamic? examples in wireframes are business question
+    # TODO: dynamic? examples in wireframes are business question
     # and speaker's ruling
-    contribution_type
+    { value: contribution_type[:value].downcase, field_name: 'contributionType_t' }
   end
 
   def contribution_type
-    return if content_object_data['contributionType_t'].blank?
-
-    content_object_data['contributionType_t'].first.downcase
+    get_first_from('contributionType_t')
   end
 
   def location
-
   end
 
   def proceeding
-
   end
 
   def proceeding_type
-
   end
 end
