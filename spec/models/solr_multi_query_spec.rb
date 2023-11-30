@@ -29,9 +29,11 @@ RSpec.describe SolrMultiQuery, type: :model do
   end
 
   describe 'all_ses_ids' do
-    it 'returns a flattened array of all_ses from all objects returned' do
+    it 'returns an array of data hashes containing values and field names from all objects returned' do
       allow(api_call).to receive(:evaluated_response).and_return(mock_response)
-      expect(api_call.all_ses_ids).to match_array([123, 234, 456, 567, 789])
+      expect(api_call.all_ses_ids).to match_array([{ :field_name => "all_ses", :value => [123, 456] },
+                                                   { :field_name => "all_ses", :value => [456, 789] },
+                                                   { :field_name => "all_ses", :value => [234, 567] }])
     end
   end
 

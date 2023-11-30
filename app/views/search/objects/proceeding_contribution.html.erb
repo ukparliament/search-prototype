@@ -19,11 +19,13 @@
   <%= render 'search/preliminary_sentences/proceeding_contribution', object: object %>
 </section>
 
-<section id="main-content" class="content-section white">
-  <div class="content-text">
-    <%= raw(object.content[:value]) %>
-  </div>
-</section>
+<% unless object.content.blank? %>
+  <section id="main-content" class="content-section white">
+    <div class="content-text">
+      <%= raw(object.content[:value]) %>
+    </div>
+  </section>
+<% end %>
 
 <section id="about" class="content-section grey">
   <h2 class="content-heading">About this <%= object_display_name(object.object_name) %></h2>

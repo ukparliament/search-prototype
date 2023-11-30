@@ -138,14 +138,14 @@ RSpec.describe ContentObject, type: :model do
   describe 'primary_sponsor' do
     context 'where there is no data' do
       it 'returns nil' do
-        expect(content_object.primary_sponsor[:value]).to be_nil
+        expect(content_object.primary_sponsor).to be_nil
       end
     end
 
     context 'where there is an empty array' do
       let!(:content_object) { ContentObject.new({ 'primarySponsorPrinted_s' => [] }) }
       it 'returns nil' do
-        expect(content_object.primary_sponsor[:value]).to be_nil
+        expect(content_object.primary_sponsor).to be_nil
       end
     end
 

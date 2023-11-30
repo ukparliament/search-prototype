@@ -9,12 +9,12 @@ class WrittenQuestion < Question
   end
 
   def holding?
-    state[:value] == 'Holding'
+    state && state[:value] == 'Holding'
   end
 
   def answered_was_holding?
     # There is no state string for this, it must be derived
-    return false unless state[:value] == 'Answered'
+    return false unless state && state[:value] == 'Answered'
 
     # the following correspond to the holding state and their presence allows us to determine that this answered
     # question formerly had the state 'holding':

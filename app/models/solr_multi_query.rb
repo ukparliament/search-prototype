@@ -13,11 +13,6 @@ class SolrMultiQuery < ApiCall
   end
 
   def all_ses_ids
-    # this is currently only used for the related items method
-    # TODO: refactor to ouput standard data structure
-    # this will mean related items method can pass this data on to the SesLookup module in the same format
-    # that everything else now uses
-
     object_data.flat_map { |o| { value: o["all_ses"], field_name: "all_ses" } }.uniq
   end
 

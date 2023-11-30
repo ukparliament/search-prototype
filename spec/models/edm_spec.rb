@@ -9,6 +9,13 @@ RSpec.describe Edm, type: :model do
     end
   end
 
+  describe 'object_name' do
+    it 'returns object type' do
+      allow(edm).to receive(:type).and_return({ value: 12345, field_name: 'type_ses' })
+      expect(edm.object_name).to eq({ value: 12345, field_name: 'type_ses' })
+    end
+  end
+
   describe 'motion_text' do
     context 'where there is no data' do
       it 'returns nil' do
@@ -27,7 +34,7 @@ RSpec.describe Edm, type: :model do
       let!(:edm) { Edm.new({ 'motionText_t' => ['first item', 'second item'] }) }
 
       it 'returns the first item' do
-        expect(edm.motion_text).to eq('first item')
+        expect(edm.motion_text).to eq({ :field_name => "motionText_t", :value => "first item" })
       end
     end
   end
@@ -50,7 +57,7 @@ RSpec.describe Edm, type: :model do
       let!(:edm) { Edm.new({ 'primarySponsor_ses' => [12345, 67890] }) }
 
       it 'returns the first item' do
-        expect(edm.primary_sponsor).to eq(12345)
+        expect(edm.primary_sponsor).to eq({ :field_name => "primarySponsor_ses", :value => 12345 })
       end
     end
   end
@@ -73,7 +80,7 @@ RSpec.describe Edm, type: :model do
       let!(:edm) { Edm.new({ 'session_t' => ['first item', 'second item'] }) }
 
       it 'returns the first item' do
-        expect(edm.parliamentary_session).to eq('first item')
+        expect(edm.parliamentary_session).to eq({ :field_name => "session_t", :value => "first item" })
       end
     end
   end
@@ -96,7 +103,7 @@ RSpec.describe Edm, type: :model do
       let!(:edm) { Edm.new({ 'identifier_t' => ['first item', 'second item'] }) }
 
       it 'returns the first item' do
-        expect(edm.reference).to eq('first item')
+        expect(edm.reference).to eq({ :field_name => "identifier_t", :value => "first item" })
       end
     end
   end
@@ -119,7 +126,7 @@ RSpec.describe Edm, type: :model do
       let!(:edm) { Edm.new({ 'signedMember_ses' => ['first item', 'second item'] }) }
 
       it 'returns all items' do
-        expect(edm.other_supporters).to eq(['first item', 'second item'])
+        expect(edm.other_supporters).to eq([{ :field_name => "signedMember_ses", :value => "first item" }, { :field_name => "signedMember_ses", :value => "second item" }])
       end
     end
   end
@@ -142,7 +149,7 @@ RSpec.describe Edm, type: :model do
       let!(:edm) { Edm.new({ 'sponsor_ses' => ['first item', 'second item'] }) }
 
       it 'returns all items' do
-        expect(edm.other_sponsors).to eq(['first item', 'second item'])
+        expect(edm.other_sponsors).to eq([{ :field_name => "sponsor_ses", :value => "first item" }, { :field_name => "sponsor_ses", :value => "second item" }])
       end
     end
   end
@@ -166,14 +173,14 @@ RSpec.describe Edm, type: :model do
         let!(:edm) { Edm.new({ 'registeredInterest_b' => ['true'] }) }
 
         it 'returns the relevant boolean' do
-          expect(edm.registered_interest_declared?).to eq(true)
+          expect(edm.registered_interest_declared?).to eq({ :field_name => "registeredInterest_b", :value => true })
         end
       end
       context 'where not a boolean value' do
         let!(:edm) { Edm.new({ 'registeredInterest_b' => ['first item', 'second item'] }) }
 
-        it 'returns false' do
-          expect(edm.registered_interest_declared?).to eq(false)
+        it 'returns nil' do
+          expect(edm.registered_interest_declared?).to eq(nil)
         end
       end
     end
@@ -195,15 +202,15 @@ RSpec.describe Edm, type: :model do
 
     context 'where data exists' do
       context 'where data is a valid date' do
-        let!(:edm) { Edm.new({ 'dateTabled_dt' => [Date.today, Date.yesterday] }) }
+        let!(:edm) { Edm.new({ 'dateTabled_dt' => [Date.today.to_s, Date.yesterday.to_s] }) }
         it 'returns a date object for the first item' do
-          expect(edm.date_tabled).to eq(Date.today)
+          expect(edm.date_tabled).to eq({ :field_name => "dateTabled_dt", :value => Date.today })
         end
       end
       context 'where data is not a valid date' do
         let!(:edm) { Edm.new({ 'dateTabled_dt' => ['date', 'another date'] }) }
-        it 'raises an error' do
-          expect { edm.date_tabled }.to raise_error(Date::Error, 'invalid date')
+        it 'returns nil' do
+          expect(edm.date_tabled).to eq(nil)
         end
       end
     end
@@ -227,7 +234,7 @@ RSpec.describe Edm, type: :model do
       let!(:edm) { Edm.new({ 'bibliographicCitation_s' => ['first item', 'second item'] }) }
 
       it 'returns all items as an array' do
-        expect(edm.bibliographic_citations).to eq(['first item', 'second item'])
+        expect(edm.bibliographic_citations).to eq([{ :field_name => "bibliographicCitation_s", :value => "first item" }, { :field_name => "bibliographicCitation_s", :value => "second item" }])
       end
     end
   end
@@ -250,7 +257,7 @@ RSpec.describe Edm, type: :model do
       let!(:edm) { Edm.new({ 'subject_ses' => ['first item', 'second item'] }) }
 
       it 'returns all items as an array' do
-        expect(edm.subjects).to eq(['first item', 'second item'])
+        expect(edm.subjects).to eq([{ :field_name => "subject_ses", :value => "first item" }, { :field_name => "subject_ses", :value => "second item" }])
       end
     end
   end
@@ -273,7 +280,7 @@ RSpec.describe Edm, type: :model do
       let!(:edm) { Edm.new({ 'legislationTitle_ses' => [12345, 67890] }) }
 
       it 'returns all items as an array' do
-        expect(edm.legislation).to eq([12345, 67890])
+        expect(edm.legislation).to eq([{ :field_name => "legislationTitle_ses", :value => 12345 }, { :field_name => "legislationTitle_ses", :value => 67890 }])
       end
     end
   end
@@ -296,7 +303,7 @@ RSpec.describe Edm, type: :model do
       let!(:edm) { Edm.new({ 'externalLocation_uri' => ['first item', 'second item'] }) }
 
       it 'returns the first item' do
-        expect(edm.external_location_uri).to eq('first item')
+        expect(edm.external_location_uri).to eq({ :field_name => "externalLocation_uri", :value => "first item" })
       end
     end
   end
@@ -319,7 +326,7 @@ RSpec.describe Edm, type: :model do
       let!(:edm) { Edm.new({ 'amendmentText_t' => ['first item', 'second item'] }) }
 
       it 'returns all items' do
-        expect(edm.amendment_text).to eq(['first item', 'second item'])
+        expect(edm.amendment_text).to eq([{ :field_name => "amendmentText_t", :value => "first item" }, { :field_name => "amendmentText_t", :value => "second item" }])
       end
     end
   end
@@ -361,13 +368,13 @@ RSpec.describe Edm, type: :model do
       it 'returns all data grouped by amendment' do
         expect(edm.amendments).to eq(
                                     [{
-                                       date_tabled: DateTime.commercial(2022),
+                                       date_tabled: { value: DateTime.commercial(2022), field_name: 'amendment_dateTabled_dt' },
                                        index: 0,
-                                       number_of_signatures: 20,
-                                       primary_sponsor: 'sponsor one',
-                                       primary_sponsor_party: 12345,
-                                       reference: 'amendment 1 id',
-                                       text: 'first item'
+                                       number_of_signatures: { value: 20, field_name: 'amendment_numberOfSignatures_s' },
+                                       primary_sponsor: { value: 'sponsor one', field_name: 'amendment_primarySponsorPrinted_t' },
+                                       primary_sponsor_party: { value: 12345, field_name: 'amendment_primarySponsorParty_ses' },
+                                       reference: { value: 'amendment 1 id', field_name: 'identifier_t' },
+                                       text: { value: 'first item', field_name: 'amendmentText_t' }
                                      }
                                     ]
                                   )
@@ -396,7 +403,7 @@ RSpec.describe Edm, type: :model do
       let!(:edm) { Edm.new({ 'internalLocation_uri' => ['www.example.com'], 'externalLocation_uri' => ['www.test.com'] }) }
 
       it 'returns the external link' do
-        expect(edm.display_link).to eq('www.test.com')
+        expect(edm.display_link).to eq({ :field_name => "externalLocation_uri", :value => "www.test.com" })
       end
     end
 
@@ -404,7 +411,7 @@ RSpec.describe Edm, type: :model do
       let!(:edm) { Edm.new({ 'internalLocation_uri' => [], 'externalLocation_uri' => ['www.test.com'] }) }
 
       it 'returns the external link' do
-        expect(edm.display_link).to eq('www.test.com')
+        expect(edm.display_link).to eq({ :field_name => "externalLocation_uri", :value => "www.test.com" })
       end
     end
   end
@@ -413,7 +420,7 @@ RSpec.describe Edm, type: :model do
     context 'where there are amendments' do
       it 'returns the number of amendments' do
         allow(edm).to receive(:amendments).and_return([{ name: 'amendment one' }, { name: 'amendment two' }, { name: 'amendment three' }])
-        expect(edm.amendments_count).to eq(3)
+        expect(edm.amendments_count).to eq({ :field_name => "amendmentText_t", :value => "3" })
       end
     end
     context 'where there are no amendments' do
@@ -487,7 +494,7 @@ RSpec.describe Edm, type: :model do
     context 'where field is populated' do
       let!(:edm) { Edm.new({ 'numberOfSignatures_t' => ['10'] }) }
       it 'returns a string' do
-        expect(edm.number_of_signatures).to eq('10')
+        expect(edm.number_of_signatures).to eq({ :field_name => "numberOfSignatures_t", :value => "10" })
       end
     end
     context 'where field is not populated' do
@@ -531,7 +538,7 @@ RSpec.describe Edm, type: :model do
     context 'where field is populated' do
       let!(:edm) { Edm.new({ 'subtype_ses' => [12345] }) }
       it 'returns a type ID' do
-        expect(edm.subtype).to eq(12345)
+        expect(edm.subtype).to eq({ :field_name => "subtype_ses", :value => 12345 })
       end
     end
     context 'where field is not populated' do

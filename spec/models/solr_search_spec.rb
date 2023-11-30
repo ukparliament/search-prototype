@@ -69,18 +69,18 @@ RSpec.describe SolrSearch, type: :model do
       end
     end
 
-    context 'where type is provided' do
-      let!(:solr_search) { SolrSearch.new({ type: 12345 }) }
+    context 'where a fiter is provided' do
+      let!(:solr_search) { SolrSearch.new({ filter: { value: 12345, field_name: 'type_ses' } }) }
 
-      it 'returns a partial url with the ses_id included' do
+      it 'returns a partial url with the filter included' do
         expect(solr_search.query_string).to eq("q=type_ses:12345")
       end
     end
 
-    context 'where query and type are both provided' do
-      let!(:solr_search) { SolrSearch.new({ query: 'a search term', type: 12345 }) }
+    context 'where query and a filter are both provided' do
+      let!(:solr_search) { SolrSearch.new({ query: 'a search term', filter: { value: 12345, field_name: 'type_ses' } }) }
 
-      it 'returns a partial url with the ses_id and search term included' do
+      it 'returns a partial url with the filter and search term included' do
         expect(solr_search.query_string).to eq("q=%22a search term%22&type_ses:12345")
       end
     end
@@ -102,7 +102,7 @@ RSpec.describe SolrSearch, type: :model do
     end
 
     context 'where query and type are both provided' do
-      let!(:solr_search) { SolrSearch.new({ query: 'a search term', type: 12345, page: 12 }) }
+      let!(:solr_search) { SolrSearch.new({ query: 'a search term', filter: { value: 12345, field_name: 'type_ses' }, page: 12 }) }
 
       it 'returns all filters combined into a single string' do
         expect(solr_search.query_chain).to eq('rows=20&start=240&q=%22a search term%22&type_ses:12345')

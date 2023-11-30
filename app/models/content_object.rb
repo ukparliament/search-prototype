@@ -93,7 +93,17 @@ class ContentObject
   end
 
   def department
-    get_first_from('department_ses')
+    # 'asked to reply author' is a third party body that needs to be removed from department SES
+    atra_id = get_first_from('askedToReplyAuthor_ses')
+
+    # this returns multiple data objects in an array
+    # then filters out the atra ID (even if it's nil) & returns the first remaining item
+
+    if atra_id.blank?
+      get_first_from('department_ses')
+    else
+      get_all_from('department_ses').reject { |h| h[:value] == atra_id }.first
+    end
   end
 
   def place
@@ -164,8 +174,10 @@ class ContentObject
     ret = {}
 
     query = SolrMultiQuery.new(object_uris: relation_uris)
-    unless query.all_ses_ids.blank?
-      ret[:ses_lookup] = SesLookup.new(query.all_ses_ids).data
+    relation_ses_ids = query.all_ses_ids
+
+    unless relation_ses_ids.blank?
+      ret[:ses_lookup] = SesLookup.new(relation_ses_ids).data
     end
 
     ret[:items] = []
@@ -245,9 +257,16 @@ class ContentObject
   private
 
   def get_first_as_boolean_from(field_name)
-    return unless [true, false].include?(content_object_data[field_name]&.first)
+    return unless ['true', 'false'].include?(content_object_data[field_name]&.first)
 
     result = content_object_data[field_name].first == 'true' ? true : false
+    { value: result, field_name: field_name }
+  end
+
+  def get_as_boolean_from(field_name)
+    return unless ['true', 'false'].include?(content_object_data[field_name])
+
+    result = content_object_data[field_name] == 'true' ? true : false
     { value: result, field_name: field_name }
   end
 

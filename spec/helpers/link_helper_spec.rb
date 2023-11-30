@@ -2,18 +2,28 @@ require 'rails_helper'
 
 RSpec.describe LinkHelper, type: :helper do
   let!(:mock_ses_data) { { 123 => 'Ses test return' } }
+  let!(:input_data_ses) { { value: 123, field_name: 'type_ses' } }
+  let!(:input_data_string) { { value: 'Test string', field_name: 'abstract_t' } }
 
-  describe 'ses_object_link' do
+  describe 'search link' do
     context 'when given nil' do
       it 'returns nil' do
         allow(helper).to receive(:ses_data).and_return(mock_ses_data)
         expect(helper.search_link(nil)).to eq(nil)
       end
     end
-    context 'when given an integer' do
-      it 'returns a link' do
+    context 'when given a SES ID & field name' do
+      it 'returns a link to a new search using the SES ID as a filter for the given field' do
+        # requires SES data to have been preloaded on the page - this is done for performance reasons
         allow(helper).to receive(:ses_data).and_return(mock_ses_data)
-        expect(helper.search_link(123)).to eq("<a href=\"/search-prototype/search?query=Ses+test+return\">Ses test return</a>")
+        expect(helper.search_link(input_data_ses)).to eq("<a href=\"/search-prototype/search?filter%5Bfield_name%5D=type_ses&amp;filter%5Bvalue%5D=123\">Ses test return</a>")
+      end
+    end
+    context 'when given a string value and a field name' do
+      # TODO: should this be the case?
+      # We should be submitting a general query rather than searching the abstract field?
+      it 'returns a link to a new search using the string as a query' do
+        expect(helper.search_link(input_data_string)).to eq("<a href=\"/search-prototype/search?query=Test+string\">Test string</a>")
       end
     end
   end
@@ -25,10 +35,16 @@ RSpec.describe LinkHelper, type: :helper do
         expect(helper.object_display_name(nil)).to eq(nil)
       end
     end
-    context 'when given an integer' do
-      it 'returns a link' do
+    context 'when given a SES ID and field name' do
+      it 'returns the SES name' do
+        # requires SES data to have been preloaded on the page - this is done for performance reasons
         allow(helper).to receive(:ses_data).and_return(mock_ses_data)
-        expect(helper.object_display_name(123)).to eq('ses test return')
+        expect(helper.object_display_name(input_data_ses)).to eq('ses test return')
+      end
+    end
+    context 'when given string and field name' do
+      it 'returns the formatted string' do
+        expect(helper.object_display_name(input_data_string)).to eq('test string')
       end
     end
   end
@@ -40,10 +56,16 @@ RSpec.describe LinkHelper, type: :helper do
         expect(helper.object_display_name_link(nil)).to eq(nil)
       end
     end
-    context 'when given an integer' do
-      it 'returns a link' do
+    context 'when given a SES ID and field name' do
+      it 'returns a link to search that SES field with the given ID' do
+        # requires SES data to have been preloaded on the page - this is done for performance reasons
         allow(helper).to receive(:ses_data).and_return(mock_ses_data)
-        expect(helper.object_display_name_link(123)).to eq("<a href=\"/\">ses test return</a>")
+        expect(helper.object_display_name_link(input_data_ses)).to eq("<a href=\"/search-prototype/search?filter%5Bfield_name%5D=type_ses&amp;filter%5Bvalue%5D=123\">ses test return</a>")
+      end
+    end
+    context 'when given string and field name' do
+      it 'returns a link to search using the string as a query' do
+        expect(helper.object_display_name_link(input_data_string)).to eq("<a href=\"/search-prototype/search?filter%5Bfield_name%5D=abstract_t&amp;filter%5Bvalue%5D=Test+string\">test string</a>")
       end
     end
   end

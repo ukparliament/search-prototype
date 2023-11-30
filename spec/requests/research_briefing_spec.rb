@@ -30,22 +30,23 @@ RSpec.describe 'Research Briefing', type: :request do
 
           unless research_briefing_instance.topics.blank?
             research_briefing_instance.topics.each do |topic|
-              test_ses_data[topic] = "SES response for #{topic}"
+              test_ses_data[topic[:value]] = "SES response for #{topic[:value]}"
             end
           end
 
           unless research_briefing_instance.subjects.blank?
+
             research_briefing_instance.subjects.each do |subject|
-              test_ses_data[subject] = "SES response for #{subject}"
+              test_ses_data[subject[:value]] = "SES response for #{subject[:value]}"
             end
           end
 
           unless research_briefing_instance.legislation.blank?
             research_briefing_instance.legislation.each do |legislation|
-              test_ses_data[legislation] = "SES response for #{legislation}"
+              test_ses_data[legislation[:value]] = "SES response for #{legislation[:value]}"
             end
           end
-          
+
           allow_any_instance_of(SolrQuery).to receive(:object_data).and_return('test')
           allow_any_instance_of(SolrMultiQuery).to receive(:object_data).and_return([])
           allow(ContentObject).to receive(:generate).and_return(research_briefing_instance)
@@ -53,8 +54,8 @@ RSpec.describe 'Research Briefing', type: :request do
 
           get '/objects', params: { :object => research_briefing_instance }
 
-          expect(CGI::unescapeHTML(response.body)).to include(research_briefing_instance.reference)
-          expect(CGI::unescapeHTML(response.body)).to include(research_briefing_instance.display_link)
+          expect(CGI::unescapeHTML(response.body)).to include(research_briefing_instance.reference[:value])
+          expect(CGI::unescapeHTML(response.body)).to include(research_briefing_instance.display_link[:value])
 
           if research_briefing_instance.published?
             expect(CGI::unescapeHTML(response.body)).to include('Published by')
@@ -68,19 +69,19 @@ RSpec.describe 'Research Briefing', type: :request do
 
           unless research_briefing_instance.subjects.blank?
             research_briefing_instance.subjects.each do |subject|
-              expect(CGI::unescapeHTML(response.body)).to include(subject.to_s)
+              expect(CGI::unescapeHTML(response.body)).to include(subject[:value].to_s)
             end
           end
 
           unless research_briefing_instance.topics.blank?
             research_briefing_instance.topics.each do |topic|
-              expect(CGI::unescapeHTML(response.body)).to include(topic.to_s)
+              expect(CGI::unescapeHTML(response.body)).to include(topic[:value].to_s)
             end
           end
 
           unless research_briefing_instance.legislation.blank?
             research_briefing_instance.legislation.each do |legislation|
-              expect(CGI::unescapeHTML(response.body)).to include(legislation.to_s)
+              expect(CGI::unescapeHTML(response.body)).to include(legislation[:value].to_s)
             end
           end
         end

@@ -2,13 +2,13 @@ require 'rails_helper'
 
 RSpec.describe 'Written Question', type: :request do
   describe 'GET /show' do
-    let!(:written_question_instance) { WrittenQuestion.new('test') }
+    let!(:written_question_instance) { WrittenQuestion.new('type_ses' => [12345]) }
 
     it 'returns http success' do
       allow_any_instance_of(SolrQuery).to receive(:object_data).and_return('test')
       allow_any_instance_of(SolrMultiQuery).to receive(:object_data).and_return([])
       allow(ContentObject).to receive(:generate).and_return(written_question_instance)
-      allow_any_instance_of(WrittenQuestion).to receive(:ses_data).and_return(written_question_instance.type => 'written question')
+      allow_any_instance_of(WrittenQuestion).to receive(:ses_data).and_return(written_question_instance.type[:value] => 'written question')
       allow(written_question_instance).to receive(:tabled?).and_return(true)
       get '/objects', params: { :object => 'test_string' }
       expect(response).to have_http_status(:ok)
@@ -31,16 +31,16 @@ RSpec.describe 'Written Question', type: :request do
 
           unless written_question_instance.subjects.blank?
             written_question_instance.subjects.each do |subject|
-              test_ses_data[subject] = "SES response for #{subject}"
+              test_ses_data[subject[:value]] = "SES response for #{subject[:value]}"
             end
           end
 
           unless written_question_instance.legislation.blank?
             written_question_instance.legislation.each do |legislation|
-              test_ses_data[legislation] = "SES response for #{legislation}"
+              test_ses_data[legislation[:value]] = "SES response for #{legislation[:value]}"
             end
           end
-          
+
           allow_any_instance_of(SolrQuery).to receive(:object_data).and_return('test')
           allow_any_instance_of(SolrMultiQuery).to receive(:object_data).and_return([])
           allow(ContentObject).to receive(:generate).and_return(written_question_instance)
@@ -48,23 +48,23 @@ RSpec.describe 'Written Question', type: :request do
           allow_any_instance_of(SesLookup).to receive(:data).and_return(test_ses_data)
 
           get '/objects', params: { :object => written_question_instance }
-          expect(CGI::unescapeHTML(response.body)).to include(written_question_instance.uin.join('; '))
-          expect(CGI::unescapeHTML(response.body)).to include(written_question_instance.parliamentary_session)
+          expect(CGI::unescapeHTML(response.body)).to include(written_question_instance.uin.map { |h| h[:value] }.join('; '))
+          expect(CGI::unescapeHTML(response.body)).to include(written_question_instance.parliamentary_session[:value])
 
           # procedure
 
           unless written_question_instance.notes.blank?
-            expect(CGI::unescapeHTML(response.body)).to include(written_question_instance.notes)
+            expect(CGI::unescapeHTML(response.body)).to include(written_question_instance.notes[:value])
           end
 
           if written_question_instance.registered_interest_declared?
-            expect(CGI::unescapeHTML(response.body)).to include(written_question_instance.registered_interest_declared?)
+            expect(CGI::unescapeHTML(response.body)).to include(written_question_instance.registered_interest_declared?[:value])
           end
 
-          expect(CGI::unescapeHTML(response.body)).to include(written_question_instance.display_link)
+          expect(CGI::unescapeHTML(response.body)).to include(written_question_instance.display_link[:value])
 
           unless written_question_instance.tabled?
-            expect(CGI::unescapeHTML(response.body)).to include(written_question_instance.attachment)
+            expect(CGI::unescapeHTML(response.body)).to include(written_question_instance.attachment[:value])
           end
 
           # grouped for answer
@@ -84,13 +84,14 @@ RSpec.describe 'Written Question', type: :request do
 
           unless written_question_instance.subjects.blank?
             written_question_instance.subjects.each do |subject|
-              expect(CGI::unescapeHTML(response.body)).to include(subject.to_s)
+              # page should show the SES name for each subject ID
+              expect(CGI::unescapeHTML(response.body)).to include(subject[:value].to_s)
             end
           end
 
           unless written_question_instance.legislation.blank?
             written_question_instance.legislation.each do |legislation|
-              expect(CGI::unescapeHTML(response.body)).to include(legislation.to_s)
+              expect(CGI::unescapeHTML(response.body)).to include(legislation[:value].to_s)
             end
           end
         end

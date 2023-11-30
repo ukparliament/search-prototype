@@ -2,11 +2,11 @@ require 'rails_helper'
 
 RSpec.describe 'Edm', type: :request do
   describe 'GET /show' do
-    let!(:edm_instance) { Edm.new('test') }
+    let!(:edm_instance) { Edm.new('type_ses' => [12345]) }
 
     it 'returns http success' do
       allow_any_instance_of(SolrQuery).to receive(:object_data).and_return('test')
-      allow_any_instance_of(Edm).to receive(:ses_data).and_return(edm_instance.type => 'early day motion')
+      allow_any_instance_of(Edm).to receive(:ses_data).and_return(edm_instance.type[:value] => 'early day motion')
       allow(ContentObject).to receive(:generate).and_return(edm_instance)
       get '/objects', params: { :object => 'test_string' }
       expect(response).to have_http_status(:ok)
@@ -25,23 +25,23 @@ RSpec.describe 'Edm', type: :request do
           edm_instance = Edm.new(data)
 
           # SES response mocking requires the correct IDs so we're populating it during the test
-          test_ses_data = { edm_instance.primary_sponsor => "SES response for #{edm_instance.primary_sponsor}" }
+          test_ses_data = { edm_instance.primary_sponsor[:value] => "SES response for #{edm_instance.primary_sponsor[:value]}" }
 
           unless edm_instance.other_sponsors.blank?
             edm_instance.other_sponsors.each do |sponsor|
-              test_ses_data[sponsor] = "SES response for #{sponsor}"
+              test_ses_data[sponsor[:value]] = "SES response for #{sponsor[:value]}"
             end
           end
 
           unless edm_instance.subjects.blank?
             edm_instance.subjects.each do |subject|
-              test_ses_data[subject] = "SES response for #{subject}"
+              test_ses_data[subject[:value]] = "SES response for #{subject[:value]}"
             end
           end
 
           unless edm_instance.legislation.blank?
             edm_instance.legislation.each do |legislation|
-              test_ses_data[legislation] = "SES response for #{legislation}"
+              test_ses_data[legislation[:value]] = "SES response for #{legislation[:value]}"
             end
           end
 
@@ -51,27 +51,27 @@ RSpec.describe 'Edm', type: :request do
 
           get '/objects', params: { :object => edm_instance }
 
-          expect(CGI::unescapeHTML(response.body)).to include(edm_instance.reference)
-          expect(CGI::unescapeHTML(response.body)).to include(edm_instance.parliamentary_session)
-          expect(CGI::unescapeHTML(response.body)).to include(edm_instance.motion_text)
-          expect(CGI::unescapeHTML(response.body)).to include("SES response for #{edm_instance.primary_sponsor}")
-          expect(CGI::unescapeHTML(response.body)).to include(edm_instance.display_link)
+          expect(CGI::unescapeHTML(response.body)).to include(edm_instance.reference[:value])
+          expect(CGI::unescapeHTML(response.body)).to include(edm_instance.parliamentary_session[:value])
+          expect(CGI::unescapeHTML(response.body)).to include(edm_instance.motion_text[:value])
+          expect(CGI::unescapeHTML(response.body)).to include("SES response for #{edm_instance.primary_sponsor[:value]}")
+          expect(CGI::unescapeHTML(response.body)).to include(edm_instance.display_link[:value])
 
           unless edm_instance.other_sponsors.blank?
             edm_instance.other_sponsors.each do |sponsor|
-              expect(CGI::unescapeHTML(response.body)).to include("SES response for #{sponsor}")
+              expect(CGI::unescapeHTML(response.body)).to include("SES response for #{sponsor[:value]}")
             end
           end
 
           unless edm_instance.subjects.blank?
             edm_instance.subjects.each do |subject|
-              expect(CGI::unescapeHTML(response.body)).to include("SES response for #{subject}")
+              expect(CGI::unescapeHTML(response.body)).to include("SES response for #{subject[:value]}")
             end
           end
 
           unless edm_instance.legislation.blank?
             edm_instance.legislation.each do |legislation|
-              expect(CGI::unescapeHTML(response.body)).to include("SES response for #{legislation}")
+              expect(CGI::unescapeHTML(response.body)).to include("SES response for #{legislation[:value]}")
             end
           end
         end

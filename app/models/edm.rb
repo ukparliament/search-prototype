@@ -43,12 +43,12 @@ class Edm < ContentObject
     ).map.with_index do |values, index|
       {
         index: index,
-        text: values[0],
-        number_of_signatures: values[1],
-        primary_sponsor: values[2],
-        primary_sponsor_party: values[3],
-        reference: values[4],
-        date_tabled: values[5],
+        text: { value: values[0], field_name: 'amendmentText_t' },
+        number_of_signatures: { value: values[1], field_name: 'amendment_numberOfSignatures_s' },
+        primary_sponsor: { value: values[2], field_name: 'amendment_primarySponsorPrinted_t' },
+        primary_sponsor_party: { value: values[3], field_name: 'amendment_primarySponsorParty_ses' },
+        reference: { value: values[4], field_name: 'identifier_t' },
+        date_tabled: { value: values[5].to_date, field_name: 'amendment_dateTabled_dt' },
       }
     end
 
@@ -58,7 +58,7 @@ class Edm < ContentObject
   def amendments_count
     return if amendments.blank?
 
-    amendments.size
+    { value: amendments.size.to_s, field_name: 'amendmentText_t' }
   end
 
   def withdrawn?
@@ -91,13 +91,13 @@ class Edm < ContentObject
   end
 
   def fatal_prayer?
-    return false unless subtype == 445873
+    return false unless subtype[:value] == 445873
 
     true
   end
 
   def non_fatal_prayer?
-    return false unless subtype == 445875
+    return false unless subtype[:value] == 445875
 
     true
   end

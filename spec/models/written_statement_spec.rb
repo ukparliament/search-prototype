@@ -9,6 +9,13 @@ RSpec.describe WrittenStatement, type: :model do
     end
   end
 
+  describe 'object_name' do
+    it 'returns object type' do
+      allow(written_statement).to receive(:type).and_return({ value: 12345, field_name: 'type_ses' })
+      expect(written_statement.object_name).to eq({ value: 12345, field_name: 'type_ses' })
+    end
+  end
+
   describe 'attachment' do
     # disabled - awaiting feedback
     context 'where there is no data' do
@@ -28,7 +35,7 @@ RSpec.describe WrittenStatement, type: :model do
       let!(:written_statement) { WrittenStatement.new({ 'attachment_t' => ['first item', 'second item'] }) }
 
       it 'returns all items as an array' do
-        expect(written_statement.attachment).to eq(['first item', 'second item'])
+        expect(written_statement.attachment).to eq([{ :field_name => "attachment_t", :value => "first item" }, { :field_name => "attachment_t", :value => "second item" }])
       end
     end
   end
@@ -51,7 +58,7 @@ RSpec.describe WrittenStatement, type: :model do
       let!(:written_statement) { WrittenStatement.new({ 'notes_t' => ['first item', 'second item'] }) }
 
       it 'returns the first item' do
-        expect(written_statement.notes).to eq('first item')
+        expect(written_statement.notes).to eq({ :field_name => "notes_t", :value => "first item" })
       end
     end
   end
@@ -74,7 +81,7 @@ RSpec.describe WrittenStatement, type: :model do
       let!(:written_statement) { WrittenStatement.new({ 'member_ses' => [12345, 67890] }) }
 
       it 'returns first item' do
-        expect(written_statement.member).to eq(12345)
+        expect(written_statement.member).to eq({ :field_name => "member_ses", :value => 12345 })
       end
     end
   end
@@ -97,7 +104,7 @@ RSpec.describe WrittenStatement, type: :model do
       let!(:written_statement) { WrittenStatement.new({ 'memberParty_ses' => [12345, 67890] }) }
 
       it 'returns first item' do
-        expect(written_statement.member_party).to eq(12345)
+        expect(written_statement.member_party).to eq({ :field_name => "memberParty_ses", :value => 12345 })
       end
     end
   end
@@ -120,7 +127,7 @@ RSpec.describe WrittenStatement, type: :model do
       let!(:written_statement) { WrittenStatement.new({ 'legislature_ses' => ['first item', 'second item'] }) }
 
       it 'returns first item' do
-        expect(written_statement.legislature).to eq('first item')
+        expect(written_statement.legislature).to eq({ :field_name => "legislature_ses", :value => "first item" })
       end
     end
   end
@@ -143,14 +150,14 @@ RSpec.describe WrittenStatement, type: :model do
       context 'where true' do
         let!(:written_statement) { WrittenStatement.new({ 'correctedWmsMc_b' => 'true' }) }
         it 'returns true' do
-          expect(written_statement.corrected?).to eq(true)
+          expect(written_statement.corrected?).to eq({ :field_name => "correctedWmsMc_b", :value => true })
         end
       end
 
       context 'where false' do
         let!(:written_statement) { WrittenStatement.new({ 'correctedWmsMc_b' => 'false' }) }
         it 'returns false' do
-          expect(written_statement.corrected?).to eq(false)
+          expect(written_statement.corrected?).to eq({ :field_name => "correctedWmsMc_b", :value => false })
         end
       end
     end
@@ -174,7 +181,7 @@ RSpec.describe WrittenStatement, type: :model do
       let!(:written_statement) { WrittenStatement.new({ 'department_ses' => [12345, 67890] }) }
 
       it 'returns first item' do
-        expect(written_statement.department).to eq(12345)
+        expect(written_statement.department).to eq({ :field_name => "department_ses", :value => 12345 })
       end
     end
   end
@@ -197,7 +204,7 @@ RSpec.describe WrittenStatement, type: :model do
       context 'where data is a valid date' do
         let!(:written_statement) { WrittenStatement.new({ 'date_dt' => Date.today.to_s }) }
         it 'returns a date object' do
-          expect(written_statement.statement_date).to eq(Date.today)
+          expect(written_statement.statement_date).to eq({ :field_name => "date_dt", :value => Date.today })
         end
       end
       context 'where data is not a valid date' do

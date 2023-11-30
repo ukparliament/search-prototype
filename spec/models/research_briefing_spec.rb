@@ -9,6 +9,13 @@ RSpec.describe ResearchBriefing, type: :model do
     end
   end
 
+  describe 'object_name' do
+    it 'returns object type' do
+      allow(research_briefing).to receive(:type).and_return({ value: 12345, field_name: 'type_ses' })
+      expect(research_briefing.object_name).to eq({ value: 12345, field_name: 'type_ses' })
+    end
+  end
+
   describe 'content' do
     context 'where there is no data' do
       it 'returns nil' do
@@ -27,7 +34,7 @@ RSpec.describe ResearchBriefing, type: :model do
       let!(:research_briefing) { ResearchBriefing.new({ 'content_t' => ['first item', 'second item'] }) }
 
       it 'returns the first item' do
-        expect(research_briefing.content).to eq('first item')
+        expect(research_briefing.content).to eq({ :field_name => "content_t", :value => "first item" })
       end
     end
   end
@@ -51,7 +58,7 @@ RSpec.describe ResearchBriefing, type: :model do
       let!(:research_briefing) { ResearchBriefing.new({ 'htmlsummary_t' => ['first item', 'second item'] }) }
 
       it 'returns the first item' do
-        expect(research_briefing.html_summary).to eq('first item')
+        expect(research_briefing.html_summary).to eq({ :field_name => "htmlsummary_t", :value => "first item" })
       end
     end
   end
@@ -75,14 +82,14 @@ RSpec.describe ResearchBriefing, type: :model do
         let!(:research_briefing) { ResearchBriefing.new({ 'published_b' => ['true'] }) }
 
         it 'returns the relevant boolean' do
-          expect(research_briefing.published?).to eq(true)
+          expect(research_briefing.published?).to eq({:field_name=>"published_b", :value=>true})
         end
       end
       context 'where not a boolean value' do
         let!(:research_briefing) { ResearchBriefing.new({ 'published_b' => ['first item', 'second item'] }) }
 
-        it 'returns false' do
-          expect(research_briefing.published?).to eq(false)
+        it 'returns nil' do
+          expect(research_briefing.published?).to eq(nil)
         end
       end
     end
@@ -106,7 +113,7 @@ RSpec.describe ResearchBriefing, type: :model do
       let!(:research_briefing) { ResearchBriefing.new({ 'publisher_ses' => [12345, 54321] }) }
 
       it 'returns the first item' do
-        expect(research_briefing.published_by).to eq(12345)
+        expect(research_briefing.published_by).to eq({ :field_name => "publisher_ses", :value => 12345 })
       end
     end
   end
@@ -129,7 +136,7 @@ RSpec.describe ResearchBriefing, type: :model do
       let!(:research_briefing) { ResearchBriefing.new({ 'creator_ses' => [12345, 54321] }) }
 
       it 'returns the first item' do
-        expect(research_briefing.creator).to eq(12345)
+        expect(research_briefing.creator).to eq({ :field_name => "creator_ses", :value => 12345 })
       end
     end
   end
@@ -152,7 +159,7 @@ RSpec.describe ResearchBriefing, type: :model do
       let!(:research_briefing) { ResearchBriefing.new({ 'publisherSnapshot_s' => ['first item', 'second item'] }) }
 
       it 'returns the first item' do
-        expect(research_briefing.publisher_string).to eq('first item')
+        expect(research_briefing.publisher_string).to eq({ :field_name => "publisherSnapshot_s", :value => "first item" })
       end
     end
   end
@@ -176,7 +183,7 @@ RSpec.describe ResearchBriefing, type: :model do
         let!(:research_briefing) { ResearchBriefing.new({ 'created_dt' => ["2015-06-01T18:00:15.73Z", "2014-06-01T18:00:15.73Z"] }) }
 
         it 'returns the first string parsed as a date' do
-          expect(research_briefing.published_on).to eq("Mon, 01 Jun 2015".to_date)
+          expect(research_briefing.published_on).to eq({ :field_name => "created_dt", :value => "Mon, 01 Jun 2015".to_date })
         end
       end
       context 'where data is not parsable as a date' do
@@ -208,7 +215,7 @@ RSpec.describe ResearchBriefing, type: :model do
         let!(:research_briefing) { ResearchBriefing.new({ 'dateLastModified_dt' => ["2015-06-01T18:00:15.73Z", "2014-06-01T18:00:15.73Z"] }) }
 
         it 'returns the first string parsed as a date' do
-          expect(research_briefing.updated_on).to eq("Mon, 01 Jun 2015".to_date)
+          expect(research_briefing.updated_on).to eq({ :field_name => "dateLastModified_dt", :value => "Mon, 01 Jun 2015".to_date })
         end
       end
       context 'where data is not parsable as a date' do
@@ -239,7 +246,7 @@ RSpec.describe ResearchBriefing, type: :model do
       let!(:research_briefing) { ResearchBriefing.new({ 'identifier_t' => ['first item', 'second item'] }) }
 
       it 'returns the first item' do
-        expect(research_briefing.reference).to eq('first item')
+        expect(research_briefing.reference).to eq({ :field_name => "identifier_t", :value => "first item" })
       end
     end
   end
@@ -262,7 +269,7 @@ RSpec.describe ResearchBriefing, type: :model do
       let!(:research_briefing) { ResearchBriefing.new({ 'subject_ses' => ['first item', 'second item'] }) }
 
       it 'returns all items as an array' do
-        expect(research_briefing.subjects).to eq(['first item', 'second item'])
+        expect(research_briefing.subjects).to eq([{ :field_name => "subject_ses", :value => "first item" }, { :field_name => "subject_ses", :value => "second item" }])
       end
     end
   end
@@ -285,7 +292,7 @@ RSpec.describe ResearchBriefing, type: :model do
       let!(:research_briefing) { ResearchBriefing.new({ 'legislationTitle_ses' => [12345, 67890] }) }
 
       it 'returns all items as an array' do
-        expect(research_briefing.legislation).to eq([12345, 67890])
+        expect(research_briefing.legislation).to eq([{ :field_name => "legislationTitle_ses", :value => 12345 }, { :field_name => "legislationTitle_ses", :value => 67890 }])
       end
     end
   end
@@ -308,7 +315,7 @@ RSpec.describe ResearchBriefing, type: :model do
       let!(:research_briefing) { ResearchBriefing.new({ 'externalLocation_uri' => ['first item', 'second item'] }) }
 
       it 'returns the first item' do
-        expect(research_briefing.external_location_uri).to eq('first item')
+        expect(research_briefing.external_location_uri).to eq({ :field_name => "externalLocation_uri", :value => "first item" })
       end
     end
   end
@@ -331,7 +338,7 @@ RSpec.describe ResearchBriefing, type: :model do
       let!(:research_briefing) { ResearchBriefing.new({ 'contentLocation_uri' => ['first item', 'second item'] }) }
 
       it 'returns the first item' do
-        expect(research_briefing.content_location_uri).to eq('first item')
+        expect(research_briefing.content_location_uri).to eq({ :field_name => "contentLocation_uri", :value => "first item" })
       end
     end
   end
@@ -367,7 +374,7 @@ RSpec.describe ResearchBriefing, type: :model do
       let!(:research_briefing) { ResearchBriefing.new({ 'internalLocation_uri' => ['www.example.com'], 'externalLocation_uri' => [] }) }
 
       it 'returns the internal link' do
-        expect(research_briefing.display_link).to eq('www.example.com')
+        expect(research_briefing.display_link).to eq({ :field_name => "internalLocation_uri", :value => "www.example.com" })
       end
     end
 
@@ -375,7 +382,7 @@ RSpec.describe ResearchBriefing, type: :model do
       let!(:research_briefing) { ResearchBriefing.new({ 'internalLocation_uri' => ['www.example.com'], 'externalLocation_uri' => ['www.test.com'] }) }
 
       it 'returns the external link' do
-        expect(research_briefing.display_link).to eq('www.test.com')
+        expect(research_briefing.display_link).to eq({ :field_name => "externalLocation_uri", :value => "www.test.com" })
       end
     end
 
@@ -383,7 +390,7 @@ RSpec.describe ResearchBriefing, type: :model do
       let!(:research_briefing) { ResearchBriefing.new({ 'internalLocation_uri' => [], 'externalLocation_uri' => ['www.test.com'] }) }
 
       it 'returns the external link' do
-        expect(research_briefing.display_link).to eq('www.test.com')
+        expect(research_briefing.display_link).to eq({ :field_name => "externalLocation_uri", :value => "www.test.com" })
       end
     end
   end

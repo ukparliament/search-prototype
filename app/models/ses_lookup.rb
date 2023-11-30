@@ -4,14 +4,16 @@ class SesLookup < ApiCall
   BASE_API_URI = "https://api.parliament.uk/ses/"
 
   # Note that this class has been refactored to operate on the 'standard data structure' (one or more hashes
-  # of value and field_name) used elsewhere in the application
+  # of value and field_name) used elsewhere in the application:
+  # [{value: w, field_name: 'x'}, { value: 'y', field_name: 'z'}...]
 
   def initialize(input_data)
     @input_data = input_data
   end
 
   def lookup_ids
-    input_data.map { |h| h[:value] }
+    # extract all of the values (which should be integers) from the hashes
+    input_data.map { |h| h[:value].to_i }
   end
 
   def lookup_string

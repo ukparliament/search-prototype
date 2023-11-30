@@ -9,15 +9,15 @@ class Question < ContentObject
   end
 
   def tabled?
-    state[:value] == 'Tabled'
+    state && state[:value] == 'Tabled'
   end
 
   def answered?
-    state[:value] == 'Answered'
+    state && state[:value] == 'Answered'
   end
 
   def withdrawn?
-    state[:value] == 'Withdrawn'
+    state && state[:value] == 'Withdrawn'
   end
 
   def corrected?

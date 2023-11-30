@@ -19,7 +19,7 @@
             <% end %>
 
             <% unless amendment[:date_tabled].blank? %>
-              on <%= amendment[:date_tabled]&.to_date&.strftime(ApplicationHelper::DATE_DISPLAY_FORMAT) %>.
+              on <%= format_date(amendment[:date_tabled]) %>.
             <% end %>
 
             <% unless amendment[:number_of_signatures].blank? %>

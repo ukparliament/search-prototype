@@ -11,7 +11,7 @@ class ProceedingContribution < ContentObject
   def object_name
     # TODO: dynamic? examples in wireframes are business question
     # and speaker's ruling
-    contribution_type[:value].downcase
+    { value: contribution_type[:value].downcase, field_name: 'contributionType_t' }
   end
 
   def contribution_type

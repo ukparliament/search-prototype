@@ -22,6 +22,6 @@ class WrittenStatement < ContentObject
 
   def corrected?
     # TODO: confirm this should be first
-    get_first_as_boolean_from('correctedWmsMc_b')
+    get_as_boolean_from('correctedWmsMc_b')
   end
 end

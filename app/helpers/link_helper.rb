@@ -22,17 +22,17 @@ module LinkHelper
   def search_link(data)
     # Accepts either a string or a SES ID, which it resolves into a string
     # Either option requires a field reference (standard data hash)
-    # TODO: fix this, currently not working
 
     return if data.blank? || data[:value].blank?
 
     if data[:field_name].last(3) == 'ses'
       link_text = ses_data[data[:value].to_i]
+      link_to(display_name(link_text), search_path(filter: data))
     else
-      link_text = data[:value]
+      query = data[:value]
+      link_to(display_name(query), search_path(query: query))
     end
 
-    link_to(display_name(link_text), search_path(filter: data))
   end
 
   def object_display_name(data, singular = true, lowercase = true)
@@ -81,8 +81,6 @@ module LinkHelper
     link_to(link_text&.singularize&.downcase, search_path(filter: data))
   end
 
-  private
-
   def display_name(ses_name)
     return if ses_name.blank?
 
@@ -109,6 +107,8 @@ module LinkHelper
     end
     ret.strip
   end
+
+  private
 
   def ses_data
     @ses_data
