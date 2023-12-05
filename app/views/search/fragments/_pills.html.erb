@@ -4,7 +4,10 @@
     <div class="pill-section">
       <% pills.each do |pill| %>
         <div class="pill-wrapper">
-          <div class="pill"><%= @ses_data[pill[:value].to_i] %></div>
+
+          <div class="pill">
+            <%= search_link(pill) %>
+          </div>
         </div>
       <% end %>
     </div>
