@@ -86,10 +86,10 @@ class ContentObject
   end
 
   def legislation
-    # TODO: sometimes leigislation text will be all that is present & we need to handle this
-    # by displaying it instead of a labelled link
+    legislation_ses = get_all_from('legislationTitle_ses')
+    return legislation_ses unless legislation_ses.blank?
 
-    get_all_from('legislationTitle_ses')
+    get_all_from('legislationTitle_t')
   end
 
   def department
@@ -110,10 +110,12 @@ class ContentObject
     get_first_from('place_ses')
   end
 
-  def library_location
-    # TODO: this is for the commons library, but there's also lordsLibraryLocation_t
-    # assume there's some logic needed for how to combine or conditionally present these
+  def commons_library_location
     get_first_from('commonsLibraryLocation_t')
+  end
+
+  def lords_library_location
+    get_first_from('lordsLibraryLocation_t')
   end
 
   def motion_text
@@ -197,8 +199,11 @@ class ContentObject
   end
 
   def procedure
-    # TODO: confirm whether this should be first or all (partial will need adjustment)
-    get_first_from('procedural_ses')
+    get_first_from('procedure_t')
+  end
+
+  def procedure_scrutiny_period
+    get_first_from('approvalDays_t')
   end
 
   def member
@@ -275,6 +280,12 @@ class ContentObject
     return if content_object_data[field_name].blank?
 
     { value: content_object_data[field_name].first, field_name: field_name }
+  end
+
+  def get_last_from(field_name)
+    return if content_object_data[field_name].blank?
+
+    { value: content_object_data[field_name].last, field_name: field_name }
   end
 
   def get_first_as_html_from(field_name)
