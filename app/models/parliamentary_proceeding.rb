@@ -9,14 +9,7 @@ class ParliamentaryProceeding < ContentObject
   end
 
   def object_name
-    subtype_id = first_subtype
-    subtype_id.blank? ? type : subtype_id
-  end
-
-  def first_subtype
-    # TODO: temporary method - need to clear up what this should show & how
-    # e.g. should this show last rather than first subtype?
-    get_first_from('subtype_ses')
+    subtype_or_type
   end
 
   def location

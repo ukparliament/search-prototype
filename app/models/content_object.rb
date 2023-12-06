@@ -27,6 +27,10 @@ class ContentObject
     get_first_from('subtype_ses')
   end
 
+  def subtype_or_type
+    subtype.blank? ? type : subtype
+  end
+
   def type
     get_first_from('type_ses')
   end
@@ -243,11 +247,17 @@ class ContentObject
   end
 
   def contains_statistics?
-    # TODO: this will be any of three attributes being true
-    # see comments on trello card
-    # Blanket rule proposed for all object views: “Given an object with one or more of the attributes, hasTable OR containsStatistics OR statisticsIndicated, show Yes if at least one of those is true. If all statistical attributes associated with the object are false, do not display.”
+    contains_stats = get_first_as_boolean_from('containsStatistics_b')
+    has_table = get_first_as_boolean_from('hasTable_b')
+    stats_indicated = get_first_as_boolean_from('statisticsIndicated_b')
 
-    get_first_as_boolean_from('containsStatistics_b')
+    return true if contains_stats && contains_stats[:value] == true
+
+    return true if has_table && has_table[:value] == true
+
+    return true if stats_indicated && stats_indicated[:value] == true
+
+    false
   end
 
   def date

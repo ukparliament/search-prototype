@@ -8,6 +8,10 @@ class EuropeanDepositedDocument < ContentObject
     'search/objects/european_deposited_document'
   end
 
+  def object_name
+    subtype_or_type
+  end
+
   def deposited_date
     get_first_as_date_from('dateDeposited_dt')
   end
