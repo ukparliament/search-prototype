@@ -86,8 +86,8 @@ class ContentObject
   end
 
   def legislation
-    legislation_ses = get_all_from('legislationTitle_ses')
-    return legislation_ses unless legislation_ses.blank?
+    preferred = get_all_from('legislationTitle_ses')
+    return preferred unless preferred.blank?
 
     get_all_from('legislationTitle_t')
   end

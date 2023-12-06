@@ -9,11 +9,21 @@ class TransportAndWorksActOrderApplication < ContentObject
   end
 
   def depositing_agent
-    get_first_from('agent_ses')
+    preferred = get_first_from('agent_ses')
+    return preferred unless preferred.blank?
+
+    get_first_from('agent_t')
   end
 
   def depositing_applicant
-    get_first_from('applicant_ses')
+    preferred = get_first_from('applicant_ses')
+    return preferred unless preferred.blank?
+
+    get_first_from('applicant_t')
+  end
+
+  def date_of_origin
+    get_first_as_date_from('dateOfOrigin_dt')
   end
 
 end

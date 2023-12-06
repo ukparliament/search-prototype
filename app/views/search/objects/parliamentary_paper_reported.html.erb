@@ -42,7 +42,7 @@
 
   <!--  conditional-->
   <!--  libary location only shown for oral evidence-->
-  <%= render 'search/fragments/library_location', location: object.library_location %>
+  <%= render 'search/fragments/library_location', commons: object.commons_library_location, lords: object.lords_library_location %>
   <!--  end conditional-->
 
   <%= render 'search/fragments/link', object: object %>
