@@ -237,6 +237,16 @@ div.callout {
         line-height: 22.48px;
     }
 
+    .pill a {
+        text-align: center;
+        color: white;
+        font-size: 16px;
+        line-height: 22.48px;
+        text-decoration: none;
+        color: white;
+        background: none;
+    }
+
     .amendment-title {
         color: #181818;
         font-weight: 700;

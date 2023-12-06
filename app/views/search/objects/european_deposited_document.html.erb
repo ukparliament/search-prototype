@@ -15,17 +15,21 @@
 <% end %>
 
 <section id="prelim">
-  <%= render 'search/preliminary_sentences/church_of_england_measure', object: object %>
+  <%= render 'search/preliminary_sentences/european_deposited_document', object: object %>
 </section>
 
 <section id="about" class="content-section grey">
   <h2 class="content-heading">About this <%= object_display_name(object.type) %></h2>
-  <%= render 'search/fragments/reference', reference: object.reference %>
+  <%= render 'search/fragments/commission_number', commission_number: object.commission_number %>
+  <%= render 'search/fragments/elc_number', elc_number: object.elc_number %>
+  <%= render 'search/fragments/council_number', council_number: object.council_number %>
+  <%= render 'search/fragments/other_number', other_number: object.other_number %>
+  <%= render 'search/fragments/responsible_departments', responsible_departments: object.responsible_departments %>
+  <%= render 'search/fragments/date', date: object.date_of_origin, title: 'Date of origin' %>
+  <%= render 'search/fragments/subsidiarity_protocol_period', from: object.subsidiarity_from_date, to: object.subsidiarity_to_date %>
+  <%= render 'search/fragments/contains_statistics', contains_statistics: object.contains_statistics? %>
   <%= render 'search/fragments/related_items', related_items: object.related_items %>
-  <%= render 'search/fragments/notes', notes: object.notes %>
   <%= render 'search/fragments/pills', pills_heading: 'Subjects', pills: object.subjects %>
-  <%= render 'search/fragments/legislation', legislation: object.legislation %>
-  <%= render 'search/fragments/link', object: object %>
 </section>
 
 <%= render '/search/fragments/back_to_top_button' %>

@@ -6,11 +6,15 @@
       <strong><%= format_date(object.date_laid) %></strong>
       by <%= search_link(object.member_name) %> on behalf of the
       <%= search_link(object.department) %>.
-      <!--      [Don't have dates for these lines yet]-->
-      <!--      It was approved by the House of Commons on-->
-      <!--      <strong><%#= object.approval_date&.strftime(ApplicationHelper::DATE_DISPLAY_FORMAT) %></strong>.-->
-      <!--      It was made on-->
-      <!--      <strong><%#= object.approval_date&.strftime(ApplicationHelper::DATE_DISPLAY_FORMAT) %></strong>.-->
+      <% unless object.date_approved.blank? %>
+        It was approved by the House of Commons on <%= format_date(object.date_approved) %>.
+      <% end %>
+      <% unless object.date_made.blank? %>
+        It was made on <%= format_date(object.date_made) %>.
+      <% end %>
+      <% unless object.date_withdrawn.blank? %>
+        It was withdrawn on <%= format_date(object.date_withdrawn) %>.
+      <% end %>
     </div>
   </div>
 </div>

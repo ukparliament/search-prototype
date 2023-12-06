@@ -9,6 +9,8 @@ class StatutoryInstrument < ContentObject
   end
 
   def object_name
+    # subtype_ses or type_ses
+    # TODO: correct subtype appears to be last in list - to be confirmed
     last_subtype.blank? ? type : last_subtype
   end
 
@@ -16,8 +18,24 @@ class StatutoryInstrument < ContentObject
     get_first_from('comingIntoForceNotes_t')
   end
 
+  def coming_into_force_date
+    get_first_from('comingIntoForce_dt')
+  end
+
   def date_laid
     get_first_as_date_from('dateLaid_dt')
+  end
+
+  def date_approved
+    get_first_as_date_from('approvedDate_dt')
+  end
+
+  def date_made
+    get_first_as_date_from('dateMade_dt')
+  end
+
+  def date_withdrawn
+    get_first_as_date_from('dateWithdrawn_dt')
   end
 
   def referred_to
@@ -45,10 +63,7 @@ class StatutoryInstrument < ContentObject
   end
 
   def last_subtype
-    # temporary method - need to clear up what this should show & how
-    return if content_object_data['subtype_ses'].blank?
-
-    content_object_data['subtype_ses'].last
+    get_last_from('subtype_ses')
   end
 
 end

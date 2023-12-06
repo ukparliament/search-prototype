@@ -27,6 +27,10 @@ class ContentObject
     get_first_from('subtype_ses')
   end
 
+  def subtype_or_type
+    subtype.blank? ? type : subtype
+  end
+
   def type
     get_first_from('type_ses')
   end
@@ -86,10 +90,10 @@ class ContentObject
   end
 
   def legislation
-    # TODO: sometimes leigislation text will be all that is present & we need to handle this
-    # by displaying it instead of a labelled link
+    preferred = get_all_from('legislationTitle_ses')
+    return preferred unless preferred.blank?
 
-    get_all_from('legislationTitle_ses')
+    get_all_from('legislationTitle_t')
   end
 
   def department
@@ -110,10 +114,12 @@ class ContentObject
     get_first_from('place_ses')
   end
 
-  def library_location
-    # TODO: this is for the commons library, but there's also lordsLibraryLocation_t
-    # assume there's some logic needed for how to combine or conditionally present these
+  def commons_library_location
     get_first_from('commonsLibraryLocation_t')
+  end
+
+  def lords_library_location
+    get_first_from('lordsLibraryLocation_t')
   end
 
   def motion_text
@@ -197,8 +203,11 @@ class ContentObject
   end
 
   def procedure
-    # TODO: confirm whether this should be first or all (partial will need adjustment)
-    get_first_from('procedural_ses')
+    get_first_from('procedure_t')
+  end
+
+  def procedure_scrutiny_period
+    get_first_from('approvalDays_t')
   end
 
   def member
@@ -238,11 +247,17 @@ class ContentObject
   end
 
   def contains_statistics?
-    # TODO: this will be any of three attributes being true
-    # see comments on trello card
-    # Blanket rule proposed for all object views: “Given an object with one or more of the attributes, hasTable OR containsStatistics OR statisticsIndicated, show Yes if at least one of those is true. If all statistical attributes associated with the object are false, do not display.”
+    contains_stats = get_first_as_boolean_from('containsStatistics_b')
+    has_table = get_first_as_boolean_from('hasTable_b')
+    stats_indicated = get_first_as_boolean_from('statisticsIndicated_b')
 
-    get_first_as_boolean_from('containsStatistics_b')
+    return true if contains_stats && contains_stats[:value] == true
+
+    return true if has_table && has_table[:value] == true
+
+    return true if stats_indicated && stats_indicated[:value] == true
+
+    false
   end
 
   def date
@@ -275,6 +290,12 @@ class ContentObject
     return if content_object_data[field_name].blank?
 
     { value: content_object_data[field_name].first, field_name: field_name }
+  end
+
+  def get_last_from(field_name)
+    return if content_object_data[field_name].blank?
+
+    { value: content_object_data[field_name].last, field_name: field_name }
   end
 
   def get_first_as_html_from(field_name)

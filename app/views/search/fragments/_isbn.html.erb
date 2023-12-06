@@ -1,4 +1,6 @@
-<div class="about-item">
-  <h3 class="content-heading" id="isbn">ISBN</h3>
-  <%= isbn %>
-</div>
+<% unless isbn.blank? %>
+  <div class="about-item">
+    <h3 class="content-heading" id="isbn">ISBN</h3>
+    <%= isbn %>
+  </div>
+<% end %>

@@ -1,0 +1,15 @@
+<div class="content-prelim-box">
+  <div class="content-prelim-inner">
+    <div class="content-prelim-text" id="prelim-text">
+      A <%= object_display_name_link(object.object_name) %> deposited
+      on <strong><%= format_date(object.date_received) %></strong>,
+      regarding
+      <% if object.regarding_link.blank? %>
+        <%= search_link(object.regarding_title) %>
+      <% else %>
+        <%= link_to(object.regarding_link[:value]) %>
+      <% end %>
+    </div>
+  </div>
+</div>
+

@@ -1,6 +1,11 @@
-<% unless location.blank? %>
+<% unless commons.blank? && lords.blank? %>
   <div class="about-item">
     <h3 class="content-heading" id="library-location">Library location</h3>
-    <%= location[:value] %>
+    <% unless commons.blank? %>
+      Commons Library: <%= commons[:value] %>
+    <% end %>
+    <% unless lords.blank? %>
+      Lords Library: <%= lords[:value] %>
+    <% end %>
   </div>
 <% end %>

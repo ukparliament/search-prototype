@@ -1,4 +1,6 @@
-<div class="about-item">
-  <h3 class="content-heading" id="laid-in-draft">Laid in draft</h3>
-  <%= boolean_yes_no(laid_in_draft) %>
-</div>
+<% if laid_in_draft %>
+  <div class="about-item">
+    <h3 class="content-heading" id="laid-in-draft">Laid in draft</h3>
+    <%= boolean_yes_no(laid_in_draft) %>
+  </div>
+<% end %>

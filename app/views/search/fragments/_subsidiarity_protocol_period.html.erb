@@ -1,0 +1,8 @@
+<% unless from.blank? || to.blank? %>
+  <div class="about-item">
+    <h3 class="content-heading" id="subsidiarity_protocol_period">Subsidiarity protocol period</h3>
+    <div>
+      From <%= format_date(from) %> to <%= format_date(to) %>
+    </div>
+  </div>
+<% end %>
