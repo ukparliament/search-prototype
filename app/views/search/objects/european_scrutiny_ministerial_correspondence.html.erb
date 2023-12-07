@@ -1,0 +1,26 @@
+<% if Rails.env.development? %>
+  <%= render 'search/fragments/data', data: object.content_object_data, title: 'SOLR Data' %>
+  <%= render 'search/fragments/data', data: @ses_data, title: 'SES Data' %>
+<% end %>
+
+<% content_for(:before_title) do %>
+  <%= link_to('UK Parliament', root_path) %> / <%= link_to('Open data', root_path) %><br/>
+  <div id="top"></div>
+<% end %>
+
+<% content_for(:title) do %>
+  <%= @page_title %>
+<% end %>
+
+<section id="prelim">
+  <%= render 'search/preliminary_sentences/european_scrutiny_ministerial_correspondence', object: object %>
+</section>
+
+<section id="about" class="content-section grey">
+  <h2 class="content-heading">About this <%= object_display_name(object.type) %></h2>
+  <%= render 'search/fragments/related_items', related_items: object.related_items %>
+  <%= render 'search/fragments/pills', pills_heading: 'Subjects', pills: object.subjects %>
+  <%= render 'search/fragments/legislation', legislation: object.legislation %>
+</section>
+
+<%= render '/search/fragments/back_to_top_button' %>

@@ -1,0 +1,23 @@
+<div class="content-prelim-box">
+  <div class="content-prelim-inner">
+    <div class="content-prelim-text" id="prelim-text">
+      <%= object_display_name_link(object.object_name, lowercase: false) %>
+      <strong><%= format_date(object.date_originated) %></strong>,
+      <% unless object.corresponding_minister.blank? %>
+        from <%= search_link(object.corresponding_minister) -%>,
+      <% end %>
+      <% unless object.department.blank? %>
+        on behalf of the <%= search_link(object.department) -%>,
+      <% end %>
+      <% unless object.regarding_link.blank? && object.regarding_title.blank? %>
+        regarding
+        <% if object.regarding_link.blank? %>
+          <%= search_link(object.regarding_title) -%>
+        <% else %>
+          <%= link_to(object.regarding_link[:value]) -%>
+        <% end %>
+      <% end %>.
+    </div>
+  </div>
+</div>
+

@@ -33,7 +33,7 @@ module LinkHelper
 
   end
 
-  def object_display_name(data, singular = true, lowercase = true)
+  def object_display_name(data, singular: true, lowercase: true)
 
     # can used where the object type is dynamic by passing a SES ID
     # alternatively works with string names
@@ -51,19 +51,10 @@ module LinkHelper
       text = display_name(val)
     end
 
-    if singular && lowercase
-      text&.singularize&.downcase
-    elsif singular
-      text&.singularize
-    elsif lowercase
-      text&.downcase
-    else
-      text
-    end
-
+    format_text(text, singular, lowercase)
   end
 
-  def object_display_name_link(data)
+  def object_display_name_link(data, singular: true, lowercase: true)
     # used where the object type is dynamic
     # accepts a standard data hash containing a SES ID
     # very similar to a search link, but the link text is singularised etc. to make it suitable
@@ -71,12 +62,12 @@ module LinkHelper
     return if data.blank? || data[:value].blank?
 
     if data[:field_name].last(3) == 'ses'
-      link_text = ses_data[data[:value].to_i]
+      text = ses_data[data[:value].to_i]
     else
-      link_text = display_name(data[:value])
+      text = display_name(data[:value])
     end
 
-    link_to(link_text&.singularize&.downcase, search_path(filter: data))
+    link_to(format_text(text, singular, lowercase), search_path(filter: data))
   end
 
   def display_name(ses_name)
@@ -107,6 +98,18 @@ module LinkHelper
   end
 
   private
+
+  def format_text(text, singular, lowercase)
+    if singular && lowercase
+      text&.singularize&.downcase
+    elsif singular
+      text&.singularize
+    elsif lowercase
+      text&.downcase
+    else
+      text
+    end
+  end
 
   def ses_data
     @ses_data
