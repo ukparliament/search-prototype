@@ -224,8 +224,8 @@ RSpec.describe WrittenQuestion, type: :model do
     context 'where data exists' do
       let!(:written_question) { WrittenQuestion.new({ 'department_ses' => [12345, 67890] }) }
 
-      it 'returns first item' do
-        expect(written_question.department).to eq({ :field_name => "department_ses", :value => 12345 })
+      it 'returns all items' do
+        expect(written_question.department).to eq([{:field_name=>"department_ses", :value=>12345}, {:field_name=>"department_ses", :value=>67890}])
       end
     end
   end

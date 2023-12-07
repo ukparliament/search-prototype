@@ -7,7 +7,7 @@
         from <%= search_link(object.corresponding_minister) -%>,
       <% end %>
       <% unless object.department.blank? %>
-        on behalf of the <%= search_link(object.department.first) -%>,
+        on behalf of the <%= search_link(object.department&.first) -%>,
       <% end %>
       <% unless object.regarding_link.blank? && object.regarding_title.blank? %>
         regarding

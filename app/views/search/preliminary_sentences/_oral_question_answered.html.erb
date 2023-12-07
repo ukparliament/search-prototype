@@ -6,7 +6,7 @@
         in the <%= search_link(object.place) %>
       <% end %>
       by <%= search_link(object.tabling_member) %> (<%= search_link(object.tabling_member_party) %>)
-      to the <%= search_link(object.department.first) %>.
+      to the <%= search_link(object.department&.first) %>.
       It was answered by <%= search_link(object.answering_member) %> (<%= search_link(object.answering_member_party) %>)
       on <strong><%= format_date(object.date_of_answer) %></strong> on
       behalf of the <%= search_link(object.answering_department) %>.

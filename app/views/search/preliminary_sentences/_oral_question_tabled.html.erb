@@ -7,7 +7,7 @@
         in the <%= search_link(object.legislature) %>,
       <% end %>
       by <%= search_link(object.tabling_member) %> (<%= search_link(object.tabling_member_party) %>)
-      to the <%= search_link(object.department.first) %>.
+      to the <%= search_link(object.department&.first) %>.
       It is due for answer on
       <strong><%= format_date(object.date_for_answer) %></strong>.
     </div>
