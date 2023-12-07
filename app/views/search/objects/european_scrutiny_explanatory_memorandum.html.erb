@@ -8,10 +8,8 @@
   <div id="top"></div>
 <% end %>
 
-<% if object.page_title %>
-  <% content_for(:title) do %>
-    <%= object.page_title %>
-  <% end %>
+<% content_for(:title) do %>
+  <%= @page_title %>
 <% end %>
 
 <section id="prelim">
