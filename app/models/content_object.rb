@@ -78,6 +78,7 @@ class ContentObject
 
   def subjects
     # TODO: may sometimes also be subject_t instead of subject_ses, need to handle this
+    # these are distinct lists so just chunk them all together
     get_all_from('subject_ses')
   end
 
@@ -89,7 +90,8 @@ class ContentObject
     get_all_from('certifiedCategory_ses')
   end
 
-  def legislation
+  def legislation\
+    # TODO: change this so it functions as subjects, above
     preferred = get_all_from('legislationTitle_ses')
     return preferred unless preferred.blank?
 

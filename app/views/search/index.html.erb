@@ -8,7 +8,7 @@
 
   <% unless params[:filter].blank? %>
     <p>
-      Results for <%= params[:filter][:field_name] %> of "<%= object_display_name(params[:filter], singular: false, lowercase: false) %>"
+      Results for <%= params[:filter][:field_name] %> of "<%= object_display_name(params[:filter], singular: false) %>"
     </p>
   <% end %>
   <!--  <h6>Found <%#= @metadata['numFound'] %> results</h6>-->

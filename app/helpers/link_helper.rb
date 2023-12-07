@@ -33,7 +33,7 @@ module LinkHelper
 
   end
 
-  def object_display_name(data, singular: true, lowercase: true)
+  def object_display_name(data, singular: true, lowercase: false)
 
     # can used where the object type is dynamic by passing a SES ID
     # alternatively works with string names
@@ -54,7 +54,7 @@ module LinkHelper
     format_text(text, singular, lowercase)
   end
 
-  def object_display_name_link(data, singular: true, lowercase: true)
+  def object_display_name_link(data, singular: true, lowercase: false)
     # used where the object type is dynamic
     # accepts a standard data hash containing a SES ID
     # very similar to a search link, but the link text is singularised etc. to make it suitable
