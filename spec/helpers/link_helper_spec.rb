@@ -20,8 +20,6 @@ RSpec.describe LinkHelper, type: :helper do
       end
     end
     context 'when given a string value and a field name' do
-      # TODO: should this be the case?
-      # We should be submitting a general query rather than searching the abstract field?
       it 'returns a link to a new search using the string as a query' do
         expect(helper.search_link(input_data_string)).to eq("<a href=\"/search-prototype/search?query=Test+string\">Test string</a>")
       end

@@ -15,9 +15,16 @@ class ContentObjectsController < ApplicationController
     else
       # We pass the received data to the object class
       @object = ContentObject.generate(object_data)
-
-      @page_title = @object.page_title
       @ses_data = @object.ses_data
+
+      object_title = @object.page_title
+      object_type_id = @object.subtype_or_type
+
+      if object_title.blank? && !object_type_id.blank?
+        @page_title = "Untitled #{@ses_data[object_type_id[:value].to_i]}"
+      else
+        @page_title = object_title
+      end
 
       # Pass the object data to the template
       render template: @object.template, :locals => { :object => @object }

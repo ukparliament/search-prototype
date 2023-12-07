@@ -32,7 +32,7 @@
   <%= render 'search/fragments/reference', reference: object.reference %>
   <%= render 'search/fragments/session', session: object.parliamentary_session %>
   <%= render 'search/fragments/paper_type', type: object.subtype %>
-  <%= render 'search/fragments/procedure', procedure: object.procedure %>
+  <%= render 'search/fragments/procedure', procedure: object.procedure, approval_days: object.procedure_scrutiny_period %>
   <%= render 'search/fragments/corporate_author', author: object.corporate_author %>
   <%= render 'search/fragments/related_items', related_items: object.related_items %>
   <!--  laying authority-->
