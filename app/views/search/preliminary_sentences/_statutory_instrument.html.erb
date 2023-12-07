@@ -5,7 +5,7 @@
       <%= search_link(object.legislature) %>, on
       <strong><%= format_date(object.date_laid) %></strong>
       by <%= search_link(object.member_name) %> on behalf of the
-      <%= search_link(object.department) %>.
+      <%= search_link(object.department.first) %>.
       <% unless object.date_approved.blank? %>
         It was approved by the House of Commons on <%= format_date(object.date_approved) %>.
       <% end %>

@@ -106,7 +106,7 @@ class ContentObject
     # then filters out the atra ID (even if it's nil) & returns the first remaining item
 
     if atra_id.blank?
-      get_first_from('department_ses')
+      get_all_from('department_ses')
     else
       get_all_from('department_ses').reject { |h| h[:value] == atra_id }.first
     end

@@ -6,7 +6,7 @@
       on <strong><%= format_date(object.date_of_question) %></strong>,
       in the <%= search_link(object.legislature) %>
       <% unless object.department.blank? %>
-        for the <%= search_link(object.department) %>
+        for the <%= search_link(object.department.first) %>
       <% end %>.
       It is due for answer
       on <strong><%= format_date(object.date_for_answer) %></strong>

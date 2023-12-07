@@ -16,7 +16,7 @@
         on <strong><%= format_date(object.date_of_answer) %></strong>.
       <% else %>
         on <strong><%= format_date(object.date_of_answer) %></strong>
-        on behalf of the <%= search_link(object.department) %>.
+        on behalf of the <%= search_link(object.department.first) %>.
       <% end %>
     </div>
   </div>
