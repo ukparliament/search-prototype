@@ -1,6 +1,4 @@
 module LinkHelper
-  # TODO: not building links correctly
-
   def object_show_link(data, object_uri, anchor = nil)
     # this is a link directly to an object, e.g. where we already have a functional URL
     # this does not generate a search link
