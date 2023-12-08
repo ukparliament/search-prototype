@@ -11,10 +11,10 @@ RSpec.describe StatutoryInstrument, type: :model do
 
   describe 'object_name' do
     context 'where there are no subtypes' do
-      let!(:statutory_instrument) { StatutoryInstrument.new({ 'subtype_ses' => [] }) }
+      let!(:statutory_instrument) { StatutoryInstrument.new({ 'subtype_ses' => [], 'type_ses' => [54321] }) }
 
-      it 'returns nil' do
-        expect(statutory_instrument.object_name).to be_nil
+      it 'returns the type in an array' do
+        expect(statutory_instrument.object_name).to eq([{ value: 54321, field_name: 'type_ses' }])
       end
     end
     context 'where there is one subtype' do

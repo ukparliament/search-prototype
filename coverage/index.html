@@ -14,7 +14,7 @@
       <img src="./assets/0.12.3/loading.gif" alt="loading"/>
     </div>
     <div id="wrapper" class="hide">
-      <div class="timestamp">Generated <abbr class="timeago" title="2023-12-08T13:03:56+00:00">2023-12-08T13:03:56+00:00</abbr></div>
+      <div class="timestamp">Generated <abbr class="timeago" title="2023-12-08T15:11:14+00:00">2023-12-08T15:11:14+00:00</abbr></div>
       <ul class="group_tabs"></ul>
 
       <div id="content">
@@ -30,7 +30,7 @@
      covered at
      <span class="covered_strength">
        <span class="green">
-         28.92
+         28.91
        </span>
     </span> hits/line
     )
@@ -43,8 +43,8 @@
   </div>
 
   <div class="t-line-summary">
-    <b>3129</b> relevant lines,
-    <span class="green"><b>2943</b> lines covered</span> and
+    <b>3130</b> relevant lines,
+    <span class="green"><b>2944</b> lines covered</span> and
     <span class="red"><b>186</b> lines missed. </span>
     (<span class="green">
   94.06%
@@ -286,7 +286,7 @@
             <td class="cell--number">209</td>
             <td class="cell--number">156</td>
             <td class="cell--number">53</td>
-            <td class="cell--number">214.52</td>
+            <td class="cell--number">214.53</td>
             
           </tr>
         
@@ -600,12 +600,12 @@
         
           <tr class="t-file">
             <td class="strong t-file__name"><a href="#570da8a913785be09fd74432f7c9435beb83b932" class="src_link" title="app/models/statutory_instrument.rb">app/models/statutory_instrument.rb</a></td>
-            <td class="red strong cell--number t-file__coverage">60.61 %</td>
-            <td class="cell--number">71</td>
-            <td class="cell--number">33</td>
-            <td class="cell--number">20</td>
+            <td class="red strong cell--number t-file__coverage">61.76 %</td>
+            <td class="cell--number">68</td>
+            <td class="cell--number">34</td>
+            <td class="cell--number">21</td>
             <td class="cell--number">13</td>
-            <td class="cell--number">1.03</td>
+            <td class="cell--number">1.09</td>
             
           </tr>
         
@@ -5642,8 +5642,8 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="772" data-linenumber="35">
-            <span class="hits">772</span>
+          <li class="covered" data-hits="773" data-linenumber="35">
+            <span class="hits">773</span>
             
 
             
@@ -8469,8 +8469,8 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="4951" data-linenumber="292">
-            <span class="hits">4951</span>
+          <li class="covered" data-hits="4952" data-linenumber="292">
+            <span class="hits">4952</span>
             
 
             
@@ -8491,8 +8491,8 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="4213" data-linenumber="294">
-            <span class="hits">4213</span>
+          <li class="covered" data-hits="4214" data-linenumber="294">
+            <span class="hits">4214</span>
             
 
             
@@ -20401,7 +20401,7 @@
     <h3>app/models/statutory_instrument.rb</h3>
     <h4>
       <span class="red">
-  60.61%
+  61.76%
 </span>
 
       lines covered
@@ -20410,8 +20410,8 @@
     
 
     <div class="t-line-summary">
-      <b>33</b> relevant lines.
-      <span class="green"><b>20</b> lines covered</span> and
+      <b>34</b> relevant lines.
+      <span class="green"><b>21</b> lines covered</span> and
       <span class="red"><b>13</b> lines missed.</span>
     </div>
 
@@ -20544,24 +20544,24 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="12">
-            
-            
-
+          <li class="covered" data-hits="3" data-linenumber="12">
+            <span class="hits">3</span>
             
 
-            <code class="ruby">    # subtype_ses or type_ses</code>
+            
+
+            <code class="ruby">    subtypes = get_all_from(&#39;subtype_ses&#39;)</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="13">
-            
-            
-
+          <li class="covered" data-hits="3" data-linenumber="13">
+            <span class="hits">3</span>
             
 
-            <code class="ruby">    # TODO: correct subtype appears to be last in list - to be confirmed</code>
+            
+
+            <code class="ruby">    subtypes.blank? ? [type] : subtypes</code>
           </li>
         </div>
       
@@ -20572,7 +20572,7 @@
 
             
 
-            <code class="ruby">    # last_subtype.blank? ? type : last_subtype</code>
+            <code class="ruby">  end</code>
           </li>
         </div>
       
@@ -20588,40 +20588,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="3" data-linenumber="16">
-            <span class="hits">3</span>
-            
-
-            
-
-            <code class="ruby">    get_all_from(&#39;subtype_ses&#39;)</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="17">
-            
-            
-
-            
-
-            <code class="ruby">  end</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="18">
-            
-            
-
-            
-
-            <code class="ruby"></code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="covered" data-hits="1" data-linenumber="19">
+          <li class="covered" data-hits="1" data-linenumber="16">
             <span class="hits">1</span>
             
 
@@ -20632,7 +20599,7 @@
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="20">
+          <li class="missed" data-hits="0" data-linenumber="17">
             
             
 
@@ -20643,7 +20610,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="21">
+          <li class="never" data-hits="" data-linenumber="18">
             
             
 
@@ -20654,7 +20621,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="22">
+          <li class="never" data-hits="" data-linenumber="19">
             
             
 
@@ -20665,7 +20632,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="23">
+          <li class="covered" data-hits="1" data-linenumber="20">
             <span class="hits">1</span>
             
 
@@ -20676,7 +20643,7 @@
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="24">
+          <li class="missed" data-hits="0" data-linenumber="21">
             
             
 
@@ -20687,7 +20654,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="25">
+          <li class="never" data-hits="" data-linenumber="22">
             
             
 
@@ -20698,7 +20665,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="26">
+          <li class="never" data-hits="" data-linenumber="23">
             
             
 
@@ -20709,7 +20676,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="27">
+          <li class="covered" data-hits="1" data-linenumber="24">
             <span class="hits">1</span>
             
 
@@ -20720,7 +20687,7 @@
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="28">
+          <li class="missed" data-hits="0" data-linenumber="25">
             
             
 
@@ -20731,7 +20698,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="29">
+          <li class="never" data-hits="" data-linenumber="26">
             
             
 
@@ -20742,7 +20709,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="30">
+          <li class="never" data-hits="" data-linenumber="27">
             
             
 
@@ -20753,7 +20720,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="31">
+          <li class="covered" data-hits="1" data-linenumber="28">
             <span class="hits">1</span>
             
 
@@ -20764,7 +20731,7 @@
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="32">
+          <li class="missed" data-hits="0" data-linenumber="29">
             
             
 
@@ -20775,7 +20742,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="33">
+          <li class="never" data-hits="" data-linenumber="30">
             
             
 
@@ -20786,7 +20753,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="34">
+          <li class="never" data-hits="" data-linenumber="31">
             
             
 
@@ -20797,7 +20764,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="35">
+          <li class="covered" data-hits="1" data-linenumber="32">
             <span class="hits">1</span>
             
 
@@ -20808,7 +20775,7 @@
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="36">
+          <li class="missed" data-hits="0" data-linenumber="33">
             
             
 
@@ -20819,7 +20786,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="37">
+          <li class="never" data-hits="" data-linenumber="34">
             
             
 
@@ -20830,7 +20797,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="38">
+          <li class="never" data-hits="" data-linenumber="35">
             
             
 
@@ -20841,7 +20808,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="39">
+          <li class="covered" data-hits="1" data-linenumber="36">
             <span class="hits">1</span>
             
 
@@ -20852,7 +20819,7 @@
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="40">
+          <li class="missed" data-hits="0" data-linenumber="37">
             
             
 
@@ -20863,7 +20830,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="41">
+          <li class="never" data-hits="" data-linenumber="38">
             
             
 
@@ -20874,7 +20841,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="42">
+          <li class="never" data-hits="" data-linenumber="39">
             
             
 
@@ -20885,7 +20852,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="43">
+          <li class="covered" data-hits="1" data-linenumber="40">
             <span class="hits">1</span>
             
 
@@ -20896,7 +20863,7 @@
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="44">
+          <li class="missed" data-hits="0" data-linenumber="41">
             
             
 
@@ -20907,7 +20874,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="45">
+          <li class="never" data-hits="" data-linenumber="42">
             
             
 
@@ -20918,7 +20885,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="46">
+          <li class="never" data-hits="" data-linenumber="43">
             
             
 
@@ -20929,7 +20896,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="47">
+          <li class="covered" data-hits="1" data-linenumber="44">
             <span class="hits">1</span>
             
 
@@ -20940,7 +20907,7 @@
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="48">
+          <li class="missed" data-hits="0" data-linenumber="45">
             
             
 
@@ -20951,7 +20918,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="49">
+          <li class="never" data-hits="" data-linenumber="46">
             
             
 
@@ -20962,7 +20929,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="50">
+          <li class="never" data-hits="" data-linenumber="47">
             
             
 
@@ -20973,7 +20940,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="51">
+          <li class="covered" data-hits="1" data-linenumber="48">
             <span class="hits">1</span>
             
 
@@ -20984,7 +20951,7 @@
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="52">
+          <li class="missed" data-hits="0" data-linenumber="49">
             
             
 
@@ -20995,7 +20962,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="53">
+          <li class="never" data-hits="" data-linenumber="50">
             
             
 
@@ -21006,7 +20973,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="54">
+          <li class="never" data-hits="" data-linenumber="51">
             
             
 
@@ -21017,7 +20984,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="55">
+          <li class="covered" data-hits="1" data-linenumber="52">
             <span class="hits">1</span>
             
 
@@ -21028,7 +20995,7 @@
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="56">
+          <li class="missed" data-hits="0" data-linenumber="53">
             
             
 
@@ -21039,7 +21006,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="57">
+          <li class="never" data-hits="" data-linenumber="54">
             
             
 
@@ -21050,7 +21017,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="58">
+          <li class="never" data-hits="" data-linenumber="55">
             
             
 
@@ -21061,7 +21028,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="59">
+          <li class="covered" data-hits="1" data-linenumber="56">
             <span class="hits">1</span>
             
 
@@ -21072,7 +21039,7 @@
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="60">
+          <li class="missed" data-hits="0" data-linenumber="57">
             
             
 
@@ -21083,7 +21050,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="61">
+          <li class="never" data-hits="" data-linenumber="58">
             
             
 
@@ -21094,7 +21061,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="62">
+          <li class="never" data-hits="" data-linenumber="59">
             
             
 
@@ -21105,7 +21072,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="63">
+          <li class="covered" data-hits="1" data-linenumber="60">
             <span class="hits">1</span>
             
 
@@ -21116,7 +21083,7 @@
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="64">
+          <li class="missed" data-hits="0" data-linenumber="61">
             
             
 
@@ -21127,7 +21094,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="65">
+          <li class="never" data-hits="" data-linenumber="62">
             
             
 
@@ -21138,7 +21105,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="66">
+          <li class="never" data-hits="" data-linenumber="63">
             
             
 
@@ -21149,7 +21116,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="67">
+          <li class="covered" data-hits="1" data-linenumber="64">
             <span class="hits">1</span>
             
 
@@ -21160,7 +21127,7 @@
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="68">
+          <li class="missed" data-hits="0" data-linenumber="65">
             
             
 
@@ -21171,7 +21138,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="69">
+          <li class="never" data-hits="" data-linenumber="66">
             
             
 
@@ -21182,7 +21149,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="70">
+          <li class="never" data-hits="" data-linenumber="67">
             
             
 
@@ -21193,7 +21160,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="71">
+          <li class="never" data-hits="" data-linenumber="68">
             
             
 
@@ -58193,7 +58160,7 @@
 
             
 
-            <code class="ruby">      let!(:statutory_instrument) { StatutoryInstrument.new({ &#39;subtype_ses&#39; =&gt; [] }) }</code>
+            <code class="ruby">      let!(:statutory_instrument) { StatutoryInstrument.new({ &#39;subtype_ses&#39; =&gt; [], &#39;type_ses&#39; =&gt; [54321] }) }</code>
           </li>
         </div>
       
@@ -58215,7 +58182,7 @@
 
             
 
-            <code class="ruby">      it &#39;returns nil&#39; do</code>
+            <code class="ruby">      it &#39;returns the type in an array&#39; do</code>
           </li>
         </div>
       
@@ -58226,7 +58193,7 @@
 
             
 
-            <code class="ruby">        expect(statutory_instrument.object_name).to be_nil</code>
+            <code class="ruby">        expect(statutory_instrument.object_name).to eq([{ value: 54321, field_name: &#39;type_ses&#39; }])</code>
           </li>
         </div>
       

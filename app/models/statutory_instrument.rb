@@ -9,7 +9,8 @@ class StatutoryInstrument < ContentObject
   end
 
   def object_name
-    get_all_from('subtype_ses')
+    subtypes = get_all_from('subtype_ses')
+    subtypes.blank? ? [type] : subtypes
   end
 
   def coming_into_force
