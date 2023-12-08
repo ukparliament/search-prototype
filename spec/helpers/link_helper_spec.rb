@@ -77,13 +77,13 @@ RSpec.describe LinkHelper, type: :helper do
   describe 'display_name' do
     context 'with a standard SES formatted name' do
       it 'returns first name then last name' do
-        expect(helper.display_name('Last, First')).to eq("First Last")
+        expect(helper.send(:display_name, "Last, First", false, false)).to eq("First Last")
       end
     end
 
     context 'where there are disambiguation brackets' do
       it 'returns first name then last name with brackets afterwards' do
-        expect(helper.display_name('Last, First (Constituency)')).to eq("First Last (Constituency)")
+        expect(helper.send(:display_name, "Last, First (Constituency)", false, false)).to eq("First Last (Constituency)")
       end
     end
   end

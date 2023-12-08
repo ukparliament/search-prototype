@@ -9,9 +9,7 @@ class StatutoryInstrument < ContentObject
   end
 
   def object_name
-    # subtype_ses or type_ses
-    # TODO: correct subtype appears to be last in list - to be confirmed
-    last_subtype.blank? ? type : last_subtype
+    get_all_from('subtype_ses')
   end
 
   def coming_into_force

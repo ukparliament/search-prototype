@@ -111,6 +111,10 @@ GEM
       railties (>= 3.2, < 8.0)
     globalid (1.1.0)
       activesupport (>= 5.0)
+    haml (6.2.3)
+      temple (>= 0.8.2)
+      thor
+      tilt
     i18n (1.13.0)
       concurrent-ruby (~> 1.0)
     importmap-rails (1.2.1)
@@ -231,7 +235,9 @@ GEM
     sqlite3 (1.6.3-x86_64-linux)
     stimulus-rails (1.2.1)
       railties (>= 6.0.0)
+    temple (0.10.3)
     thor (1.2.2)
+    tilt (2.3.0)
     timeout (0.4.0)
     turbo-rails (1.4.0)
       actionpack (>= 6.0.0)
@@ -271,6 +277,7 @@ DEPENDENCIES
   factory_bot_rails
   faker
   font-awesome-rails
+  haml
   importmap-rails
   jbuilder
   puma (~> 6.3.1)

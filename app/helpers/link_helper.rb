@@ -1,5 +1,5 @@
 module LinkHelper
-  def object_show_link(data, object_uri, anchor = nil)
+  def object_show_link(data, object_uri, anchor = nil, singular: true, lowercase: false)
     # this is a link directly to an object, e.g. where we already have a functional URL
     # this does not generate a search link
     # takes a standard data hash (so either a string or a SES ID)
@@ -11,13 +11,14 @@ module LinkHelper
       ses_data = SesLookup.new([data]).data
       link_text = ses_data[data[:value].to_i]
     else
-      link_text = display_name(data[:value])
+      link_text = display_name(data[:value], singular, lowercase)
     end
 
     link_to(link_text&.singularize&.downcase, object_show_url(object: object_uri, anchor: anchor))
   end
 
-  def search_link(data)
+  def search_link(data, singular: false, lowercase: false)
+
     # Accepts either a string or a SES ID, which it resolves into a string
     # Either option requires a field reference (standard data hash)
 
@@ -25,10 +26,10 @@ module LinkHelper
 
     if data[:field_name].last(3) == 'ses'
       link_text = ses_data[data[:value].to_i]
-      link_to(display_name(link_text), search_path(filter: data))
+      link_to(display_name(link_text, singular, lowercase), search_path(filter: data))
     else
       query = data[:value]
-      link_to(display_name(query), search_path(query: query))
+      link_to(display_name(query, singular, lowercase), search_path(query: query))
     end
 
   end
@@ -46,12 +47,12 @@ module LinkHelper
     val = data[:value]
 
     if data[:field_name].last(3) == 'ses'
-      text = display_name(ses_data[val.to_i])
+      text = display_name(ses_data[val.to_i], singular, lowercase)
     else
-      text = display_name(val)
+      text = display_name(val, singular, lowercase)
     end
 
-    format_text(text, singular, lowercase)
+    text
   end
 
   def object_display_name_link(data, singular: true, lowercase: false)
@@ -62,19 +63,21 @@ module LinkHelper
     return if data.blank? || data[:value].blank?
 
     if data[:field_name].last(3) == 'ses'
-      text = ses_data[data[:value].to_i]
+      text = format_text(ses_data[data[:value].to_i], singular, lowercase)
     else
-      text = display_name(data[:value])
+      text = display_name(data[:value], singular, lowercase)
     end
 
-    link_to(format_text(text, singular, lowercase), search_path(filter: data))
+    link_to(text, search_path(filter: data))
   end
 
-  def display_name(ses_name)
+  private
+
+  def display_name(ses_name, singular, lowercase)
     return if ses_name.blank?
 
     # only for names containing a comma (?)
-    return ses_name unless ses_name.include?(',')
+    return format_text(ses_name, singular, lowercase) unless ses_name.include?(',')
 
     if ses_name.include?('(')
       # handle disambiguation brackets
@@ -94,10 +97,9 @@ module LinkHelper
       # we return as 'Lord Sharpe of Epsom'
       ret = "#{name_components.last} #{name_components.first}"
     end
-    ret.strip
-  end
 
-  private
+    format_text(ret.strip, singular, lowercase)
+  end
 
   def format_text(text, singular, lowercase)
     if singular && lowercase
