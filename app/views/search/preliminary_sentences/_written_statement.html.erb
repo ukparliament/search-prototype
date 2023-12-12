@@ -5,7 +5,7 @@
       made by <%= search_link(object.member) %> (<%= search_link(object.member_party) %>)
       on <strong><%= format_date(object.statement_date) %></strong>
       in the <%= search_link(object.legislature) %>, on behalf of the
-      <%= search_link(object.department) %>.
+      <%= search_link(object.department&.first) %>.
       <% if object.corrected? %>
         It has since been corrected.
       <% end %>

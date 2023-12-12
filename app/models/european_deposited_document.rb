@@ -32,11 +32,6 @@ class EuropeanDepositedDocument < ContentObject
     get_first_from('otherNumber_t')
   end
 
-  def responsible_departments
-    # TODO: check if this can be more than one
-    get_all_from('department_ses')
-  end
-
   def date_of_origin
     get_first_as_date_from('dateOriginated_dt')
   end

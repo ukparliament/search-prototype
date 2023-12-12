@@ -1,5 +1,5 @@
 module LinkHelper
-  def object_show_link(data, object_uri, anchor = nil)
+  def object_show_link(data, object_uri, anchor = nil, singular: true)
     # this is a link directly to an object, e.g. where we already have a functional URL
     # this does not generate a search link
     # takes a standard data hash (so either a string or a SES ID)
@@ -7,33 +7,26 @@ module LinkHelper
 
     return if data.blank? || data[:value].blank?
 
-    if data[:field_name].last(3) == 'ses'
-      ses_data = SesLookup.new([data]).data
-      link_text = ses_data[data[:value].to_i]
-    else
-      link_text = display_name(data[:value])
-    end
-
-    link_to(link_text&.singularize&.downcase, object_show_url(object: object_uri, anchor: anchor))
+    object_ses_data = SesLookup.new([data]).data
+    link_to(formatted_name(data, object_ses_data, singular), object_show_url(object: object_uri, anchor: anchor))
   end
 
-  def search_link(data)
+  def search_link(data, singular: false)
+
     # Accepts either a string or a SES ID, which it resolves into a string
     # Either option requires a field reference (standard data hash)
 
     return if data.blank? || data[:value].blank?
 
     if data[:field_name].last(3) == 'ses'
-      link_text = ses_data[data[:value].to_i]
-      link_to(display_name(link_text), search_path(filter: data))
+      link_to(formatted_name(data, ses_data, singular), search_path(filter: data))
     else
-      query = data[:value]
-      link_to(display_name(query), search_path(query: query))
+      link_to(formatted_name(data, ses_data, singular), search_path(query: data[:value]))
     end
 
   end
 
-  def object_display_name(data, singular: true, lowercase: true)
+  def object_display_name(data, singular: true)
 
     # can used where the object type is dynamic by passing a SES ID
     # alternatively works with string names
@@ -43,43 +36,51 @@ module LinkHelper
 
     return if data.blank? || data[:value].blank?
 
-    val = data[:value]
-
-    if data[:field_name].last(3) == 'ses'
-      text = display_name(ses_data[val.to_i])
-    else
-      text = display_name(val)
-    end
-
-    format_text(text, singular, lowercase)
+    formatted_name(data, ses_data, singular)
   end
 
-  def object_display_name_link(data, singular: true, lowercase: true)
+  def object_display_name_link(data, singular: true)
+
     # used where the object type is dynamic
     # accepts a standard data hash containing a SES ID
     # very similar to a search link, but the link text is singularised etc. to make it suitable
     # for use with object names
+
     return if data.blank? || data[:value].blank?
 
-    if data[:field_name].last(3) == 'ses'
-      text = ses_data[data[:value].to_i]
-    else
-      text = display_name(data[:value])
-    end
-
-    link_to(format_text(text, singular, lowercase), search_path(filter: data))
+    link_to(formatted_name(data, ses_data, singular), search_path(filter: data))
   end
 
-  def display_name(ses_name)
-    return if ses_name.blank?
+  private
 
-    # only for names containing a comma (?)
-    return ses_name unless ses_name.include?(',')
+  def formatted_name(data, ses_data, singular)
+    singular ? format_name(data, ses_data)&.singularize : format_name(data, ses_data)
+  end
 
-    if ses_name.include?('(')
+  def format_name(data, ses_data)
+    # This method processes names, handling commas and disambiguation
+    # It accepts a standard data hash with a SES ID or string
+
+    return if data.blank?
+
+    if data[:field_name]&.last(3) == 'ses'
+      # we need to get the string from SES
+      name_string = ses_data[data[:value].to_i]
+    else
+      # we already have a string
+      name_string = data[:value]
+    end
+
+    return if name_string.blank?
+
+    # only for member's names containing a comma (?), optionally with disambiguation brackets
+    # all valid field names end in 'member_ses' (some will have 'Member_ses')
+    return name_string unless data[:field_name].last(10).downcase == 'member_ses' && name_string.include?(',')
+
+    if name_string.include?('(')
       # handle disambiguation brackets
 
-      disambiguation_components = ses_name.split(' (')
+      disambiguation_components = name_string.split(' (')
       # 'Sharpe of Epsom, Lord (Disambiguation)' => ['Sharpe of Epsom, Lord', 'Disambiguation)']
 
       name_components = disambiguation_components.first.split(',')
@@ -89,26 +90,13 @@ module LinkHelper
       ret = "#{name_components.last} #{name_components.first} (#{disambiguation_components.last}"
     else
       # we get something like 'Sharpe of Epsom, Lord'
-      name_components = ses_name.split(',')
+      name_components = name_string.split(',')
 
       # we return as 'Lord Sharpe of Epsom'
       ret = "#{name_components.last} #{name_components.first}"
     end
+
     ret.strip
-  end
-
-  private
-
-  def format_text(text, singular, lowercase)
-    if singular && lowercase
-      text&.singularize&.downcase
-    elsif singular
-      text&.singularize
-    elsif lowercase
-      text&.downcase
-    else
-      text
-    end
   end
 
   def ses_data

@@ -1,0 +1,28 @@
+.content-prelim-box
+  .content-prelim-inner
+    .content-prelim-text#prelim-text
+      A
+      = render 'search/fragments/list', items: object.object_name, terminator: ","
+      laid in the&nbsp
+      %span>= search_link(object.legislature)
+      , on&nbsp
+      %strong>= format_date(object.date_laid)
+      - unless object.member_name.blank?
+        &nbspby&nbsp
+        %span>= search_link(object.member_name)
+      - unless object.department.blank?
+        &nbspon behalf of the&nbsp
+        %span>= search_link(object.department&.first)
+      \.
+      - unless object.date_approved.blank?
+        It was approved by the House of Commons on
+        %strong>= format_date(object.date_approved)
+        \.
+      - unless object.date_made.blank?
+        It was made on&nbsp
+        %strong>= format_date(object.date_made)
+        \.
+      - unless object.date_withdrawn.blank?
+        It was made on&nbsp
+        %strong>= format_date(object.date_withdrawn)
+        \.

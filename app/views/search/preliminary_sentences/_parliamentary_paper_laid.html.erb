@@ -5,7 +5,7 @@
       <%= search_link(object.legislature) %> on
       <strong><%= format_date(object.date) %></strong>
       by <%= search_link(object.lead_member) %> on behalf of the
-      <%= search_link(object.department) %>.
+      <%= search_link(object.department&.first) %>.
     </div>
   </div>
 </div>

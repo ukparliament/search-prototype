@@ -7,8 +7,8 @@
 <% else %>
   <% if items.size == 2 %>
     <!--      penultimate one is "item and "-->
-    <%= search_link(items.last(2).first) %> and
+    <%= search_link(items.last(2).first, singular: true) %> and
   <% end %>
   <!--      last one is "item."-->
-  <%= search_link(items.last) %>.
+  <%= search_link(items.last, singular: true) %><%= terminator %>
 <% end %>

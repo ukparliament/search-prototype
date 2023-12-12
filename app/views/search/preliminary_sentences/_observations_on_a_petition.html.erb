@@ -3,7 +3,7 @@
     <div class="content-prelim-text" id="prelim-text">
       A <%= object_display_name_link(object.object_name) %> in the <%= search_link(object.legislature) %> on
       <strong><%= format_date(object.date) %></strong> from
-      <%= search_link(object.member) %> on behalf of the <%= search_link(object.department) %>.
+      <%= search_link(object.member) %> on behalf of the <%= search_link(object.department&.first) %>.
     </div>
   </div>
 </div>

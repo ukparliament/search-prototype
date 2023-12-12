@@ -5,7 +5,7 @@
       (<%= search_link(object.correcting_member_party) %>) on
       <strong><%= format_date(object.correction_date) %></strong>,
       in the <%= search_link(object.legislature) %> on behalf of the
-      <%= search_link(object.department) %>.
+      <%= search_link(object.department&.first) %>.
     </div>
   </div>
 </div>
