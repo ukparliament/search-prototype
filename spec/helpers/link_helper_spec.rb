@@ -44,9 +44,6 @@ RSpec.describe LinkHelper, type: :helper do
       it 'returns the formatted string' do
         expect(helper.object_display_name(input_data_string)).to eq('Test string')
       end
-      it 'returns the formatted string downcase if requested' do
-        expect(helper.object_display_name(input_data_string, lowercase: true)).to eq('test string')
-      end
     end
   end
 
@@ -68,22 +65,34 @@ RSpec.describe LinkHelper, type: :helper do
       it 'returns a link to search using the string as a query' do
         expect(helper.object_display_name_link(input_data_string)).to eq("<a href=\"/search-prototype/search?filter%5Bfield_name%5D=abstract_t&amp;filter%5Bvalue%5D=Test+string\">Test string</a>")
       end
-      it 'returns a link to search using the string as a query, lowercase if requested' do
-        expect(helper.object_display_name_link(input_data_string, lowercase: true)).to eq("<a href=\"/search-prototype/search?filter%5Bfield_name%5D=abstract_t&amp;filter%5Bvalue%5D=Test+string\">test string</a>")
-      end
     end
   end
 
   describe 'display_name' do
-    context 'with a standard SES formatted name' do
-      it 'returns first name then last name' do
-        expect(helper.send(:display_name, "Last, First", false, false)).to eq("First Last")
+    context 'with a SES name that is not a member name' do
+      let!(:mock_ses_data) { { 123 => 'Department of One, Two and Three' } }
+      let!(:input_data_ses) { { value: 123, field_name: 'department_ses' } }
+
+      it 'returns the name as-is' do
+        expect(helper.send(:format_name, input_data_ses, mock_ses_data)).to eq("Department of One, Two and Three")
       end
     end
 
-    context 'where there are disambiguation brackets' do
-      it 'returns first name then last name with brackets afterwards' do
-        expect(helper.send(:display_name, "Last, First (Constituency)", false, false)).to eq("First Last (Constituency)")
+    context 'with a SES name that is a member name' do
+      let!(:mock_ses_data) { { 123 => 'Last, First' } }
+      let!(:input_data_ses) { { value: 123, field_name: 'answeringMember_ses' } }
+
+      it 'returns the name correctly formatted' do
+        expect(helper.send(:format_name, input_data_ses, mock_ses_data)).to eq("First Last")
+      end
+
+      context 'where there are disambiguation brackets' do
+        let!(:mock_ses_data) { { 123 => 'Last, First (Constituency)' } }
+        let!(:input_data_ses) { { value: 123, field_name: 'answeringMember_ses' } }
+
+        it 'returns first name then last name with brackets afterwards' do
+          expect(helper.send(:format_name, input_data_ses, mock_ses_data)).to eq("First Last (Constituency)")
+        end
       end
     end
   end

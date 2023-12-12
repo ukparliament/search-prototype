@@ -8,10 +8,10 @@
       , on&nbsp
       %strong>= format_date(object.date_laid)
       - unless object.member_name.blank?
-        by&nbsp
+        &nbspby&nbsp
         %span>= search_link(object.member_name)
       - unless object.department.blank?
-        on behalf of the&nbsp
+        &nbspon behalf of the&nbsp
         %span>= search_link(object.department&.first)
       \.
       - unless object.date_approved.blank?
