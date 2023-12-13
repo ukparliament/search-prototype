@@ -316,7 +316,7 @@ class ContentObject
     # some dates are single strings stored in arrays
     return if content_object_data[field_name].blank?
 
-    valid_date_string = validate_date(content_object_data[field_name].first)
+    valid_date_string = validate_datetime(content_object_data[field_name].first)
     return unless valid_date_string
 
     { value: valid_date_string, field_name: field_name }
@@ -326,7 +326,7 @@ class ContentObject
     # some dates are stored as strings
     return if content_object_data[field_name].blank?
 
-    valid_date_string = validate_date(content_object_data[field_name])
+    valid_date_string = validate_datetime(content_object_data[field_name])
     return unless valid_date_string
 
     { value: valid_date_string, field_name: field_name }
@@ -427,9 +427,11 @@ class ContentObject
     end
   end
 
-  def validate_date(date)
+  def validate_datetime(date)
+    # All dates are stored as datetimes in the UK timezone
+
     begin
-      date_string = Date.parse(date)
+      date_string = DateTime.parse(date).in_time_zone('London')
     rescue Date::Error
       return nil
     end

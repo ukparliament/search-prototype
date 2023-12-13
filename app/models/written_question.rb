@@ -49,62 +49,32 @@ class WrittenQuestion < Question
   end
 
   def holding_answer?
-    return if content_object_data['holdingAnswer_b'].blank?
-
-    return true if content_object_data['holdingAnswer_b'] == 'true'
-
-    false
+    get_as_boolean_from('holdingAnswer_b')
   end
 
   def prorogation_answer?
     #to show conditionally on answered states only (as determined by method)
-
-    return if content_object_data['prorogationAnswer_b'].blank?
-
-    return true if content_object_data['prorogationAnswer_b'] == 'true'
-
-    false
+    get_as_boolean_from('prorogationAnswer_b')
   end
 
   def date_of_holding_answer
-    return if content_object_data['dateOfHoldingAnswer_dt'].blank?
-
-    valid_date_string = validate_date(content_object_data['dateOfHoldingAnswer_dt'].first)
-    return unless valid_date_string
-
-    valid_date_string.to_date
+    get_first_as_date_from('dateOfHoldingAnswer_dt')
   end
 
   def transferred?
-    return if content_object_data['transferredQuestion_b'].blank?
-
-    return true if content_object_data['transferredQuestion_b'] == 'true'
-
-    false
+    get_as_boolean_from('transferredQuestion_b')
   end
 
   def unstarred_question?
-    return if content_object_data['unstarredQuestion_b'].blank?
-
-    return true if content_object_data['unstarredQuestion_b'] == 'true'
-
-    false
+    get_as_boolean_from('unstarredQuestion_b')
   end
 
   def failed_oral?
-    return if content_object_data['failedOral_b'].blank?
-
-    return true if content_object_data['failedOral_b'] == 'true'
-
-    false
+    get_as_boolean_from('failedOral_b')
   end
 
   def grouped_for_answer?
-    return if content_object_data['groupedAnswer_b'].blank?
-
-    return true if content_object_data['groupedAnswer_b'] == 'true'
-
-    false
+    get_as_boolean_from('groupedAnswer_b')
   end
 
   def attachment

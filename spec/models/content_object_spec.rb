@@ -118,14 +118,21 @@ RSpec.describe ContentObject, type: :model do
     end
 
     context 'where data exists' do
-      context 'where data is parsable as a date' do
+      context 'where data is parsable as a datetime (BST)' do
         let!(:content_object) { ContentObject.new({ 'dateOfRoyalAssent_dt' => ["2015-06-01T18:00:15.73Z", "2014-06-01T18:00:15.73Z"] }) }
 
-        it 'returns the first string parsed as a date' do
-          expect(content_object.date_of_royal_assent[:value]).to eq("Mon, 01 Jun 2015".to_date)
+        it 'returns the first string parsed as a datetime in the London timezone' do
+          expect(content_object.date_of_royal_assent[:value]).to eq("Mon, 01 Jun 2015, 19:00:15.73".in_time_zone('London').to_datetime)
         end
       end
-      context 'where data is not parsable as a date' do
+      context 'where data is parsable as a datetime (GMT)' do
+        let!(:content_object) { ContentObject.new({ 'dateOfRoyalAssent_dt' => ["2015-02-01T18:00:15.73Z", "2014-06-01T18:00:15.73Z"] }) }
+
+        it 'returns the first string parsed as a datetime in the London timezone' do
+          expect(content_object.date_of_royal_assent[:value]).to eq("Sun, 01 Feb 2015, 18:00:15.73".in_time_zone('London').to_datetime)
+        end
+      end
+      context 'where data is not parsable as a datetime' do
         let!(:content_object) { ContentObject.new({ 'dateOfRoyalAssent_dt' => ["first item", "second item"] }) }
 
         it 'returns nil' do
