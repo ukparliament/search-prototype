@@ -74,8 +74,10 @@ module LinkHelper
     return if name_string.blank?
 
     # only for member's names containing a comma (?), optionally with disambiguation brackets
-    # all valid field names end in 'member_ses' (some will have 'Member_ses')
-    return name_string unless data[:field_name].last(10).downcase == 'member_ses' && name_string.include?(',')
+    # TODO: a full list of valid fields to be provided
+    human_name_fields = ['member_ses', 'creator_ses', 'answeringMember_ses', 'tablingMember_ses', 'leadMember_ses',
+                         'correspondingMinister_ses']
+    return name_string unless human_name_fields.include?(data[:field_name]) && name_string.include?(',')
 
     if name_string.include?('(')
       # handle disambiguation brackets

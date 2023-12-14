@@ -21,7 +21,7 @@ class ContentObjectsController < ApplicationController
       object_type_id = @object.subtype_or_type
 
       if object_title.blank? && !object_type_id.blank?
-        @page_title = "Untitled #{@ses_data[object_type_id[:value].to_i]}"
+        @page_title = "Untitled #{@ses_data[object_type_id[:value].to_i]&.singularize}"
       else
         @page_title = object_title
       end

@@ -7,17 +7,11 @@
         from <%= search_link(object.corresponding_minister) -%>,
       <% end %>
       <% unless object.department.blank? %>
-        on behalf of the <%= search_link(object.department&.first) -%>,
+        on behalf of the <%= search_link(object.department&.first) -%>
       <% end %>
-      <% unless object.regarding_link.blank? && object.regarding_title.blank? %>
-        regarding
-        <% if object.regarding_link.blank? %>
-          <%= search_link(object.regarding_title) -%>
-        <% else %>
-          <%= link_to(object.regarding_link[:value]) -%>
-        <% end %>
+      <% unless object.regarding_link.blank? %>
+        , regarding <%= link_to(object.regarding_title, object.regarding_link[:value]) %>
       <% end %>.
     </div>
   </div>
 </div>
-

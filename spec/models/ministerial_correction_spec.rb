@@ -169,15 +169,15 @@ RSpec.describe MinisterialCorrection, type: :model do
     end
 
     context 'where data exists' do
-      context 'where data is parsable as a date' do
+      context 'where data is parsable as a datetime' do
         let!(:ministerial_correction) { MinisterialCorrection.new({ 'date_dt' => "2015-06-01T18:00:15.73Z" }) }
 
-        it 'returns the string parsed as a date' do
-          expect(ministerial_correction.correction_date).to eq({:field_name=>"date_dt", :value=>"Mon, 01 Jun 2015".to_date})
+        it 'returns the string parsed as a datetime in the London time zone' do
+          expect(ministerial_correction.correction_date).to eq({:field_name=>"date_dt", :value=>"Mon, 01 Jun 2015, 19:00:15.73".in_time_zone('London').to_datetime})
         end
       end
-      context 'where data is not parsable as a date' do
-        let!(:ministerial_correction) { MinisterialCorrection.new({ 'date_dt' => "not a date" }) }
+      context 'where data is not parsable as a datetime' do
+        let!(:ministerial_correction) { MinisterialCorrection.new({ 'date_dt' => "not a datetime" }) }
 
         it 'returns nil' do
           expect(ministerial_correction.correction_date).to be_nil
