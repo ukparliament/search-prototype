@@ -10,7 +10,10 @@
       <% end %>.
       It is due for answer
       on <strong><%= format_date(object.date_for_answer) %></strong>
-      (<%= object.question_type %>).
+      <% unless object.question_type.blank? %>
+        (<%= object.question_type %>)
+      <% end %>
+      .
     </div>
   </div>
 </div>

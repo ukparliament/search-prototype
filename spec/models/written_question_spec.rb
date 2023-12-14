@@ -110,7 +110,7 @@ RSpec.describe WrittenQuestion, type: :model do
     context 'where state is answered' do
       context 'where answer is marked as holding and there is a holding answer date' do
         it 'returns true' do
-          allow(written_question).to receive(:holding_answer?).and_return(true)
+          allow(written_question).to receive(:holding_answer?).and_return({ value: true, field_name: 'holdingAnswer_b' })
           allow(written_question).to receive(:date_of_holding_answer).and_return(Date.yesterday)
           allow(written_question).to receive(:state).and_return({ value: 'Answered', field_name: 'pqStatus_t' })
           expect(written_question.answered_was_holding?).to eq(true)

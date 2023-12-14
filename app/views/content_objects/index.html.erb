@@ -19,7 +19,11 @@
   <ul>
     <%= content_tag('li', link_to('An EDM', object_show_url(object: 'http://data.parliament.uk/edms/22468'))) %>
     <%= content_tag('li', link_to('A research briefing', object_show_url(:object => 'http://data.parliament.uk/resources/342599'))) %>
-    <%= content_tag('li', link_to('A written question', object_show_url(:object => 'http://hansard.intranet.data.parliament.uk/Lords/2012-12-10/1212106000156'))) %>
+    <%= content_tag('li', link_to('A written question (Answered)', object_show_url(:object => 'http://hansard.intranet.data.parliament.uk/Lords/2012-12-10/1212106000156'))) %>
+    <%= content_tag('li', link_to('A written question (Holding)', object_show_url(:object => 'http://data.parliament.uk/writtenparliamentaryquestion/commons/2021-22/78384'))) %>
+    <%= content_tag('li', link_to('A written question (Tabled)', object_show_url(:object => 'http://tabledpq.indexing.parliament.uk/commons/2015-16/21659'))) %>
+    <%= content_tag('li', link_to('A written question (Withdrawn)', object_show_url(:object => 'http://tabledpq.indexing.parliament.uk/commons/2022-23/11562'))) %>
+    <%= content_tag('li', link_to('A written question (Answered, was Holding)', object_show_url(:object => 'http://data.parliament.uk/writtenparliamentaryquestion/commons/2015-16/28407'))) %>
     <%= content_tag('li', link_to('A written statement', object_show_url(:object => 'http://hansard.intranet.data.parliament.uk/Commons/2012-12-18/12121863000016'))) %>
     <%= content_tag('li', link_to('A public act', object_show_url(:object => 'http://data.parliament.uk/publicgeneralact/2023/19'))) %>
     <%= content_tag('li', link_to('A Church of England measure', object_show_url(:object => 'http://data.parliament.uk/churchmeasure/2021/3'))) %>
