@@ -18,7 +18,7 @@ class StatutoryInstrument < ContentObject
   end
 
   def coming_into_force_date
-    get_first_from('comingIntoForce_dt')
+    get_first_as_date_from('comingIntoForce_dt')
   end
 
   def date_laid

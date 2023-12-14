@@ -19,7 +19,7 @@ class EuropeanScrutinyMinisterialCorrespondence < ContentObject
     if regarding_object.page_title.blank?
       ses_data = SesLookup.new([regarding_object.object_name]).data
       ses_name = ses_data[regarding_object.object_name[:value]]
-      "an Untitled #{ses_name&.singularize}"
+      "an untitled #{ses_name&.singularize}"
     else
       regarding_object.page_title
     end
