@@ -51,7 +51,7 @@ class Question < ContentObject
   end
 
   def correcting_item_link
-    get_all_from('correctingItem_uri')
+    get_first_from('correctingItem_uri')
   end
 
   def date_of_question

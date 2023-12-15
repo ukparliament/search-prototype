@@ -161,7 +161,7 @@ RSpec.describe WrittenQuestion, type: :model do
 
   describe 'corrected?' do
     context 'where corrected boolean is true' do
-      let!(:written_question) { WrittenQuestion.new({ 'correctedWmsMc_b' => 'true' }) }
+      let!(:written_question) { WrittenQuestion.new({ 'correctedWmsMc_b' => ['true'] }) }
       it 'returns true' do
         expect(written_question.corrected?).to eq(true)
       end
@@ -172,7 +172,7 @@ RSpec.describe WrittenQuestion, type: :model do
       end
     end
     context 'where state is present but not true' do
-      let!(:written_question) { WrittenQuestion.new({ 'correctedWmsMc_b' => 'false' }) }
+      let!(:written_question) { WrittenQuestion.new({ 'correctedWmsMc_b' => ['false'] }) }
       it 'returns false' do
         expect(written_question.corrected?).to eq(false)
       end
