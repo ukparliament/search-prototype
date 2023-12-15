@@ -28,17 +28,17 @@ class WrittenQuestion < Question
   end
 
   def prelim_partial
-    return '/search/preliminary_sentences/written_question_tabled' if tabled?
+    return '/search/preliminary_sentences/written_question_corrected' if corrected?
 
     return '/search/preliminary_sentences/written_question_answered_was_holding' if answered_was_holding?
 
     return '/search/preliminary_sentences/written_question_holding' if holding?
 
-    return '/search/preliminary_sentences/written_question_answered' if answered?
+    return '/search/preliminary_sentences/written_question_tabled' if tabled?
 
     return '/search/preliminary_sentences/written_question_withdrawn' if withdrawn?
 
-    return '/search/preliminary_sentences/written_question_corrected' if corrected?
+    return '/search/preliminary_sentences/written_question_answered' if answered?
 
     nil
   end

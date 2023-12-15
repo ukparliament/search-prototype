@@ -28,7 +28,11 @@ class Question < ContentObject
     # corrected 'written questions' are written questions with corrected answers, and will have a state
     # of 'answered'
 
-    return false unless content_object_data['correctedWmsMc_b'] == 'true'
+    # Some items appear to have a correcting_item_link but this boolean is missing; need to clarify the
+    # conditions for corrections.
+
+    corrected_boolean = get_first_as_boolean_from('correctedWmsMc_b')
+    return false unless corrected_boolean && corrected_boolean[:value] == true
 
     true
   end
@@ -40,10 +44,14 @@ class Question < ContentObject
 
     return unless corrected?
 
-    return if content_object_data['correctingItem_uri'].blank?
+    return if correcting_item_link.blank?
 
-    correcting_item_data = SolrQuery.new(object_uri: content_object_data['correctingItem_uri']).object_data
+    correcting_item_data = SolrQuery.new(object_uri: correcting_item_link).object_data
     ContentObject.generate(correcting_item_data)
+  end
+
+  def correcting_item_link
+    get_all_from('correctingItem_uri')
   end
 
   def date_of_question
