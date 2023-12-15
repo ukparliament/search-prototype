@@ -12,7 +12,7 @@ RSpec.describe ProceedingContribution, type: :model do
   describe 'object_name' do
     it 'returns object type from contributionType_t' do
       allow(contribution).to receive(:contribution_type).and_return({ value: 'A string', field_name: 'contributionType_t' })
-      expect(contribution.object_name).to eq({ value: 'a string', field_name: 'contributionType_t' })
+      expect(contribution.object_name).to eq({ value: 'A string', field_name: 'contributionType_t' })
     end
   end
 
