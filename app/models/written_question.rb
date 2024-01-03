@@ -61,10 +61,6 @@ class WrittenQuestion < Question
     get_first_as_date_from('dateOfHoldingAnswer_dt')
   end
 
-  def transferred?
-    get_as_boolean_from('transferredQuestion_b')
-  end
-
   def unstarred_question?
     get_as_boolean_from('unstarredQuestion_b')
   end

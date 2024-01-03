@@ -68,6 +68,10 @@ class ContentObject
     get_first_as_boolean_from('containsIA_b')
   end
 
+  def contribution_type
+    get_first_from('contributionType_t')
+  end
+
   def published_on
     get_first_as_date_from('created_dt')
   end

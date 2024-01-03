@@ -1,11 +1,9 @@
-<% if object.corrected? %>
+<div class="about-item">
+  <h3 class="content-heading" id="corrected-answer">Corrected answer</h3>
+  <%= raw(object.corrected_answer) %>
+</div>
+<% unless object.correcting_item_link.blank? %>
   <div class="about-item">
-    <h3 class="content-heading" id="corrected-answer">Corrected answer</h3>
-    <%= raw(object.corrected_answer) %>
+    <%= link_to object.correcting_item_link %>
   </div>
-  <% unless object.correcting_item_link.blank? %>
-    <div class="about-item">
-      <%= link_to object.correcting_item_link %>
-    </div>
-  <% end %>
 <% end %>

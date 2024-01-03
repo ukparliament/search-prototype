@@ -50,6 +50,10 @@ class Question < ContentObject
     ContentObject.generate(correcting_item_data)
   end
 
+  def transferred?
+    get_as_boolean_from('transferredQuestion_b')
+  end
+
   def correcting_item_link
     get_first_from('correctingItem_uri')
   end
