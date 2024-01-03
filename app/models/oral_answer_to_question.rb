@@ -9,9 +9,7 @@ class OralAnswerToQuestion < Question
   end
 
   def has_question?
-    return if question_url.blank?
-
-    true
+    question_url.blank? ? false : true
   end
 
   def question_url
