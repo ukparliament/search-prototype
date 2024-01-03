@@ -8,4 +8,8 @@ class OralQuestionTimeIntervention < ContentObject
     'search/objects/oral_question_time_intervention'
   end
 
+  def contribution
+    get_first_from('contributionText_t')
+  end
+
 end
