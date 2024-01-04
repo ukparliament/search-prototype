@@ -80,12 +80,11 @@ class Question < ContentObject
   end
 
   def answer_text
-    get_first_from('answerText_t')
+    get_first_as_html_from('answerText_t')
   end
 
   def corrected_answer
-    # TODO: data for this not currently determined
-    nil
+    get_first_as_html_from('correctionText_t')
   end
 
   def question_text
@@ -93,7 +92,7 @@ class Question < ContentObject
   end
 
   def question_type
-    get_all_from('wqType_t')
+    get_first_from('wpqType_t')
   end
 
   def answering_department

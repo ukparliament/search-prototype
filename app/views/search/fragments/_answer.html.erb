@@ -1,6 +1,8 @@
 <% unless object.answer_text.blank? %>
   <div class="about-item">
-    <h3 class="content-heading" id="answer">Answer</h3>
-    <%= raw sanitize object.answer_text[:value], tags: %w(strong em a br) %>
+    <h3 class="content-heading" id="answer"><%= object.corrected? ? 'Original answer' : 'Answer' %></h3>
+    <p class="html-content">
+      <%= raw(object.answer_text[:value]) %>
+    </p>
   </div>
 <% end %>

@@ -9,7 +9,7 @@
         It was due for answer
         on <strong><%= format_date(object.date_for_answer) %></strong>
         <% unless object.question_type.blank? %>
-          (<%= object.question_type %>)
+          (<%= object.question_type[:value]&.downcase %>)
         <% end %>
         .
       <% end %>
