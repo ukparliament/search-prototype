@@ -19,7 +19,7 @@ class OralAnswerToQuestion < Question
   def question_object
     return unless has_question?
 
-    question_data = SolrQuery.new(object_uri: question_url).object_data
+    question_data = SolrQuery.new(object_uri: question_url[:value]).object_data
     ContentObject.generate(question_data)
   end
 end

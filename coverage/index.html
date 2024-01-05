@@ -14,7 +14,7 @@
       <img src="./assets/0.12.3/loading.gif" alt="loading"/>
     </div>
     <div id="wrapper" class="hide">
-      <div class="timestamp">Generated <abbr class="timeago" title="2024-01-05T08:31:34+00:00">2024-01-05T08:31:34+00:00</abbr></div>
+      <div class="timestamp">Generated <abbr class="timeago" title="2024-01-05T11:49:58+00:00">2024-01-05T11:49:58+00:00</abbr></div>
       <ul class="group_tabs"></ul>
 
       <div id="content">
@@ -30,7 +30,7 @@
      covered at
      <span class="covered_strength">
        <span class="green">
-         31.35
+         34.4
        </span>
     </span> hits/line
     )
@@ -43,8 +43,8 @@
   </div>
 
   <div class="t-line-summary">
-    <b>3156</b> relevant lines,
-    <span class="green"><b>2959</b> lines covered</span> and
+    <b>3159</b> relevant lines,
+    <span class="green"><b>2962</b> lines covered</span> and
     <span class="red"><b>197</b> lines missed. </span>
     (<span class="green">
   93.76%
@@ -149,12 +149,12 @@
         
           <tr class="t-file">
             <td class="strong t-file__name"><a href="#00314be7160667a6d493393764150b542180bd79" class="src_link" title="app/helpers/link_helper.rb">app/helpers/link_helper.rb</a></td>
-            <td class="green strong cell--number t-file__coverage">91.67 %</td>
-            <td class="cell--number">108</td>
+            <td class="green strong cell--number t-file__coverage">92.31 %</td>
+            <td class="cell--number">115</td>
+            <td class="cell--number">39</td>
             <td class="cell--number">36</td>
-            <td class="cell--number">33</td>
             <td class="cell--number">3</td>
-            <td class="cell--number">891.44</td>
+            <td class="cell--number">1017.74</td>
             
           </tr>
         
@@ -561,7 +561,7 @@
             <td class="cell--number">19</td>
             <td class="cell--number">19</td>
             <td class="cell--number">0</td>
-            <td class="cell--number">12.68</td>
+            <td class="cell--number">124.74</td>
             
           </tr>
         
@@ -2575,7 +2575,7 @@
     <h3>app/helpers/link_helper.rb</h3>
     <h4>
       <span class="green">
-  91.67%
+  92.31%
 </span>
 
       lines covered
@@ -2584,8 +2584,8 @@
     
 
     <div class="t-line-summary">
-      <b>36</b> relevant lines.
-      <span class="green"><b>33</b> lines covered</span> and
+      <b>39</b> relevant lines.
+      <span class="green"><b>36</b> lines covered</span> and
       <span class="red"><b>3</b> lines missed.</span>
     </div>
 
@@ -3329,7 +3329,7 @@
 
             
 
-            <code class="ruby">      # we need to get the string from SES</code>
+            <code class="ruby">      # we need to get the string from the page SES data</code>
           </li>
         </div>
       
@@ -3351,29 +3351,29 @@
 
             
 
-            <code class="ruby">    else</code>
+            <code class="ruby"></code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="70">
-            
-            
-
+          <li class="covered" data-hits="3342" data-linenumber="70">
+            <span class="hits">3342</span>
             
 
-            <code class="ruby">      # we already have a string</code>
+            
+
+            <code class="ruby">      if name_string.nil?</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="16" data-linenumber="71">
-            <span class="hits">16</span>
+          <li class="never" data-hits="" data-linenumber="71">
+            
             
 
             
 
-            <code class="ruby">      name_string = data[:value]</code>
+            <code class="ruby">        # In some edge cases, we won&#39;t have a SES name included in the page SES data. We then perform a lookup</code>
           </li>
         </div>
       
@@ -3384,29 +3384,29 @@
 
             
 
-            <code class="ruby">    end</code>
+            <code class="ruby">        # for the specific ID to make sure it gets populated.</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="73">
-            
-            
-
+          <li class="covered" data-hits="2129" data-linenumber="73">
+            <span class="hits">2129</span>
             
 
-            <code class="ruby"></code>
+            
+
+            <code class="ruby">        custom_ses_lookup = SesLookup.new([data]).data</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="3358" data-linenumber="74">
-            <span class="hits">3358</span>
+          <li class="covered" data-hits="2129" data-linenumber="74">
+            <span class="hits">2129</span>
             
 
             
 
-            <code class="ruby">    return if name_string.blank?</code>
+            <code class="ruby">        name_string = custom_ses_lookup[data[:value].to_i]</code>
           </li>
         </div>
       
@@ -3417,7 +3417,7 @@
 
             
 
-            <code class="ruby"></code>
+            <code class="ruby">      end</code>
           </li>
         </div>
       
@@ -3428,7 +3428,7 @@
 
             
 
-            <code class="ruby">    # only for member&#39;s names containing a comma (?), optionally with disambiguation brackets</code>
+            <code class="ruby">    else</code>
           </li>
         </div>
       
@@ -3439,18 +3439,18 @@
 
             
 
-            <code class="ruby">    # TODO: a full list of valid fields to be provided</code>
+            <code class="ruby">      # we already have a string</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="1229" data-linenumber="78">
-            <span class="hits">1229</span>
+          <li class="covered" data-hits="16" data-linenumber="78">
+            <span class="hits">16</span>
             
 
             
 
-            <code class="ruby">    human_name_fields = [&#39;member_ses&#39;, &#39;creator_ses&#39;, &#39;answeringMember_ses&#39;, &#39;tablingMember_ses&#39;, &#39;leadMember_ses&#39;,</code>
+            <code class="ruby">      name_string = data[:value]</code>
           </li>
         </div>
       
@@ -3461,23 +3461,12 @@
 
             
 
-            <code class="ruby">                         &#39;correspondingMinister_ses&#39;]</code>
+            <code class="ruby">    end</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="1229" data-linenumber="80">
-            <span class="hits">1229</span>
-            
-
-            
-
-            <code class="ruby">    return name_string unless human_name_fields.include?(data[:field_name]) &amp;&amp; name_string.include?(&#39;,&#39;)</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="81">
+          <li class="never" data-hits="" data-linenumber="80">
             
             
 
@@ -3488,13 +3477,24 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="2" data-linenumber="82">
-            <span class="hits">2</span>
+          <li class="covered" data-hits="3358" data-linenumber="81">
+            <span class="hits">3358</span>
             
 
             
 
-            <code class="ruby">    if name_string.include?(&#39;(&#39;)</code>
+            <code class="ruby">    return if name_string.blank?</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="82">
+            
+            
+
+            
+
+            <code class="ruby"></code>
           </li>
         </div>
       
@@ -3505,7 +3505,7 @@
 
             
 
-            <code class="ruby">      # handle disambiguation brackets</code>
+            <code class="ruby">    # only for member&#39;s names containing a comma (?), optionally with disambiguation brackets</code>
           </li>
         </div>
       
@@ -3516,18 +3516,18 @@
 
             
 
-            <code class="ruby"></code>
+            <code class="ruby">    # TODO: a full list of valid fields to be provided</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="85">
-            <span class="hits">1</span>
+          <li class="covered" data-hits="1229" data-linenumber="85">
+            <span class="hits">1229</span>
             
 
             
 
-            <code class="ruby">      disambiguation_components = name_string.split(&#39; (&#39;)</code>
+            <code class="ruby">    human_name_fields = [&#39;member_ses&#39;, &#39;creator_ses&#39;, &#39;answeringMember_ses&#39;, &#39;tablingMember_ses&#39;, &#39;leadMember_ses&#39;,</code>
           </li>
         </div>
       
@@ -3538,12 +3538,23 @@
 
             
 
-            <code class="ruby">      # &#39;Sharpe of Epsom, Lord (Disambiguation)&#39; =&gt; [&#39;Sharpe of Epsom, Lord&#39;, &#39;Disambiguation)&#39;]</code>
+            <code class="ruby">                         &#39;correspondingMinister_ses&#39;]</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="87">
+          <li class="covered" data-hits="1229" data-linenumber="87">
+            <span class="hits">1229</span>
+            
+
+            
+
+            <code class="ruby">    return name_string unless human_name_fields.include?(data[:field_name]) &amp;&amp; name_string.include?(&#39;,&#39;)</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="88">
             
             
 
@@ -3554,24 +3565,13 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="88">
-            <span class="hits">1</span>
+          <li class="covered" data-hits="2" data-linenumber="89">
+            <span class="hits">2</span>
             
 
             
 
-            <code class="ruby">      name_components = disambiguation_components.first.split(&#39;,&#39;)</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="89">
-            
-            
-
-            
-
-            <code class="ruby">      # [&#39;Sharpe of Epsom&#39;, &#39;Lord&#39;]</code>
+            <code class="ruby">    if name_string.include?(&#39;(&#39;)</code>
           </li>
         </div>
       
@@ -3582,7 +3582,7 @@
 
             
 
-            <code class="ruby"></code>
+            <code class="ruby">      # handle disambiguation brackets</code>
           </li>
         </div>
       
@@ -3593,7 +3593,7 @@
 
             
 
-            <code class="ruby">      # we return as &#39;Lord Sharpe of Epsom (Disambiguation)&#39;</code>
+            <code class="ruby"></code>
           </li>
         </div>
       
@@ -3604,7 +3604,7 @@
 
             
 
-            <code class="ruby">      ret = &quot;#{name_components.last} #{name_components.first} (#{disambiguation_components.last}&quot;</code>
+            <code class="ruby">      disambiguation_components = name_string.split(&#39; (&#39;)</code>
           </li>
         </div>
       
@@ -3615,7 +3615,7 @@
 
             
 
-            <code class="ruby">    else</code>
+            <code class="ruby">      # &#39;Sharpe of Epsom, Lord (Disambiguation)&#39; =&gt; [&#39;Sharpe of Epsom, Lord&#39;, &#39;Disambiguation)&#39;]</code>
           </li>
         </div>
       
@@ -3626,7 +3626,7 @@
 
             
 
-            <code class="ruby">      # we get something like &#39;Sharpe of Epsom, Lord&#39;</code>
+            <code class="ruby"></code>
           </li>
         </div>
       
@@ -3637,7 +3637,7 @@
 
             
 
-            <code class="ruby">      name_components = name_string.split(&#39;,&#39;)</code>
+            <code class="ruby">      name_components = disambiguation_components.first.split(&#39;,&#39;)</code>
           </li>
         </div>
       
@@ -3648,7 +3648,7 @@
 
             
 
-            <code class="ruby"></code>
+            <code class="ruby">      # [&#39;Sharpe of Epsom&#39;, &#39;Lord&#39;]</code>
           </li>
         </div>
       
@@ -3659,29 +3659,29 @@
 
             
 
-            <code class="ruby">      # we return as &#39;Lord Sharpe of Epsom&#39;</code>
+            <code class="ruby"></code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="98">
+          <li class="never" data-hits="" data-linenumber="98">
+            
+            
+
+            
+
+            <code class="ruby">      # we return as &#39;Lord Sharpe of Epsom (Disambiguation)&#39;</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="1" data-linenumber="99">
             <span class="hits">1</span>
             
 
             
 
-            <code class="ruby">      ret = &quot;#{name_components.last} #{name_components.first}&quot;</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="99">
-            
-            
-
-            
-
-            <code class="ruby">    end</code>
+            <code class="ruby">      ret = &quot;#{name_components.last} #{name_components.first} (#{disambiguation_components.last}&quot;</code>
           </li>
         </div>
       
@@ -3692,29 +3692,29 @@
 
             
 
-            <code class="ruby"></code>
+            <code class="ruby">    else</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="2" data-linenumber="101">
-            <span class="hits">2</span>
+          <li class="never" data-hits="" data-linenumber="101">
+            
             
 
             
 
-            <code class="ruby">    ret.strip</code>
+            <code class="ruby">      # we get something like &#39;Sharpe of Epsom, Lord&#39;</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="102">
-            
-            
-
+          <li class="covered" data-hits="1" data-linenumber="102">
+            <span class="hits">1</span>
             
 
-            <code class="ruby">  end</code>
+            
+
+            <code class="ruby">      name_components = name_string.split(&#39;,&#39;)</code>
           </li>
         </div>
       
@@ -3730,24 +3730,24 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="104">
+          <li class="never" data-hits="" data-linenumber="104">
+            
+            
+
+            
+
+            <code class="ruby">      # we return as &#39;Lord Sharpe of Epsom&#39;</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="1" data-linenumber="105">
             <span class="hits">1</span>
             
 
             
 
-            <code class="ruby">  def ses_data</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="covered" data-hits="3352" data-linenumber="105">
-            <span class="hits">3352</span>
-            
-
-            
-
-            <code class="ruby">    @ses_data</code>
+            <code class="ruby">      ret = &quot;#{name_components.last} #{name_components.first}&quot;</code>
           </li>
         </div>
       
@@ -3758,7 +3758,7 @@
 
             
 
-            <code class="ruby">  end</code>
+            <code class="ruby">    end</code>
           </li>
         </div>
       
@@ -3774,7 +3774,84 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="108">
+          <li class="covered" data-hits="2" data-linenumber="108">
+            <span class="hits">2</span>
+            
+
+            
+
+            <code class="ruby">    ret.strip</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="109">
+            
+            
+
+            
+
+            <code class="ruby">  end</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="110">
+            
+            
+
+            
+
+            <code class="ruby"></code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="1" data-linenumber="111">
+            <span class="hits">1</span>
+            
+
+            
+
+            <code class="ruby">  def ses_data</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="3352" data-linenumber="112">
+            <span class="hits">3352</span>
+            
+
+            
+
+            <code class="ruby">    @ses_data</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="113">
+            
+            
+
+            
+
+            <code class="ruby">  end</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="114">
+            
+            
+
+            
+
+            <code class="ruby"></code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="115">
             
             
 
@@ -13853,7 +13930,7 @@
 
             
 
-            <code class="ruby">    regarding_data = SolrQuery.new(object_uri: regarding_link).object_data</code>
+            <code class="ruby">    regarding_data = SolrQuery.new(object_uri: regarding_link[:value]).object_data</code>
           </li>
         </div>
       
@@ -15654,7 +15731,7 @@
 
             
 
-            <code class="ruby">    question_data = SolrQuery.new(object_uri: question_url).object_data</code>
+            <code class="ruby">    question_data = SolrQuery.new(object_uri: question_url[:value]).object_data</code>
           </li>
         </div>
       
@@ -19452,8 +19529,8 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="205" data-linenumber="11">
-            <span class="hits">205</span>
+          <li class="covered" data-hits="2334" data-linenumber="11">
+            <span class="hits">2334</span>
             
 
             

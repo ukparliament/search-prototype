@@ -64,8 +64,15 @@ module LinkHelper
     return if data.blank?
 
     if data[:field_name]&.last(3) == 'ses'
-      # we need to get the string from SES
+      # we need to get the string from the page SES data
       name_string = ses_data[data[:value].to_i]
+
+      if name_string.nil?
+        # In some edge cases, we won't have a SES name included in the page SES data. We then perform a lookup
+        # for the specific ID to make sure it gets populated.
+        custom_ses_lookup = SesLookup.new([data]).data
+        name_string = custom_ses_lookup[data[:value].to_i]
+      end
     else
       # we already have a string
       name_string = data[:value]
