@@ -20,13 +20,10 @@
         <strong>signed by <%= object.number_of_signatures[:value] %> members in
           total</strong>
       <% end %>
-      <%= object.amendments_count ? ',' : '.' %>
-      <% unless object.amendments_count.blank? %>
-        and has received <%= object_show_link(object.amendments_count, '#amendments') %>.
-      <% end %>
       <% if object.withdrawn? %>
-        The primary sponsor has subsequently withdrawn this motion.
+        The primary sponsor has subsequently withdrawn this motion
       <% end %>
+      .
     </div>
   </div>
 </div>

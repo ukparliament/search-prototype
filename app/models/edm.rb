@@ -9,10 +9,6 @@ class Edm < ContentObject
   end
 
   def amendments
-    # amendments fields do not include duplicates, which means the data can not be reliably used
-    # to avoid misrepresentation, we will not show amendments where there are more than one
-    # this can be changed when the underlying data issue is resolved
-
     # Title is the title of the motion itself, with 'Amendment N' on the front
     # Reference is taken from identifier_t, after removing the first item
 
@@ -22,8 +18,6 @@ class Edm < ContentObject
     return if content_object_data['amendment_primarySponsorParty_ses'].blank?
     return if content_object_data['identifier_t'].blank?
     return if content_object_data['amendment_dateTabled_dt'].blank?
-
-    return if content_object_data['amendmentText_t'].size > 1
 
     original_hash = {
       text: content_object_data['amendmentText_t'],
