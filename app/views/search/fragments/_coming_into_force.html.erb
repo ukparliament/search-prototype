@@ -4,8 +4,11 @@
     <% unless date.blank? %>
       <%= format_date(date) %>
     <% end %>
+    <% unless date.blank? || notes.blank? %>
+      ,
+    <% end %>
     <% unless notes.blank? %>
-      , <%= notes[:value] %>
+      <%= notes[:value] %>
     <% end %>
   </div>
 <% end %>
