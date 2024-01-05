@@ -42,7 +42,7 @@ class Edm < ContentObject
         primary_sponsor: { value: values[2], field_name: 'amendment_primarySponsorPrinted_t' },
         primary_sponsor_party: { value: values[3], field_name: 'amendment_primarySponsorParty_ses' },
         reference: { value: values[4], field_name: 'identifier_t' },
-        date_tabled: { value: values[5].to_date, field_name: 'amendment_dateTabled_dt' },
+        date_tabled: { value: values[5]&.to_date, field_name: 'amendment_dateTabled_dt' },
       }
     end
 
