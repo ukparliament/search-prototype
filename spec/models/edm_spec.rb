@@ -351,7 +351,27 @@ RSpec.describe Edm, type: :model do
                            }) }
 
       it 'returns nil' do
-        expect(edm.amendments).to be_nil
+        expect(edm.amendments).to eq(
+                                    [{
+                                       date_tabled: { value: DateTime.commercial(2022), field_name: 'amendment_dateTabled_dt' },
+                                       index: 0,
+                                       number_of_signatures: { value: 20, field_name: 'amendment_numberOfSignatures_s' },
+                                       primary_sponsor: { value: 'sponsor one', field_name: 'amendment_primarySponsorPrinted_t' },
+                                       primary_sponsor_party: { value: 12345, field_name: 'amendment_primarySponsorParty_ses' },
+                                       reference: { value: 'amendment 1 id', field_name: 'identifier_t' },
+                                       text: { value: 'first item', field_name: 'amendmentText_t' }
+                                     },
+                                     {
+                                       date_tabled: { value: DateTime.commercial(2021), field_name: 'amendment_dateTabled_dt' },
+                                       index: 1,
+                                       number_of_signatures: { value: 10, field_name: 'amendment_numberOfSignatures_s' },
+                                       primary_sponsor: { value: 'sponsor two', field_name: 'amendment_primarySponsorPrinted_t' },
+                                       primary_sponsor_party: { value: 54321, field_name: 'amendment_primarySponsorParty_ses' },
+                                       reference: { value: 'amendment 2 id', field_name: 'identifier_t' },
+                                       text: { value: 'second item', field_name: 'amendmentText_t' }
+                                     }
+                                    ]
+                                  )
       end
     end
 

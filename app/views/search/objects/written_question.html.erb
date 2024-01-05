@@ -20,8 +20,9 @@
 
 <section id="main-content" class="content-section white">
   <%= render 'search/fragments/question', object: object %>
-  <%= render 'search/fragments/answer', object: object %>
-  <%= render 'search/fragments/corrected_answer', object: object %>
+  <%= render 'search/fragments/answer', object: object if object.answered? || object.answered_was_holding? %>
+  <%= render 'search/fragments/corrected_written_question_follow_up', correcting_object: object.correcting_object if object.corrected? %>
+  <%= render 'search/fragments/corrected_answer', object: object if object.corrected? %>
 </section>
 
 <section id="about" class="content-section grey">
@@ -29,10 +30,11 @@
   <%= render 'search/fragments/uin', uins: object.uin %>
   <%= render 'search/fragments/session', session: object.parliamentary_session %>
   <%= render 'search/fragments/procedure', procedure: object.procedure %>
+  <%= render 'search/fragments/attachment', attachments: object.attachment %>
   <%= render 'search/fragments/related_items', related_items: object.related_items %>
+  <%= render 'search/fragments/ec_documents', ec_documents: object.ec_documents %>
   <%= render 'search/fragments/notes', notes: object.notes %>
   <%= render 'search/fragments/registered_interest_declared', registered_interest: object.registered_interest_declared? %>
-  <%= render 'search/fragments/attachment', attachments: object.attachment %>
   <% unless object.tabled? || object.withdrawn? %>
     <%= render 'search/fragments/grouped_for_answer', grouped: object.grouped_for_answer? %>
     <%= render 'search/fragments/transferred', transferred: object.transferred? %>

@@ -187,10 +187,6 @@ div.callout {
     box-sizing: border-box;
 
     .about-item {
-        .raw-html & p {
-            margin: 0;
-        }
-
         color: #181818;
     }
 

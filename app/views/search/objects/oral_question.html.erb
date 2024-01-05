@@ -21,34 +21,23 @@
 <section id="main-content" class="content-section white">
   <%= render 'search/fragments/question', object: object %>
   <%= render 'search/fragments/answer', object: object unless object.tabled? || object.withdrawn? %>
-  <!--answered state shows link here also -->
 </section>
 
 <section id="about" class="content-section grey">
   <h2 class="content-heading">About this <%= object_display_name(object.type) %></h2>
   <%= render 'search/fragments/reference', reference: object.reference %>
   <%= render 'search/fragments/session', session: object.parliamentary_session %>
-
-  <% if object.answered? || object.lords_answered? %>
-    <%= render 'search/fragments/procedure', procedure: object.procedure %>
-  <% end %>
-
-  <% if object.answered? %>
-    <%= render 'search/fragments/related_items', related_items: object.related_items %>
-  <% end %>
-
+  <%= render 'search/fragments/oral_question_type', contribution_type: object.contribution_type %>
+  <%= render 'search/fragments/procedure', procedure: object.procedure %>
+  <%= render 'search/fragments/place', place: object.place %>
+  <%= render 'search/fragments/related_items', related_items: object.related_items %>
+  <%= render 'search/fragments/ec_documents', ec_documents: object.ec_documents %>
   <%= render 'search/fragments/notes', notes: object.notes %>
-  <%= render 'search/fragments/contains_statistics', contains_statistics: object.contains_statistics? %>
   <%= render 'search/fragments/registered_interest_declared', registered_interest: object.registered_interest_declared? %>
+  <%= render 'search/fragments/transferred', transferred: object.transferred? %>
   <%= render 'search/fragments/pills', pills_heading: 'Subjects', pills: object.subjects %>
-
-  <% if object.corrected? %>
-    <%= render 'search/fragments/related_items', related_items: object.related_items %>
-  <% end %>
-
-  <% unless object.withdrawn? || object.corrected? || object.lords_answered? %>
-    <%= render 'search/fragments/legislation', legislation: object.legislation %>
-  <% end %>
+  <%= render 'search/fragments/legislation', legislation: object.legislation %>
+  <%= render 'search/fragments/contains_statistics', contains_statistics: object.contains_statistics? %>
 
   <% if object.answered? || object.corrected? %>
     <%= render 'search/fragments/link', object: object %>

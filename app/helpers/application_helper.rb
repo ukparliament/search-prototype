@@ -10,4 +10,29 @@ module ApplicationHelper
 
     'No'
   end
+
+  def ordinal_text(index)
+    case index
+    when 0
+      "first"
+    when 1
+      "second"
+    when 2
+      "third"
+    when 3
+      "fourth"
+    when 4
+      "fifth"
+    when 5
+      "sixth"
+    when 6
+      "seventh"
+    when 7
+      "eighth"
+    when 8
+      "ninth"
+    else
+      index.ordinalize
+    end
+  end
 end

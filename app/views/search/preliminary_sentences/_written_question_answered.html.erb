@@ -8,7 +8,10 @@
       <% unless object.date_for_answer.blank? %>
         It was due for answer
         on <strong><%= format_date(object.date_for_answer) %></strong>
-        (<%= object.question_type %>).
+        <% unless object.question_type.blank? %>
+          (<%= object.question_type[:value]&.downcase %>)
+        <% end %>
+        .
       <% end %>
       It was answered by <%= search_link(object.answering_member) %>
       (<%= search_link(object.answering_member_party) %>)

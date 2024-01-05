@@ -68,6 +68,10 @@ class ContentObject
     get_first_as_boolean_from('containsIA_b')
   end
 
+  def contribution_type
+    get_first_from('contributionType_t')
+  end
+
   def published_on
     get_first_as_date_from('created_dt')
   end
@@ -90,7 +94,7 @@ class ContentObject
     get_all_from('certifiedCategory_ses')
   end
 
-  def legislation\
+  def legislation
     # TODO: change this so it functions as subjects, above
     preferred = get_all_from('legislationTitle_ses')
     return preferred unless preferred.blank?
@@ -224,6 +228,14 @@ class ContentObject
     get_first_from('answeringMember_ses')
   end
 
+  def asking_member
+    get_first_from('askingMember_ses')
+  end
+
+  def asking_member_party
+    get_first_from('askingMemberParty_ses')
+  end
+
   def lead_member
     get_first_from('leadMember_ses')
   end
@@ -274,16 +286,16 @@ class ContentObject
   private
 
   def get_first_as_boolean_from(field_name)
-    return unless ['true', 'false'].include?(content_object_data[field_name]&.first)
+    return unless ['true', 'false', true, false].include?(content_object_data[field_name]&.first)
 
-    result = content_object_data[field_name].first == 'true' ? true : false
+    result = ['true', true].include?(content_object_data[field_name].first) ? true : false
     { value: result, field_name: field_name }
   end
 
   def get_as_boolean_from(field_name)
-    return unless ['true', 'false'].include?(content_object_data[field_name])
+    return unless ['true', 'false', true, false].include?(content_object_data[field_name])
 
-    result = content_object_data[field_name] == 'true' ? true : false
+    result = ['true', true].include?(content_object_data[field_name]) ? true : false
     { value: result, field_name: field_name }
   end
 

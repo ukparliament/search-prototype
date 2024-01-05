@@ -26,8 +26,13 @@ class SesLookup < ApiCall
     return unless lookup_ids.any?
 
     ret = {}
-    evaluated_response['terms'].each do |term|
-      ret[term['term']['id'].to_i] = term['term']['name']
+
+    terms = evaluated_response['terms']
+
+    unless terms.blank?
+      terms.each do |term|
+        ret[term['term']['id'].to_i] = term['term']['name']
+      end
     end
     ret
   end

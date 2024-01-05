@@ -2,19 +2,25 @@
   <div class="content-prelim-inner">
     <div class="content-prelim-text" id="prelim-text">
       A <%= object_display_name_link(object.object_name) %>
-      asked by <%= object_show_link("#{object.tabling_member}", '/') %> (<%= object.tabling_member_party %>)
+      asked by <%= search_link(object.tabling_member) %> (<%= search_link(object.tabling_member_party) %>)
       on <strong><%= format_date(object.date_of_question) %></strong>,
-      in the <%= object_show_link("#{object.legislature}", '/') %>.
-      It was due for answer
-      on <strong><%= format_date(object.date_for_answer) %></strong>
-      (<%= object.question_type %>).
-      A holding answer was provided by <%= object_show_link("#{object.answering_member}", '/') %>
-      (<%= object.answering_member_party %>)
-      on <strong><%= format_date(object.date_of_holding_answer) %></strong>
-      <% unless object.department.blank? %>
-        on behalf of <%= object_show_link("#{object.department}", '/') %>
+      in the <%= search_link(object.legislature) %>.
+      <% unless object.date_for_answer.blank? %>
+        It was due for answer
+        on <strong><%= format_date(object.date_for_answer) %></strong>
+        <% unless object.question_type.blank? %>
+          (<%= object.question_type[:value]&.downcase %>)
+        <% end %>
+        .
       <% end %>
-      .
+      A holding answer was provided by <%= search_link(object.answering_member) %>
+      (<%= search_link(object.answering_member_party) %>)
+      <% if object.department.blank? %>
+        on <strong><%= format_date(object.date_of_holding_answer) %></strong>.
+      <% else %>
+        on <strong><%= format_date(object.date_of_holding_answer) %></strong>,
+        on behalf of the <%= search_link(object.department&.first) %>.
+      <% end %>
     </div>
   </div>
 </div>

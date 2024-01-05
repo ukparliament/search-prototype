@@ -23,6 +23,7 @@
     <div class="content-text">
       <%= object.motion_text[:value] %>
     </div>
+    <%= render 'search/fragments/edm_amendments', title: object.page_title, amendments: object.amendments unless object.amendments.blank? %>
   </section>
 <% end %>
 
@@ -32,7 +33,6 @@
   <%= render 'search/fragments/session', session: object.parliamentary_session %>
   <%= render 'search/fragments/registered_interest_declared', registered_interest: object.registered_interest_declared? %>
   <%= render 'search/fragments/other_supporters', supporters: object.other_supporters %>
-  <%= render 'search/fragments/amendments', title: object.page_title, amendments: object.amendments %>
   <%= render 'search/fragments/related_items', related_items: object.related_items %>
   <%= render 'search/fragments/pills', pills_heading: 'Subjects', pills: object.subjects %>
   <%= render 'search/fragments/legislation', legislation: object.legislation %>

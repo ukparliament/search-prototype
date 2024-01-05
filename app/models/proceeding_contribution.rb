@@ -9,11 +9,7 @@ class ProceedingContribution < ContentObject
   end
 
   def object_name
-    { value: contribution_type[:value].downcase, field_name: 'contributionType_t' }
-  end
-
-  def contribution_type
-    get_first_from('contributionType_t')
+    { value: contribution_type[:value], field_name: 'contributionType_t' }
   end
 
   def location

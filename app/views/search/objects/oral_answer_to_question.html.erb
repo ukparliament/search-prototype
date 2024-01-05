@@ -23,10 +23,28 @@
 </section>
 
 <section id="main-content" class="content-section white">
-<%= render 'search/fragments/answer', object: object %>
-<!--a variant of wireframes shows final part of preliminary sentence here instead-->
-<%= render 'search/fragments/question', object: object %>
-<!--oral question lead link-->
+  <%= render 'search/fragments/answer', object: object %>
+</section>
+
+<% if object.has_question? %>
+  <section class="content-section grey">
+    <div class="about-item">
+      This is an answer to a <%= object_show_link(object.question_object.object_name, object.question_url) %>
+      asked on <strong><%= format_date(object.date_of_question) %></strong>
+      <% if object.question_object.asking_member.blank? %>
+        .
+      <% else %>
+        by <%= search_link(object.question_object.asking_member) %>
+        <% unless object.question_object.asking_member_party.blank? %>
+          (<%= search_link(object.question_object.asking_member_party) %>).
+        <% end %>
+      <% end %>
+    </div>
+  </section>
+<% end %>
+
+<section id="main-content" class="content-section white">
+  <%= render 'search/fragments/question', object: object %>
 </section>
 
 <section id="about" class="content-section grey">
@@ -34,11 +52,12 @@
   <%= render 'search/fragments/reference', reference: object.reference %>
   <%= render 'search/fragments/session', session: object.parliamentary_session %>
   <%= render 'search/fragments/procedure', procedure: object.procedure %>
+  <%= render 'search/fragments/place', place: object.place %>
   <%= render 'search/fragments/related_items', related_items: object.related_items %>
   <%= render 'search/fragments/notes', notes: object.notes %>
-  <%= render 'search/fragments/contains_statistics', contains_statistics: object.contains_statistics? %>
   <%= render 'search/fragments/pills', pills_heading: 'Subjects', pills: object.subjects %>
   <%= render 'search/fragments/legislation', legislation: object.legislation %>
+  <%= render 'search/fragments/contains_statistics', contains_statistics: object.contains_statistics? %>
   <%= render 'search/fragments/link', object: object %>
 </section>
 

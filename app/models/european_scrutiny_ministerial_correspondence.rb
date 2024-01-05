@@ -28,7 +28,7 @@ class EuropeanScrutinyMinisterialCorrespondence < ContentObject
   def regarding_object
     return if regarding_link.blank?
 
-    regarding_data = SolrQuery.new(object_uri: regarding_link).object_data
+    regarding_data = SolrQuery.new(object_uri: regarding_link[:value]).object_data
     ContentObject.generate(regarding_data)
   end
 

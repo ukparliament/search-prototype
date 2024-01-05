@@ -3,17 +3,12 @@
     <div class="content-prelim-text" id="prelim-text">
       An <%= object_display_name_link(object.object_name) %> provided
       on <strong><%= format_date(object.date_of_answer) %></strong>
-      in the <%= search_link(object.legislature) %>
-      <% if object.place %>
-        in the <%= search_link(object.place) %>
-      <% end %>
+      in the <%= search_link(object.legislature) %>,
       by <%= search_link(object.answering_member) %> (<%= search_link(object.answering_member_party) %>)
-      behalf of the <%= search_link(object.answering_department) %>.
-      <% if object.has_question? %>
-        This is an answer to a <%= object_show_link(object.question_object.object_name, object.question_url) %>
-        asked on <strong><%= format_date(object.date_of_question) %></strong>
-<!--        by <%#= ses_object_link(object.asking_member) %> (<%#= ses_object_link(object.asking_member_party) %>)-->
+      <% unless object.answering_department.blank? %>
+        behalf of the <%= search_link(object.answering_department) %>
       <% end %>
+      .
     </div>
   </div>
 </div>

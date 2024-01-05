@@ -4,9 +4,6 @@
       An <%= object_display_name_link(object.object_name) %> made
       on <strong><%= format_date(object.date) %></strong>
       in the <%= search_link(object.legislature) %>
-      <% if object.place %>
-        in the <%= search_link(object.place) %>
-      <% end %>
       by <%= search_link(object.member) %> (<%= search_link(object.member_party) %>).
     </div>
   </div>

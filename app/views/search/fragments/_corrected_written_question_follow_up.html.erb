@@ -1,0 +1,18 @@
+<div class="content-prelim-box">
+  <div class="content-prelim-inner">
+    <div class="content-prelim-text" id="prelim-text">
+      <% if correcting_object.blank? %>
+        It has since been corrected.
+      <% else %>
+        The answer was corrected by <%= search_link(correcting_object.answering_member) %>
+        (<%= search_link(correcting_object.answering_member_party) %>)
+        <% if correcting_object.department.blank? %>
+          on <strong><%= format_date(correcting_object.date_of_answer) %></strong>.
+        <% else %>
+          on <strong><%= format_date(correcting_object.date_of_answer) %></strong>
+          on behalf of the <%= search_link(correcting_object.department&.first) %>.
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>
