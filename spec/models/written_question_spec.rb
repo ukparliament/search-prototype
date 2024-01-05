@@ -167,8 +167,17 @@ RSpec.describe WrittenQuestion, type: :model do
       end
     end
     context 'where corrected boolean is missing' do
-      it 'returns false' do
-        expect(written_question.corrected?).to eq(false)
+      context 'where there is no correcting item link' do
+        it 'returns false' do
+          expect(written_question.corrected?).to eq(false)
+        end
+      end
+      context 'where correcting item link is present' do
+        let!(:written_question) { WrittenQuestion.new({ 'correctingItem_uri' => ['www.example.com'] }) }
+
+        it 'returns true' do
+          expect(written_question.corrected?).to eq(true)
+        end
       end
     end
     context 'where state is present but not true' do
@@ -225,7 +234,7 @@ RSpec.describe WrittenQuestion, type: :model do
       let!(:written_question) { WrittenQuestion.new({ 'department_ses' => [12345, 67890] }) }
 
       it 'returns all items' do
-        expect(written_question.department).to eq([{:field_name=>"department_ses", :value=>12345}, {:field_name=>"department_ses", :value=>67890}])
+        expect(written_question.department).to eq([{ :field_name => "department_ses", :value => 12345 }, { :field_name => "department_ses", :value => 67890 }])
       end
     end
   end
@@ -343,7 +352,7 @@ RSpec.describe WrittenQuestion, type: :model do
       context 'where data is a valid date' do
         let!(:written_question) { WrittenQuestion.new({ 'dateOfAnswer_dt' => [Date.yesterday.to_s, Date.today.to_s] }) }
         it 'returns the first object as a date' do
-          expect(written_question.date_of_answer).to eq({:field_name=>"dateOfAnswer_dt", :value=>Date.yesterday})
+          expect(written_question.date_of_answer).to eq({ :field_name => "dateOfAnswer_dt", :value => Date.yesterday })
         end
       end
       context 'where data is not a valid date' do
@@ -375,7 +384,7 @@ RSpec.describe WrittenQuestion, type: :model do
       context 'where data is a valid date' do
         let!(:written_question) { WrittenQuestion.new({ 'dateForAnswer_dt' => [Date.yesterday.to_s, Date.today.to_s] }) }
         it 'returns the first object as a date' do
-          expect(written_question.date_for_answer).to eq({:field_name=>"dateForAnswer_dt", :value=>Date.yesterday})
+          expect(written_question.date_for_answer).to eq({ :field_name => "dateForAnswer_dt", :value => Date.yesterday })
         end
       end
       context 'where data is not a valid date' do
@@ -405,7 +414,7 @@ RSpec.describe WrittenQuestion, type: :model do
       let!(:written_question) { WrittenQuestion.new({ 'tablingMember_ses' => [12345, 67890] }) }
 
       it 'returns first item' do
-        expect(written_question.tabling_member).to eq({:field_name=>"tablingMember_ses", :value=>12345})
+        expect(written_question.tabling_member).to eq({ :field_name => "tablingMember_ses", :value => 12345 })
       end
     end
   end
@@ -428,7 +437,7 @@ RSpec.describe WrittenQuestion, type: :model do
       let!(:written_question) { WrittenQuestion.new({ 'answeringMember_ses' => [12345, 67890] }) }
 
       it 'returns first item' do
-        expect(written_question.answering_member).to eq({:field_name=>"answeringMember_ses", :value=>12345})
+        expect(written_question.answering_member).to eq({ :field_name => "answeringMember_ses", :value => 12345 })
       end
     end
   end
@@ -451,7 +460,7 @@ RSpec.describe WrittenQuestion, type: :model do
       let!(:written_question) { WrittenQuestion.new({ 'answeringMember_ses' => [12345, 67890] }) }
 
       it 'returns first item' do
-        expect(written_question.answering_member).to eq({:field_name=>"answeringMember_ses", :value=>12345})
+        expect(written_question.answering_member).to eq({ :field_name => "answeringMember_ses", :value => 12345 })
       end
     end
   end
@@ -497,14 +506,14 @@ RSpec.describe WrittenQuestion, type: :model do
       context 'where true' do
         let!(:written_question) { WrittenQuestion.new({ 'transferredQuestion_b' => 'true' }) }
         it 'returns true' do
-          expect(written_question.transferred?).to eq({:field_name=>"transferredQuestion_b", :value=>true})
+          expect(written_question.transferred?).to eq({ :field_name => "transferredQuestion_b", :value => true })
         end
       end
 
       context 'where false' do
         let!(:written_question) { WrittenQuestion.new({ 'transferredQuestion_b' => 'false' }) }
         it 'returns false' do
-          expect(written_question.transferred?).to eq({:field_name=>"transferredQuestion_b", :value=>false})
+          expect(written_question.transferred?).to eq({ :field_name => "transferredQuestion_b", :value => false })
         end
       end
     end

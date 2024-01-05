@@ -28,9 +28,10 @@ class Question < ContentObject
     # corrected 'written questions' are written questions with corrected answers, and will have a state
     # of 'answered'
 
-    # Some items appear to have a correcting_item_link but this boolean is missing; need to clarify the
-    # conditions for corrections.
+    # If correcting item URI is present, it is considered corrected
+    return true if correcting_item_link.present? && correcting_item_link[:value].present?
 
+    # If corrected boolean is true, it is considered corrected
     corrected_boolean = get_first_as_boolean_from('correctedWmsMc_b')
     return false unless corrected_boolean && corrected_boolean[:value] == true
 
