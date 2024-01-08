@@ -5,7 +5,7 @@
       <!--      (<%#= ses_object_link(object.reading) %>)-->
       on <strong><%= format_date(object.date) %></strong>,
       in the <%= search_link(object.legislature) %> led by <%= search_link(object.lead_member) %>
-      on behalf of the <%= search_link(object.department&.first) %>. The answering member was
+      on behalf of the <%= search_link(object.department) %>. The answering member was
       <%= search_link(object.answering_member) %>.
     </div>
   </div>

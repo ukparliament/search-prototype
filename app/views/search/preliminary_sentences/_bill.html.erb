@@ -5,7 +5,7 @@
       <strong><%= format_date(object.date) %></strong>,
       in the <%= search_link(object.legislature) %> sponsored by
       <%= search_link(object.primary_sponsor) %> (<%= search_link(object.primary_sponsor_party) %>)
-      on behalf of the <%= search_link(object.department&.first) %>.
+      on behalf of the <%= search_link(object.department) %>.
     </div>
   </div>
 </div>

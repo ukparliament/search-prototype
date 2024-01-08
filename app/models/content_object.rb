@@ -104,16 +104,18 @@ class ContentObject
 
   def department
     # 'asked to reply author' is a third party body that needs to be removed from department SES
-    atra_id = get_first_from('askedToReplyAuthor_ses')
-
     # this returns multiple data objects in an array
     # then filters out the atra ID (even if it's nil) & returns the first remaining item
 
-    if atra_id.blank?
-      get_all_from('department_ses')
+    if asked_to_reply_author.blank?
+      get_first_from('department_ses')
     else
-      get_all_from('department_ses').reject { |h| h[:value] == atra_id }.first
+      get_all_from('department_ses').reject { |h| h[:value] == asked_to_reply_author[:value] }.first
     end
+  end
+
+  def asked_to_reply_author
+    get_first_from('askedToReplyAuthor_ses')
   end
 
   def place

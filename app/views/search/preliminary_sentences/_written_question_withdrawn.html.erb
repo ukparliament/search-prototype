@@ -7,7 +7,7 @@
       in the <%= search_link(object.legislature) %>.
       <% if object.department.present? %>
         The Member has subsequently withdrawn this question. An answer is no longer expected from
-        the <%= search_link(object.department&.first) %>.
+        the <%= search_link(object.department) %>.
       <% else %>
         The Member has subsequently withdrawn this question and it no longer needs to be answered.
       <% end %>

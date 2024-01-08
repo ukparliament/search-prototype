@@ -19,7 +19,10 @@
         on <strong><%= format_date(object.date_of_answer) %></strong>.
       <% else %>
         on <strong><%= format_date(object.date_of_answer) %></strong>
-        on behalf of the <%= search_link(object.department&.first) %>.
+        on behalf of the <%= search_link(object.department) %>.
+      <% end %>
+      <% unless object.asked_to_reply_author.blank? %>
+        <%= search_link(object.asked_to_reply_author) %> was asked to reply.
       <% end %>
     </div>
   </div>
