@@ -12,7 +12,7 @@
         %span>= search_link(object.member_name)
       - unless object.department.blank?
         &nbspon behalf of the&nbsp
-        %span>= search_link(object.department&.first)
+        %span>= search_link(object.department)
       \.
       - unless object.date_approved.blank?
         It was approved by the House of Commons on

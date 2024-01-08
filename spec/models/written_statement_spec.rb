@@ -180,8 +180,16 @@ RSpec.describe WrittenStatement, type: :model do
     context 'where data exists' do
       let!(:written_statement) { WrittenStatement.new({ 'department_ses' => [12345, 67890] }) }
 
-      it 'returns all items' do
-        expect(written_statement.department).to eq([{ :field_name => "department_ses", :value => 12345 }, { :field_name => "department_ses", :value => 67890 }])
+      it 'returns the first item' do
+        expect(written_statement.department).to eq({ :field_name => "department_ses", :value => 12345 })
+      end
+    end
+
+    context 'where there is an asked to reply author' do
+      let!(:written_statement) { WrittenStatement.new({ 'department_ses' => [12345, 67890], 'askedToReplyAuthor_ses' => [12345] }) }
+
+      it 'returns the first item that is not the ATRA ID' do
+        expect(written_statement.department).to eq({ :field_name => "department_ses", :value => 67890 })
       end
     end
   end
