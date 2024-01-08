@@ -51,11 +51,11 @@ module LinkHelper
     link_to(formatted_name(data, ses_data, singular), search_path(filter: data))
   end
 
-  private
-
   def formatted_name(data, ses_data, singular)
     singular ? format_name(data, ses_data)&.singularize : format_name(data, ses_data)
   end
+
+  private
 
   def format_name(data, ses_data)
     # This method processes names, handling commas and disambiguation

@@ -1,7 +1,7 @@
-<% unless department.blank? %>
+<% unless departments.blank? %>
   <div class="about-item">
     <h3 class="content-heading" id="department">Department</h3>
-    <% department.each do |department| %>
+    <% departments.each do |department| %>
       <%= search_link(department) %><br/>
     <% end %>
   </div>

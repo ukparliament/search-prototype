@@ -114,6 +114,10 @@ class ContentObject
     end
   end
 
+  def departments
+    get_all_from('department_ses')
+  end
+
   def asked_to_reply_author
     get_first_from('askedToReplyAuthor_ses')
   end
@@ -177,29 +181,12 @@ class ContentObject
   end
 
   def related_items
-    # TODO: this should be its own model
-    relation_uris = content_object_data['relation_t']
-    return if relation_uris.blank?
+    relation_uris = get_all_from('relation_t').pluck(:value)
+    ObjectsFromUriList.new(relation_uris).get_objects
+  end
 
-    return unless relation_uris.is_a?(Array)
-
-    return unless relation_uris.map(&:class).uniq.compact == [String]
-
-    ret = {}
-
-    query = SolrMultiQuery.new(object_uris: relation_uris)
-    relation_ses_ids = query.all_ses_ids
-
-    unless relation_ses_ids.blank?
-      ret[:ses_lookup] = SesLookup.new(relation_ses_ids).data
-    end
-
-    ret[:items] = []
-    query.object_data.each do |object|
-      ret[:items] << ContentObject.generate(object)
-    end
-
-    ret
+  def contribution_text
+    get_first_from('contributionText_t')
   end
 
   def parliamentary_session
@@ -418,9 +405,11 @@ class ContentObject
     when 356750
       'ProceedingContribution'
     when 352161
-      'GrandCommitteeProceeding'
+      # Grand committee
+      'ParliamentaryProceeding'
     when 352151
-      'CommitteeProceeding'
+      # Committee
+      'ParliamentaryProceeding'
     when 352179
       'ParliamentaryProceeding'
     when 347226

@@ -1,10 +1,44 @@
 <% unless contributions.blank? %>
   <div class="about-item">
     <h3 class="content-heading" id="contributions">Contributions</h3>
-    <% contributions.each do |contribution| %>
+    <% contributions[:items].first(2).each do |contribution| %>
       <div>
-        <%= link_to contribution, '/' %><br/>
+        <% if contribution.contribution_text %>
+          <%= raw(contribution.contribution_text[:value]) %>
+        <% end %>
+        <% if contribution.member %>
+          <%= link_to(formatted_name(contribution.member, contributions[:ses_lookup], false), search_path(filter: contribution.member)) %>
+          <br/>
+        <% end %>
+        <% if contribution.reference %>
+          <%= link_to(formatted_name(contribution.reference, contributions[:ses_lookup], false), search_path(filter: contribution.reference)) %>
+          <br/>
+        <% end %>
       </div>
+    <% end %>
+    <br/>
+
+    <% if contributions[:items].size > 2 %>
+      <details>
+        <summary>
+          Show all contributions (<%= contributions[:items].size %>)
+        </summary>
+        <% contributions[:items].drop(2).each do |contribution| %>
+          <div>
+            <% if contribution.contribution_text %>
+              <%= raw(contribution.contribution_text[:value]) %>
+            <% end %>
+            <% if contribution.member %>
+              <%= link_to(formatted_name(contribution.member, contributions[:ses_lookup], false), search_path(filter: contribution.member)) %>
+              <br/>
+            <% end %>
+            <% if contribution.reference %>
+              <%= link_to(formatted_name(contribution.reference, contributions[:ses_lookup], false), search_path(filter: contribution.reference)) %>
+              <br/>
+            <% end %>
+          </div>
+        <% end %>
+      </details>
     <% end %>
   </div>
 <% end %>
