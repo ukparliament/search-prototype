@@ -1,0 +1,10 @@
+<% unless sponsors.blank? %>
+  <div class="about-item">
+    <h3 class="content-heading" id="other-sponsors">Other sponsors</h3>
+    <ul>
+      <% sponsors.each do |sponsor| %>
+        <li>- <%= search_link(sponsor) %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
