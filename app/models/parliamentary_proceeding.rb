@@ -13,7 +13,7 @@ class ParliamentaryProceeding < ContentObject
   end
 
   def contributions
-    contribution_uris = get_all_from('childContribution_uri').pluck(:value)
+    contribution_uris = get_all_from('childContribution_uri')&.pluck(:value)
     ObjectsFromUriList.new(contribution_uris).get_objects
   end
 

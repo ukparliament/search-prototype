@@ -1,6 +1,8 @@
 <% unless witnesses.blank? %>
   <div class="about-item">
     <h3 class="content-heading" id="witnesses">Witnesses</h3>
-    <%= witnesses %>
+    <% witnesses.each do |witness| %>
+      <%= search_link(witness) %><br/>
+    <% end %>
   </div>
 <% end %>

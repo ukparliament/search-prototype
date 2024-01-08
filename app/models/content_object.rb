@@ -181,7 +181,7 @@ class ContentObject
   end
 
   def related_items
-    relation_uris = get_all_from('relation_t').pluck(:value)
+    relation_uris = get_all_from('relation_t')&.pluck(:value)
     ObjectsFromUriList.new(relation_uris).get_objects
   end
 
