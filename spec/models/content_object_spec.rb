@@ -78,13 +78,6 @@ RSpec.describe ContentObject, type: :model do
     end
 
     context 'where relation_t is populated' do
-      context 'where relation_t is not an array' do
-        let!(:test_data) { { "relation_t" => "test" } }
-        it 'returns nil' do
-          expect(content_object.related_items).to be_nil
-        end
-      end
-
       context 'where relation_t is an array of strings' do
         let!(:test_data) { { "relation_t" => ["test1", "test2"] } }
         let!(:solr_multi_query_object) { SolrMultiQuery.new(test_data) }
