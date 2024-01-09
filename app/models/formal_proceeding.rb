@@ -1,4 +1,4 @@
-class FormalProceeding < ContentObject
+class FormalProceeding < Proceeding
 
   def initialize(content_object_data)
     super
