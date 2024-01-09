@@ -22,7 +22,7 @@
 <% unless object.content.blank? %>
   <section id="main-content" class="content-section white">
     <div class="content-text">
-      <%= raw(object.content[:value]) %>
+      <%= raw(object.contribution_text[:value]) %>
     </div>
   </section>
 <% end %>
@@ -32,11 +32,12 @@
   <%= render 'search/fragments/reference', reference: object.reference %>
   <%= render 'search/fragments/session', session: object.parliamentary_session %>
   <%= render 'search/fragments/procedure', procedure: object.procedure %>
+  <%= render 'search/fragments/place', place: object.place %>
   <%= render 'search/fragments/related_items', related_items: object.related_items %>
-  <%= render 'search/fragments/contains_statistics', contains_statistics: object.contains_statistics? %>
   <%= render 'search/fragments/notes', notes: object.notes %>
   <%= render 'search/fragments/pills', pills_heading: 'Subjects', pills: object.subjects %>
   <%= render 'search/fragments/legislation', legislation: object.legislation %>
+  <%= render 'search/fragments/contains_statistics', contains_statistics: object.contains_statistics? %>
   <%= render 'search/fragments/link', object: object %>
 </section>
 

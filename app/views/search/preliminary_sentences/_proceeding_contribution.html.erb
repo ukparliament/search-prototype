@@ -4,13 +4,10 @@
       A <%= object_display_name_link(object.object_name) %> from
       <%= search_link(object.member) %> (<%= search_link(object.member_party) %>)
       in the <%= search_link(object.legislature) %>,
-      <% if object.place %>
-        in the <%= search_link(object.place) %>
-      <% end %>
       on <strong><%= format_date(object.date) %></strong>.
-      <% unless object.proceeding.blank? %>
-        It occurred during <%= search_link(object.proceeding) %> on
-        <%= search_link(object.proceeding_type) %>.
+      <% unless object.parent_object.blank? || object.legislation.blank? %>
+        It occurred during <%= object_display_name_link(object.parent_object&.object_name) %> on
+        <%= search_link(object.legislation&.first) %>.
       <% end %>
     </div>
   </div>

@@ -186,7 +186,7 @@ class ContentObject
   end
 
   def contribution_text
-    get_first_from('contributionText_t')
+    get_first_as_html_from('contributionText_t')
   end
 
   def parliamentary_session

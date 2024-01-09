@@ -12,12 +12,12 @@ class ProceedingContribution < ContentObject
     { value: contribution_type[:value], field_name: 'contributionType_t' }
   end
 
-  def location
+  def proceeding_contribution_uri
+    [get_first_from('parentProceeding_t')[:value]]
   end
 
-  def proceeding
-  end
-
-  def proceeding_type
+  def parent_object
+    response = ObjectsFromUriList.new(proceeding_contribution_uri).get_objects
+    response[:items]&.first
   end
 end
