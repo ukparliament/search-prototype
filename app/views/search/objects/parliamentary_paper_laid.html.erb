@@ -32,7 +32,7 @@
   <%= render 'search/fragments/session', session: object.parliamentary_session %>
   <%= render 'search/fragments/coming_into_force', notes: object.coming_into_force, date: object.coming_into_force_date %>
   <%= render 'search/fragments/corporate_author', author: object.corporate_author %>
-  <%= render 'search/fragments/paper_type', type: object.subtype %>
+  <%= render 'search/fragments/paper_type', paper_type: object.paper_type %>
   <%= render 'search/fragments/procedure', procedure: object.procedure, approval_days: object.procedure_scrutiny_period %>
   <%= render 'search/fragments/laying_authority', laying_authority: object.laying_authority %>
   <%= render 'search/fragments/laid_in_draft', laid_in_draft: object.laid_in_draft? %>
