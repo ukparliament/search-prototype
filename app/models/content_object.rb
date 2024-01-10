@@ -383,17 +383,21 @@ class ContentObject
     when 347207
       'FormalProceeding'
     when 90587
-      'CommandPaper'
+      # 'CommandPaper'
+      'ParliamentaryPaperLaid'
     when 91561
-      'HouseOfCommonsPaper'
+      # 'HouseOfCommonsPaper'
+      'ParliamentaryPaperLaid'
     when 92347
       'ParliamentaryPaperLaid'
     when 352156
       'ParliamentaryPaperReported'
     when 51288
-      'UnprintedPaper'
+      # 'UnprintedPaper'
+      'ParliamentaryPaperLaid'
     when 352261
-      'UnprintedCommandPaper'
+      # 'UnprintedCommandPaper'
+      'ParliamentaryPaperLaid'
     when 363376
       'ResearchMaterial'
     when 92277

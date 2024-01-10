@@ -1,4 +1,4 @@
-class DepositedPaper < ContentObject
+class DepositedPaper < Paper
 
   def initialize(content_object_data)
     super
@@ -24,10 +24,6 @@ class DepositedPaper < ContentObject
 
   def deposited_file
     get_all_from('depositedFile_uri')
-  end
-
-  def corporate_author
-    get_first_from('corporateAuthor_ses')
   end
 
   def personal_author

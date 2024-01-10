@@ -44,6 +44,14 @@ class Paper < ContentObject
     get_first_from('authority_t')
   end
 
+  def corporate_author
+    get_first_from('corporateAuthor_ses')
+  end
+
+  def member_name
+    get_first_from('memberPrinted_t')
+  end
+
   def isbn
     get_first_from('isbn_t')
   end

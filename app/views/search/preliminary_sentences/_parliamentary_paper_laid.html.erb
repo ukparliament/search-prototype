@@ -4,8 +4,22 @@
       A <%= object_display_name_link(object.object_name) %> laid in the
       <%= search_link(object.legislature) %> on
       <strong><%= format_date(object.date) %></strong>
-      by <%= search_link(object.lead_member) %> on behalf of the
-      <%= search_link(object.department) %>.
+      <% unless object.member_name.blank? %>
+        by <%= search_link(object.member_name) %>
+      <% end %>
+      <% unless object.department.blank? %>
+        on behalf of the <%= search_link(object.department) %>
+      <% end %>
+      .
+      <% unless object.date_approved.blank? %>
+        It was approved by the House of Commons on <%= format_date(object.date_approved) %>.
+      <% end %>
+      <% unless object.date_made.blank? %>
+        It was made on <%= format_date(object.date_made) %>.
+      <% end %>
+      <% unless object.date_withdrawn.blank? %>
+        It was withdrawn on <%= format_date(object.date_withdrawn) %>.
+      <% end %>
     </div>
   </div>
 </div>
