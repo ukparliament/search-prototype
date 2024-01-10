@@ -1,6 +1,8 @@
-<% unless type.blank? %>
+<% unless paper_type.blank? %>
   <div class="about-item">
     <h3 class="content-heading" id="paper-type">Paper type</h3>
-    <%= object_display_name(type) %>
+    <% paper_type.each do |type| %>
+      <%= search_link(type) %><br/>
+    <% end %>
   </div>
 <% end %>

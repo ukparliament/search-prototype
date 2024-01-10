@@ -16,8 +16,4 @@ class ParliamentaryProceeding < Proceeding
   def answering_members
     get_all_from('answeringMember_ses')
   end
-
-  def witnesses
-    get_all_from('witness_ses')
-  end
 end

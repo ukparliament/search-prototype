@@ -44,12 +44,13 @@ class Paper < ContentObject
     get_first_from('authority_t')
   end
 
-  def corporate_author
-    get_first_from('corporateAuthor_ses')
-  end
-
   def member_name
     get_first_from('memberPrinted_t')
+  end
+
+  def paper_type
+    all_subtypes = get_all_from('subtype_ses')
+    all_subtypes.blank? ? [type] : all_subtypes
   end
 
   def isbn
