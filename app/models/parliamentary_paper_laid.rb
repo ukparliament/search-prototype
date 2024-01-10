@@ -1,4 +1,4 @@
-class ParliamentaryPaperLaid < ContentObject
+class ParliamentaryPaperLaid < Paper
 
   def initialize(content_object_data)
     super

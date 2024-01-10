@@ -1,12 +1,22 @@
 <div class="content-prelim-box">
   <div class="content-prelim-inner">
     <div class="content-prelim-text" id="prelim-text">
-      A <%= object_display_name_link(object.object_name) %>
-      <!--      (<%#= ses_object_link(object.reading) %>)-->
+      <%= object_display_name_link(object.object_name) %>
+      <% unless object.legislative_stage.blank? %>
+        (<%= search_link(object.legislative_stage) %>)
+      <% end %>
       on <strong><%= format_date(object.date) %></strong>,
-      in the <%= search_link(object.legislature) %> led by <%= search_link(object.lead_member) %>
-      on behalf of the <%= search_link(object.department) %>. The answering member was
-      <%= search_link(object.answering_member) %>.
+      in the <%= search_link(object.legislature) %>
+      <% if object.lead_member.blank? %>
+        .
+      <% else %>
+        led by <%= search_link(object.lead_member) %>
+        <% if object.department.blank? %>
+          .
+        <% else %>
+          on behalf of the <%= search_link(object.department) %>.
+        <% end %>
+      <% end %>
     </div>
   </div>
 </div>

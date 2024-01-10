@@ -233,6 +233,10 @@ class ContentObject
     get_first_from('corporateAuthor_ses')
   end
 
+  def witnesses
+    get_all_from('witness_ses')
+  end
+
   def publisher_string
     # this is looking at a string (rather than SES id) for publisher in order to pick the correct graphic
     # this feels quite fragile and should be given further thought
@@ -383,17 +387,25 @@ class ContentObject
     when 347207
       'FormalProceeding'
     when 90587
-      'CommandPaper'
+      # 'CommandPaper'
+      'ParliamentaryPaperLaid'
     when 91561
-      'HouseOfCommonsPaper'
+      # 'HouseOfCommonsPaper'
+      'ParliamentaryPaperLaid'
+    when 91563
+      # 'HouseOfLordsPaper'
+      # TODO: Need to double check this one - inferred from guidance on papers reported
+      'ParliamentaryPaperLaid'
+    when 51288
+      # 'UnprintedPaper'
+      'ParliamentaryPaperLaid'
+    when 352261
+      # 'UnprintedCommandPaper'
+      'ParliamentaryPaperLaid'
     when 92347
       'ParliamentaryPaperLaid'
     when 352156
       'ParliamentaryPaperReported'
-    when 51288
-      'UnprintedPaper'
-    when 352261
-      'UnprintedCommandPaper'
     when 363376
       'ResearchMaterial'
     when 92277

@@ -5,7 +5,6 @@
 
 <% content_for(:before_title) do %>
   <%= link_to('UK Parliament', root_path) %> / <%= link_to('Open data', root_path) %><br/>
-  <%#= link_to('< Back to search results', root_path) %>
   <div id="top"></div>
 <% end %>
 
@@ -22,29 +21,18 @@
 <section id="about" class="content-section grey">
   <h2 class="content-heading">About this <%= object_display_name(object.type) %></h2>
 
-  <!--  conditional-->
-  <!--  reference not shown for oral evidence-->
   <%= render 'search/fragments/reference', reference: object.reference %>
-  <!--  end conditional-->
-
   <%= render 'search/fragments/session', session: object.parliamentary_session %>
+  <%= render 'search/fragments/witnesses', witnesses: object.witnesses %>
+  <%= render 'search/fragments/paper_type', paper_type: object.paper_type %>
   <%= render 'search/fragments/related_items', related_items: object.related_items %>
-  <%= render 'search/fragments/contains_statistics', contains_statistics: object.contains_statistics? %>
-  <!--  partial: witnesses - oral evidence only-->
-
-  <!--  conditional-->
-  <!--  reference not shown for oral evidence-->
+  <%= render 'search/fragments/ec_documents', ec_documents: object.ec_documents %>
   <%= render 'search/fragments/notes', notes: object.notes %>
-  <!--  end conditional-->
-
   <%= render 'search/fragments/pills', pills_heading: 'Subjects', pills: object.subjects %>
   <%= render 'search/fragments/legislation', legislation: object.legislation %>
-
-  <!--  conditional-->
-  <!--  libary location only shown for oral evidence-->
   <%= render 'search/fragments/library_location', commons: object.commons_library_location, lords: object.lords_library_location %>
-  <!--  end conditional-->
-
+  <%= render 'search/fragments/contains_statistics', contains_statistics: object.contains_statistics? %>
+  <%= render 'search/fragments/isbn', isbn: object.isbn %>
   <%= render 'search/fragments/link', object: object %>
 </section>
 
