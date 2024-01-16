@@ -20,8 +20,11 @@ class WrittenStatement < ContentObject
     date
   end
 
+  def statement_text
+    get_first_as_html_from('statementText_t')
+  end
+
   def corrected?
-    # TODO: should this be first?
-    get_as_boolean_from('correctedWmsMc_b')
+    get_first_as_boolean_from('correctedWmsMc_b')
   end
 end

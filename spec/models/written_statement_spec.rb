@@ -148,14 +148,14 @@ RSpec.describe WrittenStatement, type: :model do
 
     context 'where data exists' do
       context 'where true' do
-        let!(:written_statement) { WrittenStatement.new({ 'correctedWmsMc_b' => 'true' }) }
+        let!(:written_statement) { WrittenStatement.new({ 'correctedWmsMc_b' => ['true'] }) }
         it 'returns true' do
           expect(written_statement.corrected?).to eq({ :field_name => "correctedWmsMc_b", :value => true })
         end
       end
 
       context 'where false' do
-        let!(:written_statement) { WrittenStatement.new({ 'correctedWmsMc_b' => 'false' }) }
+        let!(:written_statement) { WrittenStatement.new({ 'correctedWmsMc_b' => ['false'] }) }
         it 'returns false' do
           expect(written_statement.corrected?).to eq({ :field_name => "correctedWmsMc_b", :value => false })
         end

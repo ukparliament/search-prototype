@@ -1,14 +1,11 @@
 module LinkHelper
-  def object_show_link(data, object_uri, anchor = nil, singular: true)
-    # this is a link directly to an object, e.g. where we already have a functional URL
-    # this does not generate a search link
-    # takes a standard data hash (so either a string or a SES ID)
-    # performs its own SES lookup by necessity
+  def object_show_link(string, uri)
+    # used where we have the title of an object and the link to that object in a source system
+    # returns a titled link to the object show page for that url
 
-    return if data.blank? || data[:value].blank?
+    return if string.blank? || uri.blank?
 
-    object_ses_data = SesLookup.new([data]).data
-    link_to(formatted_name(data, object_ses_data, singular), object_show_url(object: object_uri, anchor: anchor))
+    link_to(string, object_show_url(object: uri[:value]))
   end
 
   def search_link(data, singular: false)

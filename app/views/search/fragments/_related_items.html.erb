@@ -5,8 +5,7 @@
       <% related_items[:items].each do |related_item| %>
         <div>
           <% unless related_item.content_object_data['uri'].blank? %>
-            <%= link_to(related_item.page_title, object_show_url(:object => related_item.content_object_data['uri'])) %>
-            <br/>
+            <%= object_show_link(related_item.object_title, related_item.object_uri) %><br/>
           <% end %>
           <% if related_item.date %>
             <%= format_date(related_item.date) %><br/>
