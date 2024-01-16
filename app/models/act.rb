@@ -21,10 +21,6 @@ class Act < ContentObject
     get_first_from('isVersionOf_t')
   end
 
-  def isbn
-    get_first_from('isbn_t')
-  end
-
   def long_title
     get_first_from('longTitle_t')
   end

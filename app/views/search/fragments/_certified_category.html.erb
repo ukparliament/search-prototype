@@ -1,6 +1,9 @@
-<% unless certified.blank? %>
+<% unless certified_category.blank? %>
   <div class="about-item">
     <h3 class="content-heading" id="certified-category">Certified as</h3>
-    <%= certified %>
+    <%= search_link(certified_category) %>
+    <% unless certified_date.blank? %>
+      <%= format_date(certified_date) %>
+    <% end %>
   </div>
 <% end %>

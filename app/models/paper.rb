@@ -52,8 +52,4 @@ class Paper < ContentObject
     all_subtypes = get_all_from('subtype_ses')
     all_subtypes.blank? ? [type] : all_subtypes
   end
-
-  def isbn
-    get_first_from('isbn_t')
-  end
 end

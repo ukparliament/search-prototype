@@ -104,6 +104,10 @@ class ContentObject
     get_all_from('certifiedCategory_ses')
   end
 
+  def certified_date
+    get_as_date_from('dateCertified_dt')
+  end
+
   def legislation
     # TODO: change this so it functions as subjects, above
     preferred = get_all_from('legislationTitle_ses')
@@ -178,6 +182,10 @@ class ContentObject
 
   def content_location_uri
     get_first_from('contentLocation_uri')
+  end
+
+  def isbn
+    get_first_from('isbn_t')
   end
 
   def display_link
