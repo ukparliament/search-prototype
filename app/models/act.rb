@@ -21,16 +21,6 @@ class Act < ContentObject
     get_first_from('isVersionOf_t')
   end
 
-  def bill_title
-    if bill.page_title.blank?
-      ses_data = SesLookup.new([bill.object_name]).data
-      ses_name = ses_data[bill.object_name[:value]]
-      "an untitled #{ses_name&.singularize}"
-    else
-      bill.page_title
-    end
-  end
-
   def isbn
     get_first_from('isbn_t')
   end

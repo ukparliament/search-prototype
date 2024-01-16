@@ -29,7 +29,7 @@
 <% if object.has_question? %>
   <section class="content-section grey">
     <div class="about-item">
-      This is an answer to a <%= object_show_link(object.question_object.object_name, object.question_url[:value]) %>
+      This is an answer to <%= object_show_link(object.question_object.object_title, object.question_url) %>
       asked on <strong><%= format_date(object.date_of_question) %></strong>
       <% if object.question_object.asking_member.blank? %>
         .
