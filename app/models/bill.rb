@@ -7,4 +7,8 @@ class Bill < ContentObject
   def template
     'search/objects/bill'
   end
+
+  def title
+    get_as_string_from('title_t')
+  end
 end

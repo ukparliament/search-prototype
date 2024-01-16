@@ -18,14 +18,6 @@
   <%= render 'search/preliminary_sentences/act', object: object %>
 </section>
 
-<% unless object.motion_text.blank? %>
-  <section id="main-content" class="content-section white">
-    <div class="content-text">
-      <%= object.motion_text[:value] %>
-    </div>
-  </section>
-<% end %>
-
 <section id="about" class="content-section grey">
   <h2 class="content-heading">About this <%= object_display_name(object.type) %></h2>
   <%= render 'search/fragments/reference', reference: object.reference %>
@@ -33,6 +25,8 @@
   <%= render 'search/fragments/notes', notes: object.notes %>
   <%= render 'search/fragments/pills', pills_heading: 'Subjects', pills: object.subjects %>
   <%= render 'search/fragments/legislation', legislation: object.legislation %>
+  <%= render 'search/fragments/contains_statistics', contains_statistics: object.contains_statistics? %>
+  <%= render 'search/fragments/isbn', isbn: object.isbn %>
   <%= render 'search/fragments/link', object: object %>
 </section>
 

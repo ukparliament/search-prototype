@@ -18,14 +18,17 @@
   <%= render 'search/preliminary_sentences/deposited_paper', object: object %>
 </section>
 
-<% unless object.deposited_file.blank? %>
-  <section id="main-content" class="content-section white">
+<section id="main-content" class="content-section white">
+  <% unless object.abstract_text.blank? %>
+    <%= raw object.abstract_text[:value] %>
+  <% end %>
+  <% unless object.deposited_file.blank? %>
     <h3 class="content-heading" id="available-files">Available files</h3>
     <% object.deposited_file.each do |file| %>
       <%= link_to(file[:value]) %>
     <% end %>
-  </section>
-<% end %>
+  <% end %>
+</section>
 
 <section id="about" class="content-section grey">
   <h2 class="content-heading">About this <%= object_display_name(object.type) %></h2>

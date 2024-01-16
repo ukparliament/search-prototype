@@ -19,6 +19,21 @@ class ContentObject
     type
   end
 
+  def object_title
+    # returns the title, falling back to name
+    return page_title unless page_title.blank?
+
+    return if subtype_or_type.blank?
+
+    object_ses_data = SesLookup.new([subtype_or_type]).data
+    "Untitled #{object_ses_data[subtype_or_type[:value].to_i]&.singularize}"
+  end
+
+  def page_title
+    # keeping this simple for now
+    content_object_data['title_t']
+  end
+
   def ses_lookup_ids
     get_all_from('all_ses')
   end
@@ -33,11 +48,6 @@ class ContentObject
 
   def type
     get_first_from('type_ses')
-  end
-
-  def page_title
-    # keeping this simple for now
-    content_object_data['title_t']
   end
 
   def ses_data
@@ -152,6 +162,10 @@ class ContentObject
 
   def registered_interest_declared?
     get_first_as_boolean_from('registeredInterest_b')
+  end
+
+  def object_uri
+    get_as_string_from('uri')
   end
 
   def external_location_uri
@@ -277,6 +291,13 @@ class ContentObject
   end
 
   private
+
+  def get_as_string_from(field_name)
+    # TODO: implement this for page title etc.
+    return if content_object_data[field_name].blank?
+
+    { value: content_object_data[field_name], field_name: field_name }
+  end
 
   def get_first_as_boolean_from(field_name)
     return unless ['true', 'false', true, false].include?(content_object_data[field_name]&.first)

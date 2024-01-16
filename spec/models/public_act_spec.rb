@@ -34,7 +34,7 @@ RSpec.describe PublicAct, type: :model do
       let!(:public_act) { PublicAct.new({ 'identifier_t' => ['first item', 'second item'] }) }
 
       it 'returns the first item' do
-        expect(public_act.reference).to eq({:field_name=>"identifier_t", :value=>"first item"})
+        expect(public_act.reference).to eq({ :field_name => "identifier_t", :value => "first item" })
       end
     end
   end
@@ -57,7 +57,7 @@ RSpec.describe PublicAct, type: :model do
       let!(:public_act) { PublicAct.new({ 'subject_ses' => ['first item', 'second item'] }) }
 
       it 'returns all items as an array' do
-        expect(public_act.subjects).to eq([{:field_name=>"subject_ses", :value=>"first item"}, {:field_name=>"subject_ses", :value=>"second item"}])
+        expect(public_act.subjects).to eq([{ :field_name => "subject_ses", :value => "first item" }, { :field_name => "subject_ses", :value => "second item" }])
       end
     end
   end
@@ -80,11 +80,11 @@ RSpec.describe PublicAct, type: :model do
       let!(:public_act) { PublicAct.new({ 'legislationTitle_ses' => [12345, 67890] }) }
 
       it 'returns all items as an array' do
-        expect(public_act.legislation).to eq([{:field_name=>"legislationTitle_ses", :value=>12345}, {:field_name=>"legislationTitle_ses", :value=>67890}])
+        expect(public_act.legislation).to eq([{ :field_name => "legislationTitle_ses", :value => 12345 }, { :field_name => "legislationTitle_ses", :value => 67890 }])
       end
     end
   end
-  
+
   describe 'bill' do
     context 'where there is no data' do
       it 'returns nil' do
@@ -93,17 +93,20 @@ RSpec.describe PublicAct, type: :model do
     end
 
     context 'where there is an empty array' do
-      let!(:public_act) { PublicAct.new({ 'legislationTitle_ses' => [] }) }
+      let!(:public_act) { PublicAct.new({ 'isVersionOf_t' => [] }) }
       it 'returns nil' do
         expect(public_act.bill).to be_nil
       end
     end
 
     context 'where data exists' do
-      let!(:public_act) { PublicAct.new({ 'legislationTitle_ses' => [12345, 67890] }) }
+      let!(:public_act) { PublicAct.new({ 'isVersionOf_t' => ['uri'] }) }
+      let!(:bill) { Bill.new({ 'title_t' => 'bill title' }) }
+      let!(:response) { { items: [bill] } }
 
-      it 'returns the first legislation item' do
-        expect(public_act.bill).to eq({:field_name=>"legislationTitle_ses", :value=>12345})
+      it 'returns the associated object from the uri' do
+        allow_any_instance_of(ObjectsFromUriList).to receive(:get_objects).and_return(response)
+        expect(public_act.bill).to eq(bill)
       end
     end
   end
