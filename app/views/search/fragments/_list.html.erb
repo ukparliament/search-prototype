@@ -9,6 +9,6 @@
     <!--      penultimate one is "item and "-->
     <%= search_link(items.last(2).first, singular: true) %> and
   <% end %>
-  <!--      last one is "item."-->
-  <%= search_link(items.last, singular: true) %><%= terminator %>
 <% end %>
+<!--      last one is "item." or "item," etc. -->
+<%= search_link(items.last, singular: true) %><%= terminator %>
