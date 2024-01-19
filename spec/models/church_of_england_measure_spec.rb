@@ -84,4 +84,43 @@ RSpec.describe ChurchOfEnglandMeasure, type: :model do
       end
     end
   end
+
+  describe 'date_of_royal_assent' do
+    context 'where there is no data' do
+      it 'returns nil' do
+        expect(church_of_england_measure.date_of_royal_assent).to be_nil
+      end
+    end
+
+    context 'where there is an empty array' do
+      let!(:church_of_england_measure) { ChurchOfEnglandMeasure.new({ 'dateOfRoyalAssent_dt' => [] }) }
+      it 'returns nil' do
+        expect(church_of_england_measure.date_of_royal_assent).to be_nil
+      end
+    end
+
+    context 'where data exists' do
+      context 'where data is parsable as a datetime (BST)' do
+        let!(:church_of_england_measure) { ChurchOfEnglandMeasure.new({ 'dateOfRoyalAssent_dt' => ["2015-06-01T18:00:15.73Z", "2014-06-01T18:00:15.73Z"] }) }
+
+        it 'returns the first string parsed as a datetime in the London timezone' do
+          expect(church_of_england_measure.date_of_royal_assent[:value]).to eq("Mon, 01 Jun 2015, 19:00:15.73".in_time_zone('London').to_datetime)
+        end
+      end
+      context 'where data is parsable as a datetime (GMT)' do
+        let!(:church_of_england_measure) { ChurchOfEnglandMeasure.new({ 'dateOfRoyalAssent_dt' => ["2015-02-01T18:00:15.73Z", "2014-06-01T18:00:15.73Z"] }) }
+
+        it 'returns the first string parsed as a datetime in the London timezone' do
+          expect(church_of_england_measure.date_of_royal_assent[:value]).to eq("Sun, 01 Feb 2015, 18:00:15.73".in_time_zone('London').to_datetime)
+        end
+      end
+      context 'where data is not parsable as a datetime' do
+        let!(:church_of_england_measure) { ChurchOfEnglandMeasure.new({ 'dateOfRoyalAssent_dt' => ["first item", "second item"] }) }
+
+        it 'returns nil' do
+          expect(church_of_england_measure.date_of_royal_assent).to be_nil
+        end
+      end
+    end
+  end
 end
