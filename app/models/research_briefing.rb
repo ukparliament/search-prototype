@@ -12,8 +12,20 @@ class ResearchBriefing < ContentObject
     get_first_as_html_from('htmlsummary_t')
   end
 
+  def object_name
+    subtype
+  end
+
   def creator
     get_first_from('creator_ses')
+  end
+
+  def contributor
+    get_first_from('contributor_ses')
+  end
+
+  def series
+    get_first_from('category_ses')
   end
 
   def creator_party
@@ -27,8 +39,8 @@ class ResearchBriefing < ContentObject
     get_first_from('publisher_ses')
   end
 
-  def updated_on
-    get_first_as_date_from('dateLastModified_dt')
+  def last_updated
+    get_first_as_date_from('modified_dt')
   end
 
   def display_link

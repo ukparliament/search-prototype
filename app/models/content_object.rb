@@ -294,10 +294,6 @@ class ContentObject
     get_as_date_from('date_dt')
   end
 
-  def date_of_royal_assent
-    get_first_as_date_from('dateOfRoyalAssent_dt')
-  end
-
   private
 
   def get_as_string_from(field_name)

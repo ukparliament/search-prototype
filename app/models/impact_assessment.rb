@@ -1,4 +1,4 @@
-class ImpactAssessment < ContentObject
+class ImpactAssessment < Paper
 
   def initialize(content_object_data)
     super

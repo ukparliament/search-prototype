@@ -2,8 +2,10 @@
   <div class="content-prelim-inner">
     <div class="content-prelim-text" id="prelim-text">
       A <%= object_display_name_link(object.object_name) %> presented in the <%= search_link(object.legislature) %> on
-      <strong><%= format_date(object.date) %></strong> by
-      <%= search_link(object.member) %>.
+      <strong><%= format_date(object.date) %></strong>
+      <% unless object.members.blank? %>
+        by <%= render 'search/fragments/list', items: object.members, terminator: '.' %>
+      <% end %>
     </div>
   </div>
 </div>

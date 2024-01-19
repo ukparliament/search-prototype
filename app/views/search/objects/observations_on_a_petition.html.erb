@@ -21,7 +21,7 @@
 <% unless object.content.blank? %>
   <section id="main-content" class="content-section white">
     <div class="content-text">
-      <%= raw(object.content[:value]) %>
+      <%= raw(object.petition_text[:value]) %>
     </div>
   </section>
 <% end %>
@@ -31,8 +31,8 @@
   <%= render 'search/fragments/reference', reference: object.reference %>
   <%= render 'search/fragments/session', session: object.parliamentary_session %>
   <%= render 'search/fragments/procedure', procedure: object.procedure %>
-  <!--  presented by-->
   <%= render 'search/fragments/related_items', related_items: object.related_items %>
+  <%= render 'search/fragments/ec_documents', ec_documents: object.ec_documents %>
   <%= render 'search/fragments/notes', notes: object.notes %>
   <%= render 'search/fragments/pills', pills_heading: 'Subjects', pills: object.subjects %>
   <%= render 'search/fragments/legislation', legislation: object.legislation %>
