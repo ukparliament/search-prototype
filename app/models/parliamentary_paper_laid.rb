@@ -7,5 +7,4 @@ class ParliamentaryPaperLaid < Paper
   def template
     'search/objects/parliamentary_paper_laid'
   end
-
 end

@@ -101,11 +101,11 @@ class ContentObject
   end
 
   def certified_category
-    get_all_from('certifiedCategory_ses')
+    get_first_from('certifiedCategory_ses')
   end
 
   def certified_date
-    get_as_date_from('dateCertified_dt')
+    get_first_as_date_from('dateCertified_dt')
   end
 
   def legislation
