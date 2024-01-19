@@ -10,9 +10,9 @@ RSpec.describe ResearchBriefing, type: :model do
   end
 
   describe 'object_name' do
-    it 'returns object type' do
-      allow(research_briefing).to receive(:type).and_return({ value: 12345, field_name: 'type_ses' })
-      expect(research_briefing.object_name).to eq({ value: 12345, field_name: 'type_ses' })
+    it 'returns object subtype' do
+      allow(research_briefing).to receive(:subtype).and_return({ value: 12345, field_name: 'subtype_ses' })
+      expect(research_briefing.object_name).to eq({ value: 12345, field_name: 'subtype_ses' })
     end
   end
 
@@ -196,33 +196,33 @@ RSpec.describe ResearchBriefing, type: :model do
     end
   end
 
-  describe 'updated_on' do
+  describe 'last_updated' do
     context 'where there is no data' do
       it 'returns nil' do
-        expect(research_briefing.updated_on).to be_nil
+        expect(research_briefing.last_updated).to be_nil
       end
     end
 
     context 'where there is an empty array' do
-      let!(:research_briefing) { ResearchBriefing.new({ 'dateLastModified_dt' => [] }) }
+      let!(:research_briefing) { ResearchBriefing.new({ 'modified_dt' => [] }) }
       it 'returns nil' do
-        expect(research_briefing.updated_on).to be_nil
+        expect(research_briefing.last_updated).to be_nil
       end
     end
 
     context 'where data exists' do
       context 'where data is parsable as a datetime' do
-        let!(:research_briefing) { ResearchBriefing.new({ 'dateLastModified_dt' => ["2015-06-01T18:00:15.73Z", "2014-06-01T18:00:15.73Z"] }) }
+        let!(:research_briefing) { ResearchBriefing.new({ 'modified_dt' => ["2015-06-01T18:00:15.73Z", "2014-06-01T18:00:15.73Z"] }) }
 
         it 'returns the first string parsed as a datetime in the London timezone' do
-          expect(research_briefing.updated_on).to eq({ :field_name => "dateLastModified_dt", :value => "Mon, 01 Jun 2015, 19:00:15.73".in_time_zone("London").to_datetime })
+          expect(research_briefing.last_updated).to eq({ :field_name => "modified_dt", :value => "Mon, 01 Jun 2015, 19:00:15.73".in_time_zone("London").to_datetime })
         end
       end
       context 'where data is not parsable as a datetime' do
-        let!(:research_briefing) { ResearchBriefing.new({ 'dateLastModified_dt' => ["first item", "second item"] }) }
+        let!(:research_briefing) { ResearchBriefing.new({ 'modified_dt' => ["first item", "second item"] }) }
 
         it 'returns nil' do
-          expect(research_briefing.updated_on).to be_nil
+          expect(research_briefing.last_updated).to be_nil
         end
       end
     end
