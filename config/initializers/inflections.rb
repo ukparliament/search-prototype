@@ -9,6 +9,7 @@ ActiveSupport::Inflector.inflections(:en) do |inflect|
   inflect.irregular "debate on bills", "debates on bills"
   inflect.irregular "oral answer to question", "oral answers to questions"
   inflect.irregular "memorandum", "memoranda"
+  inflect.irregular "observations on a petition", "observations on petitions"
   #   inflect.uncountable %w( fish sheep )
 end
 

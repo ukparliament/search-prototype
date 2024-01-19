@@ -1,4 +1,4 @@
-class ObservationsOnAPetition < ContentObject
+class ObservationsOnAPetition < Petition
 
   def initialize(content_object_data)
     super

@@ -9,6 +9,8 @@ class StatutoryInstrument < Paper
   end
 
   def object_name
+    # differs from subtype_or_type as there can be multiple subtypes for SIs
+
     subtypes = get_all_from('subtype_ses')
     subtypes.blank? ? [type] : subtypes
   end

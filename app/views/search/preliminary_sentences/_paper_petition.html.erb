@@ -3,14 +3,8 @@
     <div class="content-prelim-text" id="prelim-text">
       A <%= object_display_name_link(object.object_name) %> presented in the <%= search_link(object.legislature) %> on
       <strong><%= format_date(object.date) %></strong>
-      <% if object.multi_member? %>
-        <%= render 'search/fragments/list', items: object.members, terminator: '.' %>
-      <% else %>
-        <% if object.member.blank? %>
-          .
-        <% else %>
-          by <%= search_link(object.member) %>.
-        <% end %>
+      <% unless object.members.blank? %>
+        by <%= render 'search/fragments/list', items: object.members, terminator: '.' %>
       <% end %>
     </div>
   </div>
