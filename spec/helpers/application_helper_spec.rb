@@ -8,14 +8,16 @@ RSpec.describe ApplicationHelper, type: :helper do
         expect(helper.boolean_yes_no(nil)).to eq('No')
       end
     end
-    context 'when given true' do
+    context 'when given a value of true' do
+      let!(:data) { { value: true, field_name: 'field_name' } }
       it 'returns yes' do
-        expect(helper.boolean_yes_no(true)).to eq('Yes')
+        expect(helper.boolean_yes_no(data)).to eq('Yes')
       end
     end
-    context 'when given false' do
+    context 'when given a value of false' do
+      let!(:data) { { value: false, field_name: 'field_name' } }
       it 'returns no' do
-        expect(helper.boolean_yes_no(false)).to eq('No')
+        expect(helper.boolean_yes_no(data)).to eq('No')
       end
     end
   end

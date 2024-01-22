@@ -1,4 +1,6 @@
-<div class="about-item">
-  <h3 class="content-heading" id="contains-impact-assessment">Contains impact assessment</h3>
-  <%= boolean_yes_no(contains_ia) %>
-</div>
+<% if contains_ia && contains_ia[:value] %>
+  <div class="about-item">
+    <h3 class="content-heading" id="contains-impact-assessment">Contains impact assessment</h3>
+    <%= boolean_yes_no(contains_ia) %>
+  </div>
+<% end %>

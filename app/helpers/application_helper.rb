@@ -6,7 +6,7 @@ module ApplicationHelper
     # outputs 'Yes' or 'No' strings from a boolean (an instance of Ruby TrueClass or FalseClass)
     # for presenting output of methods such as WrittenQuestion transferred?
     # Note that in most cases the partial will not be rendered except where the answer is 'Yes', but exceptions exist
-    return 'Yes' if boolean[:value] == true
+    return 'Yes' if boolean && boolean[:value] == true
 
     'No'
   end

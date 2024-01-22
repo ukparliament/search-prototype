@@ -280,13 +280,13 @@ class ContentObject
     has_table = get_first_as_boolean_from('hasTable_b')
     stats_indicated = get_first_as_boolean_from('statisticsIndicated_b')
 
-    return true if contains_stats && contains_stats[:value] == true
+    return { value: true } if contains_stats && contains_stats[:value] == true
 
-    return true if has_table && has_table[:value] == true
+    return { value: true } if has_table && has_table[:value] == true
 
-    return true if stats_indicated && stats_indicated[:value] == true
+    return { value: true } if stats_indicated && stats_indicated[:value] == true
 
-    false
+    { value: false }
   end
 
   def date
