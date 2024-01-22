@@ -1,4 +1,4 @@
-<% if grouped %>
+<% if grouped && grouped[:value] %>
   <div class="about-item">
     <h3 class="content-heading" id="grouped-for-answer">Grouped for answer</h3>
     <%= boolean_yes_no(grouped) %>

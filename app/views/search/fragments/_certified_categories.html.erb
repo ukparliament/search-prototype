@@ -1,0 +1,9 @@
+<% unless certified_categories.blank? %>
+  <div class="about-item">
+    <h3 class="content-heading" id="certified-categories">Certified as</h3>
+    <%= render 'search/fragments/list', items: certified_categories, terminator: '', singular: false %>
+    <% unless certified_date.blank? %>
+      <br/><%= format_date(certified_date) %>
+    <% end %>
+  </div>
+<% end %>

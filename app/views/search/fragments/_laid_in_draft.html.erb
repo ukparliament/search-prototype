@@ -1,4 +1,4 @@
-<% if laid_in_draft %>
+<% if laid_in_draft && laid_in_draft[:value] %>
   <div class="about-item">
     <h3 class="content-heading" id="laid-in-draft">Laid in draft</h3>
     <%= boolean_yes_no(laid_in_draft) %>

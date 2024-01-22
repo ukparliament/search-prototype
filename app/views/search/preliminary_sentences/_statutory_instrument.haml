@@ -2,7 +2,7 @@
   .content-prelim-inner
     .content-prelim-text#prelim-text
       A
-      = render 'search/fragments/list', items: object.object_name, terminator: ","
+      = render 'search/fragments/list', items: object.object_name, terminator: ",", singular: false
       laid in the&nbsp
       %span>= search_link(object.legislature)
       , on&nbsp

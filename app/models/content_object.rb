@@ -100,8 +100,8 @@ class ContentObject
     get_all_from('topic_ses')
   end
 
-  def certified_category
-    get_first_from('certifiedCategory_ses')
+  def certified_categories
+    get_all_from('certifiedCategory_ses')
   end
 
   def certified_date
@@ -280,13 +280,13 @@ class ContentObject
     has_table = get_first_as_boolean_from('hasTable_b')
     stats_indicated = get_first_as_boolean_from('statisticsIndicated_b')
 
-    return true if contains_stats && contains_stats[:value] == true
+    return { value: true } if contains_stats && contains_stats[:value] == true
 
-    return true if has_table && has_table[:value] == true
+    return { value: true } if has_table && has_table[:value] == true
 
-    return true if stats_indicated && stats_indicated[:value] == true
+    return { value: true } if stats_indicated && stats_indicated[:value] == true
 
-    false
+    { value: false }
   end
 
   def date
@@ -297,7 +297,6 @@ class ContentObject
   private
 
   def get_as_string_from(field_name)
-    # TODO: implement this for page title etc.
     return if content_object_data[field_name].blank?
 
     { value: content_object_data[field_name], field_name: field_name }
@@ -318,7 +317,6 @@ class ContentObject
   end
 
   def get_first_from(field_name)
-    # TODO: this structure could be an object itself, as we're passing it around a lot
     return if content_object_data[field_name].blank?
 
     { value: content_object_data[field_name].first, field_name: field_name }
