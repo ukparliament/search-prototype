@@ -11,7 +11,7 @@
       led by <%= search_link(object.lead_member) %>.
       <% unless object.answering_members.blank? %>
         The answering members were
-        <%= render 'search/fragments/list', items: object.answering_members, terminator: '.' %>
+        <%= render 'search/fragments/list', items: object.answering_members, terminator: '.', singular: false %>
       <% end %>
     </div>
   </div>

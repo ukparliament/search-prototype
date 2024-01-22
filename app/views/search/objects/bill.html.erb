@@ -1,6 +1,5 @@
 <% if Rails.env.development? %>
   <%= render 'search/fragments/data', data: object.content_object_data, title: 'SOLR Data' %>
-  <%= render 'search/fragments/data', data: object.previous_version.content_object_data, title: 'Previous SOLR Data' %>
   <%= render 'search/fragments/data', data: @ses_data, title: 'SES Data' %>
 <% end %>
 
@@ -31,7 +30,7 @@
   <h2 class="content-heading">About this <%= object_display_name(object.type) %></h2>
   <%= render 'search/fragments/reference', reference: object.reference %>
   <%= render 'search/fragments/session', session: object.parliamentary_session %>
-  <%= render 'search/fragments/certified_category', certified_category: object.certified_category, certified_date: object.certified_date %>
+  <%= render 'search/fragments/certified_categories', certified_categories: object.certified_categories, certified_date: object.certified_date %>
   <%= render 'search/fragments/previous_version', previous_version: object.previous_version, link: object.previous_version_link %>
   <%= render 'search/fragments/related_items', related_items: object.related_items %>
   <%= render 'search/fragments/ec_documents', ec_documents: object.ec_documents %>

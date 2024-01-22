@@ -100,8 +100,8 @@ class ContentObject
     get_all_from('topic_ses')
   end
 
-  def certified_category
-    get_first_from('certifiedCategory_ses')
+  def certified_categories
+    get_all_from('certifiedCategory_ses')
   end
 
   def certified_date
@@ -297,7 +297,6 @@ class ContentObject
   private
 
   def get_as_string_from(field_name)
-    # TODO: implement this for page title etc.
     return if content_object_data[field_name].blank?
 
     { value: content_object_data[field_name], field_name: field_name }
@@ -318,7 +317,6 @@ class ContentObject
   end
 
   def get_first_from(field_name)
-    # TODO: this structure could be an object itself, as we're passing it around a lot
     return if content_object_data[field_name].blank?
 
     { value: content_object_data[field_name].first, field_name: field_name }

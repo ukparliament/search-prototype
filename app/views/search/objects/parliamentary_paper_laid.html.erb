@@ -36,7 +36,7 @@
   <%= render 'search/fragments/procedure', procedure: object.procedure, approval_days: object.procedure_scrutiny_period %>
   <%= render 'search/fragments/laying_authority', laying_authority: object.laying_authority %>
   <%= render 'search/fragments/laid_in_draft', laid_in_draft: object.laid_in_draft? %>
-  <%= render 'search/fragments/certified_category', certified_category: object.certified_category, certified_date: object.certified_date %>
+  <%= render 'search/fragments/certified_categories', certified_categories: object.certified_categories, certified_date: object.certified_date %>
   <%= render 'search/fragments/referred_to', referred_to: object.referred_to %>
   <%= render 'search/fragments/related_items', related_items: object.related_items %>
   <%= render 'search/fragments/ec_documents', ec_documents: object.ec_documents %>

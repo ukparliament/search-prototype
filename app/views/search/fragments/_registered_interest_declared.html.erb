@@ -1,4 +1,4 @@
-<% if registered_interest %>
+<% if registered_interest && registered_interest[:value] %>
   <div class="about-item">
     <h3 class="content-heading" id="registered-interest-declared">Registered interest declared</h3>
     <%= boolean_yes_no(registered_interest) %>
