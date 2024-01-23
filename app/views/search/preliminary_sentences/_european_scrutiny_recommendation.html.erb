@@ -1,0 +1,17 @@
+<div class="content-prelim-box">
+  <div class="content-prelim-inner">
+    <div class="content-prelim-text" id="prelim-text">
+      <%= object_display_name_link(object.object_name) %> dated
+      <strong><%= format_date(object.report_date) %></strong>
+      <% unless object.regarding_link.blank? %>
+        , regarding <%= link_to(object.regarding_title, object_show_url(object: object.regarding_link[:value])) %>
+      <% end %>
+      .
+      <% unless object.debate_date.blank? %>
+        It was debated on <strong><%= format_date(object.debate_date) %></strong>
+        in <%= object.debate_location[:value] %>.
+      <% end %>
+    </div>
+  </div>
+</div>
+

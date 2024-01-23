@@ -2,9 +2,6 @@
   <div class="content-prelim-inner">
     <div class="content-prelim-text" id="prelim-text">
       An <%= object_display_name_link(object.object_name) %> asked in the <%= search_link(object.legislature) %>,
-      <% if object.place %>
-        in the <%= search_link(object.place) %>
-      <% end %>
       by <%= search_link(object.tabling_member) %> (<%= search_link(object.tabling_member_party) %>).
       It was answered by <%= search_link(object.answering_member) %>
       (<%= search_link(object.answering_member_party) %>)
