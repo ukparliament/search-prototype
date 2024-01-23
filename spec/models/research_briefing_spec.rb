@@ -64,6 +64,7 @@ RSpec.describe ResearchBriefing, type: :model do
   end
 
   describe 'published?' do
+    # test example - get first as boolean
     context 'where there is no data' do
       it 'returns nil' do
         expect(research_briefing.published?).to be_nil
