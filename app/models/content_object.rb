@@ -458,7 +458,6 @@ class ContentObject
     when 347032
       'EuropeanScrutinyRecommendation'
     when 347010
-      # no link for this yet
       'EuropeanMaterial'
 
     else
