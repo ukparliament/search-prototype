@@ -19,8 +19,4 @@ class StatutoryInstrument < Paper
     get_first_from('memberPrinted_t')
   end
 
-  def last_subtype
-    get_last_from('subtype_ses')
-  end
-
 end
