@@ -303,6 +303,7 @@ RSpec.describe ContentObject, type: :model do
   end
 
   describe 'commons_library_location' do
+    # example test - get first
     context 'where there is no data' do
       it 'returns nil' do
         expect(content_object.commons_library_location).to be_nil
@@ -510,6 +511,7 @@ RSpec.describe ContentObject, type: :model do
   end
 
   describe 'witnesses' do
+    # example test - get all from
     context 'where there is no data' do
       it 'returns nil' do
         expect(content_object.witnesses).to be_nil

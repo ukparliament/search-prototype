@@ -34,7 +34,7 @@ RSpec.describe OralQuestion, type: :model do
       let!(:oral_question) { OralQuestion.new({ 'identifier_t' => ['first item', 'second item'] }) }
 
       it 'returns the first item' do
-        expect(oral_question.reference).to eq({:field_name=>"identifier_t", :value=>"first item"})
+        expect(oral_question.reference).to eq({ :field_name => "identifier_t", :value => "first item" })
       end
     end
   end
@@ -57,7 +57,7 @@ RSpec.describe OralQuestion, type: :model do
       let!(:oral_question) { OralQuestion.new({ 'subject_ses' => ['first item', 'second item'] }) }
 
       it 'returns all items as an array' do
-        expect(oral_question.subjects).to eq([{:field_name=>"subject_ses", :value=>"first item"}, {:field_name=>"subject_ses", :value=>"second item"}])
+        expect(oral_question.subjects).to eq([{ :field_name => "subject_ses", :value => "first item" }, { :field_name => "subject_ses", :value => "second item" }])
       end
     end
   end
@@ -80,7 +80,56 @@ RSpec.describe OralQuestion, type: :model do
       let!(:oral_question) { OralQuestion.new({ 'legislationTitle_ses' => [12345, 67890] }) }
 
       it 'returns all items as an array' do
-        expect(oral_question.legislation).to eq([{:field_name=>"legislationTitle_ses", :value=>12345}, {:field_name=>"legislationTitle_ses", :value=>67890}])
+        expect(oral_question.legislation).to eq([{ :field_name => "legislationTitle_ses", :value => 12345 }, { :field_name => "legislationTitle_ses", :value => 67890 }])
+      end
+    end
+  end
+
+  describe 'lords_answered?' do
+    context 'where state is lords answered' do
+      it 'returns true' do
+        allow(oral_question).to receive(:state).and_return({ field_name: 'pqStatus_t', value: 'Lords_Answered' })
+        expect(oral_question.lords_answered?).to eq(true)
+      end
+    end
+    context 'where state is not lords answered' do
+      it 'returns false' do
+        allow(oral_question).to receive(:state).and_return({ field_name: 'pqStatus_t', value: 'another_state' })
+        expect(oral_question.lords_answered?).to eq(false)
+      end
+    end
+  end
+
+  describe 'prelim_partial' do
+    context 'when state is tabled' do
+      it 'returns the tabled partial' do
+        allow(oral_question).to receive(:tabled?).and_return(true)
+        expect(oral_question.prelim_partial).to eq('/search/preliminary_sentences/oral_question_tabled')
+      end
+    end
+    context 'when state is withdrawn' do
+      it 'returns the withdrawn partial' do
+        allow(oral_question).to receive(:withdrawn?).and_return(true)
+        expect(oral_question.prelim_partial).to eq('/search/preliminary_sentences/oral_question_withdrawn')
+      end
+    end
+    context 'when state is answered' do
+      it 'returns the answered partial' do
+        allow(oral_question).to receive(:answered?).and_return(true)
+        expect(oral_question.prelim_partial).to eq('/search/preliminary_sentences/oral_question_answered')
+      end
+    end
+    context 'when state is lords answered' do
+      it 'returns the lords answered partial' do
+        allow(oral_question).to receive(:lords_answered?).and_return(true)
+        expect(oral_question.prelim_partial).to eq('/search/preliminary_sentences/oral_question_lords_answered')
+      end
+    end
+    context 'when state is corrected' do
+      it 'returns the corrected partial' do
+        allow(oral_question).to receive(:lords_answered?).and_return(false)
+        allow(oral_question).to receive(:corrected?).and_return(true)
+        expect(oral_question.prelim_partial).to eq('/search/preliminary_sentences/oral_question_corrected')
       end
     end
   end

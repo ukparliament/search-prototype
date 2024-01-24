@@ -32,7 +32,7 @@ module ApplicationHelper
     when 8
       "ninth"
     else
-      index.ordinalize
+      (index + 1).ordinalize
     end
   end
 end
