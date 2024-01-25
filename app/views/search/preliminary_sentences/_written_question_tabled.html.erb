@@ -4,7 +4,7 @@
       A <%= object_display_name_link(object.object_name) %>
       tabled by <%= search_link(object.tabling_member) %> (<%= search_link(object.tabling_member_party) %>)
       on <strong><%= format_date(object.date_of_question) %></strong>,
-      in the <%= search_link(object.legislature) %>
+      in the <%= render 'search/fragments/list', items: object.legislature, terminator: '', singular: false %>
       <% unless object.department.blank? %>
         for the <%= search_link(object.department) %>
       <% end %>.

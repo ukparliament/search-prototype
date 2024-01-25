@@ -4,7 +4,7 @@
       A <%= object_display_name_link(object.object_name) %> made by <%= search_link(object.correcting_member) %>
       (<%= search_link(object.correcting_member_party) %>) on
       <strong><%= format_date(object.correction_date) %></strong>,
-      in the <%= search_link(object.legislature) %> on behalf of the
+      in the <%= render 'search/fragments/list', items: object.legislature, terminator: '', singular: false %> on behalf of the
       <%= search_link(object.department) %>.
     </div>
   </div>

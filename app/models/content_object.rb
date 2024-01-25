@@ -82,7 +82,7 @@ class ContentObject
   end
 
   def reference
-    get_first_from('identifier_t')
+    get_all_from('identifier_t')
   end
 
   def subjects
@@ -104,11 +104,16 @@ class ContentObject
   end
 
   def legislation
-    # TODO: change this so it functions as subjects, above
-    preferred = get_all_from('legislationTitle_ses')
-    return preferred unless preferred.blank?
+    from_ses = get_all_from('legislationTitle_ses')
+    as_text = get_all_from('legislationTitle_t')
 
-    get_all_from('legislationTitle_t')
+    return nil if from_ses.blank? && as_text.blank?
+
+    return from_ses if as_text.blank?
+
+    return as_text if from_ses.blank?
+
+    from_ses + as_text
   end
 
   def department
@@ -156,7 +161,7 @@ class ContentObject
   end
 
   def legislature
-    get_first_from('legislature_ses')
+    get_all_from('legislature_ses')
   end
 
   def registered_interest_declared?
@@ -198,6 +203,7 @@ class ContentObject
   end
 
   def related_items
+    # TODO: refactor for performance
     relation_uris = get_all_from('relation_t')&.pluck(:value)
     ObjectsFromUriList.new(relation_uris).get_objects
   end

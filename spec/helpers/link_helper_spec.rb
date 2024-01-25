@@ -20,8 +20,8 @@ RSpec.describe LinkHelper, type: :helper do
       end
     end
     context 'when given a string value and a field name' do
-      it 'returns a link to a new search using the string as a query' do
-        expect(helper.search_link(input_data_string)).to eq("<a href=\"/search-prototype/search?query=Test+string\">Test string</a>")
+      it 'returns a link to a new search using the string as a filter for the given field' do
+        expect(helper.search_link(input_data_string)).to eq("<a href=\"/search-prototype/search?filter%5Bfield_name%5D=abstract_t&amp;filter%5Bvalue%5D=Test+string\">Test string</a>")
       end
     end
   end

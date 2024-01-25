@@ -48,7 +48,10 @@ RSpec.describe 'Written Statement', type: :request do
 
           get '/objects', params: { :object => written_statement_instance }
 
-          expect(CGI::unescapeHTML(response.body)).to include(written_statement_instance.reference[:value])
+          written_statement_instance.reference.each do |ref|
+            expect(CGI::unescapeHTML(response.body)).to include(ref[:value])
+          end
+
           expect(CGI::unescapeHTML(response.body)).to include(written_statement_instance.parliamentary_session[:value])
           expect(CGI::unescapeHTML(response.body)).to include(written_statement_instance.display_link[:value])
 

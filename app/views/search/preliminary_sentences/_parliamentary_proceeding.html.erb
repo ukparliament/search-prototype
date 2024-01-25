@@ -7,7 +7,7 @@
       <% end %>
       on
       <strong><%= format_date(object.date) %></strong>,
-      in the <%= search_link(object.legislature) %>,
+      in the <%= render 'search/fragments/list', items: object.legislature, terminator: ',', singular: false %>
       led by <%= search_link(object.lead_member) %>.
       <% unless object.answering_members.blank? %>
         The answering members were

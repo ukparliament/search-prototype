@@ -10,7 +10,7 @@
         <% end %>
       <% end %>
       and tabled on <strong><%= format_date(object.date_tabled) %></strong>
-      in the <%= search_link(object.legislature) %>.
+      in the <%= render 'search/fragments/list', items: object.legislature, terminator: '.', singular: false %>
       <% if object.has_subtype? %>
         It is a <%= object.subtype_name %>
       <% else %>

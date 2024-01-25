@@ -102,8 +102,8 @@ RSpec.describe Edm, type: :model do
     context 'where data exists' do
       let!(:edm) { Edm.new({ 'identifier_t' => ['first item', 'second item'] }) }
 
-      it 'returns the first item' do
-        expect(edm.reference).to eq({ :field_name => "identifier_t", :value => "first item" })
+      it 'returns all items' do
+        expect(edm.reference).to eq([{ :field_name => "identifier_t", :value => "first item" }, { :field_name => "identifier_t", :value => "second item" }])
       end
     end
   end

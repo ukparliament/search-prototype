@@ -33,8 +33,8 @@ RSpec.describe TransportAndWorksActOrderApplication, type: :model do
     context 'where data exists' do
       let!(:transport_and_works_act_order_application) { TransportAndWorksActOrderApplication.new({ 'identifier_t' => ['first item', 'second item'] }) }
 
-      it 'returns the first item' do
-        expect(transport_and_works_act_order_application.reference).to eq({ :field_name => "identifier_t", :value => "first item" })
+      it 'returns all items' do
+        expect(transport_and_works_act_order_application.reference).to eq([{ :field_name => "identifier_t", :value => "first item" }, { :field_name => "identifier_t", :value => "second item" }])
       end
     end
   end

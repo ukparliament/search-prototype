@@ -54,7 +54,9 @@ RSpec.describe 'Research Briefing', type: :request do
 
           get '/objects', params: { :object => research_briefing_instance }
 
-          expect(CGI::unescapeHTML(response.body)).to include(research_briefing_instance.reference[:value])
+          research_briefing_instance.reference.each do |ref|
+            expect(CGI::unescapeHTML(response.body)).to include(ref[:value])
+          end
           expect(CGI::unescapeHTML(response.body)).to include(research_briefing_instance.display_link[:value])
 
           if research_briefing_instance.published?

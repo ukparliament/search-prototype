@@ -612,6 +612,56 @@ RSpec.describe ContentObject, type: :model do
     end
   end
 
+  describe 'legislation' do
+    context 'where there is no data' do
+      it 'returns nil' do
+        expect(content_object.legislation).to be_nil
+      end
+    end
+
+    context 'where there is an empty array' do
+      let!(:content_object) { ContentObject.new({ 'legislationTitle_ses' => [], 'legislationTitle_t' => [] }) }
+      it 'returns nil' do
+        expect(content_object.legislation).to be_nil
+      end
+    end
+
+    context 'where data exists in both fields' do
+      let!(:content_object) { ContentObject.new({ 'legislationTitle_ses' => [12345, 67890], 'legislationTitle_t' => ['title 1', 'title 2'] }) }
+
+      it 'returns all items' do
+        expect(content_object.legislation).to match_array([
+                                                            { field_name: 'legislationTitle_ses', value: 12345 },
+                                                            { field_name: 'legislationTitle_ses', value: 67890 },
+                                                            { field_name: 'legislationTitle_t', value: 'title 1' },
+                                                            { field_name: 'legislationTitle_t', value: 'title 2' }
+                                                          ])
+      end
+    end
+
+    context 'where data exists as text' do
+      let!(:content_object) { ContentObject.new({ 'legislationTitle_ses' => [], 'legislationTitle_t' => ['title 1', 'title 2'] }) }
+
+      it 'returns all items' do
+        expect(content_object.legislation).to match_array([
+                                                            { field_name: 'legislationTitle_t', value: 'title 1' },
+                                                            { field_name: 'legislationTitle_t', value: 'title 2' }
+                                                          ])
+      end
+    end
+
+    context 'where data exists as SES ids' do
+      let!(:content_object) { ContentObject.new({ 'legislationTitle_ses' => [12345, 67890], 'legislationTitle_t' => [] }) }
+
+      it 'returns all items' do
+        expect(content_object.legislation).to match_array([
+                                                            { field_name: 'legislationTitle_ses', value: 12345 },
+                                                            { field_name: 'legislationTitle_ses', value: 67890 }
+                                                          ])
+      end
+    end
+  end
+
   describe 'certified_date' do
     context 'where there is no data' do
       it 'returns nil' do
