@@ -22,4 +22,57 @@ RSpec.describe ApplicationHelper, type: :helper do
     end
   end
 
+  describe 'ordinal_text' do
+    context 'when given 0' do
+      it 'returns first' do
+        expect(helper.ordinal_text(0)).to eq('first')
+      end
+    end
+    context 'when given 1' do
+      it 'returns second' do
+        expect(helper.ordinal_text(1)).to eq('second')
+      end
+    end
+    context 'when given 2' do
+      it 'returns third' do
+        expect(helper.ordinal_text(2)).to eq('third')
+      end
+    end
+    context 'when given 3' do
+      it 'returns fourth' do
+        expect(helper.ordinal_text(3)).to eq('fourth')
+      end
+    end
+    context 'when given 4' do
+      it 'returns fifth' do
+        expect(helper.ordinal_text(4)).to eq('fifth')
+      end
+    end
+    context 'when given 5' do
+      it 'returns sixth' do
+        expect(helper.ordinal_text(5)).to eq('sixth')
+      end
+    end
+    context 'when given 6' do
+      it 'returns seventh' do
+        expect(helper.ordinal_text(6)).to eq('seventh')
+      end
+    end
+    context 'when given 7' do
+      it 'returns eighth' do
+        expect(helper.ordinal_text(7)).to eq('eighth')
+      end
+    end
+    context 'when given 8' do
+      it 'returns ninth' do
+        expect(helper.ordinal_text(8)).to eq('ninth')
+      end
+    end
+    context 'when given another number' do
+      it 'returns a numeric ordinal string (zero indexed)' do
+        expect(helper.ordinal_text(9)).to eq('10th')
+      end
+    end
+  end
+
 end

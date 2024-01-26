@@ -3,7 +3,7 @@
     <div class="content-prelim-text" id="prelim-text">
       An <%= object_display_name_link(object.object_name) %> provided
       on <strong><%= format_date(object.date_of_answer) %></strong>
-      in the <%= search_link(object.legislature) %>,
+      in the <%= render 'search/fragments/list', items: object.legislature, terminator: ',', singular: false %>
       by <%= search_link(object.answering_member) %> (<%= search_link(object.answering_member_party) %>)
       <% unless object.answering_department.blank? %>
         behalf of the <%= search_link(object.answering_department) %>

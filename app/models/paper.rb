@@ -17,7 +17,7 @@ class Paper < ContentObject
   end
 
   def date_approved
-    get_first_as_date_from('approvedDate_dt')
+    get_first_as_date_from('dateApproved_dt')
   end
 
   def date_made

@@ -15,11 +15,14 @@ module LinkHelper
 
     return if data.blank? || data[:value].blank?
 
-    if data[:field_name].last(3) == 'ses'
-      link_to(formatted_name(data, ses_data, singular), search_path(filter: data))
-    else
-      link_to(formatted_name(data, ses_data, singular), search_path(query: data[:value]))
-    end
+    # Adjusted behaviour: all fields now pass a complete data object across, including their field name
+    # This means any field, e.g. memberPrinted_t will search for the value in that Solr field. This behaviour was
+    # previously exclusive to _ses fields.
+    # if data[:field_name].last(3) == 'ses'
+    link_to(formatted_name(data, ses_data, singular), search_path(filter: data))
+    # else
+    #   link_to(formatted_name(data, ses_data, singular), search_path(query: data[:value]))
+    # end
 
   end
 

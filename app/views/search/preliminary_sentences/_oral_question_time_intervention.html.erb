@@ -3,7 +3,7 @@
     <div class="content-prelim-text" id="prelim-text">
       An <%= object_display_name_link(object.object_name) %> made
       on <strong><%= format_date(object.date) %></strong>
-      in the <%= search_link(object.legislature) %>
+      in the <%= render 'search/fragments/list', items: object.legislature, terminator: '', singular: false %>
       by <%= search_link(object.member) %> (<%= search_link(object.member_party) %>).
     </div>
   </div>

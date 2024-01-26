@@ -33,8 +33,8 @@ RSpec.describe DepositedPaper, type: :model do
     context 'where data exists' do
       let!(:deposited_paper) { DepositedPaper.new({ 'identifier_t' => ['first item', 'second item'] }) }
 
-      it 'returns the first item' do
-        expect(deposited_paper.reference).to eq({:field_name=>"identifier_t", :value=>"first item"})
+      it 'returns all items' do
+        expect(deposited_paper.reference).to eq([{ :field_name => "identifier_t", :value => "first item" }, { :field_name => "identifier_t", :value => "second item" }])
       end
     end
   end

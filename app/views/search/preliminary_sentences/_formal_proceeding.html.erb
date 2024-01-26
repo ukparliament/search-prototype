@@ -6,7 +6,7 @@
         (<%= search_link(object.legislative_stage) %>)
       <% end %>
       on <strong><%= format_date(object.date) %></strong>,
-      in the <%= search_link(object.legislature) %>
+      in the <%= render 'search/fragments/list', items: object.legislature, terminator: '', singular: false %>
       <% if object.lead_member.blank? %>
         .
       <% else %>

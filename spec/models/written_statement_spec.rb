@@ -126,8 +126,8 @@ RSpec.describe WrittenStatement, type: :model do
     context 'where data exists' do
       let!(:written_statement) { WrittenStatement.new({ 'legislature_ses' => ['first item', 'second item'] }) }
 
-      it 'returns first item' do
-        expect(written_statement.legislature).to eq({ :field_name => "legislature_ses", :value => "first item" })
+      it 'returns all items' do
+        expect(written_statement.legislature).to eq([{ :field_name => "legislature_ses", :value => "first item" }, { :field_name => "legislature_ses", :value => "second item" }])
       end
     end
   end

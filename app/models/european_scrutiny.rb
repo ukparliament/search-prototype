@@ -11,6 +11,7 @@ class EuropeanScrutiny < ContentObject
   def regarding_title
     # When the regarding object has no title, we need to assemble one using its subtype or type
     # This requires a separate call to SES
+    return unless regarding_object
 
     if regarding_object.page_title.blank?
       ses_data = SesLookup.new([regarding_object.object_name]).data
@@ -21,10 +22,15 @@ class EuropeanScrutiny < ContentObject
     end
   end
 
+  private
+
   def regarding_object
     return if regarding_link.blank?
 
     regarding_data = SolrQuery.new(object_uri: regarding_link[:value]).object_data
+
+    return if regarding_data.blank?
+
     ContentObject.generate(regarding_data)
   end
 end

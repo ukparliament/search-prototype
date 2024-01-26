@@ -54,10 +54,6 @@ class ContentObject
     SesLookup.new(ses_lookup_ids).data
   end
 
-  def html_summary
-    get_first_as_html_from('htmlsummary_t')
-  end
-
   def content
     get_first_as_html_from('content_t')
   end
@@ -66,19 +62,18 @@ class ContentObject
     get_as_html_from('abstract_t')
   end
 
-  def published?
-    get_first_as_boolean_from('published_b')
-  end
-
   def contains_explanatory_memo?
+    # bills, laid papers & SIs
     get_first_as_boolean_from('containsEM_b')
   end
 
   def contains_impact_assessment?
+    # laid papers & SIs
     get_first_as_boolean_from('containsIA_b')
   end
 
   def contribution_type
+    # proceeding contributions & oral questions
     get_first_from('contributionType_t')
   end
 
@@ -87,7 +82,7 @@ class ContentObject
   end
 
   def reference
-    get_first_from('identifier_t')
+    get_all_from('identifier_t')
   end
 
   def subjects
@@ -109,11 +104,16 @@ class ContentObject
   end
 
   def legislation
-    # TODO: change this so it functions as subjects, above
-    preferred = get_all_from('legislationTitle_ses')
-    return preferred unless preferred.blank?
+    from_ses = get_all_from('legislationTitle_ses')
+    as_text = get_all_from('legislationTitle_t')
 
-    get_all_from('legislationTitle_t')
+    return nil if from_ses.blank? && as_text.blank?
+
+    return from_ses if as_text.blank?
+
+    return as_text if from_ses.blank?
+
+    from_ses + as_text
   end
 
   def department
@@ -161,7 +161,7 @@ class ContentObject
   end
 
   def legislature
-    get_first_from('legislature_ses')
+    get_all_from('legislature_ses')
   end
 
   def registered_interest_declared?
@@ -203,6 +203,7 @@ class ContentObject
   end
 
   def related_items
+    # TODO: refactor for performance
     relation_uris = get_all_from('relation_t')&.pluck(:value)
     ObjectsFromUriList.new(relation_uris).get_objects
   end
@@ -322,12 +323,6 @@ class ContentObject
     { value: content_object_data[field_name].first, field_name: field_name }
   end
 
-  def get_last_from(field_name)
-    return if content_object_data[field_name].blank?
-
-    { value: content_object_data[field_name].last, field_name: field_name }
-  end
-
   def get_first_as_html_from(field_name)
     return if content_object_data[field_name].blank?
 
@@ -400,8 +395,6 @@ class ContentObject
       case subtype_id
       when 479373
         'PaperPetition'
-      when 420548
-        'EPetition'
       when 347214
         'ObservationsOnAPetition'
       else
@@ -429,8 +422,6 @@ class ContentObject
       'ParliamentaryPaperLaid'
     when 352156
       'ParliamentaryPaperReported'
-    when 363376
-      'ResearchMaterial'
     when 92277
       'OralQuestion'
     when 286676
@@ -459,7 +450,6 @@ class ContentObject
       'EuropeanScrutinyRecommendation'
     when 347010
       'EuropeanMaterial'
-
     else
       'ContentObject'
     end

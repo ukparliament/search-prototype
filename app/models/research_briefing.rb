@@ -32,6 +32,10 @@ class ResearchBriefing < ContentObject
     get_first_from('creatorParty_ses')
   end
 
+  def published?
+    get_first_as_boolean_from('published_b')
+  end
+
   def published_by
     # this is the publishing organisation and is to be used in the secondary attributes
     # currently unused as we're showing a graphic as per the wireframes, & working with publisherSnapshot_s to do that

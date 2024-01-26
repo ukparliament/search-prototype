@@ -51,7 +51,10 @@ RSpec.describe 'Edm', type: :request do
 
           get '/objects', params: { :object => edm_instance }
 
-          expect(CGI::unescapeHTML(response.body)).to include(edm_instance.reference[:value])
+          edm_instance.reference.each do |ref|
+            expect(CGI::unescapeHTML(response.body)).to include(ref[:value])
+          end
+
           expect(CGI::unescapeHTML(response.body)).to include(edm_instance.parliamentary_session[:value])
           expect(CGI::unescapeHTML(response.body)).to include(edm_instance.motion_text[:value])
           expect(CGI::unescapeHTML(response.body)).to include("SES response for #{edm_instance.primary_sponsor[:value]}")

@@ -33,8 +33,8 @@ RSpec.describe PublicAct, type: :model do
     context 'where data exists' do
       let!(:public_act) { PublicAct.new({ 'identifier_t' => ['first item', 'second item'] }) }
 
-      it 'returns the first item' do
-        expect(public_act.reference).to eq({ :field_name => "identifier_t", :value => "first item" })
+      it 'returns all items' do
+        expect(public_act.reference).to eq([{ :field_name => "identifier_t", :value => "first item" }, { :field_name => "identifier_t", :value => "second item" }])
       end
     end
   end

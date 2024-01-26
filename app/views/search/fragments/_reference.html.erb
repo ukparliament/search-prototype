@@ -1,6 +1,8 @@
 <% unless reference.blank? %>
   <div class="about-item">
     <h3 class="content-heading" id="reference">Reference</h3>
-    <%= reference[:value] %>
+    <% reference.each do |ref| %>
+      <%= ref[:value] %>&nbsp
+    <% end %>
   </div>
 <% end %>
