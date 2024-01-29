@@ -86,9 +86,10 @@ class ContentObject
   end
 
   def subjects
-    # TODO: may sometimes also be subject_t instead of subject_ses, need to handle this
-    # these are distinct lists so just chunk them all together
-    get_all_from('subject_ses')
+    from_ses = get_all_from('subject_ses')
+    as_text = get_all_from('subject_t')
+
+    combine_fields(from_ses, as_text)
   end
 
   def topics
@@ -107,13 +108,7 @@ class ContentObject
     from_ses = get_all_from('legislationTitle_ses')
     as_text = get_all_from('legislationTitle_t')
 
-    return nil if from_ses.blank? && as_text.blank?
-
-    return from_ses if as_text.blank?
-
-    return as_text if from_ses.blank?
-
-    from_ses + as_text
+    combine_fields(from_ses, as_text)
   end
 
   def department
@@ -467,6 +462,16 @@ class ContentObject
     end
 
     date_string
+  end
+
+  def combine_fields(first, second)
+    return nil if first.blank? && second.blank?
+
+    return first if second.blank?
+
+    return second if first.blank?
+
+    first + second
   end
 
 end

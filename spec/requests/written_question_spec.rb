@@ -84,14 +84,21 @@ RSpec.describe 'Written Question', type: :request do
 
           unless written_question_instance.subjects.blank?
             written_question_instance.subjects.each do |subject|
-              # page should show the SES name for each subject ID
-              expect(CGI::unescapeHTML(response.body)).to include(subject[:value].to_s)
+              if subject[:field_name] == 'subject_ses'
+                expect(CGI::unescapeHTML(response.body)).to include("SES response for #{subject[:value]}")
+              elsif subject[:field_name] == 'subject_t'
+                expect(CGI::unescapeHTML(response.body)).to include(subject[:value].to_s)
+              end
             end
           end
 
           unless written_question_instance.legislation.blank?
             written_question_instance.legislation.each do |legislation|
-              expect(CGI::unescapeHTML(response.body)).to include(legislation[:value].to_s)
+              if legislation[:field_name] == 'legislationTitle_ses'
+                expect(CGI::unescapeHTML(response.body)).to include("SES response for #{legislation[:value]}")
+              elsif legislation[:field_name] == 'legislationTitle_t'
+                expect(CGI::unescapeHTML(response.body)).to include("#{legislation[:value]}")
+              end
             end
           end
         end
