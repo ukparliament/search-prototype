@@ -19,7 +19,7 @@ class StatutoryInstrument < Paper
     get_first_from('memberPrinted_t')
   end
 
-  def withdrawn?
+  def is_withdrawn
     get_first_as_boolean_from('withdrawn_b')
   end
 

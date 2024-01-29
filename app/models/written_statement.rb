@@ -24,7 +24,7 @@ class WrittenStatement < ContentObject
     get_first_as_html_from('statementText_t')
   end
 
-  def corrected?
+  def is_corrected
     get_first_as_boolean_from('correctedWmsMc_b')
   end
 end

@@ -110,7 +110,7 @@ RSpec.describe WrittenQuestion, type: :model do
     context 'where state is answered' do
       context 'where answer is marked as holding and there is a holding answer date' do
         it 'returns true' do
-          allow(written_question).to receive(:holding_answer?).and_return({ value: true, field_name: 'holdingAnswer_b' })
+          allow(written_question).to receive(:has_holding_answer).and_return({ value: true, field_name: 'holdingAnswer_b' })
           allow(written_question).to receive(:date_of_holding_answer).and_return(Date.yesterday)
           allow(written_question).to receive(:state).and_return({ value: 'Answered', field_name: 'pqStatus_t' })
           expect(written_question.answered_was_holding?).to eq(true)
@@ -499,14 +499,14 @@ RSpec.describe WrittenQuestion, type: :model do
   describe 'transferred?' do
     context 'where there is no data' do
       it 'returns nil' do
-        expect(written_question.transferred?).to be_nil
+        expect(written_question.is_transferred).to be_nil
       end
     end
 
     context 'where there is no value' do
       let!(:written_question) { WrittenQuestion.new({ 'transferredQuestion_b' => nil }) }
       it 'returns nil' do
-        expect(written_question.transferred?).to be_nil
+        expect(written_question.is_transferred).to be_nil
       end
     end
 
@@ -514,14 +514,14 @@ RSpec.describe WrittenQuestion, type: :model do
       context 'where true' do
         let!(:written_question) { WrittenQuestion.new({ 'transferredQuestion_b' => 'true' }) }
         it 'returns true' do
-          expect(written_question.transferred?).to eq({ :field_name => "transferredQuestion_b", :value => true })
+          expect(written_question.is_transferred).to eq({ :field_name => "transferredQuestion_b", :value => true })
         end
       end
 
       context 'where false' do
         let!(:written_question) { WrittenQuestion.new({ 'transferredQuestion_b' => 'false' }) }
         it 'returns false' do
-          expect(written_question.transferred?).to eq({ :field_name => "transferredQuestion_b", :value => false })
+          expect(written_question.is_transferred).to eq({ :field_name => "transferredQuestion_b", :value => false })
         end
       end
     end

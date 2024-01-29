@@ -59,7 +59,7 @@ RSpec.describe 'Research Briefing', type: :request do
           end
           expect(CGI::unescapeHTML(response.body)).to include(research_briefing_instance.display_link[:value])
 
-          if research_briefing_instance.published?
+          if research_briefing_instance.is_published
             expect(CGI::unescapeHTML(response.body)).to include('Published by')
           end
 

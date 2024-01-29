@@ -67,14 +67,14 @@ RSpec.describe ResearchBriefing, type: :model do
     # test example - get first as boolean
     context 'where there is no data' do
       it 'returns nil' do
-        expect(research_briefing.published?).to be_nil
+        expect(research_briefing.is_published).to be_nil
       end
     end
 
     context 'where there is an empty array' do
       let!(:research_briefing) { ResearchBriefing.new({ 'published_b' => [] }) }
       it 'returns nil' do
-        expect(research_briefing.published?).to be_nil
+        expect(research_briefing.is_published).to be_nil
       end
     end
 
@@ -83,14 +83,14 @@ RSpec.describe ResearchBriefing, type: :model do
         let!(:research_briefing) { ResearchBriefing.new({ 'published_b' => ['true'] }) }
 
         it 'returns the relevant boolean' do
-          expect(research_briefing.published?).to eq({:field_name=>"published_b", :value=>true})
+          expect(research_briefing.is_published).to eq({ :field_name=>"published_b", :value=>true})
         end
       end
       context 'where not a boolean value' do
         let!(:research_briefing) { ResearchBriefing.new({ 'published_b' => ['first item', 'second item'] }) }
 
         it 'returns nil' do
-          expect(research_briefing.published?).to eq(nil)
+          expect(research_briefing.is_published).to eq(nil)
         end
       end
     end

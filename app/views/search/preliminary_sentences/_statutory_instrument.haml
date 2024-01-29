@@ -23,7 +23,7 @@
         %strong>= format_date(object.date_made)
         \.
       - if object.date_withdrawn.blank?
-        - if object.withdrawn?
+        - if object.is_withdrawn && object.is_withdrawn[:value]
           It was subsequently withdrawn.
       - else
         It was withdrawn on&nbsp

@@ -51,7 +51,7 @@ class Question < ContentObject
     ContentObject.generate(correcting_item_data)
   end
 
-  def transferred?
+  def is_transferred
     get_as_boolean_from('transferredQuestion_b')
   end
 

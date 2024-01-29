@@ -6,7 +6,7 @@
       on <strong><%= format_date(object.statement_date) %></strong>
       in the <%= render 'search/fragments/list', items: object.legislature, terminator: ',', singular: false %> on behalf of the
       <%= search_link(object.department) %>.
-      <% if object.corrected? %>
+      <% if object.is_corrected %>
         It has since been corrected.
       <% end %>
     </div>

@@ -62,12 +62,12 @@ class ContentObject
     get_as_html_from('abstract_t')
   end
 
-  def contains_explanatory_memo?
+  def contains_explanatory_memo
     # bills, laid papers & SIs
     get_first_as_boolean_from('containsEM_b')
   end
 
-  def contains_impact_assessment?
+  def contains_impact_assessment
     # laid papers & SIs
     get_first_as_boolean_from('containsIA_b')
   end
@@ -164,7 +164,7 @@ class ContentObject
     get_all_from('legislature_ses')
   end
 
-  def registered_interest_declared?
+  def registered_interest_declared
     get_first_as_boolean_from('registeredInterest_b')
   end
 
@@ -276,7 +276,9 @@ class ContentObject
     "/search/logo_svgs/#{publisher_string[:value].parameterize}"
   end
 
-  def contains_statistics?
+  def contains_statistics
+    # TODO: pass all three field names via filter
+
     contains_stats = get_first_as_boolean_from('containsStatistics_b')
     has_table = get_first_as_boolean_from('hasTable_b')
     stats_indicated = get_first_as_boolean_from('statisticsIndicated_b')

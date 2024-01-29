@@ -34,16 +34,16 @@
   <%= render 'search/fragments/related_items', related_items: object.related_items %>
   <%= render 'search/fragments/ec_documents', ec_documents: object.ec_documents %>
   <%= render 'search/fragments/notes', notes: object.notes %>
-  <%= render 'search/fragments/registered_interest_declared', registered_interest: object.registered_interest_declared? %>
-  <% unless object.tabled? || object.withdrawn? %>
-    <%= render 'search/fragments/grouped_for_answer', grouped: object.grouped_for_answer? %>
-    <%= render 'search/fragments/transferred', transferred: object.transferred? %>
+  <%= render 'search/fragments/registered_interest_declared', registered_interest: object.registered_interest_declared %>
+  <% unless object.tabled? || object.is_withdrawn %>
+    <%= render 'search/fragments/grouped_for_answer', grouped: object.is_grouped_for_answer %>
+    <%= render 'search/fragments/transferred', transferred: object.is_transferred %>
   <% end %>
-  <%= render 'search/fragments/failed_oral', failed_oral: object.failed_oral? %>
-  <%= render 'search/fragments/unstarred', unstarred: object.unstarred_question? %>
+  <%= render 'search/fragments/failed_oral', failed_oral: object.has_failed_oral %>
+  <%= render 'search/fragments/unstarred', unstarred: object.is_unstarred_question %>
   <%= render 'search/fragments/pills', pills_heading: 'Subjects', pills: object.subjects %>
   <%= render 'search/fragments/legislation', legislation: object.legislation %>
-  <%= render 'search/fragments/contains_statistics', contains_statistics: object.contains_statistics? %>
+  <%= render 'search/fragments/contains_statistics', contains_statistics: object.contains_statistics %>
   <%= render 'search/fragments/link', object: object %>
 </section>
 
