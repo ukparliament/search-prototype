@@ -20,7 +20,7 @@ class EuropeanScrutinyRecommendation < EuropeanScrutiny
     get_first_from('reportTitle_t')
   end
 
-  def cleared?
+  def is_cleared
     get_first_as_boolean_from('cleared_b')
   end
 

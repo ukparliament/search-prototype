@@ -23,7 +23,7 @@ class OralQuestion < Question
   end
 
   def lords_answered?
-    # placeholder
+    # TODO: placeholder
     state[:value] == 'Lords_Answered'
   end
 

@@ -32,11 +32,11 @@ class Paper < ContentObject
     get_first_from('referral_t')
   end
 
-  def reported_by_joint_committee?
+  def is_reported_by_joint_committee
     get_first_as_boolean_from('jointCommitteeOnStatutoryInstruments_b')
   end
 
-  def laid_in_draft?
+  def is_laid_in_draft
     get_first_as_boolean_from('draft_b')
   end
 

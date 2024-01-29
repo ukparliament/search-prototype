@@ -62,12 +62,12 @@ class ContentObject
     get_as_html_from('abstract_t')
   end
 
-  def contains_explanatory_memo?
+  def contains_explanatory_memo
     # bills, laid papers & SIs
     get_first_as_boolean_from('containsEM_b')
   end
 
-  def contains_impact_assessment?
+  def contains_impact_assessment
     # laid papers & SIs
     get_first_as_boolean_from('containsIA_b')
   end
@@ -86,9 +86,10 @@ class ContentObject
   end
 
   def subjects
-    # TODO: may sometimes also be subject_t instead of subject_ses, need to handle this
-    # these are distinct lists so just chunk them all together
-    get_all_from('subject_ses')
+    from_ses = get_all_from('subject_ses')
+    as_text = get_all_from('subject_t')
+
+    combine_fields(from_ses, as_text)
   end
 
   def topics
@@ -107,13 +108,7 @@ class ContentObject
     from_ses = get_all_from('legislationTitle_ses')
     as_text = get_all_from('legislationTitle_t')
 
-    return nil if from_ses.blank? && as_text.blank?
-
-    return from_ses if as_text.blank?
-
-    return as_text if from_ses.blank?
-
-    from_ses + as_text
+    combine_fields(from_ses, as_text)
   end
 
   def department
@@ -164,7 +159,7 @@ class ContentObject
     get_all_from('legislature_ses')
   end
 
-  def registered_interest_declared?
+  def registered_interest_declared
     get_first_as_boolean_from('registeredInterest_b')
   end
 
@@ -276,7 +271,9 @@ class ContentObject
     "/search/logo_svgs/#{publisher_string[:value].parameterize}"
   end
 
-  def contains_statistics?
+  def contains_statistics
+    # TODO: pass all three field names via filter
+
     contains_stats = get_first_as_boolean_from('containsStatistics_b')
     has_table = get_first_as_boolean_from('hasTable_b')
     stats_indicated = get_first_as_boolean_from('statisticsIndicated_b')
@@ -465,6 +462,16 @@ class ContentObject
     end
 
     date_string
+  end
+
+  def combine_fields(first, second)
+    return nil if first.blank? && second.blank?
+
+    return first if second.blank?
+
+    return second if first.blank?
+
+    first + second
   end
 
 end

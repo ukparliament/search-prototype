@@ -101,4 +101,21 @@ RSpec.describe StatutoryInstrument, type: :model do
       end
     end
   end
+
+  describe 'withdrawn?' do
+    context 'where withdrawn boolean is true' do
+      let!(:statutory_instrument) { StatutoryInstrument.new({ 'withdrawn_b' => ['true'] }) }
+
+      it 'returns a hash with a value of true' do
+        expect(statutory_instrument.is_withdrawn).to eq({ field_name: 'withdrawn_b', value: true })
+      end
+    end
+    context 'where withdrawn boolean is false' do
+      let!(:statutory_instrument) { StatutoryInstrument.new({ 'withdrawn_b' => ['false'] }) }
+
+      it 'returns a hash with a value of false' do
+        expect(statutory_instrument.is_withdrawn).to eq({ field_name: 'withdrawn_b', value: false })
+      end
+    end
+  end
 end

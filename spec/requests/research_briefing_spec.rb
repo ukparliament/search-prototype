@@ -59,7 +59,7 @@ RSpec.describe 'Research Briefing', type: :request do
           end
           expect(CGI::unescapeHTML(response.body)).to include(research_briefing_instance.display_link[:value])
 
-          if research_briefing_instance.published?
+          if research_briefing_instance.is_published
             expect(CGI::unescapeHTML(response.body)).to include('Published by')
           end
 
@@ -71,7 +71,11 @@ RSpec.describe 'Research Briefing', type: :request do
 
           unless research_briefing_instance.subjects.blank?
             research_briefing_instance.subjects.each do |subject|
-              expect(CGI::unescapeHTML(response.body)).to include(subject[:value].to_s)
+              if subject[:field_name] == 'subject_ses'
+                expect(CGI::unescapeHTML(response.body)).to include("SES response for #{subject[:value]}")
+              elsif subject[:field_name] == 'subject_t'
+                expect(CGI::unescapeHTML(response.body)).to include(subject[:value].to_s)
+              end
             end
           end
 
@@ -83,7 +87,11 @@ RSpec.describe 'Research Briefing', type: :request do
 
           unless research_briefing_instance.legislation.blank?
             research_briefing_instance.legislation.each do |legislation|
-              expect(CGI::unescapeHTML(response.body)).to include(legislation[:value].to_s)
+              if legislation[:field_name] == 'legislationTitle_ses'
+                expect(CGI::unescapeHTML(response.body)).to include("SES response for #{legislation[:value]}")
+              elsif legislation[:field_name] == 'legislationTitle_t'
+                expect(CGI::unescapeHTML(response.body)).to include("#{legislation[:value]}")
+              end
             end
           end
         end

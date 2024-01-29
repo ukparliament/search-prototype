@@ -71,13 +71,21 @@ RSpec.describe 'Written Statement', type: :request do
 
           unless written_statement_instance.subjects.blank?
             written_statement_instance.subjects.each do |subject|
-              expect(CGI::unescapeHTML(response.body)).to include(subject[:value].to_s)
+              if subject[:field_name] == 'subject_ses'
+                expect(CGI::unescapeHTML(response.body)).to include("SES response for #{subject[:value]}")
+              elsif subject[:field_name] == 'subject_t'
+                expect(CGI::unescapeHTML(response.body)).to include(subject[:value].to_s)
+              end
             end
           end
 
           unless written_statement_instance.legislation.blank?
             written_statement_instance.legislation.each do |legislation|
-              expect(CGI::unescapeHTML(response.body)).to include(legislation[:value].to_s)
+              if legislation[:field_name] == 'legislationTitle_ses'
+                expect(CGI::unescapeHTML(response.body)).to include("SES response for #{legislation[:value]}")
+              elsif legislation[:field_name] == 'legislationTitle_t'
+                expect(CGI::unescapeHTML(response.body)).to include("#{legislation[:value]}")
+              end
             end
           end
         end

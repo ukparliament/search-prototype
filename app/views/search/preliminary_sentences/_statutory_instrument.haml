@@ -5,7 +5,7 @@
       = render 'search/fragments/list', items: object.object_name, terminator: ",", singular: true
       laid in the
       %span>= render 'search/fragments/list', items: object.legislature, terminator: ",", singular: false
-      &nbspon&nbsp
+      on&nbsp
       %strong>= format_date(object.date_laid)
       - unless object.member_name.blank?
         &nbspby&nbsp
@@ -23,7 +23,7 @@
         %strong>= format_date(object.date_made)
         \.
       - if object.date_withdrawn.blank?
-        - if object.withdrawn?
+        - if object.is_withdrawn && object.is_withdrawn[:value]
           It was subsequently withdrawn.
       - else
         It was withdrawn on&nbsp

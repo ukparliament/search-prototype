@@ -157,14 +157,14 @@ RSpec.describe Edm, type: :model do
   describe 'registered_interest_declared?' do
     context 'where there is no data' do
       it 'returns nil' do
-        expect(edm.registered_interest_declared?).to be_nil
+        expect(edm.registered_interest_declared).to be_nil
       end
     end
 
     context 'where there is an empty array' do
       let!(:edm) { Edm.new({ 'registeredInterest_b' => [] }) }
       it 'returns nil' do
-        expect(edm.registered_interest_declared?).to be_nil
+        expect(edm.registered_interest_declared).to be_nil
       end
     end
 
@@ -173,14 +173,14 @@ RSpec.describe Edm, type: :model do
         let!(:edm) { Edm.new({ 'registeredInterest_b' => ['true'] }) }
 
         it 'returns the relevant boolean' do
-          expect(edm.registered_interest_declared?).to eq({ :field_name => "registeredInterest_b", :value => true })
+          expect(edm.registered_interest_declared).to eq({ :field_name => "registeredInterest_b", :value => true })
         end
       end
       context 'where not a boolean value' do
         let!(:edm) { Edm.new({ 'registeredInterest_b' => ['first item', 'second item'] }) }
 
         it 'returns nil' do
-          expect(edm.registered_interest_declared?).to eq(nil)
+          expect(edm.registered_interest_declared).to eq(nil)
         end
       end
     end

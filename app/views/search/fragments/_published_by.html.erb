@@ -1,4 +1,4 @@
-<% if object.published? && object.publisher_string %>
+<% if object.is_published && object.is_published[:value] && object.publisher_string %>
   <div class="about-item">
     <h3 class="content-heading" id="published-by">Published by</h3>
     <div class="publisher-logo">

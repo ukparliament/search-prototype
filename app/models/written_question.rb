@@ -19,7 +19,7 @@ class WrittenQuestion < Question
     # the following correspond to the holding state and their presence allows us to determine that this answered
     # question formerly had the state 'holding':
     # 1. the question has received a holding answer:
-    return false unless holding_answer? && holding_answer?[:value]
+    return false unless has_holding_answer && has_holding_answer[:value]
 
     # 2. the date this question received a holding answer:
     return false if date_of_holding_answer.blank?
@@ -48,11 +48,11 @@ class WrittenQuestion < Question
     get_all_from('identifier_t')
   end
 
-  def holding_answer?
+  def has_holding_answer
     get_first_as_boolean_from('holdingAnswer_b')
   end
 
-  def prorogation_answer?
+  def has_prorogation_answer
     #to show conditionally on answered states only (as determined by method)
     get_as_boolean_from('prorogationAnswer_b')
   end
@@ -61,15 +61,15 @@ class WrittenQuestion < Question
     get_first_as_date_from('dateOfHoldingAnswer_dt')
   end
 
-  def unstarred_question?
+  def is_unstarred_question
     get_as_boolean_from('unstarredQuestion_b')
   end
 
-  def failed_oral?
+  def has_failed_oral
     get_as_boolean_from('failedOral_b')
   end
 
-  def grouped_for_answer?
+  def is_grouped_for_answer
     get_as_boolean_from('groupedAnswer_b')
   end
 

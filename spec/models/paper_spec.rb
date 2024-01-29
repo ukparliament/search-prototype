@@ -294,14 +294,14 @@ RSpec.describe Paper, type: :model do
   describe 'reported_by_joint_committee?' do
     context 'where there is no data' do
       it 'returns nil' do
-        expect(paper.reported_by_joint_committee?).to be_nil
+        expect(paper.is_reported_by_joint_committee).to be_nil
       end
     end
 
     context 'where there is an empty array' do
       let!(:paper) { Paper.new({ 'jointCommitteeOnStatutoryInstruments_b' => [] }) }
       it 'returns nil' do
-        expect(paper.reported_by_joint_committee?).to be_nil
+        expect(paper.is_reported_by_joint_committee).to be_nil
       end
     end
 
@@ -310,14 +310,14 @@ RSpec.describe Paper, type: :model do
         let!(:paper) { Paper.new({ 'jointCommitteeOnStatutoryInstruments_b' => ['true'] }) }
 
         it 'returns the relevant boolean' do
-          expect(paper.reported_by_joint_committee?).to eq({ :field_name => "jointCommitteeOnStatutoryInstruments_b", :value => true })
+          expect(paper.is_reported_by_joint_committee).to eq({ :field_name => "jointCommitteeOnStatutoryInstruments_b", :value => true })
         end
       end
       context 'where not a boolean value' do
         let!(:paper) { Paper.new({ 'jointCommitteeOnStatutoryInstruments_b' => ['first item', 'second item'] }) }
 
         it 'returns nil' do
-          expect(paper.reported_by_joint_committee?).to eq(nil)
+          expect(paper.is_reported_by_joint_committee).to eq(nil)
         end
       end
     end
@@ -326,14 +326,14 @@ RSpec.describe Paper, type: :model do
   describe 'laid_in_draft?' do
     context 'where there is no data' do
       it 'returns nil' do
-        expect(paper.laid_in_draft?).to be_nil
+        expect(paper.is_laid_in_draft).to be_nil
       end
     end
 
     context 'where there is an empty array' do
       let!(:paper) { Paper.new({ 'draft_b' => [] }) }
       it 'returns nil' do
-        expect(paper.laid_in_draft?).to be_nil
+        expect(paper.is_laid_in_draft).to be_nil
       end
     end
 
@@ -342,14 +342,14 @@ RSpec.describe Paper, type: :model do
         let!(:paper) { Paper.new({ 'draft_b' => ['true'] }) }
 
         it 'returns the relevant boolean' do
-          expect(paper.laid_in_draft?).to eq({ :field_name => "draft_b", :value => true })
+          expect(paper.is_laid_in_draft).to eq({ :field_name => "draft_b", :value => true })
         end
       end
       context 'where not a boolean value' do
         let!(:paper) { Paper.new({ 'draft_b' => ['first item', 'second item'] }) }
 
         it 'returns nil' do
-          expect(paper.laid_in_draft?).to eq(nil)
+          expect(paper.is_laid_in_draft).to eq(nil)
         end
       end
     end

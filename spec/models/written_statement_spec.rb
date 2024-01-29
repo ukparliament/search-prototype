@@ -135,14 +135,14 @@ RSpec.describe WrittenStatement, type: :model do
   describe 'corrected?' do
     context 'where there is no data' do
       it 'returns nil' do
-        expect(written_statement.corrected?).to be_nil
+        expect(written_statement.is_corrected).to be_nil
       end
     end
 
     context 'where there is no value' do
       let!(:written_statement) { WrittenStatement.new({ 'correctedWmsMc_b' => nil }) }
       it 'returns nil' do
-        expect(written_statement.corrected?).to be_nil
+        expect(written_statement.is_corrected).to be_nil
       end
     end
 
@@ -150,14 +150,14 @@ RSpec.describe WrittenStatement, type: :model do
       context 'where true' do
         let!(:written_statement) { WrittenStatement.new({ 'correctedWmsMc_b' => ['true'] }) }
         it 'returns true' do
-          expect(written_statement.corrected?).to eq({ :field_name => "correctedWmsMc_b", :value => true })
+          expect(written_statement.is_corrected).to eq({ :field_name => "correctedWmsMc_b", :value => true })
         end
       end
 
       context 'where false' do
         let!(:written_statement) { WrittenStatement.new({ 'correctedWmsMc_b' => ['false'] }) }
         it 'returns false' do
-          expect(written_statement.corrected?).to eq({ :field_name => "correctedWmsMc_b", :value => false })
+          expect(written_statement.is_corrected).to eq({ :field_name => "correctedWmsMc_b", :value => false })
         end
       end
     end

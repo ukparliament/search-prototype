@@ -142,14 +142,14 @@ RSpec.describe ContentObject, type: :model do
   describe 'contains_explanatory_memo?' do
     context 'where there is no data' do
       it 'returns nil' do
-        expect(content_object.contains_explanatory_memo?).to be_nil
+        expect(content_object.contains_explanatory_memo).to be_nil
       end
     end
 
     context 'where there is an empty array' do
       let!(:content_object) { ContentObject.new({ 'containsEM_b' => [] }) }
       it 'returns nil' do
-        expect(content_object.contains_explanatory_memo?).to be_nil
+        expect(content_object.contains_explanatory_memo).to be_nil
       end
     end
 
@@ -158,14 +158,14 @@ RSpec.describe ContentObject, type: :model do
         let!(:content_object) { ContentObject.new({ 'containsEM_b' => ['true'] }) }
 
         it 'returns the relevant boolean' do
-          expect(content_object.contains_explanatory_memo?).to eq({ :field_name => "containsEM_b", :value => true })
+          expect(content_object.contains_explanatory_memo).to eq({ :field_name => "containsEM_b", :value => true })
         end
       end
       context 'where not a boolean value' do
         let!(:content_object) { ContentObject.new({ 'containsEM_b' => ['first item', 'second item'] }) }
 
         it 'returns nil' do
-          expect(content_object.contains_explanatory_memo?).to eq(nil)
+          expect(content_object.contains_explanatory_memo).to eq(nil)
         end
       end
     end
@@ -174,14 +174,14 @@ RSpec.describe ContentObject, type: :model do
   describe 'contains_impact_assessment?' do
     context 'where there is no data' do
       it 'returns nil' do
-        expect(content_object.contains_impact_assessment?).to be_nil
+        expect(content_object.contains_impact_assessment).to be_nil
       end
     end
 
     context 'where there is an empty array' do
       let!(:content_object) { ContentObject.new({ 'containsIA_b' => [] }) }
       it 'returns nil' do
-        expect(content_object.contains_impact_assessment?).to be_nil
+        expect(content_object.contains_impact_assessment).to be_nil
       end
     end
 
@@ -190,14 +190,14 @@ RSpec.describe ContentObject, type: :model do
         let!(:content_object) { ContentObject.new({ 'containsIA_b' => ['true'] }) }
 
         it 'returns the relevant boolean' do
-          expect(content_object.contains_impact_assessment?).to eq({ :field_name => "containsIA_b", :value => true })
+          expect(content_object.contains_impact_assessment).to eq({ :field_name => "containsIA_b", :value => true })
         end
       end
       context 'where not a boolean value' do
         let!(:content_object) { ContentObject.new({ 'containsIA_b' => ['first item', 'second item'] }) }
 
         it 'returns nil' do
-          expect(content_object.contains_impact_assessment?).to eq(nil)
+          expect(content_object.contains_impact_assessment).to eq(nil)
         end
       end
     end

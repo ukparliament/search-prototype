@@ -32,7 +32,7 @@ class ResearchBriefing < ContentObject
     get_first_from('creatorParty_ses')
   end
 
-  def published?
+  def is_published
     get_first_as_boolean_from('published_b')
   end
 
