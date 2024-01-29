@@ -56,8 +56,8 @@ RSpec.describe EuropeanMaterial, type: :model do
     context 'where data exists' do
       let!(:european_material) { EuropeanMaterial.new({ 'referenceNumber_t' => ['first item', 'second item'] }) }
 
-      it 'returns the first item' do
-        expect(european_material.reference).to eq({ :field_name => "referenceNumber_t", :value => "first item" })
+      it 'returns all items' do
+        expect(european_material.reference).to eq([{ :field_name => "referenceNumber_t", :value => "first item" }, { :field_name => "referenceNumber_t", :value => "second item" }])
       end
     end
   end

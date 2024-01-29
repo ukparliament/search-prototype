@@ -17,7 +17,7 @@ class EuropeanMaterial < ContentObject
   end
 
   def reference
-    get_first_from('referenceNumber_t')
+    get_all_from('referenceNumber_t')
   end
 
   def rapporteur
