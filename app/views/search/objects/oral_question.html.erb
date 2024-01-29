@@ -20,7 +20,7 @@
 
 <section id="main-content" class="content-section white">
   <%= render 'search/fragments/question', object: object %>
-  <%= render 'search/fragments/answer', object: object unless object.tabled? || object.is_withdrawn %>
+  <%= render 'search/fragments/answer', object: object unless object.tabled? || object.withdrawn? %>
 </section>
 
 <section id="about" class="content-section grey">
