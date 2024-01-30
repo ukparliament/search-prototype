@@ -30,4 +30,13 @@ class Bill < ContentObject
   def title
     get_as_string_from('title_t')
   end
+
+  def location_uri
+    get_first_from('location_uri')
+  end
+
+  def display_link
+    # For everything else, where there is no externalLocation, no Link, internalLocation is not surfaced in new Search
+    location_uri.blank? ? nil : location_uri
+  end
 end

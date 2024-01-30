@@ -357,17 +357,17 @@ RSpec.describe ContentObject, type: :model do
     end
 
     context 'where there is an empty array' do
-      let!(:content_object) { ContentObject.new({ 'isbn_t' => [] }) }
+      let!(:content_object) { ContentObject.new({ 'ISBN_t' => [] }) }
       it 'returns nil' do
         expect(content_object.isbn).to be_nil
       end
     end
 
     context 'where data exists' do
-      let!(:content_object) { ContentObject.new({ 'isbn_t' => ['first item', 'second item'] }) }
+      let!(:content_object) { ContentObject.new({ 'ISBN_t' => ['first item', 'second item'] }) }
 
       it 'returns the first item' do
-        expect(content_object.isbn).to eq({ :field_name => "isbn_t", :value => "first item" })
+        expect(content_object.isbn).to eq({ :field_name => "ISBN_t", :value => "first item" })
       end
     end
   end

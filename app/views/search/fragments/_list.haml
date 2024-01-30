@@ -1,0 +1,17 @@
+- unless items.blank?
+  - if items.size == 1
+    %span= search_link(items.last, singular: singular)
+    %span>= terminator
+  - elsif items.size == 2
+    %span= search_link(items.first, singular: singular)
+    %span= " and "
+    %span= search_link(items.last, singular: singular)
+    %span>= terminator
+  - elsif items.size > 2
+    - items[0...-2].each do |item|
+      %span= search_link(item)
+      %span>= ", "
+    %span= search_link(items.last(2).first, singular: singular)
+    %span= " and "
+    %span= search_link(items.last, singular: singular)
+    %span>= terminator

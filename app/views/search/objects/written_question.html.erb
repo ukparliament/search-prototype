@@ -35,7 +35,7 @@
   <%= render 'search/fragments/ec_documents', ec_documents: object.ec_documents %>
   <%= render 'search/fragments/notes', notes: object.notes %>
   <%= render 'search/fragments/registered_interest_declared', registered_interest: object.registered_interest_declared %>
-  <% unless object.tabled? || object.is_withdrawn %>
+  <% unless object.tabled? || object.withdrawn? %>
     <%= render 'search/fragments/grouped_for_answer', grouped: object.is_grouped_for_answer %>
     <%= render 'search/fragments/transferred', transferred: object.is_transferred %>
   <% end %>

@@ -31,9 +31,9 @@ class SolrSearch < ApiCall
 
     return "q=%22#{query}%22" if filter.blank?
 
-    return "q=#{filter[:field_name]}:#{filter[:value]}" if query.blank?
+    return "q=#{filter[:field_name]}:%22#{filter[:value]}%22" if query.blank?
 
-    "q=%22#{query}%22&#{filter[:field_name]}:#{filter[:value]}"
+    "q=%22#{query}%22&#{filter[:field_name]}:%22#{filter[:value]}%22"
   end
 
   def query_chain

@@ -83,7 +83,8 @@ module LinkHelper
     # only for member's names containing a comma (?), optionally with disambiguation brackets
     # TODO: a full list of valid fields to be provided
     human_name_fields = ['member_ses', 'creator_ses', 'answeringMember_ses', 'tablingMember_ses', 'leadMember_ses',
-                         'correspondingMinister_ses', 'askingMember_ses', 'contributor_ses', 'primarySponsor_ses']
+                         'correspondingMinister_ses', 'askingMember_ses', 'contributor_ses', 'primarySponsor_ses',
+                         'sponsor_ses']
     return name_string unless human_name_fields.include?(data[:field_name]) && name_string.include?(',')
 
     if name_string.include?('(')
