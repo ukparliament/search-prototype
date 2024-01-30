@@ -73,7 +73,7 @@ RSpec.describe SolrSearch, type: :model do
       let!(:solr_search) { SolrSearch.new({ filter: { value: 12345, field_name: 'type_ses' } }) }
 
       it 'returns a partial url with the filter included' do
-        expect(solr_search.query_string).to eq("q=type_ses:12345")
+        expect(solr_search.query_string).to eq("q=type_ses:%2212345%22")
       end
     end
 
@@ -81,7 +81,7 @@ RSpec.describe SolrSearch, type: :model do
       let!(:solr_search) { SolrSearch.new({ query: 'a search term', filter: { value: 12345, field_name: 'type_ses' } }) }
 
       it 'returns a partial url with the filter and search term included' do
-        expect(solr_search.query_string).to eq("q=%22a search term%22&type_ses:12345")
+        expect(solr_search.query_string).to eq("q=%22a search term%22&type_ses:%2212345%22")
       end
     end
   end
@@ -105,7 +105,7 @@ RSpec.describe SolrSearch, type: :model do
       let!(:solr_search) { SolrSearch.new({ query: 'a search term', filter: { value: 12345, field_name: 'type_ses' }, page: 12 }) }
 
       it 'returns all filters combined into a single string' do
-        expect(solr_search.query_chain).to eq('rows=20&start=240&q=%22a search term%22&type_ses:12345')
+        expect(solr_search.query_chain).to eq('rows=20&start=240&q=%22a search term%22&type_ses:%2212345%22')
       end
     end
   end

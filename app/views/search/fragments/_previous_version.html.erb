@@ -1,9 +1,9 @@
 <% unless previous_version.blank? %>
   <div class="about-item">
     <h3 class="content-heading" id="previous-version">Previous version</h3>
-    <%= object_show_link(previous_version.reference.map{|r| r[:value]}.join(' '), link) %>
-    <% unless previous_version.certified_date.blank? %>
-      <%= format_date(previous_version.certified_date) %>
+    <%= object_show_link(previous_version.reference.map { |r| r[:value] }.join(' '), link) %>
+    <% unless previous_version.date_of_order.blank? %>
+      <br/><%= format_date(previous_version.date_of_order) %>
     <% end %>
   </div>
 <% end %>
