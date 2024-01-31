@@ -502,10 +502,15 @@ RSpec.describe ContentObject, type: :model do
     end
 
     context 'where data exists' do
-      let!(:content_object) { ContentObject.new({ 'corporateAuthor_ses' => [12345, 67890] }) }
+      let!(:content_object) { ContentObject.new({ 'corporateAuthor_ses' => [12345, 67890], 'corporateAuthor_t' => ['Author 1', 'Author 2'] }) }
 
-      it 'returns the first item' do
-        expect(content_object.corporate_author[:value]).to eq(12345)
+      it 'returns all items from both SES and text fields' do
+        expect(content_object.corporate_author).to match_array([
+                                                                 { field_name: 'corporateAuthor_ses', value: 12345 },
+                                                                 { field_name: 'corporateAuthor_ses', value: 67890 },
+                                                                 { field_name: 'corporateAuthor_t', value: 'Author 1' },
+                                                                 { field_name: 'corporateAuthor_t', value: 'Author 2' }
+                                                               ])
       end
     end
   end
