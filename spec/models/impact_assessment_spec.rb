@@ -84,4 +84,27 @@ RSpec.describe ImpactAssessment, type: :model do
       end
     end
   end
+
+  describe 'notes' do
+    context 'where there is no data' do
+      it 'returns nil' do
+        expect(impact_assessment.notes).to be_nil
+      end
+    end
+
+    context 'where there is an empty array' do
+      let!(:impact_assessment) { ImpactAssessment.new({ 'searcherNote_t' => [] }) }
+      it 'returns nil' do
+        expect(impact_assessment.notes).to be_nil
+      end
+    end
+
+    context 'where data exists' do
+      let!(:impact_assessment) { ImpactAssessment.new({ 'searcherNote_t' => ['first item', 'second item'] }) }
+
+      it 'returns the first item' do
+        expect(impact_assessment.notes).to eq({ :field_name => "searcherNote_t", :value => "first item" })
+      end
+    end
+  end
 end

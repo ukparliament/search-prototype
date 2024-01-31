@@ -4,7 +4,7 @@
       A <%= object_display_name_link(object.object_name) %> reported in the
       <%= render 'search/fragments/list', items: object.legislature, terminator: '', singular: false %> on
       <strong><%= format_date(object.date) %></strong>
-      by <%= search_link(object.corporate_author) %>.
+      by <%= render 'search/fragments/list', items: object.corporate_author, terminator: '.', singular: false %>
     </div>
   </div>
 </div>
