@@ -254,7 +254,10 @@ class ContentObject
   end
 
   def corporate_author
-    get_first_from('corporateAuthor_ses')
+    from_ses = get_all_from('corporateAuthor_ses')
+    as_text = get_all_from('corporateAuthor_t')
+
+    combine_fields(from_ses, as_text)
   end
 
   def witnesses
