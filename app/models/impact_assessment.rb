@@ -7,4 +7,8 @@ class ImpactAssessment < Paper
   def template
     'search/objects/impact_assessment'
   end
+
+  def paper_type
+    get_all_from('subtype_ses')
+  end
 end

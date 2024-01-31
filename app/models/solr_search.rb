@@ -63,6 +63,6 @@ class SolrSearch < ApiCall
   end
 
   def ruby_uri
-    build_uri("#{BASE_API_URI}select?#{query_chain}")
+    build_uri("#{BASE_API_URL}select?#{query_chain}")
   end
 end

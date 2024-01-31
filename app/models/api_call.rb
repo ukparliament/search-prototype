@@ -4,7 +4,7 @@ class ApiCall
 
   attr_reader :object_uri
 
-  BASE_API_URI = "https://api.parliament.uk/new-solr/"
+  BASE_API_URL = "https://api.parliament.uk/new-solr/"
 
   def initialize(params)
     @object_uri = params[:object_uri]

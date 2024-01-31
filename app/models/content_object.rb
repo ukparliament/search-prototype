@@ -171,6 +171,10 @@ class ContentObject
     get_first_from('externalLocation_uri')
   end
 
+  def external_location_text
+    get_first_from('externalLocation_t')
+  end
+
   def internal_location_uri
     get_first_from('internalLocation_uri')
   end
@@ -184,8 +188,7 @@ class ContentObject
   end
 
   def display_link
-    # For everything else, where there is no externalLocation, no Link, internalLocation is not surfaced in new Search
-    external_location_uri.blank? ? nil : external_location_uri
+    external_location_uri.blank? ? external_location_text : external_location_uri
   end
 
   def has_link?
