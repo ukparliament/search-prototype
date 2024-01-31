@@ -1,4 +1,4 @@
-<% unless reference.blank? %>
+<% unless reference.blank? || reference.pluck(:value) == ["."] %>
   <div class="about-item">
     <h3 class="content-heading" id="reference">Reference</h3>
     <% reference.each do |ref| %>

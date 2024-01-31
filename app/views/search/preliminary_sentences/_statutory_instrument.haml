@@ -3,12 +3,12 @@
     .content-prelim-text#prelim-text
       A
       = render 'search/fragments/list', items: object.object_name, terminator: ",", singular: true
-      laid in the
+      %span= " laid in the "
       %span>= render 'search/fragments/list', items: object.legislature, terminator: ",", singular: false
-      on&nbsp
+      %span= " on "
       %strong>= format_date(object.date_laid)
       - unless object.member_name.blank?
-        &nbspby&nbsp
+        %span= " by "
         %span>= search_link(object.member_name)
       - unless object.department.blank?
         &nbspon behalf of the&nbsp
