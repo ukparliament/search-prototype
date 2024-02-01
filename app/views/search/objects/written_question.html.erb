@@ -21,6 +21,7 @@
 <section id="main-content" class="content-section white">
   <%= render 'search/fragments/question', object: object %>
   <%= render 'search/fragments/answer', object: object if object.answered? || object.answered_was_holding? %>
+  <!--  requires answering member & party, department & date of answer-->
   <%= render 'search/fragments/corrected_written_question_follow_up', correcting_object: object.correcting_object if object.corrected? %>
   <%= render 'search/fragments/corrected_answer', object: object if object.corrected? %>
 </section>

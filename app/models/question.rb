@@ -47,7 +47,7 @@ class Question < ContentObject
 
     return if correcting_item_link.blank?
 
-    correcting_item_data = SolrQuery.new(object_uri: correcting_item_link).object_data
+    correcting_item_data = SolrQuery.new(object_uri: correcting_item_link[:value]).object_data
     ContentObject.generate(correcting_item_data)
   end
 
@@ -102,5 +102,9 @@ class Question < ContentObject
 
   def answering_member_party
     get_first_from('answeringMemberParty_ses')
+  end
+
+  def question?
+    true
   end
 end

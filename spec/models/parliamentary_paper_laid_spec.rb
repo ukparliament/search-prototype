@@ -57,7 +57,7 @@ RSpec.describe ParliamentaryPaperLaid, type: :model do
       let!(:parliamentary_paper_laid) { ParliamentaryPaperLaid.new({ 'subject_ses' => ['first item', 'second item'] }) }
 
       it 'returns all items as an array' do
-        expect(parliamentary_paper_laid.subjects).to eq([{:field_name=>"subject_ses", :value=>"first item"}, {:field_name=>"subject_ses", :value=>"second item"}])
+        expect(parliamentary_paper_laid.subjects).to eq([{ :field_name => "subject_ses", :value => "first item" }, { :field_name => "subject_ses", :value => "second item" }])
       end
     end
   end
@@ -80,7 +80,27 @@ RSpec.describe ParliamentaryPaperLaid, type: :model do
       let!(:parliamentary_paper_laid) { ParliamentaryPaperLaid.new({ 'legislationTitle_ses' => [12345, 67890] }) }
 
       it 'returns all items as an array' do
-        expect(parliamentary_paper_laid.legislation).to eq([{:field_name=>"legislationTitle_ses", :value=>12345}, {:field_name=>"legislationTitle_ses", :value=>67890}])
+        expect(parliamentary_paper_laid.legislation).to eq([{ :field_name => "legislationTitle_ses", :value => 12345 }, { :field_name => "legislationTitle_ses", :value => 67890 }])
+      end
+    end
+  end
+
+  describe 'dual_type?' do
+    context 'where type is 91561 and subtype is 91563' do
+      let!(:parliamentary_paper_laid) { ParliamentaryPaperLaid.new({ 'type_ses' => [91561], 'subtype_ses' => [91563] }) }
+
+      it 'returns true' do
+        expect(parliamentary_paper_laid.dual_type?).to eq(true)
+      end
+    end
+    context 'for other combinations' do
+      let!(:parliamentary_paper_laid1) { ParliamentaryPaperLaid.new({ 'type_ses' => [91561], 'subtype_ses' => [12345] }) }
+      let!(:parliamentary_paper_laid2) { ParliamentaryPaperLaid.new({ 'type_ses' => [12345], 'subtype_ses' => [91563] }) }
+      let!(:parliamentary_paper_laid3) { ParliamentaryPaperLaid.new({ 'type_ses' => [12345], 'subtype_ses' => [12345] }) }
+      it 'returns false' do
+        expect(parliamentary_paper_laid1.dual_type?).to eq(false)
+        expect(parliamentary_paper_laid2.dual_type?).to eq(false)
+        expect(parliamentary_paper_laid3.dual_type?).to eq(false)
       end
     end
   end
