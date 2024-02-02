@@ -30,6 +30,7 @@
   <h2 class="content-heading">About this <%= object_display_name(object.type) %></h2>
   <%= render 'search/fragments/reference', reference: object.reference %>
   <%= render 'search/fragments/session', session: object.parliamentary_session %>
+  <%= render 'search/fragments/corporate_author', author: object.corporate_author %>
   <%= render 'search/fragments/certified_categories', certified_categories: object.certified_categories, certified_date: object.certified_date %>
   <%= render 'search/fragments/previous_version', previous_version: object.previous_version, link: object.previous_version_link %>
   <%= render 'search/fragments/related_items', related_items: object.related_items %>

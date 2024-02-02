@@ -77,10 +77,10 @@ RSpec.describe MinisterialCorrection, type: :model do
     end
 
     context 'where data exists' do
-      let!(:ministerial_correction) { MinisterialCorrection.new({ 'member_ses' => [12345, 54321] }) }
+      let!(:ministerial_correction) { MinisterialCorrection.new({ 'correctingMember_ses' => [12345, 54321] }) }
 
       it 'returns the first item' do
-        expect(ministerial_correction.correcting_member).to eq({:field_name=>"member_ses", :value=>12345})
+        expect(ministerial_correction.correcting_member).to eq({:field_name=>"correctingMember_ses", :value=>12345})
       end
     end
   end
@@ -100,10 +100,10 @@ RSpec.describe MinisterialCorrection, type: :model do
     end
 
     context 'where data exists' do
-      let!(:ministerial_correction) { MinisterialCorrection.new({ 'memberParty_ses' => [12345, 54321] }) }
+      let!(:ministerial_correction) { MinisterialCorrection.new({ 'correctingMemberParty_ses' => [12345, 54321] }) }
 
       it 'returns the first item' do
-        expect(ministerial_correction.correcting_member_party).to eq({:field_name=>"memberParty_ses", :value=>12345})
+        expect(ministerial_correction.correcting_member_party).to eq({:field_name=>"correctingMemberParty_ses", :value=>12345})
       end
     end
   end

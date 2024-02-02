@@ -2,8 +2,9 @@
   .content-prelim-inner
     .content-prelim-text#prelim-text
       %span= object_display_name_link(object.object_name)
-      %span= " made by "
-      %span= search_link(object.correcting_member)
+      - unless object.correcting_member.blank?
+        %span= " made by "
+        %span= search_link(object.correcting_member)
       - unless object.correcting_member_party.blank?
         %span= " ("
         %span>= search_link(object.correcting_member_party)
