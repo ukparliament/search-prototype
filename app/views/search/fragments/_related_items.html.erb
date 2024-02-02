@@ -10,10 +10,15 @@
           <% if related_item.date %>
             <%= format_date(related_item.date) %><br/>
           <% end %>
-          <% if related_item.subtype %>
-            <%= related_items[:ses_lookup][related_item.subtype[:value]] %><br/>
-          <% elsif related_item.type %>
-            <%= related_items[:ses_lookup][related_item.type[:value]] %><br/>
+          <% if related_item.dual_type? %>
+            <%= related_items[:ses_lookup][related_item.subtype[:value]] %>
+            and <%= related_items[:ses_lookup][related_item.type[:value]] %><br/>
+          <% else %>
+            <% if related_item.subtype %>
+              <%= related_items[:ses_lookup][related_item.subtype[:value]] %><br/>
+            <% elsif related_item.type %>
+              <%= related_items[:ses_lookup][related_item.type[:value]] %><br/>
+            <% end %>
           <% end %>
           <% unless related_item.legislature.blank? %>
             <% related_item.legislature.each do |house| %>

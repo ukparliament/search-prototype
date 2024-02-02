@@ -1,7 +1,8 @@
 <div class="content-prelim-box">
   <div class="content-prelim-inner">
     <div class="content-prelim-text" id="prelim-text">
-      <% if correcting_object.blank? %>
+      <!--      temporarily only showing advanced information for questions-->
+      <% if correcting_object.blank? || !correcting_object.question? %>
         It has since been corrected.
       <% else %>
         The answer was corrected by <%= search_link(correcting_object.answering_member) %>

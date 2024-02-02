@@ -1,0 +1,11 @@
+.content-prelim-box
+  .content-prelim-inner
+    .content-prelim-text#prelim-text
+      %span= object_display_name_link(object.object_name)
+      %span= " became law on "
+      %strong>= format_date(object.date)
+      - unless object.bill.blank?
+        %span= " when the "
+        %span>= object_show_link(object.bill.object_title, object.bill_link)
+        %span= " received Royal Assent "
+      %span= "."

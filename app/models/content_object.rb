@@ -301,6 +301,14 @@ class ContentObject
     get_as_date_from('date_dt')
   end
 
+  def dual_type?
+    false
+  end
+
+  def question?
+    false
+  end
+
   private
 
   def get_as_string_from(field_name)

@@ -23,4 +23,8 @@ class MinisterialCorrection < ContentObject
   def correction_date
     date
   end
+
+  def corrected_item_link
+    get_first_from('correctedItem_uri')
+  end
 end

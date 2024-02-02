@@ -27,6 +27,14 @@ class Bill < ContentObject
     ObjectsFromUriList.new(previous).get_objects[:items]&.first
   end
 
+  def version_title
+    if subtype[:value] == 92585
+      title[:value]
+    else
+      reference.map { |r| r[:value] }.join(' ')
+    end
+  end
+
   def title
     get_as_string_from('title_t')
   end
