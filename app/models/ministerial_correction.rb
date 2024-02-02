@@ -13,11 +13,11 @@ class MinisterialCorrection < ContentObject
   end
 
   def correcting_member
-    member
+    get_first_from('correctingMember_ses')
   end
 
   def correcting_member_party
-    member_party
+    get_first_from('correctingMemberParty_ses')
   end
 
   def correction_date
@@ -25,6 +25,13 @@ class MinisterialCorrection < ContentObject
   end
 
   def corrected_item_link
-    get_first_from('correctedItem_uri')
+    fallback(get_first_from('correctedItem_uri'), get_first_from('correctedItem_t'))
+  end
+
+  def corrected_object
+    return if corrected_item_link.blank?
+
+    corrected_item_data = SolrQuery.new(object_uri: corrected_item_link[:value]).object_data
+    ContentObject.generate(corrected_item_data)
   end
 end

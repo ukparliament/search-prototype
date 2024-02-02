@@ -23,14 +23,16 @@
     <div class="content-text">
       <%= raw(object.correction_text[:value]) %>
     </div>
-    <div class="about-item">
-      <h3 class="content-heading">
-        Corrected item
-      </h3>
-      <p>
-        <%= object_show_link('Corrected item', object.corrected_item_link) %>
-      </p>
-    </div>
+    <% unless object.corrected_item_link.blank? || object.corrected_object.blank? %>
+      <div class="about-item">
+        <h3 class="content-heading">
+          Original item link
+        </h3>
+        <p>
+          <%= object_show_link(object.corrected_object.object_title, object.corrected_item_link) %>
+        </p>
+      </div>
+    <% end %>
   </section>
 <% end %>
 
