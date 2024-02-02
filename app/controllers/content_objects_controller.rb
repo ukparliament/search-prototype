@@ -8,7 +8,9 @@ class ContentObjectsController < ApplicationController
   def show
     object_data = SolrQuery.new(object_uri: params[:object]).object_data
 
-    if [404, 403, 500].include?(object_data['statusCode'])
+    if object_data.blank?
+      render template: 'content_objects/error', locals: { status: 404, message: 'Resource not found' }
+    elsif [404, 403, 500].include?(object_data['statusCode'])
       render template: 'content_objects/error', locals: { status: object_data['statusCode'], message: object_data['message'] }
     else
       @object = ContentObject.generate(object_data)
