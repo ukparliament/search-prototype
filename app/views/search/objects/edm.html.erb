@@ -31,11 +31,13 @@
   <h2 class="content-heading">About this <%= object_display_name(object.type) %></h2>
   <%= render 'search/fragments/reference', reference: object.reference %>
   <%= render 'search/fragments/session', session: object.parliamentary_session %>
-  <%= render 'search/fragments/registered_interest_declared', registered_interest: object.registered_interest_declared %>
   <%= render 'search/fragments/other_sponsors', sponsors: object.other_sponsors %>
   <%= render 'search/fragments/related_items', related_items: object.related_items %>
+  <%= render 'search/fragments/notes', notes: object.notes %>
+  <%= render 'search/fragments/registered_interest_declared', registered_interest: object.registered_interest_declared %>
   <%= render 'search/fragments/pills', pills_heading: 'Subjects', pills: object.subjects %>
   <%= render 'search/fragments/legislation', legislation: object.legislation %>
+  <%= render 'search/fragments/contains_statistics', contains_statistics: object.contains_statistics %>
   <%= render 'search/fragments/link', object: object %>
 </section>
 

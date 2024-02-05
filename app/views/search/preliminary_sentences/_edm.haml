@@ -1,0 +1,38 @@
+.content-prelim-box
+  .content-prelim-inner
+    .content-prelim-text#prelim-text
+      %span= object_display_name_link(object.object_name)
+      - unless object.primary_sponsor.blank? && object.other_sponsors.blank?
+        %span=" sponsored by "
+      - unless object.primary_sponsor.blank?
+        %span>= search_link(object.primary_sponsor)
+        - unless object.primary_sponsor_party.blank?
+          %span<=" (primary sponsor, "
+          %span>= search_link(object.primary_sponsor_party)
+          %span>=")"
+      - unless object.other_sponsors.blank?
+        %span= render 'search/fragments/edm_sponsor_list', items: object.other_sponsors, terminator: '', singular: false
+        %span= " and "
+      %span= " tabled on "
+      %strong>= format_date(object.date_tabled)
+      %span= ", in the "
+      %span= render 'search/fragments/list', items: object.legislature, terminator: '.', singular: false
+      - if object.subtype.blank?
+        - unless object.number_of_signatures.blank?
+          %span= "It is"
+      - else
+        %span= "It is a "
+        %span>= object_display_name_link(object.subtype)
+      - unless object.number_of_signatures.blank?
+        - unless object.subtype.blank?
+          %span= ", "
+        %strong= "signed by "
+        %strong= object.number_of_signatures[:value]
+        - if object.number_of_signatures[:value] == 1
+          %strong>= " Member in total"
+        - else
+          %strong>= " Members in total"
+      - unless object.subtype.blank? && object.number_of_signatures.blank?
+        %span= "."
+      - if object.withdrawn?
+        %span>= " The primary sponsor has subsequently withdrawn this motion."

@@ -108,29 +108,6 @@ RSpec.describe Edm, type: :model do
     end
   end
 
-  describe 'other_supporters' do
-    context 'where there is no data' do
-      it 'returns nil' do
-        expect(edm.other_supporters).to be_nil
-      end
-    end
-
-    context 'where there is an empty array' do
-      let!(:edm) { Edm.new({ 'signedMember_ses' => [] }) }
-      it 'returns nil' do
-        expect(edm.other_supporters).to be_nil
-      end
-    end
-
-    context 'where data exists' do
-      let!(:edm) { Edm.new({ 'signedMember_ses' => ['first item', 'second item'] }) }
-
-      it 'returns all items' do
-        expect(edm.other_supporters).to eq([{ :field_name => "signedMember_ses", :value => "first item" }, { :field_name => "signedMember_ses", :value => "second item" }])
-      end
-    end
-  end
-
   describe 'other_sponsors' do
     context 'where there is no data' do
       it 'returns nil' do
@@ -216,29 +193,6 @@ RSpec.describe Edm, type: :model do
     end
   end
 
-  describe 'bibliographic_citations' do
-    context 'where there is no data' do
-      it 'returns nil' do
-        expect(edm.bibliographic_citations).to be_nil
-      end
-    end
-
-    context 'where there is an empty array' do
-      let!(:edm) { Edm.new({ 'bibliographicCitation_s' => [] }) }
-      it 'returns nil' do
-        expect(edm.bibliographic_citations).to be_nil
-      end
-    end
-
-    context 'where data exists' do
-      let!(:edm) { Edm.new({ 'bibliographicCitation_s' => ['first item', 'second item'] }) }
-
-      it 'returns all items as an array' do
-        expect(edm.bibliographic_citations).to eq([{ :field_name => "bibliographicCitation_s", :value => "first item" }, { :field_name => "bibliographicCitation_s", :value => "second item" }])
-      end
-    end
-  end
-
   describe 'subjects' do
     context 'where there is no data' do
       it 'returns nil' do
@@ -304,29 +258,6 @@ RSpec.describe Edm, type: :model do
 
       it 'returns the first item' do
         expect(edm.external_location_uri).to eq({ :field_name => "externalLocation_uri", :value => "first item" })
-      end
-    end
-  end
-
-  describe 'amendment_text' do
-    context 'where there is no data' do
-      it 'returns nil' do
-        expect(edm.amendment_text).to be_nil
-      end
-    end
-
-    context 'where there is an empty array' do
-      let!(:edm) { Edm.new({ 'amendmentText_t' => [] }) }
-      it 'returns nil' do
-        expect(edm.amendment_text).to be_nil
-      end
-    end
-
-    context 'where data exists' do
-      let!(:edm) { Edm.new({ 'amendmentText_t' => ['first item', 'second item'] }) }
-
-      it 'returns all items' do
-        expect(edm.amendment_text).to eq([{ :field_name => "amendmentText_t", :value => "first item" }, { :field_name => "amendmentText_t", :value => "second item" }])
       end
     end
   end
@@ -436,76 +367,17 @@ RSpec.describe Edm, type: :model do
     end
   end
 
-  describe 'amendments_count' do
-    context 'where there are amendments' do
-      it 'returns the number of amendments' do
-        allow(edm).to receive(:amendments).and_return([{ name: 'amendment one' }, { name: 'amendment two' }, { name: 'amendment three' }])
-        expect(edm.amendments_count).to eq({ :field_name => "amendmentText_t", :value => "3" })
-      end
-    end
-    context 'where there are no amendments' do
-      it 'returns nil' do
-        expect(edm.amendments_count).to be_nil
-      end
-    end
-  end
-
-  describe 'open?' do
-    context 'when state is open' do
-      it 'returns true' do
-        allow(edm).to receive(:state).and_return('Open')
-        expect(edm.open?).to eq(true)
-      end
-    end
-    context 'in any other state' do
-      it 'returns true' do
-        allow(edm).to receive(:state).and_return('Closed')
-        expect(edm.open?).to eq(false)
-      end
-    end
-  end
-
-  describe 'closed?' do
-    context 'when state is closed' do
-      it 'returns true' do
-        allow(edm).to receive(:state).and_return('Closed')
-        expect(edm.closed?).to eq(true)
-      end
-    end
-    context 'in any other state' do
-      it 'returns true' do
-        allow(edm).to receive(:state).and_return('Open')
-        expect(edm.closed?).to eq(false)
-      end
-    end
-  end
-
   describe 'withdrawn?' do
     context 'when state is withdrawn' do
       it 'returns true' do
-        allow(edm).to receive(:state).and_return('Withdrawn')
+        allow(edm).to receive(:state).and_return({ value: 'Withdrawn' })
         expect(edm.withdrawn?).to eq(true)
       end
     end
     context 'in any other state' do
       it 'returns true' do
-        allow(edm).to receive(:state).and_return('Open')
+        allow(edm).to receive(:state).and_return({ value: 'Open' })
         expect(edm.withdrawn?).to eq(false)
-      end
-    end
-  end
-
-  describe 'suspended?' do
-    context 'when state is withdrawn' do
-      it 'returns true' do
-        allow(edm).to receive(:state).and_return('Suspended')
-        expect(edm.suspended?).to eq(true)
-      end
-    end
-    context 'in any other state' do
-      it 'returns true' do
-        allow(edm).to receive(:state).and_return('Open')
-        expect(edm.suspended?).to eq(false)
       end
     end
   end
@@ -524,36 +396,6 @@ RSpec.describe Edm, type: :model do
     end
   end
 
-  describe 'fatal_prayer?' do
-    context 'where subtype is fatal prayer' do
-      let!(:edm) { Edm.new({ 'subtype_ses' => [445873] }) }
-      it 'returns true' do
-        expect(edm.fatal_prayer?).to eq(true)
-      end
-    end
-    context 'for any other subtype' do
-      let!(:edm) { Edm.new({ 'subtype_ses' => [445875] }) }
-      it 'returns false' do
-        expect(edm.fatal_prayer?).to eq(false)
-      end
-    end
-  end
-
-  describe 'fatal_prayer?' do
-    context 'where subtype is fatal prayer' do
-      let!(:edm) { Edm.new({ 'subtype_ses' => [445875] }) }
-      it 'returns true' do
-        expect(edm.non_fatal_prayer?).to eq(true)
-      end
-    end
-    context 'for any other subtype' do
-      let!(:edm) { Edm.new({ 'subtype_ses' => [445873] }) }
-      it 'returns false' do
-        expect(edm.non_fatal_prayer?).to eq(false)
-      end
-    end
-  end
-
   describe 'subtype' do
     context 'where field is populated' do
       let!(:edm) { Edm.new({ 'subtype_ses' => [12345] }) }
@@ -564,20 +406,6 @@ RSpec.describe Edm, type: :model do
     context 'where field is not populated' do
       it 'returns a string' do
         expect(edm.subtype).to be_nil
-      end
-    end
-  end
-
-  describe 'has_subtype?' do
-    context 'where field is populated' do
-      let!(:edm) { Edm.new({ 'subtype_ses' => [12345] }) }
-      it 'returns a type ID' do
-        expect(edm.has_subtype?).to eq(true)
-      end
-    end
-    context 'where field is not populated' do
-      it 'returns a string' do
-        expect(edm.has_subtype?).to eq(false)
       end
     end
   end
