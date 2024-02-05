@@ -1,0 +1,45 @@
+- amendments.each_with_index do |amendment, index|
+  .content-prelim-box
+    .content-prelim-inner
+      .content-prelim-text#prelim-text
+        %span= " The Early day motion has received"
+        - if index.zero?
+          %span= " an amendment"
+        - else
+          %span= " a "
+          %span= ordinal_text(index)
+          %span>= " amendment"
+        - if amendment[:primary_sponsor][:value].blank?
+          - unless amendment[:date_tabled][:value].blank?
+            %span= "Tabled on "
+            %span>= format_date(amendment[:date_tabled])
+            %span= "."
+        - else
+          %span= " sponsored by "
+          %span= search_link(amendment[:primary_sponsor])
+          %span= " (primary, "
+          %span>= search_link(amendment[:primary_sponsor_party])
+          %span>= ")"
+          - unless amendment[:date_tabled][:value].blank?
+            %span= " and tabled on "
+            %span>= format_date(amendment[:date_tabled])
+            %span= "."
+          - unless amendment[:number_of_signatures][:value].blank?
+            %span= "It has been signed by "
+            %span= amendment[:number_of_signatures][:value]
+            - if amendment[:number_of_signatures][:value] == 1
+              %span>= " Member in total"
+            - else
+              %span>= " Members in total"
+        %span= "."
+
+  .content-text
+    .amendment-title
+      %strong= "Amendment "
+      %strong= amendment[:index] + 1
+      %strong= " - "
+      %strong= title
+      %strong= " ("
+      %span.amendment-title-ref>= amendment[:reference][:value]
+      %strong= ") "
+    .amendment-text= amendment[:text][:value]

@@ -49,79 +49,15 @@ class Edm < ContentObject
     result_hashes
   end
 
-  def amendments_count
-    return if amendments.blank?
-
-    { value: amendments.size.to_s, field_name: 'amendmentText_t' }
-  end
-
   def withdrawn?
-    return false unless state == 'Withdrawn'
+    return false unless state && state[:value] == 'Withdrawn'
 
     true
-  end
-
-  def open?
-    return false unless state == 'Open'
-
-    true
-  end
-
-  def closed?
-    return false unless state == 'Closed'
-
-    true
-  end
-
-  def suspended?
-    return false unless state == 'Suspended'
-
-    true
-  end
-
-  def subtype
-    # the majority of EDMs have no subtype
-    get_first_from('subtype_ses')
-  end
-
-  def fatal_prayer?
-    return false unless subtype[:value] == 445873
-
-    true
-  end
-
-  def non_fatal_prayer?
-    return false unless subtype[:value] == 445875
-
-    true
-  end
-
-  def has_subtype?
-    return false if subtype.blank?
-
-    true
-  end
-
-  def subtype_name
-    return 'fatal prayer' if fatal_prayer?
-
-    return 'non-fatal prayer' if non_fatal_prayer?
-
-    nil
   end
 
   def state
     # 'Open', 'Closed', 'Withdrawn', 'Suspended'
-    get_all_from('edmStatus_t')
-  end
-
-  def amendment_text
-    get_all_from('amendmentText_t')
-  end
-
-  def other_supporters
-    # This is all other supporters and includes other sponsors
-    get_all_from('signedMember_ses')
+    get_first_from('edmStatus_t')
   end
 
   def other_sponsors
@@ -134,13 +70,5 @@ class Edm < ContentObject
 
   def date_tabled
     get_first_as_date_from('dateTabled_dt')
-  end
-
-  def bibliographic_citations
-    get_all_from('bibliographicCitation_s')
-  end
-
-  def external_location_uri
-    get_first_from('externalLocation_uri')
   end
 end
