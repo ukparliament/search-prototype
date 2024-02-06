@@ -25,17 +25,17 @@ RSpec.describe WrittenStatement, type: :model do
     end
 
     context 'where there is an empty array' do
-      let!(:written_statement) { WrittenStatement.new({ 'attachment_t' => [] }) }
+      let!(:written_statement) { WrittenStatement.new({ 'attachmentTitle_t' => [] }) }
       it 'returns nil' do
         expect(written_statement.attachment).to be_nil
       end
     end
 
     context 'where data exists' do
-      let!(:written_statement) { WrittenStatement.new({ 'attachment_t' => ['first item', 'second item'] }) }
+      let!(:written_statement) { WrittenStatement.new({ 'attachmentTitle_t' => ['first item', 'second item'] }) }
 
       it 'returns all items as an array' do
-        expect(written_statement.attachment).to eq([{ :field_name => "attachment_t", :value => "first item" }, { :field_name => "attachment_t", :value => "second item" }])
+        expect(written_statement.attachment).to eq([{ :field_name => "attachmentTitle_t", :value => "first item" }, { :field_name => "attachmentTitle_t", :value => "second item" }])
       end
     end
   end

@@ -9,7 +9,11 @@ class WrittenStatement < ContentObject
   end
 
   def attachment
-    get_all_from('attachment_t')
+    get_all_from('attachmentTitle_t')
+  end
+
+  def procedure
+    get_first_from('procedural_ses')
   end
 
   def notes
@@ -26,5 +30,12 @@ class WrittenStatement < ContentObject
 
   def is_corrected
     get_first_as_boolean_from('correctedWmsMc_b')
+  end
+
+  def corrected?
+    corrected_boolean = get_first_as_boolean_from('correctedWmsMc_b')
+    return false unless corrected_boolean && corrected_boolean[:value] == true
+
+    true
   end
 end
