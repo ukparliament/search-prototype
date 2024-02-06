@@ -1,0 +1,22 @@
+.content-prelim-box
+  .content-prelim-inner
+    .content-prelim-text#prelim-text
+      %span= object_display_name_link(object.object_name)
+      - unless object.member.blank?
+        %span= " made by "
+        %span>= search_link(object.member)
+        - unless object.primary_sponsor_party.blank?
+          %span<=" ("
+          %span>= search_link(object.member_party)
+          %span>=")"
+      %span= " on "
+      %strong>= format_date(object.statement_date)
+      %span= " in the "
+      %span= render 'search/fragments/list', items: object.legislature, terminator: ',', singular: false
+      %span= " on behalf of the "
+      - unless object.department.blank?
+        %span>= search_link(object.department)
+        %span= "."
+      - if object.corrected?
+        %span= "It has since been corrected."
+
