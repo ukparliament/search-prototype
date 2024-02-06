@@ -9,8 +9,6 @@ class DepositedPaper < Paper
   end
 
   def deposited_date
-    # uncertain this is the correct field
-
     get_first_as_date_from('dateReceived_dt')
   end
 
@@ -27,10 +25,7 @@ class DepositedPaper < Paper
   end
 
   def personal_author
-    # unsure of course for this field, possibly creator_ses?
-    # return if content_object_data['personalAuthor_t'].blank?
-
-    # content_object_data['personalAuthor_t']
+    combine_fields(get_all_from('personalAuthor_ses'), get_all_from('personalAuthor_t'))
     nil
   end
 end
