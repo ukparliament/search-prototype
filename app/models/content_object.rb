@@ -253,6 +253,10 @@ class ContentObject
     get_first_from('leadMember_ses')
   end
 
+  def lead_member_party
+    get_first_from('leadMemberParty_ses')
+  end
+
   def corporate_author
     combine_fields(get_all_from('corporateAuthor_ses'), get_all_from('corporateAuthor_t'))
   end
