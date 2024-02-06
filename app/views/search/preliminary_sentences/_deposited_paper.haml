@@ -1,0 +1,21 @@
+.content-prelim-box
+  .content-prelim-inner
+    .content-prelim-text#prelim-text
+      %span= object_display_name_link(object.object_name)
+      - unless object.legislature.blank? && object.department.blank? && object.deposited_date.blank?
+        %span= "deposited "
+      - unless object.legislature.blank?
+        %span= " in the "
+        %span>= render 'search/fragments/list', items: object.legislature, terminator: "", singular: false
+      - unless object.department.blank?
+        %span= " by the "
+      - unless object.department.blank?
+        %span= search_link(object.department)
+      - unless object.deposited_date.blank?
+        %span= " on "
+        %strong>= format_date(object.deposited_date)
+      %span= "."
+      - unless object.commitment_to_deposit_date.blank?
+        %span= " The commitment to deposit was made on "
+        %strong>= format_date(object.commitment_to_deposit_date)
+        %span= "."
