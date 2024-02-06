@@ -1,8 +1,14 @@
-<% unless from.blank? || to.blank? %>
+<% unless from.blank? && to.blank? %>
   <div class="about-item">
     <h3 class="content-heading" id="subsidiarity_protocol_period">Subsidiarity protocol period</h3>
     <div>
-      From <%= format_date(from) %> to <%= format_date(to) %>
+      <% if to.blank? %>
+        From <%= format_date(from) %>
+      <% elsif from.blank? %>
+        To <%= format_date(to) %>
+      <% else %>
+        From <%= format_date(from) %> to <%= format_date(to) %>
+      <% end %>
     </div>
   </div>
 <% end %>
