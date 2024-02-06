@@ -11,7 +11,7 @@
           <br/>
         <% end %>
         <% if contribution.reference %>
-          <%= link_to(formatted_name(contribution.reference, contributions[:ses_lookup], false), search_path(filter: contribution.reference)) %>
+          <%= link_to(formatted_name(contribution.reference.first, contributions[:ses_lookup], false), search_path(filter: contribution.reference)) %>
           <br/>
         <% end %>
       </div>
@@ -33,7 +33,7 @@
               <br/>
             <% end %>
             <% if contribution.reference %>
-              <%= link_to(formatted_name(contribution.reference, contributions[:ses_lookup], false), search_path(filter: contribution.reference)) %>
+              <%= link_to(formatted_name(contribution.reference.first, contributions[:ses_lookup], false), search_path(filter: contribution.reference)) %>
               <br/>
             <% end %>
           </div>
