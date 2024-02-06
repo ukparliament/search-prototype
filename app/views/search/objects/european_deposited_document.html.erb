@@ -25,11 +25,11 @@
   <%= render 'search/fragments/council_number', council_number: object.council_number %>
   <%= render 'search/fragments/other_number', other_number: object.other_number %>
   <%= render 'search/fragments/responsible_departments', responsible_departments: object.departments %>
-  <%= render 'search/fragments/date', date: object.date_of_origin, title: 'Date of origin' %>
   <%= render 'search/fragments/subsidiarity_protocol_period', from: object.subsidiarity_from_date, to: object.subsidiarity_to_date %>
-  <%= render 'search/fragments/contains_statistics', contains_statistics: object.contains_statistics %>
+  <%= render 'search/fragments/date', date: object.date_of_origin, title: 'Date of origin' %>
   <%= render 'search/fragments/related_items', related_items: object.related_items %>
   <%= render 'search/fragments/pills', pills_heading: 'Subjects', pills: object.subjects %>
+  <%= render 'search/fragments/contains_statistics', contains_statistics: object.contains_statistics %>
 </section>
 
 <%= render '/search/fragments/back_to_top_button' %>
