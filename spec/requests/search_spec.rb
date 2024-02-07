@@ -9,11 +9,11 @@ RSpec.describe 'Search', type: :request do
       let!(:item1) { { 'type_ses' => [90996], 'title_t' => 'Test item 1', 'uri' => 'test_item_1_uri', 'all_ses' => [90996, 12345] } }
       let!(:item2) { { 'type_ses' => [90996], 'title_t' => 'Test item 2', 'uri' => 'test_item_2_uri', 'all_ses' => [90996, 56789] } }
       let!(:item3) { { 'type_ses' => [90996], 'title_t' => 'Test item 3', 'uri' => 'test_item_3_uri', 'all_ses' => [90996, 34567] } }
-      let!(:test_search_response) { [item1, item2, item3] }
+      let!(:test_search_response) { { 'start' => 0, 'docs' => [item1, item2, item3] } }
 
       it 'returns http success' do
         allow(SolrSearch).to receive(:new).and_return(solr_search_instance)
-        allow(solr_search_instance).to receive(:object_data).and_return(test_search_response)
+        allow(solr_search_instance).to receive(:all_data).and_return(test_search_response)
         allow(SesLookup).to receive(:new).and_return(ses_lookup_instance)
         allow(ses_lookup_instance).to receive(:data).and_return('test ses response')
 
@@ -21,7 +21,7 @@ RSpec.describe 'Search', type: :request do
         expect(SolrSearch).to receive(:new)
 
         # the results are retrieved from the search
-        expect(solr_search_instance).to receive(:object_data)
+        expect(solr_search_instance).to receive(:all_data)
 
         # the combined all_ses fields from the results are submitted to SES
         expect(SesLookup).to receive(:new).with([{ value: [90996, 12345, 90996, 56789, 90996, 34567] }])
@@ -34,7 +34,7 @@ RSpec.describe 'Search', type: :request do
       end
 
       it 'returns items found by search' do
-        allow_any_instance_of(SolrSearch).to receive(:object_data).and_return(test_search_response)
+        allow_any_instance_of(SolrSearch).to receive(:all_data).and_return(test_search_response)
         allow_any_instance_of(SesLookup).to receive(:data).and_return('test ses response')
 
         get '/search', params: { "filter" => { "field_name" => "type_ses", "value" => "90996" } }
@@ -55,16 +55,16 @@ RSpec.describe 'Search', type: :request do
       let!(:item1) { { 'type_ses' => [90996], 'title_t' => 'Test item 1', 'uri' => 'test_item_1_uri', 'all_ses' => [90996, 12345] } }
       let!(:item2) { { 'type_ses' => [90996], 'title_t' => 'Test item 2', 'uri' => 'test_item_2_uri', 'all_ses' => [90996, 56789] } }
       let!(:item3) { { 'type_ses' => [90996], 'title_t' => 'Test item 3', 'uri' => 'test_item_3_uri', 'all_ses' => [90996, 34567] } }
-      let!(:test_search_response) { [item1, item2, item3] }
+      let!(:test_search_response) { { 'start' => 0, 'docs' => [item1, item2, item3] } }
 
       it 'returns http success' do
         allow(SolrSearch).to receive(:new).and_return(solr_search_instance)
-        allow(solr_search_instance).to receive(:object_data).and_return(test_search_response)
+        allow(solr_search_instance).to receive(:all_data).and_return(test_search_response)
         allow(SesLookup).to receive(:new).and_return(ses_lookup_instance)
         allow(ses_lookup_instance).to receive(:data).and_return('test ses response')
 
         expect(SolrSearch).to receive(:new)
-        expect(solr_search_instance).to receive(:object_data)
+        expect(solr_search_instance).to receive(:all_data)
 
         # SES lookup is still performed
         expect(SesLookup).to receive(:new).with([{ value: [90996, 12345, 90996, 56789, 90996, 34567] }])

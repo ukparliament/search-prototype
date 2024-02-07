@@ -11,15 +11,21 @@ class ApiCall
   end
 
   def object_data
+    all_data['docs']
+  end
+
+  def all_data
     response = evaluated_response
     return response if response['statusCode'] == 500
 
-    response['response']['docs']
+    response['response']
   end
 
   private
 
   def response_body
+    raise 'Please stub this method to avoid HTTP requests in test environment' if Rails.env.test?
+
     get_api_response(ruby_uri)
   end
 
