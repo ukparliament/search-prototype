@@ -39,7 +39,7 @@
   <%= render 'search/fragments/legislation', legislation: object.legislation %>
   <%= render 'search/fragments/contains_statistics', contains_statistics: object.contains_statistics %>
 
-  <% if object.answered? || object.is_corrected %>
+  <% if object.answered? || object.corrected? %>
     <%= render 'search/fragments/link', object: object %>
   <% end %>
 </section>

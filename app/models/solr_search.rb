@@ -2,15 +2,27 @@ class SolrSearch < ApiCall
 
   attr_reader :query, :page, :filter
 
-  def initialize(params)
+  def initialize(search_parameters)
     super
-    @query = params[:query]
-    @page = params[:page]
-    @filter = params[:filter]
+    @query = search_parameters[:query]
+    @page = search_parameters[:page]
+    @filter = search_parameters[:filter]
   end
 
   def result_uris
     object_data.map { |doc| doc["uri"] }
+  end
+
+  def number_of_results
+    evaluated_response['response']['numFound']
+  end
+
+  def start
+    evaluated_response['response']['start']
+  end
+
+  def end
+    start + rows
   end
 
   def start

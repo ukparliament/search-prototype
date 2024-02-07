@@ -6,25 +6,28 @@
 <section>
   <h3>Search results</h3>
 
-  <% unless params[:filter].blank? %>
+  <% unless @search.filter.blank? %>
     <p>
-      Results for <%= params[:filter][:field_name] %> of "<%= object_display_name(params[:filter], singular: false) %>"
+      Showing rows <strong><%= @start %> - <%= @end %></strong> of
+      <strong><%= @number_of_results %></strong>
+      results for
+      <strong><%= @search.filter[:field_name] %></strong> of
+      <strong>"<%= object_display_name(@search.filter, singular: false) %>"</strong>
     </p>
   <% end %>
-  <!--  <h6>Found <%#= @metadata['numFound'] %> results</h6>-->
 
-  <ul>
-    <% @items.each do |item| %>
-      <li>
-        <%= link_to(item["title_t"], object_show_url(:object => item["uri"])) %>
-      </li>
-    <% end %>
-  </ul>
+  <% @results.each do |result| %>
+    <p>
+      <%#= result %>
+      <%= link_to(result["title_t"], object_show_url(:object => result["uri"])) %><br/>
+      <%= @ses_data[result["type_ses"].first] %>
+    </p>
+  <% end %>
 
 </section>
 
 <div id="pagination">
-  <%= link_to "1", search_url(query: params[:query], page: 1), { method: :post } %>
-  <%= link_to "2", search_url(query: params[:query], page: 2), { method: :post } %>
-  <%= link_to "3", search_url(query: params[:query], page: 3), { method: :post } %>
+  <%= link_to "1", search_url(query: @search.query, filter: @search.filter, page: 0), { method: :post } %>
+  <%= link_to "2", search_url(query: @search.query, filter: @search.filter, page: 1), { method: :post } %>
+  <%= link_to "3", search_url(query: @search.query, filter: @search.filter, page: 2), { method: :post } %>
 </div>

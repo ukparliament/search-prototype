@@ -7,6 +7,7 @@ RSpec.describe 'Edm', type: :request do
     it 'returns http success' do
       allow_any_instance_of(SolrQuery).to receive(:object_data).and_return('test')
       allow_any_instance_of(Edm).to receive(:ses_data).and_return(edm_instance.type[:value] => 'early day motion')
+      allow_any_instance_of(SesLookup).to receive(:data).and_return([])
       allow(ContentObject).to receive(:generate).and_return(edm_instance)
       get '/objects', params: { :object => 'test_string' }
       expect(response).to have_http_status(:ok)
