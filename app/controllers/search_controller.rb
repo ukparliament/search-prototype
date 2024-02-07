@@ -3,15 +3,16 @@ class SearchController < ApplicationController
 
   def index
     @page_title = "Search results"
-    query = SolrSearch.new(params)
+    @search = SolrSearch.new(search_params)
+    @results = @search.object_data
 
-    @items = query.object_data
-    @ses_data = SesLookup.new([query.filter]).data unless query.filter.blank?
+    ses_ids = { value: @results.pluck('all_ses').flatten }
+    @ses_data = SesLookup.new([ses_ids]).data unless ses_ids.blank?
   end
 
   private
 
   def search_params
-    params.permit(:query, :page, filter: [])
+    params.permit(:commit, :query, :page, filter: [:field_name, :value])
   end
 end

@@ -6,21 +6,27 @@ RSpec.describe 'Search', type: :request do
     context 'a search using filters' do
       let!(:solr_search_instance) { SolrSearch.new(query: { "filter" => { "field_name" => "type_ses", "value" => "90996" } }) }
       let!(:ses_lookup_instance) { SesLookup.new('test SES lookup input') }
-      let!(:item1) { { 'type_ses' => 90996, 'title_t' => 'Test item 1', 'uri' => 'test_item_1_uri' } }
-      let!(:item2) { { 'type_ses' => 90996, 'title_t' => 'Test item 2', 'uri' => 'test_item_2_uri' } }
-      let!(:item3) { { 'type_ses' => 90996, 'title_t' => 'Test item 3', 'uri' => 'test_item_3_uri' } }
+      let!(:item1) { { 'type_ses' => [90996], 'title_t' => 'Test item 1', 'uri' => 'test_item_1_uri', 'all_ses' => [90996, 12345] } }
+      let!(:item2) { { 'type_ses' => [90996], 'title_t' => 'Test item 2', 'uri' => 'test_item_2_uri', 'all_ses' => [90996, 56789] } }
+      let!(:item3) { { 'type_ses' => [90996], 'title_t' => 'Test item 3', 'uri' => 'test_item_3_uri', 'all_ses' => [90996, 34567] } }
       let!(:test_search_response) { [item1, item2, item3] }
 
       it 'returns http success' do
         allow(SolrSearch).to receive(:new).and_return(solr_search_instance)
         allow(solr_search_instance).to receive(:object_data).and_return(test_search_response)
-        allow(solr_search_instance).to receive(:filter).and_return({ "field_name" => "type_ses", "value" => 90996 })
         allow(SesLookup).to receive(:new).and_return(ses_lookup_instance)
         allow(ses_lookup_instance).to receive(:data).and_return('test ses response')
 
-        expect(SolrSearch).to receive(:new).with({ "filter" => { "field_name" => "type_ses", "value" => "90996" }, "controller" => "search", "action" => "index" })
+        # a new instance of SolrSearch is created
+        expect(SolrSearch).to receive(:new)
+
+        # the results are retrieved from the search
         expect(solr_search_instance).to receive(:object_data)
-        expect(SesLookup).to receive(:new).with([{ "field_name" => "type_ses", "value" => 90996 }])
+
+        # the combined all_ses fields from the results are submitted to SES
+        expect(SesLookup).to receive(:new).with([{ value: [90996, 12345, 90996, 56789, 90996, 34567] }])
+
+        # the SES results are retrieved
         expect(ses_lookup_instance).to receive(:data)
 
         get '/search', params: { "filter" => { "field_name" => "type_ses", "value" => "90996" } }
@@ -45,18 +51,24 @@ RSpec.describe 'Search', type: :request do
 
     context 'a search using a query string' do
       let!(:solr_search_instance) { SolrSearch.new(query: { "query" => 'item 2' }) }
-      let!(:item1) { { 'type_ses' => 90996, 'title_t' => 'Test item 1', 'uri' => 'test_item_1_uri' } }
-      let!(:item2) { { 'type_ses' => 90996, 'title_t' => 'Test item 2', 'uri' => 'test_item_2_uri' } }
-      let!(:item3) { { 'type_ses' => 90996, 'title_t' => 'Test item 3', 'uri' => 'test_item_3_uri' } }
+      let!(:ses_lookup_instance) { SesLookup.new('test SES lookup input') }
+      let!(:item1) { { 'type_ses' => [90996], 'title_t' => 'Test item 1', 'uri' => 'test_item_1_uri', 'all_ses' => [90996, 12345] } }
+      let!(:item2) { { 'type_ses' => [90996], 'title_t' => 'Test item 2', 'uri' => 'test_item_2_uri', 'all_ses' => [90996, 56789] } }
+      let!(:item3) { { 'type_ses' => [90996], 'title_t' => 'Test item 3', 'uri' => 'test_item_3_uri', 'all_ses' => [90996, 34567] } }
       let!(:test_search_response) { [item1, item2, item3] }
 
       it 'returns http success' do
         allow(SolrSearch).to receive(:new).and_return(solr_search_instance)
         allow(solr_search_instance).to receive(:object_data).and_return(test_search_response)
+        allow(SesLookup).to receive(:new).and_return(ses_lookup_instance)
+        allow(ses_lookup_instance).to receive(:data).and_return('test ses response')
 
-        expect(SolrSearch).to receive(:new).with({ "query" => "item 2", "controller" => "search", "action" => "index" })
+        expect(SolrSearch).to receive(:new)
         expect(solr_search_instance).to receive(:object_data)
-        expect(SesLookup).not_to receive(:new)
+
+        # SES lookup is still performed
+        expect(SesLookup).to receive(:new).with([{ value: [90996, 12345, 90996, 56789, 90996, 34567] }])
+        expect(ses_lookup_instance).to receive(:data)
 
         get '/search', params: { "query" => 'item 2' }
         expect(response).to have_http_status(:ok)
