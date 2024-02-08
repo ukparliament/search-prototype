@@ -222,7 +222,7 @@ class ContentObject
   end
 
   def procedure
-    get_first_from('procedure_t')
+    get_first_from('procedural_ses')
   end
 
   def procedure_scrutiny_period

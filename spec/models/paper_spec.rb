@@ -366,8 +366,8 @@ RSpec.describe Paper, type: :model do
     end
     context 'where there are no subtypes' do
       let!(:paper) { Paper.new({ 'type_ses' => [12345], 'subtype_ses' => [] }) }
-      it 'returns type' do
-        expect(paper.paper_type).to eq([{ field_name: 'type_ses', value: 12345 }])
+      it 'returns nil' do
+        expect(paper.paper_type).to be_nil
       end
     end
   end
