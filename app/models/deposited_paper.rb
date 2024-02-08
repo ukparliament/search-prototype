@@ -26,6 +26,13 @@ class DepositedPaper < Paper
 
   def personal_author
     combine_fields(get_all_from('personalAuthor_ses'), get_all_from('personalAuthor_t'))
-    nil
+  end
+
+  def commons_library_location
+    get_first_from('physicalLocationCommons_t')
+  end
+
+  def lords_library_location
+    get_first_from('physicalLocationLords_t')
   end
 end

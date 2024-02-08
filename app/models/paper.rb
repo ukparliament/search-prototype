@@ -48,8 +48,11 @@ class Paper < ContentObject
     get_first_from('memberPrinted_t')
   end
 
+  def paper_procedure
+    get_first_from('procedure_t')
+  end
+
   def paper_type
-    all_subtypes = get_all_from('subtype_ses')
-    all_subtypes.blank? ? [type] : all_subtypes
+    get_all_from('subtype_ses')
   end
 end

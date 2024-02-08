@@ -2,5 +2,8 @@
   <div class="about-item">
     <h3 class="content-heading" id="procedure">Procedure</h3>
     <%= search_link(procedure) %>
+    <% unless approval_days.blank? || approval_days[:value]&.to_i.zero? %>
+      <br/><%= approval_days[:value] %> days scrutiny period
+    <% end %>
   </div>
 <% end %>

@@ -1,6 +1,8 @@
 <% unless author.blank? %>
   <div class="about-item">
     <h3 class="content-heading" id="personal-author">Personal author</h3>
-    <%= author %>
+    <% author.each do |item| %>
+      <%= search_link(item) %><br/>
+    <% end %>
   </div>
 <% end %>

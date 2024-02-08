@@ -1,0 +1,31 @@
+.content-prelim-box
+  .content-prelim-inner
+    .content-prelim-text#prelim-text
+      %span= object_display_name_link(object.object_name)
+      %span= " asked in the "
+      %span>= render 'search/fragments/list', items: object.legislature, terminator: object.tabling_member.blank? && object.department.blank? ? '' : ',', singular: false
+      - unless object.tabling_member.blank?
+        %span= " by "
+        %span= search_link(object.member)
+        - unless object.member_party.blank?
+          %span<="("
+          %span>= search_link(object.member_party)
+          %span>=")"
+      - unless object.department.blank?
+        %span=" to the "
+        %span>= search_link(object.department)
+      %span>=". It was answered "
+      - unless object.answering_member.blank?
+        %span= " by "
+        %span= search_link(object.answering_member)
+        - unless object.answering_member_party.blank?
+          %span<="("
+          %span>= search_link(object.answering_member_party)
+          %span>=")"
+      - unless object.date_of_answer.blank?
+        %span= " on "
+        %strong= format_date(object.date_of_answer)
+      - unless object.answering_department.blank?
+        %span= " on behalf of the "
+        %span= search_link(object.answering_department)
+      %span= "."
