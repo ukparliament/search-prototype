@@ -19,33 +19,21 @@
 <% end %>
 
 <section id="prelim">
-  <%= render 'search/preliminary_sentences/oral_answer_to_question', object: object %>
+  <%= render 'search/preliminary_sentences/oral_answer', object: object %>
 </section>
 
-<section id="main-content" class="content-section white">
-  <%= render 'search/fragments/answer', object: object %>
-</section>
-
-<% if object.has_question? %>
-  <section class="content-section grey">
-    <div class="about-item">
-      This is an answer to <%= object_show_link(object.question_object.object_title, object.question_url) %>
-      asked on <strong><%= format_date(object.date_of_question) %></strong>
-      <% if object.question_object.asking_member.blank? %>
-        .
-      <% else %>
-        by <%= search_link(object.question_object.asking_member) %>
-        <% unless object.question_object.asking_member_party.blank? %>
-          (<%= search_link(object.question_object.asking_member_party) %>).
-        <% end %>
-      <% end %>
-    </div>
+<% unless object.answer_text.blank? %>
+  <section id="main-content" class="content-section white">
+    <%= render 'search/fragments/answer', object: object %>
   </section>
 <% end %>
 
-<section id="main-content" class="content-section white">
-  <%= render 'search/fragments/question', object: object %>
-</section>
+<% if object.has_question? %>
+  <%= render 'search/preliminary_sentences/oral_answer_question', object: object %>
+  <section id="main-content" class="content-section white">
+    <%= render 'search/fragments/question', object: object.question_object %>
+  </section>
+<% end %>
 
 <section id="about" class="content-section grey">
   <h2 class="content-heading">About this <%= object_display_name(object.type) %></h2>
