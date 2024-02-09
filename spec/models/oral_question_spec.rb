@@ -85,21 +85,6 @@ RSpec.describe OralQuestion, type: :model do
     end
   end
 
-  describe 'lords_answered?' do
-    context 'where state is lords answered' do
-      it 'returns true' do
-        allow(oral_question).to receive(:state).and_return({ field_name: 'pqStatus_t', value: 'Lords_Answered' })
-        expect(oral_question.lords_answered?).to eq(true)
-      end
-    end
-    context 'where state is not lords answered' do
-      it 'returns false' do
-        allow(oral_question).to receive(:state).and_return({ field_name: 'pqStatus_t', value: 'another_state' })
-        expect(oral_question.lords_answered?).to eq(false)
-      end
-    end
-  end
-
   describe 'prelim_partial' do
     context 'when state is tabled' do
       it 'returns the tabled partial' do
@@ -119,17 +104,11 @@ RSpec.describe OralQuestion, type: :model do
         expect(oral_question.prelim_partial).to eq('/search/preliminary_sentences/oral_question_answered')
       end
     end
-    context 'when state is lords answered' do
-      it 'returns the lords answered partial' do
-        allow(oral_question).to receive(:lords_answered?).and_return(true)
-        expect(oral_question.prelim_partial).to eq('/search/preliminary_sentences/oral_question_lords_answered')
-      end
-    end
-    context 'when state is corrected' do
-      it 'returns the corrected partial' do
-        allow(oral_question).to receive(:lords_answered?).and_return(false)
+    context 'when state is answered and question is corrected' do
+      it 'returns the answered partial' do
+        allow(oral_question).to receive(:answered?).and_return(true)
         allow(oral_question).to receive(:corrected?).and_return(true)
-        expect(oral_question.prelim_partial).to eq('/search/preliminary_sentences/oral_question_corrected')
+        expect(oral_question.prelim_partial).to eq('/search/preliminary_sentences/oral_question_answered')
       end
     end
   end

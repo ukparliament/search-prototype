@@ -38,6 +38,7 @@ class ApiCall
   end
 
   def get_api_response(uri)
+    puts "Get request from #{self.class.name}: #{uri}"
     Net::HTTP.get(uri, request_headers)
   end
 
