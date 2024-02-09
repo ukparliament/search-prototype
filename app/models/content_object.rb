@@ -23,10 +23,14 @@ class ContentObject
     # returns the title, falling back to name
     return page_title unless page_title.blank?
 
+    "Untitled #{object_name_text}"
+  end
+
+  def object_name_text
     return if subtype_or_type.blank?
 
     object_ses_data = SesLookup.new([subtype_or_type]).data
-    "Untitled #{object_ses_data[subtype_or_type[:value].to_i]&.singularize}"
+    object_ses_data[subtype_or_type[:value].to_i]&.singularize
   end
 
   def page_title
