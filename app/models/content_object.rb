@@ -43,7 +43,7 @@ class ContentObject
   end
 
   def subtype_or_type
-    subtype.blank? ? type : subtype
+    fallback(subtype, type)
   end
 
   def type

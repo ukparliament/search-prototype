@@ -13,18 +13,6 @@ class SolrSearch < ApiCall
     object_data.map { |doc| doc["uri"] }
   end
 
-  def number_of_results
-    evaluated_response['response']['numFound']
-  end
-
-  def start
-    evaluated_response['response']['start']
-  end
-
-  def end
-    start + rows
-  end
-
   def start
     # offset number of rows
     return 0 if page.blank?
@@ -38,6 +26,10 @@ class SolrSearch < ApiCall
   end
 
   def query_string
+    # multiple fields can be stacked using fq
+    # return "fq=questionText_t:%221%22&fq=type_ses:%2292277%22"
+    # return "fq=pqStatus_t:%22Answered%22&fq=type_ses:%2292277%22"
+
     # processing the query separately as it can comprise of multiple components and follows its own pattern
     return unless query || filter
 

@@ -2,19 +2,19 @@
   <div class="about-item">
     <h3 class="content-heading" id="contributions">Contributions</h3>
     <% contributions[:items].first(2).each do |contribution| %>
-      <div>
-        <% if contribution.contribution_text %>
-          <%= raw(contribution.contribution_text[:value]) %>
-        <% end %>
+      <p>
         <% if contribution.member %>
           <%= link_to(formatted_name(contribution.member, contributions[:ses_lookup], false), search_path(filter: contribution.member)) %>
           <br/>
         <% end %>
+        <% if contribution.contribution_text %>
+          <%= raw(contribution.contribution_text[:value]) %>
+        <% end %>
         <% if contribution.reference %>
-          <%= link_to(formatted_name(contribution.reference.first, contributions[:ses_lookup], false), search_path(filter: contribution.reference)) %>
+          <%= object_show_link(contribution.reference.first[:value], contribution.object_uri) %>
           <br/>
         <% end %>
-      </div>
+      </p>
     <% end %>
     <br/>
 
@@ -24,19 +24,19 @@
           Show all contributions (<%= contributions[:items].size %>)
         </summary>
         <% contributions[:items].drop(2).each do |contribution| %>
-          <div>
-            <% if contribution.contribution_text %>
-              <%= raw(contribution.contribution_text[:value]) %>
-            <% end %>
+          <p>
             <% if contribution.member %>
               <%= link_to(formatted_name(contribution.member, contributions[:ses_lookup], false), search_path(filter: contribution.member)) %>
               <br/>
             <% end %>
+            <% if contribution.contribution_text %>
+              <%= raw(contribution.contribution_text[:value]) %>
+            <% end %>
             <% if contribution.reference %>
-              <%= link_to(formatted_name(contribution.reference.first, contributions[:ses_lookup], false), search_path(filter: contribution.reference)) %>
+              <%= object_show_link(contribution.reference.first[:value], contribution.object_uri) %>
               <br/>
             <% end %>
-          </div>
+          </p>
         <% end %>
       </details>
     <% end %>

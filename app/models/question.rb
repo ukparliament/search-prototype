@@ -21,7 +21,6 @@ class Question < ContentObject
   end
 
   def corrected?
-    # TODO: There is no state string for this, it must be derived
     # Prior to July 2014, correctedWmsMc_b flag + related links will contain a link to the correction
     # After July 2014, correctedWmsMc_b + correctingItem_uri OR correctingItem_t / s as a fallback
 
@@ -56,7 +55,7 @@ class Question < ContentObject
   end
 
   def correcting_item_link
-    get_first_from('correctingItem_uri')
+    fallback(get_first_from('correctingItem_uri'), get_first_from('correctingItem_t'))
   end
 
   def date_of_question
