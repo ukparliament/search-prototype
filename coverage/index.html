@@ -14,7 +14,7 @@
       <img src="./assets/0.12.3/loading.gif" alt="loading"/>
     </div>
     <div id="wrapper" class="hide">
-      <div class="timestamp">Generated <abbr class="timeago" title="2024-02-09T09:15:32+00:00">2024-02-09T09:15:32+00:00</abbr></div>
+      <div class="timestamp">Generated <abbr class="timeago" title="2024-02-09T15:11:37+00:00">2024-02-09T15:11:37+00:00</abbr></div>
       <ul class="group_tabs"></ul>
 
       <div id="content">
@@ -23,14 +23,14 @@
     <span class="group_name">All Files</span>
     (<span class="covered_percent">
       <span class="green">
-  93.63%
+  92.89%
 </span>
 
      </span>
      covered at
      <span class="covered_strength">
        <span class="green">
-         97.53
+         96.45
        </span>
     </span> hits/line
     )
@@ -43,11 +43,11 @@
   </div>
 
   <div class="t-line-summary">
-    <b>974</b> relevant lines,
-    <span class="green"><b>912</b> lines covered</span> and
-    <span class="red"><b>62</b> lines missed. </span>
+    <b>985</b> relevant lines,
+    <span class="green"><b>915</b> lines covered</span> and
+    <span class="red"><b>70</b> lines missed. </span>
     (<span class="green">
-  93.63%
+  92.89%
 </span>
 )
   </div>
@@ -435,12 +435,12 @@
         
           <tr class="t-file">
             <td class="strong t-file__name"><a href="#7264c46e514612b68be88661810ec4be225655e6" class="src_link" title="app/models/oral_question.rb">app/models/oral_question.rb</a></td>
-            <td class="green strong cell--number t-file__coverage">100.00 %</td>
-            <td class="cell--number">25</td>
-            <td class="cell--number">11</td>
-            <td class="cell--number">11</td>
-            <td class="cell--number">0</td>
-            <td class="cell--number">3.09</td>
+            <td class="red strong cell--number t-file__coverage">70.00 %</td>
+            <td class="cell--number">43</td>
+            <td class="cell--number">20</td>
+            <td class="cell--number">14</td>
+            <td class="cell--number">6</td>
+            <td class="cell--number">1.85</td>
             
           </tr>
         
@@ -545,12 +545,12 @@
         
           <tr class="t-file">
             <td class="strong t-file__name"><a href="#f40fdf090b91a5353240875d57915500976ed732" class="src_link" title="app/models/proceeding_contribution.rb">app/models/proceeding_contribution.rb</a></td>
-            <td class="red strong cell--number t-file__coverage">75.00 %</td>
-            <td class="cell--number">23</td>
-            <td class="cell--number">12</td>
+            <td class="red strong cell--number t-file__coverage">64.29 %</td>
+            <td class="cell--number">26</td>
+            <td class="cell--number">14</td>
             <td class="cell--number">9</td>
-            <td class="cell--number">3</td>
-            <td class="cell--number">1.67</td>
+            <td class="cell--number">5</td>
+            <td class="cell--number">1.43</td>
             
           </tr>
         
@@ -16470,8 +16470,8 @@
   <div class="header">
     <h3>app/models/oral_question.rb</h3>
     <h4>
-      <span class="green">
-  100.0%
+      <span class="red">
+  70.0%
 </span>
 
       lines covered
@@ -16480,9 +16480,9 @@
     
 
     <div class="t-line-summary">
-      <b>11</b> relevant lines.
-      <span class="green"><b>11</b> lines covered</span> and
-      <span class="red"><b>0</b> lines missed.</span>
+      <b>20</b> relevant lines.
+      <span class="green"><b>14</b> lines covered</span> and
+      <span class="red"><b>6</b> lines missed.</span>
     </div>
 
     
@@ -16653,18 +16653,18 @@
 
             
 
-            <code class="ruby">  def prelim_partial</code>
+            <code class="ruby">  def answer_text</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="4" data-linenumber="16">
-            <span class="hits">4</span>
+          <li class="missed" data-hits="0" data-linenumber="16">
+            
             
 
             
 
-            <code class="ruby">    return &#39;/search/preliminary_sentences/oral_question_withdrawn&#39; if withdrawn?</code>
+            <code class="ruby">    answer_object.answer_text</code>
           </li>
         </div>
       
@@ -16675,23 +16675,12 @@
 
             
 
-            <code class="ruby"></code>
+            <code class="ruby">  end</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="3" data-linenumber="18">
-            <span class="hits">3</span>
-            
-
-            
-
-            <code class="ruby">    return &#39;/search/preliminary_sentences/oral_question_tabled&#39; if tabled?</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="19">
+          <li class="never" data-hits="" data-linenumber="18">
             
             
 
@@ -16702,24 +16691,35 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="2" data-linenumber="20">
-            <span class="hits">2</span>
+          <li class="covered" data-hits="1" data-linenumber="19">
+            <span class="hits">1</span>
             
 
             
 
-            <code class="ruby">    return &#39;/search/preliminary_sentences/oral_question_answered&#39; if answered?</code>
+            <code class="ruby">  def answer_object</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="21">
+          <li class="never" data-hits="" data-linenumber="20">
             
             
 
             
 
-            <code class="ruby"></code>
+            <code class="ruby">    # TODO: Awaiting confirmation that this is the correct approach</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="missed" data-hits="0" data-linenumber="21">
+            
+            
+
+            
+
+            <code class="ruby">    return unless answered?</code>
           </li>
         </div>
       
@@ -16730,18 +16730,18 @@
 
             
 
-            <code class="ruby">    nil</code>
+            <code class="ruby"></code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="23">
+          <li class="missed" data-hits="0" data-linenumber="23">
             
             
 
             
 
-            <code class="ruby">  end</code>
+            <code class="ruby">    return if answer_item_link.blank?</code>
           </li>
         </div>
       
@@ -16757,7 +16757,205 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="25">
+          <li class="missed" data-hits="0" data-linenumber="25">
+            
+            
+
+            
+
+            <code class="ruby">    answer_item_data = SolrQuery.new(object_uri: answer_item_link[:value]).object_data</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="missed" data-hits="0" data-linenumber="26">
+            
+            
+
+            
+
+            <code class="ruby">    ContentObject.generate(answer_item_data)</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="27">
+            
+            
+
+            
+
+            <code class="ruby">  end</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="28">
+            
+            
+
+            
+
+            <code class="ruby"></code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="1" data-linenumber="29">
+            <span class="hits">1</span>
+            
+
+            
+
+            <code class="ruby">  def answer_item_link</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="missed" data-hits="0" data-linenumber="30">
+            
+            
+
+            
+
+            <code class="ruby">    get_first_from(&#39;answerFor_uri&#39;)</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="31">
+            
+            
+
+            
+
+            <code class="ruby">  end</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="32">
+            
+            
+
+            
+
+            <code class="ruby"></code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="1" data-linenumber="33">
+            <span class="hits">1</span>
+            
+
+            
+
+            <code class="ruby">  def prelim_partial</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="4" data-linenumber="34">
+            <span class="hits">4</span>
+            
+
+            
+
+            <code class="ruby">    return &#39;/search/preliminary_sentences/oral_question_withdrawn&#39; if withdrawn?</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="35">
+            
+            
+
+            
+
+            <code class="ruby"></code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="3" data-linenumber="36">
+            <span class="hits">3</span>
+            
+
+            
+
+            <code class="ruby">    return &#39;/search/preliminary_sentences/oral_question_tabled&#39; if tabled?</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="37">
+            
+            
+
+            
+
+            <code class="ruby"></code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="2" data-linenumber="38">
+            <span class="hits">2</span>
+            
+
+            
+
+            <code class="ruby">    return &#39;/search/preliminary_sentences/oral_question_answered&#39; if answered?</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="39">
+            
+            
+
+            
+
+            <code class="ruby"></code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="40">
+            
+            
+
+            
+
+            <code class="ruby">    nil</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="41">
+            
+            
+
+            
+
+            <code class="ruby">  end</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="42">
+            
+            
+
+            
+
+            <code class="ruby"></code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="43">
             
             
 
@@ -19014,7 +19212,7 @@
     <h3>app/models/proceeding_contribution.rb</h3>
     <h4>
       <span class="red">
-  75.0%
+  64.29%
 </span>
 
       lines covered
@@ -19023,9 +19221,9 @@
     
 
     <div class="t-line-summary">
-      <b>12</b> relevant lines.
+      <b>14</b> relevant lines.
       <span class="green"><b>9</b> lines covered</span> and
-      <span class="red"><b>3</b> lines missed.</span>
+      <span class="red"><b>5</b> lines missed.</span>
     </div>
 
     
@@ -19207,7 +19405,7 @@
 
             
 
-            <code class="ruby">    [get_first_from(&#39;parentProceeding_t&#39;)[:value]]</code>
+            <code class="ruby">    get_first_from(&#39;parentProceeding_t&#39;)</code>
           </li>
         </div>
       
@@ -19251,12 +19449,45 @@
 
             
 
-            <code class="ruby">    response = ObjectsFromUriList.new(proceeding_contribution_uri).get_objects</code>
+            <code class="ruby">    return if proceeding_contribution_uri.blank?</code>
           </li>
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="21">
+          <li class="never" data-hits="" data-linenumber="21">
+            
+            
+
+            
+
+            <code class="ruby"></code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="missed" data-hits="0" data-linenumber="22">
+            
+            
+
+            
+
+            <code class="ruby">    parent_proceeding_uri = proceeding_contribution_uri[:value]</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="missed" data-hits="0" data-linenumber="23">
+            
+            
+
+            
+
+            <code class="ruby">    response = ObjectsFromUriList.new([parent_proceeding_uri]).get_objects</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="missed" data-hits="0" data-linenumber="24">
             
             
 
@@ -19267,7 +19498,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="22">
+          <li class="never" data-hits="" data-linenumber="25">
             
             
 
@@ -19278,7 +19509,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="23">
+          <li class="never" data-hits="" data-linenumber="26">
             
             
 

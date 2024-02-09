@@ -13,11 +13,14 @@ class ProceedingContribution < ContentObject
   end
 
   def proceeding_contribution_uri
-    [get_first_from('parentProceeding_t')[:value]]
+    get_first_from('parentProceeding_t')
   end
 
   def parent_object
-    response = ObjectsFromUriList.new(proceeding_contribution_uri).get_objects
+    return if proceeding_contribution_uri.blank?
+
+    parent_proceeding_uri = proceeding_contribution_uri[:value]
+    response = ObjectsFromUriList.new([parent_proceeding_uri]).get_objects
     response[:items]&.first
   end
 end
