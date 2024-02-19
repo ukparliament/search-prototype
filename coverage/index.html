@@ -14,7 +14,7 @@
       <img src="./assets/0.12.3/loading.gif" alt="loading"/>
     </div>
     <div id="wrapper" class="hide">
-      <div class="timestamp">Generated <abbr class="timeago" title="2024-02-09T11:52:45+00:00">2024-02-09T11:52:45+00:00</abbr></div>
+      <div class="timestamp">Generated <abbr class="timeago" title="2024-02-19T10:47:55+00:00">2024-02-19T10:47:55+00:00</abbr></div>
       <ul class="group_tabs"></ul>
 
       <div id="content">
@@ -23,14 +23,14 @@
     <span class="group_name">All Files</span>
     (<span class="covered_percent">
       <span class="green">
-  93.1%
+  92.91%
 </span>
 
      </span>
      covered at
      <span class="covered_strength">
        <span class="green">
-         96.45
+         96.26
        </span>
     </span> hits/line
     )
@@ -43,11 +43,11 @@
   </div>
 
   <div class="t-line-summary">
-    <b>985</b> relevant lines,
+    <b>987</b> relevant lines,
     <span class="green"><b>917</b> lines covered</span> and
-    <span class="red"><b>68</b> lines missed. </span>
+    <span class="red"><b>70</b> lines missed. </span>
     (<span class="green">
-  93.1%
+  92.91%
 </span>
 )
   </div>
@@ -412,7 +412,7 @@
           </tr>
         
           <tr class="t-file">
-            <td class="strong t-file__name"><a href="#e8dc7b65452fc7884e174d472ec02e05738e83cd" class="src_link" title="app/models/observations_on_a_petition.rb">app/models/observations_on_a_petition.rb</a></td>
+            <td class="strong t-file__name"><a href="#de850d27bb03d197dd42ed258da54020c5a811b3" class="src_link" title="app/models/observations_on_petitions.rb">app/models/observations_on_petitions.rb</a></td>
             <td class="red strong cell--number t-file__coverage">75.00 %</td>
             <td class="cell--number">16</td>
             <td class="cell--number">8</td>
@@ -545,12 +545,12 @@
         
           <tr class="t-file">
             <td class="strong t-file__name"><a href="#f40fdf090b91a5353240875d57915500976ed732" class="src_link" title="app/models/proceeding_contribution.rb">app/models/proceeding_contribution.rb</a></td>
-            <td class="red strong cell--number t-file__coverage">75.00 %</td>
-            <td class="cell--number">23</td>
-            <td class="cell--number">12</td>
+            <td class="red strong cell--number t-file__coverage">64.29 %</td>
+            <td class="cell--number">26</td>
+            <td class="cell--number">14</td>
             <td class="cell--number">9</td>
-            <td class="cell--number">3</td>
-            <td class="cell--number">1.67</td>
+            <td class="cell--number">5</td>
+            <td class="cell--number">1.43</td>
             
           </tr>
         
@@ -10171,7 +10171,7 @@
 
             
 
-            <code class="ruby">        &#39;ObservationsOnAPetition&#39;</code>
+            <code class="ruby">        &#39;ObservationsOnPetitions&#39;</code>
           </li>
         </div>
       
@@ -15997,9 +15997,9 @@
 </div>
 
       
-        <div class="source_table" id="e8dc7b65452fc7884e174d472ec02e05738e83cd">
+        <div class="source_table" id="de850d27bb03d197dd42ed258da54020c5a811b3">
   <div class="header">
-    <h3>app/models/observations_on_a_petition.rb</h3>
+    <h3>app/models/observations_on_petitions.rb</h3>
     <h4>
       <span class="red">
   75.0%
@@ -16030,7 +16030,7 @@
 
             
 
-            <code class="ruby">class ObservationsOnAPetition &lt; Petition</code>
+            <code class="ruby">class ObservationsOnPetitions &lt; Petition</code>
           </li>
         </div>
       
@@ -16107,7 +16107,7 @@
 
             
 
-            <code class="ruby">    &#39;search/objects/observations_on_a_petition&#39;</code>
+            <code class="ruby">    &#39;search/objects/observations_on_petitions&#39;</code>
           </li>
         </div>
       
@@ -19256,7 +19256,7 @@
     <h3>app/models/proceeding_contribution.rb</h3>
     <h4>
       <span class="red">
-  75.0%
+  64.29%
 </span>
 
       lines covered
@@ -19265,9 +19265,9 @@
     
 
     <div class="t-line-summary">
-      <b>12</b> relevant lines.
+      <b>14</b> relevant lines.
       <span class="green"><b>9</b> lines covered</span> and
-      <span class="red"><b>3</b> lines missed.</span>
+      <span class="red"><b>5</b> lines missed.</span>
     </div>
 
     
@@ -19449,7 +19449,7 @@
 
             
 
-            <code class="ruby">    [get_first_from(&#39;parentProceeding_t&#39;)[:value]]</code>
+            <code class="ruby">    get_first_from(&#39;parentProceeding_t&#39;)</code>
           </li>
         </div>
       
@@ -19493,12 +19493,45 @@
 
             
 
-            <code class="ruby">    response = ObjectsFromUriList.new(proceeding_contribution_uri).get_objects</code>
+            <code class="ruby">    return if proceeding_contribution_uri.blank?</code>
           </li>
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="21">
+          <li class="never" data-hits="" data-linenumber="21">
+            
+            
+
+            
+
+            <code class="ruby"></code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="missed" data-hits="0" data-linenumber="22">
+            
+            
+
+            
+
+            <code class="ruby">    parent_proceeding_uri = proceeding_contribution_uri[:value]</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="missed" data-hits="0" data-linenumber="23">
+            
+            
+
+            
+
+            <code class="ruby">    response = ObjectsFromUriList.new([parent_proceeding_uri]).get_objects</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="missed" data-hits="0" data-linenumber="24">
             
             
 
@@ -19509,7 +19542,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="22">
+          <li class="never" data-hits="" data-linenumber="25">
             
             
 
@@ -19520,7 +19553,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="23">
+          <li class="never" data-hits="" data-linenumber="26">
             
             
 

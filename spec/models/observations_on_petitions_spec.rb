@@ -1,7 +1,7 @@
 require 'rails_helper'
 
-RSpec.describe ObservationsOnAPetition, type: :model do
-  let!(:observations_on_a_petition) { ObservationsOnAPetition.new({}) }
+RSpec.describe ObservationsOnPetitions, type: :model do
+  let!(:observations_on_a_petition) { ObservationsOnPetitions.new({}) }
 
   describe 'template' do
     it 'returns a string' do
@@ -24,14 +24,14 @@ RSpec.describe ObservationsOnAPetition, type: :model do
     end
 
     context 'where there is an empty array' do
-      let!(:observations_on_a_petition) { ObservationsOnAPetition.new({ 'identifier_t' => [] }) }
+      let!(:observations_on_a_petition) { ObservationsOnPetitions.new({ 'identifier_t' => [] }) }
       it 'returns nil' do
         expect(observations_on_a_petition.reference).to be_nil
       end
     end
 
     context 'where data exists' do
-      let!(:observations_on_a_petition) { ObservationsOnAPetition.new({ 'identifier_t' => ['first item', 'second item'] }) }
+      let!(:observations_on_a_petition) { ObservationsOnPetitions.new({ 'identifier_t' => ['first item', 'second item'] }) }
 
       it 'returns all items' do
         expect(observations_on_a_petition.reference).to eq([{ :field_name => "identifier_t", :value => "first item" }, { :field_name => "identifier_t", :value => "second item" }])
@@ -47,14 +47,14 @@ RSpec.describe ObservationsOnAPetition, type: :model do
     end
 
     context 'where there is an empty array' do
-      let!(:observations_on_a_petition) { ObservationsOnAPetition.new({ 'subject_ses' => [] }) }
+      let!(:observations_on_a_petition) { ObservationsOnPetitions.new({ 'subject_ses' => [] }) }
       it 'returns nil' do
         expect(observations_on_a_petition.subjects).to be_nil
       end
     end
 
     context 'where data exists' do
-      let!(:observations_on_a_petition) { ObservationsOnAPetition.new({ 'subject_ses' => ['first item', 'second item'] }) }
+      let!(:observations_on_a_petition) { ObservationsOnPetitions.new({ 'subject_ses' => ['first item', 'second item'] }) }
 
       it 'returns all items as an array' do
         expect(observations_on_a_petition.subjects).to eq([{:field_name=>"subject_ses", :value=>"first item"}, {:field_name=>"subject_ses", :value=>"second item"}])
@@ -70,14 +70,14 @@ RSpec.describe ObservationsOnAPetition, type: :model do
     end
 
     context 'where there is an empty array' do
-      let!(:observations_on_a_petition) { ObservationsOnAPetition.new({ 'legislationTitle_ses' => [] }) }
+      let!(:observations_on_a_petition) { ObservationsOnPetitions.new({ 'legislationTitle_ses' => [] }) }
       it 'returns nil' do
         expect(observations_on_a_petition.legislation).to be_nil
       end
     end
 
     context 'where data exists' do
-      let!(:observations_on_a_petition) { ObservationsOnAPetition.new({ 'legislationTitle_ses' => [12345, 67890] }) }
+      let!(:observations_on_a_petition) { ObservationsOnPetitions.new({ 'legislationTitle_ses' => [12345, 67890] }) }
 
       it 'returns all items as an array' do
         expect(observations_on_a_petition.legislation).to eq([{:field_name=>"legislationTitle_ses", :value=>12345}, {:field_name=>"legislationTitle_ses", :value=>67890}])

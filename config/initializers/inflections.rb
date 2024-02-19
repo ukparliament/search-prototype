@@ -11,6 +11,8 @@ ActiveSupport::Inflector.inflections(:en) do |inflect|
   inflect.irregular "memorandum", "memoranda"
   inflect.irregular "observations on a petition", "observations on petitions"
   inflect.uncountable ["European material produced by EU institutions"]
+  inflect.uncountable ["Observations on petitions"]
+  inflect.uncountable ["ObservationsOnPetitions"]
 end
 
 # These inflection rules are supported but not enabled by default:
