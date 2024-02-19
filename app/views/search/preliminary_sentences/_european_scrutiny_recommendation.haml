@@ -1,0 +1,15 @@
+.content-prelim-box
+  .content-prelim-inner
+    .content-prelim-text#prelim-text
+      %span= object_display_name_link(object.object_name)
+      - unless object.report_date.blank?
+        %span= " dated "
+        %strong>= format_date(object.report_date)
+        %span= "."
+      - unless object.debate_date.blank?
+        %span= " It was debated on "
+        %strong>= format_date(object.debate_date)
+        - unless object.debate_location.blank?
+          %span= " in "
+          %span= object.debate_location[:value]
+        %span= "."
