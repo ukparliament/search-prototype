@@ -14,7 +14,7 @@
       <img src="./assets/0.12.3/loading.gif" alt="loading"/>
     </div>
     <div id="wrapper" class="hide">
-      <div class="timestamp">Generated <abbr class="timeago" title="2024-02-19T13:27:25+00:00">2024-02-19T13:27:25+00:00</abbr></div>
+      <div class="timestamp">Generated <abbr class="timeago" title="2024-02-19T17:08:24+00:00">2024-02-19T17:08:24+00:00</abbr></div>
       <ul class="group_tabs"></ul>
 
       <div id="content">
@@ -23,14 +23,14 @@
     <span class="group_name">All Files</span>
     (<span class="covered_percent">
       <span class="green">
-  92.85%
+  92.21%
 </span>
 
      </span>
      covered at
      <span class="covered_strength">
        <span class="green">
-         96.88
+         95.91
        </span>
     </span> hits/line
     )
@@ -43,11 +43,11 @@
   </div>
 
   <div class="t-line-summary">
-    <b>979</b> relevant lines,
-    <span class="green"><b>909</b> lines covered</span> and
-    <span class="red"><b>70</b> lines missed. </span>
+    <b>989</b> relevant lines,
+    <span class="green"><b>912</b> lines covered</span> and
+    <span class="red"><b>77</b> lines missed. </span>
     (<span class="green">
-  92.85%
+  92.21%
 </span>
 )
   </div>
@@ -314,12 +314,12 @@
         
           <tr class="t-file">
             <td class="strong t-file__name"><a href="#9ca14196e63b4568c696ac9e54be6052a36ce20b" class="src_link" title="app/models/european_material.rb">app/models/european_material.rb</a></td>
-            <td class="green strong cell--number t-file__coverage">100.00 %</td>
-            <td class="cell--number">39</td>
-            <td class="cell--number">19</td>
-            <td class="cell--number">19</td>
-            <td class="cell--number">0</td>
-            <td class="cell--number">2.89</td>
+            <td class="red strong cell--number t-file__coverage">75.86 %</td>
+            <td class="cell--number">57</td>
+            <td class="cell--number">29</td>
+            <td class="cell--number">22</td>
+            <td class="cell--number">7</td>
+            <td class="cell--number">2.00</td>
             
           </tr>
         
@@ -3032,7 +3032,7 @@
 
             
 
-            <code class="ruby">                         &#39;personalAuthor_ses&#39;, &#39;personalAuthor_t&#39;]</code>
+            <code class="ruby">                         &#39;personalAuthor_ses&#39;, &#39;personalAuthor_t&#39;, &#39;mep_ses&#39;]</code>
           </li>
         </div>
       
@@ -12950,8 +12950,8 @@
   <div class="header">
     <h3>app/models/european_material.rb</h3>
     <h4>
-      <span class="green">
-  100.0%
+      <span class="red">
+  75.86%
 </span>
 
       lines covered
@@ -12960,9 +12960,9 @@
     
 
     <div class="t-line-summary">
-      <b>19</b> relevant lines.
-      <span class="green"><b>19</b> lines covered</span> and
-      <span class="red"><b>0</b> lines missed.</span>
+      <b>29</b> relevant lines.
+      <span class="green"><b>22</b> lines covered</span> and
+      <span class="red"><b>7</b> lines missed.</span>
     </div>
 
     
@@ -13276,7 +13276,7 @@
 
             
 
-            <code class="ruby">    get_first_from(&#39;ep_committee_t&#39;)</code>
+            <code class="ruby">    get_first_from(&#39;epCommittee_t&#39;)</code>
           </li>
         </div>
       
@@ -13309,18 +13309,18 @@
 
             
 
-            <code class="ruby">  def publisher</code>
+            <code class="ruby">  def related_items</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="3" data-linenumber="32">
-            <span class="hits">3</span>
+          <li class="never" data-hits="" data-linenumber="32">
+            
             
 
             
 
-            <code class="ruby">    get_first_from(&#39;publisher_t&#39;)</code>
+            <code class="ruby">    # We&#39;re including two additional fields for EU material</code>
           </li>
         </div>
       
@@ -13331,51 +13331,51 @@
 
             
 
-            <code class="ruby">  end</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="34">
-            
-            
-
-            
-
             <code class="ruby"></code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="35">
-            <span class="hits">1</span>
+          <li class="missed" data-hits="0" data-linenumber="34">
+            
             
 
             
 
-            <code class="ruby">  def published_date</code>
+            <code class="ruby">    doc_text = get_all_from(&#39;referencingDD_t&#39;)&amp;.pluck(:value)</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="5" data-linenumber="36">
-            <span class="hits">5</span>
+          <li class="missed" data-hits="0" data-linenumber="35">
+            
             
 
             
 
-            <code class="ruby">    get_first_as_date_from(&#39;dateEntered_dt&#39;)</code>
+            <code class="ruby">    doc_uri = get_all_from(&#39;referencingDD_uri&#39;)&amp;.pluck(:value)</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="37">
+          <li class="missed" data-hits="0" data-linenumber="36">
             
             
 
             
 
-            <code class="ruby">  end</code>
+            <code class="ruby">    relation_uris = get_all_from(&#39;relation_t&#39;)&amp;.pluck(:value)</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="missed" data-hits="0" data-linenumber="37">
+            
+            
+
+            
+
+            <code class="ruby">    combined = [doc_text, doc_uri, relation_uris].flatten.compact</code>
           </li>
         </div>
       
@@ -13391,7 +13391,205 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="39">
+          <li class="missed" data-hits="0" data-linenumber="39">
+            
+            
+
+            
+
+            <code class="ruby">    ObjectsFromUriList.new(combined).get_objects</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="40">
+            
+            
+
+            
+
+            <code class="ruby">  end</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="41">
+            
+            
+
+            
+
+            <code class="ruby"></code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="1" data-linenumber="42">
+            <span class="hits">1</span>
+            
+
+            
+
+            <code class="ruby">  def publisher</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="3" data-linenumber="43">
+            <span class="hits">3</span>
+            
+
+            
+
+            <code class="ruby">    get_first_from(&#39;publisher_t&#39;)</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="44">
+            
+            
+
+            
+
+            <code class="ruby">  end</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="45">
+            
+            
+
+            
+
+            <code class="ruby"></code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="1" data-linenumber="46">
+            <span class="hits">1</span>
+            
+
+            
+
+            <code class="ruby">  def published_date</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="5" data-linenumber="47">
+            <span class="hits">5</span>
+            
+
+            
+
+            <code class="ruby">    get_first_as_date_from(&#39;dateEntered_dt&#39;)</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="48">
+            
+            
+
+            
+
+            <code class="ruby">  end</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="49">
+            
+            
+
+            
+
+            <code class="ruby"></code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="1" data-linenumber="50">
+            <span class="hits">1</span>
+            
+
+            
+
+            <code class="ruby">  def commons_library_location</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="missed" data-hits="0" data-linenumber="51">
+            
+            
+
+            
+
+            <code class="ruby">    get_first_from(&#39;commonsLocation_t&#39;)</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="52">
+            
+            
+
+            
+
+            <code class="ruby">  end</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="53">
+            
+            
+
+            
+
+            <code class="ruby"></code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="1" data-linenumber="54">
+            <span class="hits">1</span>
+            
+
+            
+
+            <code class="ruby">  def ec_documents</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="missed" data-hits="0" data-linenumber="55">
+            
+            
+
+            
+
+            <code class="ruby">    get_first_from(&#39;ecDocuments_t&#39;)</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="56">
+            
+            
+
+            
+
+            <code class="ruby">  end</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="57">
             
             
 

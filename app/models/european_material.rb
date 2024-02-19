@@ -25,7 +25,18 @@ class EuropeanMaterial < ContentObject
   end
 
   def eu_parliament_committee
-    get_first_from('ep_committee_t')
+    get_first_from('epCommittee_t')
+  end
+
+  def related_items
+    # We're including two additional fields for EU material
+
+    doc_text = get_all_from('referencingDD_t')&.pluck(:value)
+    doc_uri = get_all_from('referencingDD_uri')&.pluck(:value)
+    relation_uris = get_all_from('relation_t')&.pluck(:value)
+    combined = [doc_text, doc_uri, relation_uris].flatten.compact
+
+    ObjectsFromUriList.new(combined).get_objects
   end
 
   def publisher
@@ -36,4 +47,11 @@ class EuropeanMaterial < ContentObject
     get_first_as_date_from('dateEntered_dt')
   end
 
+  def commons_library_location
+    get_first_from('commonsLocation_t')
+  end
+
+  def ec_documents
+    get_first_from('ecDocuments_t')
+  end
 end
