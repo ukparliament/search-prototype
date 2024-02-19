@@ -1,7 +1,7 @@
 .content-prelim-box
   .content-prelim-inner
     .content-prelim-text#prelim-text
-      %span= object_display_name_link(object.object_name)
+      %span>= object_display_name_link(object.object_name)
       - unless object.date.blank?
         %span= " made on "
         %strong= format_date(object.date)

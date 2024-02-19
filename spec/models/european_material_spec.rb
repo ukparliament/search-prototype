@@ -93,17 +93,17 @@ RSpec.describe EuropeanMaterial, type: :model do
     end
 
     context 'where there is an empty array' do
-      let!(:european_material) { EuropeanMaterial.new({ 'ep_committee_t' => [] }) }
+      let!(:european_material) { EuropeanMaterial.new({ 'epCommittee_t' => [] }) }
       it 'returns nil' do
         expect(european_material.eu_parliament_committee).to be_nil
       end
     end
 
     context 'where data exists' do
-      let!(:european_material) { EuropeanMaterial.new({ 'ep_committee_t' => ['first item', 'second item'] }) }
+      let!(:european_material) { EuropeanMaterial.new({ 'epCommittee_t' => ['first item', 'second item'] }) }
 
       it 'returns the first item' do
-        expect(european_material.eu_parliament_committee).to eq({ :field_name => "ep_committee_t", :value => "first item" })
+        expect(european_material.eu_parliament_committee).to eq({ :field_name => "epCommittee_t", :value => "first item" })
       end
     end
   end
