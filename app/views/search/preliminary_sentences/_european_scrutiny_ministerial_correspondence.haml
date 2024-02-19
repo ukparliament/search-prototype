@@ -1,0 +1,14 @@
+.content-prelim-box
+  .content-prelim-inner
+    .content-prelim-text#prelim-text
+      %span= object_display_name_link(object.object_name)
+      - unless object.date_originated.blank?
+        %span= " dated "
+        %strong>= format_date(object.date_originated)
+        %span= " from "
+      - unless object.corresponding_minister.blank?
+        %span>= search_link(object.corresponding_minister)
+      - unless object.department.blank?
+        %span= " on behalf of the "
+        %span>= search_link(object.department)
+      %span= "."
