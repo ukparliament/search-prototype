@@ -1,11 +1,11 @@
-class ObservationsOnAPetition < Petition
+class ObservationsOnPetitions < Petition
 
   def initialize(content_object_data)
     super
   end
 
   def template
-    'search/objects/observations_on_a_petition'
+    'search/objects/observations_on_petitions'
   end
 
   def display_link

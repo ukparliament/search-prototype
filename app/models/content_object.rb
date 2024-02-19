@@ -415,7 +415,7 @@ class ContentObject
       when 479373
         'PaperPetition'
       when 347214
-        'ObservationsOnAPetition'
+        'ObservationsOnPetitions'
       else
         'ContentObject'
       end

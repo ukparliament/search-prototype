@@ -70,7 +70,7 @@ RSpec.describe ContentObject, type: :model do
         expect(ContentObject.generate(transport_and_works_act_order_application)).to be_an_instance_of(TransportAndWorksActOrderApplication)
         expect(ContentObject.generate(bill)).to be_an_instance_of(Bill)
         expect(ContentObject.generate(paper_petition)).to be_an_instance_of(PaperPetition)
-        expect(ContentObject.generate(observations_on_a_petition)).to be_an_instance_of(ObservationsOnAPetition)
+        expect(ContentObject.generate(observations_on_a_petition)).to be_an_instance_of(ObservationsOnPetitions)
         expect(ContentObject.generate(petition_with_unrecognised_subtype_id)).to be_an_instance_of(ContentObject)
         expect(ContentObject.generate(formal_proceeding)).to be_an_instance_of(FormalProceeding)
         expect(ContentObject.generate(parliamentary_paper_reported)).to be_an_instance_of(ParliamentaryPaperReported)
