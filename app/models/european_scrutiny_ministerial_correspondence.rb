@@ -17,6 +17,6 @@ class EuropeanScrutinyMinisterialCorrespondence < EuropeanScrutiny
   end
 
   def corresponding_minister
-    get_first_from('correspondingMinister_ses')
+    fallback(get_first_from('correspondingMinister_ses'), get_first_from('correspondingMinister_t'))
   end
 end

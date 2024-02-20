@@ -130,6 +130,20 @@ RSpec.describe EuropeanScrutinyRecommendation, type: :model do
           expect(european_scrutiny_recommendation.report_date[:value]).to eq("Mon, 01 Jun 2015, 19:00:15.73".in_time_zone('London').to_datetime)
         end
       end
+      context 'where data is present in date_dt only' do
+        let!(:european_scrutiny_recommendation) { EuropeanScrutinyRecommendation.new({ 'date_dt' => ["2015-06-01T18:00:15.73Z", "2014-06-01T18:00:15.73Z"] }) }
+
+        it 'returns the first string parsed as a datetime in the London timezone' do
+          expect(european_scrutiny_recommendation.report_date[:value]).to eq("Mon, 01 Jun 2015, 19:00:15.73".in_time_zone('London').to_datetime)
+        end
+      end
+      context 'where data is present in date_dt as well as reportDate_dt' do
+        let!(:european_scrutiny_recommendation) { EuropeanScrutinyRecommendation.new({ 'reportDate_dt' => ["2015-06-01T18:00:15.73Z", "2014-06-01T18:00:15.73Z"], 'date_dt' => ["2017-06-01T18:00:15.73Z", "2016-06-01T18:00:15.73Z"] }) }
+
+        it 'returns the first string parsed as a datetime in the London timezone' do
+          expect(european_scrutiny_recommendation.report_date[:value]).to eq("Mon, 01 Jun 2015, 19:00:15.73".in_time_zone('London').to_datetime)
+        end
+      end
       context 'where data is parsable as a datetime (GMT)' do
         let!(:european_scrutiny_recommendation) { EuropeanScrutinyRecommendation.new({ 'reportDate_dt' => ["2015-02-01T18:00:15.73Z", "2014-06-01T18:00:15.73Z"] }) }
 

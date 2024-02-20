@@ -11,6 +11,10 @@ class EuropeanScrutiny < ContentObject
     ObjectsFromUriList.new(relation_uris).get_objects
   end
 
+  def department
+    fallback(get_first_from('department_ses'), get_first_from('department_t'))
+  end
+
   private
 
   def regarding_links

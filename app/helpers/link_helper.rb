@@ -85,7 +85,7 @@ module LinkHelper
     human_name_fields = ['member_ses', 'creator_ses', 'answeringMember_ses', 'tablingMember_ses', 'leadMember_ses',
                          'correspondingMinister_ses', 'askingMember_ses', 'contributor_ses', 'primarySponsor_ses',
                          'sponsor_ses', 'amendment_primarySponsorPrinted_t', 'correctingMember_ses',
-                         'personalAuthor_ses', 'personalAuthor_t', 'mep_ses']
+                         'personalAuthor_ses', 'personalAuthor_t', 'mep_ses', 'correspondingMinister_t']
     return name_string unless human_name_fields.include?(data[:field_name]) && name_string.include?(',')
 
     if name_string.include?('(')

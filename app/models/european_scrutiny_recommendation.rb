@@ -25,7 +25,7 @@ class EuropeanScrutinyRecommendation < EuropeanScrutiny
   end
 
   def report_date
-    get_first_as_date_from('reportDate_dt')
+    fallback(get_first_as_date_from('reportDate_dt'), get_first_as_date_from('date_dt'))
   end
 
   def debate_date

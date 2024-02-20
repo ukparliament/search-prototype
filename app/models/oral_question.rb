@@ -13,6 +13,8 @@ class OralQuestion < Question
   end
 
   def answer_text
+    return unless answer_object
+
     answer_object.answer_text
   end
 
