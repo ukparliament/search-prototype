@@ -128,7 +128,7 @@ class ContentObject
   end
 
   def departments
-    get_all_from('department_ses')
+    combine_fields(get_all_from('department_ses'), get_all_from('department_t'))
   end
 
   def asked_to_reply_author

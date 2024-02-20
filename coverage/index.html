@@ -14,7 +14,7 @@
       <img src="./assets/0.12.3/loading.gif" alt="loading"/>
     </div>
     <div id="wrapper" class="hide">
-      <div class="timestamp">Generated <abbr class="timeago" title="2024-02-20T12:46:01+00:00">2024-02-20T12:46:01+00:00</abbr></div>
+      <div class="timestamp">Generated <abbr class="timeago" title="2024-02-20T13:10:55+00:00">2024-02-20T13:10:55+00:00</abbr></div>
       <ul class="group_tabs"></ul>
 
       <div id="content">
@@ -275,7 +275,7 @@
             <td class="cell--number">234</td>
             <td class="cell--number">231</td>
             <td class="cell--number">3</td>
-            <td class="cell--number">246.43</td>
+            <td class="cell--number">246.46</td>
             
           </tr>
         
@@ -325,12 +325,12 @@
         
           <tr class="t-file">
             <td class="strong t-file__name"><a href="#cc8b2f95977fa269c63e3c76e4641b4a577ebbb3" class="src_link" title="app/models/european_scrutiny.rb">app/models/european_scrutiny.rb</a></td>
-            <td class="green strong cell--number t-file__coverage">100.00 %</td>
-            <td class="cell--number">19</td>
-            <td class="cell--number">10</td>
-            <td class="cell--number">10</td>
-            <td class="cell--number">0</td>
-            <td class="cell--number">4.60</td>
+            <td class="green strong cell--number t-file__coverage">91.67 %</td>
+            <td class="cell--number">23</td>
+            <td class="cell--number">12</td>
+            <td class="cell--number">11</td>
+            <td class="cell--number">1</td>
+            <td class="cell--number">3.92</td>
             
           </tr>
         
@@ -347,12 +347,12 @@
         
           <tr class="t-file">
             <td class="strong t-file__name"><a href="#a7ba710f14c3fd923bbf0a71d7df25cef29dfff9" class="src_link" title="app/models/european_scrutiny_ministerial_correspondence.rb">app/models/european_scrutiny_ministerial_correspondence.rb</a></td>
-            <td class="red strong cell--number t-file__coverage">61.54 %</td>
-            <td class="cell--number">26</td>
-            <td class="cell--number">13</td>
-            <td class="cell--number">8</td>
-            <td class="cell--number">5</td>
-            <td class="cell--number">0.62</td>
+            <td class="red strong cell--number t-file__coverage">63.64 %</td>
+            <td class="cell--number">22</td>
+            <td class="cell--number">11</td>
+            <td class="cell--number">7</td>
+            <td class="cell--number">4</td>
+            <td class="cell--number">0.64</td>
             
           </tr>
         
@@ -7069,7 +7069,7 @@
 
             
 
-            <code class="ruby">    get_all_from(&#39;department_ses&#39;)</code>
+            <code class="ruby">    combine_fields(get_all_from(&#39;department_ses&#39;), get_all_from(&#39;department_t&#39;))</code>
           </li>
         </div>
       
@@ -9824,8 +9824,8 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="5252" data-linenumber="382">
-            <span class="hits">5252</span>
+          <li class="covered" data-hits="5255" data-linenumber="382">
+            <span class="hits">5255</span>
             
 
             
@@ -11012,8 +11012,8 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1768" data-linenumber="490">
-            <span class="hits">1768</span>
+          <li class="covered" data-hits="1771" data-linenumber="490">
+            <span class="hits">1771</span>
             
 
             
@@ -11034,8 +11034,8 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1137" data-linenumber="492">
-            <span class="hits">1137</span>
+          <li class="covered" data-hits="1138" data-linenumber="492">
+            <span class="hits">1138</span>
             
 
             
@@ -13664,7 +13664,7 @@
     <h3>app/models/european_scrutiny.rb</h3>
     <h4>
       <span class="green">
-  100.0%
+  91.67%
 </span>
 
       lines covered
@@ -13673,9 +13673,9 @@
     
 
     <div class="t-line-summary">
-      <b>10</b> relevant lines.
-      <span class="green"><b>10</b> lines covered</span> and
-      <span class="red"><b>0</b> lines missed.</span>
+      <b>12</b> relevant lines.
+      <span class="green"><b>11</b> lines covered</span> and
+      <span class="red"><b>1</b> lines missed.</span>
     </div>
 
     
@@ -13835,45 +13835,23 @@
 
             
 
-            <code class="ruby">  private</code>
+            <code class="ruby">  def department</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="15">
+          <li class="missed" data-hits="0" data-linenumber="15">
             
             
 
             
 
-            <code class="ruby"></code>
+            <code class="ruby">    fallback(get_first_from(&#39;department_ses&#39;), get_first_from(&#39;department_t&#39;))</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="16">
-            <span class="hits">1</span>
-            
-
-            
-
-            <code class="ruby">  def regarding_links</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="covered" data-hits="4" data-linenumber="17">
-            <span class="hits">4</span>
-            
-
-            
-
-            <code class="ruby">    combine_fields(get_all_from(&#39;regardingDD_uri&#39;), get_all_from(&#39;regardingDD_t&#39;))</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="18">
+          <li class="never" data-hits="" data-linenumber="16">
             
             
 
@@ -13884,7 +13862,73 @@
         </div>
       
         <div>
+          <li class="never" data-hits="" data-linenumber="17">
+            
+            
+
+            
+
+            <code class="ruby"></code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="1" data-linenumber="18">
+            <span class="hits">1</span>
+            
+
+            
+
+            <code class="ruby">  private</code>
+          </li>
+        </div>
+      
+        <div>
           <li class="never" data-hits="" data-linenumber="19">
+            
+            
+
+            
+
+            <code class="ruby"></code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="1" data-linenumber="20">
+            <span class="hits">1</span>
+            
+
+            
+
+            <code class="ruby">  def regarding_links</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="4" data-linenumber="21">
+            <span class="hits">4</span>
+            
+
+            
+
+            <code class="ruby">    combine_fields(get_all_from(&#39;regardingDD_uri&#39;), get_all_from(&#39;regardingDD_t&#39;))</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="22">
+            
+            
+
+            
+
+            <code class="ruby">  end</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="23">
             
             
 
@@ -14133,7 +14177,7 @@
     <h3>app/models/european_scrutiny_ministerial_correspondence.rb</h3>
     <h4>
       <span class="red">
-  61.54%
+  63.64%
 </span>
 
       lines covered
@@ -14142,9 +14186,9 @@
     
 
     <div class="t-line-summary">
-      <b>13</b> relevant lines.
-      <span class="green"><b>8</b> lines covered</span> and
-      <span class="red"><b>5</b> lines missed.</span>
+      <b>11</b> relevant lines.
+      <span class="green"><b>7</b> lines covered</span> and
+      <span class="red"><b>4</b> lines missed.</span>
     </div>
 
     
@@ -14359,7 +14403,7 @@
 
             
 
-            <code class="ruby">  def department</code>
+            <code class="ruby">  def corresponding_minister</code>
           </li>
         </div>
       
@@ -14370,7 +14414,7 @@
 
             
 
-            <code class="ruby">    fallback(get_first_from(&#39;department_ses&#39;), get_first_from(&#39;department_t&#39;))</code>
+            <code class="ruby">    fallback(get_first_from(&#39;correspondingMinister_ses&#39;), get_first_from(&#39;correspondingMinister_t&#39;))</code>
           </li>
         </div>
       
@@ -14387,50 +14431,6 @@
       
         <div>
           <li class="never" data-hits="" data-linenumber="22">
-            
-            
-
-            
-
-            <code class="ruby"></code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="covered" data-hits="1" data-linenumber="23">
-            <span class="hits">1</span>
-            
-
-            
-
-            <code class="ruby">  def corresponding_minister</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="missed" data-hits="0" data-linenumber="24">
-            
-            
-
-            
-
-            <code class="ruby">    fallback(get_first_from(&#39;correspondingMinister_ses&#39;), get_first_from(&#39;correspondingMinister_t&#39;))</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="25">
-            
-            
-
-            
-
-            <code class="ruby">  end</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="26">
             
             
 
