@@ -11,4 +11,8 @@ class ChurchOfEnglandMeasure < ContentObject
   def template
     'search/objects/church_of_england_measure'
   end
+
+  def display_link
+    fallback(get_first_from('location_uri'), get_first_from('external_location_uri'))
+  end
 end
