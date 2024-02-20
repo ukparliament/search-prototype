@@ -5,8 +5,8 @@
       - unless object.date_originated.blank?
         %span= " dated "
         %strong>= format_date(object.date_originated)
-        %span= " from "
       - unless object.corresponding_minister.blank?
+        %span= " from "
         %span>= search_link(object.corresponding_minister)
       - unless object.department.blank?
         %span= " on behalf of the "

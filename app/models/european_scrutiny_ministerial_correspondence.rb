@@ -16,7 +16,11 @@ class EuropeanScrutinyMinisterialCorrespondence < EuropeanScrutiny
     get_first_as_date_from('dateOriginated_dt')
   end
 
+  def department
+    fallback(get_first_from('department_ses'), get_first_from('department_t'))
+  end
+
   def corresponding_minister
-    get_first_from('correspondingMinister_ses')
+    fallback(get_first_from('correspondingMinister_ses'), get_first_from('correspondingMinister_t'))
   end
 end
