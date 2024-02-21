@@ -55,7 +55,7 @@
   <%= render 'search/fragments/contains_statistics', contains_statistics: object.contains_statistics %>
 
   <% if object.answered? || object.corrected? %>
-    <%= render 'search/fragments/link', object: object %>
+    <%= render 'search/fragments/subtype_link', object: object %>
   <% end %>
 </section>
 
