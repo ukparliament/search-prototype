@@ -112,4 +112,35 @@ RSpec.describe OralQuestion, type: :model do
       end
     end
   end
+
+  describe 'transferred?' do
+    context 'where there is no data' do
+      it 'returns nil' do
+        expect(oral_question.is_transferred).to be_nil
+      end
+    end
+
+    context 'where there is no value' do
+      let!(:oral_question) { OralQuestion.new({ 'transferredQuestion_b' => nil }) }
+      it 'returns nil' do
+        expect(oral_question.is_transferred).to be_nil
+      end
+    end
+
+    context 'where data exists' do
+      context 'where true' do
+        let!(:oral_question) { OralQuestion.new({ 'transferredQuestion_b' => ['true'] }) }
+        it 'returns true' do
+          expect(oral_question.is_transferred).to eq({ :field_name => "transferredQuestion_b", :value => true })
+        end
+      end
+
+      context 'where false' do
+        let!(:oral_question) { OralQuestion.new({ 'transferredQuestion_b' => ['false'] }) }
+        it 'returns false' do
+          expect(oral_question.is_transferred).to eq({ :field_name => "transferredQuestion_b", :value => false })
+        end
+      end
+    end
+  end
 end

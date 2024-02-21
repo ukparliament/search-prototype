@@ -51,7 +51,7 @@ class Question < ContentObject
   end
 
   def is_transferred
-    get_as_boolean_from('transferredQuestion_b')
+    get_first_as_boolean_from('transferredQuestion_b')
   end
 
   def correcting_item_link

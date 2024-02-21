@@ -512,14 +512,14 @@ RSpec.describe WrittenQuestion, type: :model do
 
     context 'where data exists' do
       context 'where true' do
-        let!(:written_question) { WrittenQuestion.new({ 'transferredQuestion_b' => 'true' }) }
+        let!(:written_question) { WrittenQuestion.new({ 'transferredQuestion_b' => ['true'] }) }
         it 'returns true' do
           expect(written_question.is_transferred).to eq({ :field_name => "transferredQuestion_b", :value => true })
         end
       end
 
       context 'where false' do
-        let!(:written_question) { WrittenQuestion.new({ 'transferredQuestion_b' => 'false' }) }
+        let!(:written_question) { WrittenQuestion.new({ 'transferredQuestion_b' => ['false'] }) }
         it 'returns false' do
           expect(written_question.is_transferred).to eq({ :field_name => "transferredQuestion_b", :value => false })
         end
