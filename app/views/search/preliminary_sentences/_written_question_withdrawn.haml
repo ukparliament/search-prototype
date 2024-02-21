@@ -1,0 +1,27 @@
+.content-prelim-box
+  .content-prelim-inner
+    .content-prelim-text#prelim-text
+      %span>= object_display_name_link(object.object_name)
+      %span= " tabled "
+      - unless object.tabling_member.blank?
+        %span= " by "
+        %span>= search_link(object.tabling_member)
+        - unless object.tabling_member_party.blank?
+          %span= " ("
+          %span>= search_link(object.tabling_member_party)
+          %span= ") "
+      - unless object.date_of_question.blank?
+        %span= " on "
+        %strong>= format_date(object.date_of_question)
+      %span= ", "
+      - unless object.legislature.blank?
+        %span= " in the "
+        %span>= render 'search/fragments/list', items: object.legislature, terminator: '', singular: false
+      %span>= "."
+      %span>= " The member has subsequently withdrawn this question"
+      - if object.department.blank?
+        %span>= " and it no longer needs to be answered"
+      - else
+        %span= ". An answer is no longer expected from the "
+        %span>= search_link(object.department)
+      %span= "."

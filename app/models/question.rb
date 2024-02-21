@@ -95,6 +95,10 @@ class Question < ContentObject
     get_first_from('wpqType_t')
   end
 
+  def named_day?
+    question_type && question_type[:value]&.downcase == 'named day'
+  end
+
   def answering_department
     get_first_from('answeringDept_ses')
   end
