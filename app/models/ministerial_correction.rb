@@ -24,6 +24,10 @@ class MinisterialCorrection < ContentObject
     date
   end
 
+  def ministerial_correction?
+    true
+  end
+
   def corrected_item_link
     fallback(get_first_from('correctedItem_uri'), get_first_from('correctedItem_t'))
   end
