@@ -310,7 +310,7 @@ class ContentObject
     false
   end
 
-  def question?
+  def ministerial_correction?
     false
   end
 
