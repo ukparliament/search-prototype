@@ -1,0 +1,16 @@
+<% content_for(:before_title) do %>
+  <%= link_to('UK Parliament', root_path) %> / <%= link_to('Open data', root_path) %><br/>
+  <div id="top"></div>
+<% end %>
+
+<section class="content-section">
+  <article>
+    <div class="block">
+      <h1 class="content-heading">Search did not return any results</h1>
+      <p>Try widening the search</p>
+      <p>If you would like to report the problem, please contact <%= link_to('support', root_path) %></p>
+
+      <%= "#{status}: #{message}" %>
+    </div>
+  </article>
+</section>
