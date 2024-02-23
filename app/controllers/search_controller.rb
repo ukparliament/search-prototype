@@ -6,8 +6,17 @@ class SearchController < ApplicationController
     @search = SolrSearch.new(search_params)
     @response = @search.all_data
 
-    if @response['code']
-      render template: 'content_objects/error', locals: { status: @response['code'], message: @response['msg'] }
+    if @response['statusCode']
+      case @response['statusCode']
+      when 404
+        render template: 'layouts/shared/error/404', locals: { status: @response['statusCode'], message: @response['message'] }
+      when 500
+        render template: 'layouts/shared/error/500', locals: { status: @response['statusCode'], message: @response['message'] }
+      when 401
+        render template: 'layouts/shared/error/401', locals: { status: @response['statusCode'], message: @response['message'] }
+      else
+        raise 'unknown error occurred'
+      end
     else
       @results = @response['docs']
       @number_of_results = @response['numFound']

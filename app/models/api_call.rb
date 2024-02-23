@@ -16,7 +16,7 @@ class ApiCall
 
   def all_data
     response = evaluated_response
-    return response['error'] if response.has_key?('error')
+    return response if response['statusCode']
 
     response['response']
   end

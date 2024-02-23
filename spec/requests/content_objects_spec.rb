@@ -20,7 +20,17 @@ RSpec.describe 'ContentObjects', type: :request do
         allow_any_instance_of(Edm).to receive(:ses_data).and_return(edm_instance.type => 'early day motion')
         allow(ContentObject).to receive(:generate).and_return(edm_instance)
         get '/objects', params: { :object => 'test_string' }
-        expect(response.body).to include("An error occurred")
+        expect(response.body).to include("There is a technical issue.")
+      end
+    end
+
+    context '404 error' do
+      it 'renders the error page' do
+        allow_any_instance_of(SolrQuery).to receive(:object_data).and_return('statusCode' => 404)
+        allow_any_instance_of(Edm).to receive(:ses_data).and_return(edm_instance.type => 'early day motion')
+        allow(ContentObject).to receive(:generate).and_return(edm_instance)
+        get '/objects', params: { :object => 'test_string' }
+        expect(response.body).to include("We can't find what you are looking for")
       end
     end
   end
