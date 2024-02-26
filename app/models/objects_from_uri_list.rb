@@ -7,27 +7,35 @@ class ObjectsFromUriList
   end
 
   def get_objects
-    return if relation_uris.blank?
+    return unless valid_input
 
-    # must be an array of strings
-    return unless relation_uris.is_a?(Array)
-
-    return unless relation_uris.map(&:class).uniq.compact == [String]
+    puts "Get #{relation_uris.size} objects..."
 
     ret = {}
-
-    query = SolrMultiQuery.new(object_uris: relation_uris)
-    relation_ses_ids = query.all_ses_ids
+    data = SolrMultiQuery.new(object_uris: relation_uris).object_data
+    relation_ses_ids = all_ses_ids(data)
 
     unless relation_ses_ids.blank?
       ret[:ses_lookup] = SesLookup.new(relation_ses_ids).data
     end
 
     ret[:items] = []
-    query.object_data.each do |object|
+    data.each do |object|
       ret[:items] << ContentObject.generate(object)
     end
 
     ret
   end
+
+  def all_ses_ids(data)
+    data.flat_map { |o| { value: o["all_ses"], field_name: "all_ses" } }.uniq
+  end
+
+  private
+
+  def valid_input
+    # must be an array of strings
+    !relation_uris.blank? && relation_uris.is_a?(Array) && relation_uris.map(&:class).uniq.compact == [String]
+  end
+
 end

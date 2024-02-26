@@ -205,10 +205,6 @@ class ContentObject
   end
 
   def related_items
-    # For church measures, they're related to a paper of type 'house of commons paper'
-    # House of lords paper is added as a subtype. So in this case, we want related items to show type and subtype
-
-    # TODO: refactor for performance
     relation_uris = get_all_from('relation_t')&.pluck(:value)
     ObjectsFromUriList.new(relation_uris).get_objects
   end

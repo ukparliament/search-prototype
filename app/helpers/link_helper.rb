@@ -68,6 +68,7 @@ module LinkHelper
       name_string = ses_data[data[:value].to_i]
 
       if name_string.nil?
+        puts "Missing name - performing fallback SES lookup for: #{data[:value].to_i}"
         # In some edge cases, we won't have a SES name included in the page SES data. We then perform a lookup
         # for the specific ID to make sure it gets populated.
         custom_ses_lookup = SesLookup.new([data]).data
@@ -80,17 +81,10 @@ module LinkHelper
 
     return if name_string.blank?
 
-    # only for member's names containing a comma (?), optionally with disambiguation brackets
-    # TODO: a full list of valid fields to be provided
-    human_name_fields = ['member_ses', 'creator_ses', 'answeringMember_ses', 'tablingMember_ses', 'leadMember_ses',
-                         'correspondingMinister_ses', 'askingMember_ses', 'contributor_ses', 'primarySponsor_ses',
-                         'sponsor_ses', 'amendment_primarySponsorPrinted_t', 'correctingMember_ses',
-                         'personalAuthor_ses', 'personalAuthor_t', 'mep_ses', 'correspondingMinister_t']
     return name_string unless human_name_fields.include?(data[:field_name]) && name_string.include?(',')
 
+    # handle disambiguation brackets
     if name_string.include?('(')
-      # handle disambiguation brackets
-
       disambiguation_components = name_string.split(' (')
       # 'Sharpe of Epsom, Lord (Disambiguation)' => ['Sharpe of Epsom, Lord', 'Disambiguation)']
 
@@ -112,6 +106,32 @@ module LinkHelper
 
   def ses_data
     @ses_data
+  end
+
+  private
+
+  def human_name_fields
+    # only for member's names containing a comma (?), optionally with disambiguation brackets
+    # TODO: a full list of valid fields to be provided
+
+    [
+      'amendment_primarySponsorPrinted_t',
+      'answeringMember_ses',
+      'askingMember_ses',
+      'contributor_ses',
+      'correctingMember_ses',
+      'correspondingMinister_t',
+      'correspondingMinister_ses',
+      'creator_ses',
+      'leadMember_ses',
+      'member_ses',
+      'mep_ses',
+      'personalAuthor_ses',
+      'personalAuthor_t',
+      'primarySponsor_ses',
+      'sponsor_ses',
+      'tablingMember_ses'
+    ]
   end
 
 end
