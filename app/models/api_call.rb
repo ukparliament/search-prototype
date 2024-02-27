@@ -4,7 +4,7 @@ class ApiCall
 
   attr_reader :object_uri
 
-  BASE_API_URL = "https://api.parliament.uk/new-solr/"
+  BASE_API_URL = "https://api.parliament.uk/new-solr/select?"
 
   def initialize(params)
     @object_uri = params[:object_uri]
@@ -23,22 +23,30 @@ class ApiCall
 
   private
 
-  def response_body
+  def api_response
     raise 'Please stub this method to avoid HTTP requests in test environment' if Rails.env.test?
 
-    get_api_response(ruby_uri)
+    api_post_request(search_params)
   end
 
   def evaluated_response
-    JSON.parse(response_body)
+    JSON.parse(api_response.body)
   end
 
   def build_uri(url)
     URI.parse(url)
   end
 
-  def get_api_response(uri)
-    puts "Get request from #{self.class.name}: #{uri}"
+  def api_post_request(params)
+    _uri = URI(BASE_API_URL).dup
+    data = URI.encode_www_form(params)
+    puts "POST request from #{self.class.name}: #{_uri} with data: #{params} encoded as: #{data}"
+
+    Net::HTTP.post(_uri, data, request_headers)
+  end
+
+  def api_get_request(uri)
+    puts "GET request from #{self.class.name}: #{uri}"
     Net::HTTP.get(uri, request_headers)
   end
 

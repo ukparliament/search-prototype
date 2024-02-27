@@ -46,6 +46,10 @@ class ContentObject
     get_first_from('subtype_ses')
   end
 
+  def subtypes
+    get_all_from('subtype_ses')
+  end
+
   def subtype_or_type
     fallback(subtype, type)
   end
@@ -205,16 +209,16 @@ class ContentObject
   end
 
   def related_items
-    # For church measures, they're related to a paper of type 'house of commons paper'
-    # House of lords paper is added as a subtype. So in this case, we want related items to show type and subtype
-
-    # TODO: refactor for performance
     relation_uris = get_all_from('relation_t')&.pluck(:value)
     ObjectsFromUriList.new(relation_uris).get_objects
   end
 
   def contribution_text
     get_first_as_html_from('contributionText_t')
+  end
+
+  def contribution_short_text
+    get_first_as_html_from('contributionText_s')
   end
 
   def parliamentary_session
@@ -226,7 +230,7 @@ class ContentObject
   end
 
   def procedure
-    get_first_from('procedural_ses')
+    get_all_from('procedural_ses')
   end
 
   def procedure_scrutiny_period
@@ -257,6 +261,10 @@ class ContentObject
     get_first_from('leadMember_ses')
   end
 
+  def lead_members
+    get_all_from('leadMember_ses')
+  end
+
   def lead_member_party
     get_first_from('leadMemberParty_ses')
   end
@@ -266,7 +274,7 @@ class ContentObject
   end
 
   def witnesses
-    get_all_from('witness_ses')
+    combine_fields(get_all_from('witness_ses'), get_all_from('witness_t'))
   end
 
   def publisher_string

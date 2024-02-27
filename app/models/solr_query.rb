@@ -1,4 +1,7 @@
 class SolrQuery < ApiCall
+
+  # Used to return the first result for item with given URI
+
   def initialize(params)
     super
   end
@@ -7,7 +10,13 @@ class SolrQuery < ApiCall
     super.first
   end
 
-  def ruby_uri
-    build_uri("#{BASE_API_URL}select?q=uri:%22#{object_uri}%22")
+  private
+
+  def search_params
+    {
+      "q": "uri:#{object_uri}"
+      # "rows": 1,
+      # "wt": "json"
+    }
   end
 end
