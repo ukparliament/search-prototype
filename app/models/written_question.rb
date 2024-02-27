@@ -62,15 +62,15 @@ class WrittenQuestion < Question
   end
 
   def is_unstarred_question
-    get_as_boolean_from('unstarredQuestion_b')
+    get_first_as_boolean_from('unstarredQuestion_b')
   end
 
   def has_failed_oral
-    get_as_boolean_from('failedOral_b')
+    get_first_as_boolean_from('failedOral_b')
   end
 
   def is_grouped_for_answer
-    get_as_boolean_from('groupedAnswer_b')
+    get_first_as_boolean_from('groupedAnswer_b')
   end
 
   def attachment

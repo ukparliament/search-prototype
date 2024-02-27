@@ -18,7 +18,7 @@
         %span= " in the "
         %span>= render 'search/fragments/list', items: object.legislature, terminator: '', singular: false
       %span>= "."
-      %span>= " The member has subsequently withdrawn this question"
+      %span>= " The Member has subsequently withdrawn this question"
       - if object.department.blank?
         %span>= " and it no longer needs to be answered"
       - else
