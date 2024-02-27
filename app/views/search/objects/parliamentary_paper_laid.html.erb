@@ -8,11 +8,9 @@
   <div id="top"></div>
 <% end %>
 
-<% if object.page_title %>
   <% content_for(:title) do %>
-    <%= object.page_title %>
+    <%= object.object_title %>
   <% end %>
-<% end %>
 
 <section id="prelim">
   <%= render 'search/preliminary_sentences/parliamentary_paper_laid', object: object %>
