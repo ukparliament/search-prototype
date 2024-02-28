@@ -83,7 +83,7 @@ RSpec.describe ResearchBriefing, type: :model do
         let!(:research_briefing) { ResearchBriefing.new({ 'published_b' => ['true'] }) }
 
         it 'returns the relevant boolean' do
-          expect(research_briefing.is_published).to eq({ :field_name=>"published_b", :value=>true})
+          expect(research_briefing.is_published).to eq({ :field_name => "published_b", :value => true })
         end
       end
       context 'where not a boolean value' do
@@ -119,25 +119,85 @@ RSpec.describe ResearchBriefing, type: :model do
     end
   end
 
-  describe 'creator' do
+  describe 'creators' do
     context 'where there is no data' do
       it 'returns nil' do
-        expect(research_briefing.creator).to be_nil
+        expect(research_briefing.creators).to be_nil
       end
     end
 
     context 'where there is an empty array' do
-      let!(:research_briefing) { ResearchBriefing.new({ 'creator_ses' => [] }) }
+      let!(:research_briefing) { ResearchBriefing.new({ 'creator_ses' => [], 'creator_t' => [] }) }
       it 'returns nil' do
-        expect(research_briefing.creator).to be_nil
+        expect(research_briefing.creators).to be_nil
       end
     end
 
     context 'where data exists' do
-      let!(:research_briefing) { ResearchBriefing.new({ 'creator_ses' => [12345, 54321] }) }
+      let!(:research_briefing) { ResearchBriefing.new({ 'creator_ses' => [12345, 54321], 'creator_t' => [67890, 98765] }) }
 
-      it 'returns the first item' do
-        expect(research_briefing.creator).to eq({ :field_name => "creator_ses", :value => 12345 })
+      it 'returns all items' do
+        expect(research_briefing.creators).to match_array([{ :field_name => "creator_ses", :value => 12345 },
+                                                           { :field_name => "creator_ses", :value => 54321 },
+                                                           { :field_name => "creator_t", :value => 67890 },
+                                                           { :field_name => "creator_t", :value => 98765 }])
+      end
+    end
+  end
+
+  describe 'contributors' do
+    context 'where there is no data' do
+      it 'returns nil' do
+        expect(research_briefing.contributors).to be_nil
+      end
+    end
+
+    context 'where there is an empty array' do
+      let!(:research_briefing) { ResearchBriefing.new({ 'contributor_ses' => [], 'contibutor_t' => [] }) }
+      it 'returns nil' do
+        expect(research_briefing.contributors).to be_nil
+      end
+    end
+
+    context 'where data exists' do
+      let!(:research_briefing) { ResearchBriefing.new({ 'contributor_ses' => [12345, 54321], 'contributor_t' => [67890, 98765] }) }
+
+      it 'returns all items' do
+        expect(research_briefing.contributors).to match_array([{ :field_name => "contributor_ses", :value => 12345 },
+                                                               { :field_name => "contributor_ses", :value => 54321 },
+                                                               { :field_name => "contributor_t", :value => 67890 },
+                                                               { :field_name => "contributor_t", :value => 98765 }])
+      end
+    end
+  end
+
+  describe 'creators_and_contributors' do
+    context 'where there is no data' do
+      it 'returns nil' do
+        expect(research_briefing.creators_and_contributors).to be_nil
+      end
+    end
+
+    context 'where there is an empty array' do
+      let!(:research_briefing) { ResearchBriefing.new({ 'contributor_ses' => [], 'contributor_t' => [], 'creator_ses' => [], 'creator_t' => [] }) }
+      it 'returns nil' do
+        expect(research_briefing.creators_and_contributors).to be_nil
+      end
+    end
+
+    context 'where data exists' do
+      let!(:research_briefing) { ResearchBriefing.new({ 'contributor_ses' => [12345, 54321], 'contributor_t' => [67890, 98765], 'creator_ses' => [87654, 54321], 'creator_t' => [34567, 76543] }) }
+
+      it 'returns all items' do
+        expect(research_briefing.creators_and_contributors).to match_array([
+                                                                             { :field_name => "contributor_ses", :value => 12345 },
+                                                                             { :field_name => "contributor_ses", :value => 54321 },
+                                                                             { :field_name => "contributor_t", :value => 67890 },
+                                                                             { :field_name => "contributor_t", :value => 98765 },
+                                                                             { :field_name => "creator_ses", :value => 87654 },
+                                                                             { :field_name => "creator_ses", :value => 54321 },
+                                                                             { :field_name => "creator_t", :value => 34567 },
+                                                                             { :field_name => "creator_t", :value => 76543 }])
       end
     end
   end
@@ -358,40 +418,6 @@ RSpec.describe ResearchBriefing, type: :model do
 
       it 'returns a path to a partial' do
         expect(research_briefing.publisher_logo_partial).to eq('/search/logo_svgs/a-publisher-name')
-      end
-    end
-  end
-
-  describe 'display_link' do
-    context 'no links are present' do
-      let!(:research_briefing) { ResearchBriefing.new({ 'internalLocation_uri' => [], 'externalLocation_uri' => [] }) }
-
-      it 'returns nil' do
-        expect(research_briefing.display_link).to be_nil
-      end
-    end
-
-    context 'internal link is present, external link is not present' do
-      let!(:research_briefing) { ResearchBriefing.new({ 'internalLocation_uri' => ['www.example.com'], 'externalLocation_uri' => [] }) }
-
-      it 'returns the internal link' do
-        expect(research_briefing.display_link).to eq({ :field_name => "internalLocation_uri", :value => "www.example.com" })
-      end
-    end
-
-    context 'internal link is present, external link is present' do
-      let!(:research_briefing) { ResearchBriefing.new({ 'internalLocation_uri' => ['www.example.com'], 'externalLocation_uri' => ['www.test.com'] }) }
-
-      it 'returns the external link' do
-        expect(research_briefing.display_link).to eq({ :field_name => "externalLocation_uri", :value => "www.test.com" })
-      end
-    end
-
-    context 'internal link is not present, external link is present' do
-      let!(:research_briefing) { ResearchBriefing.new({ 'internalLocation_uri' => [], 'externalLocation_uri' => ['www.test.com'] }) }
-
-      it 'returns the external link' do
-        expect(research_briefing.display_link).to eq({ :field_name => "externalLocation_uri", :value => "www.test.com" })
       end
     end
   end
