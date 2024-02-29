@@ -103,28 +103,31 @@ module LinkHelper
 
   def human_name_fields
     # only for member's names containing a comma (?), optionally with disambiguation brackets
-    # TODO: a full list of valid fields to be provided
 
     [
       'amendment_primarySponsorPrinted_t',
+      'amendment_primarySponsor_ses',
       'answeringMember_ses',
       'askingMember_ses',
       'contributor_ses',
+      'contributor_t',
       'correctingMember_ses',
       'correspondingMinister_t',
       'correspondingMinister_ses',
       'creator_ses',
       'creator_t',
-      'contributor_ses',
-      'contributor_t',
       'leadMember_ses',
       'member_ses',
+      'memberPrinted_t',
       'mep_ses',
       'personalAuthor_ses',
       'personalAuthor_t',
       'primarySponsor_ses',
+      'signedMember_ses',
       'sponsor_ses',
-      'tablingMember_ses'
+      'tablingMember_ses',
+      'witness_ses',
+      'witness_t'
     ]
   end
 
