@@ -1,0 +1,23 @@
+<div>
+  <% unless related_item.content_object_data['uri'].blank? %>
+    <%= object_show_link(related_item.object_title, related_item.object_uri) %><br/>
+  <% end %>
+  <% if related_item.date %>
+    <%= format_date(related_item.date) %><br/>
+  <% end %>
+  <% if related_item.dual_type? %>
+    <%= ses_data[related_item.subtype[:value]] %>
+    and <%= ses_data[related_item.type[:value]] %><br/>
+  <% else %>
+    <% if related_item.subtype %>
+      <%= ses_data[related_item.subtype[:value]] %><br/>
+    <% elsif related_item.type %>
+      <%= ses_data[related_item.type[:value]] %><br/>
+    <% end %>
+  <% end %>
+  <% unless related_item.legislature.blank? %>
+    <% related_item.legislature.each do |house| %>
+      <%= ses_data[house[:value]] %><br/>
+    <% end %>
+  <% end %>
+</div>
