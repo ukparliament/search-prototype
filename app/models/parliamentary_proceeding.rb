@@ -9,7 +9,7 @@ class ParliamentaryProceeding < Proceeding
   end
 
   def object_name
-    subtypes
+    fallback(subtypes, [type])
   end
 
   def contributions
