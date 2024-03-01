@@ -12,7 +12,8 @@ RSpec.describe PaperPetition, type: :model do
   describe 'object_name' do
     it 'returns object type' do
       allow(paper_petition).to receive(:type).and_return({ value: 12345, field_name: 'type_ses' })
-      expect(paper_petition.object_name).to eq({ value: 12345, field_name: 'type_ses' })
+      allow(paper_petition).to receive(:subtype).and_return({ value: 23456, field_name: 'subtype_ses' })
+      expect(paper_petition.object_name).to eq({ value: 23456, field_name: 'subtype_ses' })
     end
   end
 
