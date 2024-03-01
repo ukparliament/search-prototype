@@ -1,7 +1,7 @@
 .content-prelim-box
   .content-prelim-inner
     .content-prelim-text#prelim-text
-      %span>= render 'search/fragments/list', items: object.subtypes, terminator: '', singular: true
+      %span>= render 'search/fragments/list', items: object.object_name, terminator: '', singular: true
       - unless object.date.blank?
         %span= " on "
         %strong>= format_date(object.date)
