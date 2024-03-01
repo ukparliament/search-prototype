@@ -21,7 +21,6 @@ class ParliamentaryPaperReported < Paper
     return subtype_or_type_ids unless subtype_or_type_ids.is_a?(Array)
 
     subtype_or_type_ids.reject do |i|
-      puts "i: #{i}"
       [91561, 81563, 51288].include?(i[:value])
     end
   end
