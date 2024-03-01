@@ -10,9 +10,37 @@ RSpec.describe ParliamentaryPaperReported, type: :model do
   end
 
   describe 'object_name' do
-    it 'returns object type' do
-      allow(parliamentary_paper_reported).to receive(:type).and_return({ value: 12345, field_name: 'type_ses' })
-      expect(parliamentary_paper_reported.object_name).to eq({ value: 12345, field_name: 'type_ses' })
+    context 'where a single type is present' do
+      it 'returns object type' do
+        allow(parliamentary_paper_reported).to receive(:type).and_return({ value: 12345, field_name: 'type_ses' })
+        allow(parliamentary_paper_reported).to receive(:subtype).and_return(nil)
+        expect(parliamentary_paper_reported.object_name).to eq([{ value: 12345, field_name: 'type_ses' }])
+      end
+    end
+    context 'where a single subtype is present' do
+      it 'returns object subtypes' do
+        allow(parliamentary_paper_reported).to receive(:type).and_return({ value: 12345, field_name: 'type_ses' })
+        allow(parliamentary_paper_reported).to receive(:subtypes).and_return([{ value: 45678, field_name: 'subtype_ses' }])
+        expect(parliamentary_paper_reported.object_name).to eq([{ value: 45678, field_name: 'subtype_ses' }])
+      end
+    end
+    context 'where multiple subtypes are present' do
+      it 'returns all object subtypes' do
+        allow(parliamentary_paper_reported).to receive(:type).and_return({ value: 12345, field_name: 'type_ses' })
+        allow(parliamentary_paper_reported).to receive(:subtypes).and_return([{ value: 45678, field_name: 'subtype_ses' }, { value: 54321, field_name: 'subtype_ses' }])
+        expect(parliamentary_paper_reported.object_name).to eq([{ value: 45678, field_name: 'subtype_ses' }, { value: 54321, field_name: 'subtype_ses' }])
+      end
+    end
+    context 'where restricted subtypes are present' do
+      it 'returns all object subtypes except 91561, 81563 or 51288' do
+        allow(parliamentary_paper_reported).to receive(:type).and_return({ value: 12345, field_name: 'type_ses' })
+        allow(parliamentary_paper_reported).to receive(:subtypes).and_return([{ value: 45678, field_name: 'subtype_ses' },
+                                                                              { value: 54321, field_name: 'subtype_ses' },
+                                                                              { value: 91561, field_name: 'subtype_ses' },
+                                                                              { value: 81563, field_name: 'subtype_ses' },
+                                                                              { value: 51288, field_name: 'subtype_ses' }])
+        expect(parliamentary_paper_reported.object_name).to eq([{ value: 45678, field_name: 'subtype_ses' }, { value: 54321, field_name: 'subtype_ses' }])
+      end
     end
   end
 
@@ -57,7 +85,7 @@ RSpec.describe ParliamentaryPaperReported, type: :model do
       let!(:parliamentary_paper_reported) { ParliamentaryPaperReported.new({ 'subject_ses' => ['first item', 'second item'] }) }
 
       it 'returns all items as an array' do
-        expect(parliamentary_paper_reported.subjects).to eq([{:field_name=>"subject_ses", :value=>"first item"}, {:field_name=>"subject_ses", :value=>"second item"}])
+        expect(parliamentary_paper_reported.subjects).to eq([{ :field_name => "subject_ses", :value => "first item" }, { :field_name => "subject_ses", :value => "second item" }])
       end
     end
   end
@@ -80,7 +108,7 @@ RSpec.describe ParliamentaryPaperReported, type: :model do
       let!(:parliamentary_paper_reported) { ParliamentaryPaperReported.new({ 'legislationTitle_ses' => [12345, 67890] }) }
 
       it 'returns all items as an array' do
-        expect(parliamentary_paper_reported.legislation).to eq([{:field_name=>"legislationTitle_ses", :value=>12345}, {:field_name=>"legislationTitle_ses", :value=>67890}])
+        expect(parliamentary_paper_reported.legislation).to eq([{ :field_name => "legislationTitle_ses", :value => 12345 }, { :field_name => "legislationTitle_ses", :value => 67890 }])
       end
     end
   end
