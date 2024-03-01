@@ -64,10 +64,13 @@ module LinkHelper
         # for the specific ID to make sure it gets populated.
         custom_ses_lookup = SesLookup.new([data]).data
         name_string = custom_ses_lookup[data[:value].to_i]
+        # where we still don't have a string (e.g. if SES is missing an entry for this ID) then
+        # present the SES ID itself as a string
+        name_string = data[:value].to_s if name_string.nil?
       end
     else
       # we already have a string
-      name_string = data[:value]
+      name_string = data[:value].to_s
     end
 
     return if name_string.blank?
