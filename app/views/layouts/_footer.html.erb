@@ -1,4 +1,53 @@
-<footer>
-  <%= content_tag('p', "Made available by the #{link_to('House of Commons Library', 'https://commonslibrary.parliament.uk/')} under an #{link_to('Open Parliament Licence', 'https://www.parliament.uk/site-information/copyright-parliament/open-parliament-licence/')}.".html_safe) %>
-  <%= content_tag('p', "#{link_to('Meta', meta_list_url)}: #{link_to('About', meta_about_url)} - #{link_to('Content coverage', meta_coverage_url)} - #{link_to('Contact', meta_contact_url)}".html_safe) %>
+
+<footer class="p-footer">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="p-footer__wrapper">
+          <div class="p-footer__panel p-footer__panel-top">
+            <div class="">
+              <h4 class="p-footer__heading">data.parliament.uk</h4>
+              <ul class="p-footer__list">
+                <li>
+                  <a href="https://search-material.parliament.uk/">Parliamentary Search</a>
+                </li>
+                <li>
+                  <a href="api_directory.html">API directory</a>
+                </li>
+                <li>
+                  <a href="/">Support</a>
+                </li>
+                <li>
+                  <a href="https://www.parliament.uk/site-information/copyright-parliament/open-parliament-licence/">Re-use our content freely and flexibly with only a few conditions under the Open Parliament Licence.</a>
+                </li>
+
+              </ul>
+            </div>
+          </div>
+
+          <div class="p-footer__panel">
+            <h4 class="p-footer__heading">Legal</h4>
+            <ul class="p-footer__list">
+              <li>
+                <a href="https://www.parliament.uk/site-information/accessibility/">Accessibility statement</a>
+              </li>
+              <li>
+                <a href="https://www.parliament.uk/about/modernslavery/">Modern slavery statement</a>
+              </li>
+              <li>
+                <a href="https://www.parliament.uk/site-information/data-protection/data-protection-and-privacy-policy/">Privacy notice</a>
+              </li>
+              <li>
+                <a href="https://www.parliament.uk/site-information/privacy/">Cookie policy</a>
+              </li>
+              <li>
+                <a href="#" data-cookie-manager-open="">Cookie settings</a>
+              </li>
+            </ul>
+          </div>
+          <div class="p-footer__panel-bottom">
+            <p>© UK Parliament 2024</p>
+          </div>
+        </div>
+      </div>
+    </div>
 </footer>
