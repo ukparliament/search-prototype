@@ -54,6 +54,10 @@ class ContentObject
     fallback(subtype, type)
   end
 
+  def subtypes_or_type
+    fallback(subtypes, [type])
+  end
+
   def type
     get_first_from('type_ses')
   end
@@ -90,7 +94,7 @@ class ContentObject
   end
 
   def reference
-    get_all_from('identifier_t')
+    combine_fields(get_all_from('identifier_t'), get_all_from('reference_t'))
   end
 
   def subjects
@@ -432,23 +436,29 @@ class ContentObject
     when 90587
       # 'CommandPaper'
       'ParliamentaryPaperLaid'
+
+
+    # These are both types & subtypes: 91561, 91563 and 51288
+      # For reported papers, the subtype should be ignored and type shown in the sentence etc.
+      # Need clarification on how to route items which have these IDs as type
     when 91561
       # 'HouseOfCommonsPaper'
       'ParliamentaryPaperLaid'
     when 91563
       # 'HouseOfLordsPaper'
-      # TODO: Need to double check this one - inferred from guidance on papers reported
       'ParliamentaryPaperLaid'
     when 51288
       # 'UnprintedPaper'
       'ParliamentaryPaperLaid'
+    when 352156
+      'ParliamentaryPaperReported'
+
     when 352261
       # 'UnprintedCommandPaper'
       'ParliamentaryPaperLaid'
     when 92347
       'ParliamentaryPaperLaid'
-    when 352156
-      'ParliamentaryPaperReported'
+
     when 92277
       'OralQuestion'
     when 286676
