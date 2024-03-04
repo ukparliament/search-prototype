@@ -24,10 +24,11 @@ module LinkHelper
     # uses standard data hash
     # e.g. secondary information title
     # does not return a link
-
     return if data.blank? || data[:value].blank?
 
-    formatted_name(data, ses_data, singular)
+    formatted = formatted_name(data, ses_data, singular)
+
+    conditional_downcase(formatted)
   end
 
   def object_display_name_link(data, singular: true)
@@ -90,7 +91,6 @@ module LinkHelper
     else
       # we get something like 'Sharpe of Epsom, Lord'
       name_components = name_string.split(',')
-
       # we return as 'Lord Sharpe of Epsom'
       ret = "#{name_components.last} #{name_components.first}"
     end
@@ -103,6 +103,34 @@ module LinkHelper
   end
 
   private
+
+  def conditional_downcase(name)
+    downcased = name.downcase
+    downcase_exceptions.each do |lower_case, upper_case|
+      downcased.gsub!(lower_case, upper_case)
+    end
+
+    downcased
+  end
+
+  def downcase_exceptions
+    # having downcased entire names, we can use this list to upcase words or phrases
+
+    {
+      'house of commons' => 'House of Commons',
+      'house of lords' => 'House of Lords',
+      'parliament' => 'Parliament',
+      'parliamentary' => 'Parliamentary',
+      'parliamentary committees' => 'Parliamentary Committees',
+      'european' => 'European',
+      'eu' => 'European',
+      'european material produced by eu institutions' => 'European material produced by EU institutions',
+      'transport and works act' => 'Transport and Works Act',
+      'grand committee' => 'Grand Committee',
+      'church of england' => 'Church of England'
+    }
+
+  end
 
   def human_name_fields
     # only for member's names containing a comma (?), optionally with disambiguation brackets
