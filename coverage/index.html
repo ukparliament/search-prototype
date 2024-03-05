@@ -14,7 +14,7 @@
       <img src="./assets/0.12.3/loading.gif" alt="loading"/>
     </div>
     <div id="wrapper" class="hide">
-      <div class="timestamp">Generated <abbr class="timeago" title="2024-03-05T13:31:14+00:00">2024-03-05T13:31:14+00:00</abbr></div>
+      <div class="timestamp">Generated <abbr class="timeago" title="2024-03-05T14:23:35+00:00">2024-03-05T14:23:35+00:00</abbr></div>
       <ul class="group_tabs"></ul>
 
       <div id="content">
@@ -23,14 +23,14 @@
     <span class="group_name">All Files</span>
     (<span class="covered_percent">
       <span class="green">
-  90.16%
+  90.05%
 </span>
 
      </span>
      covered at
      <span class="covered_strength">
        <span class="green">
-         109.44
+         109.65
        </span>
     </span> hits/line
     )
@@ -43,11 +43,11 @@
   </div>
 
   <div class="t-line-summary">
-    <b>1057</b> relevant lines,
-    <span class="green"><b>953</b> lines covered</span> and
-    <span class="red"><b>104</b> lines missed. </span>
+    <b>1055</b> relevant lines,
+    <span class="green"><b>950</b> lines covered</span> and
+    <span class="red"><b>105</b> lines missed. </span>
     (<span class="green">
-  90.16%
+  90.05%
 </span>
 )
   </div>
@@ -275,7 +275,7 @@
             <td class="cell--number">242</td>
             <td class="cell--number">233</td>
             <td class="cell--number">9</td>
-            <td class="cell--number">255.48</td>
+            <td class="cell--number">255.52</td>
             
           </tr>
         
@@ -644,12 +644,12 @@
         
           <tr class="t-file">
             <td class="strong t-file__name"><a href="#069a92a93be08c09d045be1e9e1f6f9973eeec4f" class="src_link" title="app/models/transport_and_works_act_order_application.rb">app/models/transport_and_works_act_order_application.rb</a></td>
-            <td class="green strong cell--number t-file__coverage">100.00 %</td>
-            <td class="cell--number">29</td>
-            <td class="cell--number">15</td>
-            <td class="cell--number">15</td>
-            <td class="cell--number">0</td>
-            <td class="cell--number">2.87</td>
+            <td class="green strong cell--number t-file__coverage">92.31 %</td>
+            <td class="cell--number">26</td>
+            <td class="cell--number">13</td>
+            <td class="cell--number">12</td>
+            <td class="cell--number">1</td>
+            <td class="cell--number">2.92</td>
             
           </tr>
         
@@ -10099,8 +10099,8 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="6038" data-linenumber="352">
-            <span class="hits">6038</span>
+          <li class="covered" data-hits="6040" data-linenumber="352">
+            <span class="hits">6040</span>
             
 
             
@@ -10121,8 +10121,8 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="4649" data-linenumber="354">
-            <span class="hits">4649</span>
+          <li class="covered" data-hits="4651" data-linenumber="354">
+            <span class="hits">4651</span>
             
 
             
@@ -11925,8 +11925,8 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="253" data-linenumber="518">
-            <span class="hits">253</span>
+          <li class="covered" data-hits="257" data-linenumber="518">
+            <span class="hits">257</span>
             
 
             
@@ -25585,7 +25585,7 @@
     <h3>app/models/transport_and_works_act_order_application.rb</h3>
     <h4>
       <span class="green">
-  100.0%
+  92.31%
 </span>
 
       lines covered
@@ -25594,9 +25594,9 @@
     
 
     <div class="t-line-summary">
-      <b>15</b> relevant lines.
-      <span class="green"><b>15</b> lines covered</span> and
-      <span class="red"><b>0</b> lines missed.</span>
+      <b>13</b> relevant lines.
+      <span class="green"><b>12</b> lines covered</span> and
+      <span class="red"><b>1</b> lines missed.</span>
     </div>
 
     
@@ -25734,18 +25734,18 @@
 
             
 
-            <code class="ruby">    preferred = get_first_from(&#39;agent_ses&#39;)</code>
+            <code class="ruby">    fallback(get_first_from(&#39;agent_ses&#39;), get_first_from(&#39;agent_t&#39;))</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="2" data-linenumber="13">
-            <span class="hits">2</span>
+          <li class="never" data-hits="" data-linenumber="13">
+            
             
 
             
 
-            <code class="ruby">    return preferred unless preferred.blank?</code>
+            <code class="ruby">  end</code>
           </li>
         </div>
       
@@ -25767,18 +25767,18 @@
 
             
 
-            <code class="ruby">    get_first_from(&#39;agent_t&#39;)</code>
+            <code class="ruby">  def depositing_applicant</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="16">
-            
-            
-
+          <li class="covered" data-hits="2" data-linenumber="16">
+            <span class="hits">2</span>
             
 
-            <code class="ruby">  end</code>
+            
+
+            <code class="ruby">    fallback(get_first_from(&#39;applicant_ses&#39;), get_first_from(&#39;applicant_t&#39;))</code>
           </li>
         </div>
       
@@ -25789,78 +25789,12 @@
 
             
 
-            <code class="ruby"></code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="covered" data-hits="1" data-linenumber="18">
-            <span class="hits">1</span>
-            
-
-            
-
-            <code class="ruby">  def depositing_applicant</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="covered" data-hits="2" data-linenumber="19">
-            <span class="hits">2</span>
-            
-
-            
-
-            <code class="ruby">    preferred = get_first_from(&#39;applicant_ses&#39;)</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="covered" data-hits="2" data-linenumber="20">
-            <span class="hits">2</span>
-            
-
-            
-
-            <code class="ruby">    return preferred unless preferred.blank?</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="21">
-            
-            
-
-            
-
-            <code class="ruby"></code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="covered" data-hits="1" data-linenumber="22">
-            <span class="hits">1</span>
-            
-
-            
-
-            <code class="ruby">    get_first_from(&#39;applicant_t&#39;)</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="23">
-            
-            
-
-            
-
             <code class="ruby">  end</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="24">
+          <li class="never" data-hits="" data-linenumber="18">
             
             
 
@@ -25871,7 +25805,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="25">
+          <li class="covered" data-hits="1" data-linenumber="19">
             <span class="hits">1</span>
             
 
@@ -25882,7 +25816,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="5" data-linenumber="26">
+          <li class="covered" data-hits="5" data-linenumber="20">
             <span class="hits">5</span>
             
 
@@ -25893,7 +25827,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="27">
+          <li class="never" data-hits="" data-linenumber="21">
             
             
 
@@ -25904,7 +25838,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="28">
+          <li class="never" data-hits="" data-linenumber="22">
             
             
 
@@ -25915,7 +25849,40 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="29">
+          <li class="covered" data-hits="1" data-linenumber="23">
+            <span class="hits">1</span>
+            
+
+            
+
+            <code class="ruby">  def display_link</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="missed" data-hits="0" data-linenumber="24">
+            
+            
+
+            
+
+            <code class="ruby">    get_first_from(&#39;location_uri&#39;)</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="25">
+            
+            
+
+            
+
+            <code class="ruby">  end</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="26">
             
             
 

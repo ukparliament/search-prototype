@@ -1,0 +1,17 @@
+.content-prelim-box
+  .content-prelim-inner
+    .content-prelim-text#prelim-text
+      %span>= object_display_name_link(object.object_name)
+      %span= " deposited in Parliament "
+      - unless object.depositing_agent.blank?
+        %span= " by "
+        %span>= search_link(object.depositing_agent)
+        %span= " as the agent, "
+      - unless object.depositing_applicant.blank?
+        %span= " for "
+        %span>= search_link(object.depositing_applicant)
+        %span= " as the applicant, "
+      - unless object.date_of_origin.blank?
+        %span= " on "
+        %strong>= format_date(object.date_of_origin)
+      %span= "."
