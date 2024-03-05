@@ -18,12 +18,11 @@ module LinkHelper
   end
 
   def object_display_name(data, singular: true)
-
     # can used where the object type is dynamic by passing a SES ID
     # alternatively works with string names
-    # uses standard data hash
     # e.g. secondary information title
     # does not return a link
+
     return if data.blank? || data[:value].blank?
 
     formatted = formatted_name(data, ses_data, singular)
@@ -32,15 +31,11 @@ module LinkHelper
   end
 
   def object_display_name_link(data, singular: true)
-
-    # used where the object type is dynamic
-    # accepts a standard data hash containing a SES ID
-    # very similar to a search link, but the link text is singularised etc. to make it suitable
-    # for use with object names
-
     return if data.blank? || data[:value].blank?
 
-    link_to(formatted_name(data, ses_data, singular), search_path(filter: data))
+    formatted = formatted_name(data, ses_data, singular)
+
+    link_to(conditional_downcase(formatted, capitalise: true), search_path(filter: data))
   end
 
   def formatted_name(data, ses_data, singular)
@@ -104,13 +99,13 @@ module LinkHelper
 
   private
 
-  def conditional_downcase(name)
+  def conditional_downcase(name, capitalise: false)
     downcased = name.downcase
     downcase_exceptions.each do |lower_case, upper_case|
       downcased.gsub!(lower_case, upper_case)
     end
 
-    downcased
+    capitalise ? downcased.upcase_first : downcased
   end
 
   def downcase_exceptions
