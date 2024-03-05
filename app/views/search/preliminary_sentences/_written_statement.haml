@@ -5,7 +5,7 @@
       - unless object.member.blank?
         %span= " made by "
         %span>= search_link(object.member)
-        - unless object.primary_sponsor_party.blank?
+        - unless object.member_party.blank?
           %span<=" ("
           %span>= search_link(object.member_party)
           %span>=")"
