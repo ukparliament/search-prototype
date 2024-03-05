@@ -9,8 +9,7 @@ class ProceedingContribution < ContentObject
   end
 
   def object_name
-    
-    { value: contribution_type[:value], field_name: 'contributionType_t' }
+    subtype_or_type
   end
 
   def proceeding_contribution_uri

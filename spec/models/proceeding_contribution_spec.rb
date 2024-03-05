@@ -10,9 +10,19 @@ RSpec.describe ProceedingContribution, type: :model do
   end
 
   describe 'object_name' do
-    it 'returns object type from contributionType_t' do
-      allow(contribution).to receive(:contribution_type).and_return({ value: 'A string', field_name: 'contributionType_t' })
-      expect(contribution.object_name).to eq({ value: 'A string', field_name: 'contributionType_t' })
+    context 'where there are no subtypes' do
+      let!(:contribution) { ProceedingContribution.new({ 'subtype_ses' => [], 'type_ses' => [54321] }) }
+
+      it 'returns the type in an array' do
+        expect(contribution.object_name).to eq({ value: 54321, field_name: 'type_ses' })
+      end
+    end
+    context 'where there is a subtype' do
+      let!(:contribution) { ProceedingContribution.new({ 'subtype_ses' => [12345] }) }
+
+      it 'returns the subtype' do
+        expect(contribution.object_name).to eq({ value: 12345, field_name: 'subtype_ses' })
+      end
     end
   end
 
