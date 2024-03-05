@@ -7,7 +7,7 @@
         %span= search_link(object.member)
         - unless object.member_party.blank?
           %span= " ("
-          %span= search_link(object.member_party)
+          %span>= search_link(object.member_party)
           %span= ") "
       - unless object.legislature.blank?
         %span= " in the "
@@ -16,7 +16,7 @@
         %span= " on "
         %strong>= format_date(object.date)
       %span= "."
-      - unless object.parent_object.blank? || object.legislation.blank?
+      - unless object.parent_object.blank?
         %span= " It occurred during "
         %span>= render 'search/fragments/list', items: object.parent_object.object_name, terminator: '', singular: false
         %span= " on "

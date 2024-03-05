@@ -54,7 +54,7 @@ class SesLookup < ApiCall
     # each hash is the parsed response from individual lookups (one per [group_size] IDs)
     # the hashes contain a nested 'term' hash containing 'id' and 'name'
 
-    unless responses.blank?
+    unless responses.compact.blank?
       responses.each do |response|
         ret[response['term']['id'].to_i] = response['term']['name']
       end
