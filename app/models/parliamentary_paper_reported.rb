@@ -9,20 +9,16 @@ class ParliamentaryPaperReported < Paper
   end
 
   def object_name
-    filter_types(subtypes_or_type)
+    # subtype, but not if it's 91561, 81563, 51288
+    # there will be multiple subtypes to look through, but we're using the first remaining one
+    valid_subtypes = subtypes&.reject{ |i| [91561, 91563, 51288].include?(i[:value]) }
+    valid_subtypes.blank? ? type : valid_subtypes.first
   end
 
   def paper_type
-    filter_types(super)
-  end
-
-  def filter_types(subtype_or_type_ids)
-    # Reported papers ignore subtype IDs of 91561, 81563 or 51288
-    return subtype_or_type_ids unless subtype_or_type_ids.is_a?(Array)
-
-    subtype_or_type_ids.reject do |i|
-      [91561, 81563, 51288].include?(i[:value])
-    end
+    # subtype, but only if it's 91561, 81563, 51288
+    valid_paper_types = super&.select { |i| [91561, 91563, 51288].include?(i[:value]) }
+    valid_paper_types.blank? ? nil : valid_paper_types
   end
 
   def display_link
