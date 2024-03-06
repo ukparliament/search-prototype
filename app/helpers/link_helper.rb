@@ -17,7 +17,7 @@ module LinkHelper
     link_to(formatted_name(data, ses_data, singular), search_path(filter: data))
   end
 
-  def object_display_name(data, singular: true)
+  def object_display_name(data, singular: true, capitalise: false)
     # can used where the object type is dynamic by passing a SES ID
     # alternatively works with string names
     # e.g. secondary information title
@@ -27,7 +27,7 @@ module LinkHelper
 
     formatted = formatted_name(data, ses_data, singular)
 
-    conditional_downcase(formatted)
+    conditional_downcase(formatted, capitalise: capitalise)
   end
 
   def object_display_name_link(data, singular: true)

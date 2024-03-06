@@ -6,14 +6,11 @@
     <%= format_date(related_item.date) %><br/>
   <% end %>
   <% if related_item.dual_type? %>
-    <%= ses_data[related_item.subtype[:value]] %>
-    and <%= ses_data[related_item.type[:value]] %><br/>
+    <%= object_display_name(related_item.subtype, singular: false, capitalise: true) %>
+    and <%= object_display_name(related_item.type, singular: false, capitalise: true) %><br/>
   <% else %>
-    <% if related_item.subtype %>
-      <%= ses_data[related_item.subtype[:value]] %><br/>
-    <% elsif related_item.type %>
-      <%= ses_data[related_item.type[:value]] %><br/>
-    <% end %>
+    <%= render 'search/fragments/name_list', items: related_item.subtypes_or_type, singular: false, capitalise: true, terminator: '' %>
+    <br/>
   <% end %>
   <% unless related_item.legislature.blank? %>
     <% related_item.legislature.each do |house| %>
