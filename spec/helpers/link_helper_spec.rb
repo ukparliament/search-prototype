@@ -29,7 +29,7 @@ RSpec.describe LinkHelper, type: :helper do
 
   describe 'object_display_name' do
     # used for object names that aren't links, e.g. secondary information titles
-    
+
     let!(:mock_ses_data) { { 123 => 'Early day motions' } }
     let!(:input_data_ses) { { value: 123, field_name: 'type_ses' } }
     let!(:input_data_string) { { value: 'Early day motions', field_name: 'type_t' } }
@@ -46,15 +46,21 @@ RSpec.describe LinkHelper, type: :helper do
       context 'default behaviour' do
         it 'returns the SES name in lower case' do
           allow(helper).to receive(:ses_data).and_return(mock_ses_data)
-          expect(helper.object_display_name(input_data_ses)).to eq('early day motion')
+          expect(helper.object_display_name(input_data_ses)).to eq('Early day motion')
         end
       end
-      context 'where the SES data contains excluded words' do
-        let!(:mock_ses_data) { { 123 => 'Church of England Measure' } }
-        let!(:input_data_ses) { { value: 123, field_name: 'type_ses' } }
-        it 'retains capitalisation for excluded words' do
+      context 'when called with case formatting true' do
+        it 'returns the SES name in lower case' do
           allow(helper).to receive(:ses_data).and_return(mock_ses_data)
-          expect(helper.object_display_name(input_data_ses)).to eq('Church of England measure')
+          expect(helper.object_display_name(input_data_ses, case_formatting: true)).to eq('early day motion')
+        end
+        context 'where the SES data contains excluded words' do
+          let!(:mock_ses_data) { { 123 => 'Church of England Measure' } }
+          let!(:input_data_ses) { { value: 123, field_name: 'type_ses' } }
+          it 'retains capitalisation for excluded words' do
+            allow(helper).to receive(:ses_data).and_return(mock_ses_data)
+            expect(helper.object_display_name(input_data_ses, case_formatting: true)).to eq('Church of England measure')
+          end
         end
       end
       context 'where called with singularisation disabled' do
@@ -62,26 +68,31 @@ RSpec.describe LinkHelper, type: :helper do
         let!(:input_data_ses) { { value: 123, field_name: 'type_ses' } }
         it 'returns the plural term' do
           allow(helper).to receive(:ses_data).and_return(mock_ses_data)
-          expect(helper.object_display_name(input_data_ses, singular: false)).to eq('early day motions')
+          expect(helper.object_display_name(input_data_ses, singular: false)).to eq('Early day motions')
         end
       end
     end
 
     context 'when given string and field name' do
       context 'default behaviour' do
-        it 'returns the formatted string in lower case' do
-          expect(helper.object_display_name(input_data_string)).to eq('early day motion')
+        it 'returns the formatted string' do
+          expect(helper.object_display_name(input_data_string)).to eq('Early day motion')
         end
       end
-      context 'when given a string including excluded words' do
-        let!(:input_data_string) { { value: 'Church of England Measure', field_name: 'type_t' } }
-        it 'retains capitalisation of the excluded words' do
-          expect(helper.object_display_name(input_data_string)).to eq('Church of England measure')
+      context 'when called with case formatting true' do
+        it 'returns the formatted string in lower case' do
+          expect(helper.object_display_name(input_data_string, case_formatting: true)).to eq('early day motion')
+        end
+        context 'when given a string including excluded words' do
+          let!(:input_data_string) { { value: 'Church of England Measure', field_name: 'type_t' } }
+          it 'retains capitalisation of the excluded words' do
+            expect(helper.object_display_name(input_data_string, case_formatting: true)).to eq('Church of England measure')
+          end
         end
       end
       context 'where called with singularisation disabled' do
         it 'returns the plural term' do
-          expect(helper.object_display_name(input_data_string, singular: false)).to eq('early day motions')
+          expect(helper.object_display_name(input_data_string, singular: false)).to eq('Early day motions')
         end
       end
     end

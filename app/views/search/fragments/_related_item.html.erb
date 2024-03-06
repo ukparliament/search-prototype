@@ -6,10 +6,10 @@
     <%= format_date(related_item.date) %><br/>
   <% end %>
   <% if related_item.dual_type? %>
-    <%= object_display_name(related_item.subtype, singular: false, capitalise: true) %>
-    and <%= object_display_name(related_item.type, singular: false, capitalise: true) %><br/>
+    <%= object_display_name(related_item.subtype, singular: false) %>
+    and <%= object_display_name(related_item.type, singular: false) %><br/>
   <% else %>
-    <%= render 'search/fragments/name_list', items: related_item.subtypes_or_type, singular: false, capitalise: true, terminator: '' %>
+    <%= render 'search/fragments/name_list', items: related_item.subtypes_or_type, singular: false, terminator: '' %>
     <br/>
   <% end %>
   <% unless related_item.legislature.blank? %>

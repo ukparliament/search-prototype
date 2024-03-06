@@ -1,7 +1,7 @@
 .content-prelim-box
   .content-prelim-inner
     .content-prelim-text#prelim-text
-      %span>= search_link(object.object_name)
+      %span>= render 'search/fragments/list', items: object.object_name, terminator: '', singular: true
       - unless object.legislature.blank?
         %span= " laid in the "
         %span>= render 'search/fragments/list', items: object.legislature, terminator: '', singular: false
