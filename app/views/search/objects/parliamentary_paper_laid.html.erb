@@ -8,9 +8,9 @@
   <div id="top"></div>
 <% end %>
 
-  <% content_for(:title) do %>
-    <%= object.object_title %>
-  <% end %>
+<% content_for(:title) do %>
+  <%= object.object_title %>
+<% end %>
 
 <section id="prelim">
   <%= render 'search/preliminary_sentences/parliamentary_paper_laid', object: object %>
@@ -36,6 +36,9 @@
   <%= render 'search/fragments/laid_in_draft', laid_in_draft: object.is_laid_in_draft %>
   <%= render 'search/fragments/certified_categories', certified_categories: object.certified_categories, certified_date: object.certified_date %>
   <%= render 'search/fragments/referred_to', referred_to: object.referred_to %>
+  <%= render 'search/fragments/considered_by_eu_si_committee', considered: object.is_considered_by_eu_si_committee %>
+  <%= render 'search/fragments/considered_by_secondary_legislation_committee', considered: object.is_considered_by_secondary_legislation_committee %>
+  <%= render 'search/fragments/reported_by_joint_committee', reported: object.is_reported_by_joint_committee %>
   <%= render 'search/fragments/related_items', related_items: object.related_items %>
   <%= render 'search/fragments/ec_documents', ec_documents: object.ec_documents %>
   <%= render 'search/fragments/notes', notes: object.notes %>

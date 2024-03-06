@@ -433,14 +433,10 @@ class ContentObject
       end
     when 347207
       'FormalProceeding'
+
     when 90587
       # 'CommandPaper'
       'ParliamentaryPaperLaid'
-
-
-    # These are both types & subtypes: 91561, 91563 and 51288
-      # For reported papers, the subtype should be ignored and type shown in the sentence etc.
-      # Need clarification on how to route items which have these IDs as type
     when 91561
       # 'HouseOfCommonsPaper'
       'ParliamentaryPaperLaid'
@@ -452,7 +448,6 @@ class ContentObject
       'ParliamentaryPaperLaid'
     when 352156
       'ParliamentaryPaperReported'
-
     when 352261
       # 'UnprintedCommandPaper'
       'ParliamentaryPaperLaid'

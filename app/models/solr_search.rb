@@ -17,6 +17,8 @@ class SolrSearch < ApiCall
   end
 
   def search_filter
+    return if filter.blank?
+
     "#{filter[:field_name]}:#{filter[:value]}"
   end
 

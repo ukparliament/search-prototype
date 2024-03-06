@@ -31,10 +31,23 @@ RSpec.describe ParliamentaryPaperLaid, type: :model do
     end
 
     context 'where data exists' do
-      let!(:parliamentary_paper_laid) { ParliamentaryPaperLaid.new({ 'identifier_t' => ['first item', 'second item'] }) }
-
-      it 'returns all items' do
-        expect(parliamentary_paper_laid.reference).to eq([{ :field_name => "identifier_t", :value => "first item" }, { :field_name => "identifier_t", :value => "second item" }])
+      context 'for type 352261' do
+        let!(:parliamentary_paper_laid) { ParliamentaryPaperLaid.new({ 'type_ses' => [352261], 'identifier_t' => ['first item', 'second item'], 'reference_t' => ['first item', 'second item'] }) }
+        it 'returns nil' do
+          expect(parliamentary_paper_laid.reference).to be_nil
+        end
+      end
+      context 'for type 51288' do
+        let!(:parliamentary_paper_laid) { ParliamentaryPaperLaid.new({ 'type_ses' => [51288], 'identifier_t' => ['first item', 'second item'], 'reference_t' => ['first item', 'second item'] }) }
+        it 'returns all items' do
+          expect(parliamentary_paper_laid.reference).to eq([{ :field_name => "reference_t", :value => "first item" }, { :field_name => "reference_t", :value => "second item" }])
+        end
+      end
+      context 'another type' do
+        let!(:parliamentary_paper_laid) { ParliamentaryPaperLaid.new({ 'type_ses' => [12345], 'identifier_t' => ['first item', 'second item'], 'reference_t' => ['first item', 'second item'] }) }
+        it 'returns all items' do
+          expect(parliamentary_paper_laid.reference).to eq([{ :field_name => "identifier_t", :value => "first item" }, { :field_name => "identifier_t", :value => "second item" }, { :field_name => "reference_t", :value => "first item" }, { :field_name => "reference_t", :value => "second item" }])
+        end
       end
     end
   end
