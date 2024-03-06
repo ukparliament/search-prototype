@@ -6,7 +6,8 @@ RSpec.describe 'ContentObjects', type: :request do
 
     context 'success' do
       it 'returns http success' do
-        allow_any_instance_of(SolrQuery).to receive(:object_data).and_return('test')
+        allow_any_instance_of(SolrQuery).to receive(:all_data).and_return('test')
+        allow_any_instance_of(SolrQuery).to receive(:object_data).and_return('test docs')
         allow_any_instance_of(Edm).to receive(:ses_data).and_return(edm_instance.type => 'early day motion')
         allow(ContentObject).to receive(:generate).and_return(edm_instance)
         get '/objects', params: { :object => 'test_string' }
@@ -16,7 +17,7 @@ RSpec.describe 'ContentObjects', type: :request do
 
     context '500 error' do
       it 'renders the error page' do
-        allow_any_instance_of(SolrQuery).to receive(:object_data).and_return('statusCode' => 500)
+        allow_any_instance_of(SolrQuery).to receive(:all_data).and_return('statusCode' => 500)
         allow_any_instance_of(Edm).to receive(:ses_data).and_return(edm_instance.type => 'early day motion')
         allow(ContentObject).to receive(:generate).and_return(edm_instance)
         get '/objects', params: { :object => 'test_string' }
@@ -26,7 +27,7 @@ RSpec.describe 'ContentObjects', type: :request do
 
     context '404 error' do
       it 'renders the error page' do
-        allow_any_instance_of(SolrQuery).to receive(:object_data).and_return('statusCode' => 404)
+        allow_any_instance_of(SolrQuery).to receive(:all_data).and_return('statusCode' => 404)
         allow_any_instance_of(Edm).to receive(:ses_data).and_return(edm_instance.type => 'early day motion')
         allow(ContentObject).to receive(:generate).and_return(edm_instance)
         get '/objects', params: { :object => 'test_string' }
