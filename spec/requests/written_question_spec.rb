@@ -6,6 +6,7 @@ RSpec.describe 'Written Question', type: :request do
 
     it 'returns http success' do
       allow_any_instance_of(SolrQuery).to receive(:object_data).and_return('test')
+      allow_any_instance_of(SolrQuery).to receive(:all_data).and_return('test')
       allow_any_instance_of(SolrMultiQuery).to receive(:object_data).and_return([])
       allow_any_instance_of(SesLookup).to receive(:data).and_return([])
       allow(ContentObject).to receive(:generate).and_return(written_question_instance)
@@ -43,6 +44,7 @@ RSpec.describe 'Written Question', type: :request do
           end
 
           allow_any_instance_of(SolrQuery).to receive(:object_data).and_return('test')
+          allow_any_instance_of(SolrQuery).to receive(:all_data).and_return('test')
           allow_any_instance_of(SolrMultiQuery).to receive(:object_data).and_return([])
           allow(ContentObject).to receive(:generate).and_return(written_question_instance)
           allow(written_question_instance).to receive(:tabled?).and_return(true)
