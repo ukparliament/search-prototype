@@ -1,0 +1,15 @@
+<% content_for(:before_title) do %>
+  <%= link_to('UK Parliament', root_path) %> / <%= link_to('Open data', root_path) %><br/>
+  <div id="top"></div>
+<% end %>
+
+<section class="content-section">
+  <article>
+    <div class="block">
+      <h2 class="content-heading">Something has gone wrong</h2>
+      <p>There is a technical issue.</p>
+      <p>Please try again later. If the problem persists, please contact <%= link_to('support', root_path) %></p>
+      <%= "#{status}: #{message}" %>
+    </div>
+  </article>
+</section>

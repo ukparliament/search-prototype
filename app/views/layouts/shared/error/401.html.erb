@@ -1,0 +1,16 @@
+<% content_for(:before_title) do %>
+  <%= link_to('UK Parliament', root_path) %> / <%= link_to('Open data', root_path) %><br/>
+  <div id="top"></div>
+<% end %>
+
+<section class="content-section">
+  <article>
+    <div class="block">
+      <h1 class="content-heading">You do not have access to this object</h1>
+      <p>The page address may be incorrect, or the page may have been moved or deleted.
+      <p>Please check the page address. If you would like to report the problem, please contact <%= link_to('support', root_path) %></p>
+
+      <%= "#{status}: #{message}" %>
+    </div>
+  </article>
+</section>
