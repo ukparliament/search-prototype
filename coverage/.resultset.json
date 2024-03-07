@@ -1,7 +1,7 @@
 {
   "RSpec": {
     "coverage": {
-      "/Users/barbarajenkins/RubymineProjects/search-prototype/app/channels/application_cable/channel.rb": {
+      "/Users/jon.corry/RubymineProjects/search-prototype/app/channels/application_cable/channel.rb": {
         "lines": [
           1,
           1,
@@ -9,7 +9,7 @@
           null
         ]
       },
-      "/Users/barbarajenkins/RubymineProjects/search-prototype/app/channels/application_cable/connection.rb": {
+      "/Users/jon.corry/RubymineProjects/search-prototype/app/channels/application_cable/connection.rb": {
         "lines": [
           1,
           1,
@@ -17,13 +17,13 @@
           null
         ]
       },
-      "/Users/barbarajenkins/RubymineProjects/search-prototype/app/controllers/application_controller.rb": {
+      "/Users/jon.corry/RubymineProjects/search-prototype/app/controllers/application_controller.rb": {
         "lines": [
           1,
           null
         ]
       },
-      "/Users/barbarajenkins/RubymineProjects/search-prototype/app/helpers/application_helper.rb": {
+      "/Users/jon.corry/RubymineProjects/search-prototype/app/helpers/application_helper.rb": {
         "lines": [
           1,
           null,
@@ -65,7 +65,7 @@
           null
         ]
       },
-      "/Users/barbarajenkins/RubymineProjects/search-prototype/app/helpers/date_helper.rb": {
+      "/Users/jon.corry/RubymineProjects/search-prototype/app/helpers/date_helper.rb": {
         "lines": [
           1,
           null,
@@ -79,7 +79,7 @@
           null
         ]
       },
-      "/Users/barbarajenkins/RubymineProjects/search-prototype/app/helpers/link_helper.rb": {
+      "/Users/jon.corry/RubymineProjects/search-prototype/app/helpers/link_helper.rb": {
         "lines": [
           1,
           1,
@@ -243,19 +243,19 @@
           null
         ]
       },
-      "/Users/barbarajenkins/RubymineProjects/search-prototype/app/helpers/meta_helper.rb": {
+      "/Users/jon.corry/RubymineProjects/search-prototype/app/helpers/meta_helper.rb": {
         "lines": [
           1,
           null
         ]
       },
-      "/Users/barbarajenkins/RubymineProjects/search-prototype/app/helpers/search_helper.rb": {
+      "/Users/jon.corry/RubymineProjects/search-prototype/app/helpers/search_helper.rb": {
         "lines": [
           1,
           null
         ]
       },
-      "/Users/barbarajenkins/RubymineProjects/search-prototype/app/controllers/content_objects_controller.rb": {
+      "/Users/jon.corry/RubymineProjects/search-prototype/app/controllers/content_objects_controller.rb": {
         "lines": [
           1,
           null,
@@ -267,7 +267,12 @@
           1,
           207,
           null,
+          null,
+          null,
+          null,
+          null,
           207,
+          null,
           2,
           null,
           1,
@@ -280,6 +285,8 @@
           null,
           null,
           null,
+          null,
+          null,
           205,
           205,
           205,
@@ -292,7 +299,7 @@
           null
         ]
       },
-      "/Users/barbarajenkins/RubymineProjects/search-prototype/app/controllers/search_controller.rb": {
+      "/Users/jon.corry/RubymineProjects/search-prototype/app/controllers/search_controller.rb": {
         "lines": [
           null,
           1,
@@ -332,7 +339,7 @@
           null
         ]
       },
-      "/Users/barbarajenkins/RubymineProjects/search-prototype/app/jobs/application_job.rb": {
+      "/Users/jon.corry/RubymineProjects/search-prototype/app/jobs/application_job.rb": {
         "lines": [
           1,
           null,
@@ -343,7 +350,7 @@
           null
         ]
       },
-      "/Users/barbarajenkins/RubymineProjects/search-prototype/app/mailers/application_mailer.rb": {
+      "/Users/jon.corry/RubymineProjects/search-prototype/app/mailers/application_mailer.rb": {
         "lines": [
           1,
           1,
@@ -351,7 +358,7 @@
           null
         ]
       },
-      "/Users/barbarajenkins/RubymineProjects/search-prototype/app/models/act.rb": {
+      "/Users/jon.corry/RubymineProjects/search-prototype/app/models/act.rb": {
         "lines": [
           1,
           null,
@@ -382,7 +389,7 @@
           null
         ]
       },
-      "/Users/barbarajenkins/RubymineProjects/search-prototype/app/models/content_object.rb": {
+      "/Users/jon.corry/RubymineProjects/search-prototype/app/models/content_object.rb": {
         "lines": [
           1,
           null,
@@ -902,7 +909,7 @@
           null
         ]
       },
-      "/Users/barbarajenkins/RubymineProjects/search-prototype/app/models/api_call.rb": {
+      "/Users/jon.corry/RubymineProjects/search-prototype/app/models/api_call.rb": {
         "lines": [
           1,
           1,
@@ -913,7 +920,7 @@
           1,
           null,
           1,
-          425,
+          220,
           null,
           null,
           1,
@@ -966,14 +973,14 @@
           null
         ]
       },
-      "/Users/barbarajenkins/RubymineProjects/search-prototype/app/models/application_record.rb": {
+      "/Users/jon.corry/RubymineProjects/search-prototype/app/models/application_record.rb": {
         "lines": [
           1,
           1,
           null
         ]
       },
-      "/Users/barbarajenkins/RubymineProjects/search-prototype/app/models/bill.rb": {
+      "/Users/jon.corry/RubymineProjects/search-prototype/app/models/bill.rb": {
         "lines": [
           1,
           null,
@@ -1027,7 +1034,7 @@
           null
         ]
       },
-      "/Users/barbarajenkins/RubymineProjects/search-prototype/app/models/church_of_england_measure.rb": {
+      "/Users/jon.corry/RubymineProjects/search-prototype/app/models/church_of_england_measure.rb": {
         "lines": [
           1,
           null,
@@ -1049,7 +1056,7 @@
           null
         ]
       },
-      "/Users/barbarajenkins/RubymineProjects/search-prototype/app/models/committee_proceeding.rb": {
+      "/Users/jon.corry/RubymineProjects/search-prototype/app/models/committee_proceeding.rb": {
         "lines": [
           1,
           null,
@@ -1063,7 +1070,7 @@
           null
         ]
       },
-      "/Users/barbarajenkins/RubymineProjects/search-prototype/app/models/deposited_paper.rb": {
+      "/Users/jon.corry/RubymineProjects/search-prototype/app/models/deposited_paper.rb": {
         "lines": [
           1,
           null,
@@ -1105,7 +1112,7 @@
           null
         ]
       },
-      "/Users/barbarajenkins/RubymineProjects/search-prototype/app/models/paper.rb": {
+      "/Users/jon.corry/RubymineProjects/search-prototype/app/models/paper.rb": {
         "lines": [
           1,
           null,
@@ -1167,7 +1174,7 @@
           null
         ]
       },
-      "/Users/barbarajenkins/RubymineProjects/search-prototype/app/models/edm.rb": {
+      "/Users/jon.corry/RubymineProjects/search-prototype/app/models/edm.rb": {
         "lines": [
           1,
           null,
@@ -1245,7 +1252,7 @@
           null
         ]
       },
-      "/Users/barbarajenkins/RubymineProjects/search-prototype/app/models/european_deposited_document.rb": {
+      "/Users/jon.corry/RubymineProjects/search-prototype/app/models/european_deposited_document.rb": {
         "lines": [
           1,
           null,
@@ -1295,7 +1302,7 @@
           null
         ]
       },
-      "/Users/barbarajenkins/RubymineProjects/search-prototype/app/models/european_material.rb": {
+      "/Users/jon.corry/RubymineProjects/search-prototype/app/models/european_material.rb": {
         "lines": [
           1,
           null,
@@ -1356,7 +1363,7 @@
           null
         ]
       },
-      "/Users/barbarajenkins/RubymineProjects/search-prototype/app/models/european_scrutiny.rb": {
+      "/Users/jon.corry/RubymineProjects/search-prototype/app/models/european_scrutiny.rb": {
         "lines": [
           1,
           null,
@@ -1383,7 +1390,7 @@
           null
         ]
       },
-      "/Users/barbarajenkins/RubymineProjects/search-prototype/app/models/european_scrutiny_explanatory_memorandum.rb": {
+      "/Users/jon.corry/RubymineProjects/search-prototype/app/models/european_scrutiny_explanatory_memorandum.rb": {
         "lines": [
           1,
           null,
@@ -1405,7 +1412,7 @@
           null
         ]
       },
-      "/Users/barbarajenkins/RubymineProjects/search-prototype/app/models/european_scrutiny_ministerial_correspondence.rb": {
+      "/Users/jon.corry/RubymineProjects/search-prototype/app/models/european_scrutiny_ministerial_correspondence.rb": {
         "lines": [
           1,
           null,
@@ -1431,7 +1438,7 @@
           null
         ]
       },
-      "/Users/barbarajenkins/RubymineProjects/search-prototype/app/models/european_scrutiny_recommendation.rb": {
+      "/Users/jon.corry/RubymineProjects/search-prototype/app/models/european_scrutiny_recommendation.rb": {
         "lines": [
           1,
           null,
@@ -1477,7 +1484,7 @@
           null
         ]
       },
-      "/Users/barbarajenkins/RubymineProjects/search-prototype/app/models/formal_proceeding.rb": {
+      "/Users/jon.corry/RubymineProjects/search-prototype/app/models/formal_proceeding.rb": {
         "lines": [
           1,
           null,
@@ -1492,7 +1499,7 @@
           null
         ]
       },
-      "/Users/barbarajenkins/RubymineProjects/search-prototype/app/models/proceeding.rb": {
+      "/Users/jon.corry/RubymineProjects/search-prototype/app/models/proceeding.rb": {
         "lines": [
           1,
           null,
@@ -1510,7 +1517,7 @@
           null
         ]
       },
-      "/Users/barbarajenkins/RubymineProjects/search-prototype/app/models/impact_assessment.rb": {
+      "/Users/jon.corry/RubymineProjects/search-prototype/app/models/impact_assessment.rb": {
         "lines": [
           1,
           null,
@@ -1528,7 +1535,7 @@
           null
         ]
       },
-      "/Users/barbarajenkins/RubymineProjects/search-prototype/app/models/ministerial_correction.rb": {
+      "/Users/jon.corry/RubymineProjects/search-prototype/app/models/ministerial_correction.rb": {
         "lines": [
           1,
           null,
@@ -1573,7 +1580,7 @@
           null
         ]
       },
-      "/Users/barbarajenkins/RubymineProjects/search-prototype/app/models/objects_from_uri_list.rb": {
+      "/Users/jon.corry/RubymineProjects/search-prototype/app/models/objects_from_uri_list.rb": {
         "lines": [
           1,
           null,
@@ -1620,7 +1627,7 @@
           null
         ]
       },
-      "/Users/barbarajenkins/RubymineProjects/search-prototype/app/models/observations_on_petitions.rb": {
+      "/Users/jon.corry/RubymineProjects/search-prototype/app/models/observations_on_petitions.rb": {
         "lines": [
           1,
           null,
@@ -1640,7 +1647,7 @@
           null
         ]
       },
-      "/Users/barbarajenkins/RubymineProjects/search-prototype/app/models/petition.rb": {
+      "/Users/jon.corry/RubymineProjects/search-prototype/app/models/petition.rb": {
         "lines": [
           1,
           null,
@@ -1667,7 +1674,7 @@
           null
         ]
       },
-      "/Users/barbarajenkins/RubymineProjects/search-prototype/app/models/oral_answer_to_question.rb": {
+      "/Users/jon.corry/RubymineProjects/search-prototype/app/models/oral_answer_to_question.rb": {
         "lines": [
           1,
           null,
@@ -1696,7 +1703,7 @@
           null
         ]
       },
-      "/Users/barbarajenkins/RubymineProjects/search-prototype/app/models/question.rb": {
+      "/Users/jon.corry/RubymineProjects/search-prototype/app/models/question.rb": {
         "lines": [
           1,
           null,
@@ -1813,7 +1820,7 @@
           null
         ]
       },
-      "/Users/barbarajenkins/RubymineProjects/search-prototype/app/models/oral_question.rb": {
+      "/Users/jon.corry/RubymineProjects/search-prototype/app/models/oral_question.rb": {
         "lines": [
           1,
           null,
@@ -1862,7 +1869,7 @@
           null
         ]
       },
-      "/Users/barbarajenkins/RubymineProjects/search-prototype/app/models/oral_question_time_intervention.rb": {
+      "/Users/jon.corry/RubymineProjects/search-prototype/app/models/oral_question_time_intervention.rb": {
         "lines": [
           1,
           null,
@@ -1877,7 +1884,7 @@
           null
         ]
       },
-      "/Users/barbarajenkins/RubymineProjects/search-prototype/app/models/paper_petition.rb": {
+      "/Users/jon.corry/RubymineProjects/search-prototype/app/models/paper_petition.rb": {
         "lines": [
           1,
           null,
@@ -1899,7 +1906,7 @@
           null
         ]
       },
-      "/Users/barbarajenkins/RubymineProjects/search-prototype/app/models/parliamentary_paper_laid.rb": {
+      "/Users/jon.corry/RubymineProjects/search-prototype/app/models/parliamentary_paper_laid.rb": {
         "lines": [
           1,
           null,
@@ -1959,7 +1966,7 @@
           null
         ]
       },
-      "/Users/barbarajenkins/RubymineProjects/search-prototype/app/models/parliamentary_paper_reported.rb": {
+      "/Users/jon.corry/RubymineProjects/search-prototype/app/models/parliamentary_paper_reported.rb": {
         "lines": [
           1,
           null,
@@ -1997,7 +2004,7 @@
           null
         ]
       },
-      "/Users/barbarajenkins/RubymineProjects/search-prototype/app/models/parliamentary_proceeding.rb": {
+      "/Users/jon.corry/RubymineProjects/search-prototype/app/models/parliamentary_proceeding.rb": {
         "lines": [
           1,
           null,
@@ -2039,7 +2046,7 @@
           null
         ]
       },
-      "/Users/barbarajenkins/RubymineProjects/search-prototype/app/models/private_act.rb": {
+      "/Users/jon.corry/RubymineProjects/search-prototype/app/models/private_act.rb": {
         "lines": [
           1,
           null,
@@ -2053,7 +2060,7 @@
           null
         ]
       },
-      "/Users/barbarajenkins/RubymineProjects/search-prototype/app/models/proceeding_contribution.rb": {
+      "/Users/jon.corry/RubymineProjects/search-prototype/app/models/proceeding_contribution.rb": {
         "lines": [
           1,
           null,
@@ -2083,7 +2090,7 @@
           null
         ]
       },
-      "/Users/barbarajenkins/RubymineProjects/search-prototype/app/models/public_act.rb": {
+      "/Users/jon.corry/RubymineProjects/search-prototype/app/models/public_act.rb": {
         "lines": [
           1,
           null,
@@ -2097,7 +2104,7 @@
           null
         ]
       },
-      "/Users/barbarajenkins/RubymineProjects/search-prototype/app/models/research_briefing.rb": {
+      "/Users/jon.corry/RubymineProjects/search-prototype/app/models/research_briefing.rb": {
         "lines": [
           1,
           null,
@@ -2155,7 +2162,7 @@
           null
         ]
       },
-      "/Users/barbarajenkins/RubymineProjects/search-prototype/app/models/ses_lookup.rb": {
+      "/Users/jon.corry/RubymineProjects/search-prototype/app/models/ses_lookup.rb": {
         "lines": [
           1,
           1,
@@ -2239,7 +2246,7 @@
           null
         ]
       },
-      "/Users/barbarajenkins/RubymineProjects/search-prototype/app/models/solr_multi_query.rb": {
+      "/Users/jon.corry/RubymineProjects/search-prototype/app/models/solr_multi_query.rb": {
         "lines": [
           1,
           null,
@@ -2273,14 +2280,14 @@
           null
         ]
       },
-      "/Users/barbarajenkins/RubymineProjects/search-prototype/app/models/solr_query.rb": {
+      "/Users/jon.corry/RubymineProjects/search-prototype/app/models/solr_query.rb": {
         "lines": [
           1,
           null,
           null,
           null,
           1,
-          417,
+          212,
           null,
           null,
           1,
@@ -2299,7 +2306,7 @@
           null
         ]
       },
-      "/Users/barbarajenkins/RubymineProjects/search-prototype/app/models/solr_search.rb": {
+      "/Users/jon.corry/RubymineProjects/search-prototype/app/models/solr_search.rb": {
         "lines": [
           1,
           null,
@@ -2342,7 +2349,7 @@
           null
         ]
       },
-      "/Users/barbarajenkins/RubymineProjects/search-prototype/app/models/statutory_instrument.rb": {
+      "/Users/jon.corry/RubymineProjects/search-prototype/app/models/statutory_instrument.rb": {
         "lines": [
           1,
           null,
@@ -2380,7 +2387,7 @@
           null
         ]
       },
-      "/Users/barbarajenkins/RubymineProjects/search-prototype/app/models/transport_and_works_act_order_application.rb": {
+      "/Users/jon.corry/RubymineProjects/search-prototype/app/models/transport_and_works_act_order_application.rb": {
         "lines": [
           1,
           null,
@@ -2410,7 +2417,7 @@
           null
         ]
       },
-      "/Users/barbarajenkins/RubymineProjects/search-prototype/app/models/written_question.rb": {
+      "/Users/jon.corry/RubymineProjects/search-prototype/app/models/written_question.rb": {
         "lines": [
           1,
           null,
@@ -2498,7 +2505,7 @@
           null
         ]
       },
-      "/Users/barbarajenkins/RubymineProjects/search-prototype/app/models/written_statement.rb": {
+      "/Users/jon.corry/RubymineProjects/search-prototype/app/models/written_statement.rb": {
         "lines": [
           1,
           null,
@@ -2547,6 +2554,6 @@
         ]
       }
     },
-    "timestamp": 1709738904
+    "timestamp": 1709805783
   }
 }

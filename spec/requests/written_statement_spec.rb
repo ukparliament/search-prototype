@@ -5,8 +5,7 @@ RSpec.describe 'Written Statement', type: :request do
     let!(:written_statement_instance) { WrittenStatement.new('type_ses' => [12345]) }
 
     it 'returns http success' do
-      allow_any_instance_of(SolrQuery).to receive(:object_data).and_return('test')
-      allow_any_instance_of(SolrQuery).to receive(:all_data).and_return('test')
+      allow_any_instance_of(SolrQuery).to receive(:all_data).and_return({ "docs" => ['test'] })
       allow_any_instance_of(SolrMultiQuery).to receive(:object_data).and_return([])
       allow(ContentObject).to receive(:generate).and_return(written_statement_instance)
       allow_any_instance_of(WrittenStatement).to receive(:ses_data).and_return(written_statement_instance.type[:value] => 'written statement')
@@ -42,8 +41,7 @@ RSpec.describe 'Written Statement', type: :request do
             end
           end
 
-          allow_any_instance_of(SolrQuery).to receive(:object_data).and_return('test')
-          allow_any_instance_of(SolrQuery).to receive(:all_data).and_return('test')
+          allow_any_instance_of(SolrQuery).to receive(:all_data).and_return({ "docs" => ['test'] })
           allow_any_instance_of(SolrMultiQuery).to receive(:object_data).and_return([])
           allow(ContentObject).to receive(:generate).and_return(written_statement_instance)
           allow_any_instance_of(SesLookup).to receive(:data).and_return(test_ses_data)
