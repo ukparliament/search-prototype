@@ -5,7 +5,7 @@ RSpec.describe 'Research Briefing', type: :request do
     let!(:research_briefing_instance) { ResearchBriefing.new('test') }
 
     it 'returns http success' do
-      allow_any_instance_of(SolrQuery).to receive(:object_data).and_return('test')
+      allow_any_instance_of(SolrQuery).to receive(:all_data).and_return({ "docs" => ['test'] })
       allow_any_instance_of(SolrMultiQuery).to receive(:object_data).and_return([])
       allow(ContentObject).to receive(:generate).and_return(research_briefing_instance)
       allow_any_instance_of(ResearchBriefing).to receive(:ses_data).and_return(research_briefing_instance.type => 'research briefing')
@@ -47,7 +47,7 @@ RSpec.describe 'Research Briefing', type: :request do
             end
           end
 
-          allow_any_instance_of(SolrQuery).to receive(:object_data).and_return('test')
+          allow_any_instance_of(SolrQuery).to receive(:all_data).and_return({ "docs" => ['test'] })
           allow_any_instance_of(SolrMultiQuery).to receive(:object_data).and_return([])
           allow(ContentObject).to receive(:generate).and_return(research_briefing_instance)
           allow_any_instance_of(SesLookup).to receive(:data).and_return(test_ses_data)
