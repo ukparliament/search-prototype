@@ -17,7 +17,7 @@ module LinkHelper
     link_to(formatted_name(data, ses_data, singular), search_path(filter: data))
   end
 
-  def object_display_name(data, singular: true, capitalise: false)
+  def object_display_name(data, singular: true, case_formatting: false)
     # can used where the object type is dynamic by passing a SES ID
     # alternatively works with string names
     # e.g. secondary information title
@@ -27,15 +27,23 @@ module LinkHelper
 
     formatted = formatted_name(data, ses_data, singular)
 
-    conditional_downcase(formatted, capitalise: capitalise)
+    if case_formatting
+      conditional_downcase(formatted)
+    else
+      formatted
+    end
   end
 
-  def object_display_name_link(data, singular: true)
+  def object_display_name_link(data, singular: true, case_formatting: false)
     return if data.blank? || data[:value].blank?
 
     formatted = formatted_name(data, ses_data, singular)
 
-    link_to(conditional_downcase(formatted, capitalise: true), search_path(filter: data))
+    if case_formatting
+      link_to(conditional_downcase(formatted), search_path(filter: data))
+    else
+      link_to(formatted, search_path(filter: data))
+    end
   end
 
   def formatted_name(data, ses_data, singular)
@@ -99,13 +107,13 @@ module LinkHelper
 
   private
 
-  def conditional_downcase(name, capitalise: false)
+  def conditional_downcase(name)
     downcased = name.downcase
     downcase_exceptions.each do |lower_case, upper_case|
       downcased.gsub!(lower_case, upper_case)
     end
 
-    capitalise ? downcased.upcase_first : downcased
+    downcased
   end
 
   def downcase_exceptions

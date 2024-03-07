@@ -9,8 +9,10 @@ class ParliamentaryPaperLaid < Paper
   end
 
   def object_name
-    # for 92347 - unsure about other types
-    subtype_or_type
+    # type shown for most papers, except 92347 which uses subtypes (plural)
+    return if type.blank?
+
+    type[:value] == 92347 ? subtypes : [type]
   end
 
   def is_withdrawn
@@ -18,8 +20,10 @@ class ParliamentaryPaperLaid < Paper
   end
 
   def paper_type
-    # show subtypes, excluding 92347
-    super&.reject { |a| a[:value].to_i == 92347 }
+    # show subtypes, except if type is 92347
+    return if type[:value] == 92347
+
+    super
   end
 
   def reference
@@ -31,11 +35,11 @@ class ParliamentaryPaperLaid < Paper
   end
 
   def is_considered_by_eu_si_committee
-    get_first_as_date_from('consideredByESICDate_dt')
+    get_first_as_date_from('ConsideredByESICDate_dt')
   end
 
   def is_considered_by_secondary_legislation_committee
-    get_first_as_date_from('consideredBySLSCDate_dt')
+    get_first_as_date_from('ConsideredBySLSCDate_dt')
   end
 
   def display_link
