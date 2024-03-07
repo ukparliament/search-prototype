@@ -326,7 +326,7 @@ li {
 /* TODO: add nav menu to show in its place */
 @media only screen and (max-width: 360px) {
 
-    header {
+    breadcrumbs {
         padding: 16px 16px 0 16px;
     }
 
@@ -357,7 +357,7 @@ li {
 /* Wireframes don't cover these screen sizes so this may need some adjustments later */
 @media only screen and (min-width: 360px) and (max-width: 1200px) {
 
-    header {
+    breadcrumbs {
         padding: 16px 32px 0 32px;
     }
 
@@ -387,7 +387,7 @@ li {
 /* Above 1200px width, show the nav menu in full desktop mode */
 @media only screen and (min-width: 1200px) {
 
-    header {
+    breadcrumbs {
         padding: 16px 32px 0 32px;
     }
 

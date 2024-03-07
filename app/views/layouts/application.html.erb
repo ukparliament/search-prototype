@@ -2,14 +2,14 @@
 <html lang="en-GB">
 <%= render '/layouts/head' %>
 <body>
-<%= render '/layouts/nav' %>
+<%= render '/layouts/header' %>
 <main>
-  <header>
+  <breadcrumbs>
     <%= yield :before_title if content_for?(:before_title) %>
     <h1>
       <%= yield :title if content_for?(:title) %>
     </h1>
-  </header>
+  </breadcrumbs>
   <%= yield %>
 </main>
 <%#= render '/layouts/footer' %>
