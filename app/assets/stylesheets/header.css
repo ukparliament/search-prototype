@@ -145,17 +145,17 @@ header .product-header .title {
         background-color: #ebe9e8;
         position: fixed;
         top: 0;
-        left: 0;
         right: 0;
         bottom: 0;
         color: #373151;
         z-index: 300;
         padding: 15px;
         overflow-y: auto;
-        display: none
+        height: 30%;
+        width: 40%;
     }
 
-    header .container .primary-nav .close-navigation {
+    header .container .primary-nav .close-nav {
         position: absolute;
         top: 14px;
         right: 15px;
@@ -163,7 +163,7 @@ header .product-header .title {
     }
 
     header .container .primary-nav .title {
-        margin-top: 55px;
+        margin-top: 20px;
         margin-bottom: 10px;
         font-weight: 500;
         font-size: 2rem;
@@ -229,7 +229,7 @@ header .product-header .title {
         overflow: hidden;
     }
 
-    header .container .primary-nav > .title {
+    header .container .primary-nav > .title, header .container .primary-nav .close-nav {
         display: none
     }
 
