@@ -4,6 +4,10 @@ class OralQuestionTimeIntervention < ContentObject
     super
   end
 
+  def object_name
+    subtype_or_type
+  end
+
   def template
     'search/objects/oral_question_time_intervention'
   end

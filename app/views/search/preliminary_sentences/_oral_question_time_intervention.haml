@@ -4,14 +4,14 @@
       %span>= object_display_name_link(object.object_name)
       - unless object.date.blank?
         %span= " made on "
-        %strong= format_date(object.date)
-      %span= " in the  "
-      %span= render 'search/fragments/list', items: object.legislature, terminator: '', singular: false
+        %strong>= format_date(object.date)
+      %span= " in the "
+      %span>= render 'search/fragments/list', items: object.legislature, terminator: '', singular: false
       - unless object.member.blank?
-        %span= " by  "
-        %span= search_link(object.member)
+        %span= " by "
+        %span>= search_link(object.member)
         - unless object.member_party.blank?
-          %span= "("
+          %span= " ("
           %span>= search_link(object.member_party)
           %span>= ")"
-      %span="."
+      %span>="."
