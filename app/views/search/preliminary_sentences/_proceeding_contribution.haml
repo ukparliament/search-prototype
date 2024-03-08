@@ -18,7 +18,7 @@
       %span= "."
       - unless object.parent_object.blank?
         %span= " It occurred during "
-        %span>= render 'search/fragments/list', items: object.parent_object.object_name, terminator: '', singular: false
+        %span>= render 'search/fragments/list', items: object.parent_object.object_name, terminator: '', singular: true
         %span= " on "
         %span>= object_show_link(object.parent_object.object_title, object.parent_object.object_uri)
         %span= "."
