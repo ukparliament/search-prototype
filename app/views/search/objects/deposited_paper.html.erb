@@ -22,8 +22,8 @@
   <% end %>
   <% unless object.deposited_file.blank? %>
     <h3 class="content-heading" id="available-files">Available files</h3>
-    <% object.deposited_file.each do |file| %>
-      <%= link_to(file[:value], file[:value]) %>
+    <% object.deposited_file.each do |uri| %>
+      <%= link_to(uri, uri.to_s) %>
     <% end %>
   <% end %>
 </section>
