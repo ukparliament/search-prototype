@@ -10,13 +10,13 @@
       - else object.primary_sponsor.blank?
         %span>= search_link(object.primary_sponsor)
         - if object.primary_sponsor_party.blank?
-          %span=" (primary sponsor) "
+          %span= " (primary sponsor)"
         - else
-          %span=" (primary sponsor, "
+          %span= " (primary sponsor, "
           %span>= search_link(object.primary_sponsor_party)
-          %span=") "
+          %span= ")"
         - unless object.other_sponsors.blank?
-          %span= render 'search/fragments/edm_sponsor_list', items: object.other_sponsors, terminator: '', singular: false
+          %span>= render 'search/fragments/edm_sponsor_list', items: object.other_sponsors, terminator: '', singular: false
           %span= " and "
       %span= " tabled on "
       %strong>= format_date(object.date_tabled)
