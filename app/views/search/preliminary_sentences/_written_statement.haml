@@ -13,8 +13,11 @@
       %strong>= format_date(object.statement_date)
       %span= " in the "
       %span= render 'search/fragments/list', items: object.legislature, terminator: ',', singular: false
-      %span= " on behalf of the "
       - unless object.department.blank?
+        - if object.member.blank?
+          %span= " from the "
+        - else
+          %span= " on behalf of the "
         %span>= search_link(object.department)
         %span= "."
       - if object.corrected?
