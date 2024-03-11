@@ -9,46 +9,41 @@ module LinkHelper
   end
 
   def search_link(data, singular: false)
-
     # Accepts either a string or a SES ID, which it resolves into a string
     # Either option requires a field reference (standard data hash)
 
     return if data.blank? || data[:value].blank?
 
-    # Adjusted behaviour: all fields now pass a complete data object across, including their field name
-    # This means any field, e.g. memberPrinted_t will search for the value in that Solr field. This behaviour was
-    # previously exclusive to _ses fields.
-    # if data[:field_name].last(3) == 'ses'
     link_to(formatted_name(data, ses_data, singular), search_path(filter: data))
-    # else
-    #   link_to(formatted_name(data, ses_data, singular), search_path(query: data[:value]))
-    # end
-
   end
 
-  def object_display_name(data, singular: true)
-
+  def object_display_name(data, singular: true, case_formatting: false)
     # can used where the object type is dynamic by passing a SES ID
     # alternatively works with string names
-    # uses standard data hash
     # e.g. secondary information title
     # does not return a link
 
     return if data.blank? || data[:value].blank?
 
-    formatted_name(data, ses_data, singular)
+    formatted = formatted_name(data, ses_data, singular)
+
+    if case_formatting
+      conditional_downcase(formatted)
+    else
+      formatted
+    end
   end
 
-  def object_display_name_link(data, singular: true)
-
-    # used where the object type is dynamic
-    # accepts a standard data hash containing a SES ID
-    # very similar to a search link, but the link text is singularised etc. to make it suitable
-    # for use with object names
-
+  def object_display_name_link(data, singular: true, case_formatting: false)
     return if data.blank? || data[:value].blank?
 
-    link_to(formatted_name(data, ses_data, singular), search_path(filter: data))
+    formatted = formatted_name(data, ses_data, singular)
+
+    if case_formatting
+      link_to(conditional_downcase(formatted), search_path(filter: data))
+    else
+      link_to(formatted, search_path(filter: data))
+    end
   end
 
   def formatted_name(data, ses_data, singular)
@@ -68,29 +63,26 @@ module LinkHelper
       name_string = ses_data[data[:value].to_i]
 
       if name_string.nil?
+        puts "Missing name - performing fallback SES lookup for: #{data[:value].to_i}"
         # In some edge cases, we won't have a SES name included in the page SES data. We then perform a lookup
         # for the specific ID to make sure it gets populated.
         custom_ses_lookup = SesLookup.new([data]).data
         name_string = custom_ses_lookup[data[:value].to_i]
+        # where we still don't have a string (e.g. if SES is missing an entry for this ID) then
+        # present the SES ID itself as a string
+        name_string = data[:value].to_s if name_string.nil?
       end
     else
       # we already have a string
-      name_string = data[:value]
+      name_string = data[:value].to_s
     end
 
     return if name_string.blank?
 
-    # only for member's names containing a comma (?), optionally with disambiguation brackets
-    # TODO: a full list of valid fields to be provided
-    human_name_fields = ['member_ses', 'creator_ses', 'answeringMember_ses', 'tablingMember_ses', 'leadMember_ses',
-                         'correspondingMinister_ses', 'askingMember_ses', 'contributor_ses', 'primarySponsor_ses',
-                         'sponsor_ses', 'amendment_primarySponsorPrinted_t', 'correctingMember_ses',
-                         'personalAuthor_ses', 'personalAuthor_t', 'mep_ses', 'correspondingMinister_t']
     return name_string unless human_name_fields.include?(data[:field_name]) && name_string.include?(',')
 
+    # handle disambiguation brackets
     if name_string.include?('(')
-      # handle disambiguation brackets
-
       disambiguation_components = name_string.split(' (')
       # 'Sharpe of Epsom, Lord (Disambiguation)' => ['Sharpe of Epsom, Lord', 'Disambiguation)']
 
@@ -102,7 +94,6 @@ module LinkHelper
     else
       # we get something like 'Sharpe of Epsom, Lord'
       name_components = name_string.split(',')
-
       # we return as 'Lord Sharpe of Epsom'
       ret = "#{name_components.last} #{name_components.first}"
     end
@@ -112,6 +103,66 @@ module LinkHelper
 
   def ses_data
     @ses_data
+  end
+
+  private
+
+  def conditional_downcase(name)
+    downcased = name.downcase
+    downcase_exceptions.each do |lower_case, upper_case|
+      downcased.gsub!(lower_case, upper_case)
+    end
+
+    downcased
+  end
+
+  def downcase_exceptions
+    # having downcased entire names, we can use this list to upcase words or phrases
+
+    {
+      'house of commons' => 'House of Commons',
+      'house of lords' => 'House of Lords',
+      'parliament' => 'Parliament',
+      'parliamentary' => 'Parliamentary',
+      'parliamentary committees' => 'Parliamentary Committees',
+      'european' => 'European',
+      'eu' => 'European',
+      'european material produced by eu institutions' => 'European material produced by EU institutions',
+      'transport and works act' => 'Transport and Works Act',
+      'grand committee' => 'Grand Committee',
+      'church of england' => 'Church of England'
+    }
+
+  end
+
+  def human_name_fields
+    # only for member's names containing a comma (?), optionally with disambiguation brackets
+
+    [
+      'amendment_primarySponsorPrinted_t',
+      'amendment_primarySponsor_ses',
+      'answeringMember_ses',
+      'askingMember_ses',
+      'contributor_ses',
+      'contributor_t',
+      'correctingMember_ses',
+      'correspondingMinister_t',
+      'correspondingMinister_ses',
+      'creator_ses',
+      'creator_t',
+      'leadMember_ses',
+      'member_ses',
+      'memberPrinted_t',
+      'mep_ses',
+      'personalAuthor_ses',
+      'personalAuthor_t',
+      'primarySponsor_ses',
+      'signedMember_ses',
+      'sponsor_ses',
+      'tablingMember_ses',
+      'witness_ses',
+      'witness_t'
+    ]
   end
 
 end

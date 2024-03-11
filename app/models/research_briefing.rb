@@ -16,12 +16,16 @@ class ResearchBriefing < ContentObject
     subtype
   end
 
-  def creator
-    get_first_from('creator_ses')
+  def creators
+    combine_fields(get_all_from('creator_ses'), get_all_from('creator_t'))
   end
 
-  def contributor
-    get_first_from('contributor_ses')
+  def contributors
+    combine_fields(get_all_from('contributor_ses'), get_all_from('contributor_t'))
+  end
+
+  def creators_and_contributors
+    combine_fields(creators, contributors)
   end
 
   def series
@@ -37,19 +41,14 @@ class ResearchBriefing < ContentObject
   end
 
   def published_by
-    # this is the publishing organisation and is to be used in the secondary attributes
-    # currently unused as we're showing a graphic as per the wireframes, & working with publisherSnapshot_s to do that
-
     get_first_from('publisher_ses')
+  end
+
+  def section
+    get_first_from('section_ses')
   end
 
   def last_updated
     get_first_as_date_from('modified_dt')
-  end
-
-  def display_link
-    # For Research briefings link to externalLocation if present, internalLocation if no externalLocation is available.
-
-    external_location_uri.blank? ? internal_location_uri : external_location_uri
   end
 end

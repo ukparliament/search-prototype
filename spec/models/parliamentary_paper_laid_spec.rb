@@ -10,9 +10,37 @@ RSpec.describe ParliamentaryPaperLaid, type: :model do
   end
 
   describe 'object_name' do
-    it 'returns object type' do
-      allow(parliamentary_paper_laid).to receive(:type).and_return({ value: 12345, field_name: 'type_ses' })
-      expect(parliamentary_paper_laid.object_name).to eq({ value: 12345, field_name: 'type_ses' })
+    context 'where type is 92347' do
+      it 'returns all subtypes' do
+        allow(parliamentary_paper_laid).to receive(:type).and_return({ value: 92347, field_name: 'type_ses' })
+        allow(parliamentary_paper_laid).to receive(:subtypes).and_return([{ value: 12345, field_name: 'subtype_ses' }, { value: 23456, field_name: 'subtype_ses' }])
+        expect(parliamentary_paper_laid.object_name).to eq([{ value: 12345, field_name: 'subtype_ses' }, { value: 23456, field_name: 'subtype_ses' }])
+      end
+    end
+    context 'where type is not 92347' do
+      it 'returns type in an array' do
+        allow(parliamentary_paper_laid).to receive(:type).and_return({ value: 65432, field_name: 'type_ses' })
+        allow(parliamentary_paper_laid).to receive(:subtypes).and_return([{ value: 12345, field_name: 'subtype_ses' }, { value: 23456, field_name: 'subtype_ses' }])
+        expect(parliamentary_paper_laid.object_name).to eq([{ value: 65432, field_name: 'type_ses' }])
+      end
+    end
+  end
+
+  describe 'paper_type' do
+    context 'where type is 92347' do
+      it 'returns nil' do
+        allow(parliamentary_paper_laid).to receive(:type).and_return({ value: 92347, field_name: 'type_ses' })
+        allow(parliamentary_paper_laid).to receive(:subtypes).and_return([{ value: 12345, field_name: 'subtype_ses' }, { value: 23456, field_name: 'subtype_ses' }])
+        expect(parliamentary_paper_laid.paper_type).to be_nil
+      end
+    end
+    context 'where type is not 92347' do
+      let!(:parliamentary_paper_laid) { ParliamentaryPaperLaid.new({ 'subtype_ses' => [12345, 23456] }) }
+
+      it 'returns all subtypes' do
+        allow(parliamentary_paper_laid).to receive(:type).and_return({ value: 65432, field_name: 'type_ses' })
+        expect(parliamentary_paper_laid.paper_type).to eq([{ value: 12345, field_name: 'subtype_ses' }, { value: 23456, field_name: 'subtype_ses' }])
+      end
     end
   end
 
@@ -31,10 +59,23 @@ RSpec.describe ParliamentaryPaperLaid, type: :model do
     end
 
     context 'where data exists' do
-      let!(:parliamentary_paper_laid) { ParliamentaryPaperLaid.new({ 'identifier_t' => ['first item', 'second item'] }) }
-
-      it 'returns all items' do
-        expect(parliamentary_paper_laid.reference).to eq([{ :field_name => "identifier_t", :value => "first item" }, { :field_name => "identifier_t", :value => "second item" }])
+      context 'for type 352261' do
+        let!(:parliamentary_paper_laid) { ParliamentaryPaperLaid.new({ 'type_ses' => [352261], 'identifier_t' => ['first item', 'second item'], 'reference_t' => ['first item', 'second item'] }) }
+        it 'returns nil' do
+          expect(parliamentary_paper_laid.reference).to be_nil
+        end
+      end
+      context 'for type 51288' do
+        let!(:parliamentary_paper_laid) { ParliamentaryPaperLaid.new({ 'type_ses' => [51288], 'identifier_t' => ['first item', 'second item'], 'reference_t' => ['first item', 'second item'] }) }
+        it 'returns all items' do
+          expect(parliamentary_paper_laid.reference).to eq([{ :field_name => "reference_t", :value => "first item" }, { :field_name => "reference_t", :value => "second item" }])
+        end
+      end
+      context 'another type' do
+        let!(:parliamentary_paper_laid) { ParliamentaryPaperLaid.new({ 'type_ses' => [12345], 'identifier_t' => ['first item', 'second item'], 'reference_t' => ['first item', 'second item'] }) }
+        it 'returns all items' do
+          expect(parliamentary_paper_laid.reference).to eq([{ :field_name => "identifier_t", :value => "first item" }, { :field_name => "identifier_t", :value => "second item" }, { :field_name => "reference_t", :value => "first item" }, { :field_name => "reference_t", :value => "second item" }])
+        end
       end
     end
   end

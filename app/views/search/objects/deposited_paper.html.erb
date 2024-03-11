@@ -8,11 +8,9 @@
   <div id="top"></div>
 <% end %>
 
-<% if object.page_title %>
   <% content_for(:title) do %>
-    <%= object.page_title %>
+    <%= object.object_title %>
   <% end %>
-<% end %>
 
 <section id="prelim">
   <%= render 'search/preliminary_sentences/deposited_paper', object: object %>
@@ -24,14 +22,14 @@
   <% end %>
   <% unless object.deposited_file.blank? %>
     <h3 class="content-heading" id="available-files">Available files</h3>
-    <% object.deposited_file.each do |file| %>
-      <%= link_to(file[:value], file[:value]) %>
+    <% object.deposited_file.each do |uri| %>
+      <%= link_to(uri, uri.to_s) %>
     <% end %>
   <% end %>
 </section>
 
 <section id="about" class="content-section grey">
-  <h2 class="content-heading">About this <%= object_display_name(object.type) %></h2>
+  <h2 class="content-heading">About this <%= object_display_name(object.type, case_formatting: true) %></h2>
   <%= render 'search/fragments/reference', reference: object.reference %>
   <%= render 'search/fragments/date', title: 'Date of origin', date: object.date_originated %>
   <%= render 'search/fragments/corporate_author', author: object.corporate_author %>

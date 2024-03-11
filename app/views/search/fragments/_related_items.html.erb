@@ -2,31 +2,24 @@
   <div class="about-item">
     <h3 class="content-heading" id="related-items">Related items</h3>
     <div class="flex-list">
-      <% related_items[:items].each do |related_item| %>
-        <div>
-          <% unless related_item.content_object_data['uri'].blank? %>
-            <%= object_show_link(related_item.object_title, related_item.object_uri) %><br/>
-          <% end %>
-          <% if related_item.date %>
-            <%= format_date(related_item.date) %><br/>
-          <% end %>
-          <% if related_item.dual_type? %>
-            <%= related_items[:ses_lookup][related_item.subtype[:value]] %>
-            and <%= related_items[:ses_lookup][related_item.type[:value]] %><br/>
-          <% else %>
-            <% if related_item.subtype %>
-              <%= related_items[:ses_lookup][related_item.subtype[:value]] %><br/>
-            <% elsif related_item.type %>
-              <%= related_items[:ses_lookup][related_item.type[:value]] %><br/>
-            <% end %>
-          <% end %>
-          <% unless related_item.legislature.blank? %>
-            <% related_item.legislature.each do |house| %>
-              <%= related_items[:ses_lookup][house[:value]] %><br/>
-            <% end %>
-          <% end %>
-        </div>
+      <% related_items[:items][..3].each do |related_item| %>
+        <%= render 'search/fragments/related_item', related_item: related_item, ses_data: related_items[:ses_lookup] %>
       <% end %>
     </div>
+    <% if related_items[:items].size > 4 %>
+      <br/>
+      <details>
+        <summary>
+          Show all related items (<%= related_items[:items].size %>)
+        </summary>
+        <br/>
+        <div class="flex-list">
+          <% related_items[:items][4..].each do |related_item| %>
+            <%= render 'search/fragments/related_item', related_item: related_item, ses_data: related_items[:ses_lookup] %>
+          <% end %>
+        </div>
+      </details>
+    <% end %>
+  </div>
   </div>
 <% end %>

@@ -9,11 +9,11 @@ class ProceedingContribution < ContentObject
   end
 
   def object_name
-    { value: contribution_type[:value], field_name: 'contributionType_t' }
+    subtype_or_type
   end
 
   def proceeding_contribution_uri
-    get_first_from('parentProceeding_t')
+    fallback(get_first_from('parentProceeding_t'), get_first_from('parentProceeding_uri'))
   end
 
   def parent_object

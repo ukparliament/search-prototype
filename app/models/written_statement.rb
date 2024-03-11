@@ -13,11 +13,14 @@ class WrittenStatement < ContentObject
   end
 
   def procedure
-    get_first_from('procedural_ses')
+    # wrapped in an array to allow use of the same partial as get_all_from used on other items
+    # [nil].blank? == false so use compact to produce [].blank? instead
+    # this will then fail conditional check (in partial) in cases where there's no data, as intended
+    [get_first_from('procedural_ses')].compact
   end
 
   def notes
-    get_first_from('notes_t')
+    get_first_from('searcherNote_t')
   end
 
   def statement_date

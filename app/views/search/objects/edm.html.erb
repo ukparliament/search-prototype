@@ -8,11 +8,9 @@
   <div id="top"></div>
 <% end %>
 
-<% if object.page_title %>
   <% content_for(:title) do %>
-    <%= object.page_title %>
+    <%= object.object_title %>
   <% end %>
-<% end %>
 
 <section id="prelim">
   <%= render 'search/preliminary_sentences/edm', object: object %>
@@ -28,7 +26,7 @@
 <% end %>
 
 <section id="about" class="content-section grey">
-  <h2 class="content-heading">About this <%= object_display_name(object.type) %></h2>
+  <h2 class="content-heading">About this <%= object_display_name(object.type, case_formatting: true) %></h2>
   <%= render 'search/fragments/reference', reference: object.reference %>
   <%= render 'search/fragments/session', session: object.parliamentary_session %>
   <%= render 'search/fragments/other_sponsors', sponsors: object.other_sponsors %>

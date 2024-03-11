@@ -1,0 +1,14 @@
+.content-prelim-box
+  .content-prelim-inner
+    .content-prelim-text#prelim-text
+      %span>= object_display_name_link(object.object_name)
+      - unless object.legislature.blank?
+        %span= " presented in the "
+        %span>= render 'search/fragments/list', items: object.legislature, terminator: ',', singular: false
+      - unless object.date.blank?
+        %span= " on "
+        %strong>= format_date(object.date)
+      - unless object.members.blank?
+        %span= " by "
+        %span>= render 'search/fragments/list', items: object.members, terminator: '', singular: false
+      %span= "."

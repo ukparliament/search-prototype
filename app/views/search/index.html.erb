@@ -12,7 +12,7 @@
       <strong><%= @number_of_results %></strong>
       results for
       <strong><%= @search.filter[:field_name] %></strong> of
-      <strong>"<%= object_display_name(@search.filter, singular: false) %>"</strong>
+      <strong>"<%= object_display_name(@search.filter.to_h, singular: false) %>"</strong>
     </p>
   <% end %>
 

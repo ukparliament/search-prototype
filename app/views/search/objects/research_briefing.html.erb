@@ -8,11 +8,9 @@
   <div id="top"></div>
 <% end %>
 
-<% if object.page_title %>
   <% content_for(:title) do %>
-    <%= object.page_title %>
+    <%= object.object_title %>
   <% end %>
-<% end %>
 
 <section id="prelim">
   <%= render 'search/preliminary_sentences/research_briefing', object: object %>
@@ -27,12 +25,12 @@
 <% end %>
 
 <section id="about" class="content-section grey">
-  <h2 class="content-heading">About this <%= object_display_name(object.type) %></h2>
+  <h2 class="content-heading">About this <%= object_display_name(object.type, case_formatting: true) %></h2>
   <%= render 'search/fragments/reference', reference: object.reference %>
   <%= render 'search/fragments/series', series: object.series %>
   <%= render 'search/fragments/related_items', related_items: object.related_items %>
-  <%= render 'search/fragments/pills', pills_heading: 'Subjects', pills: object.subjects %>
   <%= render 'search/fragments/pills', pills_heading: 'Topics', pills: object.topics %>
+  <%= render 'search/fragments/pills', pills_heading: 'Subjects', pills: object.subjects %>
   <%= render 'search/fragments/legislation', legislation: object.legislation %>
   <%= render 'search/fragments/contains_statistics', contains_statistics: object.contains_statistics %>
   <%= render 'search/fragments/published_by', object: object %>

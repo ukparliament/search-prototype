@@ -8,10 +8,8 @@
   <div id="top"></div>
 <% end %>
 
-<% if object.page_title %>
-  <% content_for(:title) do %>
-    <%= object.page_title %>
-  <% end %>
+<% content_for(:title) do %>
+  <%= object.object_title %>
 <% end %>
 
 <section id="prelim">
@@ -27,7 +25,7 @@
 <% end %>
 
 <section id="about" class="content-section grey">
-  <h2 class="content-heading">About this <%= object_display_name(object.type) %></h2>
+  <h2 class="content-heading">About this <%= object_display_name(object.type, case_formatting: true) %></h2>
   <%= render 'search/fragments/reference', reference: object.reference %>
   <%= render 'search/fragments/session', session: object.parliamentary_session %>
   <%= render 'search/fragments/coming_into_force', notes: object.coming_into_force, date: object.coming_into_force_date %>
@@ -38,6 +36,9 @@
   <%= render 'search/fragments/laid_in_draft', laid_in_draft: object.is_laid_in_draft %>
   <%= render 'search/fragments/certified_categories', certified_categories: object.certified_categories, certified_date: object.certified_date %>
   <%= render 'search/fragments/referred_to', referred_to: object.referred_to %>
+  <%= render 'search/fragments/considered_by_eu_si_committee', considered: object.is_considered_by_eu_si_committee %>
+  <%= render 'search/fragments/considered_by_secondary_legislation_committee', considered: object.is_considered_by_secondary_legislation_committee %>
+  <%= render 'search/fragments/reported_by_joint_committee', reported: object.is_reported_by_joint_committee %>
   <%= render 'search/fragments/related_items', related_items: object.related_items %>
   <%= render 'search/fragments/ec_documents', ec_documents: object.ec_documents %>
   <%= render 'search/fragments/notes', notes: object.notes %>

@@ -8,6 +8,10 @@ class PaperPetition < Petition
     'search/objects/paper_petition'
   end
 
+  def object_name
+    subtype
+  end
+
   def content
     abstract_text.blank? ? petition_text : abstract_text
   end

@@ -27,13 +27,6 @@
         %span= "."
       - unless object.date_of_holding_answer.blank?
         %span= " A holding answer was provided "
-        -# - unless object.answering_member.blank?
-          %span= " by "
-          %span>= search_link(object.answering_member)
-          - unless object.answering_member_party.blank?
-            %span= " ("
-            %span>= search_link(object.answering_member_party)
-            %span= ") "
         %span= " on "
         %strong>= format_date(object.date_of_holding_answer)
         %span= "."

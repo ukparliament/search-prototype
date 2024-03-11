@@ -48,17 +48,17 @@ RSpec.describe WrittenStatement, type: :model do
     end
 
     context 'where there is an empty array' do
-      let!(:written_statement) { WrittenStatement.new({ 'notes_t' => [] }) }
+      let!(:written_statement) { WrittenStatement.new({ 'searcherNote_t' => [] }) }
       it 'returns nil' do
         expect(written_statement.notes).to be_nil
       end
     end
 
     context 'where data exists' do
-      let!(:written_statement) { WrittenStatement.new({ 'notes_t' => ['first item', 'second item'] }) }
+      let!(:written_statement) { WrittenStatement.new({ 'searcherNote_t' => ['first item', 'second item'] }) }
 
       it 'returns the first item' do
-        expect(written_statement.notes).to eq({ :field_name => "notes_t", :value => "first item" })
+        expect(written_statement.notes).to eq({ :field_name => "searcherNote_t", :value => "first item" })
       end
     end
   end

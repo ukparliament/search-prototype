@@ -21,7 +21,13 @@ class DepositedPaper < Paper
   end
 
   def deposited_file
-    get_all_from('depositedFile_uri')
+    uris = get_all_from('depositedFile_uri')
+    https_uris = uris.map do |uri|
+      full = URI.parse(uri[:value])
+      URI::HTTPS.build(host: full.host, path: full.path)
+    end
+
+    https_uris
   end
 
   def personal_author

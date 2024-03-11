@@ -1,9 +1,12 @@
 <% if object.is_published && object.is_published[:value] && object.publisher_string %>
   <div class="about-item">
     <h3 class="content-heading" id="published-by">Published by</h3>
+    <%= search_link(object.section) %>
     <div class="publisher-logo">
-      <% if lookup_context.template_exists?('/search/logo_svgs/house-of-commons-library', nil, :partial) %>
-        <%= render object.publisher_logo_partial %>
+      <% if lookup_context.template_exists?(object.publisher_logo_partial, nil, :partial) %>
+        <%= link_to search_path(filter: object.published_by) do %>
+          <%= render object.publisher_logo_partial %>
+        <% end %>
       <% end %>
     </div>
   </div>

@@ -13,6 +13,6 @@ class ChurchOfEnglandMeasure < ContentObject
   end
 
   def display_link
-    fallback(get_first_from('location_uri'), get_first_from('external_location_uri'))
+    fallback(get_first_from('location_uri'), get_first_from('externalLocation_uri'))
   end
 end

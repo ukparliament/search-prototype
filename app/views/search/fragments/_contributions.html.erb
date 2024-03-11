@@ -1,42 +1,17 @@
 <% unless contributions.blank? %>
   <div class="about-item">
-    <h3 class="content-heading" id="contributions">Contributions</h3>
-    <% contributions[:items].first(2).each do |contribution| %>
-      <p>
-        <% if contribution.member %>
-          <%= link_to(formatted_name(contribution.member, contributions[:ses_lookup], false), search_path(filter: contribution.member)) %>
-          <br/>
-        <% end %>
-        <% if contribution.contribution_text %>
-          <%= raw(contribution.contribution_text[:value]) %>
-        <% end %>
-        <% if contribution.reference %>
-          <%= object_show_link(contribution.reference.first[:value], contribution.object_uri) %>
-          <br/>
-        <% end %>
-      </p>
+    <h3 class="content-heading" id="contributions">Proceeding contributions</h3>
+    <% contributions[:contribution_data].first(2).each do |contribution| %>
+      <%= render 'search/fragments/contribution', contribution: contribution, ses_data: contributions[:contribution_ses_data] %>
     <% end %>
-    <br/>
 
-    <% if contributions[:items].size > 2 %>
+    <% if contributions[:contribution_data].size > 2 %>
       <details>
         <summary>
-          Show all contributions (<%= contributions[:items].size %>)
+          Show all contributions (<%= contributions[:contribution_data].size %>)
         </summary>
-        <% contributions[:items].drop(2).each do |contribution| %>
-          <p>
-            <% if contribution.member %>
-              <%= link_to(formatted_name(contribution.member, contributions[:ses_lookup], false), search_path(filter: contribution.member)) %>
-              <br/>
-            <% end %>
-            <% if contribution.contribution_text %>
-              <%= raw(contribution.contribution_text[:value]) %>
-            <% end %>
-            <% if contribution.reference %>
-              <%= object_show_link(contribution.reference.first[:value], contribution.object_uri) %>
-              <br/>
-            <% end %>
-          </p>
+        <% contributions[:contribution_data].drop(2).each do |contribution| %>
+          <%= render 'search/fragments/contribution', contribution: contribution, ses_data: contributions[:contribution_ses_data] %>
         <% end %>
       </details>
     <% end %>

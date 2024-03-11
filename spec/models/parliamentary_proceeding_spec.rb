@@ -40,7 +40,6 @@ RSpec.describe ParliamentaryProceeding, type: :model do
   end
 
   describe 'previous version' do
-    # TODO: check bills are appropriate for this test case as contributions?
     context 'there is no previous version link' do
       let!(:parliamentary_proceeding) { ParliamentaryProceeding.new({ 'childContribution_uri' => nil }) }
       it 'returns nil' do
@@ -50,28 +49,28 @@ RSpec.describe ParliamentaryProceeding, type: :model do
 
     context 'previous version link is present' do
       let!(:parliamentary_proceeding) { ParliamentaryProceeding.new({ 'childContribution_uri' => ['contributions_link'] }) }
-      let!(:contribution) { Bill.new({}) }
+      let!(:contribution) { ProceedingContribution.new({}) }
       let!(:returned_objects) { { items: [contribution] } }
 
-      it 'performs a search for the url and returns the related object' do
+      it 'performs a search for the url and returns data on the related object' do
         allow_any_instance_of(ObjectsFromUriList).to receive(:get_objects).and_return(returned_objects)
         allow(ObjectsFromUriList).to receive(:new).and_return(ObjectsFromUriList.new(['contributions_link']))
         expect(ObjectsFromUriList).to receive(:new).with(['contributions_link'])
-        expect(parliamentary_proceeding.contributions).to eq({ items: [contribution] })
+        expect(parliamentary_proceeding.contributions).to eq({ :contribution_data => [{ :member => nil, :reference => nil, :text => nil, :uri => nil }], :contribution_ses_data => nil })
       end
     end
 
     context 'multiple previous version links are present' do
       let!(:parliamentary_proceeding) { ParliamentaryProceeding.new({ 'childContribution_uri' => ['contributions_link_1', 'contributions_link_2'] }) }
-      let!(:contribution1) { Bill.new({}) }
-      let!(:contribution2) { Bill.new({}) }
+      let!(:contribution1) { ProceedingContribution.new({}) }
+      let!(:contribution2) { ProceedingContribution.new({}) }
       let!(:returned_objects) { { items: [contribution1, contribution2] } }
 
-      it 'performs a search for the urls and returns the first object' do
+      it 'performs a search for the urls and returns data on the objects' do
         allow_any_instance_of(ObjectsFromUriList).to receive(:get_objects).and_return(returned_objects)
         allow(ObjectsFromUriList).to receive(:new).and_return(ObjectsFromUriList.new(['contributions_link_1', 'contributions_link_2']))
         expect(ObjectsFromUriList).to receive(:new).with(['contributions_link_1', 'contributions_link_2'])
-        expect(parliamentary_proceeding.contributions).to eq({ items: [contribution1, contribution2] })
+        expect(parliamentary_proceeding.contributions).to eq({ :contribution_data => [{ :member => nil, :reference => nil, :text => nil, :uri => nil }, { :member => nil, :reference => nil, :text => nil, :uri => nil }], :contribution_ses_data => nil })
       end
     end
   end
