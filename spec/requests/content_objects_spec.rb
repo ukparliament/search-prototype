@@ -13,7 +13,7 @@ RSpec.describe 'ContentObjects', type: :request do
         expect(response).to have_http_status(:ok)
       end
       it 'renders the footer' do
-        allow_any_instance_of(SolrQuery).to receive(:object_data).and_return('test')
+        allow_any_instance_of(SolrQuery).to receive(:all_data).and_return({ "docs" => ['test'] })
         allow_any_instance_of(Edm).to receive(:ses_data).and_return(edm_instance.type => 'early day motion')
         allow(ContentObject).to receive(:generate).and_return(edm_instance)
         get '/objects', params: { :object => 'test_string' }
@@ -22,7 +22,6 @@ RSpec.describe 'ContentObjects', type: :request do
         expect(response.body).to include('Open Parliament Licence')
         expect(response.body).to include('Accessibility statement')
         expect(response.body).to include('Parliamentary Search')
-
       end
     end
 
