@@ -4,6 +4,10 @@ class MinisterialCorrection < ContentObject
     super
   end
 
+  def object_name
+    subtype_or_type
+  end
+
   def template
     'search/objects/ministerial_correction'
   end
