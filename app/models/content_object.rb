@@ -281,22 +281,6 @@ class ContentObject
     combine_fields(get_all_from('witness_ses'), get_all_from('witness_t'))
   end
 
-  def publisher_string
-    # this is looking at a string (rather than SES id) for publisher in order to pick the correct graphic
-    # this feels quite fragile and should be given further thought
-
-    get_first_from('publisherSnapshot_s')
-  end
-
-  def publisher_logo_partial
-    # TODO: investigate CSS approach
-    # TODO: validate publisher names against accepted list?
-
-    return unless publisher_string
-
-    "/search/logo_svgs/#{publisher_string[:value].parameterize}"
-  end
-
   def contains_statistics
     # TODO: pass all three field names via filter
 

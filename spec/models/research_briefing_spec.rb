@@ -202,29 +202,6 @@ RSpec.describe ResearchBriefing, type: :model do
     end
   end
 
-  describe 'publisher_string' do
-    context 'where there is no data' do
-      it 'returns nil' do
-        expect(research_briefing.publisher_string).to be_nil
-      end
-    end
-
-    context 'where there is an empty array' do
-      let!(:research_briefing) { ResearchBriefing.new({ 'publisherSnapshot_s' => [] }) }
-      it 'returns nil' do
-        expect(research_briefing.publisher_string).to be_nil
-      end
-    end
-
-    context 'where data exists' do
-      let!(:research_briefing) { ResearchBriefing.new({ 'publisherSnapshot_s' => ['first item', 'second item'] }) }
-
-      it 'returns the first item' do
-        expect(research_briefing.publisher_string).to eq({ :field_name => "publisherSnapshot_s", :value => "first item" })
-      end
-    end
-  end
-
   describe 'published_on' do
     context 'where there is no data' do
       it 'returns nil' do
@@ -400,24 +377,6 @@ RSpec.describe ResearchBriefing, type: :model do
 
       it 'returns the first item' do
         expect(research_briefing.content_location_uri).to eq({ :field_name => "contentLocation_uri", :value => "first item" })
-      end
-    end
-  end
-
-  describe 'publisher_logo_partial' do
-    context 'where publisher is missing' do
-      let!(:research_briefing) { ResearchBriefing.new({ 'publisherSnapshot_s' => [] }) }
-
-      it 'returns nil' do
-        expect(research_briefing.publisher_logo_partial).to be_nil
-      end
-    end
-
-    context 'where publisher is present' do
-      let!(:research_briefing) { ResearchBriefing.new({ 'publisherSnapshot_s' => ['a publisher name'] }) }
-
-      it 'returns a path to a partial' do
-        expect(research_briefing.publisher_logo_partial).to eq('/search/logo_svgs/a-publisher-name')
       end
     end
   end
