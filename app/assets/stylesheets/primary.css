@@ -6,21 +6,55 @@ html {
 
 body {
     margin: 0;
-    border-bottom: 2em beige;
+    background: white;
 }
 
 main {
+    background: white;
     display: block;
     margin: 0 auto;
     font-family: Helvetica, sans-serif;
     width: 100%;
     height: 100%;
     box-sizing: border-box;
-    padding: 16px 0;
+    padding: 16px 24px;
     font-size: 20px;
     font-weight: 400;
     word-wrap: break-word;
     line-height: 28px;
+}
+
+.footer-container {
+    background: black;
+}
+
+footer {
+    display: block;
+    margin: 0 auto;
+    background: black;
+    border: none;
+    color: white;
+
+    .col {
+        padding: 24px;
+    }
+
+    hr {
+        margin: 32px 0 24px 0;
+    }
+
+    a {
+        color: white;
+    }
+
+    .footer-list {
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        gap: 20px;
+        display: flex;
+        box-sizing: border-box;
+    }
 }
 
 /* Main nav bar */
@@ -36,6 +70,7 @@ main {
             width: 100%;
             height: 100%;
             background: black;
+            padding: 32px 24px;
             justify-content: space-between;
             align-items: center;
             display: inline-flex;
@@ -154,16 +189,6 @@ div.callout {
     background-color: #E7DFF4;
     border-left: 6px solid #2B57AB;
     padding: 16px;
-}
-
-/* Object view custom lists (e.g. amendments) */
-.content-list {
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
-    gap: 16px;
-    display: flex;
-    box-sizing: border-box;
 }
 
 /* Object view sections */
@@ -327,7 +352,7 @@ li {
 @media only screen and (max-width: 360px) {
 
     header {
-        padding: 16px 16px 0 16px;
+        padding-top: 16px;
     }
 
     /*nav bar*/
@@ -348,7 +373,7 @@ li {
     }
 
     section {
-        margin: 16px 16px
+        margin: 16px 0;
     }
 
 }
@@ -358,7 +383,7 @@ li {
 @media only screen and (min-width: 360px) and (max-width: 1200px) {
 
     header {
-        padding: 16px 32px 0 32px;
+        padding-top: 16px;
     }
 
     /*nav bar*/
@@ -379,7 +404,7 @@ li {
     }
 
     section {
-        margin: 16px 32px
+        margin: 16px 0;
     }
 
 }
@@ -388,7 +413,7 @@ li {
 @media only screen and (min-width: 1200px) {
 
     header {
-        padding: 16px 32px 0 32px;
+        padding-top: 16px;
     }
 
     /*nav bar*/
@@ -404,12 +429,12 @@ li {
         }
     }
 
-    main {
+    main, footer {
         max-width: 1200px;
     }
 
     section {
-        margin: 16px 32px
+        margin: 16px 0;
     }
 
 }
