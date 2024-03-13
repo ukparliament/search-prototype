@@ -1,53 +1,31 @@
-
-<footer class="p-footer">
+<div class="footer-container">
+  <footer>
     <div class="row">
-      <div class="col-md-12">
-        <div class="p-footer__wrapper">
-          <div class="p-footer__panel p-footer__panel-top">
-            <div class="">
-              <h4 class="p-footer__heading">data.parliament.uk</h4>
-              <ul class="p-footer__list">
-                <li>
-                  <a href="https://search-material.parliament.uk/">Parliamentary Search</a>
-                </li>
-                <li>
-                  <a href="api_directory.html">API directory</a>
-                </li>
-                <li>
-                  <a href="/">Support</a>
-                </li>
-                <li>
-                  <a href="https://www.parliament.uk/site-information/copyright-parliament/open-parliament-licence/">Re-use our content freely and flexibly with only a few conditions under the Open Parliament Licence.</a>
-                </li>
-
-              </ul>
-            </div>
-          </div>
-
-          <div class="p-footer__panel">
-            <h4 class="p-footer__heading">Legal</h4>
-            <ul class="p-footer__list">
-              <li>
-                <a href="https://www.parliament.uk/site-information/accessibility/">Accessibility statement</a>
-              </li>
-              <li>
-                <a href="https://www.parliament.uk/about/modernslavery/">Modern slavery statement</a>
-              </li>
-              <li>
-                <a href="https://www.parliament.uk/site-information/data-protection/data-protection-and-privacy-policy/">Privacy notice</a>
-              </li>
-              <li>
-                <a href="https://www.parliament.uk/site-information/privacy/">Cookie policy</a>
-              </li>
-              <li>
-                <a href="#" data-cookie-manager-open="">Cookie settings</a>
-              </li>
-            </ul>
-          </div>
-          <div class="p-footer__panel-bottom">
-            <p>© UK Parliament 2024</p>
-          </div>
+      <div class="col">
+        <div class="footer-list">
+          <strong>data.parliament.uk</strong>
+          <div><%= link_to('Parliamentary Search', 'https://search-material.parliament.uk/', class: 'footer-link') %></div>
+          <div><%= link_to 'API directory', 'api_directory.html', class: 'footer-link' %></div>
+          <div><%= link_to 'Support', '/', class: 'footer-link' %></div>
         </div>
+        <hr>
+        <div>
+          © UK Parliament 2024. Re-use our content freely and flexibly with only a few conditions under the
+          <%= link_to 'Open Parliament Licence', 'https://www.parliament.uk/site-information/copyright-parliament/open-parliament-licence/', class: 'footer-link' %>.
+        </div>
+        <br>
       </div>
     </div>
-</footer>
+    <div class="row">
+      <div class="col">
+        <%= link_to('Privacy notice', 'https://www.parliament.uk/site-information/data-protection/data-protection-and-privacy-policy/') %>
+        &nbsp|
+        <%= link_to('Cookie policy', 'https://www.parliament.uk/site-information/privacy/') %>
+        &nbsp|
+        <%= link_to('Accessibility statement', 'https://www.parliament.uk/site-information/accessibility/') %>
+        &nbsp|
+        <%= link_to('Modern slavery statement', 'https://www.parliament.uk/about/modernslavery/') %>
+      </div>
+    </div>
+  </footer>
+</div>
