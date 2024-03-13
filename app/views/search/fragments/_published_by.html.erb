@@ -1,7 +1,12 @@
 <% if object.is_published && object.is_published[:value] %>
   <div class="about-item">
     <h3 class="content-heading" id="published-by">Published by</h3>
-    <%= search_link(object.section) %><br/>
-    <%= search_link(object.published_by) %>
+    <%= search_link(object.section) %>
+    <% unless object.section.blank? || object.published_by.blank? %>
+      <% unless object.section[:value] == object.published_by[:value] %>
+        <br/>
+        <%= search_link(object.published_by) %>
+      <% end %>
+    <% end %>
   </div>
 <% end %>
