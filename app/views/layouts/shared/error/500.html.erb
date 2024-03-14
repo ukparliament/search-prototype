@@ -3,13 +3,8 @@
   <div id="top"></div>
 <% end %>
 
-<section class="content-section">
-  <article>
-    <div class="block">
-      <h2 class="content-heading">Something has gone wrong</h2>
-      <p>There is a technical issue.</p>
-      <p>Please try again later. If the problem persists, please contact <%= link_to('support', root_path) %></p>
-      <%= "#{status}: #{message}" %>
-    </div>
-  </article>
+<section>
+  <h1>Something has gone wrong</h1>
+  <p>There is a technical issue.</p>
+  <p>Please try again later. If the problem persists, please contact <%= link_to('support', root_path) %>.</p>
 </section>
