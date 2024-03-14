@@ -6,4 +6,6 @@ Rails.application.routes.draw do
 
   get 'search' => 'search#index'
   get 'objects' => 'content_objects#show', as: 'object_show'
+
+  get 'search_results_xml' => 'search#search_results_xml'
 end

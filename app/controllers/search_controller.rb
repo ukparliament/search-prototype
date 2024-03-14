@@ -5,7 +5,6 @@ class SearchController < ApplicationController
     @page_title = "Search results"
     @search = SolrSearch.new(search_params)
     @response = @search.all_data
-
     if @response.has_key?('code')
       case @response['code']
       when 404
@@ -26,6 +25,21 @@ class SearchController < ApplicationController
       ses_ids = { value: @results.pluck('all_ses').flatten }
       @ses_data = SesLookup.new([ses_ids]).data unless ses_ids.blank?
     end
+  end
+
+  def search_results_xml
+    @search = SolrSearch.new(search_params)
+    @response = @search.all_data
+    @results = @response['docs']
+
+    render 'search_results_xml', xml: @results, content_type: "application/xml"
+    # results_rss
+  end
+
+  def results_rss
+    @search = SolrSearch.new(search_params)
+    @rss = Rss.new(search_params)
+    @rss.read
   end
 
   private
