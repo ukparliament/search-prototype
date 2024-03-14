@@ -4,6 +4,9 @@
 <% end %>
 
 <section>
+
+  <%= link_to('View as XML', search_results_xml_path) %>
+
   <h3>Search results</h3>
 
   <% unless @search.filter.blank? %>

@@ -212,6 +212,8 @@ GEM
       rspec-mocks (~> 3.12)
       rspec-support (~> 3.12)
     rspec-support (3.12.1)
+    rss (0.3.0)
+      rexml
     rubyzip (2.3.2)
     selenium-webdriver (4.9.1)
       rexml (~> 3.2, >= 3.2.5)
@@ -284,6 +286,7 @@ DEPENDENCIES
   puma (~> 6.3.1)
   rails (>= 7.0.7.1)
   rspec-rails
+  rss
   selenium-webdriver
   simplecov
   sprockets-rails
