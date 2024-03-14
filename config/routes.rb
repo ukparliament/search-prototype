@@ -9,4 +9,6 @@ Rails.application.routes.draw do
   get 'errors/500' => 'errors#internal_server_error'
   get 'errors/404' => 'errors#not_found'
   get 'errors/401' => 'errors#not_authorized'
+
+  get 'search_results_xml' => 'search#search_results_xml'
 end
