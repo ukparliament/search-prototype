@@ -148,23 +148,38 @@ RSpec.describe Paper, type: :model do
       end
     end
 
+    context 'where only date_dt exists' do
+      let!(:paper) { Paper.new({ 'date_dt' => ["2014-06-01T18:00:15.73Z", "2013-06-01T18:00:15.73Z"] }) }
+
+      it 'falls back to using the first date from date_dt' do
+        expect(paper.date_laid[:value]).to eq("Sun, 01 Jun 2014, 19:00:15.73".in_time_zone('London').to_datetime)
+      end
+    end
+
     context 'where data exists' do
       context 'where data is parsable as a datetime (BST)' do
-        let!(:paper) { Paper.new({ 'dateLaid_dt' => ["2015-06-01T18:00:15.73Z", "2014-06-01T18:00:15.73Z"] }) }
+        let!(:paper) { Paper.new({ 'dateLaid_dt' => ["2015-06-01T18:00:15.73Z", "2014-06-01T18:00:15.73Z"], 'date_dt' => ["2014-06-01T18:00:15.73Z", "2013-06-01T18:00:15.73Z"] }) }
 
         it 'returns the first string parsed as a datetime in the London timezone' do
           expect(paper.date_laid[:value]).to eq("Mon, 01 Jun 2015, 19:00:15.73".in_time_zone('London').to_datetime)
         end
       end
       context 'where data is parsable as a datetime (GMT)' do
-        let!(:paper) { Paper.new({ 'dateLaid_dt' => ["2015-02-01T18:00:15.73Z", "2014-06-01T18:00:15.73Z"] }) }
+        let!(:paper) { Paper.new({ 'dateLaid_dt' => ["2015-02-01T18:00:15.73Z", "2014-06-01T18:00:15.73Z"], 'date_dt' => ["2014-06-01T18:00:15.73Z", "2013-06-01T18:00:15.73Z"] }) }
 
         it 'returns the first string parsed as a datetime in the London timezone' do
           expect(paper.date_laid[:value]).to eq("Sun, 01 Feb 2015, 18:00:15.73".in_time_zone('London').to_datetime)
         end
       end
-      context 'where data is not parsable as a datetime' do
-        let!(:paper) { Paper.new({ 'dateLaid_dt' => ["first item", "second item"] }) }
+      context 'where data in the dateLaid_dt is not parsable as a datetime' do
+        let!(:paper) { Paper.new({ 'dateLaid_dt' => ["first item", "second item"], 'date_dt' => ["2014-06-01T18:00:15.73Z", "2013-06-01T18:00:15.73Z"] }) }
+
+        it 'returns date_dt as a fallback' do
+          expect(paper.date_laid[:value]).to eq("Sun, 01 Jun 2014, 19:00:15.73".in_time_zone('London').to_datetime)
+        end
+      end
+      context 'where no data is not parsable as a datetime' do
+        let!(:paper) { Paper.new({ 'dateLaid_dt' => ["first item", "second item"], 'date_dt' => ["first item", "second item"] }) }
 
         it 'returns nil' do
           expect(paper.date_laid).to be_nil

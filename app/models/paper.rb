@@ -13,7 +13,7 @@ class Paper < ContentObject
   end
 
   def date_laid
-    get_first_as_date_from('dateLaid_dt')
+    fallback(get_first_as_date_from('dateLaid_dt'), get_first_as_date_from('date_dt'))
   end
 
   def date_approved

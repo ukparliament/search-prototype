@@ -438,6 +438,11 @@ class ContentObject
     when 92347
       'ParliamentaryPaperLaid'
 
+      # when type is 92347, which would otherwise be papers laid, we have some papers that aren't laid papars
+      # How to identify these?
+      # By subtype: 91561 or 91563...?
+      # These are currently directed to laid papers via the type_id, should we capture those too?
+
     when 92277
       'OralQuestion'
     when 286676
