@@ -11,14 +11,21 @@ class SolrSearch < ApiCall
 
   def start
     # offset number of rows
-    return 0 if current_page.blank?
+    # start at 0 (the first record) by default:
+    return 0 if user_requested_page.zero? || user_requested_page.blank?
 
+    # if a page number is given, offset by a number of records equal to the number per page * (solr) page number
     current_page * rows
   end
 
+  def user_requested_page
+    # this is the 1-indexed (we assume) user requested page (from the url)
+    page.to_i&.zero? ? 1 : page.to_i
+  end
+
   def current_page
-    # this is zero-indexed, because Solr is
-    page.to_i
+    # this is the solr zero-indexed page number; subtract 1 from what the user asked for
+    user_requested_page - 1
   end
 
   def search_filter

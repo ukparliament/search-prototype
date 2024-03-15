@@ -27,5 +27,5 @@
 </section>
 
 <% unless @search.current_page.blank? || @total_pages.blank? %>
-  <%= render 'pagination', current_page: @search.current_page, last_page: @total_pages, query: @search.query, filter: @search.filter %>
+  <%= render 'pagination', user_requested_page: @search.user_requested_page, last_page: @total_pages, query: @search.query, filter: @search.filter %>
 <% end %>
