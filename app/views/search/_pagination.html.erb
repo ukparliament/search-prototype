@@ -1,0 +1,36 @@
+<div id="pagination">
+  <!--  logic is using zero-indexed values; link to text has been adjusted to show non-zero indexed values -->
+  <!--  page zero-->
+  <!--  only show if current page is 3 or more -->
+  <% if current_page > 2 %>
+    <%= link_to "1", search_url(query: query, filter: filter, page: 0), { method: :post } %>...
+  <% end %>
+  <!--  previous pages-->
+  <!--  only go back two pages if current page is 2 or more-->
+  <% if current_page > 1 %>
+    <%= link_to current_page - 1, search_url(query: query, filter: filter, page: current_page - 2), { method: :post } %>
+  <% end %>
+  <!--  only go back one page if current page is 1 or more-->
+  <% if current_page > 0 %>
+    <%= link_to current_page, search_url(query: query, filter: filter, page: current_page - 1), { method: :post } %>
+  <% end %>
+
+  <!--  current page-->
+  <!--  we always show this-->
+  <%= current_page + 1 %>
+
+  <!--  next pages-->
+  <!--  only show one page ahead if we're not on the last page already-->
+  <% if current_page < last_page %>
+    <%= link_to current_page + 2, search_url(query: query, filter: filter, page: current_page + 1), { method: :post } %>
+  <% end %>
+  <!--  only show two pages ahead if we're not on the last or next to last page already -->
+  <% if current_page < last_page - 1 %>
+    <%= link_to current_page + 3, search_url(query: query, filter: filter, page: current_page + 2), { method: :post } %>
+  <% end %>
+  <!--  last page-->
+  <!--  we only need to show a dedicated link to the last page if we're more than 3 pages away from it-->
+  <% if current_page < last_page - 2 %>
+    ...<%= link_to last_page + 1, search_url(query: query, filter: filter, page: last_page), { method: :post } %>
+  <% end %>
+</div>

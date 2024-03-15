@@ -26,8 +26,6 @@
 
 </section>
 
-<div id="pagination">
-  <%= link_to "1", search_url(query: @search.query, filter: @search.filter, page: 0), { method: :post } %>
-  <%= link_to "2", search_url(query: @search.query, filter: @search.filter, page: 1), { method: :post } %>
-  <%= link_to "3", search_url(query: @search.query, filter: @search.filter, page: 2), { method: :post } %>
-</div>
+<% unless @search.current_page.blank? || @total_pages.blank? %>
+  <%= render 'pagination', current_page: @search.current_page, last_page: @total_pages, query: @search.query, filter: @search.filter %>
+<% end %>

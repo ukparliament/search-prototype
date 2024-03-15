@@ -22,6 +22,7 @@ class SearchController < ApplicationController
       @number_of_results = @response['numFound']
       @start = @response['start']
       @end = @response['start'] + @search.rows
+      @total_pages =  @number_of_results / @search.rows unless @number_of_results.blank?
 
       ses_ids = { value: @results.pluck('all_ses').flatten }
       @ses_data = SesLookup.new([ses_ids]).data unless ses_ids.blank?
