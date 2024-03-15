@@ -11,9 +11,14 @@ class SolrSearch < ApiCall
 
   def start
     # offset number of rows
-    return 0 if page.blank?
+    return 0 if current_page.blank?
 
-    page.to_i * rows
+    current_page * rows
+  end
+
+  def current_page
+    # this is zero-indexed, because Solr is
+    page.to_i
   end
 
   def search_filter
