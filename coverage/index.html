@@ -14,7 +14,7 @@
       <img src="./assets/0.12.3/loading.gif" alt="loading"/>
     </div>
     <div id="wrapper" class="hide">
-      <div class="timestamp">Generated <abbr class="timeago" title="2024-03-15T10:56:17+00:00">2024-03-15T10:56:17+00:00</abbr></div>
+      <div class="timestamp">Generated <abbr class="timeago" title="2024-03-15T14:18:27+00:00">2024-03-15T14:18:27+00:00</abbr></div>
       <ul class="group_tabs"></ul>
 
       <div id="content">
@@ -23,14 +23,14 @@
     <span class="group_name">All Files</span>
     (<span class="covered_percent">
       <span class="yellow">
-  88.14%
+  88.17%
 </span>
 
      </span>
      covered at
      <span class="covered_strength">
        <span class="green">
-         101.22
+         101.1
        </span>
     </span> hits/line
     )
@@ -43,11 +43,11 @@
   </div>
 
   <div class="t-line-summary">
-    <b>1105</b> relevant lines,
-    <span class="green"><b>974</b> lines covered</span> and
+    <b>1107</b> relevant lines,
+    <span class="green"><b>976</b> lines covered</span> and
     <span class="red"><b>131</b> lines missed. </span>
     (<span class="yellow">
-  88.14%
+  88.17%
 </span>
 )
   </div>
@@ -231,7 +231,7 @@
             <td class="cell--number">33</td>
             <td class="cell--number">22</td>
             <td class="cell--number">11</td>
-            <td class="cell--number">7.61</td>
+            <td class="cell--number">7.85</td>
             
           </tr>
         
@@ -633,12 +633,12 @@
         
           <tr class="t-file">
             <td class="strong t-file__name"><a href="#c443869adadaccea9dd3a718fc38a2cda0232135" class="src_link" title="app/models/solr_search.rb">app/models/solr_search.rb</a></td>
-            <td class="green strong cell--number t-file__coverage">95.00 %</td>
-            <td class="cell--number">44</td>
-            <td class="cell--number">20</td>
-            <td class="cell--number">19</td>
+            <td class="green strong cell--number t-file__coverage">95.45 %</td>
+            <td class="cell--number">51</td>
+            <td class="cell--number">22</td>
+            <td class="cell--number">21</td>
             <td class="cell--number">1</td>
-            <td class="cell--number">3.00</td>
+            <td class="cell--number">5.55</td>
             
           </tr>
         
@@ -1782,7 +1782,7 @@
 
             
 
-            <code class="ruby">        raise &#39;unknown error occurred&#39;</code>
+            <code class="ruby">        render template: &#39;layouts/shared/error/500&#39;, locals: { status: @response[&#39;code&#39;], message: @response[&#39;msg&#39;] }</code>
           </li>
         </div>
       
@@ -1859,7 +1859,7 @@
 
             
 
-            <code class="ruby">      @total_pages =  @number_of_results / @search.rows unless @number_of_results.blank?</code>
+            <code class="ruby">      @total_pages = (@number_of_results / @search.rows) + 1 unless @number_of_results.blank?</code>
           </li>
         </div>
       
@@ -5212,8 +5212,8 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="221" data-linenumber="10">
-            <span class="hits">221</span>
+          <li class="covered" data-hits="229" data-linenumber="10">
+            <span class="hits">229</span>
             
 
             
@@ -25730,7 +25730,7 @@
     <h3>app/models/solr_search.rb</h3>
     <h4>
       <span class="green">
-  95.0%
+  95.45%
 </span>
 
       lines covered
@@ -25739,8 +25739,8 @@
     
 
     <div class="t-line-summary">
-      <b>20</b> relevant lines.
-      <span class="green"><b>19</b> lines covered</span> and
+      <b>22</b> relevant lines.
+      <span class="green"><b>21</b> lines covered</span> and
       <span class="red"><b>1</b> lines missed.</span>
     </div>
 
@@ -25807,8 +25807,8 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="8" data-linenumber="6">
-            <span class="hits">8</span>
+          <li class="covered" data-hits="16" data-linenumber="6">
+            <span class="hits">16</span>
             
 
             
@@ -25818,8 +25818,8 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="8" data-linenumber="7">
-            <span class="hits">8</span>
+          <li class="covered" data-hits="16" data-linenumber="7">
+            <span class="hits">16</span>
             
 
             
@@ -25829,8 +25829,8 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="8" data-linenumber="8">
-            <span class="hits">8</span>
+          <li class="covered" data-hits="16" data-linenumber="8">
+            <span class="hits">16</span>
             
 
             
@@ -25840,8 +25840,8 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="8" data-linenumber="9">
-            <span class="hits">8</span>
+          <li class="covered" data-hits="16" data-linenumber="9">
+            <span class="hits">16</span>
             
 
             
@@ -25895,35 +25895,35 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="2" data-linenumber="14">
-            <span class="hits">2</span>
+          <li class="never" data-hits="" data-linenumber="14">
+            
             
 
             
 
-            <code class="ruby">    return 0 if current_page.blank?</code>
+            <code class="ruby">    # start at 0 (the first record) by default:</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="15">
+          <li class="covered" data-hits="4" data-linenumber="15">
+            <span class="hits">4</span>
+            
+
+            
+
+            <code class="ruby">    return 0 if user_requested_page.zero? || user_requested_page.blank?</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="16">
             
             
 
             
 
             <code class="ruby"></code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="covered" data-hits="2" data-linenumber="16">
-            <span class="hits">2</span>
-            
-
-            
-
-            <code class="ruby">    current_page * rows</code>
           </li>
         </div>
       
@@ -25934,29 +25934,29 @@
 
             
 
+            <code class="ruby">    # if a page number is given, offset by a number of records equal to the number per page * (solr) page number</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="4" data-linenumber="18">
+            <span class="hits">4</span>
+            
+
+            
+
+            <code class="ruby">    current_page * rows</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="19">
+            
+            
+
+            
+
             <code class="ruby">  end</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="18">
-            
-            
-
-            
-
-            <code class="ruby"></code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="covered" data-hits="1" data-linenumber="19">
-            <span class="hits">1</span>
-            
-
-            
-
-            <code class="ruby">  def current_page</code>
           </li>
         </div>
       
@@ -25967,18 +25967,18 @@
 
             
 
-            <code class="ruby">    # this is zero-indexed, because Solr is</code>
+            <code class="ruby"></code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="7" data-linenumber="21">
-            <span class="hits">7</span>
+          <li class="covered" data-hits="1" data-linenumber="21">
+            <span class="hits">1</span>
             
 
             
 
-            <code class="ruby">    page.to_i</code>
+            <code class="ruby">  def user_requested_page</code>
           </li>
         </div>
       
@@ -25989,12 +25989,34 @@
 
             
 
+            <code class="ruby">    # this is the 1-indexed (we assume) user requested page (from the url)</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="21" data-linenumber="23">
+            <span class="hits">21</span>
+            
+
+            
+
+            <code class="ruby">    page.to_i&amp;.zero? ? 1 : page.to_i</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="24">
+            
+            
+
+            
+
             <code class="ruby">  end</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="23">
+          <li class="never" data-hits="" data-linenumber="25">
             
             
 
@@ -26005,57 +26027,35 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="24">
+          <li class="covered" data-hits="1" data-linenumber="26">
             <span class="hits">1</span>
             
 
             
 
-            <code class="ruby">  def search_filter</code>
+            <code class="ruby">  def current_page</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="25">
-            <span class="hits">1</span>
+          <li class="never" data-hits="" data-linenumber="27">
+            
             
 
             
 
-            <code class="ruby">    return if filter.blank?</code>
+            <code class="ruby">    # this is the solr zero-indexed page number; subtract 1 from what the user asked for</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="26">
-            
-            
-
-            
-
-            <code class="ruby"></code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="covered" data-hits="1" data-linenumber="27">
-            <span class="hits">1</span>
+          <li class="covered" data-hits="10" data-linenumber="28">
+            <span class="hits">10</span>
             
 
             
 
-            <code class="ruby">    &quot;#{filter[:field_name]}:#{filter[:value]}&quot;</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="28">
-            
-            
-
-            
-
-            <code class="ruby">  end</code>
+            <code class="ruby">    user_requested_page - 1</code>
           </li>
         </div>
       
@@ -26066,40 +26066,40 @@
 
             
 
+            <code class="ruby">  end</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="30">
+            
+            
+
+            
+
             <code class="ruby"></code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="30">
+          <li class="covered" data-hits="1" data-linenumber="31">
             <span class="hits">1</span>
             
 
             
 
-            <code class="ruby">  def rows</code>
+            <code class="ruby">  def search_filter</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="31">
-            
-            
-
-            
-
-            <code class="ruby">    # number of results per page; default is 10 in SOLR</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="covered" data-hits="6" data-linenumber="32">
-            <span class="hits">6</span>
+          <li class="covered" data-hits="1" data-linenumber="32">
+            <span class="hits">1</span>
             
 
             
 
-            <code class="ruby">    20</code>
+            <code class="ruby">    return if filter.blank?</code>
           </li>
         </div>
       
@@ -26110,29 +26110,29 @@
 
             
 
-            <code class="ruby">  end</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="34">
-            
-            
-
-            
-
             <code class="ruby"></code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="35">
+          <li class="covered" data-hits="1" data-linenumber="34">
             <span class="hits">1</span>
             
 
             
 
-            <code class="ruby">  private</code>
+            <code class="ruby">    &quot;#{filter[:field_name]}:#{filter[:value]}&quot;</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="35">
+            
+            
+
+            
+
+            <code class="ruby">  end</code>
           </li>
         </div>
       
@@ -26154,7 +26154,7 @@
 
             
 
-            <code class="ruby">  def search_params</code>
+            <code class="ruby">  def rows</code>
           </li>
         </div>
       
@@ -26165,18 +26165,18 @@
 
             
 
-            <code class="ruby">    {</code>
+            <code class="ruby">    # number of results per page; default is 10 in SOLR</code>
           </li>
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="39">
-            
-            
-
+          <li class="covered" data-hits="7" data-linenumber="39">
+            <span class="hits">7</span>
             
 
-            <code class="ruby">      q: search_filter,</code>
+            
+
+            <code class="ruby">    20</code>
           </li>
         </div>
       
@@ -26187,7 +26187,7 @@
 
             
 
-            <code class="ruby">      rows: rows,</code>
+            <code class="ruby">  end</code>
           </li>
         </div>
       
@@ -26198,18 +26198,18 @@
 
             
 
-            <code class="ruby">      start: start</code>
+            <code class="ruby"></code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="42">
-            
-            
-
+          <li class="covered" data-hits="1" data-linenumber="42">
+            <span class="hits">1</span>
             
 
-            <code class="ruby">    }</code>
+            
+
+            <code class="ruby">  private</code>
           </li>
         </div>
       
@@ -26220,12 +26220,89 @@
 
             
 
+            <code class="ruby"></code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="1" data-linenumber="44">
+            <span class="hits">1</span>
+            
+
+            
+
+            <code class="ruby">  def search_params</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="45">
+            
+            
+
+            
+
+            <code class="ruby">    {</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="missed" data-hits="0" data-linenumber="46">
+            
+            
+
+            
+
+            <code class="ruby">      q: search_filter,</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="47">
+            
+            
+
+            
+
+            <code class="ruby">      rows: rows,</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="48">
+            
+            
+
+            
+
+            <code class="ruby">      start: start</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="49">
+            
+            
+
+            
+
+            <code class="ruby">    }</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="50">
+            
+            
+
+            
+
             <code class="ruby">  end</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="44">
+          <li class="never" data-hits="" data-linenumber="51">
             
             
 

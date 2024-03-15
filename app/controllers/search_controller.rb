@@ -15,14 +15,14 @@ class SearchController < ApplicationController
       when 401
         render template: 'layouts/shared/error/401', locals: { status: @response['code'], message: @response['msg'] }
       else
-        raise 'unknown error occurred'
+        render template: 'layouts/shared/error/500', locals: { status: @response['code'], message: @response['msg'] }
       end
     else
       @results = @response['docs']
       @number_of_results = @response['numFound']
       @start = @response['start']
       @end = @response['start'] + @search.rows
-      @total_pages =  @number_of_results / @search.rows unless @number_of_results.blank?
+      @total_pages = (@number_of_results / @search.rows) + 1 unless @number_of_results.blank?
 
       ses_ids = { value: @results.pluck('all_ses').flatten }
       @ses_data = SesLookup.new([ses_ids]).data unless ses_ids.blank?
