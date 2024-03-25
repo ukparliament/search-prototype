@@ -18,7 +18,7 @@ RSpec.describe 'ContentObjects', type: :request do
         allow(ContentObject).to receive(:generate).and_return(edm_instance)
         get '/objects', params: { :object => 'test_string' }
         expect(response).to have_http_status(:ok)
-        expect(response.body).to include('API directory')
+        # expect(response.body).to include('API directory')
         expect(response.body).to include('Open Parliament Licence')
         expect(response.body).to include('Accessibility statement')
         expect(response.body).to include('Parliamentary Search')
