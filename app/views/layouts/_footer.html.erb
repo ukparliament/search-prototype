@@ -5,19 +5,18 @@
         <div class="footer-list">
           <strong>data.parliament.uk</strong>
           <div><%= link_to('Parliamentary Search', 'https://search-material.parliament.uk/', class: 'footer-link') %></div>
-          <div><%= link_to 'API directory', 'api_directory.html', class: 'footer-link' %></div>
-          <div><%= link_to 'Support', '/', class: 'footer-link' %></div>
+<!--          <div><%#= link_to 'API directory', 'api_directory.html', class: 'footer-link' %></div>-->
+          <div><%= link_to 'Support', 'mailto:webmaster@parliament.uk', class: 'footer-link' %></div>
         </div>
         <hr>
         <div>
           © UK Parliament 2024. Re-use our content freely and flexibly with only a few conditions under the
           <%= link_to 'Open Parliament Licence', 'https://www.parliament.uk/site-information/copyright-parliament/open-parliament-licence/', class: 'footer-link' %>.
         </div>
-        <br>
       </div>
     </div>
     <div class="row">
-      <div class="col">
+      <div class="col" id="footer-links">
         <%= link_to('Privacy notice', 'https://www.parliament.uk/site-information/data-protection/data-protection-and-privacy-policy/') %>
         &nbsp|
         <%= link_to('Cookie policy', 'https://www.parliament.uk/site-information/privacy/') %>
