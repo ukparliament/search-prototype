@@ -52,11 +52,6 @@ class WrittenQuestion < Question
     get_first_as_boolean_from('holdingAnswer_b')
   end
 
-  def has_prorogation_answer
-    #to show conditionally on answered states only (as determined by method)
-    get_as_boolean_from('prorogationAnswer_b')
-  end
-
   def date_of_holding_answer
     get_first_as_date_from('dateOfHoldingAnswer_dt')
   end

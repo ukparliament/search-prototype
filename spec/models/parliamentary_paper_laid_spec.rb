@@ -145,4 +145,36 @@ RSpec.describe ParliamentaryPaperLaid, type: :model do
       end
     end
   end
+
+  describe 'is_withdrawn?' do
+    context 'where there is no data' do
+      it 'returns nil' do
+        expect(parliamentary_paper_laid.is_withdrawn).to be_nil
+      end
+    end
+
+    context 'where there is an empty array' do
+      let!(:parliamentary_paper_laid) { ParliamentaryPaperLaid.new({ 'withdrawn_b' => [] }) }
+      it 'returns nil' do
+        expect(parliamentary_paper_laid.is_withdrawn).to be_nil
+      end
+    end
+
+    context 'where data exists' do
+      context 'where a string representing a boolean' do
+        let!(:parliamentary_paper_laid) { ParliamentaryPaperLaid.new({ 'withdrawn_b' => ['true'] }) }
+
+        it 'returns the relevant boolean' do
+          expect(parliamentary_paper_laid.is_withdrawn).to eq({ :field_name => "withdrawn_b", :value => true })
+        end
+      end
+      context 'where not a boolean value' do
+        let!(:parliamentary_paper_laid) { ParliamentaryPaperLaid.new({ 'withdrawn_b' => ['first item', 'second item'] }) }
+
+        it 'returns nil' do
+          expect(parliamentary_paper_laid.is_withdrawn).to eq(nil)
+        end
+      end
+    end
+  end
 end

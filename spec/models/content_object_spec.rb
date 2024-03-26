@@ -139,6 +139,34 @@ RSpec.describe ContentObject, type: :model do
     end
   end
 
+  describe 'display_link' do
+    let!(:content_object) { ContentObject.new(test_data) }
+    context 'when neither external location uri or external location text are present' do
+      let!(:test_data) { {} }
+      it 'returns nil' do
+        expect(content_object.display_link).to be_nil
+      end
+    end
+    context 'when only external location uri is present' do
+      let!(:test_data) { { "externalLocation_uri" => ['test_link_1', 'test_link_2'] } }
+      it 'returns the first link from external location uri' do
+        expect(content_object.display_link).to eq({ field_name: 'externalLocation_uri', value: 'test_link_1' })
+      end
+    end
+    context 'when only external location text is present' do
+      let!(:test_data) { { "externalLocation_t" => ['test_link_3', 'test_link_4'] } }
+      it 'returns the first link from external location text' do
+        expect(content_object.display_link).to eq({ field_name: 'externalLocation_t', value: 'test_link_3' })
+      end
+    end
+    context 'when both external location uri and external location text are present' do
+      let!(:test_data) { { "externalLocation_uri" => ['test_link_1', 'test_link_2'], "externalLocation_t" => ['test_link_3', 'test_link__4'] } }
+      it 'returns the first link from external location uri' do
+        expect(content_object.display_link).to eq({ field_name: 'externalLocation_uri', value: 'test_link_1' })
+      end
+    end
+  end
+
   describe 'contains_explanatory_memo?' do
     context 'where there is no data' do
       it 'returns nil' do
@@ -255,6 +283,68 @@ RSpec.describe ContentObject, type: :model do
     end
   end
 
+  describe 'subtype_or_type' do
+    context 'where there is no data' do
+      it 'returns nil' do
+        expect(content_object.subtype_or_type).to be_nil
+      end
+    end
+
+    context 'where there is an empty array' do
+      let!(:content_object) { ContentObject.new({ 'type_ses' => [], 'subtype_ses' => [] }) }
+      it 'returns nil' do
+        expect(content_object.subtype_or_type).to be_nil
+      end
+    end
+
+    context 'where subtype id exists' do
+      let!(:content_object) { ContentObject.new({ 'type_ses' => [12345, 23456], 'subtype_ses' => [56789, 67890] }) }
+
+      it 'returns the first item from subtype_ses' do
+        expect(content_object.subtype_or_type).to eq({ :field_name => "subtype_ses", :value => 56789 })
+      end
+    end
+
+    context 'where only type id exists' do
+      let!(:content_object) { ContentObject.new({ 'type_ses' => [12345, 23456], 'subtype_ses' => [] }) }
+
+      it 'returns the first item from type_ses' do
+        expect(content_object.subtype_or_type).to eq({ :field_name => "type_ses", :value => 12345 })
+      end
+    end
+  end
+
+  describe 'subtypes_or_type' do
+    context 'where there is no data' do
+      it 'returns nil' do
+        expect(content_object.subtypes_or_type).to be_nil
+      end
+    end
+
+    context 'where there is an empty array' do
+      let!(:content_object) { ContentObject.new({ 'type_ses' => [], 'subtype_ses' => [] }) }
+      it 'returns nil' do
+        expect(content_object.subtypes_or_type).to be_nil
+      end
+    end
+
+    context 'where subtype id exists' do
+      let!(:content_object) { ContentObject.new({ 'type_ses' => [12345, 23456], 'subtype_ses' => [56789, 67890] }) }
+
+      it 'returns all items from subtype_ses' do
+        expect(content_object.subtypes_or_type).to eq([{ :field_name => "subtype_ses", :value => 56789 }, { :field_name => "subtype_ses", :value => 67890 }])
+      end
+    end
+
+    context 'where only type id exists' do
+      let!(:content_object) { ContentObject.new({ 'type_ses' => [12345, 23456], 'subtype_ses' => [] }) }
+
+      it 'returns the first item from type_ses in an array' do
+        expect(content_object.subtypes_or_type).to eq([{ :field_name => "type_ses", :value => 12345 }])
+      end
+    end
+  end
+
   describe 'procedure_scrutiny_period' do
     context 'where there is no data' do
       it 'returns nil' do
@@ -298,6 +388,75 @@ RSpec.describe ContentObject, type: :model do
 
       it 'returns the first item having unescaped any escaped html tags' do
         expect(content_object.contribution_text).to eq({ :field_name => "contributionText_t", :value => "<p> text in paragraph tags </p>" })
+      end
+    end
+  end
+
+  describe 'contribution_short_text' do
+    context 'where there is no data' do
+      it 'returns nil' do
+        expect(content_object.contribution_short_text).to be_nil
+      end
+    end
+
+    context 'where there is an empty array' do
+      let!(:content_object) { ContentObject.new({ 'contributionText_s' => [] }) }
+      it 'returns nil' do
+        expect(content_object.contribution_short_text).to be_nil
+      end
+    end
+
+    context 'where data exists' do
+      let!(:content_object) { ContentObject.new({ 'contributionText_s' => ['&lt;p&gt; text in paragraph tags &lt;/p&gt;', '&lt;strong&gt; more content using tags &lt;/strong&gt;'] }) }
+
+      it 'returns the first item having unescaped any escaped html tags' do
+        expect(content_object.contribution_short_text).to eq({ :field_name => "contributionText_s", :value => "<p> text in paragraph tags </p>" })
+      end
+    end
+  end
+
+  describe 'external_location_uri' do
+    context 'where there is no data' do
+      it 'returns nil' do
+        expect(content_object.external_location_uri).to be_nil
+      end
+    end
+
+    context 'where there is an empty array' do
+      let!(:content_object) { ContentObject.new({ 'externalLocation_uri' => [] }) }
+      it 'returns nil' do
+        expect(content_object.external_location_uri).to be_nil
+      end
+    end
+
+    context 'where data exists' do
+      let!(:content_object) { ContentObject.new({ 'externalLocation_uri' => ['first item', 'second item'] }) }
+
+      it 'returns the first item' do
+        expect(content_object.external_location_uri).to eq({ :field_name => "externalLocation_uri", :value => "first item" })
+      end
+    end
+  end
+
+  describe 'external_location_text' do
+    context 'where there is no data' do
+      it 'returns nil' do
+        expect(content_object.external_location_text).to be_nil
+      end
+    end
+
+    context 'where there is an empty array' do
+      let!(:content_object) { ContentObject.new({ 'externalLocation_t' => [] }) }
+      it 'returns nil' do
+        expect(content_object.external_location_text).to be_nil
+      end
+    end
+
+    context 'where data exists' do
+      let!(:content_object) { ContentObject.new({ 'externalLocation_t' => ['first item', 'second item'] }) }
+
+      it 'returns the first item' do
+        expect(content_object.external_location_text).to eq({ :field_name => "externalLocation_t", :value => "first item" })
       end
     end
   end
@@ -482,7 +641,53 @@ RSpec.describe ContentObject, type: :model do
       let!(:content_object) { ContentObject.new({ 'leadMember_ses' => [12345, 67890] }) }
 
       it 'returns the first item' do
-        expect(content_object.lead_member[:value]).to eq(12345)
+        expect(content_object.lead_member).to eq({ field_name: 'leadMember_ses', value: 12345 })
+      end
+    end
+  end
+
+  describe 'lead_member_party' do
+    context 'where there is no data' do
+      it 'returns nil' do
+        expect(content_object.lead_member_party).to be_nil
+      end
+    end
+
+    context 'where there is an empty array' do
+      let!(:content_object) { ContentObject.new({ 'leadMemberParty_ses' => [] }) }
+      it 'returns nil' do
+        expect(content_object.lead_member_party).to be_nil
+      end
+    end
+
+    context 'where data exists' do
+      let!(:content_object) { ContentObject.new({ 'leadMemberParty_ses' => [12345, 67890] }) }
+
+      it 'returns the first item' do
+        expect(content_object.lead_member_party).to eq({ field_name: 'leadMemberParty_ses', value: 12345 })
+      end
+    end
+  end
+
+  describe 'lead_members' do
+    context 'where there is no data' do
+      it 'returns nil' do
+        expect(content_object.lead_members).to be_nil
+      end
+    end
+
+    context 'where there is an empty array' do
+      let!(:content_object) { ContentObject.new({ 'leadMember_ses' => [] }) }
+      it 'returns nil' do
+        expect(content_object.lead_members).to be_nil
+      end
+    end
+
+    context 'where data exists' do
+      let!(:content_object) { ContentObject.new({ 'leadMember_ses' => [12345, 67890] }) }
+
+      it 'returns all items' do
+        expect(content_object.lead_members).to eq([{ field_name: 'leadMember_ses', value: 12345 }, { field_name: 'leadMember_ses', value: 67890 }])
       end
     end
   end
@@ -703,6 +908,18 @@ RSpec.describe ContentObject, type: :model do
           expect(content_object.certified_date).to be_nil
         end
       end
+    end
+  end
+
+  describe 'dual type' do
+    it 'returns false' do
+      expect(content_object.dual_type?).to eq(false)
+    end
+  end
+
+  describe 'ministerial correction' do
+    it 'returns false' do
+      expect(content_object.ministerial_correction?).to eq(false)
     end
   end
 

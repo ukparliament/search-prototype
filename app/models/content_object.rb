@@ -55,6 +55,8 @@ class ContentObject
   end
 
   def subtypes_or_type
+    return if subtypes.blank? && type.blank?
+
     fallback(subtypes, [type])
   end
 
@@ -187,10 +189,6 @@ class ContentObject
     get_first_from('externalLocation_t')
   end
 
-  def internal_location_uri
-    get_first_from('internalLocation_uri')
-  end
-
   def content_location_uri
     get_first_from('contentLocation_uri')
   end
@@ -200,7 +198,7 @@ class ContentObject
   end
 
   def display_link
-    external_location_uri.blank? ? external_location_text : external_location_uri
+    fallback(external_location_uri, external_location_text)
   end
 
   def has_link?
@@ -322,13 +320,6 @@ class ContentObject
     return unless ['true', 'false', true, false].include?(content_object_data[field_name]&.first)
 
     result = ['true', true].include?(content_object_data[field_name].first) ? true : false
-    { value: result, field_name: field_name }
-  end
-
-  def get_as_boolean_from(field_name)
-    return unless ['true', 'false', true, false].include?(content_object_data[field_name])
-
-    result = ['true', true].include?(content_object_data[field_name]) ? true : false
     { value: result, field_name: field_name }
   end
 
