@@ -10,9 +10,9 @@ class ContentObject
     # takes object data as an argument and returns an instance of the correct object subclass
 
     type_id = content_object_data['type_ses']&.first
-    subtype_id = content_object_data['subtype_ses']&.first
+    subtype_ids = content_object_data['subtype_ses']
 
-    content_object_class(type_id, subtype_id).classify.constantize.new(content_object_data)
+    content_object_class(type_id, subtype_ids).classify.constantize.new(content_object_data)
   end
 
   def object_name
@@ -371,7 +371,7 @@ class ContentObject
     content_object_data[field_name].map { |value| { value: value, field_name: field_name } }
   end
 
-  def self.content_object_class(type_id, subtype_id)
+  def self.content_object_class(type_id, subtype_ids)
     case type_id
     when 90996
       'Edm'
@@ -398,10 +398,9 @@ class ContentObject
     when 347122
       'Bill'
     when 92435
-      case subtype_id
-      when 479373
+      if subtype_ids.include?(479373)
         'PaperPetition'
-      when 347214
+      elsif subtype_ids.include?(347214)
         'ObservationsOnPetitions'
       else
         'ContentObject'
@@ -427,13 +426,17 @@ class ContentObject
       # 'UnprintedCommandPaper'
       'ParliamentaryPaperLaid'
     when 92347
-      'ParliamentaryPaperLaid'
-
-      # when type is 92347, which would otherwise be papers laid, we have some papers that aren't laid papars
-      # How to identify these?
-      # By subtype: 91561 or 91563...?
-      # These are currently directed to laid papers via the type_id, should we capture those too?
-
+      if subtype_ids.include?(528119)
+        'PaperOrderedToBePrinted'
+      elsif subtype_ids.include?(528127)
+        'PaperOrderedToBePrinted'
+      elsif subtype_ids.include?(528129)
+        'PaperSubmitted'
+      elsif subtype_ids.include?(51288)
+        'ParliamentaryPaperLaid'
+      else
+        'ContentObject'
+      end
     when 92277
       'OralQuestion'
     when 286676
