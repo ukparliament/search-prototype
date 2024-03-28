@@ -35,7 +35,10 @@ RSpec.describe ContentObject, type: :model do
       let!(:petition_with_unrecognised_subtype_id) { { "type_ses" => [92435], "subtype_ses" => [11111] } }
       let!(:formal_proceeding) { { "type_ses" => [347207] } }
       let!(:parliamentary_paper_reported) { { "type_ses" => [352156] } }
-      let!(:parliamentary_paper_laid) { { "type_ses" => [92347] } }
+      let!(:parliamentary_paper_laid) { { "type_ses" => [92347], "subtype_ses" => [51288] } }
+      let!(:paper_ordered_to_be_printed1) { { "type_ses" => [92347], "subtype_ses" => [528119] } }
+      let!(:paper_ordered_to_be_printed2) { { "type_ses" => [92347], "subtype_ses" => [528127] } }
+      let!(:paper_submitted) { { "type_ses" => [92347], "subtype_ses" => [528129] } }
       let!(:parliamentary_paper_laid_command_paper) { { "type_ses" => [90587] } }
       let!(:parliamentary_paper_laid_unprinted_command_paper) { { "type_ses" => [352261] } }
       let!(:parliamentary_paper_laid_house_of_commons_paper) { { "type_ses" => [91561] } }
@@ -75,6 +78,9 @@ RSpec.describe ContentObject, type: :model do
         expect(ContentObject.generate(formal_proceeding)).to be_an_instance_of(FormalProceeding)
         expect(ContentObject.generate(parliamentary_paper_reported)).to be_an_instance_of(ParliamentaryPaperReported)
         expect(ContentObject.generate(parliamentary_paper_laid)).to be_an_instance_of(ParliamentaryPaperLaid)
+        expect(ContentObject.generate(paper_ordered_to_be_printed1)).to be_an_instance_of(PaperOrderedToBePrinted)
+        expect(ContentObject.generate(paper_ordered_to_be_printed2)).to be_an_instance_of(PaperOrderedToBePrinted)
+        expect(ContentObject.generate(paper_submitted)).to be_an_instance_of(PaperSubmitted)
         expect(ContentObject.generate(parliamentary_paper_laid_command_paper)).to be_an_instance_of(ParliamentaryPaperLaid)
         expect(ContentObject.generate(parliamentary_paper_laid_unprinted_command_paper)).to be_an_instance_of(ParliamentaryPaperLaid)
         expect(ContentObject.generate(parliamentary_paper_laid_house_of_commons_paper)).to be_an_instance_of(ParliamentaryPaperLaid)
@@ -123,17 +129,14 @@ RSpec.describe ContentObject, type: :model do
       let!(:test_data) { { "some_data" => [12345] } }
 
       it 'returns false' do
-        allow(content_object).to receive(:display_link).and_return(nil)
         expect(content_object.has_link?).to eq(false)
       end
     end
-
     context 'when display link is populated' do
       let!(:content_object) { ContentObject.new(test_data) }
-      let!(:test_data) { { "some_data" => [12345] } }
+      let!(:test_data) { { "externalLocation_uri" => ['www.example.com'] } }
 
       it 'returns true' do
-        allow(content_object).to receive(:display_link).and_return('www.example.com')
         expect(content_object.has_link?).to eq(true)
       end
     end

@@ -1,0 +1,13 @@
+.content-prelim-box
+  .content-prelim-inner
+    .content-prelim-text#prelim-text
+      %span>= object_display_name_link(object.object_name)
+      %span= " submitted "
+      - unless object.legislature.blank?
+        %span= " to the "
+        %span>= render 'search/fragments/list', items: object.legislature, terminator: '', singular: false
+      - unless object.date.blank?
+        %span= " on "
+        %strong>= format_date(object.date)
+      %span= " by the Examiners of Petitions for Private Bills"
+      %span>= "."
