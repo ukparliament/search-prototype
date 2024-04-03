@@ -21,6 +21,7 @@
     <div class="content-text">
       <%= raw(object.petition_text[:value]) %>
     </div>
+    <%= render 'search/fragments/copy_button', content: object.petition_text[:value] %>
   </section>
 <% end %>
 

@@ -23,9 +23,9 @@
   <div id="top"></div>
 <% end %>
 
-  <% content_for(:title) do %>
-    <%= object.object_title %>
-  <% end %>
+<% content_for(:title) do %>
+  <%= object.object_title %>
+<% end %>
 
 <section id="prelim">
   <%= render object.prelim_partial, object: object %>

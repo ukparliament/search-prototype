@@ -219,6 +219,7 @@ div.callout {
     box-sizing: border-box;
 
     .about-item {
+        width: 100%;
         color: #4d4d4d;
     }
 
@@ -339,15 +340,48 @@ li {
     gap: 16px;
     display: flex;
     box-sizing: border-box;
-}
 
-.button-link {
-    border: 1px #2B57AB solid;
-    background: white;
-    border-radius: 4px;
-    color: #2B57AB;
-    text-decoration: none;
-    padding: 8px 16px;
+    &.copy-button-container {
+        margin: 0 0 16px 0;
+        width: 100%;
+    }
+
+    &.top-button-container {
+        margin: 48px 32px 32px 32px;
+    }
+
+    .page-button {
+        border: 2px #2B57AB solid;
+        background: white;
+        border-radius: 4px;
+        color: #2B57AB;
+        text-decoration: none;
+        padding: 8px 16px;
+        cursor: pointer;
+        font-size: large;
+        width: 250px;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+
+        &:hover {
+            background: #f1f1f1;
+        }
+    }
+
+    .button-link {
+        border: 2px #2B57AB solid;
+        background: white;
+        border-radius: 4px;
+        color: #2B57AB;
+        text-decoration: none;
+        padding: 8px 16px;
+
+        &:hover {
+            background: #f1f1f1;
+        }
+    }
 }
 
 /* Reactivity */

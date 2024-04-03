@@ -21,6 +21,7 @@
     <div class="about-item">
       <%= raw(object.html_summary[:value]) %>
     </div>
+    <%= render 'search/fragments/copy_button', content: object.html_summary[:value] %>
   </section>
 <% end %>
 

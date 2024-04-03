@@ -8,9 +8,9 @@
   <div id="top"></div>
 <% end %>
 
-  <% content_for(:title) do %>
-    <%= object.object_title %>
-  <% end %>
+<% content_for(:title) do %>
+  <%= object.object_title %>
+<% end %>
 
 <section id="prelim">
   <%= render 'search/preliminary_sentences/deposited_paper', object: object %>
@@ -18,7 +18,10 @@
 
 <section id="main-content" class="content-section white">
   <% unless object.abstract_text.blank? %>
-    <%= raw object.abstract_text[:value] %>
+    <div class="content-text">
+      <%= raw object.abstract_text[:value] %>
+    </div>
+    <%= render 'search/fragments/copy_button', content: object.abstract_text[:value] %>
   <% end %>
   <% unless object.deposited_file.blank? %>
     <h3 class="content-heading" id="available-files">Available files</h3>

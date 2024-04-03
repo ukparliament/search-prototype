@@ -21,6 +21,7 @@
     <div class="content-text">
       <%= object.abstract_text[:value] %>
     </div>
+    <%= render 'search/fragments/copy_button', content: object.abstract_text[:value] %>
   </section>
 <% end %>
 
