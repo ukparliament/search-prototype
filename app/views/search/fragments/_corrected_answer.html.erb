@@ -5,11 +5,13 @@
       <p class="html-content">
         <%= raw(object.corrected_answer[:value]) %>
       </p>
+      <%= render 'search/fragments/copy_button', content: object.corrected_answer[:value] %>
     <% end %>
     <% unless object.correcting_item_link.blank? %>
       <p class="html-content">
         <%= raw(object.correcting_object.correction_text[:value]) %>
       </p>
+      <%= render 'search/fragments/copy_button', content: object.correction_text[:value] %>
     <% end %>
   </div>
 <% end %>
