@@ -185,6 +185,16 @@ class ContentObject
     get_first_from('externalLocation_uri')
   end
 
+  def internal_location_uri
+    get_first_from('internalLocation_uri')
+  end
+
+  def solr_deep_link
+    return if object_uri.blank?
+
+    "https://search.parliament.uk/claw/solr/?id=#{object_uri[:value]}"
+  end
+
   def external_location_text
     get_first_from('externalLocation_t')
   end
