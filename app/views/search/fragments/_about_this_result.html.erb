@@ -1,15 +1,31 @@
 <section hidden data-controller="claw" id="about-this-result">
   <h3 class="content-heading">About this result</h3>
-  <h4 class="content-heading" id="reference">Timestamp</h4>
-  <p>
-    TIMESTAMP
-  </p>
-  <h4 class="content-heading" id="reference">URI</h4>
-  <p>
-    URI
-  </p>
-  <h4 class="content-heading" id="reference">Internal location URI</h4>
-  <p>
-    Internal location URI
-  </p>
+  <div class="claw-grid-container">
+    <% unless object.date.blank? %>
+      <b class="grid-item" id="about-timestamp">Timestamp</b>
+      <span class="grid-item"><%= object.date[:value] %></span>
+    <% end %>
+
+    <% unless object.object_uri.blank? %>
+      <b class="grid-item" id="about-uri">URI</b>
+      <div class="grid-item"><%= object.object_uri[:value] %>
+        <div data-controller="clipboard" class="mini-button-container">
+          <div hidden data-clipboard-target="source" data-clipboard-text="<%= object.object_uri[:value] %>"></div>
+          <button data-action="clipboard#copy" title="Copy text to clipboard" class="page-button">
+            Copy URI to clipboard
+          </button>
+        </div>
+      </div>
+    <% end %>
+
+    <% unless object.solr_deep_link.blank? %>
+      <b class="grid-item" id="about-uri">Solr URI</b>
+      <span class="grid-item"><%= link_to object.solr_deep_link, object.solr_deep_link %></span>
+    <% end %>
+
+    <% unless object.internal_location_uri.blank? %>
+      <b class="grid-item" id="about-internal-uri">Internal location URI</b>
+      <span class="grid-item"><%= link_to object.internal_location_uri[:value], object.internal_location_uri[:value] %></span>
+    <% end %>
+  </div>
 </section>

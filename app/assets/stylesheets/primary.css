@@ -199,10 +199,24 @@ div.callout {
 }
 
 /* Object view sections */
-/* TODO: some classes could probably be renamed */
+
 #about-this-result {
     border: 1px solid black;
     padding: 16px;
+
+    div.claw-grid-container {
+        display: grid;
+        grid-template-columns: auto auto;
+        grid-template-rows: auto auto auto;
+        padding: 16px 0;
+        column-gap: 24px;
+        row-gap: 12px;
+
+        span {
+            align-content: center;
+            word-wrap: anywhere;
+        }
+    }
 }
 
 .content-section {
@@ -339,6 +353,24 @@ li {
 }
 
 /* Back to top & any other on-page buttons */
+.mini-button-container {
+    .page-button {
+        border: 2px #2B57AB solid;
+        background: white;
+        border-radius: 4px;
+        color: #2B57AB;
+        text-decoration: none;
+        padding: 4px 8px;
+        cursor: pointer;
+        font-size: small;
+        /*width: 250px;*/
+
+        &:hover {
+            background: #f1f1f1;
+        }
+    }
+}
+
 .button-container {
     margin: 32px;
     justify-content: center;
@@ -365,10 +397,6 @@ li {
         cursor: pointer;
         font-size: large;
         width: 250px;
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
 
         &:hover {
             background: #f1f1f1;
