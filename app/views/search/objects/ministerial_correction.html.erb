@@ -21,7 +21,6 @@
     <div class="content-text">
       <%= raw(object.correction_text[:value]) %>
     </div>
-    <%= render 'search/fragments/copy_button', content: object.correction_text[:value] %>
     <% unless object.corrected_item_link.blank? || object.corrected_object.blank? %>
       <div class="about-item">
         <h3 class="content-heading">

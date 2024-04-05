@@ -21,7 +21,6 @@
     <div class="content-text">
       <%= object.motion_text[:value] %>
     </div>
-    <%= render 'search/fragments/copy_button', content: object.motion_text[:value] %>
     <%= render 'search/fragments/edm_amendments', title: object.page_title, amendments: object.amendments unless object.amendments.blank? %>
   </section>
 <% end %>

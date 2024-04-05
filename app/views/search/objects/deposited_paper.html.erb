@@ -21,7 +21,6 @@
     <div class="content-text">
       <%= raw object.abstract_text[:value] %>
     </div>
-    <%= render 'search/fragments/copy_button', content: object.abstract_text[:value] %>
   <% end %>
   <% unless object.deposited_file.blank? %>
     <h3 class="content-heading" id="available-files">Available files</h3>
