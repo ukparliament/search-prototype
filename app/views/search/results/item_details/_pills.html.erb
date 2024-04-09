@@ -1,0 +1,14 @@
+<% unless pills.blank? %>
+  <div class="item-details">
+    <h5 class="content-heading" id="<%= pills_heading.downcase %>"><%= pills_heading %></h5>
+    <div class="pill-section">
+      <% pills.each do |pill| %>
+        <div class="pill-wrapper">
+          <div class="pill">
+            <%= search_link(pill) %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+<% end %>

@@ -4,7 +4,9 @@ class SearchController < ApplicationController
   def index
     @page_title = "Search results"
     @search = SolrSearch.new(search_params)
-    @response = @search.all_data
+    @all_data = @search.all_data
+    @response = @all_data['response']
+    @facets = @all_data['facet_counts']
 
     if @response.has_key?('code')
       case @response['code']
@@ -18,13 +20,20 @@ class SearchController < ApplicationController
         render template: 'layouts/shared/error/500', locals: { status: @response['code'], message: @response['msg'] }
       end
     else
-      @results = @response['docs']
+
+      data = @response['docs']
+      @objects = []
+      data.each do |object_data|
+        @objects << ContentObject.generate(object_data)
+      end
+
+      @metadata = @response.except('docs')
       @number_of_results = @response['numFound']
       @start = @response['start']
       @end = @response['start'] + @search.rows
       @total_pages = (@number_of_results / @search.rows) + 1 unless @number_of_results.blank?
 
-      ses_ids = { value: @results.pluck('all_ses').flatten }
+      ses_ids = { value: data.pluck('all_ses').flatten.uniq }
       @ses_data = SesLookup.new([ses_ids]).data unless ses_ids.blank?
     end
   end

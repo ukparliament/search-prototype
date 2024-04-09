@@ -34,6 +34,12 @@ class SolrSearch < ApiCall
     "#{filter[:field_name]}:#{filter[:value]}"
   end
 
+  def search_query
+    return if query.blank?
+
+    query
+  end
+
   def rows
     # number of results per page; default is 10 in SOLR
     20
@@ -43,9 +49,13 @@ class SolrSearch < ApiCall
 
   def search_params
     {
-      q: search_filter,
+      q: search_query,
+      fq: search_filter,
       rows: rows,
-      start: start
+      start: start,
+      facet: true,
+      # 'facet.limit': 10,
+      'facet.field': 'type_ses'
     }
   end
 end

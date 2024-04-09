@@ -3,7 +3,7 @@
   <div class="claw-grid-container">
     <% unless object.date.blank? %>
       <b class="grid-item" id="about-timestamp">Timestamp</b>
-      <span class="grid-item"><%= object.date[:value] %></span>
+      <span class="grid-item"><%= object.timestamp[:value] %></span>
     <% end %>
 
     <% unless object.object_uri.blank? %>

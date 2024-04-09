@@ -3,29 +3,80 @@
   <div id="top"></div>
 <% end %>
 
-<section>
-  <h3>Search results</h3>
-
-  <% unless @search.filter.blank? %>
-    <p>
-      Showing rows <strong><%= @start %> - <%= @end %></strong> of
-      <strong><%= @number_of_results %></strong>
-      results for
-      <strong><%= @search.filter[:field_name] %></strong> of
-      <strong>"<%= object_display_name(@search.filter.to_h, singular: false) %>"</strong>
-    </p>
+<section id="search" class="content-section white">
+  <h2 class="content-heading">Search</h2>
+  <%= form_with url: search_url, method: :get, local: true, id: 'search-form' do |f| %>
+    <div class="search-grid-container">
+      <%= f.text_field :query, class: 'grid-item', id: 'search-input', value: @search.query %>
+      <%= f.submit 'Search', class: 'grid-item', id: 'search-button' %>
+    </div>
   <% end %>
-
-  <% @results.each do |result| %>
-    <p>
-      <%#= result %>
-      <%= link_to(result["title_t"], object_show_url(:object => result["uri"])) %><br/>
-      <%= @ses_data[result["type_ses"].first] %>
-    </p>
-  <% end %>
-
 </section>
 
-<% unless @search.current_page.blank? || @total_pages.blank? %>
-  <%= render 'pagination', user_requested_page: @search.user_requested_page, last_page: @total_pages, query: @search.query, filter: @search.filter %>
-<% end %>
+<%= render 'search/fragments/data', data: @metadata, title: 'Search metadata' %>
+<%= render 'search/fragments/data', data: @results, title: 'Search results' %>
+<%= render 'search/fragments/data', data: @facets, title: 'Facet counts' %>
+
+<section id="search-results">
+  <div class="results-grid-container">
+    <div class="filter-container">
+      <% unless @search.filter.blank? %>
+        <div class="applied-filters">
+          <strong>Applied filters</strong>
+          <%= @search.filter %>
+        </div>
+      <% end %>
+      <div class="facets">
+        <strong>Filtering by facet</strong>
+        <br>
+        <strong>Type</strong>
+        <% @facets['facet_fields']['type_ses'].each do |facet| %>
+          <label for='facet'><%= object_display_name({value: facet, field_name: 'type_ses'}) %></label>
+          <input type="checkbox" value="<%= facet %>">
+          <br>
+        <% end %>
+      </div>
+    </div>
+    <div class="results-container" data-controller="detailed-results">
+      <div class="search-control-panel">
+        <div class="control-panel-row">
+          <strong><%= @number_of_results %> results</strong>
+        </div>
+        <div class="control-panel-row">
+          <label class="search-control-panel-label">
+            <span>Show detailed</span>
+          </label>
+          <label class="toggle">
+            <input hidden type="checkbox" data-action="change->detailed-results#toggle">
+            <span class="slider"></span>
+          </label>
+          <div class="flex-spacer"></div>
+          <label class="search-control-panel-label">
+            <span>Results per page</span>
+          </label>
+          <%= select_tag("number_of_results", options_for_select([10, 20, 30])) %>
+          <label class="search-control-panel-label">
+            <span>Sort by</span>
+          </label>
+          <%= select_tag("sort_by", options_for_select(["Date"])) %>
+        </div>
+      </div>
+
+      <div>
+        <% @objects.each do |object| %>
+          <%= render object.search_result_partial, object: object %>
+          <br>
+          <hr>
+        <% end %>
+
+        <% unless @search.current_page.blank? || @total_pages.blank? %>
+          <p>
+            Showing results <strong><%= @start %> - <%= @end %></strong> of
+            <strong><%= @number_of_results %></strong>
+          </p>
+          <%= render 'pagination', user_requested_page: @search.user_requested_page, last_page: @total_pages, query: @search.query, filter: @search.filter %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</section>

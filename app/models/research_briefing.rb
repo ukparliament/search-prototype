@@ -8,6 +8,10 @@ class ResearchBriefing < ContentObject
     'search/objects/research_briefing'
   end
 
+  def search_result_partial
+    'search/results/research_briefing'
+  end
+
   def html_summary
     get_first_as_html_from('htmlsummary_t')
   end

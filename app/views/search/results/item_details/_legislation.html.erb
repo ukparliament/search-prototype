@@ -1,0 +1,7 @@
+<% unless legislation.blank? %>
+  <div class="item-details">
+    <% legislation.each do |legislation| %>
+      <%= search_link(legislation) %><br/>
+    <% end %>
+  </div>
+<% end %>

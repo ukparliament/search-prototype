@@ -6,7 +6,7 @@ class ContentObjectsController < ApplicationController
   end
 
   def show
-    @response = SolrQuery.new(object_uri: params[:object]).all_data
+    @response = SolrQuery.new(object_uri: params[:object]).all_data['response']
 
     if @response.has_key?('code')
       # error state
