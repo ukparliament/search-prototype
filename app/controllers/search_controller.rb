@@ -6,7 +6,10 @@ class SearchController < ApplicationController
     @search = SolrSearch.new(search_params)
     @all_data = @search.all_data
     @response = @all_data['response']
-    @facets = @all_data['facet_counts']
+
+    @all_facets = @all_data['facet_counts']['facet_fields'].map do |facet_field|
+      { field_name: facet_field.first, facets: Hash[*facet_field.last] }
+    end
 
     if @response.has_key?('code')
       case @response['code']
@@ -33,14 +36,25 @@ class SearchController < ApplicationController
       @end = @response['start'] + @search.rows
       @total_pages = (@number_of_results / @search.rows) + 1 unless @number_of_results.blank?
 
-      ses_ids = { value: data.pluck('all_ses').flatten.uniq }
-      @ses_data = SesLookup.new([ses_ids]).data unless ses_ids.blank?
+      ses_ids = data.pluck('all_ses').flatten.uniq
+      facet_ses = @all_data['facet_counts']['facet_fields'].select { |k, v| k.last(3) == "ses" }.flat_map { |k, v| Hash[*v].keys.map(&:to_i) }
+      all_ses_ids = { value: facet_ses + ses_ids }
+      @ses_data = SesLookup.new([all_ses_ids]).data unless ses_ids.blank?
     end
   end
 
   private
 
   def search_params
-    params.permit(:commit, :query, :page, filter: [:field_name, :value])
+    params.permit(:commit, :query, :page, :number_of_results, :sort_by, permitted_filters)
+  end
+
+  def permitted_filters
+    hash = {}
+    SolrSearch.facet_fields.each do |field|
+      hash[field.to_sym] = []
+    end
+
+    hash
   end
 end

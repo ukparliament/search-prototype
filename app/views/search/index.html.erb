@@ -3,80 +3,90 @@
   <div id="top"></div>
 <% end %>
 
-<section id="search" class="content-section white">
-  <h2 class="content-heading">Search</h2>
-  <%= form_with url: search_url, method: :get, local: true, id: 'search-form' do |f| %>
+<%#= render '/shared/search_bar' %>
+<%#= render 'search/fragments/data', data: @metadata, title: 'Search metadata' %>
+<%#= render 'search/fragments/data', data: @results, title: 'Search results' %>
+<%#= render 'search/fragments/data', data: @all_facets, title: 'Facets' %>
+
+<%= form_with url: search_url, method: :get, local: true, id: 'search-form' do |f| %>
+  <section id="search" class="content-section white">
+    <h2 class="content-heading">Search</h2>
     <div class="search-grid-container">
-      <%= f.text_field :query, class: 'grid-item', id: 'search-input', value: @search.query %>
+      <%= f.text_field :query, class: 'grid-item', id: 'search-input', value: @search.blank? ? nil : @search.query %>
       <%= f.submit 'Search', class: 'grid-item', id: 'search-button' %>
     </div>
-  <% end %>
-</section>
+  </section>
 
-<%= render 'search/fragments/data', data: @metadata, title: 'Search metadata' %>
-<%= render 'search/fragments/data', data: @results, title: 'Search results' %>
-<%= render 'search/fragments/data', data: @facets, title: 'Facet counts' %>
-
-<section id="search-results">
-  <div class="results-grid-container">
-    <div class="filter-container">
-      <% unless @search.filter.blank? %>
-        <div class="applied-filters">
-          <strong>Applied filters</strong>
-          <%= @search.filter %>
-        </div>
-      <% end %>
-      <div class="facets">
-        <strong>Filtering by facet</strong>
-        <br>
-        <strong>Type</strong>
-        <% @facets['facet_fields']['type_ses'].each do |facet| %>
-          <label for='facet'><%= object_display_name({value: facet, field_name: 'type_ses'}) %></label>
-          <input type="checkbox" value="<%= facet %>">
-          <br>
+  <section id="search-results">
+    <div class="results-grid-container">
+      <div class="filter-container">
+        <% @all_facets.each do |facet_field| %>
+          <% unless facet_field[:facets].blank? %>
+            <details open>
+              <summary>
+                <strong><%= ses_field_name(facet_field[:field_name]) %></strong>
+              </summary>
+              <div class="facets">
+                <% facet_field[:facets].each do |facet| %>
+                  <div class="facet-check">
+                    <%= f.check_box facet_field[:field_name], { multiple: true, checked: params[facet_field[:field_name]]&.include?(facet.first) }, facet.first, nil %>
+<!--                    <input type="checkbox" name="filter[<%#= facet_field[:field_name] %>][]" value="<%#= facet.first %>" <%#= "checked" if params["filter"][facet_field[:field_name]] == facet.first %>></input>-->
+                    <%#= raise 'halt' if facet.first == "2022" %>
+                  </div>
+                  <div class="facet-label">
+                    <div><%= object_display_name({ value: facet.first, field_name: facet_field[:field_name] }, singular: false) %>
+                      (<%= facet.last.to_i %>)
+                    </div>
+                  </div>
+                <% end %>
+              </div>
+            </details>
+          <% end %>
         <% end %>
+      </div>
+
+      <div class="results-container" data-controller="detailed-results">
+        <div class="search-control-panel">
+          <div class="control-panel-row">
+            <strong><%= @number_of_results %> results</strong>
+          </div>
+          <div class="control-panel-row">
+            <label class="search-control-panel-label">
+              <span>Show detailed</span>
+            </label>
+            <label class="toggle">
+              <input hidden type="checkbox" data-action="change->detailed-results#toggle">
+              <span class="slider"></span>
+            </label>
+            <div class="flex-spacer"></div>
+            <label class="search-control-panel-label">
+              <span>Results per page</span>
+            </label>
+            <%= select_tag("number_of_results", options_for_select([10, 20, 30])) %>
+            <label class="search-control-panel-label">
+              <span>Sort by</span>
+            </label>
+            <%= select_tag("sort_by", options_for_select(["Date"])) %>
+          </div>
+        </div>
+
+        <div>
+          <% @objects.each do |object| %>
+            <%= render object.search_result_partial, object: object %>
+            <br>
+            <hr>
+          <% end %>
+
+          <% unless @search.current_page.blank? || @total_pages.blank? %>
+            <p>
+              Showing results <strong><%= @start %> - <%= @end %></strong> of
+              <strong><%= @number_of_results %></strong>
+            </p>
+            <%= render 'pagination', user_requested_page: @search.user_requested_page, last_page: @total_pages, query: @search.query, filter: @search.filter %>
+          <% end %>
+        </div>
       </div>
     </div>
-    <div class="results-container" data-controller="detailed-results">
-      <div class="search-control-panel">
-        <div class="control-panel-row">
-          <strong><%= @number_of_results %> results</strong>
-        </div>
-        <div class="control-panel-row">
-          <label class="search-control-panel-label">
-            <span>Show detailed</span>
-          </label>
-          <label class="toggle">
-            <input hidden type="checkbox" data-action="change->detailed-results#toggle">
-            <span class="slider"></span>
-          </label>
-          <div class="flex-spacer"></div>
-          <label class="search-control-panel-label">
-            <span>Results per page</span>
-          </label>
-          <%= select_tag("number_of_results", options_for_select([10, 20, 30])) %>
-          <label class="search-control-panel-label">
-            <span>Sort by</span>
-          </label>
-          <%= select_tag("sort_by", options_for_select(["Date"])) %>
-        </div>
-      </div>
 
-      <div>
-        <% @objects.each do |object| %>
-          <%= render object.search_result_partial, object: object %>
-          <br>
-          <hr>
-        <% end %>
-
-        <% unless @search.current_page.blank? || @total_pages.blank? %>
-          <p>
-            Showing results <strong><%= @start %> - <%= @end %></strong> of
-            <strong><%= @number_of_results %></strong>
-          </p>
-          <%= render 'pagination', user_requested_page: @search.user_requested_page, last_page: @total_pages, query: @search.query, filter: @search.filter %>
-        <% end %>
-      </div>
-    </div>
-  </div>
-</section>
+  </section>
+<% end %>

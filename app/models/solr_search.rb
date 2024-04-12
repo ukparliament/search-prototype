@@ -29,9 +29,12 @@ class SolrSearch < ApiCall
   end
 
   def search_filter
+    # "fq": ["field_name:value1", "field_name:value2", ...],
+
     return if filter.blank?
 
-    "#{filter[:field_name]}:#{filter[:value]}"
+    results = filter.to_h.map { |k, v| "#{k}:#{v}" }
+    # raise 'halt'
   end
 
   def search_query
@@ -45,6 +48,10 @@ class SolrSearch < ApiCall
     20
   end
 
+  def self.facet_fields
+    ['type_ses', 'subtype_ses', 'legislativeStage_ses', 'session_t', 'member_ses', 'tablingMember_ses', 'answeringMember_ses', 'legislature_ses']
+  end
+
   private
 
   def search_params
@@ -55,7 +62,11 @@ class SolrSearch < ApiCall
       start: start,
       facet: true,
       # 'facet.limit': 10,
-      'facet.field': 'type_ses'
+      'facet.field': SolrSearch.facet_fields,
+      # 'facet.range': ['date_dt'],
+      # 'facet.range.start': 'NOW/DAY-30DAYS',
+      # 'facet.range.end': 'NOW/DAY+30DAYS',
+      # 'facet.range.gap': '+1DAY'
     }
   end
 end

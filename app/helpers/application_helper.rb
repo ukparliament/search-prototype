@@ -35,4 +35,25 @@ module ApplicationHelper
       (index + 1).ordinalize
     end
   end
+
+  def ses_field_name(field)
+    # returns display name for a SES field, e.g. 'Content Type' for type_ses
+
+    field_names = {
+      type_ses: 'Content type',
+      legislature_ses: 'Legislature',
+      session_t: 'Session',
+      member_ses: 'Member',
+      legislativeStage_ses: 'Legislative stage',
+      department_ses: 'Department',
+      subject_ses: 'Subject',
+      topic_ses: 'Topic',
+      party_ses: 'Party',
+      subtype_ses: 'Content subtype',
+      tablingMember_ses: 'Tabling member',
+      answeringMember_ses: 'Answering member'
+    }
+
+    field_names[field.to_sym]
+  end
 end
