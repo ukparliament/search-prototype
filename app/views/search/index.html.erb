@@ -4,9 +4,9 @@
 <% end %>
 
 <%#= render '/shared/search_bar' %>
-<%#= render 'search/fragments/data', data: @metadata, title: 'Search metadata' %>
-<%#= render 'search/fragments/data', data: @results, title: 'Search results' %>
-<%#= render 'search/fragments/data', data: @all_facets, title: 'Facets' %>
+<%= render 'search/fragments/data', data: @metadata, title: 'Search metadata' %>
+<%= render 'search/fragments/data', data: @results, title: 'Search results' %>
+<%= render 'search/fragments/data', data: @all_facets, title: 'Facets' %>
 
 <%= form_with url: search_url, method: :get, local: true, id: 'search-form' do |f| %>
   <section id="search" class="content-section white">
@@ -20,27 +20,27 @@
   <section id="search-results">
     <div class="results-grid-container">
       <div class="filter-container">
-        <% @all_facets.each do |facet_field| %>
-          <% unless facet_field[:facets].blank? %>
-            <details open>
-              <summary>
-                <strong><%= ses_field_name(facet_field[:field_name]) %></strong>
-              </summary>
-              <div class="facets">
-                <% facet_field[:facets].each do |facet| %>
-                  <div class="facet-check">
-                    <%= f.check_box facet_field[:field_name], { multiple: true, checked: params[facet_field[:field_name]]&.include?(facet.first) }, facet.first, nil %>
-<!--                    <input type="checkbox" name="filter[<%#= facet_field[:field_name] %>][]" value="<%#= facet.first %>" <%#= "checked" if params["filter"][facet_field[:field_name]] == facet.first %>></input>-->
-                    <%#= raise 'halt' if facet.first == "2022" %>
-                  </div>
-                  <div class="facet-label">
-                    <div><%= object_display_name({ value: facet.first, field_name: facet_field[:field_name] }, singular: false) %>
-                      (<%= facet.last.to_i %>)
+        <%= f.fields_for :filter do |filter_form| %>
+          <% @all_facets.each do |facet_field| %>
+            <% unless facet_field[:facets].blank? %>
+              <details open>
+                <summary>
+                  <strong><%= ses_field_name(facet_field[:field_name]) %></strong>
+                </summary>
+                <div class="facets">
+                  <% facet_field[:facets].each do |facet| %>
+                    <div class="facet-check">
+                      <%= filter_form.check_box facet_field[:field_name], { multiple: true, checked: params[:filter][facet_field[:field_name]]&.include?(facet.first) }, facet.first, nil %>
                     </div>
-                  </div>
-                <% end %>
-              </div>
-            </details>
+                    <div class="facet-label">
+                      <div><%= object_display_name({ value: facet.first, field_name: facet_field[:field_name] }, singular: false) %>
+                        (<%= facet.last.to_i %>)
+                      </div>
+                    </div>
+                  <% end %>
+                </div>
+              </details>
+            <% end %>
           <% end %>
         <% end %>
       </div>

@@ -30,11 +30,7 @@ class SolrSearch < ApiCall
 
   def search_filter
     # "fq": ["field_name:value1", "field_name:value2", ...],
-
-    return if filter.blank?
-
-    results = filter.to_h.map { |k, v| "#{k}:#{v}" }
-    # raise 'halt'
+    filter.to_h.flat_map { |field_name, values| values.map { |value| "#{field_name}:#{value}" }.join(" OR ") }
   end
 
   def search_query
