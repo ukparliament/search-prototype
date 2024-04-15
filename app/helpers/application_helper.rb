@@ -56,4 +56,10 @@ module ApplicationHelper
 
     field_names[field.to_sym]
   end
+
+  def checked_field(filter_params, facet_field_name,  text_field_name)
+    return false if filter_params.blank?
+
+    filter_params[facet_field_name]&.include?(text_field_name)
+  end
 end

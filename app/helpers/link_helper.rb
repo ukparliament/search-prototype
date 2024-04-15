@@ -14,7 +14,10 @@ module LinkHelper
 
     return if data.blank? || data[:value].blank?
 
-    link_to(formatted_name(data, ses_data, singular), search_path(filter: data))
+    field_name = data[:field_name]
+    value = data[:value]
+
+    link_to(formatted_name(data, ses_data, singular), search_path(filter: { field_name => [value] }))
   end
 
   def object_display_name(data, singular: true, case_formatting: false)

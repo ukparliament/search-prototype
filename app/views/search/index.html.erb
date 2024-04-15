@@ -30,7 +30,7 @@
                 <div class="facets">
                   <% facet_field[:facets].each do |facet| %>
                     <div class="facet-check">
-                      <%= filter_form.check_box facet_field[:field_name], { multiple: true, checked: params[:filter][facet_field[:field_name]]&.include?(facet.first) }, facet.first, nil %>
+                      <%= filter_form.check_box facet_field[:field_name], { multiple: true, checked: checked_field(params[:filter], facet_field[:field_name], facet.first) }, facet.first, nil %>
                     </div>
                     <div class="facet-label">
                       <div><%= object_display_name({ value: facet.first, field_name: facet_field[:field_name] }, singular: false) %>
