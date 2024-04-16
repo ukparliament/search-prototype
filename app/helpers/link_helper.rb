@@ -41,11 +41,13 @@ module LinkHelper
     return if data.blank? || data[:value].blank?
 
     formatted = formatted_name(data, ses_data, singular)
+    field_name = data[:field_name]
+    value = data[:value]
 
     if case_formatting
-      link_to(conditional_downcase(formatted), search_path(filter: data))
+      link_to(conditional_downcase(formatted), search_path(filter: { field_name => [value] }))
     else
-      link_to(formatted, search_path(filter: data))
+      link_to(formatted, search_path(filter: { field_name => [value] }))
     end
   end
 
