@@ -11,14 +11,14 @@ class ApiCall
   end
 
   def object_data
-    all_data['docs']
+    all_data['response']['docs']
   end
 
   def all_data
     response = evaluated_response
     return response['error'] if response.has_key?('error')
 
-    response['response']
+    response
   end
 
   private

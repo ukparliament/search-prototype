@@ -19,6 +19,10 @@ class ContentObject
     type
   end
 
+  def search_result_partial
+    'search/results/content_object'
+  end
+
   def object_title
     # returns the title, falling back to name
     return page_title unless page_title.blank?
@@ -187,6 +191,10 @@ class ContentObject
 
   def internal_location_uri
     get_first_from('internalLocation_uri')
+  end
+
+  def timestamp
+    get_as_date_from('timestamp')
   end
 
   def solr_deep_link

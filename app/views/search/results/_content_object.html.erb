@@ -1,0 +1,9 @@
+<div class="detailed-view">
+  <p><%= link_to(object.object_title, object_show_url(object: object.object_uri[:value])) %></p>
+  <%= render 'search/results/item_details/type', type: object.type %>
+</div>
+
+<div hidden class="simple-view">
+  <p><%= link_to(object.object_title, object_show_url(object: object.object_uri[:value])) %></p>
+  <%= render 'search/results/item_details/type', type: object.type %>
+</div>

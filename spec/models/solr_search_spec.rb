@@ -119,12 +119,13 @@ RSpec.describe SolrSearch, type: :model do
   end
 
   describe 'search_filter' do
+    # TODO: re-do testing here; functionality considerably expanded
     context 'with a single filter' do
-      let!(:solr_search) { SolrSearch.new({ filter: { field_name: 'field_name', value: 'test' } }) }
+      let!(:solr_search) { SolrSearch.new({ filter: { 'field_name' => ['test'] } }) }
 
-      it 'returns a string' do
+      it 'returns an array of filter strings' do
         allow(solr_search).to receive(:evaluated_response).and_return(mock_response)
-        expect(solr_search.search_filter).to eq("field_name:test")
+        expect(solr_search.search_filter).to eq(["field_name:test"])
       end
     end
   end
