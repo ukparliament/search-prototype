@@ -2,6 +2,7 @@
     width: 100%;
 
     div.search-grid-container {
+        width: 100%;
         display: grid;
         grid-template-columns: auto auto auto auto auto auto auto auto auto auto auto auto;
         padding: 16px 0;
