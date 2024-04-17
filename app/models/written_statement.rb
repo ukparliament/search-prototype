@@ -8,6 +8,10 @@ class WrittenStatement < ContentObject
     'search/objects/written_statement'
   end
 
+  def search_result_partial
+    'search/results/written_statement'
+  end
+
   def attachment
     get_all_from('attachmentTitle_t')
   end

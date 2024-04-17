@@ -76,6 +76,10 @@ class ContentObject
     get_first_as_html_from('content_t')
   end
 
+  def description
+    get_first_as_html_from('description_t')
+  end
+
   def abstract_text
     get_as_html_from('abstract_t')
   end

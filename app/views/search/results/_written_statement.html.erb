@@ -1,19 +1,25 @@
 <div class="result-item simple-view" data-detailed-results-target="toggleHidden">
   <p><%= link_to(object.object_title, object_show_url(object: object.object_uri[:value])) %></p>
-  <%= render 'search/results/item_details/description', description: object.description %>
+  <%= render 'search/results/item_details/statement_text', statement_text: object.statement_text %>
   <%= render 'search/results/item_details/date', date: object.date %>
   <%= render 'search/results/item_details/type', type: object.type %>
+  <%= render 'search/results/item_details/member', member: object.member %>
+  <%= render 'search/results/item_details/departments', departments: object.departments %>
+  <%= render 'search/fragments/list', items: object.legislature, terminator: "", singular: false %>
   <%= render 'search/results/item_details/reference', reference: object.reference %>
 </div>
 
 <div hidden class="result-item detailed-view" data-detailed-results-target="toggleHidden">
   <p><%= link_to(object.object_title, object_show_url(object: object.object_uri[:value])) %></p>
-  <%= render 'search/results/item_details/description', description: object.description %>
+  <%= render 'search/results/item_details/statement_text', statement_text: object.statement_text %>
   <%= render 'search/results/item_details/date', date: object.date %>
   <%= render 'search/results/item_details/type', type: object.type %>
-  <%#= render 'search/results/item_details/authors', authors: object.authors %>
+  <%= render 'search/results/item_details/member', member: object.member %>
+  <%= render 'search/results/item_details/member_party', member_party: object.member_party %>
+  <%= render 'search/results/item_details/departments', departments: object.departments %>
+  <%= render 'search/fragments/list', items: object.legislature, terminator: "", singular: false %>
   <%= render 'search/results/item_details/reference', reference: object.reference %>
   <%= render 'search/results/item_details/legislation', legislation: object.legislation %>
+  <%= render 'search/results/item_details/notes', notes: object.notes %>
   <%= render 'search/results/item_details/pills', pills: object.subjects, pills_heading: 'Subjects' %>
-  <%= render 'search/results/item_details/pills', pills: object.topics, pills_heading: 'Topics' %>
 </div>

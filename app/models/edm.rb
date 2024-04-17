@@ -8,6 +8,14 @@ class Edm < ContentObject
     'search/objects/edm'
   end
 
+  def edm_number
+    get_first_from('edmNumber_t')
+  end
+
+  def search_result_partial
+    'search/results/early_day_motion'
+  end
+
   def amendments
     # Title is the title of the motion itself, with 'Amendment N' on the front
     # Reference is taken from identifier_t, after removing the first item
