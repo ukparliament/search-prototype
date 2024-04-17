@@ -14,7 +14,7 @@
       <img src="./assets/0.12.3/loading.gif" alt="loading"/>
     </div>
     <div id="wrapper" class="hide">
-      <div class="timestamp">Generated <abbr class="timeago" title="2024-04-16T15:36:40+01:00">2024-04-16T15:36:40+01:00</abbr></div>
+      <div class="timestamp">Generated <abbr class="timeago" title="2024-04-17T11:03:18+01:00">2024-04-17T11:03:18+01:00</abbr></div>
       <ul class="group_tabs"></ul>
 
       <div id="content">
@@ -23,14 +23,14 @@
     <span class="group_name">All Files</span>
     (<span class="covered_percent">
       <span class="yellow">
-  89.56%
+  89.35%
 </span>
 
      </span>
      covered at
      <span class="covered_strength">
        <span class="green">
-         108.08
+         107.79
        </span>
     </span> hits/line
     )
@@ -43,11 +43,11 @@
   </div>
 
   <div class="t-line-summary">
-    <b>1178</b> relevant lines,
-    <span class="green"><b>1055</b> lines covered</span> and
-    <span class="red"><b>123</b> lines missed. </span>
+    <b>1183</b> relevant lines,
+    <span class="green"><b>1057</b> lines covered</span> and
+    <span class="red"><b>126</b> lines missed. </span>
     (<span class="yellow">
-  89.56%
+  89.35%
 </span>
 )
   </div>
@@ -105,12 +105,12 @@
         
           <tr class="t-file">
             <td class="strong t-file__name"><a href="#f7d318c3ace62575d97bbef2060e6c2175195e60" class="src_link" title="app/controllers/content_objects_controller.rb">app/controllers/content_objects_controller.rb</a></td>
-            <td class="red strong cell--number t-file__coverage">77.78 %</td>
-            <td class="cell--number">36</td>
-            <td class="cell--number">18</td>
-            <td class="cell--number">14</td>
-            <td class="cell--number">4</td>
-            <td class="cell--number">92.17</td>
+            <td class="red strong cell--number t-file__coverage">75.00 %</td>
+            <td class="cell--number">40</td>
+            <td class="cell--number">20</td>
+            <td class="cell--number">15</td>
+            <td class="cell--number">5</td>
+            <td class="cell--number">93.25</td>
             
           </tr>
         
@@ -622,12 +622,12 @@
         
           <tr class="t-file">
             <td class="strong t-file__name"><a href="#e98e0e5ab9cf2f78bcafe1d8f12b4e838b9150fc" class="src_link" title="app/models/ses_lookup.rb">app/models/ses_lookup.rb</a></td>
-            <td class="green strong cell--number t-file__coverage">94.44 %</td>
-            <td class="cell--number">80</td>
-            <td class="cell--number">36</td>
-            <td class="cell--number">34</td>
-            <td class="cell--number">2</td>
-            <td class="cell--number">41.69</td>
+            <td class="yellow strong cell--number t-file__coverage">89.74 %</td>
+            <td class="cell--number">91</td>
+            <td class="cell--number">39</td>
+            <td class="cell--number">35</td>
+            <td class="cell--number">4</td>
+            <td class="cell--number">38.54</td>
             
           </tr>
         
@@ -933,7 +933,7 @@
     <h3>app/controllers/content_objects_controller.rb</h3>
     <h4>
       <span class="red">
-  77.78%
+  75.0%
 </span>
 
       lines covered
@@ -942,9 +942,9 @@
     
 
     <div class="t-line-summary">
-      <b>18</b> relevant lines.
-      <span class="green"><b>14</b> lines covered</span> and
-      <span class="red"><b>4</b> lines missed.</span>
+      <b>20</b> relevant lines.
+      <span class="green"><b>15</b> lines covered</span> and
+      <span class="red"><b>5</b> lines missed.</span>
     </div>
 
     
@@ -1302,18 +1302,18 @@
 
             
 
-            <code class="ruby">      render template: @object.template, :locals =&gt; { :object =&gt; @object }</code>
+            <code class="ruby">      if @ses_data.has_key?(:error)</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="33">
+          <li class="missed" data-hits="0" data-linenumber="33">
             
             
 
             
 
-            <code class="ruby">    end</code>
+            <code class="ruby">        render template: &#39;layouts/shared/error/500&#39;, locals: { status: 500, message: &#39;There was an error resolving names using the SES service&#39; }</code>
           </li>
         </div>
       
@@ -1324,12 +1324,56 @@
 
             
 
+            <code class="ruby">      else</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="206" data-linenumber="35">
+            <span class="hits">206</span>
+            
+
+            
+
+            <code class="ruby">      render template: @object.template, :locals =&gt; { :object =&gt; @object }</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="36">
+            
+            
+
+            
+
+            <code class="ruby">      end</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="37">
+            
+            
+
+            
+
+            <code class="ruby">    end</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="38">
+            
+            
+
+            
+
             <code class="ruby"></code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="35">
+          <li class="never" data-hits="" data-linenumber="39">
             
             
 
@@ -1340,7 +1384,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="36">
+          <li class="never" data-hits="" data-linenumber="40">
             
             
 
@@ -25698,8 +25742,8 @@
   <div class="header">
     <h3>app/models/ses_lookup.rb</h3>
     <h4>
-      <span class="green">
-  94.44%
+      <span class="yellow">
+  89.74%
 </span>
 
       lines covered
@@ -25708,9 +25752,9 @@
     
 
     <div class="t-line-summary">
-      <b>36</b> relevant lines.
-      <span class="green"><b>34</b> lines covered</span> and
-      <span class="red"><b>2</b> lines missed.</span>
+      <b>39</b> relevant lines.
+      <span class="green"><b>35</b> lines covered</span> and
+      <span class="red"><b>4</b> lines missed.</span>
     </div>
 
     
@@ -26139,35 +26183,35 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="2" data-linenumber="39">
+          <li class="never" data-hits="" data-linenumber="39">
+            
+            
+
+            
+
+            <code class="ruby"></code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="40">
+            
+            
+
+            
+
+            <code class="ruby">      begin</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="2" data-linenumber="41">
             <span class="hits">2</span>
             
 
             
 
-            <code class="ruby">      response = JSON.parse(api_response(id_group))</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="covered" data-hits="2" data-linenumber="40">
-            <span class="hits">2</span>
-            
-
-            
-
-            <code class="ruby">      output &lt;&lt; response[&#39;terms&#39;]</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="41">
-            
-            
-
-            
-
-            <code class="ruby">    end</code>
+            <code class="ruby">        response = JSON.parse(api_response(id_group))</code>
           </li>
         </div>
       
@@ -26178,199 +26222,45 @@
 
             
 
-            <code class="ruby"></code>
+            <code class="ruby">      rescue JSON::ParserError</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="43">
-            <span class="hits">1</span>
+          <li class="never" data-hits="" data-linenumber="43">
+            
             
 
             
 
-            <code class="ruby">    output.flatten</code>
+            <code class="ruby">        # if SES fails it returns an error as XML</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="44">
+          <li class="missed" data-hits="0" data-linenumber="44">
             
             
 
             
 
-            <code class="ruby">  end</code>
+            <code class="ruby">        response = Hash.from_xml(api_response(id_group))</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="45">
+          <li class="missed" data-hits="0" data-linenumber="45">
             
             
 
             
 
-            <code class="ruby"></code>
+            <code class="ruby">        return [{ error: response }]</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="46">
-            <span class="hits">1</span>
-            
-
-            
-
-            <code class="ruby">  def data</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="47">
-            
-            
-
-            
-
-            <code class="ruby">    # for returning all data in a structured format for further querying</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="covered" data-hits="2" data-linenumber="48">
-            <span class="hits">2</span>
-            
-
-            
-
-            <code class="ruby">    return if input_data.blank?</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="49">
-            
-            
-
-            
-
-            <code class="ruby"></code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="covered" data-hits="2" data-linenumber="50">
-            <span class="hits">2</span>
-            
-
-            
-
-            <code class="ruby">    ret = {}</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="covered" data-hits="2" data-linenumber="51">
-            <span class="hits">2</span>
-            
-
-            
-
-            <code class="ruby">    responses = evaluated_responses</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="52">
-            
-            
-
-            
-
-            <code class="ruby"></code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="53">
-            
-            
-
-            
-
-            <code class="ruby">    # responses is an array of hashes</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="54">
-            
-            
-
-            
-
-            <code class="ruby">    # each hash is the parsed response from individual lookups (one per [group_size] IDs)</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="55">
-            
-            
-
-            
-
-            <code class="ruby">    # the hashes contain a nested &#39;term&#39; hash containing &#39;id&#39; and &#39;name&#39;</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="56">
-            
-            
-
-            
-
-            <code class="ruby"></code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="covered" data-hits="2" data-linenumber="57">
-            <span class="hits">2</span>
-            
-
-            
-
-            <code class="ruby">    unless responses.compact.blank?</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="covered" data-hits="2" data-linenumber="58">
-            <span class="hits">2</span>
-            
-
-            
-
-            <code class="ruby">      responses.each do |response|</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="covered" data-hits="3" data-linenumber="59">
-            <span class="hits">3</span>
-            
-
-            
-
-            <code class="ruby">        ret[response[&#39;term&#39;][&#39;id&#39;].to_i] = response[&#39;term&#39;][&#39;name&#39;]</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="60">
+          <li class="never" data-hits="" data-linenumber="46">
             
             
 
@@ -26381,7 +26271,29 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="61">
+          <li class="never" data-hits="" data-linenumber="47">
+            
+            
+
+            
+
+            <code class="ruby"></code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="2" data-linenumber="48">
+            <span class="hits">2</span>
+            
+
+            
+
+            <code class="ruby">      output &lt;&lt; response[&#39;terms&#39;]</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="49">
             
             
 
@@ -26392,13 +26304,145 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="2" data-linenumber="62">
+          <li class="never" data-hits="" data-linenumber="50">
+            
+            
+
+            
+
+            <code class="ruby"></code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="1" data-linenumber="51">
+            <span class="hits">1</span>
+            
+
+            
+
+            <code class="ruby">    output.flatten</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="52">
+            
+            
+
+            
+
+            <code class="ruby">  end</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="53">
+            
+            
+
+            
+
+            <code class="ruby"></code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="1" data-linenumber="54">
+            <span class="hits">1</span>
+            
+
+            
+
+            <code class="ruby">  def data</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="55">
+            
+            
+
+            
+
+            <code class="ruby">    # for returning all data in a structured format for further querying</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="2" data-linenumber="56">
             <span class="hits">2</span>
             
 
             
 
-            <code class="ruby">    ret</code>
+            <code class="ruby">    return if input_data.blank?</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="57">
+            
+            
+
+            
+
+            <code class="ruby"></code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="2" data-linenumber="58">
+            <span class="hits">2</span>
+            
+
+            
+
+            <code class="ruby">    ret = {}</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="2" data-linenumber="59">
+            <span class="hits">2</span>
+            
+
+            
+
+            <code class="ruby">    responses = evaluated_responses</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="60">
+            
+            
+
+            
+
+            <code class="ruby"></code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="61">
+            
+            
+
+            
+
+            <code class="ruby">    # responses is an array of hashes</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="62">
+            
+            
+
+            
+
+            <code class="ruby">    # each hash is the parsed response from individual lookups (one per [group_size] IDs)</code>
           </li>
         </div>
       
@@ -26409,7 +26453,7 @@
 
             
 
-            <code class="ruby">  end</code>
+            <code class="ruby">    # the hashes contain a nested &#39;term&#39; hash containing &#39;id&#39; and &#39;name&#39;</code>
           </li>
         </div>
       
@@ -26425,13 +26469,13 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="65">
-            <span class="hits">1</span>
+          <li class="never" data-hits="" data-linenumber="65">
+            
             
 
             
 
-            <code class="ruby">  def ruby_uri(id_group_string)</code>
+            <code class="ruby">    # If SES returns an error, we&#39;ll get an error key returned from evaluated_response</code>
           </li>
         </div>
       
@@ -26442,7 +26486,7 @@
 
             
 
-            <code class="ruby">    build_uri(&quot;#{BASE_API_URL}select.exe?TBDB=disp_taxonomy&amp;TEMPLATE=service.json&amp;SERVICE=term&amp;ID=#{id_group_string}&quot;)</code>
+            <code class="ruby">    return responses.first if responses.first.has_key?(:error)</code>
           </li>
         </div>
       
@@ -26453,73 +26497,73 @@
 
             
 
-            <code class="ruby">  end</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="68">
-            
-            
-
-            
-
             <code class="ruby"></code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="69">
-            <span class="hits">1</span>
-            
-
-            
-
-            <code class="ruby">  private</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="70">
-            
-            
-
-            
-
-            <code class="ruby"></code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="covered" data-hits="1" data-linenumber="71">
-            <span class="hits">1</span>
-            
-
-            
-
-            <code class="ruby">  def group_size</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="covered" data-hits="2" data-linenumber="72">
+          <li class="covered" data-hits="2" data-linenumber="68">
             <span class="hits">2</span>
             
 
             
 
-            <code class="ruby">    250</code>
+            <code class="ruby">    unless responses.compact.blank?</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="73">
+          <li class="covered" data-hits="2" data-linenumber="69">
+            <span class="hits">2</span>
+            
+
+            
+
+            <code class="ruby">      responses.each do |response|</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="3" data-linenumber="70">
+            <span class="hits">3</span>
+            
+
+            
+
+            <code class="ruby">        ret[response[&#39;term&#39;][&#39;id&#39;].to_i] = response[&#39;term&#39;][&#39;name&#39;]</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="71">
             
             
 
             
 
-            <code class="ruby">  end</code>
+            <code class="ruby">      end</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="72">
+            
+            
+
+            
+
+            <code class="ruby">    end</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="2" data-linenumber="73">
+            <span class="hits">2</span>
+            
+
+            
+
+            <code class="ruby">    ret</code>
           </li>
         </div>
       
@@ -26530,56 +26574,45 @@
 
             
 
+            <code class="ruby">  end</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="75">
+            
+            
+
+            
+
             <code class="ruby"></code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="75">
+          <li class="covered" data-hits="1" data-linenumber="76">
             <span class="hits">1</span>
             
 
             
 
-            <code class="ruby">  def api_response(id_group_string)</code>
+            <code class="ruby">  def ruby_uri(id_group_string)</code>
           </li>
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="76">
-            
-            
-
+          <li class="covered" data-hits="2" data-linenumber="77">
+            <span class="hits">2</span>
             
 
-            <code class="ruby">    raise &#39;Please stub this method to avoid HTTP requests in test environment&#39; if Rails.env.test?</code>
+            
+
+            <code class="ruby">    build_uri(&quot;#{BASE_API_URL}select.exe?TBDB=disp_taxonomy&amp;TEMPLATE=service.json&amp;SERVICE=term&amp;ID=#{id_group_string}&quot;)</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="77">
-            
-            
-
-            
-
-            <code class="ruby"></code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="missed" data-hits="0" data-linenumber="78">
-            
-            
-
-            
-
-            <code class="ruby">    api_get_request(ruby_uri(id_group_string))</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="79">
+          <li class="never" data-hits="" data-linenumber="78">
             
             
 
@@ -26590,7 +26623,139 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="80">
+          <li class="never" data-hits="" data-linenumber="79">
+            
+            
+
+            
+
+            <code class="ruby"></code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="1" data-linenumber="80">
+            <span class="hits">1</span>
+            
+
+            
+
+            <code class="ruby">  private</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="81">
+            
+            
+
+            
+
+            <code class="ruby"></code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="1" data-linenumber="82">
+            <span class="hits">1</span>
+            
+
+            
+
+            <code class="ruby">  def group_size</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="2" data-linenumber="83">
+            <span class="hits">2</span>
+            
+
+            
+
+            <code class="ruby">    250</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="84">
+            
+            
+
+            
+
+            <code class="ruby">  end</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="85">
+            
+            
+
+            
+
+            <code class="ruby"></code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="1" data-linenumber="86">
+            <span class="hits">1</span>
+            
+
+            
+
+            <code class="ruby">  def api_response(id_group_string)</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="missed" data-hits="0" data-linenumber="87">
+            
+            
+
+            
+
+            <code class="ruby">    raise &#39;Please stub this method to avoid HTTP requests in test environment&#39; if Rails.env.test?</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="88">
+            
+            
+
+            
+
+            <code class="ruby"></code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="missed" data-hits="0" data-linenumber="89">
+            
+            
+
+            
+
+            <code class="ruby">    api_get_request(ruby_uri(id_group_string))</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="90">
+            
+            
+
+            
+
+            <code class="ruby">  end</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="91">
             
             
 
