@@ -10,7 +10,7 @@
     <%= render 'search/results/item_details/pills', pills: object.subjects, pills_heading: 'Subjects' %>
     <%= render 'search/results/item_details/legislation', legislation: object.legislation %>
   </div>
-  <%= render 'search/results/item_details/type', type: object.subtype_or_type %>
+  <%= render 'search/results/item_details/type', type: object.object_name %>
   <%= render 'search/results/item_details/notes', notes: object.notes %>
   <div hidden class="detailed-view" data-detailed-results-target="toggleHidden">
     <%= render 'search/results/item_details/date_tabled', date_tabled: object.date_tabled %>

@@ -7,4 +7,8 @@ class PublicAct < Act
   def template
     'search/objects/public_act'
   end
+
+  def search_result_partial
+    'search/results/public_act'
+  end
 end
