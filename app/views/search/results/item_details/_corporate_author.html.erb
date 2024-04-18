@@ -1,0 +1,7 @@
+<% unless author.blank? %>
+  <div class="item-details">
+    <% author.each do |item| %>
+      <%= search_link(item) %><br/>
+    <% end %>
+  </div>
+<% end %>

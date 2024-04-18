@@ -8,6 +8,10 @@ class Bill < ContentObject
     'search/objects/bill'
   end
 
+  def search_result_partial
+    'search/results/bill'
+  end
+
   def object_name
     subtype_or_type
   end

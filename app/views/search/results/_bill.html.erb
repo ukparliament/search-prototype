@@ -1,6 +1,5 @@
 <div class="result-item">
   <p><%= link_to(object.object_title, object_show_url(object: object.object_uri[:value])) %></p>
-  <%= render 'search/results/item_details/statement_text', statement_text: object.statement_text %>
   <%= render 'search/results/item_details/date', date: object.date %>
   <%= render 'search/results/item_details/type', type: object.object_name %>
   <%= render 'search/results/item_details/member', member: object.member %>
