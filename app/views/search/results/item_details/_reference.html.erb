@@ -1,5 +1,5 @@
 <% unless reference.blank? || reference.pluck(:value) == ["."] %>
-  <div class="item-detail">
+  <div class="item-details">
     <% reference.each do |ref| %>
       <%= ref[:value] %>&nbsp
     <% end %>

@@ -36,7 +36,15 @@ class SesLookup < ApiCall
     # returns a (flattened) array
     output = []
     lookup_id_groups.each do |id_group|
-      response = JSON.parse(api_response(id_group))
+
+      begin
+        response = JSON.parse(api_response(id_group))
+      rescue JSON::ParserError
+        # if SES fails it returns an error as XML
+        response = Hash.from_xml(api_response(id_group))
+        return [{ error: response }]
+      end
+
       output << response['terms']
     end
 
@@ -53,6 +61,9 @@ class SesLookup < ApiCall
     # responses is an array of hashes
     # each hash is the parsed response from individual lookups (one per [group_size] IDs)
     # the hashes contain a nested 'term' hash containing 'id' and 'name'
+
+    # If SES returns an error, we'll get an error key returned from evaluated_response
+    return responses.first if responses.first.has_key?(:error)
 
     unless responses.compact.blank?
       responses.each do |response|

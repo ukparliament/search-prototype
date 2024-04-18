@@ -1,0 +1,7 @@
+<% unless departments.blank? %>
+  <div class="item-details">
+    <% departments.each do |department| %>
+      <%= search_link(department) %><br/>
+    <% end %>
+  </div>
+<% end %>

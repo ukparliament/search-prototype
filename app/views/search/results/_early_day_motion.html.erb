@@ -1,0 +1,20 @@
+<div class="result-item">
+  <p><%= link_to(object.object_title, object_show_url(object: object.object_uri[:value])) %></p>
+  <%= render 'search/results/item_details/motion_text', motion_text: object.motion_text %>
+  <%= render 'search/results/item_details/date', date: object.date %>
+  <%= render 'search/fragments/list', items: object.legislature, terminator: "", singular: false %>
+  <%= render 'search/results/item_details/reference', reference: object.reference %>
+  <%= render 'search/results/item_details/primary_sponsor', primary_sponsor: object.primary_sponsor %>
+  <div hidden class="detailed-view" data-detailed-results-target="toggleHidden">
+    <%= render 'search/results/item_details/primary_sponsor_party', primary_sponsor_party: object.primary_sponsor_party %>
+    <%= render 'search/results/item_details/pills', pills: object.subjects, pills_heading: 'Subjects' %>
+    <%= render 'search/results/item_details/legislation', legislation: object.legislation %>
+  </div>
+  <%= render 'search/results/item_details/type', type: object.subtype_or_type %>
+  <%= render 'search/results/item_details/notes', notes: object.notes %>
+  <div hidden class="detailed-view" data-detailed-results-target="toggleHidden">
+    <%= render 'search/results/item_details/date_tabled', date_tabled: object.date_tabled %>
+    <!-- amendment primary sponsor -->
+    <!-- amendment date tabled -->
+  </div>
+</div>
