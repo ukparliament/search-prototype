@@ -9,10 +9,6 @@ class SearchController < ApplicationController
     @all_data = @search.all_data
     @response = @all_data['response']
 
-    @all_facets = @all_data['facet_counts']['facet_fields'].map do |facet_field|
-      { field_name: facet_field.first, facets: Hash[*facet_field.last] }
-    end
-
     if @response.has_key?('code')
       if [401, 404].include?(@response['code'])
         render template: "layouts/shared/error/#{@response['code']}", locals: { status: @response['code'], message: @response['msg'] }
@@ -38,9 +34,25 @@ class SearchController < ApplicationController
       unique_ses_ids = { value: combined_ses_ids.uniq }
       @ses_data = SesLookup.new([unique_ses_ids]).data unless unique_ses_ids.blank?
     end
+
+    @all_facets = @all_data['facet_counts']['facet_fields'].map do |facet_field|
+      { field_name: facet_field.first, facets: sort_facets(facet_field) }
+    end
   end
 
   private
+
+  def sort_facets(facet_field)
+    field_name = facet_field.first
+
+    if field_name.last(3).downcase == "ses"
+      sorted_facets = Hash[*facet_field.last].sort_by { |ses_id, count| @ses_data[ses_id.to_i] }
+    else
+      sorted_facets = Hash[*facet_field.last].sort_by { |name, count| name }
+    end
+
+    sorted_facets
+  end
 
   def search_params
     params.permit(:commit, :query, :page, :number_of_results, :sort_by, filter: [permitted_filters])
