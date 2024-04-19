@@ -61,11 +61,11 @@
             <label class="search-control-panel-label">
               <span>Results per page</span>
             </label>
-            <%= select_tag("number_of_results", options_for_select([10, 20, 30])) %>
+            <%= select_tag("number_of_results", options_for_select([10, 20, 30]), { class: 'form-select' }) %>
             <label class="search-control-panel-label">
               <span>Sort by</span>
             </label>
-            <%= select_tag("sort_by", options_for_select(["Date"])) %>
+            <%= select_tag("sort_by", options_for_select(["Date"]), { class: 'form-select' }) %>
           </div>
         </div>
 

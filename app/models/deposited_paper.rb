@@ -8,6 +8,10 @@ class DepositedPaper < Paper
     'search/objects/deposited_paper'
   end
 
+  def search_result_partial
+    'search/results/deposited_paper'
+  end
+
   def deposited_date
     get_first_as_date_from('dateReceived_dt')
   end

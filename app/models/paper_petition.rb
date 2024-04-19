@@ -8,6 +8,10 @@ class PaperPetition < Petition
     'search/objects/paper_petition'
   end
 
+  def search_result_partial
+    'search/results/paper_petition'
+  end
+
   def object_name
     subtype
   end

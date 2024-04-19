@@ -8,6 +8,10 @@ class TransportAndWorksActOrderApplication < ContentObject
     'search/objects/transport_and_works_act_order_application'
   end
 
+  def search_result_partial
+    'search/results/transport_and_works_act_order_application'
+  end
+
   def depositing_agent
     fallback(get_first_from('agent_ses'), get_first_from('agent_t'))
   end

@@ -1,0 +1,16 @@
+<div class="result-item">
+  <p><%= link_to(object.object_title, object_show_url(object: object.object_uri[:value])) %></p>
+  <%= render 'search/results/item_details/correction_text', correction_text: object.correction_text %>
+  <%= render 'search/results/item_details/date', date: object.date %>
+  <%= render 'search/results/item_details/type', type: object.object_name %>
+  <%= render 'search/results/item_details/lead_member', lead_member: object.lead_member %>
+  <%= render 'search/results/item_details/lead_member_party', lead_member_party: object.lead_member_party %>
+  <%= render 'search/results/item_details/departments', departments: object.departments %>
+  <%= render 'search/fragments/list', items: object.legislature, terminator: "", singular: false %>
+  <%= render 'search/results/item_details/reference', reference: object.reference %>
+  <div hidden class="detailed-view" data-detailed-results-target="toggleHidden">
+    <%= render 'search/results/item_details/legislation', legislation: object.legislation %>
+    <%= render 'search/results/item_details/notes', notes: object.notes %>
+    <%= render 'search/results/item_details/pills', pills: object.subjects, pills_heading: 'Subjects' %>
+  </div>
+</div>
