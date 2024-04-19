@@ -12,6 +12,10 @@ class MinisterialCorrection < ContentObject
     'search/objects/ministerial_correction'
   end
 
+  def search_result_partial
+    'search/results/ministerial_correction'
+  end
+
   def correction_text
     get_first_from('correctionText_t')
   end

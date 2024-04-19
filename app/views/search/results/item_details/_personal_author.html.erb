@@ -1,6 +1,6 @@
-<% unless corporate_author.blank? %>
+<% unless personal_author.blank? %>
   <div class="item-details">
-    <% corporate_author.each do |item| %>
+    <% personal_author.each do |item| %>
       <%= search_link(item) %><br/>
     <% end %>
   </div>

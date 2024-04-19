@@ -8,6 +8,10 @@ class EuropeanDepositedDocument < ContentObject
     'search/objects/european_deposited_document'
   end
 
+  def search_result_partial
+    'search/results/european_deposited_document'
+  end
+
   def object_name
     subtype_or_type
   end
@@ -33,6 +37,7 @@ class EuropeanDepositedDocument < ContentObject
   end
 
   def date_of_origin
+    # TODO: this method is named differently on different object types; should be the same
     get_first_as_date_from('dateOriginated_dt')
   end
 

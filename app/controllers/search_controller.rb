@@ -43,15 +43,7 @@ class SearchController < ApplicationController
   private
 
   def sort_facets(facet_field)
-    field_name = facet_field.first
-
-    if field_name.last(3).downcase == "ses"
-      sorted_facets = Hash[*facet_field.last].sort_by { |ses_id, count| @ses_data[ses_id.to_i] }
-    else
-      sorted_facets = Hash[*facet_field.last].sort_by { |name, count| name }
-    end
-
-    sorted_facets
+    Hash[*facet_field.last].sort_by { |name, count| count }.reverse
   end
 
   def search_params
