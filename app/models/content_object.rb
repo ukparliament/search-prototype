@@ -443,7 +443,8 @@ class ContentObject
       # 'UnprintedPaper'
       'ParliamentaryPaperLaid'
     when 352156
-      'ParliamentaryPaperReported'
+      # Parliamentary committee inherits from ParliamentaryPaperReported
+      'ParliamentaryCommittee'
     when 352261
       # 'UnprintedCommandPaper'
       'ParliamentaryPaperLaid'
@@ -468,11 +469,11 @@ class ContentObject
     when 356750
       'ProceedingContribution'
     when 352161
-      # Grand committee
-      'ParliamentaryProceeding'
+      # Grand committee proceeding inherits from parliamentary proceeding
+      'GrandCommitteeProceeding'
     when 352151
-      # Committee
-      'ParliamentaryProceeding'
+      # Committee proceeding inherits from parliamentary proceeding
+      'CommitteeProceeding'
     when 352179
       'ParliamentaryProceeding'
     when 347226

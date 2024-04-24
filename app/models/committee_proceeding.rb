@@ -1,10 +1,10 @@
-class CommitteeProceeding < ContentObject
+class CommitteeProceeding < ParliamentaryProceeding
 
   def initialize(content_object_data)
     super
   end
 
-  def template
-    'search/objects/committee_proceeding'
+  def search_result_partial
+    'search/results/committee_proceeding'
   end
 end
