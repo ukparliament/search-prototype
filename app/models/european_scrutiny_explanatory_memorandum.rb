@@ -8,6 +8,10 @@ class EuropeanScrutinyExplanatoryMemorandum < EuropeanScrutiny
     'search/objects/european_scrutiny_explanatory_memorandum'
   end
 
+  def search_result_partial
+    'search/results/european_scrutiny_explanatory_memorandum'
+  end
+
   def object_name
     subtype_or_type
   end

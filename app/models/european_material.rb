@@ -8,11 +8,17 @@ class EuropeanMaterial < ContentObject
     'search/objects/european_material'
   end
 
+  def search_result_partial
+    'search/results/european_material'
+  end
+
   def category
     get_first_from('category_ses')
   end
 
   def object_name
+    # TODO: should include category?
+    # (category_ses AND subtype_ses) OR category_ses OR subtype_ses OR type_ses
     subtype_or_type
   end
 

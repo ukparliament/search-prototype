@@ -8,6 +8,10 @@ class ProceedingContribution < ContentObject
     'search/objects/proceeding_contribution'
   end
 
+  def search_result_template
+    'search/results/proceeding_contribution'
+  end
+
   def object_name
     subtype_or_type
   end
