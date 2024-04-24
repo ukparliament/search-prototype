@@ -468,8 +468,8 @@ class ContentObject
     when 356750
       'ProceedingContribution'
     when 352161
-      # Grand committee
-      'ParliamentaryProceeding'
+      # Grand committee proceeding inherits from parliamentary proceeding
+      'GrandCommitteeProceeding'
     when 352151
       # Committee proceeding inherits from parliamentary proceeding
       'CommitteeProceeding'
