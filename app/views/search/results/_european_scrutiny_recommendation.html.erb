@@ -1,0 +1,9 @@
+<div class="result-item">
+  <p><%= link_to(object.object_title, object_show_url(object: object.object_uri[:value])) %></p>
+  <%= render 'search/results/item_details/report_date', report_date: object.report_date %>
+  <%= render 'search/results/item_details/type', type: object.object_name %>
+  <div hidden class="detailed-view" data-detailed-results-target="toggleHidden">
+    <%= render 'search/results/item_details/debate_date', debate_date: object.debate_date %>
+  </div>
+  <%= render 'search/results/item_details/reference', reference: object.reference %>
+</div>

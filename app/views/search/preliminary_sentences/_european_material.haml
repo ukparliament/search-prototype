@@ -2,15 +2,9 @@
   .content-prelim-inner
     .content-prelim-text#prelim-text
       %span>= object_display_name_link(object.type)
-      - unless object.category.blank? && object.subtype.blank?
-        %span= " ("
-        - unless object.category.blank?
-          %span>= object_display_name_link(object.category)
-          - unless object.subtype.blank?
-            %span= ", "
-        - unless object.subtype.blank?
-          %span>= object_display_name_link(object.subtype)
-        %span= ")"
+      %span= " ("
+      %span>= render partial: '/search/fragments/eu_material_subtype_and_category', locals: { category: object.category, subtype: object.subtype }
+      %span= ")"
       - unless object.published_date.blank?
         %span= " published on "
         %strong>= format_date(object.published_date)
