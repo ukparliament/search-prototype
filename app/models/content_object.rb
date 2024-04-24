@@ -443,7 +443,8 @@ class ContentObject
       # 'UnprintedPaper'
       'ParliamentaryPaperLaid'
     when 352156
-      'ParliamentaryPaperReported'
+      # Parliamentary committee inherits from ParliamentaryPaperReported
+      'ParliamentaryCommittee'
     when 352261
       # 'UnprintedCommandPaper'
       'ParliamentaryPaperLaid'

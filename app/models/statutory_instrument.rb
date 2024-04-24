@@ -8,6 +8,10 @@ class StatutoryInstrument < Paper
     'search/objects/statutory_instrument'
   end
 
+  def search_result_partial
+    'search/results/statutory_instrument'
+  end
+
   def object_name
     # differs from subtype_or_type as there can be multiple subtypes for SIs
 

@@ -1,0 +1,24 @@
+<div class="result-item">
+  <p><%= link_to(object.object_title, object_show_url(object: object.object_uri[:value])) %></p>
+  <%= render 'search/results/item_details/abstract', abstract: object.abstract_text %>
+  <%= render 'search/results/item_details/date', date: object.date %>
+  <%= render 'search/fragments/list', items: object.object_name, terminator: "", singular: true %>
+  <div hidden class="detailed-view" data-detailed-results-target="toggleHidden">
+    <%= render 'search/results/item_details/procedure', procedure: object.procedure %>
+    <%= render 'search/results/item_details/member_name', member_name: object.member_name %>
+  </div>
+  <%= render 'search/results/item_details/departments', departments: object.departments %>
+  <%= render 'search/fragments/list', items: object.legislature, terminator: "", singular: false %>
+  <%= render 'search/results/item_details/reference', reference: object.reference %>
+  <div hidden class="detailed-view" data-detailed-results-target="toggleHidden">
+    <%= render 'search/results/item_details/legislation', legislation: object.legislation %>
+    <%= render 'search/results/item_details/notes', notes: object.notes %>
+    <%= render 'search/results/item_details/date_laid', date_laid: object.date_laid %>
+    <%= render 'search/results/item_details/date_made', date_made: object.date_made %>
+    <%= render 'search/results/item_details/date_approved', date_approved: object.date_approved %>
+    <%= render 'search/results/item_details/coming_into_force', notes: object.coming_into_force, date: object.coming_into_force_date %>
+    <%= render 'search/results/item_details/date_withdrawn', date_withdrawn: object.date_withdrawn %>
+    <%= render 'search/results/item_details/pills', pills: object.subjects, pills_heading: 'Subjects' %>
+    <%= render 'search/results/item_details/library_location', commons: object.commons_library_location, lords: object.lords_library_location %>
+  </div>
+</div>
