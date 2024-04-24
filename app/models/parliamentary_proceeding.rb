@@ -8,6 +8,10 @@ class ParliamentaryProceeding < Proceeding
     'search/objects/parliamentary_proceeding'
   end
 
+  def search_result_partial
+    'search/results/parliamentary_proceeding'
+  end
+
   def object_name
     subtypes_or_type
   end
