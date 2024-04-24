@@ -1,0 +1,7 @@
+<% unless procedure.blank? %>
+  <div class="item-details">
+    <% procedure.each do |p| %>
+      <%= search_link(p) %><br/>
+    <% end %>
+  </div>
+<% end %>

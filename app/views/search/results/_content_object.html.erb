@@ -1,3 +1,6 @@
 <div class="result-item">
   <p><%= link_to(object.object_title, object_show_url(object: object.object_uri[:value])) %></p>
+  <%= render 'search/fragments/list', items: [object.object_name].flatten, terminator: '', singular: true %>
+  <%= object.class %>
+  <%= object.search_result_partial %>
 </div>

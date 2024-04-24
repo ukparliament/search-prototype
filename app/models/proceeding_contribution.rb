@@ -8,7 +8,7 @@ class ProceedingContribution < ContentObject
     'search/objects/proceeding_contribution'
   end
 
-  def search_result_template
+  def search_result_partial
     'search/results/proceeding_contribution'
   end
 
