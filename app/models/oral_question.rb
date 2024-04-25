@@ -8,6 +8,10 @@ class OralQuestion < Question
     'search/objects/oral_question'
   end
 
+  def search_result_partial
+    'search/results/oral_question'
+  end
+
   def object_name
     subtype_or_type
   end

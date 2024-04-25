@@ -126,6 +126,10 @@ class ContentObject
     get_first_as_date_from('dateCertified_dt')
   end
 
+  def date_tabled
+    get_first_as_date_from('dateTabled_dt')
+  end
+
   def legislation
     from_ses = get_all_from('legislationTitle_ses')
     as_text = get_all_from('legislationTitle_t')
@@ -420,45 +424,45 @@ class ContentObject
     when 347122
       'Bill'
     when 92435
-      if subtype_ids.include?(479373)
+      if subtype_ids&.include?(479373)
         'PaperPetition'
-      elsif subtype_ids.include?(347214)
+      elsif subtype_ids&.include?(347214)
         'ObservationsOnPetitions'
       else
         'ContentObject'
       end
     when 347207
       'FormalProceeding'
-
     when 90587
-      # 'CommandPaper'
-      'ParliamentaryPaperLaid'
+      # CommandPaper inherits from ParliamentaryPaperLaid
+      'CommandPaper'
     when 91561
-      # 'HouseOfCommonsPaper'
-      'ParliamentaryPaperLaid'
+      # HouseOfCommons paper inherits from ParliamentaryPaperLaid
+      'HouseOfCommonsPaper'
     when 91563
       # 'HouseOfLordsPaper'
       'ParliamentaryPaperLaid'
     when 51288
-      # 'UnprintedPaper'
-      'ParliamentaryPaperLaid'
+      # UnprintedPaper inherits from ParliamentaryPaperLaid
+      'UnprintedPaper'
     when 352156
-      # Parliamentary committee inherits from ParliamentaryPaperReported
+      # ParliamentaryCommittee inherits from ParliamentaryPaperReported
       'ParliamentaryCommittee'
     when 352261
-      # 'UnprintedCommandPaper'
-      'ParliamentaryPaperLaid'
+      # UnprintedCommandPaper inherits from ParliamentaryPaperLaid
+      'UnprintedCommandPaper'
     when 92347
-      if subtype_ids.include?(528119)
+      if subtype_ids&.include?(528119)
         'PaperOrderedToBePrinted'
-      elsif subtype_ids.include?(528127)
+      elsif subtype_ids&.include?(528127)
         'PaperOrderedToBePrinted'
-      elsif subtype_ids.include?(528129)
+      elsif subtype_ids&.include?(528129)
         'PaperSubmitted'
-      elsif subtype_ids.include?(51288)
-        'ParliamentaryPaperLaid'
+      elsif subtype_ids&.include?(51288)
+        # changed from ParliamentaryPaperLaid when object added
+        'UnprintedPaper'
       else
-        'ContentObject'
+        'ParliamentaryPaperLaid'
       end
     when 92277
       'OralQuestion'
