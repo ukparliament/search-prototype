@@ -1,0 +1,32 @@
+<div class="result-item">
+  <p><%= link_to(object.object_title, object_show_url(object: object.object_uri[:value])) %></p>
+  <%= render 'search/results/item_details/question_text', question_text: object.question_text %>
+  <%= render 'search/results/item_details/date', date: object.date %>
+  <%= render 'search/results/item_details/type', type: object.object_name %>
+  <%= render 'search/results/item_details/state', state: object.state %>
+  <div hidden class="detailed-view" data-detailed-results-target="toggleHidden">
+    <%= render 'search/results/item_details/contribution_type', contribution_type: object.contribution_type %>
+  </div>
+  <%= render 'search/results/item_details/asking_member', asking_member: object.asking_member %>
+  <div hidden class="detailed-view" data-detailed-results-target="toggleHidden">
+    <%= render 'search/results/item_details/asking_member_party', asking_member_party: object.asking_member_party %>
+    <%= render 'search/results/item_details/answer_text', answer_text: object.answer_text %>
+    <%= render 'search/results/item_details/answering_member', answering_member: object.answering_member %>
+    <%= render 'search/results/item_details/answering_member_party', answering_member_party: object.answering_member_party %>
+  </div>
+  <%= render 'search/results/item_details/answering_department', answering_department: object.answering_department %>
+  <div hidden class="detailed-view" data-detailed-results-target="toggleHidden">
+    <%= render 'search/results/item_details/place', place: object.place %>
+  </div>
+  <%= render 'search/fragments/list', items: object.legislature, terminator: "", singular: false %>
+  <%= render 'search/results/item_details/reference', reference: object.reference %>
+  <div hidden class="detailed-view" data-detailed-results-target="toggleHidden">
+    <%= render 'search/results/item_details/legislation', legislation: object.legislation %>
+    <%= render 'search/results/item_details/procedure', procedure: object.procedure %>
+    <%= render 'search/results/item_details/notes', notes: object.notes %>
+    <%= render 'search/results/item_details/date_tabled', date_tabled: object.date_tabled %>
+    <%= render 'search/results/item_details/date_for_answer', date_for_answer: object.date_for_answer %>
+    <%= render 'search/results/item_details/date_of_answer', date_of_answer: object.date_of_answer %>
+    <%= render 'search/results/item_details/pills', pills: object.subjects, pills_heading: 'Subjects' %>
+  </div>
+</div>

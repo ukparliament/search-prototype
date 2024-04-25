@@ -75,8 +75,4 @@ class Edm < ContentObject
   def number_of_signatures
     get_first_from('numberOfSignatures_t')
   end
-
-  def date_tabled
-    get_first_as_date_from('dateTabled_dt')
-  end
 end

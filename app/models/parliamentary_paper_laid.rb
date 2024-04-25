@@ -8,6 +8,10 @@ class ParliamentaryPaperLaid < Paper
     'search/objects/parliamentary_paper_laid'
   end
 
+  def search_result_partial
+    'search/results/parliamentary_paper_laid'
+  end
+
   def object_name
     # type shown for most papers, except 92347 which uses subtypes (plural)
     return if type.blank?

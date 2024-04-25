@@ -8,6 +8,10 @@ class WrittenQuestion < Question
     'search/objects/written_question'
   end
 
+  def search_result_partial
+    'search/results/written_question'
+  end
+
   def holding?
     state && state[:value] == 'Holding'
   end
@@ -66,6 +70,10 @@ class WrittenQuestion < Question
 
   def is_grouped_for_answer
     get_first_as_boolean_from('groupedAnswer_b')
+  end
+
+  def answering_body
+    get_first_from('departmentPrinted_t')
   end
 
   def attachment
