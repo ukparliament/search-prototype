@@ -40,13 +40,13 @@ RSpec.describe 'Search', type: :request do
 
         get '/search', params: { "filter" => { "type_ses" => ["90996"] } }
         expect(response).to have_http_status(:ok)
-        expect(response.parsed_body).to include("Parliamentary search - Search results")
-        expect(response.parsed_body).to include('Test item 1')
-        expect(response.parsed_body).to include('http://www.example.com/objects?object=test_item_1_uri')
-        expect(response.parsed_body).to include('Test item 2')
-        expect(response.parsed_body).to include('http://www.example.com/objects?object=test_item_2_uri')
-        expect(response.parsed_body).to include('Test item 3')
-        expect(response.parsed_body).to include('http://www.example.com/objects?object=test_item_3_uri')
+        expect(response.parsed_body.inner_html).to include("Parliamentary search - Search results")
+        expect(response.parsed_body.inner_html).to include('Test item 1')
+        expect(response.parsed_body.inner_html).to include('http://www.example.com/objects?object=test_item_1_uri')
+        expect(response.parsed_body.inner_html).to include('Test item 2')
+        expect(response.parsed_body.inner_html).to include('http://www.example.com/objects?object=test_item_2_uri')
+        expect(response.parsed_body.inner_html).to include('Test item 3')
+        expect(response.parsed_body.inner_html).to include('http://www.example.com/objects?object=test_item_3_uri')
       end
     end
 

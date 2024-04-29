@@ -19,27 +19,25 @@
   <section id="search-results">
     <div class="results-grid-container">
       <div class="filter-container">
-        <%= f.fields_for :filter do |filter_form| %>
-          <% @all_facets.each do |facet_field| %>
-            <% unless facet_field[:facets].blank? %>
-              <details open>
-                <summary>
-                  <strong><%= ses_field_name(facet_field[:field_name]) %></strong>
-                </summary>
-                <div class="facets">
-                  <% facet_field[:facets].each do |facet| %>
-                    <div class="facet-check">
-                      <%= filter_form.check_box facet_field[:field_name], { multiple: true, checked: checked_field(params[:filter], facet_field[:field_name], facet.first), onchange: 'this.form.submit()' }, facet.first, nil %>
+        <% @all_facets.each do |facet_field| %>
+          <% unless facet_field[:facets].blank? %>
+            <details open>
+              <summary>
+                <strong><%= ses_field_name(facet_field[:field_name]) %></strong>
+              </summary>
+              <div class="facets">
+                <% facet_field[:facets].each do |facet| %>
+                  <div class="facet-check">
+                    <%= f.check_box "filter[#{facet_field[:field_name]}]", { multiple: true, checked: checked_field(params[:filter], facet_field[:field_name], facet.first), onchange: 'this.form.submit()' }, facet.first, nil %>
+                  </div>
+                  <div class="facet-label">
+                    <div><%= object_display_name({ value: facet.first, field_name: facet_field[:field_name] }, singular: false) %>
+                      (<%= facet.last.to_i %>)
                     </div>
-                    <div class="facet-label">
-                      <div><%= object_display_name({ value: facet.first, field_name: facet_field[:field_name] }, singular: false) %>
-                        (<%= facet.last.to_i %>)
-                      </div>
-                    </div>
-                  <% end %>
-                </div>
-              </details>
-            <% end %>
+                  </div>
+                <% end %>
+              </div>
+            </details>
           <% end %>
         <% end %>
       </div>
