@@ -3,9 +3,12 @@
   <div id="top"></div>
 <% end %>
 
-<%#= render 'search/fragments/data', data: @metadata, title: 'Search metadata' %>
-<%#= render 'search/fragments/data', data: @results, title: 'Search results' %>
-<%#= render 'search/fragments/data', data: @all_facets, title: 'Facets' %>
+<%= render 'search/fragments/data', data: @response, title: 'Full response' %>
+<%= render 'search/fragments/data', data: @all_data, title: 'All data' %>
+<%= render 'search/fragments/data', data: @metadata, title: 'Search metadata' %>
+<%= render 'search/fragments/data', data: @ses_data, title: 'SES results' %>
+<%= render 'search/fragments/data', data: @all_facets, title: 'Facets' %>
+<%= render 'search/fragments/data', data: @content_type_hierarchy, title: 'Content type' %>
 
 <%= form_with url: search_url, method: :get, local: true, id: 'search-form' do |f| %>
   <section id="search" class="content-section white">
@@ -19,7 +22,7 @@
   <section id="search-results">
     <div class="results-grid-container">
       <div class="filter-container">
-        <% @all_facets.each do |facet_field| %>
+        <% @facets.each do |facet_field| %>
           <% unless facet_field[:facets].blank? %>
             <details open>
               <summary>
@@ -45,7 +48,7 @@
       <div class="results-container" data-controller="detailed-results">
         <div class="search-control-panel">
           <div class="control-panel-row">
-            <strong><%= @number_of_results %> results</strong>
+            <strong><%= @number_of_results %> results</strong> (<%= @query_time %> seconds)
           </div>
           <div class="control-panel-row">
             <label class="search-control-panel-label">
@@ -59,11 +62,11 @@
             <label class="search-control-panel-label">
               <span>Results per page</span>
             </label>
-            <%= select_tag("number_of_results", options_for_select([10, 20, 30]), { class: 'form-select' }) %>
+            <%= f.select "results_per_page", options_for_select([10, 20, 50, 100], selected: @number_of_results), {}, { onchange: "this.form.submit()", class: 'form-select' } %>
             <label class="search-control-panel-label">
               <span>Sort by</span>
             </label>
-            <%= select_tag("sort_by", options_for_select(["Date"]), { class: 'form-select' }) %>
+            <%= f.select("sort_by", options_for_select(["Date (desc)", "Date (asc)"], selected: @sort), {}, { onchange: 'this.form.submit()', class: 'form-select' }) %>
           </div>
         </div>
 
@@ -74,10 +77,10 @@
             <hr>
           <% end %>
 
-          <% unless @search.current_page.blank? || @total_pages.blank? %>
+          <% unless @current_page.blank? || @total_pages.blank? %>
             <p>
               Showing results <strong><%= @start %> - <%= @end %></strong> of
-              <strong><%= @number_of_results %></strong>
+              <strong><%= @number_of_results %></strong> in <strong><%= "#{(@query_time)} seconds." %></strong>
             </p>
             <%= render 'pagination', user_requested_page: @search.user_requested_page, last_page: @total_pages, query: @search.query, filter: @search.filter %>
           <% end %>

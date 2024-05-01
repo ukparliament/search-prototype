@@ -6,48 +6,46 @@ class SearchController < ApplicationController
 
     @page_title = "Search results"
     @search = SolrSearch.new(search_params)
-    @all_data = @search.all_data
-    @response = @all_data['response']
+    search_data = SearchData.new(@search)
 
-    if @response.has_key?('code')
-      if [401, 404].include?(@response['code'])
-        render template: "layouts/shared/error/#{@response['code']}", locals: { status: @response['code'], message: @response['msg'] }
+    @all_data = @search.all_data
+
+    if search_data.response.has_key?('code')
+      if [401, 404].include?(search_data.response['code'])
+        render template: "layouts/shared/error/#{search_data.response['code']}", locals: { status: search_data.response['code'], message: search_data.response['msg'] }
       else
-        render template: 'layouts/shared/error/500', locals: { status: @response['code'], message: @response['msg'] }
+        render template: 'layouts/shared/error/500', locals: { status: search_data.response['code'], message: search_data.response['msg'] }
       end
     else
-      data = @response['docs']
+      # TODO: consider placing all of this inside a single data hash to be read by views?
+
       @objects = []
-      data.each do |object_data|
+      search_data.data.each do |object_data|
         @objects << ContentObject.generate(object_data)
       end
 
-      @metadata = @response.except('docs')
-      @number_of_results = @response['numFound']
-      @start = @response['start']
-      @end = @response['start'] + @search.rows
-      @total_pages = (@number_of_results / @search.rows) + 1 unless @number_of_results.blank?
+      @metadata = search_data.metadata
+      @number_of_results = search_data.number_of_results
+      @sort = search_data.sort
+      @start = search_data.start
+      @end = search_data.end
+      @total_pages = search_data.total_pages
+      @ses_data = search_data.ses_data
+      @facets = search_data.facet_data
+      @query_time = search_data.query_time
+      @current_page = @search.current_page
+      @requested_age = @search.user_requested_page
 
-      ses_ids = data.pluck('all_ses').flatten
-      facet_ses = @all_data['facet_counts']['facet_fields'].select { |k, v| k.last(3) == "ses" }.flat_map { |k, v| Hash[*v].keys.map(&:to_i) }
-      combined_ses_ids = facet_ses + ses_ids
-      unique_ses_ids = { value: combined_ses_ids.uniq }
-      @ses_data = SesLookup.new([unique_ses_ids]).data unless unique_ses_ids.blank?
-    end
-
-    @all_facets = @all_data['facet_counts']['facet_fields'].map do |facet_field|
-      { field_name: facet_field.first, facets: sort_facets(facet_field) }
+      # debug only
+      @content_type_hierarchy = SesLookup.new([{ value: [92277] }]).data
+      # @content_type_hierarchy = SesLookup.new([{ value: [346696] }]).data
     end
   end
 
   private
 
-  def sort_facets(facet_field)
-    Hash[*facet_field.last].sort_by { |name, count| count }.reverse
-  end
-
   def search_params
-    params.permit(:commit, :query, :page, :number_of_results, :sort_by, filter: [permitted_filters])
+    params.permit(:commit, :query, :page, :results_per_page, :sort_by, filter: [permitted_filters])
   end
 
   def permitted_filters

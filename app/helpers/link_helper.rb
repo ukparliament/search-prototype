@@ -63,7 +63,8 @@ module LinkHelper
 
     return if data.blank?
 
-    if data[:field_name]&.last(3) == 'ses'
+    if data[:field_name] && ["ses", "sesrollup"].include?(data[:field_name]&.split('_')&.last)
+      # if data[:field_name]&.last(3) == 'ses'
       # we need to get the string from the page SES data
       name_string = ses_data[data[:value].to_i]
 
