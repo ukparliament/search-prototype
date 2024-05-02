@@ -1,15 +1,35 @@
 class SolrSearch < ApiCall
 
-  attr_reader :query, :page, :filter, :results_per_page, :sort_by
+  attr_reader :query, :page, :filter, :results_per_page, :sort_by, :search_parameters
 
   def initialize(search_parameters)
     super
+    @search_parameters = search_parameters
     @query = search_parameters[:query]
     @page = search_parameters[:page]
     @results_per_page = search_parameters[:results_per_page]&.to_i
     @filter = search_parameters[:filter]
     @sort_by = search_parameters[:sort_by]
   end
+
+  def self.facet_fields
+    ['type_ses', 'type_sesrollup', 'subtype_ses', 'legislativeStage_ses', 'session_t', 'member_ses', 'tablingMember_ses', 'answeringMember_ses', 'legislature_ses']
+  end
+
+  # TODO: no direct querying of data; everything here needs to be output to a single hash
+  # The hash will then be interrogated by another class that it is passed to
+
+  def data
+    ret = {}
+    ret[:search_parameters] = search_parameters unless search_parameters.blank?
+    ret[:data] = all_data
+    ret
+  end
+
+  private
+
+  # Various private methods to transform user provided params into search_params for API request
+  # These methods are not to be accessed after API has returned its results
 
   def start
     # offset number of rows
@@ -30,16 +50,6 @@ class SolrSearch < ApiCall
     user_requested_page - 1
   end
 
-  def search_filter
-    # "fq": ["field_name:value1", "field_name:value2", ...],
-
-    # For 'OR'
-    # filter.to_h.flat_map { |field_name, values| values.map { |value| "#{field_name}:#{value}" }.join(" OR ") }
-
-    # Default is 'AND'
-    filter.to_h.flat_map { |field_name, values| values.map { |value| "#{field_name}:#{value}" } }
-  end
-
   def search_query
     return if query.blank?
 
@@ -53,18 +63,22 @@ class SolrSearch < ApiCall
     results_per_page
   end
 
+  def search_filter
+    # "fq": ["field_name:value1", "field_name:value2", ...],
+
+    # For 'OR'
+    # filter.to_h.flat_map { |field_name, values| values.map { |value| "#{field_name}:#{value}" }.join(" OR ") }
+
+    # Default is 'AND'
+    filter.to_h.flat_map { |field_name, values| values.map { |value| "#{field_name}:#{value}" } }
+  end
+
   def sort
-    return 'date_dt desc' if sort_by == "Date (desc)"
-    return 'date_dt asc' if sort_by == "Date (asc)"
+    return 'date_dt desc' if sort_by == "date_desc"
+    return 'date_dt asc' if sort_by == "date_asc"
 
     'date_dt desc'
   end
-
-  def self.facet_fields
-    ['type_ses', 'type_sesrollup', 'subtype_ses', 'legislativeStage_ses', 'session_t', 'member_ses', 'tablingMember_ses', 'answeringMember_ses', 'legislature_ses']
-  end
-
-  private
 
   def search_params
     {
