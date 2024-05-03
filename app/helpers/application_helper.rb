@@ -41,6 +41,7 @@ module ApplicationHelper
 
     field_names = {
       type_ses: 'Content type',
+      type_sesrollup: 'Content type (Rollup)',
       legislature_ses: 'Legislature',
       session_t: 'Session',
       member_ses: 'Member',

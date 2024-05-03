@@ -48,6 +48,7 @@ class SesLookup < ApiCall
       output << response['terms']
     end
 
+    # puts JSON.pretty_generate(output)
     output.flatten
   end
 
@@ -63,7 +64,7 @@ class SesLookup < ApiCall
     # the hashes contain a nested 'term' hash containing 'id' and 'name'
 
     # If SES returns an error, we'll get an error key returned from evaluated_response
-    return responses.first if responses.first.has_key?(:error)
+    return responses.first if responses.first&.has_key?(:error)
 
     unless responses.compact.blank?
       responses.each do |response|
