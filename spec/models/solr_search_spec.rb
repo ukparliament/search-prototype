@@ -20,14 +20,18 @@ RSpec.describe SolrSearch, type: :model do
     "highlighting" => { "test_url" => {} }
   } }
 
-  describe 'object_data' do
-    it 'returns an array of data' do
+  describe 'facet_fields' do
+    it 'returns an array of strings' do
+      expect(SolrSearch.facet_fields).to be_a Array
+      expect(SolrSearch.facet_fields.map(&:class).uniq).to eq([String])
+    end
+  end
+
+  describe 'data' do
+    let!(:solr_search) { SolrSearch.new({ filter: { 'field_name' => ['test'] } }) }
+    it 'returns a hash containing the search parameters and response' do
       allow(solr_search).to receive(:evaluated_response).and_return(mock_response)
-      expect(solr_search.object_data).to eq([
-                                              { 'test_string' => 'test string 1', 'uri' => 'test1' },
-                                              { 'test_string' => 'test string 2', 'uri' => 'test2' },
-                                              { 'test_string' => 'test string 3', 'uri' => 'test3' },
-                                            ])
+      expect(solr_search.data).to eq({ search_parameters: { :filter => { "field_name" => ["test"] } }, data: mock_response })
     end
   end
 
@@ -83,6 +87,26 @@ RSpec.describe SolrSearch, type: :model do
     end
   end
 
+  describe 'sort' do
+    context 'sort parameter is blank' do
+      it 'defaults to date desc' do
+        expect(solr_search.sort).to eq('date_dt desc')
+      end
+    end
+    context 'sort is date desc' do
+      let!(:solr_search) { SolrSearch.new({ sort_by: 'date_desc' }) }
+      it 'returns date desc' do
+        expect(solr_search.sort).to eq('date_dt desc')
+      end
+    end
+    context 'sort is date asc' do
+      let!(:solr_search) { SolrSearch.new({ sort_by: 'date_asc' }) }
+      it 'returns date asc' do
+        expect(solr_search.sort).to eq('date_dt asc')
+      end
+    end
+  end
+
   describe 'start' do
     context 'page parameter is blank' do
       it 'returns 0' do
@@ -118,14 +142,75 @@ RSpec.describe SolrSearch, type: :model do
     end
   end
 
+  describe 'rows' do
+    context 'where per page parameter is blank' do
+      let!(:solr_search) { SolrSearch.new({ results_per_page: nil }) }
+      it 'returns 20' do
+        expect(solr_search.rows).to eq(20)
+      end
+    end
+
+    context 'where per page parameter is not an integer' do
+      let!(:solr_search) { SolrSearch.new({ results_per_page: 'test' }) }
+      it 'returns 20' do
+        expect(solr_search.rows).to eq(20)
+      end
+    end
+
+    context 'where per page parameter is 10' do
+      let!(:solr_search) { SolrSearch.new({ results_per_page: 10 }) }
+      it 'returns 20' do
+        expect(solr_search.rows).to eq(10)
+      end
+    end
+
+    context 'where per page parameter is 50' do
+      let!(:solr_search) { SolrSearch.new({ results_per_page: 50 }) }
+      it 'returns 20' do
+        expect(solr_search.rows).to eq(50)
+      end
+    end
+
+    context 'where per page parameter is 100' do
+      let!(:solr_search) { SolrSearch.new({ results_per_page: 100 }) }
+      it 'returns 20' do
+        expect(solr_search.rows).to eq(100)
+      end
+    end
+  end
+
   describe 'search_filter' do
-    # TODO: re-do testing here; functionality considerably expanded
     context 'with a single filter' do
       let!(:solr_search) { SolrSearch.new({ filter: { 'field_name' => ['test'] } }) }
 
       it 'returns an array of filter strings' do
         allow(solr_search).to receive(:evaluated_response).and_return(mock_response)
         expect(solr_search.search_filter).to eq(["field_name:test"])
+      end
+    end
+    context 'with multiple filters' do
+      let!(:solr_search) { SolrSearch.new({ filter: { "type_ses" => ["347163"], "subtype_ses" => ["363905"] } }) }
+
+      it 'returns an array of filter strings' do
+        allow(solr_search).to receive(:evaluated_response).and_return(mock_response)
+        expect(solr_search.search_filter).to eq(["type_ses:347163", "subtype_ses:363905"])
+      end
+    end
+  end
+
+  describe 'search_query' do
+    context 'with no query' do
+      it 'returns nil' do
+        allow(solr_search).to receive(:evaluated_response).and_return(mock_response)
+        expect(solr_search.search_query).to eq(nil)
+      end
+    end
+    context 'with a query' do
+      let!(:solr_search) { SolrSearch.new({ query: 'horse' }) }
+
+      it 'returns ' do
+        allow(solr_search).to receive(:evaluated_response).and_return(mock_response)
+        expect(solr_search.search_query).to eq('horse')
       end
     end
   end

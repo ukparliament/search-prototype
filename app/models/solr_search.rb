@@ -16,20 +16,12 @@ class SolrSearch < ApiCall
     ['type_ses', 'type_sesrollup', 'subtype_ses', 'legislativeStage_ses', 'session_t', 'member_ses', 'tablingMember_ses', 'answeringMember_ses', 'legislature_ses']
   end
 
-  # TODO: no direct querying of data; everything here needs to be output to a single hash
-  # The hash will then be interrogated by another class that it is passed to
-
   def data
     ret = {}
     ret[:search_parameters] = search_parameters unless search_parameters.blank?
     ret[:data] = all_data
     ret
   end
-
-  private
-
-  # Various private methods to transform user provided params into search_params for API request
-  # These methods are not to be accessed after API has returned its results
 
   def start
     # offset number of rows
@@ -58,7 +50,7 @@ class SolrSearch < ApiCall
 
   def rows
     # number of results per page; default is 10 in SOLR
-    return 20 if results_per_page.blank?
+    return 20 if results_per_page.blank? || results_per_page.zero?
 
     results_per_page
   end
@@ -79,6 +71,8 @@ class SolrSearch < ApiCall
 
     'date_dt desc'
   end
+
+  private
 
   def search_params
     {
