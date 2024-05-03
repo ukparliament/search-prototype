@@ -15,13 +15,13 @@ class SearchData
   def error_code
     return unless solr_error?
 
-    search[:data]['code']
+    search.dig(:data, 'code')
   end
 
   def error_message
     return unless solr_error?
 
-    search[:data]['message']
+    search.dig(:data, 'message')
   end
 
   def error_partial_path
@@ -30,12 +30,14 @@ class SearchData
     if [401, 404].include?(error_code)
       "layouts/shared/error/#{error_code}"
     else
-      "shared/error/500"
+      "layouts/shared/error/500"
     end
   end
 
   def object_data
-    search[:data]['response']['docs']
+    return unless search
+
+    search.dig(:data, 'response', 'docs')
   end
 
   def objects
@@ -46,24 +48,28 @@ class SearchData
     ret
   end
 
-  def metadata
-    search[:data]['response'].except('docs')
-  end
-
   def number_of_results
-    search[:data]['response']['numFound']
+    return unless search
+
+    search.dig(:data, 'response', 'numFound')
   end
 
   def query
-    search[:search_parameters][:query]
+    return unless search
+
+    search.dig(:search_parameters, :query)
   end
 
   def sort
-    search[:search_parameters]['sort']
+    return unless search
+
+    search.dig(:search_parameters, 'sort_by')
   end
 
   def start
-    search[:data]['response']['start']
+    return unless search
+
+    search.dig(:data, 'response', 'start')
   end
 
   def end
@@ -71,7 +77,9 @@ class SearchData
   end
 
   def results_per_page
-    per_page = search[:search_parameters]['results_per_page']
+    return unless search
+
+    per_page = search.dig(:search_parameters, 'results_per_page')
     per_page.blank? ? 20 : per_page.to_i
   end
 
@@ -84,8 +92,10 @@ class SearchData
   end
 
   def combined_ses_ids
+    return unless search
+
     ses_ids = object_data.pluck('all_ses').flatten
-    facet_ses = search[:data]['facet_counts']['facet_fields'].select { |k, v| ["ses", "sesrollup"].include?(k.split("_").last) }.flat_map { |k, v| Hash[*v].keys.map(&:to_i) }
+    facet_ses = search.dig(:data, 'facet_counts', 'facet_fields').select { |k, v| ["ses", "sesrollup"].include?(k.split("_").last) }.flat_map { |k, v| Hash[*v].keys.map(&:to_i) }
     facet_ses + ses_ids
   end
 
@@ -95,13 +105,17 @@ class SearchData
   end
 
   def facets
-    search[:data]['facet_counts']['facet_fields'].map do |facet_field|
+    return unless search
+
+    search.dig(:data, 'facet_counts', 'facet_fields').map do |facet_field|
       { field_name: facet_field.first, facets: sort_facets(facet_field) }
     end
   end
 
   def query_time
-    time = search[:data]['responseHeader']['QTime']
+    return unless search&.dig(:data, 'responseHeader', 'QTime')
+
+    time = search&.dig(:data, 'responseHeader', 'QTime')
     return if time.blank?
 
     time.to_f / 1000
