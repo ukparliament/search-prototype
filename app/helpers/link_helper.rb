@@ -69,14 +69,15 @@ module LinkHelper
       name_string = ses_data[data[:value].to_i]
 
       if name_string.nil?
-        puts "Missing name - performing fallback SES lookup for: #{data[:value].to_i}"
+        name_string = "unknown"
+        # puts "Missing name - performing fallback SES lookup for: #{data[:value].to_i}"
         # In some edge cases, we won't have a SES name included in the page SES data. We then perform a lookup
         # for the specific ID to make sure it gets populated.
-        custom_ses_lookup = SesLookup.new([data]).data
-        name_string = custom_ses_lookup[data[:value].to_i]
+        # custom_ses_lookup = SesLookup.new([data]).data
+        # name_string = custom_ses_lookup[data[:value].to_i]
         # where we still don't have a string (e.g. if SES is missing an entry for this ID) then
         # present the SES ID itself as a string
-        name_string = data[:value].to_s if name_string.nil?
+        # name_string = data[:value].to_s if name_string.nil?
       end
     else
       # we already have a string
