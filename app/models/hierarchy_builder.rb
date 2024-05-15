@@ -18,7 +18,7 @@ class HierarchyBuilder
   def organise_hierarchy_data(ses_data)
     ret = {}
 
-    return unless ses_data.is_a?(Array)
+    return unless ses_data.is_a?(Hash)
 
     ses_data.each do |k, v|
       narrower_term_hash = v.select { |h| h["abbr"] == "NT" }.first
@@ -42,7 +42,7 @@ class HierarchyBuilder
   end
 
   def top_level_types
-    return unless ses_data.is_a?(Array)
+    return unless ses_data.is_a?(Hash)
 
     ret = []
 
