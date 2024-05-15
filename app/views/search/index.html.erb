@@ -5,10 +5,10 @@
 
 <%#= render 'search/fragments/data', data: @response, title: 'Full response' %>
 <%#= render 'search/fragments/data', data: @metadata, title: 'Search metadata' %>
-<%= render 'search/fragments/data', data: @ses_data, title: 'SES results' %>
-<%= render 'search/fragments/data', data: @search_data.facets, title: 'Facets' %>
-<%= render 'search/fragments/data', data: @hierarchy_data, title: 'Hierarchy data' %>
-<%= render 'search/fragments/data', data: @top_level, title: 'Hierarchy top level types' %>
+<%#= render 'search/fragments/data', data: @ses_data, title: 'SES results' %>
+<%#= render 'search/fragments/data', data: @search_data.facets, title: 'Facets' %>
+<%#= render 'search/fragments/data', data: @hierarchy_data, title: 'Hierarchy data' %>
+<%#= render 'search/fragments/data', data: @top_level, title: 'Hierarchy top level types' %>
 
 <%= form_with url: search_url, method: :get, local: true, id: 'search-form' do |f| %>
   <section id="search" class="content-section white">
@@ -27,7 +27,7 @@
             <strong>Type</strong>
           </summary>
           <div class="facets">
-            <% @hierarchy_builder.top_level_types.each do |top_level_type| %>
+            <% @hierarchy_builder.top_level_types&.each do |top_level_type| %>
               <%= render 'hierarchy_layer', hash: top_level_type, id: top_level_type[:id], f: f, tier: 1 %>
             <% end %>
           </div>

@@ -18,6 +18,8 @@ class HierarchyBuilder
   def organise_hierarchy_data(ses_data)
     ret = {}
 
+    return unless ses_data.is_a?(Array)
+
     ses_data.each do |k, v|
       narrower_term_hash = v.select { |h| h["abbr"] == "NT" }.first
       array = []
@@ -40,8 +42,8 @@ class HierarchyBuilder
   end
 
   def top_level_types
-    # the top level items will be those where the broader term has ID 346696 ("Content Type")
-    # this now needs to look different: {12345: { name: 'string' }}
+    return unless ses_data.is_a?(Array)
+
     ret = []
 
     ses_data.select { |k, v| v.first.dig("fields").first.dig("field", "id") == "346696" }.keys.map do |id, name|

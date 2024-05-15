@@ -2,9 +2,9 @@
   <p><%= link_to(object.object_title, object_show_url(object: object.object_uri[:value])) %></p>
   <%= render 'search/results/item_details/abstract', abstract: object.abstract_text %>
   <%= render 'search/results/item_details/date', date: object.date %>
-  <%= render 'search/fragments/list', items: object.object_name, terminator: '', singular: true %>
-  <%= render 'search/results/item_details/lead_member', lead_member: object.lead_member %>
-  <%= render 'search/results/item_details/answering_member', answering_member: object.answering_member %>
+  <%= render 'search/fragments/list', items: object.object_name, terminator: '', singular: true %><br/>
+  <%= render 'search/fragments/list', items: object.lead_members, terminator: '', singular: true %><br/>
+  <%= render 'search/fragments/list', items: object.answering_members, terminator: '', singular: true %><br/>
   <%= render 'search/results/item_details/departments', departments: object.departments %>
   <div hidden class="detailed-view" data-detailed-results-target="toggleHidden">
     <%= render 'search/results/item_details/place', place: object.place %>
