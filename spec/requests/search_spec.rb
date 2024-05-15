@@ -17,6 +17,7 @@ RSpec.describe 'Search', type: :request do
         allow(solr_search_instance).to receive(:all_data).and_return(test_search_response)
         allow(SesLookup).to receive(:new).and_return(ses_lookup_instance)
         allow(ses_lookup_instance).to receive(:data).and_return('test ses response')
+        allow(ses_lookup_instance).to receive(:hierarchy_data).and_return('test ses response')
 
         get '/search', params: { "filter" => { "type_ses" => ["90996"] } }
         expect(response).to have_http_status(:ok)
@@ -26,7 +27,7 @@ RSpec.describe 'Search', type: :request do
 
     context 'a search using filters' do
       let!(:solr_search_instance) { SolrSearch.new(query: { "filter" => { "type_ses" => ["90996"] } }) }
-      let!(:ses_lookup_instance) { SesLookup.new('test SES lookup input') }
+      let!(:ses_lookup_instance) { SesLookup.new([{ value: 12345 }, { value: 56789 }]) }
       let!(:item1) { { 'type_ses' => [90996], 'title_t' => 'Test item 1', 'uri' => 'test_item_1_uri', 'all_ses' => [90996, 12345] } }
       let!(:item2) { { 'type_ses' => [90996], 'title_t' => 'Test item 2', 'uri' => 'test_item_2_uri', 'all_ses' => [90996, 56789] } }
       let!(:item3) { { 'type_ses' => [90996], 'title_t' => 'Test item 3', 'uri' => 'test_item_3_uri', 'all_ses' => [90996, 34567] } }
@@ -37,6 +38,7 @@ RSpec.describe 'Search', type: :request do
         allow(solr_search_instance).to receive(:all_data).and_return(test_search_response)
         allow(SesLookup).to receive(:new).and_return(ses_lookup_instance)
         allow(ses_lookup_instance).to receive(:data).and_return('test ses response')
+        allow(ses_lookup_instance).to receive(:hierarchy_data).and_return('test ses response')
 
         # a new instance of SolrSearch is created
         expect(SolrSearch).to receive(:new)
@@ -73,7 +75,7 @@ RSpec.describe 'Search', type: :request do
 
     context 'a search using a query string' do
       let!(:solr_search_instance) { SolrSearch.new(query: { "query" => 'item 2' }) }
-      let!(:ses_lookup_instance) { SesLookup.new('test SES lookup input') }
+      let!(:ses_lookup_instance) { SesLookup.new([{ value: 12345 }, { value: 56789 }]) }
       let!(:item1) { { 'type_ses' => [90996], 'title_t' => 'Test item 1', 'uri' => 'test_item_1_uri', 'all_ses' => [90996, 12345] } }
       let!(:item2) { { 'type_ses' => [90996], 'title_t' => 'Test item 2', 'uri' => 'test_item_2_uri', 'all_ses' => [90996, 56789] } }
       let!(:item3) { { 'type_ses' => [90996], 'title_t' => 'Test item 3', 'uri' => 'test_item_3_uri', 'all_ses' => [90996, 34567] } }
@@ -84,6 +86,7 @@ RSpec.describe 'Search', type: :request do
         allow(solr_search_instance).to receive(:all_data).and_return(test_search_response)
         allow(SesLookup).to receive(:new).and_return(ses_lookup_instance)
         allow(ses_lookup_instance).to receive(:data).and_return('test ses response')
+        allow(ses_lookup_instance).to receive(:hierarchy_data).and_return('test ses response')
 
         expect(SolrSearch).to receive(:new)
         expect(solr_search_instance).to receive(:all_data)

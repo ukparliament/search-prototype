@@ -95,8 +95,20 @@ class SearchData
     return unless search
 
     ses_ids = object_data.pluck('all_ses').flatten
-    facet_ses = search.dig(:data, 'facet_counts', 'facet_fields').select { |k, v| ["ses", "sesrollup"].include?(k.split("_").last) }.flat_map { |k, v| Hash[*v].keys.map(&:to_i) }
-    facet_ses + ses_ids
+    facet_ses_ids + ses_ids
+  end
+
+  def facet_ses_ids
+    search.dig(:data, 'facet_counts', 'facet_fields').select { |k, v| ["ses", "sesrollup"].include?(k.split("_").last) }.flat_map { |k, v| Hash[*v].keys.map(&:to_i) }
+  end
+
+  def content_type_rollup_ids
+    arr = []
+    type_data = search.dig(:data, 'facet_counts', 'facet_fields', 'type_sesrollup')
+    subtype_data = search.dig(:data, 'facet_counts', 'facet_fields', 'subtype_sesrollup')
+    arr << Hash[*type_data].keys.uniq
+    arr << Hash[*subtype_data].keys.uniq
+    arr.flatten.map(&:to_i)
   end
 
   def ses_data
@@ -107,7 +119,7 @@ class SearchData
   def facets
     return unless search
 
-    search.dig(:data, 'facet_counts', 'facet_fields').map do |facet_field|
+    results = search.dig(:data, 'facet_counts', 'facet_fields').map do |facet_field|
       { field_name: facet_field.first, facets: sort_facets(facet_field) }
     end
   end

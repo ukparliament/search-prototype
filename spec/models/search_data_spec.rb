@@ -180,6 +180,23 @@ RSpec.describe SearchData, type: :model do
     end
   end
 
+  describe 'filter' do
+    context 'where data is present' do
+      let!(:search_output) { { search_parameters: { filter: ['type_ses:12345'] } } }
+      it 'returns an array of filter strings' do
+        expect(search_data.filter).to eq(["type_ses:12345"])
+      end
+    end
+
+    context 'where no filter is present' do
+      let!(:search_output) { { search_parameters: {} } }
+
+      it 'returns nil' do
+        expect(search_data.filter).to be nil
+      end
+    end
+  end
+
   describe 'start' do
     context 'where no data is present' do
       it 'returns the number of results' do
@@ -189,8 +206,23 @@ RSpec.describe SearchData, type: :model do
 
     context 'where data is present' do
       let!(:search_output) { { data: { 'response' => { 'start' => 15 } } } }
-      it 'returns nil' do
+      it 'returns the number of results' do
         expect(search_data.start).to eq(15)
+      end
+    end
+  end
+
+  describe 'query_time' do
+    context 'where no data is present' do
+      let!(:search_output) { { data: { 'response' => { 'QTime' => nil } } } }
+      it 'returns nil' do
+        expect(search_data.query_time).to be nil
+      end
+    end
+
+    context 'where data is present' do
+      it 'returns the time in seconds' do
+        expect(search_data.query_time).to eq(0.004)
       end
     end
   end

@@ -15,7 +15,7 @@ class SesLookup < ApiCall
     # extract all of the sub arrays from the hashes
     return if input_data.blank?
 
-    input_data.map { |h| h[:value] }.flatten.uniq.compact
+    input_data.map { |h| h[:value] }.flatten.uniq.compact.sort
   end
 
   def lookup_id_groups
@@ -74,6 +74,32 @@ class SesLookup < ApiCall
     ret
   end
 
+  def hierarchy_data
+    # for returning all data in a structured format for further querying
+    return if input_data.blank?
+
+    ret = {}
+    responses = evaluated_responses
+
+    # responses is an array of hashes
+    # each hash is the parsed response from individual lookups (one per [group_size] IDs)
+    # the hashes contain a nested 'term' hash containing 'id' and 'name'
+
+    # If SES returns an error, we'll get an error key returned from evaluated_response
+    return responses.first if responses.first&.has_key?(:error)
+
+    unless responses.compact.blank?
+      responses.each do |response|
+        new_key = []
+        new_key << response.dig('term','id')&.to_i
+        new_key << response.dig('term','name')
+        ret[new_key] = response.dig('term','hierarchy')
+      end
+    end
+
+    ret
+  end
+
   def ruby_uri(id_group_string)
     build_uri("#{BASE_API_URL}select.exe?TBDB=disp_taxonomy&TEMPLATE=service.json&SERVICE=term&ID=#{id_group_string}")
   end
@@ -81,7 +107,7 @@ class SesLookup < ApiCall
   private
 
   def group_size
-    250
+    275
   end
 
   def api_response(id_group_string)

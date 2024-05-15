@@ -1,6 +1,6 @@
 <div class="result-item">
   <p><%= link_to(object.object_title, object_show_url(object: object.object_uri[:value])) %></p>
-  <%= render 'search/results/item_details/deposited_date', deposited_date: object.deposited_date %>
+  <%= render 'search/results/item_details/deposited_date', deposited_date: object.date_received %>
   <%= render 'search/results/item_details/type', type: object.object_name %>
   <%= render 'search/fragments/list', items: object.departments, terminator: "", singular: false %>
   <%= render 'search/results/item_details/reference', reference: object.reference %>
