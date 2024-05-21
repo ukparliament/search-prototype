@@ -4,7 +4,7 @@
   <%= render 'search/results/item_details/date', date: object.date %>
   <%= render 'search/results/item_details/type', type: object.object_name %>
   <div hidden class="detailed-view" data-detailed-results-target="toggleHidden">
-    <%= render 'search/fragments/list', items: object.creators, terminator: "", singular: false %>
+    <%= render 'search/results/item_details/creators', creators: object.creators %>
   </div>
   <%= render 'search/results/item_details/reference', reference: object.reference %>
   <div hidden class="detailed-view" data-detailed-results-target="toggleHidden">

@@ -21,7 +21,13 @@ class SearchData
   def error_message
     return unless solr_error?
 
-    search.dig(:data, 'message')
+    search.dig(:data, 'msg')
+  end
+
+  def error_query
+    return unless solr_error?
+
+    search.dig(:search_parameters, 'query')
   end
 
   def error_partial_path

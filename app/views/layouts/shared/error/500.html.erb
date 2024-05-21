@@ -7,4 +7,10 @@
   <h1>Something has gone wrong</h1>
   <p>There is a technical issue.</p>
   <p>Please try again later. If the problem persists, please contact support.</p>
+  <% if Rails.env.development? %>
+    <h2><%= status %></h2>
+    <p><%= message %></p>
+  <% end %>
 </section>
+
+

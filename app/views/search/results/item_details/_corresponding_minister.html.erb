@@ -1,7 +1,7 @@
 <% unless corresponding_minister.blank? %>
   <div class="item-details">
-    <p>
-      <%= search_link(corresponding_minister) %>
-    </p>
+    <span>
+      <%= object_display_name(corresponding_minister, singular: false) %>
+    </span>
   </div>
 <% end %>

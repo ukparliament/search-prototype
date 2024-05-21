@@ -8,4 +8,8 @@
   <p>The page address may be incorrect, or the page may have been moved or deleted.</p>
   <p>Please check the page address. If you would like to report the problem, please
     contact support.</p>
+  <% if Rails.env.development? %>
+    <h2><%= status %></h2>
+    <p><%= message %></p>
+  <% end %>
 </section>

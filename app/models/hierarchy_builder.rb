@@ -37,7 +37,6 @@ class HierarchyBuilder
       ret[k.first] = { name: k.last, children: array }
     end
 
-    # Note: this data has not yet been filtered by what's present in the results
     ret
   end
 

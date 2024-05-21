@@ -1,7 +1,8 @@
 <% unless answering_member.blank? %>
   <div class="item-details">
-    <p>
-      <%= search_link(answering_member) %>
-    </p>
+    <label>Answering member</label>
+    <span>
+      <%= object_display_name(answering_member, singular: false) %>
+    </span>
   </div>
 <% end %>

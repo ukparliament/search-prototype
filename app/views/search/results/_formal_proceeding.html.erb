@@ -3,12 +3,12 @@
   <%= render 'search/results/item_details/abstract', abstract: object.abstract_text %>
   <%= render 'search/results/item_details/date', date: object.date %>
   <%= render 'search/results/item_details/type', type: object.object_name %>
-  <%= render 'search/fragments/list', items: object.lead_members, terminator: '', singular: true %><br/>
+  <%= render 'search/results/item_details/lead_members', lead_members: object.lead_members %>
   <%= render 'search/results/item_details/departments', departments: object.departments %>
   <div hidden class="detailed-view" data-detailed-results-target="toggleHidden">
     <%= render 'search/results/item_details/place', place: object.place %>
   </div>
-  <%= render 'search/fragments/list', items: object.legislature, terminator: "", singular: false %>
+  <%= render 'search/results/item_details/legislature', legislature: object.legislature %>
   <%= render 'search/results/item_details/reference', reference: object.reference %>
   <div hidden class="detailed-view" data-detailed-results-target="toggleHidden">
     <%= render 'search/results/item_details/legislative_stage', legislative_stage: object.legislative_stage %>

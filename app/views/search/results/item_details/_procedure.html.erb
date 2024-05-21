@@ -1,7 +1,8 @@
 <% unless procedure.blank? %>
   <div class="item-details">
+    <label>Procedure</label>
     <% procedure.each do |p| %>
-      <%= search_link(p) %><br/>
+      <%= object_display_name(p, singular: false) %><br/>
     <% end %>
   </div>
 <% end %>

@@ -1,7 +1,7 @@
 <% unless asked_to_reply_author.blank? %>
   <div class="item-details">
-    <p>
-      <%= search_link(asked_to_reply_author) %>
-    </p>
+    <span>
+      <%= object_display_name(asked_to_reply_author, singular: false) %>
+    </span>
   </div>
 <% end %>
