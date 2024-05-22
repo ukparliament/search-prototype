@@ -28,7 +28,7 @@ RSpec.describe SearchData, type: :model do
       end
     end
     context 'when an error code is present' do
-      let!(:search_output) { { search_parameters: { filter: ['type_ses:12345'] }, data: { "code" => 500, "message" => "error_message" } } }
+      let!(:search_output) { { search_parameters: { filter: ['type_ses:12345'] }, data: { "code" => 500, "msg" => "error_message" } } }
       it 'returns true' do
         expect(search_data.solr_error?).to be true
       end
@@ -42,7 +42,7 @@ RSpec.describe SearchData, type: :model do
       end
     end
     context 'when an error code is present' do
-      let!(:search_output) { { search_parameters: { filter: ['type_ses:12345'] }, data: { "code" => 500, "message" => "error_message" } } }
+      let!(:search_output) { { search_parameters: { filter: ['type_ses:12345'] }, data: { "code" => 500, "msg" => "error_message" } } }
       it 'returns the message' do
         expect(search_data.error_message).to eq('error_message')
       end
@@ -56,7 +56,7 @@ RSpec.describe SearchData, type: :model do
       end
     end
     context 'when an error code is present' do
-      let!(:search_output) { { search_parameters: { filter: ['type_ses:12345'] }, data: { "code" => 500, "message" => "error_message" } } }
+      let!(:search_output) { { search_parameters: { filter: ['type_ses:12345'] }, data: { "code" => 500, "msg" => "error_message" } } }
       it 'returns the code' do
         expect(search_data.error_code).to eq(500)
       end
@@ -70,7 +70,7 @@ RSpec.describe SearchData, type: :model do
       end
     end
     context 'when an error code is present' do
-      let!(:search_output) { { search_parameters: { filter: ['type_ses:12345'] }, data: { "code" => 500, "message" => "error_message" } } }
+      let!(:search_output) { { search_parameters: { filter: ['type_ses:12345'] }, data: { "code" => 500, "msg" => "error_message" } } }
       it 'returns the partial path' do
         expect(search_data.error_partial_path).to eq('layouts/shared/error/500')
       end
