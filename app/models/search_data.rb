@@ -140,7 +140,7 @@ class SearchData
   end
 
   def filter
-    search[:search_parameters][:filter]
+    search.dig(:search_parameters, :filter)
   end
 
   private
