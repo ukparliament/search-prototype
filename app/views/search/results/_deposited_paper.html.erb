@@ -3,8 +3,8 @@
   <%= render 'search/results/item_details/description', description: object.abstract_text %>
   <%= render 'search/results/item_details/date', date: object.date %>
   <%= render 'search/results/item_details/type', type: object.object_name %>
-  <%= render 'search/fragments/list', items: object.departments, terminator: "", singular: false %>
-  <%= render 'search/fragments/list', items: object.legislature, terminator: "", singular: false %>
+  <%= render 'search/results/item_details/departments', departments: object.departments %>
+  <%= render 'search/results/item_details/legislature', legislature: object.legislature %>
   <%= render 'search/results/item_details/reference', reference: object.reference %>
   <div hidden class="detailed-view" data-detailed-results-target="toggleHidden">
     <%= render 'search/results/item_details/legislation', legislation: object.legislation %>

@@ -7,9 +7,11 @@ class SearchController < ApplicationController
     @search_data = SearchData.new(search)
 
     if @search_data.solr_error?
-      render template: @search_data.error_partial_path, locals: { status: @search_data.error_code, message: @search_data.error_message }
+      render template: @search_data.error_partial_path, locals: { status: @search_data.error_code,
+                                                                  message: @search_data.error_message }
     else
       @ses_data = @search_data.ses_data
+      # @ses_data = []
       @hierarchy_builder = HierarchyBuilder.new(@search_data.content_type_rollup_ids)
       @hierarchy_data = @hierarchy_builder.hierarchy_data
       # debug

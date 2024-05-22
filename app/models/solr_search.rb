@@ -13,7 +13,7 @@ class SolrSearch < ApiCall
   end
 
   def self.facet_fields
-    ['type_ses', 'type_sesrollup', 'subtype_ses', 'subtype_sesrollup', 'legislativeStage_ses', 'session_t', 'member_ses', 'tablingMember_ses', 'answeringMember_ses', 'legislature_ses']
+    ['type_sesrollup', 'subtype_sesrollup', 'legislativeStage_ses', 'session_t', 'member_ses', 'tablingMember_ses', 'answeringMember_ses', 'legislature_ses']
   end
 
   def data
@@ -56,13 +56,7 @@ class SolrSearch < ApiCall
   end
 
   def search_filter
-    # "fq": ["field_name:value1", "field_name:value2", ...],
-
-    # For 'OR'
-    filter.to_h.flat_map { |field_name, values| values.map { |value| "#{field_name}:#{value}" }.join(" OR ") }
-
-    # Default is 'AND'
-    # filter.to_h.flat_map { |field_name, values| values.map { |value| "#{field_name}:#{value}" } }
+    filter.to_h.flat_map { |field_name, values| values.map { |value| "#{field_name}:#{value}" } }
   end
 
   def sort
@@ -77,6 +71,7 @@ class SolrSearch < ApiCall
   def search_params
     {
       q: search_query,
+      'q.op': 'AND',
       fq: search_filter,
       start: start,
       rows: rows,
@@ -84,7 +79,6 @@ class SolrSearch < ApiCall
       facet: true,
       'facet.limit': -1,
       'facet.field': SolrSearch.facet_fields,
-      'facet.missing': false
     }
   end
 end

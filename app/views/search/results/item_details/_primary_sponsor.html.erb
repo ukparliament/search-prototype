@@ -1,7 +1,7 @@
 <% unless primary_sponsor.blank? %>
   <div class="item-details">
-    <p>
-      <%= search_link(primary_sponsor) %>
-    </p>
+    <span>
+      <%= object_display_name(primary_sponsor, singular: false) %>
+    </span>
   </div>
 <% end %>

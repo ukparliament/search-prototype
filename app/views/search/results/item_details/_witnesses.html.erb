@@ -1,7 +1,7 @@
 <% unless witnesses.blank? %>
   <div class="item-details">
     <% witnesses.each do |witness| %>
-      <%= search_link(witness) %><br/>
+      <%= object_display_name(witness, singular: false) %><br/>
     <% end %>
   </div>
 <% end %>

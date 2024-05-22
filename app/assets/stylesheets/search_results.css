@@ -72,6 +72,22 @@
     }
 }
 
+.result-card-split {
+    margin-top: 12px;
+    display: grid;
+    grid-template-columns: 50% 50%;
+
+    div.left {
+        grid-column: 1 / 2;
+    }
+
+    div.right {
+        display: flex;
+        grid-column: 2 / 3;
+        justify-content: flex-end;
+    }
+}
+
 .search-control-panel {
     display: flex;
     flex-direction: column;

@@ -1,7 +1,9 @@
 <% unless lead_member.blank? %>
   <div class="item-details">
-    <p>
-      <%= search_link(lead_member) %>
-    </p>
+    <label>Lead member:</label>
+    <span><%= object_display_name(lead_member, singular: false) %></span>
+    <% unless lead_member_party.blank? %>
+      <span>(<%= object_display_name(lead_member_party, singular: false) %>)</span>
+    <% end %>
   </div>
 <% end %>

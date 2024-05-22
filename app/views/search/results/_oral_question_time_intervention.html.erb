@@ -8,7 +8,7 @@
     <%= render 'search/results/item_details/member_party', member_party: object.member_party %>
     <%= render 'search/results/item_details/place', place: object.place %>
   </div>
-  <%= render 'search/fragments/list', items: object.legislature, terminator: "", singular: false %>
+  <%= render 'search/results/item_details/legislature', legislature: object.legislature %>
   <%= render 'search/results/item_details/reference', reference: object.reference %>
   <div hidden class="detailed-view" data-detailed-results-target="toggleHidden">
     <%= render 'search/results/item_details/legislation', legislation: object.legislation %>

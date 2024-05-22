@@ -5,7 +5,7 @@
       <% pills.each do |pill| %>
         <div class="pill-wrapper">
           <div class="pill">
-            <%= search_link(pill) %>
+            <%= object_display_name(pill, singular: false) %>
           </div>
         </div>
       <% end %>

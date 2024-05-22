@@ -1,7 +1,7 @@
 <% unless rapporteur.blank? %>
   <div class="item-details">
-    <p>
-      <%= search_link(rapporteur) %>
-    </p>
+    <span>
+      <%= object_display_name(rapporteur, singular: false) %>
+    </span>
   </div>
 <% end %>

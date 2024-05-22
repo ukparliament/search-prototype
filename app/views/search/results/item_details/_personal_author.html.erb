@@ -1,7 +1,7 @@
 <% unless personal_author.blank? %>
   <div class="item-details">
     <% personal_author.each do |item| %>
-      <%= search_link(item) %><br/>
+      <%= object_display_name(item, singular: false) %><br/>
     <% end %>
   </div>
 <% end %>

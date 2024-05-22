@@ -1,7 +1,8 @@
 <% unless corporate_author.blank? %>
   <div class="item-details">
+    <label>Corporate author</label>
     <% corporate_author.each do |item| %>
-      <%= search_link(item) %><br/>
+      <%= object_display_name(item, singular: false) %><br/>
     <% end %>
   </div>
 <% end %>

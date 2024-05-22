@@ -1,7 +1,7 @@
 <% unless correction_text.blank? %>
   <div class="item-details">
-    <p>
-      <%= raw correction_text[:value] %>
-    </p>
+    <span>
+      <%= raw correction_text[:value].truncate(175) %>
+    </span>
   </div>
 <% end %>

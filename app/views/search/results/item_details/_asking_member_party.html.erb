@@ -1,7 +1,7 @@
 <% unless asking_member_party.blank? %>
   <div class="item-details">
-    <p>
-      <%= search_link(asking_member_party) %>
-    </p>
+    <span>
+      <%= object_display_name(asking_member_party, singular: false) %>
+    </span>
   </div>
 <% end %>
