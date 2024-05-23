@@ -6,9 +6,11 @@
 <main>
   <header>
     <%= yield :before_title if content_for?(:before_title) %>
-    <h1>
-      <%= yield :title if content_for?(:title) %>
-    </h1>
+    <% if content_for?(:title) %>
+      <h1>
+        <%= yield :title %>
+      </h1>
+    <% end %>
   </header>
   <%= yield %>
 </main>

@@ -1,11 +1,10 @@
 import { Controller } from "@hotwired/stimulus"
 
-// Connects to data-controller="update-form"
+// Connects to data-controller="expand-hierarchy"
 export default class extends Controller {
   connect() {
   }
 
-  update() {
-    console.log('update action')
+  toggle() {
   }
 }

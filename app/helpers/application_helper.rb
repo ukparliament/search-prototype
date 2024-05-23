@@ -58,9 +58,17 @@ module ApplicationHelper
     field_names[field.to_sym]
   end
 
-  def checked_field(filter_params, facet_field_name,  text_field_name)
+  def checked_field(filter_params, facet_field_name, text_field_name)
     return false if filter_params.blank?
 
     filter_params[facet_field_name]&.include?(text_field_name)
+  end
+
+  def remove_filter_url(params, filter_name, filter_value)
+    params.merge(filter: params[:filter].merge({ filter_name => params.dig(:filter, filter_name)&.excluding(filter_value) }))
+  end
+
+  def apply_filter_url(params, filter_name, filter_value)
+    params.merge(filter: params.dig(:filter).nil? ? { filter_name => [filter_value] } : params.dig(:filter).merge(filter_name => [filter_value, params.dig(:filter, filter_name)].compact.flatten))
   end
 end

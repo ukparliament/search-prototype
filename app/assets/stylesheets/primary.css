@@ -79,7 +79,7 @@ footer {
             width: 100%;
             height: 100%;
             background: black;
-            padding: 32px 24px;
+            padding: 24px 24px;
             justify-content: space-between;
             align-items: center;
             display: inline-flex;
@@ -221,6 +221,10 @@ div.callout {
     background: none;
 }
 
+#search-results {
+    margin: 4px 0;
+}
+
 .content-section {
     &.grey {
         background: #EBEBEB;
@@ -230,6 +234,12 @@ div.callout {
     &.white {
         background: none;
         padding: 16px 0;
+    }
+
+    &.white-slim {
+        background: none;
+        padding: 0;
+        margin: 4px 0;
     }
 
     flex-direction: column;
@@ -425,10 +435,6 @@ li {
 /* TODO: add nav menu to show in its place */
 @media only screen and (max-width: 360px) {
 
-    header {
-        padding-top: 16px;
-    }
-
     /*nav bar*/
     .nav-container {
         width: 360px;
@@ -456,10 +462,6 @@ li {
 /* Wireframes don't cover these screen sizes so this may need some adjustments later */
 @media only screen and (min-width: 360px) and (max-width: 1200px) {
 
-    header {
-        padding-top: 16px;
-    }
-
     /*nav bar*/
     .nav-container {
         max-width: 1200px;
@@ -485,10 +487,6 @@ li {
 
 /* Above 1200px width, show the nav menu in full desktop mode */
 @media only screen and (min-width: 1200px) {
-
-    header {
-        padding-top: 16px;
-    }
 
     /*nav bar*/
     .nav-container {

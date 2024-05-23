@@ -1,11 +1,6 @@
 <% if id %>
   <div class="" style="margin-left: <%= (tier - 1) * 10 %>px;">
-    <%= f.check_box "filter[type_sesrollup]", { multiple: true, checked: checked_field(params[:filter], 'type_sesrollup', id.to_s), onchange: 'this.form.submit()' }, id, nil %>
-  </div>
-  <div class="" style="margin-left: <%= ((tier - 1) * 10) + 5 %>px;">
-    <div><%= @hierarchy_data.dig(id, :name) %>
-      (<%= @search_data.facets.select { |h| h.dig(:field_name) == "type_sesrollup" }.first.dig(:facets).to_h.dig(id.to_s) %>)
-    </div>
+    <%= link_to "#{@hierarchy_data.dig(id, :name)} (#{(@search_data.facets.select { |h| h.dig(:field_name) == "type_sesrollup" }.first.dig(:facets).to_h.dig(id.to_s))})", url_for(apply_filter_url(request.params, 'type_sesrollup', id)) %>
   </div>
   <% if @hierarchy_data.dig(id) %>
     <% @hierarchy_data.dig(id, :children).each do |child| %>

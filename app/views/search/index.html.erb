@@ -10,98 +10,109 @@
 <%#= render 'search/fragments/data', data: @hierarchy_data, title: 'Hierarchy data' %>
 <%#= render 'search/fragments/data', data: @top_level, title: 'Hierarchy top level types' %>
 
-<%= turbo_frame_tag 'form_frame' do %>
-  <%= form_with url: search_url, method: :get, remote: true, id: 'search-form', data: { target: 'form_frame' } do |f| %>
-    <section id="search" class="content-section white">
-      <div class="search-grid-container">
-        <%= f.text_field :query, class: 'grid-item', id: 'search-input', value: @search_data.query %>
-        <%= f.submit 'Search', class: 'grid-item', id: 'search-button' %>
-      </div>
-    </section>
+<%#= turbo_frame_tag 'form_frame' do %>
+<%= form_with url: search_url, method: :get, remote: true, id: 'search-form', data: { target: 'form_frame' } do |f| %>
+  <section id="search" class="content-section white-slim">
+    <div class="search-grid-container">
+      <%= f.text_field :query, class: 'grid-item', id: 'search-input', value: @search_data.query %>
+      <%= f.submit 'Search', class: 'grid-item', id: 'search-button' %>
+    </div>
+  </section>
 
-    <section id="search-results">
-      <div class="results-grid-container">
-        <div class="filter-container">
-          <details open>
-            <summary>
-              <strong>Type</strong>
-            </summary>
-            <div class="facets">
-              <% @hierarchy_builder.top_level_types&.each do |top_level_type| %>
-                <%= render 'hierarchy_layer', hash: top_level_type, id: top_level_type[:id], f: f, tier: 1 %>
+  <section id="search-results">
+    <div class="results-grid-container">
+      <div class="filter-container">
+        <div class="applied-filters">
+          <% unless request.params.dig(:filter).blank? %>
+            <strong>Applied filters</strong>
+            <div class="filter-section">
+              <% request.params.dig(:filter).each do |filter| %>
+                <% filter.last.each do |filter_value| %>
+                  <div class="filter-wrapper">
+                    <div class="filter">
+                      <span class="filter-name"><%= object_display_name({ value: filter_value.to_i, field_name: filter.first }) %></span>
+                      <%= link_to sanitize("&#x2715;"), url_for(remove_filter_url(request.params, filter.first, filter_value)) %>
+                    </div>
+                  </div>
+                <% end %>
               <% end %>
             </div>
-          </details>
-
-          <% @search_data.facets.reject { |h| ["type_ses", "type_sesrollup", "subtype_ses", "subtype_sesrollup"].include?(h.dig(:field_name)) }.each do |facet_field| %>
-            <% unless facet_field[:facets].blank? %>
-              <details open>
-                <summary>
-                  <strong><%= ses_field_name(facet_field[:field_name]) %></strong>
-                </summary>
-                <div class="facets" data-controller="updateForm">
-
-                  <% facet_field[:facets].each do |facet| %>
-                    <div class="facet-check">
-                      <%= f.check_box "filter[#{facet_field[:field_name]}]", { multiple: true, checked: checked_field(params[:filter], facet_field[:field_name], facet.first), onchange: 'this.form.submit()' }, facet.first, nil %>
-                    </div>
-                    <div class="facet-label">
-                      <div><%= object_display_name({ value: facet.first, field_name: facet_field[:field_name] }, singular: false) %>
-                        (<%= facet.last.to_i %>)
-                      </div>
-                    </div>
-                  <% end %>
-                </div>
-              </details>
-            <% end %>
           <% end %>
-
         </div>
 
-        <div class="results-container" data-controller="detailed-results">
-          <div class="search-control-panel">
-            <div class="control-panel-row">
-              <strong><%= @search_data.number_of_results %> results</strong> (<%= @search_data.query_time %> seconds)
-            </div>
-            <div class="control-panel-row">
-              <label class="search-control-panel-label">
-                <span>Show detailed</span>
-              </label>
-              <label class="toggle">
-                <input hidden type="checkbox" data-action="change->detailed-results#toggle">
-                <span class="slider"></span>
-              </label>
-              <div class="flex-spacer"></div>
-              <label class="search-control-panel-label">
-                <span>Results per page</span>
-              </label>
-              <%= f.select "results_per_page", options_for_select([10, 20, 50, 100], selected: @search_data.results_per_page), {}, { data: { action: 'change->updateForm#update' }, class: 'form-select' } %>
-              <label class="search-control-panel-label">
-                <span>Sort by</span>
-              </label>
-              <%= f.select("sort_by", options_for_select([["Date (descending)", "date_desc"], ["Date (ascending)", "date_asc"]], selected: @search_data.sort), {}, { onchange: 'this.form.submit()', class: 'form-select' }) %>
-            </div>
-          </div>
-
-          <div>
-            <% @search_data.objects.each do |object| %>
-              <%= render object.search_result_partial, object: object %>
-              <br>
-              <hr>
-            <% end %>
-
-            <% unless @search_data.current_page.blank? || @search_data.total_pages.blank? %>
-              <p>
-                Showing results <strong><%= @search_data.start %> - <%= @search_data.end %></strong> of
-                <strong><%= @search_data.number_of_results %></strong> in
-                <strong><%= "#{(@search_data.query_time)} seconds." %></strong>
-              </p>
-              <%= render 'pagination', user_requested_page: @search_data.current_page, last_page: @search_data.total_pages, query: @search_data.query, filter: @search_data.filter %>
+        <details open>
+          <summary>
+            <strong>Type</strong>
+          </summary>
+          <div class="facets" data-controller="expand-hierarchy">
+            <!--              <a data-action="click->expand-hierarchy#toggle">-->
+            <% @hierarchy_builder.top_level_types&.each do |top_level_type| %>
+              <%= render 'hierarchy_layer', hash: top_level_type, id: top_level_type[:id], f: f, tier: 1 %>
             <% end %>
           </div>
-        </div>
+        </details>
+
+        <% @search_data.facets.reject { |h| ["type_ses", "type_sesrollup", "subtype_ses", "subtype_sesrollup"].include?(h.dig(:field_name)) }.each do |facet_field| %>
+          <% unless facet_field[:facets].blank? %>
+            <details open>
+              <summary>
+                <strong><%= ses_field_name(facet_field[:field_name]) %></strong>
+              </summary>
+              <% facet_field[:facets].each do |facet| %>
+                <div>
+                  <%= link_to "#{object_display_name({ value: facet.first, field_name: facet_field[:field_name] }, singular: false)} (#{facet.last.to_i})", url_for(apply_filter_url(request.params, facet_field[:field_name], facet.first)), class: "" %>
+                </div>
+              <% end %>
+            </details>
+          <% end %>
+        <% end %>
+
       </div>
 
-    </section>
-  <% end %>
+      <div class="results-container" data-controller="detailed-results">
+        <div class="search-control-panel">
+          <div class="control-panel-row">
+            <strong><%= @search_data.number_of_results %> results</strong> (<%= @search_data.query_time %> seconds)
+          </div>
+          <div class="control-panel-row">
+            <label class="search-control-panel-label">
+              <span>Show detailed</span>
+            </label>
+            <label class="toggle">
+              <input hidden type="checkbox" data-action="change->detailed-results#toggle">
+              <span class="slider"></span>
+            </label>
+            <div class="flex-spacer"></div>
+            <label class="search-control-panel-label">
+              <span>Results per page</span>
+            </label>
+            <%= f.select "results_per_page", options_for_select([10, 20, 50, 100], selected: @search_data.results_per_page), {}, { data: { action: 'change->updateForm#update' }, class: 'form-select' } %>
+            <label class="search-control-panel-label">
+              <span>Sort by</span>
+            </label>
+            <%= f.select("sort_by", options_for_select([["Date (descending)", "date_desc"], ["Date (ascending)", "date_asc"]], selected: @search_data.sort), {}, { onchange: 'this.form.submit()', class: 'form-select' }) %>
+          </div>
+        </div>
+
+        <div>
+          <% @search_data.objects.each do |object| %>
+            <%= render object.search_result_partial, object: object %>
+            <br>
+            <hr>
+          <% end %>
+
+          <% unless @search_data.current_page.blank? || @search_data.total_pages.blank? %>
+            <p>
+              Showing results <strong><%= @search_data.start %> - <%= @search_data.end %></strong> of
+              <strong><%= @search_data.number_of_results %></strong> in
+              <strong><%= "#{(@search_data.query_time)} seconds." %></strong>
+            </p>
+            <%= render 'pagination', user_requested_page: @search_data.current_page, last_page: @search_data.total_pages, query: @search_data.query, filter: @search_data.filter %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+  </section>
 <% end %>
+<%# end %>
