@@ -24,15 +24,19 @@
       <div class="filter-container">
         <div class="applied-filters">
           <% unless request.params.dig(:filter).blank? %>
-            <% request.params.dig(:filter).each do |filter| %>
-              <%= filter %>
-              <% filter.last.each do |filter_value| %><br/>
-                <%= filter_value %>
-                <%#= request.params.merge(filter: request.params[:filter].merge({ filter.first => request.params.dig(:filter, :member_ses).excluding(filter_value) })) %>
-                <span><%= filter.first %> - <%= filter_value %></span>
-                <%= link_to "X", url_for(request.params.merge(filter: request.params[:filter].merge({ filter.first => request.params.dig(:filter, filter.first)&.excluding(filter_value) }))), class: "" %>
+            <strong>Applied filters</strong>
+            <div class="filter-section">
+              <% request.params.dig(:filter).each do |filter| %>
+                <% filter.last.each do |filter_value| %>
+                  <div class="filter-wrapper">
+                    <div class="filter">
+                      <span class="filter-name"><%= object_display_name({ value: filter_value.to_i, field_name: filter.first }) %></span>
+                      <%= link_to sanitize("&#x2715;"), url_for(remove_filter_url(request.params, filter.first, filter_value)) %>
+                    </div>
+                  </div>
+                <% end %>
               <% end %>
-            <% end %>
+            </div>
           <% end %>
         </div>
 
@@ -57,36 +61,13 @@
               <div class="">
                 <% facet_field[:facets].each do |facet| %>
                   <div class="">
-                    <%= link_to "#{object_display_name({ value: facet.first, field_name: facet_field[:field_name] }, singular: false)} (#{facet.last.to_i})", url_for(request.params.merge(filter: request.params.dig(:filter).nil? ? { facet_field[:field_name] => [facet.first] } : request.params.dig(:filter).merge(facet_field[:field_name] => [facet.first, request.params.dig(:filter, facet_field.dig(:field_name))].compact.flatten))), class: "" %>
+                    <%= link_to "#{object_display_name({ value: facet.first, field_name: facet_field[:field_name] }, singular: false)} (#{facet.last.to_i})", url_for(apply_filter_url(request.params, facet_field[:field_name], facet.first)), class: "" %>
                   </div>
                 <% end %>
               </div>
             </details>
           <% end %>
         <% end %>
-
-        <%# @search_data.facets.reject { |h| ["type_ses", "type_sesrollup", "subtype_ses", "subtype_sesrollup"].include?(h.dig(:field_name)) }.each do |facet_field| %>
-        <%# unless facet_field[:facets].blank? %>
-        <!--              <details open>-->
-        <!--                <summary>-->
-        <!--                  <strong><%#= ses_field_name(facet_field[:field_name]) %></strong>-->
-        <!--                </summary>-->
-        <!--                <div class="facets" data-controller="updateForm">-->
-
-        <%# facet_field[:facets].each do |facet| %>
-        <!--                    <div class="facet-check">-->
-        <%#= f.check_box "filter[#{facet_field[:field_name]}]", { multiple: true, checked: checked_field(params[:filter], facet_field[:field_name], facet.first), onchange: 'this.form.submit()' }, facet.first, nil %>
-        <!--                    </div>-->
-        <!--                    <div class="facet-label">-->
-        <!--                      <div><%#= object_display_name({ value: facet.first, field_name: facet_field[:field_name] }, singular: false) %>-->
-        <!--                        (<%#= facet.last.to_i %>)-->
-        <!--                      </div>-->
-        <!--                    </div>-->
-        <%# end %>
-        <!--                </div>-->
-        <!--              </details>-->
-        <%# end %>
-        <%# end %>
 
       </div>
 

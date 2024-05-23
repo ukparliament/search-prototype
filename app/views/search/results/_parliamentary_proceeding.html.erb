@@ -3,8 +3,8 @@
   <%= render 'search/results/item_details/abstract', abstract: object.abstract_text %>
   <%= render 'search/results/item_details/date', date: object.date %>
   <%= render 'search/results/item_details/object_name', object_name: object.object_name %><br/>
-  <%= render 'search/results/item_details/lead_members', lead_members: object.lead_members %>
-  <%= render 'search/results/item_details/answering_members', answering_members: object.answering_members %>
+  <%= render 'search/results/item_details/lead_members', items: object.lead_members %>
+  <%= render 'search/results/item_details/answering_members', items: object.answering_members %>
   <%= render 'search/results/item_details/departments', departments: object.departments %>
   <div hidden class="detailed-view" data-detailed-results-target="toggleHidden">
     <%= render 'search/results/item_details/place', place: object.place %>

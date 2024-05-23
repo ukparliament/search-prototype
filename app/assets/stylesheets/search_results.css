@@ -37,6 +37,48 @@
 #search-results {
     width: 100%;
 
+    div.applied-filters {
+        .filter-section {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: flex-start;
+            align-items: flex-start;
+            gap: 4px;
+            margin: 8px 0;
+
+            .filter-wrapper {
+                padding: 4px 8px;
+                background: #555555;
+                border-radius: 4px;
+                justify-content: flex-start;
+                align-items: center;
+                display: flex;
+
+                .filter {
+                    text-align: center;
+                    color: white;
+                    font-size: 16px;
+                    line-height: 22.48px;
+                }
+
+                .filter-name{
+                    margin-right: 4px;
+                }
+
+                .filter a {
+                    text-align: center;
+                    color: white;
+                    font-size: 16px;
+                    line-height: 22.48px;
+                    text-decoration: none;
+                    background: none;
+                }
+            }
+
+        }
+    }
+
     div.filter-heading {
         font-weight: bold;
     }
