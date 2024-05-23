@@ -83,20 +83,6 @@
         font-weight: bold;
     }
 
-    div.facets {
-        display: grid;
-        grid-template-columns: 20px auto;
-
-        div.facet-check {
-            grid-column: 1 / 2;
-        }
-
-        div.facet-label {
-            grid-column: 2 / 3;
-            padding: 0 5px;
-        }
-    }
-
     div.results-grid-container {
         display: grid;
         grid-template-columns: 5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5%;

@@ -58,13 +58,11 @@
               <summary>
                 <strong><%= ses_field_name(facet_field[:field_name]) %></strong>
               </summary>
-              <div class="">
-                <% facet_field[:facets].each do |facet| %>
-                  <div class="">
-                    <%= link_to "#{object_display_name({ value: facet.first, field_name: facet_field[:field_name] }, singular: false)} (#{facet.last.to_i})", url_for(apply_filter_url(request.params, facet_field[:field_name], facet.first)), class: "" %>
-                  </div>
-                <% end %>
-              </div>
+              <% facet_field[:facets].each do |facet| %>
+                <div>
+                  <%= link_to "#{object_display_name({ value: facet.first, field_name: facet_field[:field_name] }, singular: false)} (#{facet.last.to_i})", url_for(apply_filter_url(request.params, facet_field[:field_name], facet.first)), class: "" %>
+                </div>
+              <% end %>
             </details>
           <% end %>
         <% end %>
