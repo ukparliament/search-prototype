@@ -37,6 +37,10 @@
 #search-results {
     width: 100%;
 
+    .collapse {
+        display: none;
+    }
+
     div.applied-filters {
         .filter-section {
             display: flex;
@@ -62,7 +66,7 @@
                     line-height: 22.48px;
                 }
 
-                .filter-name{
+                .filter-name {
                     margin-right: 4px;
                 }
 
@@ -76,6 +80,26 @@
                 }
             }
 
+        }
+    }
+
+    .grid-row {
+        display: grid;
+        grid-template-columns: 15px auto;
+
+        .facet-toggle {
+            grid-column: 1 / 2;
+
+            a {
+                align-items: center;
+                text-decoration: none;
+            }
+        }
+
+        .facet-link {
+            div {
+                grid-column: 2 / 3;
+            }
         }
     }
 

@@ -45,9 +45,8 @@
             <strong>Type</strong>
           </summary>
           <div class="facets" data-controller="expand-hierarchy">
-            <!--              <a data-action="click->expand-hierarchy#toggle">-->
             <% @hierarchy_builder.top_level_types&.each do |top_level_type| %>
-              <%= render 'hierarchy_layer', hash: top_level_type, id: top_level_type[:id], f: f, tier: 1 %>
+              <%= render 'hierarchy_layer', hash: top_level_type, id: top_level_type[:id], f: f, tier: 1, parent_id: 0 %>
             <% end %>
           </div>
         </details>
