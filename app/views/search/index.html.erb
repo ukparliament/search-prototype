@@ -30,7 +30,7 @@
                 <% filter.last.each do |filter_value| %>
                   <div class="filter-wrapper">
                     <div class="filter">
-                      <span class="filter-name"><%= object_display_name({ value: filter_value.to_i, field_name: filter.first }) %></span>
+                      <span class="filter-name"><%= object_display_name({ value: filter_value.to_i, field_name: filter.first }, singular: false) %></span>
                       <%= link_to sanitize("&#x2715;"), url_for(remove_filter_url(request.params, filter.first, filter_value)) %>
                     </div>
                   </div>
