@@ -44,6 +44,7 @@ module ApplicationHelper
       type_sesrollup: 'Content type (Rollup)',
       legislature_ses: 'Legislature',
       session_t: 'Session',
+      date_dt: 'Date',
       member_ses: 'Member',
       legislativeStage_ses: 'Legislative stage',
       department_ses: 'Department',
@@ -52,7 +53,10 @@ module ApplicationHelper
       party_ses: 'Party',
       subtype_ses: 'Content subtype',
       tablingMember_ses: 'Tabling member',
-      answeringMember_ses: 'Answering member'
+      answeringMember_ses: 'Answering member',
+      askingMember_ses: 'Asking member',
+      leadMember_ses: 'Lead member',
+      legislationTitle_ses: 'Legislation',
     }
 
     field_names[field.to_sym]

@@ -1,0 +1,22 @@
+<section class="facet">
+  <details <%= 'open' if open %>>
+    <summary>
+      <strong><%= ses_field_name(facet_field[:field_name]) %></strong>
+    </summary>
+    <% facet_field[:facets][0..4].each do |facet| %>
+      <div>
+        <%= link_to "#{object_display_name({ value: facet.first, field_name: facet_field[:field_name] }, singular: false)} (#{facet.last.to_i})", url_for(apply_filter_url(request.params, facet_field[:field_name], facet.first)), class: "" %>
+      </div>
+    <% end %>
+    <% unless facet_field[:facets][5..].blank? %>
+      <details>
+        <summary>More</summary>
+        <% facet_field[:facets][5...].each do |facet| %>
+          <div>
+            <%= link_to "#{object_display_name({ value: facet.first, field_name: facet_field[:field_name] }, singular: false)} (#{facet.last.to_i})", url_for(apply_filter_url(request.params, facet_field[:field_name], facet.first)), class: "" %>
+          </div>
+        <% end %>
+      </details>
+    <% end %>
+  </details>
+</section>

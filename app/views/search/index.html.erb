@@ -6,7 +6,7 @@
 <%#= render 'search/fragments/data', data: @response, title: 'Full response' %>
 <%#= render 'search/fragments/data', data: @metadata, title: 'Search metadata' %>
 <%#= render 'search/fragments/data', data: @ses_data, title: 'SES results' %>
-<%#= render 'search/fragments/data', data: @search_data.facets, title: 'Facets' %>
+<%= render 'search/fragments/data', data: @search_data.facets, title: 'Facets' %>
 <%#= render 'search/fragments/data', data: @hierarchy_data, title: 'Hierarchy data' %>
 <%#= render 'search/fragments/data', data: @top_level, title: 'Hierarchy top level types' %>
 
@@ -53,30 +53,15 @@
           </details>
         </section>
 
-        <% @search_data.facets.reject { |h| ["type_ses", "type_sesrollup", "subtype_ses", "subtype_sesrollup"].include?(h.dig(:field_name)) }.each do |facet_field| %>
+        <% @search_data.facets.select { |h| ["legislature_ses", "session_t", "date_dt", "department_ses", "member_ses"].include?(h.dig(:field_name)) }.each do |facet_field| %>
           <% unless facet_field[:facets].blank? %>
-            <section class="facet">
-              <details open>
-                <summary>
-                  <strong><%= ses_field_name(facet_field[:field_name]) %></strong>
-                </summary>
-                <% facet_field[:facets][0..4].each do |facet| %>
-                  <div>
-                    <%= link_to "#{object_display_name({ value: facet.first, field_name: facet_field[:field_name] }, singular: false)} (#{facet.last.to_i})", url_for(apply_filter_url(request.params, facet_field[:field_name], facet.first)), class: "" %>
-                  </div>
-                <% end %>
-                <% unless facet_field[:facets][5..].blank? %>
-                  <details>
-                    <summary>More</summary>
-                    <% facet_field[:facets][5...].each do |facet| %>
-                      <div>
-                        <%= link_to "#{object_display_name({ value: facet.first, field_name: facet_field[:field_name] }, singular: false)} (#{facet.last.to_i})", url_for(apply_filter_url(request.params, facet_field[:field_name], facet.first)), class: "" %>
-                      </div>
-                    <% end %>
-                  </details>
-                <% end %>
-              </details>
-            </section>
+            <%= render 'filter_section', facet_field: format_facets(facet_field), open: true %>
+          <% end %>
+        <% end %>
+
+        <% @search_data.facets.select { |h| ["tablingMember_ses", "askingMember_ses", "leadMember_ses", "answeringMember_ses", "legistativeStage_ses", "legislationTitle_ses", "subject_ses"].include?(h.dig(:field_name)) }.each do |facet_field| %>
+          <% unless facet_field[:facets].blank? %>
+            <%= render 'filter_section', facet_field: format_facets(facet_field), open: false %>
           <% end %>
         <% end %>
       </div>

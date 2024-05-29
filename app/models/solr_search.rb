@@ -13,7 +13,26 @@ class SolrSearch < ApiCall
   end
 
   def self.facet_fields
-    ['type_sesrollup', 'subtype_sesrollup', 'legislativeStage_ses', 'session_t', 'member_ses', 'tablingMember_ses', 'answeringMember_ses', 'legislature_ses']
+    # ['type_sesrollup', 'subtype_sesrollup', 'legislativeStage_ses', 'session_t', 'member_ses', 'tablingMember_ses', 'answeringMember_ses', 'legislature_ses']
+
+    [
+      'type_sesrollup',
+      'subtype_sesrollup',
+      'legislature_ses',
+      'session_t',
+      'date_dt',
+      'department_ses',
+      'answeringDepartment_ses',
+      'member_ses',
+      'tablingMember_ses',
+      'askingMember_ses',
+      'leadMember_ses',
+      'answeringMember_ses',
+      'legislativeStage_ses',
+      'legislationTitle_ses',
+      'subject_ses',
+      'topic_ses'
+    ]
   end
 
   def data
