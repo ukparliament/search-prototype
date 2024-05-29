@@ -83,6 +83,10 @@
         }
     }
 
+    section.facet {
+        margin: 8px 0;
+    }
+
     .grid-row {
         display: grid;
         grid-template-columns: 15px auto;

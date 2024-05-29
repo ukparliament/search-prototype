@@ -40,32 +40,45 @@
           <% end %>
         </div>
 
-        <details open>
-          <summary>
-            <strong>Type</strong>
-          </summary>
-          <div class="facets" data-controller="expand-hierarchy">
-            <% @hierarchy_builder.top_level_types&.each do |top_level_type| %>
-              <%= render 'hierarchy_layer', hash: top_level_type, id: top_level_type[:id], f: f, tier: 1, parent_id: 0 %>
-            <% end %>
-          </div>
-        </details>
+        <section class="facet">
+          <details open>
+            <summary>
+              <strong>Type</strong>
+            </summary>
+            <div class="facets" data-controller="expand-hierarchy">
+              <% @hierarchy_builder.top_level_types&.each do |top_level_type| %>
+                <%= render 'hierarchy_layer', hash: top_level_type, id: top_level_type[:id], f: f, tier: 1, parent_id: 0 %>
+              <% end %>
+            </div>
+          </details>
+        </section>
 
         <% @search_data.facets.reject { |h| ["type_ses", "type_sesrollup", "subtype_ses", "subtype_sesrollup"].include?(h.dig(:field_name)) }.each do |facet_field| %>
           <% unless facet_field[:facets].blank? %>
-            <details open>
-              <summary>
-                <strong><%= ses_field_name(facet_field[:field_name]) %></strong>
-              </summary>
-              <% facet_field[:facets].each do |facet| %>
-                <div>
-                  <%= link_to "#{object_display_name({ value: facet.first, field_name: facet_field[:field_name] }, singular: false)} (#{facet.last.to_i})", url_for(apply_filter_url(request.params, facet_field[:field_name], facet.first)), class: "" %>
-                </div>
-              <% end %>
-            </details>
+            <section class="facet">
+              <details open>
+                <summary>
+                  <strong><%= ses_field_name(facet_field[:field_name]) %></strong>
+                </summary>
+                <% facet_field[:facets][0..4].each do |facet| %>
+                  <div>
+                    <%= link_to "#{object_display_name({ value: facet.first, field_name: facet_field[:field_name] }, singular: false)} (#{facet.last.to_i})", url_for(apply_filter_url(request.params, facet_field[:field_name], facet.first)), class: "" %>
+                  </div>
+                <% end %>
+                <% unless facet_field[:facets][5..].blank? %>
+                  <details>
+                    <summary>More</summary>
+                    <% facet_field[:facets][5...].each do |facet| %>
+                      <div>
+                        <%= link_to "#{object_display_name({ value: facet.first, field_name: facet_field[:field_name] }, singular: false)} (#{facet.last.to_i})", url_for(apply_filter_url(request.params, facet_field[:field_name], facet.first)), class: "" %>
+                      </div>
+                    <% end %>
+                  </details>
+                <% end %>
+              </details>
+            </section>
           <% end %>
         <% end %>
-
       </div>
 
       <div class="results-container" data-controller="detailed-results">
