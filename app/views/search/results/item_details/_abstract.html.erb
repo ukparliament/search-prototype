@@ -1,7 +1,7 @@
 <% unless abstract.blank? %>
   <div class="item-details">
     <span>
-      <%= raw abstract[:value] %>
+      <%= raw abstract[:value].truncate(200) %>
     </span>
   </div>
 <% end %>

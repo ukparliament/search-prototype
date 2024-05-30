@@ -1,6 +1,6 @@
 <% unless lead_member.blank? %>
   <div class="item-details">
-    <label>Lead member:</label>
+    <label>Lead Member:</label>
     <span><%= object_display_name(lead_member, singular: false) %></span>
     <% unless lead_member_party.blank? %>
       <span>(<%= object_display_name(lead_member_party, singular: false) %>)</span>

@@ -1,7 +1,7 @@
 <% unless lead_member_party.blank? %>
   <div class="item-details">
     <span>
-      <%= object_display_name(lead_member_party, singular: false) %>
+      (<%= object_display_name(lead_member_party, singular: false) %>)
     </span>
   </div>
 <% end %>

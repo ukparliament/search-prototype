@@ -458,13 +458,13 @@ li {
 
 }
 
-/* Between 360px and 1200px widths, use larger margins & padding but use mobile menu */
+/* Between 360px and 1280px widths, use larger margins & padding but use mobile menu */
 /* Wireframes don't cover these screen sizes so this may need some adjustments later */
-@media only screen and (min-width: 360px) and (max-width: 1200px) {
+@media only screen and (min-width: 360px) and (max-width: 1280px) {
 
     /*nav bar*/
     .nav-container {
-        max-width: 1200px;
+        max-width: 1280px;
 
         .nav-bar {
             padding: 24px 32px;
@@ -476,7 +476,7 @@ li {
     }
 
     main {
-        max-width: 1200px;
+        max-width: 1280px;
     }
 
     section {
@@ -485,12 +485,12 @@ li {
 
 }
 
-/* Above 1200px width, show the nav menu in full desktop mode */
-@media only screen and (min-width: 1200px) {
+/* Above 1280px width, show the nav menu in full desktop mode */
+@media only screen and (min-width: 1280px) {
 
     /*nav bar*/
     .nav-container {
-        width: 1200px;
+        width: 85%;
 
         .nav-bar {
             padding: 24px 32px;
@@ -502,7 +502,7 @@ li {
     }
 
     main, footer {
-        max-width: 1200px;
+        max-width: 85%;
     }
 
     section {

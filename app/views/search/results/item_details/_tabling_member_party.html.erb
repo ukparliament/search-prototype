@@ -1,7 +1,7 @@
 <% unless tabling_member_party.blank? %>
   <div class="item-details">
     <span>
-      <%= object_display_name(tabling_member_party, singular: false) %>
+      (<%= object_display_name(tabling_member_party, singular: false) %>)
     </span>
   </div>
 <% end %>
