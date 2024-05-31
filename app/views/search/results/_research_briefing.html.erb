@@ -1,15 +1,53 @@
-<div class="result-item">
-  <p><%= link_to(object.object_title, object_show_url(object: object.object_uri[:value])) %></p>
-  <%= render 'search/results/item_details/description', description: object.description %>
-  <%= render 'search/results/item_details/date', date: object.date %>
-  <%= render 'search/results/item_details/type', type: object.object_name %>
-  <div hidden class="detailed-view" data-detailed-results-target="toggleHidden">
-    <%= render 'search/results/item_details/creators', creators: object.creators %>
+<section class="result-item">
+  <div class="row title">
+    <%= link_to(object.object_title, object_show_url(object: object.object_uri[:value])) %>
   </div>
-  <%= render 'search/results/item_details/reference', reference: object.reference %>
-  <div hidden class="detailed-view" data-detailed-results-target="toggleHidden">
+  <div class="row content">
+    <%= render 'search/results/item_details/description', description: object.description %>
+  </div>
+  <div class="row">
+    <div class="three-panel">
+      <div class="left member">
+        <%= render 'search/results/item_details/creators', creators: object.creators %>
+      </div>
+      <div class="centre other-member">
+
+      </div>
+      <div class="right department">
+
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="three-panel">
+      <div class="left type">
+        <%= render 'search/results/item_details/type', type: object.object_name %>
+      </div>
+      <div class="centre status">
+
+      </div>
+      <div class="right corporate-author">
+
+      </div>
+    </div>
+  </div>
+  <div hidden class="row detailed-view" data-detailed-results-target="toggleHidden">
     <%= render 'search/results/item_details/legislation', legislation: object.legislation %>
-    <%= render 'search/results/item_details/pills', pills: object.subjects, pills_heading: 'Subjects' %>
-    <%= render 'search/results/item_details/pills', pills: object.topics, pills_heading: 'Topics' %>
+    <%= render 'search/results/item_details/list', items: object.subjects, seperator: ';', terminator: '', singular: false %>
+    <%= render 'search/results/item_details/list', items: object.topics, seperator: ';', terminator: '', singular: false %>
   </div>
-</div>
+  <div class="row">
+    <div class="three-panel">
+      <div class="left date">
+        <%= render 'search/results/item_details/date', date: object.date %>
+      </div>
+      <div class="centre reference">
+        <%= render 'search/results/item_details/reference', reference: object.reference %>
+      </div>
+      <div class="right house">
+
+      </div>
+    </div>
+  </div>
+</section>
+<hr/>

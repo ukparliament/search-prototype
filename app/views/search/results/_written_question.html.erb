@@ -1,28 +1,42 @@
-<div class="result-item">
-  <p><%= link_to(object.object_title, object_show_url(object: object.object_uri[:value])) %></p>
-  <%= render 'search/results/item_details/question_text', question_text: object.question_text %>
-  <%= render 'search/results/item_details/date', date: object.date %>
-  <%= render 'search/results/item_details/type', type: object.object_name %>
-  <div hidden class="detailed-view" data-detailed-results-target="toggleHidden">
-    <%= render 'search/results/item_details/state', state: object.state %>
+<section class="result-item">
+  <div class="row title">
+    <%= link_to(object.object_title, object_show_url(object: object.object_uri[:value])) %>
   </div>
-  <%= render 'search/results/item_details/tabling_member', tabling_member: object.tabling_member %>
-  <div hidden class="detailed-view" data-detailed-results-target="toggleHidden">
-    <%= render 'search/results/item_details/tabling_member_party', tabling_member_party: object.tabling_member_party %>
+  <div class="row content">
+    <%= render 'search/results/item_details/question_text', question_text: object.question_text %>
   </div>
-  <%= render 'search/results/item_details/answer_text', answer_text: object.answer_text %>
-  <%= render 'search/results/item_details/answering_member', answering_member: object.answering_member %>
-  <div hidden class="detailed-view" data-detailed-results-target="toggleHidden">
-    <%= render 'search/results/item_details/answering_member_party', answering_member_party: object.answering_member_party %>
+  <div class="row">
+    <div class="three-panel">
+      <div class="left member">
+        <%= render 'search/results/item_details/tabling_member', tabling_member: object.tabling_member %>
+        <%= render 'search/results/item_details/tabling_member_party', tabling_member_party: object.tabling_member_party %>
+      </div>
+      <div class="centre other-member">
+        <%= render 'search/results/item_details/answering_member', answering_member: object.answering_member %>
+        <%= render 'search/results/item_details/answering_member_party', answering_member_party: object.answering_member_party %>
+      </div>
+      <div class="right department">
+        <%= render 'search/results/item_details/answering_body', answering_body: object.answering_body %>
+      </div>
+    </div>
   </div>
-  <%= render 'search/results/item_details/answering_body', answering_body: object.answering_body %>
-  <div hidden class="detailed-view" data-detailed-results-target="toggleHidden">
+  <div class="row">
+    <div class="three-panel">
+      <div class="left type">
+        <%= render 'search/results/item_details/type', type: object.object_name %>
+      </div>
+      <div class="centre status">
+        <%= render 'search/results/item_details/state', state: object.state %>
+      </div>
+      <div class="right corporate-author">
+
+      </div>
+    </div>
+  </div>
+  <div hidden class="row detailed-view" data-detailed-results-target="toggleHidden">
+    <%= render 'search/results/item_details/answer_text', answer_text: object.answer_text %>
     <%= render 'search/results/item_details/asked_to_reply_author', asked_to_reply_author: object.asked_to_reply_author %>
     <%= render 'search/results/item_details/corrected', corrected: object.corrected? %>
-  </div>
-  <%= render 'search/results/item_details/legislature', legislature: object.legislature %>
-  <%= render 'search/results/item_details/reference', reference: object.reference %>
-  <div hidden class="detailed-view" data-detailed-results-target="toggleHidden">
     <%= render 'search/results/item_details/legislation', legislation: object.legislation %>
     <%= render 'search/results/item_details/procedure', procedure: object.procedure %>
     <%= render 'search/results/item_details/notes', notes: object.notes %>
@@ -30,6 +44,20 @@
     <%= render 'search/results/item_details/date_for_answer', date_for_answer: object.date_for_answer %>
     <%= render 'search/results/item_details/date_of_holding_answer', date_of_holding_answer: object.date_of_holding_answer %>
     <%= render 'search/results/item_details/date_of_answer', date_of_answer: object.date_of_answer %>
-    <%= render 'search/results/item_details/pills', pills: object.subjects, pills_heading: 'Subjects' %>
+    <%= render 'search/results/item_details/list', items: object.subjects, seperator: ';', terminator: '', singular: false %>
   </div>
-</div>
+  <div class="row">
+    <div class="three-panel">
+      <div class="left date">
+        <%= render 'search/results/item_details/date', date: object.date %>
+      </div>
+      <div class="centre reference">
+        <%= render 'search/results/item_details/reference', reference: object.reference %>
+      </div>
+      <div class="right house">
+        <%= render 'search/results/item_details/legislature', legislature: object.legislature %>
+      </div>
+    </div>
+  </div>
+</section>
+<hr/>

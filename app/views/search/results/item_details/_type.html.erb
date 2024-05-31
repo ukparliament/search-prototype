@@ -1,5 +1,9 @@
 <% unless type.blank? %>
-  <div class="item-details">
-    <%= object_display_name(type, singular: true) %>
-  </div>
+  <% if type.is_a?(Array) %>
+    <%= render 'search/results/item_details/list', items: type, seperator: ';', terminator: '', singular: false %>
+  <% else %>
+    <div class="item-details">
+      <%= object_display_name(type, singular: true) %>
+    </div>
+  <% end %>
 <% end %>

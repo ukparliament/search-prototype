@@ -1,21 +1,57 @@
-<div class="result-item">
-  <p><%= link_to(object.object_title, object_show_url(object: object.object_uri[:value])) %></p>
-  <%= render 'search/results/item_details/date', date: object.date %>
-  <%= render 'search/results/item_details/object_name', object_name: object.object_name %>
-  <div hidden class="detailed-view" data-detailed-results-target="toggleHidden">
-    <%= render 'search/results/item_details/corporate_author', corporate_author: object.corporate_author %>
-    <%= render 'search/results/item_details/procedure', procedure: object.procedure %>
-    <%= render 'search/results/item_details/member_name', member_name: object.member_name %>
+<section class="result-item">
+  <div class="row title">
+    <%= link_to(object.object_title, object_show_url(object: object.object_uri[:value])) %>
   </div>
-  <%= render 'search/results/item_details/departments', departments: object.departments %>
-  <%= render 'search/results/item_details/legislature', legislature: object.legislature %>
-  <%= render 'search/results/item_details/reference', reference: object.reference %>
-  <div hidden class="detailed-view" data-detailed-results-target="toggleHidden">
+  <div class="row content">
+
+  </div>
+  <div class="row">
+    <div class="three-panel">
+      <div class="left member">
+        <%= render 'search/results/item_details/member_name', member_name: object.member_name %>
+      </div>
+      <div class="centre other-member">
+
+      </div>
+      <div class="right department">
+        <%= render 'search/results/item_details/departments', departments: object.departments %>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="three-panel">
+      <div class="left type">
+        <%= render 'search/results/item_details/type', type: object.object_name %>
+      </div>
+      <div class="centre status">
+
+      </div>
+      <div class="right corporate-author">
+        <%= render 'search/results/item_details/corporate_author', corporate_author: object.corporate_author %>
+      </div>
+    </div>
+  </div>
+  <div hidden class="row detailed-view" data-detailed-results-target="toggleHidden">
+    <%= render 'search/results/item_details/procedure', procedure: object.procedure %>
     <%= render 'search/results/item_details/legislation', legislation: object.legislation %>
     <%= render 'search/results/item_details/notes', notes: object.notes %>
     <%= render 'search/results/item_details/date_laid', date_laid: object.date_laid %>
     <%= render 'search/results/item_details/date_withdrawn', date_withdrawn: object.date_withdrawn %>
-    <%= render 'search/results/item_details/pills', pills: object.subjects, pills_heading: 'Subjects' %>
+    <%= render 'search/results/item_details/list', items: object.subjects, seperator: ';', terminator: '', singular: false %>
     <%= render 'search/results/item_details/library_location', commons: object.commons_library_location, lords: object.lords_library_location %>
   </div>
-</div>
+  <div class="row">
+    <div class="three-panel">
+      <div class="left date">
+        <%= render 'search/results/item_details/date', date: object.date %>
+      </div>
+      <div class="centre reference">
+        <%= render 'search/results/item_details/reference', reference: object.reference %>
+      </div>
+      <div class="right house">
+        <%= render 'search/results/item_details/legislature', legislature: object.legislature %>
+      </div>
+    </div>
+  </div>
+</section>
+<hr/>
