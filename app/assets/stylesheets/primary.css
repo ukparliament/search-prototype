@@ -490,7 +490,7 @@ li {
 
     /*nav bar*/
     .nav-container {
-        width: 85%;
+        width: 1440px;
 
         .nav-bar {
             padding: 24px 32px;
@@ -502,7 +502,7 @@ li {
     }
 
     main, footer {
-        max-width: 85%;
+        max-width: 1440px;
     }
 
     section {
