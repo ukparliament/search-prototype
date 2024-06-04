@@ -71,7 +71,7 @@ module LinkHelper
       if name_string.nil?
         if Rails.env.development?
           skip = []
-          raise 'Missing SES name' unless skip.include?(data[:field_name])
+          puts "Missing SES name for ID #{data[:value]}" unless skip.include?(data[:field_name])
         else
           name_string = "Unknown"
         end
