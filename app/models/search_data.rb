@@ -118,7 +118,7 @@ class SearchData
   end
 
   def ses_data
-    unique_ses_ids = { value: combined_ses_ids.uniq }
+    unique_ses_ids = { value: combined_ses_ids.uniq.sort }
     SesLookup.new([unique_ses_ids]).data unless unique_ses_ids.blank?
   end
 

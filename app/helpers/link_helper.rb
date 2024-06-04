@@ -69,7 +69,12 @@ module LinkHelper
       name_string = ses_data[data[:value].to_i]
 
       if name_string.nil?
-        name_string = "unknown"
+        if Rails.env.development?
+          skip = []
+          raise 'Missing SES name' unless skip.include?(data[:field_name])
+        else
+          name_string = "Unknown"
+        end
         # puts "Missing name - performing fallback SES lookup for: #{data[:value].to_i}"
         # In some edge cases, we won't have a SES name included in the page SES data. We then perform a lookup
         # for the specific ID to make sure it gets populated.

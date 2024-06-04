@@ -334,6 +334,16 @@ class ContentObject
     false
   end
 
+  def standard_reference
+    # this is always just identifier_t
+    get_all_from('identifier_t')
+  end
+
+  def standard_date
+    # this is always just date_dt
+    get_as_date_from('date_dt')
+  end
+
   private
 
   def get_as_string_from(field_name)
