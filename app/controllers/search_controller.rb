@@ -11,11 +11,8 @@ class SearchController < ApplicationController
                                                                   message: @search_data.error_message }
     else
       @ses_data = @search_data.ses_data
-      # @ses_data = []
       @hierarchy_builder = HierarchyBuilder.new(@search_data.content_type_rollup_ids)
       @hierarchy_data = @hierarchy_builder.hierarchy_data
-      # debug
-      @top_level = @hierarchy_builder.top_level_types
     end
   end
 

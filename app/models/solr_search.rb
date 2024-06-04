@@ -17,12 +17,10 @@ class SolrSearch < ApiCall
 
     [
       'type_sesrollup',
-      'subtype_sesrollup',
       'legislature_ses',
       'session_t',
       'date_dt',
       'department_ses',
-      'answeringDepartment_ses',
       'member_ses',
       'tablingMember_ses',
       'askingMember_ses',
@@ -69,7 +67,7 @@ class SolrSearch < ApiCall
 
   def rows
     # number of results per page; default is 10 in SOLR
-    return 20 if results_per_page.blank? || results_per_page.zero?
+    return 10 if results_per_page.blank? || results_per_page.zero?
 
     results_per_page
   end
@@ -96,7 +94,7 @@ class SolrSearch < ApiCall
       rows: rows,
       sort: sort,
       facet: true,
-      'facet.limit': -1,
+      'facet.limit': 100,
       'facet.field': SolrSearch.facet_fields,
     }
   end

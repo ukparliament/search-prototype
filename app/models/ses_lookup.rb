@@ -91,9 +91,9 @@ class SesLookup < ApiCall
     unless responses.compact.blank?
       responses.each do |response|
         new_key = []
-        new_key << response.dig('term','id')&.to_i
-        new_key << response.dig('term','name')
-        ret[new_key] = response.dig('term','hierarchy')
+        new_key << response.dig('term', 'id')&.to_i
+        new_key << response.dig('term', 'name')
+        ret[new_key] = response.dig('term', 'hierarchy')
       end
     end
 

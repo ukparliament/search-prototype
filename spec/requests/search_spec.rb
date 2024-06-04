@@ -48,7 +48,7 @@ RSpec.describe 'Search', type: :request do
 
         # SES lookup is still performed (without duplicates)
         # Any SES field in the facets are also included here
-        expect(SesLookup).to receive(:new).with([{ value: [90996, 90995, 12345, 56789, 34567] }])
+        expect(SesLookup).to receive(:new).with([{ value: [12345, 34567, 56789, 90995, 90996] }])
 
         # the SES results are retrieved
         expect(ses_lookup_instance).to receive(:data)
@@ -93,7 +93,7 @@ RSpec.describe 'Search', type: :request do
 
         # SES lookup is still performed (without duplicates)
         # Any SES field in the facets are also included here
-        expect(SesLookup).to receive(:new).with([{ value: [90996, 90995, 12345, 56789, 34567] }])
+        expect(SesLookup).to receive(:new).with([{ value: [12345, 34567, 56789, 90995, 90996] }])
         expect(ses_lookup_instance).to receive(:data)
 
         get '/search', params: { "query" => 'item 2' }
