@@ -35,20 +35,37 @@ class SesLookup < ApiCall
     # for each chunk, make a new request, then combine the results
     # returns a (flattened) array
     output = []
+    threads = []
+
+    puts "Making #{lookup_id_groups.size} requests to SES..." if Rails.env.development?
     lookup_id_groups.each do |id_group|
+      # one request per group of IDs; one thread per request
+      threads << Thread.new do
+        puts "Begin thread" if Rails.env.development?
+        begin
+          # try to parse the response as JSON & extract terms
+          response = JSON.parse(api_response(id_group)).dig('terms')
 
-      begin
-        response = JSON.parse(api_response(id_group))
-      rescue JSON::ParserError
-        # if SES fails it returns an error as XML
-        response = Hash.from_xml(api_response(id_group))
-        return [{ error: response }]
+          # for debugging API
+          # service = "stats"
+          # test_uri = build_uri("#{BASE_API_URL}select.exe?TBDB=disp_taxonomy&TEMPLATE=service.json&SERVICE=#{service}")
+
+        rescue JSON::ParserError
+          # contrary to SES API documentation, errors seem to be returned as XML regardless of specified TEMPLATE
+          response = Hash.from_xml(api_response(id_group))
+          puts "Error: #{response}" if Rails.env.development?
+        end
+
+        # collate responses
+        output << response
       end
-
-      output << response['terms']
     end
 
-    # puts JSON.pretty_generate(output)
+    # wait for all threads to have finished executing
+    threads.each(&:join)
+    puts "All requests completed" if Rails.env.development?
+
+    # flatten responses
     output.flatten
   end
 
@@ -100,14 +117,15 @@ class SesLookup < ApiCall
     ret
   end
 
-  def ruby_uri(id_group_string)
-    build_uri("#{BASE_API_URL}select.exe?TBDB=disp_taxonomy&TEMPLATE=service.json&SERVICE=term&ID=#{id_group_string}")
+  def ruby_uri(id_group_string, hierarchy_expanded = true)
+    expand_hierarchy_int = hierarchy_expanded ? 1 : 0
+    build_uri("#{BASE_API_URL}select.exe?TBDB=disp_taxonomy&TEMPLATE=service.json&expand_hierarchy=#{expand_hierarchy_int}&SERVICE=term&ID=#{id_group_string}")
   end
 
   private
 
   def group_size
-    275
+    250
   end
 
   def api_response(id_group_string)
