@@ -14,7 +14,7 @@
   <% end %>
   <% unless related_item.legislature.blank? %>
     <% related_item.legislature.each do |house| %>
-      <%= ses_data[house[:value]] %><br/>
+      <%= @ses_data[house[:value]] %><br/>
     <% end %>
   <% end %>
 </div>

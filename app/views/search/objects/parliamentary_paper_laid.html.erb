@@ -39,7 +39,7 @@
   <%= render 'search/fragments/considered_by_eu_si_committee', considered: object.is_considered_by_eu_si_committee %>
   <%= render 'search/fragments/considered_by_secondary_legislation_committee', considered: object.is_considered_by_secondary_legislation_committee %>
   <%= render 'search/fragments/reported_by_joint_committee', reported: object.is_reported_by_joint_committee %>
-  <%= render 'search/fragments/related_items', related_items: object.related_items %>
+  <%= render 'search/fragments/related_items', related_item_ids: object.related_item_ids %>
   <%= render 'search/fragments/ec_documents', ec_documents: object.ec_documents %>
   <%= render 'search/fragments/notes', notes: object.notes %>
   <%= render 'search/fragments/contains_explanatory_memorandum', contains_em: object.contains_explanatory_memo %>

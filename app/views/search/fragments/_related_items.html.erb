@@ -1,21 +1,21 @@
-<% unless related_items.blank? %>
+<% unless related_item_ids.blank? %>
   <div class="about-item">
     <h3 class="content-heading" id="related-items">Related items</h3>
     <div class="flex-list">
-      <% related_items[:items][..3].each do |related_item| %>
-        <%= render 'search/fragments/related_item', related_item: related_item, ses_data: related_items[:ses_lookup] %>
+      <% related_item_ids[..3].each do |related_item_id| %>
+        <%= render 'search/fragments/related_item', related_item: @associated_object_data[related_item_id] %>
       <% end %>
     </div>
-    <% if related_items[:items].size > 4 %>
+    <% if related_item_ids.size > 4 %>
       <br/>
       <details>
         <summary>
-          Show all related items (<%= related_items[:items].size %>)
+          Show all related items (<%= related_item_ids.size %>)
         </summary>
         <br/>
         <div class="flex-list">
-          <% related_items[:items][4..].each do |related_item| %>
-            <%= render 'search/fragments/related_item', related_item: related_item, ses_data: related_items[:ses_lookup] %>
+          <% related_item_ids[4..].each do |related_item_id| %>
+            <%= render 'search/fragments/related_item', related_item: @associated_object_data[related_item_id] %>
           <% end %>
         </div>
       </details>

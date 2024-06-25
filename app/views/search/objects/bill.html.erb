@@ -1,6 +1,9 @@
 <% if Rails.env.development? %>
   <%= render 'search/fragments/data', data: object.content_object_data, title: 'SOLR Data' %>
   <%= render 'search/fragments/data', data: @ses_data, title: 'SES Data' %>
+  <%= render 'search/fragments/data', data: @associated_object_ids, title: 'Associated object IDs' %>
+  <%= render 'search/fragments/data', data: @associated_objects, title: 'Associated objects' %>
+  <%= render 'search/fragments/data', data: @associated_object_data, title: 'Associated object data' %>
 <% end %>
 
 <% content_for(:before_title) do %>
@@ -30,8 +33,8 @@
   <%= render 'search/fragments/session', session: object.parliamentary_session %>
   <%= render 'search/fragments/corporate_author', author: object.corporate_author %>
   <%= render 'search/fragments/certified_categories', certified_categories: object.certified_categories, certified_date: object.certified_date %>
-  <%= render 'search/fragments/previous_version', previous_version: object.previous_version, link: object.previous_version_link %>
-  <%= render 'search/fragments/related_items', related_items: object.related_items %>
+  <%= render 'search/fragments/previous_version', previous_version: @associated_object_data[object.previous_version_id] %>
+  <%= render 'search/fragments/related_items', related_item_ids: object.related_item_ids %>
   <%= render 'search/fragments/ec_documents', ec_documents: object.ec_documents %>
   <%= render 'search/fragments/notes', notes: object.notes %>
   <%= render 'search/fragments/contains_explanatory_note', contains_note: object.contains_explanatory_memo %>

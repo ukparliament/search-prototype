@@ -21,7 +21,7 @@
   <%= render 'search/fragments/reference', reference: object.reference %>
   <%= render 'search/fragments/departments', departments: object.departments %>
   <%= render 'search/fragments/regarding', regarding_objects: object.regarding_objects %>
-  <%= render 'search/fragments/related_items', related_items: object.related_items %>
+  <%= render 'search/fragments/related_items', related_item_ids: object.related_item_ids %>
   <%= render 'search/fragments/pills', pills_heading: 'Subjects', pills: object.subjects %>
   <%= render 'search/fragments/contains_statistics', contains_statistics: object.contains_statistics %>
 </section>

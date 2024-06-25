@@ -30,7 +30,7 @@
   <%= render 'search/fragments/session', session: object.parliamentary_session %>
   <%= render 'search/fragments/corporate_author', author: object.corporate_author %>
   <%= render 'search/fragments/paper_type', paper_type: object.paper_type %>
-  <%= render 'search/fragments/related_items', related_items: object.related_items %>
+  <%= render 'search/fragments/related_items', related_item_ids: object.related_item_ids %>
   <%= render 'search/fragments/notes', notes: object.notes %>
   <%= render 'search/fragments/pills', pills_heading: 'Subjects', pills: object.subjects %>
   <%= render 'search/fragments/legislation', legislation: object.legislation %>

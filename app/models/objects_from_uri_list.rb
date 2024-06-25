@@ -15,11 +15,13 @@ class ObjectsFromUriList
     data = SolrMultiQuery.new(object_uris: relation_uris).object_data
     sorted_data = data.sort { |a, b| a['date_dt'] <=> b['date_dt'] }
 
-    relation_ses_ids = all_ses_ids(sorted_data)
+    # disabled
+    # intent is to move this lookup higher up stack
+    # relation_ses_ids = all_ses_ids(sorted_data)
 
-    unless relation_ses_ids.blank?
-      ret[:ses_lookup] = SesLookup.new(relation_ses_ids).data
-    end
+    # unless relation_ses_ids.blank?
+    #   ret[:ses_lookup] = SesLookup.new(relation_ses_ids).data
+    # end
 
     ret[:items] = []
     sorted_data.each do |object|

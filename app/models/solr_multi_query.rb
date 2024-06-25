@@ -24,6 +24,7 @@ class SolrMultiQuery < ApiCall
   def search_params
     {
       q: object_filter,
+      'q.op': 'OR',
       rows: 500
     }
   end
