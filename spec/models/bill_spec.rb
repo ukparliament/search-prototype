@@ -125,29 +125,6 @@ RSpec.describe Bill, type: :model do
     end
   end
 
-  describe 'previous_version_link' do
-    context 'where there is no data' do
-      it 'returns nil' do
-        expect(bill.previous_version_link).to be_nil
-      end
-    end
-
-    context 'where there is an empty array' do
-      let!(:bill) { Bill.new({ 'isVersionOf_t' => [] }) }
-      it 'returns nil' do
-        expect(bill.previous_version_link).to be_nil
-      end
-    end
-
-    context 'where data exists' do
-      let!(:bill) { Bill.new({ 'isVersionOf_t' => ['first item', 'second item'] }) }
-
-      it 'returns the first item' do
-        expect(bill.previous_version_link).to eq({ :field_name => "isVersionOf_t", :value => "first item" })
-      end
-    end
-  end
-
   describe 'title' do
     context 'where there is no data' do
       it 'returns nil' do
@@ -171,38 +148,27 @@ RSpec.describe Bill, type: :model do
     end
   end
 
-  describe 'previous version' do
+  describe 'previous version id' do
     context 'there is no previous version link' do
       let!(:bill) { Bill.new({ 'isVersionOf_t' => nil }) }
       it 'returns nil' do
-        expect(bill.previous_version).to be_nil
+        expect(bill.previous_version_id).to be_nil
       end
     end
 
     context 'previous version link is present' do
       let!(:bill) { Bill.new({ 'isVersionOf_t' => ['previous_version_link'] }) }
-      let!(:previous_bill) { Bill.new({}) }
-      let!(:returned_objects) { { items: [previous_bill] } }
 
-      it 'performs a search for the url and returns the related object' do
-        allow_any_instance_of(ObjectsFromUriList).to receive(:get_objects).and_return(returned_objects)
-        allow(ObjectsFromUriList).to receive(:new).and_return(ObjectsFromUriList.new(['previous_version_link']))
-        expect(ObjectsFromUriList).to receive(:new).with(['previous_version_link'])
-        expect(bill.previous_version).to eq(previous_bill)
+      it 'returns the url as a string' do
+        expect(bill.previous_version_id).to eq('previous_version_link')
       end
     end
 
     context 'multiple previous version links are present' do
       let!(:bill) { Bill.new({ 'isVersionOf_t' => ['previous_version_link_1', 'previous_version_link_2'] }) }
-      let!(:previous_bill_1) { Bill.new({}) }
-      let!(:previous_bill_2) { Bill.new({}) }
-      let!(:returned_objects) { { items: [previous_bill_1, previous_bill_2] } }
 
-      it 'performs a search for the urls and returns the first object' do
-        allow_any_instance_of(ObjectsFromUriList).to receive(:get_objects).and_return(returned_objects)
-        allow(ObjectsFromUriList).to receive(:new).and_return(ObjectsFromUriList.new(['previous_version_link_1', 'previous_version_link_2']))
-        expect(ObjectsFromUriList).to receive(:new).with(['previous_version_link_1', 'previous_version_link_2'])
-        expect(bill.previous_version).to eq(previous_bill_1)
+      it 'returns the first url as a string' do
+        expect(bill.previous_version_id).to eq('previous_version_link_1')
       end
     end
   end

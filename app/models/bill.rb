@@ -17,14 +17,9 @@ class Bill < ContentObject
   end
 
   def associated_objects
-    # A method that returns the IDs of objects that are associated with this one
-    # These IDs will be collated and a single Solr query will retrieve their data
-    # The data will be staged in an associated_object_data hash, keyed to the ID of the object
-    # Any methods that previously queried Solr directly will now use the same ID(s) to retrieve data from said hash
-
     ids = super
     ids << previous_version_id
-    ids.flatten.uniq
+    ids.flatten.compact.uniq
   end
 
   def date_of_order
@@ -32,7 +27,7 @@ class Bill < ContentObject
   end
 
   def previous_version_id
-    get_first_from('isVersionOf_t')[:value]
+    get_first_id_from('isVersionOf_t')
   end
 
   def version_title

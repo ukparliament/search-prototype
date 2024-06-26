@@ -66,10 +66,11 @@ RSpec.describe 'Research Briefing', type: :request do
             expect(CGI::unescapeHTML(response.body)).to include('Published by')
           end
 
-          unless research_briefing_instance.related_items.blank?
-            research_briefing_instance.related_items.each do |related_item|
-              # TODO: meaningfully test related items
-            end
+          unless research_briefing_instance.related_item_ids.blank?
+            # TODO: test related items
+            # research_briefing_instance.related_item_ids.each do |related_item_uri|
+            #   expect(CGI::unescapeHTML(response.body)).to include(related_item_uri)
+            # end
           end
 
           unless research_briefing_instance.subjects.blank?

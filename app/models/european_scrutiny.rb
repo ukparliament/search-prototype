@@ -4,20 +4,17 @@ class EuropeanScrutiny < ContentObject
     super
   end
 
-  def regarding_objects
-    return if regarding_links.blank?
-
-    relation_uris = regarding_links&.pluck(:value)
-    ObjectsFromUriList.new(relation_uris).get_objects
+  def associated_objects
+    ids = super
+    ids << regarding_object_ids
+    ids.flatten.compact.uniq
   end
 
   def department
     fallback(get_first_from('department_ses'), get_first_from('department_t'))
   end
 
-  private
-
-  def regarding_links
-    combine_fields(get_all_from('regardingDD_uri'), get_all_from('regardingDD_t'))
+  def regarding_object_ids
+    combine_fields(get_all_ids_from('regardingDD_uri'), get_all_ids_from('regardingDD_t'))
   end
 end

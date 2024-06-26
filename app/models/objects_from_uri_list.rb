@@ -31,10 +31,6 @@ class ObjectsFromUriList
     ret
   end
 
-  def all_ses_ids(data)
-    data.flat_map { |o| { value: o["all_ses"], field_name: "all_ses" } }.uniq
-  end
-
   private
 
   def valid_input

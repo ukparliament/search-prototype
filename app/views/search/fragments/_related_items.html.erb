@@ -3,7 +3,9 @@
     <h3 class="content-heading" id="related-items">Related items</h3>
     <div class="flex-list">
       <% related_item_ids[..3].each do |related_item_id| %>
-        <%= render 'search/fragments/related_item', related_item: @associated_object_data[related_item_id] %>
+        <% unless @associated_object_data[related_item_id].blank? %>
+          <%= render 'search/fragments/related_item', related_item: @associated_object_data[related_item_id] %>
+        <% end %>
       <% end %>
     </div>
     <% if related_item_ids.size > 4 %>
@@ -15,11 +17,12 @@
         <br/>
         <div class="flex-list">
           <% related_item_ids[4..].each do |related_item_id| %>
-            <%= render 'search/fragments/related_item', related_item: @associated_object_data[related_item_id] %>
+            <% unless @associated_object_data[related_item_id].blank? %>
+              <%= render 'search/fragments/related_item', related_item: @associated_object_data[related_item_id] %>
+            <% end %>
           <% end %>
         </div>
       </details>
     <% end %>
-  </div>
   </div>
 <% end %>

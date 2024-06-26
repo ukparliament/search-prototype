@@ -234,30 +234,22 @@ RSpec.describe ContentObject, type: :model do
     end
   end
 
-  describe 'related_items' do
+  describe 'related_item_ids' do
     let!(:content_object) { ContentObject.new(test_data) }
     context 'where there is no data' do
       let!(:test_data) { {} }
 
       it 'returns nil' do
-        expect(content_object.related_items).to be_nil
+        expect(content_object.related_item_ids).to be_nil
       end
     end
 
     context 'where relation_t is populated' do
       context 'where relation_t is an array of strings' do
         let!(:test_data) { { "relation_t" => ["test1", "test2"] } }
-        let!(:solr_multi_query_object) { SolrMultiQuery.new(test_data) }
-        let!(:related_item_1) { ContentObject.new({}) }
 
-        it 'passes the strings to a new instance of SolrMultiQuery' do
-          expect(SolrMultiQuery).to receive(:new).with({ :object_uris => ["test1", "test2"] }).and_return(solr_multi_query_object)
-          allow_any_instance_of(SolrMultiQuery).to receive(:object_data).and_return(['test'])
-          allow_any_instance_of(SesLookup).to receive(:data).and_return('SES data')
-
-          allow(ContentObject).to receive(:generate).and_return(related_item_1)
-
-          expect(content_object.related_items).to eq({ items: [related_item_1], ses_lookup: 'SES data' })
+        it 'returns an array of strings' do
+          expect(content_object.related_item_ids).to eq(['test1', 'test2'])
         end
       end
     end
