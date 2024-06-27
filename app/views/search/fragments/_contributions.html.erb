@@ -1,18 +1,23 @@
-<% unless contributions.blank? %>
+<% unless contribution_ids.blank? %>
   <div class="about-item">
     <h3 class="content-heading" id="contributions">Proceeding contributions</h3>
-    <% contributions[:contribution_data].first(2).each do |contribution| %>
-      <%= render 'search/fragments/contribution', contribution: contribution, ses_data: contributions[:contribution_ses_data] %>
-    <% end %>
-
-    <% if contributions[:contribution_data].size > 2 %>
+    <div class="flex-list">
+      <% contribution_ids[..1].each do |contribution_id| %>
+        <%= render 'search/fragments/contribution', contribution: @associated_object_data[contribution_id] %>
+      <% end %>
+    </div>
+    <% if contribution_ids.size > 2 %>
+      <br/>
       <details>
         <summary>
-          Show all contributions (<%= contributions[:contribution_data].size %>)
+          Show all contributions (<%= contribution_ids.size %>)
         </summary>
-        <% contributions[:contribution_data].drop(2).each do |contribution| %>
-          <%= render 'search/fragments/contribution', contribution: contribution, ses_data: contributions[:contribution_ses_data] %>
-        <% end %>
+        <br/>
+        <div class="flex-list">
+          <% contribution_ids[2..].each do |contribution_id| %>
+            <%= render 'search/fragments/contribution', contribution: @associated_object_data[contribution_id] %>
+          <% end %>
+        </div>
       </details>
     <% end %>
   </div>

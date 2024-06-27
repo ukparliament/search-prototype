@@ -1,28 +1,29 @@
-<% unless regarding_objects.blank? %>
+<% unless regarding_object_ids.blank? %>
   <div class="about-item">
     <h3 class="content-heading" id="regarding-deposited-document">Regarding deposited document</h3>
     <div class="flex-list">
-      <% regarding_objects[:items].each do |regarding_object| %>
+      <% regarding_object_ids.each do |r_id| %>
         <div>
-          <% unless regarding_object.content_object_data['uri'].blank? %>
-            <%= object_show_link(regarding_object.object_title, regarding_object.object_uri) %><br/>
+          <% unless @associated_object_data[r_id].object_uri.blank? %>
+            <%= object_show_link(@associated_object_data[r_id].object_title, @associated_object_data[r_id].object_uri) %>
+            <br/>
           <% end %>
-          <% if regarding_object.date %>
-            <%= format_date(regarding_object.date) %><br/>
+          <% if @associated_object_data[r_id].date %>
+            <%= format_date(@associated_object_data[r_id].date) %><br/>
           <% end %>
-          <% if regarding_object.dual_type? %>
-            <%= regarding_objects[:ses_lookup][regarding_object.subtype[:value]] %>
-            and <%= regarding_objects[:ses_lookup][regarding_object.type[:value]] %><br/>
+          <% if @associated_object_data[r_id].dual_type? %>
+            <%= @ses_data[@associated_object_data[r_id].subtype[:value]] %>
+            and <%= @ses_data[@associated_object_data[r_id].type[:value]] %><br/>
           <% else %>
-            <% if regarding_object.subtype %>
-              <%= regarding_objects[:ses_lookup][regarding_object.subtype[:value]] %><br/>
-            <% elsif regarding_object.type %>
-              <%= regarding_objects[:ses_lookup][regarding_object.type[:value]] %><br/>
+            <% if @associated_object_data[r_id].subtype %>
+              <%= @ses_data[@associated_object_data[r_id].subtype[:value]] %><br/>
+            <% elsif @associated_object_data[r_id].type %>
+              <%= @ses_data[@associated_object_data[r_id].type[:value]] %><br/>
             <% end %>
           <% end %>
-          <% unless regarding_object.legislature.blank? %>
-            <% regarding_object.legislature.each do |house| %>
-              <%= regarding_objects[:ses_lookup][house[:value]] %><br/>
+          <% unless @associated_object_data[r_id].legislature.blank? %>
+            <% @associated_object_data[r_id].legislature.each do |house| %>
+              <%= @ses_data[house[:value]] %><br/>
             <% end %>
           <% end %>
         </div>

@@ -4,21 +4,18 @@ class Act < ContentObject
     super
   end
 
+  def associated_objects
+    ids = super
+    ids << bill_id
+    ids.compact.flatten.uniq
+  end
+
   def object_name
     subtype_or_type
   end
 
-  def bill
-    # returns the associated Bill object, if it exists
-
-    bill_uris = get_all_from('isVersionOf_t')&.pluck(:value)
-    return if bill_uris.blank?
-
-    ObjectsFromUriList.new(bill_uris).get_objects[:items]&.first
-  end
-
-  def bill_link
-    get_first_from('isVersionOf_t')
+  def bill_id
+    get_first_id_from('isVersionOf_t')
   end
 
   def long_title

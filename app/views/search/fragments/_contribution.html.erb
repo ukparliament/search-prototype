@@ -1,18 +1,18 @@
-<p>
-  <% if contribution[:reference] %>
-    <% if contribution[:member] %>
-      <%= object_show_link("#{formatted_name(contribution[:member], ses_data, false)} | #{contribution[:reference].map { |ref| ref[:value] }.join(' ')} (Link to this contribution)", contribution[:uri]) %>
+<div>
+  <% if contribution.reference %>
+    <% if contribution.member %>
+      <%= object_show_link("#{formatted_name(contribution.member, ses_data, false)} | #{contribution.reference.map { |ref| ref[:value] }.join(' ')} (Link to this contribution)", contribution.object_uri) %>
     <% else %>
-      <%= object_show_link("#{contribution[:reference].first[:value]} (Link to this contribution)", contribution[:uri]) %>
+      <%= object_show_link("#{contribution.reference.first[:value]} (Link to this contribution)", contribution.object_uri) %>
     <% end %>
   <% else %>
-    <% if contribution[:member] %>
-      <%= object_show_link("#{formatted_name(contribution[:member], ses_data, false)} (Link to this contribution)", contribution[:uri]) %>
+    <% if contribution.member %>
+      <%= object_show_link("#{formatted_name(contribution.member, ses_data, false)} (Link to this contribution)", contribution.object_uri) %>
     <% else %>
-      <%= object_show_link("Link to this contribution", contribution[:uri]) %>
+      <%= object_show_link("Link to this contribution", contribution.object_uri) %>
     <% end %>
   <% end %>
-  <% unless contribution[:text].blank? %>
-    <%= raw(contribution[:text][:value].first(100)) %><%= "..." unless contribution[:text][:value].length < 100 %>
+  <% unless contribution.contribution_text.blank? %>
+    <%= raw(contribution.contribution_text[:value].first(100)) %><%= "..." unless contribution.contribution_text[:value].length < 100 %>
   <% end %>
-</p>
+</div>

@@ -73,7 +73,7 @@ module LinkHelper
           skip = []
           puts "Missing SES name for ID #{data[:value]}" unless skip.include?(data[:field_name])
         else
-          name_string = "Unknown"
+          name_string = "unknown"
         end
         # puts "Missing name - performing fallback SES lookup for: #{data[:value].to_i}"
         # In some edge cases, we won't have a SES name included in the page SES data. We then perform a lookup

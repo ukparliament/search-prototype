@@ -26,13 +26,27 @@ class ContentObjectsController < ApplicationController
     else
       object_data = @response['docs'].first
       @object = ContentObject.generate(object_data)
-      @ses_data = @object.ses_data
+      @associated_object_ids = @object.associated_objects.compact
+      all_ses_ids = @object.ses_lookup_ids
+
+      # TODO: refactor into an object
+      if @associated_object_ids.any?
+        @associated_objects_query = @object.get_associated_objects
+        @associated_objects = @associated_objects_query[:items]
+
+        @associated_object_data = {}
+        @associated_objects.each { |o| @associated_object_data[o.object_uri[:value]] = o }
+        assoc_ses_ids = @associated_objects.flat_map(&:ses_lookup_ids)
+        all_ses_ids = @object.ses_lookup_ids + assoc_ses_ids
+      end
+
+      @ses_data = SesLookup.new(all_ses_ids).data
       @page_title = @object.object_title
 
       if @ses_data.has_key?(:error)
         render template: 'layouts/shared/error/500', locals: { status: 500, message: 'There was an error resolving names using the SES service' }
       else
-      render template: @object.template, :locals => { :object => @object }
+        render template: @object.template, :locals => { :object => @object }
       end
     end
 

@@ -8,6 +8,7 @@ RSpec.describe 'ContentObjects', type: :request do
       it 'returns http success' do
         allow_any_instance_of(SolrQuery).to receive(:all_data).and_return({ 'response' => { "docs" => ['test'] } })
         allow_any_instance_of(Edm).to receive(:ses_data).and_return(edm_instance.type => 'early day motion')
+        allow_any_instance_of(SesLookup).to receive(:data).and_return({})
         allow(ContentObject).to receive(:generate).and_return(edm_instance)
         get '/objects', params: { :object => 'test_string' }
         expect(response).to have_http_status(:ok)
@@ -15,6 +16,7 @@ RSpec.describe 'ContentObjects', type: :request do
       it 'renders the footer' do
         allow_any_instance_of(SolrQuery).to receive(:all_data).and_return({ 'response' => { "docs" => ['test'] } })
         allow_any_instance_of(Edm).to receive(:ses_data).and_return(edm_instance.type => 'early day motion')
+        allow_any_instance_of(SesLookup).to receive(:data).and_return({})
         allow(ContentObject).to receive(:generate).and_return(edm_instance)
         get '/objects', params: { :object => 'test_string' }
         expect(response).to have_http_status(:ok)

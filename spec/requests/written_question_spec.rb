@@ -7,7 +7,7 @@ RSpec.describe 'Written Question', type: :request do
     it 'returns http success' do
       allow_any_instance_of(SolrQuery).to receive(:all_data).and_return({ 'response' => { "docs" => ['test'] } })
       allow_any_instance_of(SolrMultiQuery).to receive(:object_data).and_return([])
-      allow_any_instance_of(SesLookup).to receive(:data).and_return([])
+      allow_any_instance_of(SesLookup).to receive(:data).and_return({})
       allow(ContentObject).to receive(:generate).and_return(written_question_instance)
       allow_any_instance_of(WrittenQuestion).to receive(:ses_data).and_return(written_question_instance.type[:value] => 'written question')
       allow(written_question_instance).to receive(:tabled?).and_return(true)
@@ -77,10 +77,11 @@ RSpec.describe 'Written Question', type: :request do
           # failed oral
           # unstarred
 
-          unless written_question_instance.related_items.blank?
-            written_question_instance.related_items.each do |related_item|
-              # TODO: meaningfully test related items
-            end
+          unless written_question_instance.related_item_ids.blank?
+            # TODO: test related items
+            # written_question_instance.related_item_ids.each do |related_item_uri|
+            #   expect(CGI::unescapeHTML(response.body)).to include(related_item_uri)
+            # end
           end
 
           unless written_question_instance.subjects.blank?

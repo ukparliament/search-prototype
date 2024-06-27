@@ -30,7 +30,19 @@ class ContentObject
     "Untitled #{object_name_text}"
   end
 
+  def associated_objects
+    ids = []
+    ids << related_item_ids
+    ids.flatten.compact.uniq
+  end
+
+  def get_associated_objects
+    ObjectsFromUriList.new(associated_objects).get_objects
+  end
+
   def object_name_text
+    # TODO: integrate into eager SES loading
+
     return if subtype_or_type.blank?
 
     object_ses_data = SesLookup.new([subtype_or_type]).data
@@ -236,9 +248,8 @@ class ContentObject
     get_first_from('searcherNote_t')
   end
 
-  def related_items
-    relation_uris = get_all_from('relation_t')&.pluck(:value)
-    ObjectsFromUriList.new(relation_uris).get_objects
+  def related_item_ids
+    get_all_ids_from('relation_t')
   end
 
   def contribution_text
@@ -363,6 +374,18 @@ class ContentObject
     return if content_object_data[field_name].blank?
 
     { value: content_object_data[field_name].first, field_name: field_name }
+  end
+
+  def get_first_id_from(field_name)
+    return if content_object_data[field_name].blank?
+
+    content_object_data[field_name].first
+  end
+
+  def get_all_ids_from(field_name)
+    return if content_object_data[field_name].blank?
+
+    content_object_data[field_name]
   end
 
   def get_first_as_html_from(field_name)

@@ -4,6 +4,12 @@ class ProceedingContribution < ContentObject
     super
   end
 
+  def associated_objects
+    ids = super
+    ids << proceeding_contribution_uri
+    ids.compact.flatten.uniq
+  end
+
   def template
     'search/objects/proceeding_contribution'
   end
@@ -17,14 +23,6 @@ class ProceedingContribution < ContentObject
   end
 
   def proceeding_contribution_uri
-    fallback(get_first_from('parentProceeding_t'), get_first_from('parentProceeding_uri'))
-  end
-
-  def parent_object
-    return if proceeding_contribution_uri.blank?
-
-    parent_proceeding_uri = proceeding_contribution_uri[:value]
-    response = ObjectsFromUriList.new([parent_proceeding_uri]).get_objects
-    response[:items]&.first
+    fallback(get_first_id_from('parentProceeding_t'), get_first_id_from('parentProceeding_uri'))
   end
 end

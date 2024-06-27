@@ -1,6 +1,7 @@
 <% if Rails.env.development? %>
   <%= render 'search/fragments/data', data: object.content_object_data, title: 'SOLR Data' %>
   <%= render 'search/fragments/data', data: @ses_data, title: 'SES Data' %>
+  <%= render 'search/fragments/data', data: @associated_object_data, title: 'Associated Object Data' %>
 <% end %>
 
 <% content_for(:before_title) do %>
@@ -8,18 +9,18 @@
   <div id="top"></div>
 <% end %>
 
-  <% content_for(:title) do %>
-    <%= object.object_title %>
-  <% end %>
+<% content_for(:title) do %>
+  <%= object.object_title %>
+<% end %>
 
 <section id="prelim">
-  <%= render 'search/preliminary_sentences/act', object: object %>
+  <%= render 'search/preliminary_sentences/act', object: object, bill: @associated_object_data[object.bill_id] %>
 </section>
 
 <section id="about" class="content-section grey">
   <h2 class="content-heading">About this <%= object_display_name(object.type, case_formatting: true) %></h2>
   <%= render 'search/fragments/reference', reference: object.reference %>
-  <%= render 'search/fragments/related_items', related_items: object.related_items %>
+  <%= render 'search/fragments/related_items', related_item_ids: object.related_item_ids %>
   <%= render 'search/fragments/notes', notes: object.notes %>
   <%= render 'search/fragments/pills', pills_heading: 'Subjects', pills: object.subjects %>
   <%= render 'search/fragments/legislation', legislation: object.legislation %>

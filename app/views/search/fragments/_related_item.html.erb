@@ -1,5 +1,5 @@
 <div>
-  <% unless related_item.content_object_data['uri'].blank? %>
+  <% unless related_item.object_uri.blank? %>
     <%= object_show_link(related_item.object_title, related_item.object_uri) %><br/>
   <% end %>
   <% if related_item.date %>
@@ -14,7 +14,7 @@
   <% end %>
   <% unless related_item.legislature.blank? %>
     <% related_item.legislature.each do |house| %>
-      <%= ses_data[house[:value]] %><br/>
+      <%= @ses_data[house[:value]] %><br/>
     <% end %>
   <% end %>
 </div>

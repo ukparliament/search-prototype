@@ -4,8 +4,8 @@
       %span>= object_display_name_link(object.object_name)
       %span= " became law on "
       %strong>= format_date(object.date)
-      - unless object.bill.blank?
+      - unless bill.blank?
         %span= " when the "
-        %span>= object_show_link(object.bill.object_title, object.bill_link)
+        %span>= object_show_link(bill.object_title, bill.object_uri)
         %span>= " received Royal Assent"
       %span= "."

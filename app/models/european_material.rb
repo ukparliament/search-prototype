@@ -4,6 +4,14 @@ class EuropeanMaterial < ContentObject
     super
   end
 
+  def associated_objects
+    # TODO: consider moving related item IDs to subclasses, as its use varies
+
+    ids = super
+    ids << related_item_ids
+    ids.flatten.compact.uniq
+  end
+
   def template
     'search/objects/european_material'
   end
@@ -34,17 +42,6 @@ class EuropeanMaterial < ContentObject
     get_first_from('epCommittee_t')
   end
 
-  def related_items
-    # We're including two additional fields for EU material
-
-    doc_text = get_all_from('referencingDD_t')&.pluck(:value)
-    doc_uri = get_all_from('referencingDD_uri')&.pluck(:value)
-    relation_uris = get_all_from('relation_t')&.pluck(:value)
-    combined = [doc_text, doc_uri, relation_uris].flatten.compact
-
-    ObjectsFromUriList.new(combined).get_objects
-  end
-
   def publisher
     get_first_from('publisher_t')
   end
@@ -59,5 +56,12 @@ class EuropeanMaterial < ContentObject
 
   def ec_documents
     get_first_from('ecDocuments_t')
+  end
+
+  def related_item_ids
+    doc_text = get_all_ids_from('referencingDD_t')
+    doc_uri = get_all_ids_from('referencingDD_uri')
+    relation_uris = get_all_ids_from('relation_t')
+    [doc_text, doc_uri, relation_uris].flatten.compact
   end
 end

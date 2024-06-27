@@ -85,28 +85,25 @@ RSpec.describe PublicAct, type: :model do
     end
   end
 
-  describe 'bill' do
+  describe 'bill_id' do
     context 'where there is no data' do
       it 'returns nil' do
-        expect(public_act.bill).to be_nil
+        expect(public_act.bill_id).to be_nil
       end
     end
 
     context 'where there is an empty array' do
       let!(:public_act) { PublicAct.new({ 'isVersionOf_t' => [] }) }
       it 'returns nil' do
-        expect(public_act.bill).to be_nil
+        expect(public_act.bill_id).to be_nil
       end
     end
 
     context 'where data exists' do
       let!(:public_act) { PublicAct.new({ 'isVersionOf_t' => ['uri'] }) }
-      let!(:bill) { Bill.new({ 'title_t' => 'bill title' }) }
-      let!(:response) { { items: [bill] } }
 
-      it 'returns the associated object from the uri' do
-        allow_any_instance_of(ObjectsFromUriList).to receive(:get_objects).and_return(response)
-        expect(public_act.bill).to eq(bill)
+      it 'returns the uri' do
+        expect(public_act.bill_id).to eq('uri')
       end
     end
   end
