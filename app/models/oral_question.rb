@@ -4,6 +4,12 @@ class OralQuestion < Question
     super
   end
 
+  def associated_objects
+    ids = super
+    ids << answer_item_link
+    ids.flatten.compact.uniq
+  end
+
   def template
     'search/objects/oral_question'
   end
@@ -16,24 +22,8 @@ class OralQuestion < Question
     subtype_or_type
   end
 
-  def answer_text
-    return unless answer_object
-
-    answer_object.answer_text
-  end
-
-  def answer_object
-    # TODO: Awaiting confirmation that this is the correct approach
-    return unless answered?
-
-    return if answer_item_link.blank?
-
-    answer_item_data = SolrQuery.new(object_uri: answer_item_link[:value]).object_data
-    ContentObject.generate(answer_item_data)
-  end
-
   def answer_item_link
-    get_first_from('answerFor_uri')
+    get_first_id_from('answerFor_uri')
   end
 
   def prelim_partial

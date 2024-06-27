@@ -7,7 +7,6 @@ RSpec.describe 'ContentObjects', type: :request do
     context 'success' do
       it 'returns http success' do
         allow_any_instance_of(SolrQuery).to receive(:all_data).and_return({ 'response' => { "docs" => ['test'] } })
-        allow_any_instance_of(Edm).to receive(:ses_data).and_return(edm_instance.type => 'early day motion')
         allow_any_instance_of(SesLookup).to receive(:data).and_return({})
         allow(ContentObject).to receive(:generate).and_return(edm_instance)
         get '/objects', params: { :object => 'test_string' }
@@ -15,7 +14,6 @@ RSpec.describe 'ContentObjects', type: :request do
       end
       it 'renders the footer' do
         allow_any_instance_of(SolrQuery).to receive(:all_data).and_return({ 'response' => { "docs" => ['test'] } })
-        allow_any_instance_of(Edm).to receive(:ses_data).and_return(edm_instance.type => 'early day motion')
         allow_any_instance_of(SesLookup).to receive(:data).and_return({})
         allow(ContentObject).to receive(:generate).and_return(edm_instance)
         get '/objects', params: { :object => 'test_string' }
@@ -30,7 +28,6 @@ RSpec.describe 'ContentObjects', type: :request do
     context '500 error' do
       it 'renders the error page' do
         allow_any_instance_of(SolrQuery).to receive(:all_data).and_return({ 'response' => { 'code' => 500 } })
-        allow_any_instance_of(Edm).to receive(:ses_data).and_return(edm_instance.type => 'early day motion')
         allow(ContentObject).to receive(:generate).and_return(edm_instance)
         get '/objects', params: { :object => 'test_string' }
         expect(response.body).to include("There is a technical issue.")
@@ -40,7 +37,6 @@ RSpec.describe 'ContentObjects', type: :request do
     context '404 error' do
       it 'renders the error page' do
         allow_any_instance_of(SolrQuery).to receive(:all_data).and_return({ 'response' => { 'code' => 404 } })
-        allow_any_instance_of(Edm).to receive(:ses_data).and_return(edm_instance.type => 'early day motion')
         allow(ContentObject).to receive(:generate).and_return(edm_instance)
         get '/objects', params: { :object => 'test_string' }
         expect(response.body).to include("We can't find what you are looking for")

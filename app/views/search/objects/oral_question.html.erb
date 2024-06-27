@@ -33,7 +33,7 @@
 
 <section id="main-content" class="content-section white">
   <%= render 'search/fragments/question', object: object %>
-  <%= render 'search/fragments/answer', object: object unless object.tabled? || object.withdrawn? %>
+  <%= render 'search/fragments/answer', object: @associated_object_data[object.answer_item_link] unless object.tabled? || object.withdrawn? %>
 </section>
 
 <section id="about" class="content-section grey">

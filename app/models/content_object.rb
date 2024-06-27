@@ -23,11 +23,29 @@ class ContentObject
     'search/results/content_object'
   end
 
+  def page_title
+    content_object_data['title_t']
+  end
+
   def object_title
-    # returns the title, falling back to name
+    # TODO: everywhere this is currently called, we can wrapper it in formatted_name, passing in @ses_data
+    # from the controllers and setting singularize to true
+    # formatted_name(x.object_title, @ses_data, true)
+    # The helper method can be modified if neccessary with fallback options
+    # But in most cases @ses_data will already include the required names
+    # this method (object title) can then return either a name or "Untitled" string (see below)
+    # Or subtype_or_type as a replacement
+
+    # Problem - singularisation only needed for SES derived type names
+    # Actual document titles we DON'T want to singularise - this method needs to pass back whether singularisation
+    # is required to the helper method?
+
     return page_title unless page_title.blank?
 
-    "Untitled #{object_name_text}"
+    return "Untitled" if subtype_or_type.blank?
+
+    # returning structured subtype or type to pass to formatted name helper
+    subtype_or_type
   end
 
   def associated_objects
@@ -38,20 +56,6 @@ class ContentObject
 
   def get_associated_objects
     ObjectsFromUriList.new(associated_objects).get_objects
-  end
-
-  def object_name_text
-    # TODO: integrate into eager SES loading
-
-    return if subtype_or_type.blank?
-
-    object_ses_data = SesLookup.new([subtype_or_type]).data
-    object_ses_data[subtype_or_type[:value].to_i]&.singularize
-  end
-
-  def page_title
-    # keeping this simple for now
-    content_object_data['title_t']
   end
 
   def ses_lookup_ids
@@ -78,10 +82,6 @@ class ContentObject
 
   def type
     get_first_from('type_ses')
-  end
-
-  def ses_data
-    SesLookup.new(ses_lookup_ids).data
   end
 
   def content

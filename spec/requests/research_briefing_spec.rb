@@ -9,7 +9,6 @@ RSpec.describe 'Research Briefing', type: :request do
       allow_any_instance_of(SolrMultiQuery).to receive(:object_data).and_return([])
       allow_any_instance_of(SesLookup).to receive(:data).and_return({})
       allow(ContentObject).to receive(:generate).and_return(research_briefing_instance)
-      allow_any_instance_of(ResearchBriefing).to receive(:ses_data).and_return(research_briefing_instance.type => 'research briefing')
       get '/objects', params: { :object => 'test_string' }
       expect(response).to have_http_status(:ok)
     end

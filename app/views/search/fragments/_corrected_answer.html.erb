@@ -8,7 +8,7 @@
     <% end %>
     <% unless object.correcting_item_link.blank? %>
       <p class="html-content">
-        <%= raw(object.correcting_object.correction_text[:value]) %>
+        <%= raw(@associated_object_data[object.correcting_item_link].correction_text[:value]) %>
       </p>
     <% end %>
   </div>

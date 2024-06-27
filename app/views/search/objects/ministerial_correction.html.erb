@@ -8,9 +8,9 @@
   <div id="top"></div>
 <% end %>
 
-  <% content_for(:title) do %>
-    <%= object.object_title %>
-  <% end %>
+<% content_for(:title) do %>
+  <%= object.object_title %>
+<% end %>
 
 <section id="prelim">
   <%= render 'search/preliminary_sentences/ministerial_correction', object: object %>
@@ -21,13 +21,13 @@
     <div class="content-text">
       <%= raw(object.correction_text[:value]) %>
     </div>
-    <% unless object.corrected_item_link.blank? || object.corrected_object.blank? %>
+    <% unless object.corrected_item_link.blank? || @associated_object_data[object.corrected_item_id].blank? %>
       <div class="about-item">
         <h3 class="content-heading">
           Original item link
         </h3>
         <p>
-          <%= object_show_link(object.corrected_object.object_title, object.corrected_item_link) %>
+          <%= object_show_link(@associated_object_data[object.corrected_item_id].object_title, object.corrected_item_link) %>
         </p>
       </div>
     <% end %>

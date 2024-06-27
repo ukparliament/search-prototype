@@ -40,10 +40,10 @@ class ContentObjectsController < ApplicationController
         all_ses_ids = @object.ses_lookup_ids + assoc_ses_ids
       end
 
-      @ses_data = SesLookup.new(all_ses_ids).data
       @page_title = @object.object_title
+      @ses_data = SesLookup.new(all_ses_ids).data
 
-      if @ses_data.has_key?(:error)
+      if @ses_data && @ses_data.has_key?(:error)
         render template: 'layouts/shared/error/500', locals: { status: 500, message: 'There was an error resolving names using the SES service' }
       else
         render template: @object.template, :locals => { :object => @object }

@@ -9,7 +9,6 @@ RSpec.describe 'Written Statement', type: :request do
       allow_any_instance_of(SolrMultiQuery).to receive(:object_data).and_return({})
       allow_any_instance_of(SesLookup).to receive(:data).and_return({})
       allow(ContentObject).to receive(:generate).and_return(written_statement_instance)
-      allow_any_instance_of(WrittenStatement).to receive(:ses_data).and_return(written_statement_instance.type[:value] => 'written statement')
       allow_any_instance_of(WrittenStatement).to receive(:page_title).and_return(written_statement_instance.type[:value] => 'test page title')
       get '/objects', params: { :object => 'test_string' }
       expect(response).to have_http_status(:ok)
