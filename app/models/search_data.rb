@@ -94,7 +94,8 @@ class SearchData
   end
 
   def current_page
-    search[:page].blank? ? 1 : search[:page].to_i
+    page_parameter = search.dig(:search_parameters, :page)
+    page_parameter.blank? ? 1 : page_parameter.to_i
   end
 
   def combined_ses_ids
