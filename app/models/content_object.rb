@@ -28,23 +28,11 @@ class ContentObject
   end
 
   def object_title
-    # TODO: everywhere this is currently called, we can wrapper it in formatted_name, passing in @ses_data
-    # from the controllers and setting singularize to true
-    # formatted_name(x.object_title, @ses_data, true)
-    # The helper method can be modified if neccessary with fallback options
-    # But in most cases @ses_data will already include the required names
-    # this method (object title) can then return either a name or "Untitled" string (see below)
-    # Or subtype_or_type as a replacement
-
-    # Problem - singularisation only needed for SES derived type names
-    # Actual document titles we DON'T want to singularise - this method needs to pass back whether singularisation
-    # is required to the helper method?
+    # Returns either a string field or a SES ID
+    # Titles are then formatted by formatted_page_title helper method
 
     return page_title unless page_title.blank?
 
-    return "Untitled" if subtype_or_type.blank?
-
-    # returning structured subtype or type to pass to formatted name helper
     subtype_or_type
   end
 
