@@ -14,7 +14,7 @@
       <img src="./assets/0.12.3/loading.gif" alt="loading"/>
     </div>
     <div id="wrapper" class="hide">
-      <div class="timestamp">Generated <abbr class="timeago" title="2024-06-28T09:51:06+01:00">2024-06-28T09:51:06+01:00</abbr></div>
+      <div class="timestamp">Generated <abbr class="timeago" title="2024-06-28T11:53:35+01:00">2024-06-28T11:53:35+01:00</abbr></div>
       <ul class="group_tabs"></ul>
 
       <div id="content">
@@ -23,14 +23,14 @@
     <span class="group_name">All Files</span>
     (<span class="covered_percent">
       <span class="yellow">
-  85.08%
+  85.09%
 </span>
 
      </span>
      covered at
      <span class="covered_strength">
        <span class="green">
-         86.09
+         86.1
        </span>
     </span> hits/line
     )
@@ -43,11 +43,11 @@
   </div>
 
   <div class="t-line-summary">
-    <b>1454</b> relevant lines,
-    <span class="green"><b>1237</b> lines covered</span> and
+    <b>1455</b> relevant lines,
+    <span class="green"><b>1238</b> lines covered</span> and
     <span class="red"><b>217</b> lines missed. </span>
     (<span class="yellow">
-  85.08%
+  85.09%
 </span>
 )
   </div>
@@ -138,12 +138,12 @@
         
           <tr class="t-file">
             <td class="strong t-file__name"><a href="#905b6e9b10254dc0d6b80aa4b294aa33db207cc2" class="src_link" title="app/helpers/application_helper.rb">app/helpers/application_helper.rb</a></td>
-            <td class="yellow strong cell--number t-file__coverage">81.48 %</td>
-            <td class="cell--number">78</td>
-            <td class="cell--number">27</td>
-            <td class="cell--number">22</td>
+            <td class="yellow strong cell--number t-file__coverage">82.14 %</td>
+            <td class="cell--number">82</td>
+            <td class="cell--number">28</td>
+            <td class="cell--number">23</td>
             <td class="cell--number">5</td>
-            <td class="cell--number">4.00</td>
+            <td class="cell--number">3.89</td>
             
           </tr>
         
@@ -308,7 +308,7 @@
             <td class="cell--number">263</td>
             <td class="cell--number">260</td>
             <td class="cell--number">3</td>
-            <td class="cell--number">281.76</td>
+            <td class="cell--number">281.97</td>
             
           </tr>
         
@@ -330,7 +330,7 @@
             <td class="cell--number">29</td>
             <td class="cell--number">28</td>
             <td class="cell--number">1</td>
-            <td class="cell--number">36.24</td>
+            <td class="cell--number">36.55</td>
             
           </tr>
         
@@ -704,7 +704,7 @@
             <td class="cell--number">80</td>
             <td class="cell--number">77</td>
             <td class="cell--number">3</td>
-            <td class="cell--number">3.78</td>
+            <td class="cell--number">4.26</td>
             
           </tr>
         
@@ -2335,7 +2335,7 @@
     <h3>app/helpers/application_helper.rb</h3>
     <h4>
       <span class="yellow">
-  81.48%
+  82.14%
 </span>
 
       lines covered
@@ -2344,8 +2344,8 @@
     
 
     <div class="t-line-summary">
-      <b>27</b> relevant lines.
-      <span class="green"><b>22</b> lines covered</span> and
+      <b>28</b> relevant lines.
+      <span class="green"><b>23</b> lines covered</span> and
       <span class="red"><b>5</b> lines missed.</span>
     </div>
 
@@ -2374,40 +2374,40 @@
 
             
 
-            <code class="ruby">  # ## We set the date display format.</code>
+            <code class="ruby"></code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="3">
+          <li class="never" data-hits="" data-linenumber="3">
+            
+            
+
+            
+
+            <code class="ruby">  # For formatting search result counts</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="1" data-linenumber="4">
             <span class="hits">1</span>
             
 
             
 
-            <code class="ruby">  DATE_DISPLAY_FORMAT = &#39;%A, %e %B %Y&#39;</code>
+            <code class="ruby">  include ActiveSupport::NumberHelper</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="4">
+          <li class="never" data-hits="" data-linenumber="5">
             
             
 
             
 
             <code class="ruby"></code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="covered" data-hits="1" data-linenumber="5">
-            <span class="hits">1</span>
-            
-
-            
-
-            <code class="ruby">  def boolean_yes_no(boolean)</code>
           </li>
         </div>
       
@@ -2418,18 +2418,18 @@
 
             
 
-            <code class="ruby">    # outputs &#39;Yes&#39; or &#39;No&#39; strings from a boolean (an instance of Ruby TrueClass or FalseClass)</code>
+            <code class="ruby">  # ## We set the date display format.</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="7">
-            
-            
-
+          <li class="covered" data-hits="1" data-linenumber="7">
+            <span class="hits">1</span>
             
 
-            <code class="ruby">    # for presenting output of methods such as WrittenQuestion transferred?</code>
+            
+
+            <code class="ruby">  DATE_DISPLAY_FORMAT = &#39;%A, %e %B %Y&#39;</code>
           </li>
         </div>
       
@@ -2440,18 +2440,18 @@
 
             
 
-            <code class="ruby">    # Note that in most cases the partial will not be rendered except where the answer is &#39;Yes&#39;, but exceptions exist</code>
+            <code class="ruby"></code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="72" data-linenumber="9">
-            <span class="hits">72</span>
+          <li class="covered" data-hits="1" data-linenumber="9">
+            <span class="hits">1</span>
             
 
             
 
-            <code class="ruby">    return &#39;Yes&#39; if boolean &amp;&amp; boolean[:value] == true</code>
+            <code class="ruby">  def boolean_yes_no(boolean)</code>
           </li>
         </div>
       
@@ -2462,18 +2462,18 @@
 
             
 
-            <code class="ruby"></code>
+            <code class="ruby">    # outputs &#39;Yes&#39; or &#39;No&#39; strings from a boolean (an instance of Ruby TrueClass or FalseClass)</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="2" data-linenumber="11">
-            <span class="hits">2</span>
+          <li class="never" data-hits="" data-linenumber="11">
+            
             
 
             
 
-            <code class="ruby">    &#39;No&#39;</code>
+            <code class="ruby">    # for presenting output of methods such as WrittenQuestion transferred?</code>
           </li>
         </div>
       
@@ -2484,12 +2484,23 @@
 
             
 
-            <code class="ruby">  end</code>
+            <code class="ruby">    # Note that in most cases the partial will not be rendered except where the answer is &#39;Yes&#39;, but exceptions exist</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="13">
+          <li class="covered" data-hits="72" data-linenumber="13">
+            <span class="hits">72</span>
+            
+
+            
+
+            <code class="ruby">    return &#39;Yes&#39; if boolean &amp;&amp; boolean[:value] == true</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="14">
             
             
 
@@ -2500,24 +2511,13 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="14">
-            <span class="hits">1</span>
+          <li class="covered" data-hits="2" data-linenumber="15">
+            <span class="hits">2</span>
             
 
             
 
-            <code class="ruby">  def ordinal_text(index)</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="covered" data-hits="12" data-linenumber="15">
-            <span class="hits">12</span>
-            
-
-            
-
-            <code class="ruby">    case index</code>
+            <code class="ruby">    &#39;No&#39;</code>
           </li>
         </div>
       
@@ -2528,40 +2528,40 @@
 
             
 
-            <code class="ruby">    when 0</code>
+            <code class="ruby">  end</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="17">
+          <li class="never" data-hits="" data-linenumber="17">
+            
+            
+
+            
+
+            <code class="ruby"></code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="1" data-linenumber="18">
             <span class="hits">1</span>
             
 
             
 
-            <code class="ruby">      &quot;first&quot;</code>
+            <code class="ruby">  def ordinal_text(index)</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="18">
-            
-            
-
-            
-
-            <code class="ruby">    when 1</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="covered" data-hits="3" data-linenumber="19">
-            <span class="hits">3</span>
+          <li class="covered" data-hits="12" data-linenumber="19">
+            <span class="hits">12</span>
             
 
             
 
-            <code class="ruby">      &quot;second&quot;</code>
+            <code class="ruby">    case index</code>
           </li>
         </div>
       
@@ -2572,7 +2572,7 @@
 
             
 
-            <code class="ruby">    when 2</code>
+            <code class="ruby">    when 0</code>
           </li>
         </div>
       
@@ -2583,7 +2583,7 @@
 
             
 
-            <code class="ruby">      &quot;third&quot;</code>
+            <code class="ruby">      &quot;first&quot;</code>
           </li>
         </div>
       
@@ -2594,18 +2594,18 @@
 
             
 
-            <code class="ruby">    when 3</code>
+            <code class="ruby">    when 1</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="23">
-            <span class="hits">1</span>
+          <li class="covered" data-hits="3" data-linenumber="23">
+            <span class="hits">3</span>
             
 
             
 
-            <code class="ruby">      &quot;fourth&quot;</code>
+            <code class="ruby">      &quot;second&quot;</code>
           </li>
         </div>
       
@@ -2616,7 +2616,7 @@
 
             
 
-            <code class="ruby">    when 4</code>
+            <code class="ruby">    when 2</code>
           </li>
         </div>
       
@@ -2627,7 +2627,7 @@
 
             
 
-            <code class="ruby">      &quot;fifth&quot;</code>
+            <code class="ruby">      &quot;third&quot;</code>
           </li>
         </div>
       
@@ -2638,7 +2638,7 @@
 
             
 
-            <code class="ruby">    when 5</code>
+            <code class="ruby">    when 3</code>
           </li>
         </div>
       
@@ -2649,7 +2649,7 @@
 
             
 
-            <code class="ruby">      &quot;sixth&quot;</code>
+            <code class="ruby">      &quot;fourth&quot;</code>
           </li>
         </div>
       
@@ -2660,7 +2660,7 @@
 
             
 
-            <code class="ruby">    when 6</code>
+            <code class="ruby">    when 4</code>
           </li>
         </div>
       
@@ -2671,7 +2671,7 @@
 
             
 
-            <code class="ruby">      &quot;seventh&quot;</code>
+            <code class="ruby">      &quot;fifth&quot;</code>
           </li>
         </div>
       
@@ -2682,7 +2682,7 @@
 
             
 
-            <code class="ruby">    when 7</code>
+            <code class="ruby">    when 5</code>
           </li>
         </div>
       
@@ -2693,7 +2693,7 @@
 
             
 
-            <code class="ruby">      &quot;eighth&quot;</code>
+            <code class="ruby">      &quot;sixth&quot;</code>
           </li>
         </div>
       
@@ -2704,7 +2704,7 @@
 
             
 
-            <code class="ruby">    when 8</code>
+            <code class="ruby">    when 6</code>
           </li>
         </div>
       
@@ -2715,7 +2715,7 @@
 
             
 
-            <code class="ruby">      &quot;ninth&quot;</code>
+            <code class="ruby">      &quot;seventh&quot;</code>
           </li>
         </div>
       
@@ -2726,7 +2726,7 @@
 
             
 
-            <code class="ruby">    else</code>
+            <code class="ruby">    when 7</code>
           </li>
         </div>
       
@@ -2737,7 +2737,7 @@
 
             
 
-            <code class="ruby">      (index + 1).ordinalize</code>
+            <code class="ruby">      &quot;eighth&quot;</code>
           </li>
         </div>
       
@@ -2748,18 +2748,18 @@
 
             
 
-            <code class="ruby">    end</code>
+            <code class="ruby">    when 8</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="37">
-            
-            
-
+          <li class="covered" data-hits="1" data-linenumber="37">
+            <span class="hits">1</span>
             
 
-            <code class="ruby">  end</code>
+            
+
+            <code class="ruby">      &quot;ninth&quot;</code>
           </li>
         </div>
       
@@ -2770,7 +2770,7 @@
 
             
 
-            <code class="ruby"></code>
+            <code class="ruby">    else</code>
           </li>
         </div>
       
@@ -2781,7 +2781,7 @@
 
             
 
-            <code class="ruby">  def ses_field_name(field)</code>
+            <code class="ruby">      (index + 1).ordinalize</code>
           </li>
         </div>
       
@@ -2792,7 +2792,7 @@
 
             
 
-            <code class="ruby">    # returns display name for a SES field, e.g. &#39;Content Type&#39; for type_ses</code>
+            <code class="ruby">    end</code>
           </li>
         </div>
       
@@ -2803,7 +2803,7 @@
 
             
 
-            <code class="ruby"></code>
+            <code class="ruby">  end</code>
           </li>
         </div>
       
@@ -2814,18 +2814,18 @@
 
             
 
-            <code class="ruby">    field_names = {</code>
+            <code class="ruby"></code>
           </li>
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="43">
-            
-            
-
+          <li class="covered" data-hits="1" data-linenumber="43">
+            <span class="hits">1</span>
             
 
-            <code class="ruby">      type_ses: &#39;Content type&#39;,</code>
+            
+
+            <code class="ruby">  def ses_field_name(field)</code>
           </li>
         </div>
       
@@ -2836,7 +2836,7 @@
 
             
 
-            <code class="ruby">      type_sesrollup: &#39;Content type (Rollup)&#39;,</code>
+            <code class="ruby">    # returns display name for a SES field, e.g. &#39;Content Type&#39; for type_ses</code>
           </li>
         </div>
       
@@ -2847,7 +2847,7 @@
 
             
 
-            <code class="ruby">      legislature_ses: &#39;Legislature&#39;,</code>
+            <code class="ruby"></code>
           </li>
         </div>
       
@@ -2858,18 +2858,18 @@
 
             
 
-            <code class="ruby">      session_t: &#39;Session&#39;,</code>
+            <code class="ruby">    field_names = {</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="47">
+          <li class="missed" data-hits="0" data-linenumber="47">
             
             
 
             
 
-            <code class="ruby">      date_dt: &#39;Date&#39;,</code>
+            <code class="ruby">      type_ses: &#39;Content type&#39;,</code>
           </li>
         </div>
       
@@ -2880,7 +2880,7 @@
 
             
 
-            <code class="ruby">      member_ses: &#39;Member&#39;,</code>
+            <code class="ruby">      type_sesrollup: &#39;Content type (Rollup)&#39;,</code>
           </li>
         </div>
       
@@ -2891,7 +2891,7 @@
 
             
 
-            <code class="ruby">      legislativeStage_ses: &#39;Legislative stage&#39;,</code>
+            <code class="ruby">      legislature_ses: &#39;Legislature&#39;,</code>
           </li>
         </div>
       
@@ -2902,7 +2902,7 @@
 
             
 
-            <code class="ruby">      department_ses: &#39;Department&#39;,</code>
+            <code class="ruby">      session_t: &#39;Session&#39;,</code>
           </li>
         </div>
       
@@ -2913,7 +2913,7 @@
 
             
 
-            <code class="ruby">      subject_ses: &#39;Subject&#39;,</code>
+            <code class="ruby">      date_dt: &#39;Date&#39;,</code>
           </li>
         </div>
       
@@ -2924,7 +2924,7 @@
 
             
 
-            <code class="ruby">      topic_ses: &#39;Topic&#39;,</code>
+            <code class="ruby">      member_ses: &#39;Member&#39;,</code>
           </li>
         </div>
       
@@ -2935,7 +2935,7 @@
 
             
 
-            <code class="ruby">      party_ses: &#39;Party&#39;,</code>
+            <code class="ruby">      legislativeStage_ses: &#39;Legislative stage&#39;,</code>
           </li>
         </div>
       
@@ -2946,7 +2946,7 @@
 
             
 
-            <code class="ruby">      subtype_ses: &#39;Content subtype&#39;,</code>
+            <code class="ruby">      department_ses: &#39;Department&#39;,</code>
           </li>
         </div>
       
@@ -2957,7 +2957,7 @@
 
             
 
-            <code class="ruby">      tablingMember_ses: &#39;Tabling member&#39;,</code>
+            <code class="ruby">      subject_ses: &#39;Subject&#39;,</code>
           </li>
         </div>
       
@@ -2968,7 +2968,7 @@
 
             
 
-            <code class="ruby">      answeringMember_ses: &#39;Answering member&#39;,</code>
+            <code class="ruby">      topic_ses: &#39;Topic&#39;,</code>
           </li>
         </div>
       
@@ -2979,7 +2979,7 @@
 
             
 
-            <code class="ruby">      askingMember_ses: &#39;Asking member&#39;,</code>
+            <code class="ruby">      party_ses: &#39;Party&#39;,</code>
           </li>
         </div>
       
@@ -2990,7 +2990,7 @@
 
             
 
-            <code class="ruby">      leadMember_ses: &#39;Lead member&#39;,</code>
+            <code class="ruby">      subtype_ses: &#39;Content subtype&#39;,</code>
           </li>
         </div>
       
@@ -3001,7 +3001,7 @@
 
             
 
-            <code class="ruby">      legislationTitle_ses: &#39;Legislation&#39;,</code>
+            <code class="ruby">      tablingMember_ses: &#39;Tabling member&#39;,</code>
           </li>
         </div>
       
@@ -3012,7 +3012,7 @@
 
             
 
-            <code class="ruby">    }</code>
+            <code class="ruby">      answeringMember_ses: &#39;Answering member&#39;,</code>
           </li>
         </div>
       
@@ -3023,18 +3023,18 @@
 
             
 
-            <code class="ruby"></code>
+            <code class="ruby">      askingMember_ses: &#39;Asking member&#39;,</code>
           </li>
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="62">
+          <li class="never" data-hits="" data-linenumber="62">
             
             
 
             
 
-            <code class="ruby">    field_names[field.to_sym]</code>
+            <code class="ruby">      leadMember_ses: &#39;Lead member&#39;,</code>
           </li>
         </div>
       
@@ -3045,7 +3045,7 @@
 
             
 
-            <code class="ruby">  end</code>
+            <code class="ruby">      legislationTitle_ses: &#39;Legislation&#39;,</code>
           </li>
         </div>
       
@@ -3056,18 +3056,18 @@
 
             
 
-            <code class="ruby"></code>
+            <code class="ruby">    }</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="65">
-            <span class="hits">1</span>
+          <li class="never" data-hits="" data-linenumber="65">
+            
             
 
             
 
-            <code class="ruby">  def checked_field(filter_params, facet_field_name, text_field_name)</code>
+            <code class="ruby"></code>
           </li>
         </div>
       
@@ -3078,7 +3078,7 @@
 
             
 
-            <code class="ruby">    return false if filter_params.blank?</code>
+            <code class="ruby">    field_names[field.to_sym]</code>
           </li>
         </div>
       
@@ -3089,62 +3089,62 @@
 
             
 
+            <code class="ruby">  end</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="68">
+            
+            
+
+            
+
             <code class="ruby"></code>
           </li>
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="68">
+          <li class="covered" data-hits="1" data-linenumber="69">
+            <span class="hits">1</span>
+            
+
+            
+
+            <code class="ruby">  def checked_field(filter_params, facet_field_name, text_field_name)</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="missed" data-hits="0" data-linenumber="70">
+            
+            
+
+            
+
+            <code class="ruby">    return false if filter_params.blank?</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="71">
+            
+            
+
+            
+
+            <code class="ruby"></code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="missed" data-hits="0" data-linenumber="72">
             
             
 
             
 
             <code class="ruby">    filter_params[facet_field_name]&amp;.include?(text_field_name)</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="69">
-            
-            
-
-            
-
-            <code class="ruby">  end</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="70">
-            
-            
-
-            
-
-            <code class="ruby"></code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="covered" data-hits="1" data-linenumber="71">
-            <span class="hits">1</span>
-            
-
-            
-
-            <code class="ruby">  def remove_filter_url(params, filter_name, filter_value)</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="covered" data-hits="2" data-linenumber="72">
-            <span class="hits">2</span>
-            
-
-            
-
-            <code class="ruby">    params.merge(filter: params[:filter].merge({ filter_name =&gt; params.dig(:filter, filter_name)&amp;.excluding(filter_value) }))</code>
           </li>
         </div>
       
@@ -3177,18 +3177,18 @@
 
             
 
-            <code class="ruby">  def apply_filter_url(params, filter_name, filter_value)</code>
+            <code class="ruby">  def remove_filter_url(params, filter_name, filter_value)</code>
           </li>
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="76">
-            
-            
-
+          <li class="covered" data-hits="2" data-linenumber="76">
+            <span class="hits">2</span>
             
 
-            <code class="ruby">    params.merge(filter: params.dig(:filter).nil? ? { filter_name =&gt; [filter_value] } : params.dig(:filter).merge(filter_name =&gt; [filter_value, params.dig(:filter, filter_name)].compact.flatten))</code>
+            
+
+            <code class="ruby">    params.merge(filter: params[:filter].merge({ filter_name =&gt; params.dig(:filter, filter_name)&amp;.excluding(filter_value) }))</code>
           </li>
         </div>
       
@@ -3205,6 +3205,50 @@
       
         <div>
           <li class="never" data-hits="" data-linenumber="78">
+            
+            
+
+            
+
+            <code class="ruby"></code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="1" data-linenumber="79">
+            <span class="hits">1</span>
+            
+
+            
+
+            <code class="ruby">  def apply_filter_url(params, filter_name, filter_value)</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="missed" data-hits="0" data-linenumber="80">
+            
+            
+
+            
+
+            <code class="ruby">    params.merge(filter: params.dig(:filter).nil? ? { filter_name =&gt; [filter_value] } : params.dig(:filter).merge(filter_name =&gt; [filter_value, params.dig(:filter, filter_name)].compact.flatten))</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="81">
+            
+            
+
+            
+
+            <code class="ruby">  end</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="82">
             
             
 
@@ -8355,8 +8399,8 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1007" data-linenumber="6">
-            <span class="hits">1007</span>
+          <li class="covered" data-hits="1016" data-linenumber="6">
+            <span class="hits">1016</span>
             
 
             
@@ -8421,8 +8465,8 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="66" data-linenumber="12">
-            <span class="hits">66</span>
+          <li class="covered" data-hits="75" data-linenumber="12">
+            <span class="hits">75</span>
             
 
             
@@ -8432,8 +8476,8 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="66" data-linenumber="13">
-            <span class="hits">66</span>
+          <li class="covered" data-hits="75" data-linenumber="13">
+            <span class="hits">75</span>
             
 
             
@@ -8454,8 +8498,8 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="66" data-linenumber="15">
-            <span class="hits">66</span>
+          <li class="covered" data-hits="75" data-linenumber="15">
+            <span class="hits">75</span>
             
 
             
@@ -12931,8 +12975,8 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="66" data-linenumber="422">
-            <span class="hits">66</span>
+          <li class="covered" data-hits="75" data-linenumber="422">
+            <span class="hits">75</span>
             
 
             
@@ -12953,8 +12997,8 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="10" data-linenumber="424">
-            <span class="hits">10</span>
+          <li class="covered" data-hits="19" data-linenumber="424">
+            <span class="hits">19</span>
             
 
             
@@ -14962,8 +15006,8 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="112" data-linenumber="4">
-            <span class="hits">112</span>
+          <li class="covered" data-hits="121" data-linenumber="4">
+            <span class="hits">121</span>
             
 
             
@@ -29128,8 +29172,8 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="14" data-linenumber="44">
-            <span class="hits">14</span>
+          <li class="covered" data-hits="20" data-linenumber="44">
+            <span class="hits">20</span>
             
 
             
@@ -29150,8 +29194,8 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="14" data-linenumber="46">
-            <span class="hits">14</span>
+          <li class="covered" data-hits="20" data-linenumber="46">
+            <span class="hits">20</span>
             
 
             
@@ -29194,8 +29238,8 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="5" data-linenumber="50">
-            <span class="hits">5</span>
+          <li class="covered" data-hits="8" data-linenumber="50">
+            <span class="hits">8</span>
             
 
             
@@ -29216,8 +29260,8 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="4" data-linenumber="52">
-            <span class="hits">4</span>
+          <li class="covered" data-hits="7" data-linenumber="52">
+            <span class="hits">7</span>
             
 
             
@@ -29227,8 +29271,8 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="16" data-linenumber="53">
-            <span class="hits">16</span>
+          <li class="covered" data-hits="28" data-linenumber="53">
+            <span class="hits">28</span>
             
 
             
@@ -29238,8 +29282,8 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="4" data-linenumber="54">
-            <span class="hits">4</span>
+          <li class="covered" data-hits="7" data-linenumber="54">
+            <span class="hits">7</span>
             
 
             
@@ -29282,8 +29326,8 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="8" data-linenumber="58">
-            <span class="hits">8</span>
+          <li class="covered" data-hits="11" data-linenumber="58">
+            <span class="hits">11</span>
             
 
             
@@ -29304,8 +29348,8 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="8" data-linenumber="60">
-            <span class="hits">8</span>
+          <li class="covered" data-hits="11" data-linenumber="60">
+            <span class="hits">11</span>
             
 
             
