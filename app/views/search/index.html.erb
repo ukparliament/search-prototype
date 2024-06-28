@@ -77,7 +77,7 @@
         <div class="results-container" data-controller="detailed-results">
           <section class="search-control-panel">
             <div class="control-panel-row">
-              <strong><%= number_to_delimited(@search_data.number_of_results, separator: ",") %><%= @search_data.number_of_results > 1 ? " results" : " result" %></strong>(<%= @search_data.query_time %>
+              <strong><%= number_to_delimited(@search_data.number_of_results, separator: ",") %><%= @search_data.number_of_results && @search_data.number_of_results > 1 ? " results" : " result" %></strong>(<%= @search_data.query_time %>
               seconds)
             </div>
             <div class="control-panel-row">
