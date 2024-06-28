@@ -21,7 +21,8 @@
   <% if @search_data.objects.blank? %>
     <section class="content-section white centered">
       <p>
-        No results found for <strong><%= @search_data.query %></strong>. Please adjust your search query and try again.<br/>
+        No results found for <strong><%= @search_data.query %></strong>. Please adjust your search query and try
+        again.<br/>
         If you think this search should return results, please
         email <%= mail_to "parliamentarysearch@parliament.co.uk" %>.
       </p>
@@ -88,14 +89,8 @@
                 <span class="slider"></span>
               </label>
               <div class="flex-spacer"></div>
-              <label class="search-control-panel-label">
-                <span>Results per page</span>
-              </label>
-              <%= f.select "results_per_page", options_for_select([10, 20, 50, 100], selected: @search_data.results_per_page), {}, { onchange: "this.form.submit()", class: 'form-select' } %>
-              <label class="search-control-panel-label">
-                <span>Sort by</span>
-              </label>
-              <%= f.select("sort_by", options_for_select([["Date (descending)", "date_desc"], ["Date (ascending)", "date_asc"]], selected: @search_data.sort), {}, { onchange: 'this.form.submit()', class: 'form-select' }) %>
+              <%= f.select "results_per_page", options_for_select([["Show 10 results", 10], ["Show 20 results", 20], ["Show 50 results", 50], ["Show 100 results", 100]], selected: @search_data.results_per_page), {}, { onchange: "this.form.submit()", class: 'form-select' } %>
+              <%= f.select("sort_by", options_for_select([["Newest first", "date_desc"], ["Oldest first", "date_asc"]], selected: @search_data.sort), {}, { onchange: 'this.form.submit()', class: 'form-select' }) %>
             </div>
           </section>
 
