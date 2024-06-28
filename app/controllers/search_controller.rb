@@ -1,5 +1,6 @@
 # # The one and only search controller.
 class SearchController < ApplicationController
+  before_action :begin_timer
 
   def index
     @page_title = "Search results"
@@ -17,6 +18,10 @@ class SearchController < ApplicationController
   end
 
   private
+
+  def begin_timer
+    @start_time = Time.now
+  end
 
   def search_params
     params.permit(:commit, :query, :page, :results_per_page, :sort_by, filter: [permitted_filters])
