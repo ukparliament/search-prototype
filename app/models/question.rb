@@ -4,6 +4,12 @@ class Question < ContentObject
     super
   end
 
+  def associated_objects
+    ids = super
+    ids << correcting_item_link
+    ids.flatten.compact.uniq
+  end
+
   def state
     get_first_from('pqStatus_t')
   end
@@ -28,7 +34,7 @@ class Question < ContentObject
     # of 'answered'
 
     # If correcting item URI is present, it is considered corrected
-    return true if correcting_item_link.present? && correcting_item_link[:value].present?
+    return true if correcting_item_link.present?
 
     # If corrected boolean is true, it is considered corrected
     corrected_boolean = get_first_as_boolean_from('correctedWmsMc_b')
@@ -37,25 +43,12 @@ class Question < ContentObject
     true
   end
 
-  def correcting_object
-    # This only applies to corrections before July 2014, and for corrected written questions after this date
-    # this method should return nil as content_object_data['correctingItem_uri'] will be blank. We can therefore
-    # check correcting_object is not nil to determine whether or not we attempt to show its data in the view.
-
-    return unless corrected?
-
-    return if correcting_item_link.blank?
-
-    correcting_item_data = SolrQuery.new(object_uri: correcting_item_link[:value]).object_data
-    ContentObject.generate(correcting_item_data)
-  end
-
   def is_transferred
     get_first_as_boolean_from('transferredQuestion_b')
   end
 
   def correcting_item_link
-    fallback(get_first_from('correctingItem_uri'), get_first_from('correctingItem_t'))
+    fallback(get_first_id_from('correctingItem_uri'), get_first_id_from('correctingItem_t'))
   end
 
   def date_of_question

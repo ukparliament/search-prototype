@@ -4,6 +4,12 @@ class OralAnswerToQuestion < Question
     super
   end
 
+  def associated_objects
+    ids = super
+    ids << question_id
+    ids.flatten.compact.uniq
+  end
+
   def template
     'search/objects/oral_answer_to_question'
   end
@@ -13,17 +19,14 @@ class OralAnswerToQuestion < Question
   end
 
   def has_question?
-    question_url.blank? ? false : true
+    question_id.blank? ? false : true
+  end
+
+  def question_id
+    get_first_id_from('answerFor_uri')
   end
 
   def question_url
     get_first_from('answerFor_uri')
-  end
-
-  def question_object
-    return unless has_question?
-
-    question_data = SolrQuery.new(object_uri: question_url[:value]).object_data
-    ContentObject.generate(question_data)
   end
 end

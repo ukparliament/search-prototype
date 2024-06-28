@@ -1,7 +1,15 @@
 class MinisterialCorrection < ContentObject
 
+  # TODO: rename to written correction for clarity
+
   def initialize(content_object_data)
     super
+  end
+
+  def associated_objects
+    ids = super
+    ids << corrected_item_id
+    ids.flatten.compact.uniq
   end
 
   def object_name
@@ -40,10 +48,7 @@ class MinisterialCorrection < ContentObject
     fallback(get_first_from('correctedItem_uri'), get_first_from('correctedItem_t'))
   end
 
-  def corrected_object
-    return if corrected_item_link.blank?
-
-    corrected_item_data = SolrQuery.new(object_uri: corrected_item_link[:value]).object_data
-    ContentObject.generate(corrected_item_data)
+  def corrected_item_id
+    fallback(get_first_id_from('correctedItem_uri'), get_first_id_from('correctedItem_t'))
   end
 end

@@ -55,6 +55,31 @@ module LinkHelper
     singular ? format_name(data, ses_data)&.singularize : format_name(data, ses_data)
   end
 
+  def formatted_page_title(data)
+    return "Untitled" if data.blank?
+
+    if data.is_a?(String)
+      # We have a string, so just display it
+      data.to_s
+    elsif data.is_a?(Hash)
+      return "Untitled" if data[:value].blank?
+
+      if data[:field_name].last(4) == "_ses"
+        if @ses_data.blank?
+          # We have a SES ID, but no lookup
+          return "Untitled"
+        else
+          # We have a SES ID and a populated lookup
+          resolved_name = @ses_data[data[:value].to_i]
+          return "Untitled #{resolved_name}"
+        end
+      else
+        # We have a string data field
+        return data[:value].to_s
+      end
+    end
+  end
+
   private
 
   def format_name(data, ses_data)
@@ -75,14 +100,6 @@ module LinkHelper
         else
           name_string = "unknown"
         end
-        # puts "Missing name - performing fallback SES lookup for: #{data[:value].to_i}"
-        # In some edge cases, we won't have a SES name included in the page SES data. We then perform a lookup
-        # for the specific ID to make sure it gets populated.
-        # custom_ses_lookup = SesLookup.new([data]).data
-        # name_string = custom_ses_lookup[data[:value].to_i]
-        # where we still don't have a string (e.g. if SES is missing an entry for this ID) then
-        # present the SES ID itself as a string
-        # name_string = data[:value].to_s if name_string.nil?
       end
     else
       # we already have a string

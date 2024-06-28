@@ -23,11 +23,17 @@ class ContentObject
     'search/results/content_object'
   end
 
+  def page_title
+    content_object_data['title_t']
+  end
+
   def object_title
-    # returns the title, falling back to name
+    # Returns either a string field or a SES ID
+    # Titles are then formatted by formatted_page_title helper method
+
     return page_title unless page_title.blank?
 
-    "Untitled #{object_name_text}"
+    subtype_or_type
   end
 
   def associated_objects
@@ -38,20 +44,6 @@ class ContentObject
 
   def get_associated_objects
     ObjectsFromUriList.new(associated_objects).get_objects
-  end
-
-  def object_name_text
-    # TODO: integrate into eager SES loading
-
-    return if subtype_or_type.blank?
-
-    object_ses_data = SesLookup.new([subtype_or_type]).data
-    object_ses_data[subtype_or_type[:value].to_i]&.singularize
-  end
-
-  def page_title
-    # keeping this simple for now
-    content_object_data['title_t']
   end
 
   def ses_lookup_ids
@@ -78,10 +70,6 @@ class ContentObject
 
   def type
     get_first_from('type_ses')
-  end
-
-  def ses_data
-    SesLookup.new(ses_lookup_ids).data
   end
 
   def content

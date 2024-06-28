@@ -188,34 +188,6 @@ RSpec.describe WrittenQuestion, type: :model do
     end
   end
 
-  describe 'correcting_object' do
-    context 'where corrected' do
-      context 'where URI is missing' do
-        let!(:written_question) { WrittenQuestion.new({ 'correctingItem_uri' => '' }) }
-        it 'returns nil' do
-          allow(written_question).to receive(:corrected?).and_return(true)
-          expect(written_question.correcting_object).to be_nil
-        end
-      end
-      context 'where URI is present' do
-        let!(:written_question) { WrittenQuestion.new({ 'correctingItem_uri' => 'test' }) }
-        let!(:test_data) { { "type_ses" => [93522] } }
-
-        it 'returns a written question object' do
-          allow(written_question).to receive(:corrected?).and_return(true)
-          allow_any_instance_of(SolrQuery).to receive(:object_data).and_return(test_data)
-          expect(written_question.correcting_object).to be_an_instance_of(WrittenQuestion)
-        end
-      end
-    end
-    context 'where not corrected' do
-      it 'returns nil' do
-        allow(written_question).to receive(:corrected?).and_return(false)
-        expect(written_question.correcting_object).to be_nil
-      end
-    end
-  end
-
   describe 'department' do
     context 'where there is no data' do
       it 'returns nil' do
