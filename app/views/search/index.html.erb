@@ -67,7 +67,7 @@
       <div class="results-container" data-controller="detailed-results">
         <section class="search-control-panel">
           <div class="control-panel-row">
-            <strong><%= @search_data.number_of_results %> results</strong> (<%= @search_data.query_time %> seconds)
+            <strong><%= number_to_delimited(@search_data.number_of_results, separator: ",") %><%= @search_data.number_of_results > 1 ? " results" : " result" %></strong>(<%= @search_data.query_time %> seconds)
           </div>
           <div class="control-panel-row">
             <label class="search-control-panel-label">
@@ -97,7 +97,7 @@
           <% unless @search_data.current_page.blank? || @search_data.total_pages.blank? %>
             <p>
               Showing results <strong><%= @search_data.start %> - <%= @search_data.end %></strong> of
-              <strong><%= @search_data.number_of_results %></strong> in
+              <strong><%= number_to_delimited(@search_data.number_of_results, separator: ",") %></strong> in
               <strong><%= "#{(@search_data.query_time)} seconds." %></strong>
             </p>
             <%= render 'pagination', user_requested_page: @search_data.current_page, last_page: @search_data.total_pages, query: @search_data.query, filter: @search_data.filter %>
