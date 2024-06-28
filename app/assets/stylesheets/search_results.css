@@ -186,13 +186,32 @@
     width: 100%;
     box-sizing: border-box;
     align-self: stretch;
-    padding: 1em;
+    padding: 0;
+    margin: 10px 0;
     justify-content: center;
-    gap: 1em;
+    gap: 0;
     font-size: large;
     align-items: flex-start;
     display: inline-flex;
     flex-direction: row;
+
+    div {
+        padding: 0.5em 1em;
+
+        &:hover {
+            a {
+                text-decoration-thickness: 3px;
+            }
+
+            background: #e3e3e3
+        }
+
+        &.selected {
+            background: #2B57AB;
+            color: white;
+        }
+    }
+
 }
 
 .form-select {

@@ -3,42 +3,60 @@
   <!--  page zero-->
   <!--  only show if user requested page is 3 or more -->
   <% if user_requested_page > 3 %>
-    <%= link_to "1", search_url(query: query, filter: filter, page: 1), { method: :post } %>
+    <div>
+      <%= link_to "1", search_url(query: query, filter: filter, page: 1), { method: :post } %>
+    </div>
     <!--    from page 5 onwards we no longer have a continuous run from 1 onwards, so we show the ...-->
     <% if user_requested_page > 4 %>
-      ...
+      <div>
+        ...
+      </div>
     <% end %>
   <% end %>
   <!--  previous pages-->
   <!--  only go back two pages if user requested page is 2 or more-->
   <% if user_requested_page > 2 %>
-    <%= link_to user_requested_page - 2, search_url(query: query, filter: filter, page: user_requested_page - 2), { method: :post } %>
+    <div>
+      <%= link_to user_requested_page - 2, search_url(query: query, filter: filter, page: user_requested_page - 2), { method: :post } %>
+    </div>
   <% end %>
   <!--  only go back one page if user requested page is 1 or more-->
   <% if user_requested_page > 1 %>
-    <%= link_to user_requested_page -1, search_url(query: query, filter: filter, page: user_requested_page -1), { method: :post } %>
+    <div>
+      <%= link_to user_requested_page -1, search_url(query: query, filter: filter, page: user_requested_page -1), { method: :post } %>
+    </div>
   <% end %>
 
   <!--  user requested page-->
   <!--  we always show this-->
-  <%= user_requested_page %>
+  <div class="selected">
+    <%= user_requested_page %>
+  </div>
 
   <!--  next pages-->
   <!--  show one page ahead if we're not on the last page already-->
   <% if user_requested_page < last_page %>
-    <%= link_to user_requested_page + 1, search_url(query: query, filter: filter, page: user_requested_page + 1), { method: :post } %>
+    <div>
+      <%= link_to user_requested_page + 1, search_url(query: query, filter: filter, page: user_requested_page + 1), { method: :post } %>
+    </div>
   <% end %>
   <!--  show two pages ahead if we're not on the last or next to last page -->
   <% if user_requested_page < last_page - 1 %>
-    <%= link_to user_requested_page + 2, search_url(query: query, filter: filter, page: user_requested_page + 2), { method: :post } %>
+    <div>
+      <%= link_to user_requested_page + 2, search_url(query: query, filter: filter, page: user_requested_page + 2), { method: :post } %>
+    </div>
   <% end %>
   <!--  last page-->
   <!--  we only need to show a dedicated link to the last page if we're 3 or more pages away from it-->
   <% if user_requested_page < last_page - 2 %>
     <!--    the three dots indicate a discontinuity, which only happens if we're 4 of more pages away from the end-->
     <% if user_requested_page < last_page - 3 %>
-      ...
+      <div>
+        ...
+      </div>
     <% end %>
-    <%= link_to last_page, search_url(query: query, filter: filter, page: last_page), { method: :post } %>
+    <div>
+      <%= link_to last_page, search_url(query: query, filter: filter, page: last_page), { method: :post } %>
+    </div>
   <% end %>
 </div>
