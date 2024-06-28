@@ -242,6 +242,14 @@ div.callout {
         margin: 4px 0;
     }
 
+    &.centered {
+        text-align: center;
+
+        p {
+            align-self: center;
+        }
+    }
+
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
