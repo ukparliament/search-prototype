@@ -10,108 +10,135 @@
 <%#= render 'search/fragments/data', data: @hierarchy_data, title: 'Hierarchy data' %>
 <%#= render 'search/fragments/data', data: @top_level, title: 'Hierarchy top level types' %>
 
-<%= form_with url: search_url, method: :get, remote: true, id: 'search-form', data: { target: 'form_frame' } do |f| %>
+<%= form_with url: search_url, method: :get, remote: true, id: 'search-form' do |f| %>
   <section id="search" class="content-section white-slim">
     <div class="search-grid-container">
       <%= f.text_field :query, class: 'grid-item', id: 'search-input', value: @search_data.query %>
       <%= f.submit 'Search', class: 'grid-item', id: 'search-button' %>
     </div>
   </section>
+<% end %>
 
-  <% if @search_data.objects.blank? %>
-    <section class="content-section white centered">
-      <p>
-        No results found for <strong><%= @search_data.query %></strong>. Please adjust your search query and try
-        again.<br/>
-        If you think this search should return results, please
-        email <%= mail_to "parliamentarysearch@parliament.co.uk" %>.
-      </p>
-    </section>
-  <% else %>
-    <section id="search-results">
-      <div class="results-grid-container">
-        <div class="filter-container">
-          <% unless request.params.dig(:filter).blank? %>
-            <section class="applied-filters">
-              <div class="applied-filter-container">
-                <% request.params.dig(:filter).each do |filter| %>
-                  <% filter.last.each do |filter_value| %>
-                    <div class="filter-wrapper">
-                      <div class="filter">
-                        <span class="filter-name"><%= object_display_name({ value: filter_value.to_i, field_name: filter.first }, singular: false) %></span>
-                        <%= link_to sanitize("&#x2715;"), url_for(remove_filter_url(request.params, filter.first, filter_value)) %>
-                      </div>
+<% if @search_data.objects.blank? %>
+  <section class="content-section white centered">
+    <p>
+      No results found for <strong><%= @search_data.query %></strong>. Please adjust your search query and try
+      again.<br/>
+      If you think this search should return results, please
+      email <%= mail_to "parliamentarysearch@parliament.co.uk" %>.
+    </p>
+  </section>
+<% else %>
+  <section id="search-results">
+    <div class="results-grid-container">
+      <div class="filter-container">
+        <% unless request.params.dig(:filter).blank? %>
+          <section class="applied-filters">
+            <div class="applied-filter-container">
+              <% request.params.dig(:filter).each do |filter| %>
+                <% filter.last.each do |filter_value| %>
+                  <div class="filter-wrapper">
+                    <div class="filter">
+                      <span class="filter-name"><%= object_display_name({ value: filter_value.to_i, field_name: filter.first }, singular: false) %></span>
+                      <%= link_to sanitize("&#x2715;"), url_for(remove_filter_url(request.params, filter.first, filter_value)) %>
                     </div>
-                  <% end %>
+                  </div>
                 <% end %>
-              </div>
-            </section>
-          <% end %>
-
-          <section class="facet">
-            <details open>
-              <summary>
-                <strong>Type</strong>
-              </summary>
-              <div class="facets" data-controller="expand-hierarchy">
-                <% @hierarchy_builder.top_level_types&.each do |top_level_type| %>
-                  <%= render 'hierarchy_layer', hash: top_level_type, id: top_level_type[:id], f: f, tier: 1, parent_id: 0 %>
-                <% end %>
-              </div>
-            </details>
-          </section>
-
-          <% @search_data.facets.select { |h| ["legislature_ses", "session_t", "date_dt", "department_ses", "member_ses"].include?(h.dig(:field_name)) }.each do |facet_field| %>
-            <% unless facet_field[:facets].blank? %>
-              <%= render 'filter_section', facet_field: format_facets(facet_field), open: true %>
-            <% end %>
-          <% end %>
-
-          <% @search_data.facets.select { |h| ["tablingMember_ses", "askingMember_ses", "leadMember_ses", "answeringMember_ses", "legistativeStage_ses", "legislationTitle_ses", "subject_ses"].include?(h.dig(:field_name)) }.each do |facet_field| %>
-            <% unless facet_field[:facets].blank? %>
-              <%= render 'filter_section', facet_field: format_facets(facet_field), open: false %>
-            <% end %>
-          <% end %>
-        </div>
-
-        <div class="results-container" data-controller="detailed-results">
-          <section class="search-control-panel">
-            <div class="control-panel-row">
-              <strong><%= number_to_delimited(@search_data.number_of_results, separator: ",") %><%= @search_data.number_of_results && @search_data.number_of_results > 1 ? " results" : " result" %></strong>
-            </div>
-            <div class="control-panel-row">
-              <label class="search-control-panel-label">
-                <span>Show detailed</span>
-              </label>
-              <label class="toggle">
-                <input hidden type="checkbox" data-action="change->detailed-results#toggle">
-                <span class="slider"></span>
-              </label>
-              <div class="flex-spacer"></div>
-              <%= f.select "results_per_page", options_for_select([["Show 10 results", 10], ["Show 20 results", 20], ["Show 50 results", 50], ["Show 100 results", 100]], selected: @search_data.results_per_page), {}, { onchange: "this.form.submit()", class: 'form-select' } %>
-              <%= f.select("sort_by", options_for_select([["Newest first", "date_desc"], ["Oldest first", "date_asc"]], selected: @search_data.sort), {}, { onchange: 'this.form.submit()', class: 'form-select' }) %>
+              <% end %>
             </div>
           </section>
+        <% end %>
 
-          <div>
-            <% @search_data.objects.each do |object| %>
-              <%= render object.search_result_partial, object: object %>
-            <% end %>
+        <section class="facet">
+          <details open>
+            <summary>
+              <strong>Type</strong>
+            </summary>
+            <div class="facets" data-controller="expand-hierarchy">
+              <% @hierarchy_builder.top_level_types&.each do |top_level_type| %>
+                <%= render 'hierarchy_layer', hash: top_level_type, id: top_level_type[:id], tier: 1, parent_id: 0 %>
+              <% end %>
+            </div>
+          </details>
+        </section>
 
-            <% unless @search_data.current_page.blank? || @search_data.total_pages.blank? %>
-              <p>
-                Showing results <strong><%= @search_data.start %> - <%= @search_data.end %></strong> of
-                <strong><%= number_to_delimited(@search_data.number_of_results, separator: ",") %></strong> in
-                <strong>
-                  <%= "#{@search_data.query_time.round(3)} seconds" %> (<%= "#{(Time.now - @start_time).round(3)} seconds" %>).
-                </strong>
-              </p>
-              <%= render 'pagination', user_requested_page: @search_data.current_page, last_page: @search_data.total_pages, query: @search_data.query, filter: @search_data.filter %>
-            <% end %>
-          </div>
-        </div>
+        <% @search_data.facets.select { |h| ["legislature_ses", "session_t", "date_dt", "department_ses", "member_ses"].include?(h.dig(:field_name)) }.each do |facet_field| %>
+          <% unless facet_field[:facets].blank? %>
+            <%= render 'filter_section', facet_field: format_facets(facet_field), open: true %>
+          <% end %>
+        <% end %>
+
+        <% @search_data.facets.select { |h| ["tablingMember_ses", "askingMember_ses", "leadMember_ses", "answeringMember_ses", "legistativeStage_ses", "legislationTitle_ses", "subject_ses"].include?(h.dig(:field_name)) }.each do |facet_field| %>
+          <% unless facet_field[:facets].blank? %>
+            <%= render 'filter_section', facet_field: format_facets(facet_field), open: false %>
+          <% end %>
+        <% end %>
       </div>
 
-    </section>
-  <% end %>
+      <div class="results-container" data-controller="detailed-results">
+        <section class="search-control-panel">
+          <div class="control-panel-row">
+            <strong><%= number_to_delimited(@search_data.number_of_results, separator: ",") %><%= @search_data.number_of_results && @search_data.number_of_results > 1 ? " results" : " result" %></strong>
+          </div>
+          <div class="control-panel-row">
+            <label class="search-control-panel-label">
+              <span>Show detailed</span>
+            </label>
+            <label class="toggle">
+              <input hidden type="checkbox" data-action="change->detailed-results#toggle">
+              <span class="slider"></span>
+            </label>
+            <div class="flex-spacer"></div>
+            <%= form_with url: request.url, method: :get, remote: true, id: 'results-per-page' do |rf| %>
+              <% unless request.params.dig(:filter).blank? %>
+                <% request.params.dig(:filter).keys.each do |filter_key| %>
+                  <%= rf.hidden_field "filter[#{filter_key}]", value: request.params.dig(:filter, filter_key), multiple: true %>
+                <% end %>
+              <% end %>
+              <% unless request.params.dig(:query).blank? %>
+                <%= rf.hidden_field :query, value: request.params.dig(:query) %>
+              <% end %>
+              <% unless request.params.dig(:sort_by).blank? %>
+                <%= rf.hidden_field :sort_by, value: request.params.dig(:sort_by) %>
+              <% end %>
+              <%= rf.select "results_per_page", options_for_select([["Show 10 results", 10], ["Show 20 results", 20], ["Show 50 results", 50], ["Show 100 results", 100]], selected: @search_data.results_per_page), {}, { onchange: "this.form.submit()", class: 'form-select' } %>
+            <% end %>
+            <%= form_with url: request.url, method: :get, remote: true, id: 'sort-by' do |sf| %>
+              <% unless request.params.dig(:filter).blank? %>
+                <% request.params.dig(:filter).keys.each do |filter_key| %>
+                  <%= sf.hidden_field "filter[#{filter_key}]", value: request.params.dig(:filter, filter_key), multiple: true %>
+                <% end %>
+              <% end %>
+              <% unless request.params.dig(:query).blank? %>
+                <%= sf.hidden_field :query, value: request.params.dig(:query) %>
+              <% end %>
+              <% unless request.params.dig(:results_per_page).blank? %>
+                <%= sf.hidden_field :results_per_page, value: request.params.dig(:results_per_page) %>
+              <% end %>
+              <%= sf.select("sort_by", options_for_select([["Newest first", "date_desc"], ["Oldest first", "date_asc"]], selected: @search_data.sort), {}, { onchange: 'this.form.submit()', class: 'form-select' }) %>
+            <% end %>
+          </div>
+        </section>
+
+        <div>
+          <% @search_data.objects.each do |object| %>
+            <%= render object.search_result_partial, object: object %>
+          <% end %>
+
+          <% unless @search_data.current_page.blank? || @search_data.total_pages.blank? %>
+            <p>
+              Showing results <strong><%= @search_data.start %> - <%= @search_data.end %></strong> of
+              <strong><%= number_to_delimited(@search_data.number_of_results, separator: ",") %></strong> in
+              <strong>
+                <%= "#{@search_data.query_time.round(3)} seconds" %>
+                (<%= "#{(Time.now - @start_time).round(3)} seconds" %>).
+              </strong>
+            </p>
+            <%= render 'pagination', user_requested_page: @search_data.current_page, last_page: @search_data.total_pages, query: @search_data.query, filter: @search_data.filter %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+  </section>
 <% end %>

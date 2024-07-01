@@ -4,6 +4,7 @@ class SearchController < ApplicationController
 
   def index
     @page_title = "Search results"
+
     search = SolrSearch.new(search_params).data
     @search_data = SearchData.new(search)
 
