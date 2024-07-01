@@ -29,8 +29,8 @@
 
   <!--  user requested page-->
   <!--  we always show this-->
-  <div class="selected">
-    <%= user_requested_page %>
+  <div>
+    <%= link_to user_requested_page, search_url(query: query, filter: filter, page: user_requested_page), class: 'selected', method: :post %>
   </div>
 
   <!--  next pages-->
