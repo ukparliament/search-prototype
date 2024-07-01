@@ -1,5 +1,4 @@
 <% if id %>
-
   <div class="grid-row">
     <span class="facet-toggle toggle-<%= parent_id %> <%= 'collapse' if tier > 1 %>" style="margin-left: <%= (tier - 1) * 0 %>px;">
       <% if @hierarchy_data.dig(id, :children).select { |child| @search_data.content_type_rollup_ids.include?(child.dig(:id)) }.any? %>
@@ -12,7 +11,7 @@
       <% if @hierarchy_data.dig(id) %>
       <% @hierarchy_data.dig(id, :children).each do |child| %>
         <% if @search_data.content_type_rollup_ids.include?(child.dig(:id)) %>
-          <%= render 'hierarchy_layer', id: child.dig(:id), f: f, tier: tier + 1, parent_id: id %>
+          <%= render 'hierarchy_layer', id: child.dig(:id), tier: tier + 1, parent_id: id %>
         <% end %>
       <% end %>
     <% end %>
