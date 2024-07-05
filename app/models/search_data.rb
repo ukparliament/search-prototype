@@ -66,6 +66,20 @@ class SearchData
     search.dig(:search_parameters, :query)
   end
 
+  def expanded_ids
+    return unless search
+
+    expanded_id_param = search.dig(:search_parameters, :expanded_ids)
+
+    ret = []
+
+    unless expanded_id_param.blank?
+      ret = expanded_id_param.split(',').compact_blank.uniq
+    end
+
+    ret
+  end
+
   def sort
     return unless search
 

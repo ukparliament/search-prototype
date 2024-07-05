@@ -1,62 +1,47 @@
 <div id="pagination">
-  <!--  logic is using zero-indexed values; link to text has been adjusted to show non-zero indexed values -->
-  <!--  page zero-->
-  <!--  only show if user requested page is 3 or more -->
   <% if user_requested_page > 3 %>
     <div>
-      <%= link_to "1", search_url(query: query, filter: filter, sort_by: sort_by, results_per_page: results_per_page, page: 1), { method: :post } %>
+      <%= link_to "1", search_url(query: query, filter: filter, sort_by: sort_by, results_per_page: results_per_page, page: 1), class: 'modifiable-link' %>
     </div>
-    <!--    from page 5 onwards we no longer have a continuous run from 1 onwards, so we show the ...-->
     <% if user_requested_page > 4 %>
       <div>
         ...
       </div>
     <% end %>
   <% end %>
-  <!--  previous pages-->
-  <!--  only go back two pages if user requested page is 2 or more-->
   <% if user_requested_page > 2 %>
     <div>
-      <%= link_to user_requested_page - 2, search_url(query: query, filter: filter, sort_by: sort_by, results_per_page: results_per_page, page: user_requested_page - 2), { method: :post } %>
+      <%= link_to user_requested_page - 2, search_url(query: query, filter: filter, sort_by: sort_by, results_per_page: results_per_page, page: user_requested_page - 2), class: 'modifiable-link' %>
     </div>
   <% end %>
-  <!--  only go back one page if user requested page is 1 or more-->
   <% if user_requested_page > 1 %>
     <div>
-      <%= link_to user_requested_page -1, search_url(query: query, filter: filter, sort_by: sort_by, results_per_page: results_per_page, page: user_requested_page -1), { method: :post } %>
+      <%= link_to user_requested_page -1, search_url(query: query, filter: filter, sort_by: sort_by, results_per_page: results_per_page, page: user_requested_page -1), class: 'modifiable-link' %>
     </div>
   <% end %>
 
-  <!--  user requested page-->
-  <!--  we always show this-->
   <div>
-    <%= link_to user_requested_page, search_url(query: query, filter: filter, sort_by: sort_by, results_per_page: results_per_page, page: user_requested_page), class: 'selected', method: :post %>
+    <%= link_to user_requested_page, search_url(query: query, filter: filter, sort_by: sort_by, results_per_page: results_per_page, page: user_requested_page), class: 'selected modifiable-link' %>
   </div>
 
-  <!--  next pages-->
-  <!--  show one page ahead if we're not on the last page already-->
   <% if user_requested_page < last_page %>
     <div>
-      <%= link_to user_requested_page + 1, search_url(query: query, filter: filter, sort_by: sort_by, results_per_page: results_per_page, page: user_requested_page + 1), { method: :post } %>
+      <%= link_to user_requested_page + 1, search_url(query: query, filter: filter, sort_by: sort_by, results_per_page: results_per_page, page: user_requested_page + 1), class: 'modifiable-link' %>
     </div>
   <% end %>
-  <!--  show two pages ahead if we're not on the last or next to last page -->
   <% if user_requested_page < last_page - 1 %>
     <div>
-      <%= link_to user_requested_page + 2, search_url(query: query, filter: filter, sort_by: sort_by, results_per_page: results_per_page, page: user_requested_page + 2), { method: :post } %>
+      <%= link_to user_requested_page + 2, search_url(query: query, filter: filter, sort_by: sort_by, results_per_page: results_per_page, page: user_requested_page + 2), class: 'modifiable-link' %>
     </div>
   <% end %>
-  <!--  last page-->
-  <!--  we only need to show a dedicated link to the last page if we're 3 or more pages away from it-->
   <% if user_requested_page < last_page - 2 %>
-    <!--    the three dots indicate a discontinuity, which only happens if we're 4 of more pages away from the end-->
     <% if user_requested_page < last_page - 3 %>
       <div>
         ...
       </div>
     <% end %>
     <div>
-      <%= link_to last_page, search_url(query: query, filter: filter, sort_by: sort_by, results_per_page: results_per_page, page: last_page), { method: :post } %>
+      <%= link_to last_page, search_url(query: query, filter: filter, sort_by: sort_by, results_per_page: results_per_page, page: last_page), class: 'modifiable-link' %>
     </div>
   <% end %>
 </div>

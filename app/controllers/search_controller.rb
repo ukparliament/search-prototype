@@ -15,6 +15,7 @@ class SearchController < ApplicationController
       @ses_data = @search_data.ses_data
       @hierarchy_builder = HierarchyBuilder.new(@search_data.content_type_rollup_ids)
       @hierarchy_data = @hierarchy_builder.hierarchy_data
+      @opened = @search_data.expanded_ids
     end
   end
 
@@ -25,7 +26,7 @@ class SearchController < ApplicationController
   end
 
   def search_params
-    params.permit(:commit, :query, :page, :results_per_page, :sort_by, filter: [permitted_filters])
+    params.permit(:commit, :query, :page, :results_per_page, :sort_by, :expanded_ids, filter: [permitted_filters])
   end
 
   def permitted_filters
