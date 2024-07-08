@@ -40,7 +40,7 @@
                   <div class="filter-wrapper">
                     <div class="filter">
                       <span class="filter-name"><%= object_display_name({ value: filter_value.to_i, field_name: filter.first }, singular: false) %></span>
-                      <%= link_to sanitize("&#x2715;"), url_for(remove_filter_url(request.params, filter.first, filter_value)) %>
+                      <%= link_to sanitize("&#x2715;"), url_for(remove_filter_url(request.params, filter.first, filter_value)), class: 'modifiable-link' %>
                     </div>
                   </div>
                 <% end %>
@@ -101,6 +101,7 @@
               <% unless request.params.dig(:sort_by).blank? %>
                 <%= rf.hidden_field :sort_by, value: request.params.dig(:sort_by) %>
               <% end %>
+              <%= rf.hidden_field :expanded_ids, value: request.params.dig(:expanded_ids), class: 'hidden-value' %>
               <%= rf.select "results_per_page", options_for_select([["Show 10 results", 10], ["Show 20 results", 20], ["Show 50 results", 50], ["Show 100 results", 100]], selected: @search_data.results_per_page), {}, { onchange: "this.form.submit()", class: 'form-select' } %>
             <% end %>
             <%= form_with url: request.url, method: :get, remote: true, id: 'sort-by' do |sf| %>
@@ -115,6 +116,7 @@
               <% unless request.params.dig(:results_per_page).blank? %>
                 <%= sf.hidden_field :results_per_page, value: request.params.dig(:results_per_page) %>
               <% end %>
+              <%= sf.hidden_field :expanded_ids, value: request.params.dig(:expanded_ids), class: 'hidden-value' %>
               <%= sf.select("sort_by", options_for_select([["Newest first", "date_desc"], ["Oldest first", "date_asc"]], selected: @search_data.sort), {}, { onchange: 'this.form.submit()', class: 'form-select' }) %>
             <% end %>
           </div>

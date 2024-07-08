@@ -11,6 +11,7 @@ export default class extends Controller {
         const container_id_string = container_id.toString();
 
         const links = document.querySelectorAll('.modifiable-link');
+        const hidden_fields = document.querySelectorAll('.hidden-value');
         let existingIds = [];
         const first_link = links.item(0).href;
         const first_url = new URL(first_link);
@@ -34,6 +35,10 @@ export default class extends Controller {
         } else {
             existingIds.push(container_id_string);
         }
+
+        hidden_fields.forEach( field => {
+            field.value = existingIds;
+        })
 
         links.forEach(link => {
             const url = new URL(link.href);
