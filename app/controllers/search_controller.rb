@@ -26,7 +26,7 @@ class SearchController < ApplicationController
   end
 
   def search_params
-    params.permit(:commit, :query, :page, :results_per_page, :sort_by, :expanded_ids, filter: [permitted_filters])
+    params.permit(:commit, :query, :page, :results_per_page, :sort_by, :expanded_ids, :show_detailed, filter: [permitted_filters])
   end
 
   def permitted_filters

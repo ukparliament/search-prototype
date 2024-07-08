@@ -11,12 +11,13 @@ export default class extends Controller {
         const container_id_string = container_id.toString();
 
         const links = document.querySelectorAll('.modifiable-link');
-        const hidden_fields = document.querySelectorAll('.hidden-value');
+        const hidden_existing_id_fields = document.querySelectorAll('.hidden-existing-ids');
         let existingIds = [];
         const first_link = links.item(0).href;
         const first_url = new URL(first_link);
         const first_link_params = first_url.searchParams;
 
+        // read in current values from params
         if (typeof first_link_params !== "undefined") {
             const ids_from_params = first_link_params.getAll('expanded_ids');
 
@@ -36,7 +37,8 @@ export default class extends Controller {
             existingIds.push(container_id_string);
         }
 
-        hidden_fields.forEach( field => {
+        // Update form hidden fields with existing IDs
+        hidden_existing_id_fields.forEach(field => {
             field.value = existingIds;
         })
 

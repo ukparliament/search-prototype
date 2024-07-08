@@ -85,7 +85,7 @@
               <span>Show detailed</span>
             </label>
             <label class="toggle">
-              <input hidden type="checkbox" data-action="change->detailed-results#toggle">
+              <input hidden id="show-detailed" type="checkbox" <%= 'checked' if params[:show_detailed] == "true" %> data-action="change->detailed-results#toggle">
               <span class="slider"></span>
             </label>
             <div class="flex-spacer"></div>
@@ -101,7 +101,8 @@
               <% unless request.params.dig(:sort_by).blank? %>
                 <%= rf.hidden_field :sort_by, value: request.params.dig(:sort_by) %>
               <% end %>
-              <%= rf.hidden_field :expanded_ids, value: request.params.dig(:expanded_ids), class: 'hidden-value' %>
+              <%= rf.hidden_field :expanded_ids, value: request.params.dig(:expanded_ids), class: 'hidden-existing-ids' %>
+              <%= rf.hidden_field :show_detailed, value: request.params.dig(:show_detailed), class: 'hidden-show-detailed' %>
               <%= rf.select "results_per_page", options_for_select([["Show 10 results", 10], ["Show 20 results", 20], ["Show 50 results", 50], ["Show 100 results", 100]], selected: @search_data.results_per_page), {}, { onchange: "this.form.submit()", class: 'form-select' } %>
             <% end %>
             <%= form_with url: request.url, method: :get, remote: true, id: 'sort-by' do |sf| %>
@@ -116,7 +117,8 @@
               <% unless request.params.dig(:results_per_page).blank? %>
                 <%= sf.hidden_field :results_per_page, value: request.params.dig(:results_per_page) %>
               <% end %>
-              <%= sf.hidden_field :expanded_ids, value: request.params.dig(:expanded_ids), class: 'hidden-value' %>
+              <%= sf.hidden_field :expanded_ids, value: request.params.dig(:expanded_ids), class: 'hidden-existing-ids' %>
+              <%= sf.hidden_field :show_detailed, value: request.params.dig(:show_detailed), class: 'hidden-show-detailed' %>
               <%= sf.select("sort_by", options_for_select([["Newest first", "date_desc"], ["Oldest first", "date_asc"]], selected: @search_data.sort), {}, { onchange: 'this.form.submit()', class: 'form-select' }) %>
             <% end %>
           </div>
