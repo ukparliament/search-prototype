@@ -1,6 +1,6 @@
 import {Controller} from "@hotwired/stimulus"
 
-// Connects to data-controller="expand-hierarchy"
+// Connects to data-controller="expand-types"
 export default class extends Controller {
 
     connect() {
@@ -11,13 +11,15 @@ export default class extends Controller {
         const container_id_string = container_id.toString();
 
         const links = document.querySelectorAll('.modifiable-link');
+        const hidden_existing_id_fields = document.querySelectorAll('.hidden-existing-ids');
         let existingIds = [];
         const first_link = links.item(0).href;
         const first_url = new URL(first_link);
         const first_link_params = first_url.searchParams;
 
+        // read in current values from params
         if (typeof first_link_params !== "undefined") {
-            const ids_from_params = first_link_params.getAll('expanded_ids');
+            const ids_from_params = first_link_params.getAll('expanded_types');
 
             ids_from_params.forEach(param => {
                 const ids_array = param.split(',')
@@ -35,10 +37,15 @@ export default class extends Controller {
             existingIds.push(container_id_string);
         }
 
+        // Update form hidden fields with existing IDs
+        hidden_existing_id_fields.forEach(field => {
+            field.value = existingIds;
+        })
+
         links.forEach(link => {
             const url = new URL(link.href);
-            url.searchParams.delete('expanded_ids');
-            url.searchParams.append('expanded_ids', existingIds);
+            url.searchParams.delete('expanded_types');
+            url.searchParams.append('expanded_types', existingIds);
             link.href = url.toString();
         });
 
