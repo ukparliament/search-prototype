@@ -66,15 +66,29 @@ class SearchData
     search.dig(:search_parameters, :query)
   end
 
-  def expanded_ids
+  def expanded_types
     return unless search
 
-    expanded_id_param = search.dig(:search_parameters, :expanded_ids)
+    expanded_id_param = search.dig(:search_parameters, :expanded_types)
 
     ret = []
 
     unless expanded_id_param.blank?
       ret = expanded_id_param.split(',').compact_blank.uniq
+    end
+
+    ret
+  end
+
+  def toggled_facets
+    return unless search
+
+    toggled_facet_param = search.dig(:search_parameters, :toggled_facets)
+
+    ret = []
+
+    unless toggled_facet_param.blank?
+      ret = toggled_facet_param.split(',').compact_blank.uniq
     end
 
     ret
@@ -140,7 +154,7 @@ class SearchData
   def facets
     return unless search
 
-    results = search.dig(:data, 'facet_counts', 'facet_fields').map do |facet_field|
+    search.dig(:data, 'facet_counts', 'facet_fields').map do |facet_field|
       { field_name: facet_field.first, facets: sort_facets(facet_field) }
     end
   end

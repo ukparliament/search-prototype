@@ -15,7 +15,8 @@ class SearchController < ApplicationController
       @ses_data = @search_data.ses_data
       @hierarchy_builder = HierarchyBuilder.new(@search_data.content_type_rollup_ids)
       @hierarchy_data = @hierarchy_builder.hierarchy_data
-      @opened = @search_data.expanded_ids
+      @expanded_types = @search_data.expanded_types
+      @toggled_facets = @search_data.toggled_facets
     end
   end
 
@@ -26,7 +27,8 @@ class SearchController < ApplicationController
   end
 
   def search_params
-    params.permit(:commit, :query, :page, :results_per_page, :sort_by, :expanded_ids, :show_detailed, filter: [permitted_filters])
+    params.permit(:commit, :query, :page, :results_per_page, :sort_by, :expanded_types, :toggled_facets,
+                  :show_detailed, filter: [permitted_filters])
   end
 
   def permitted_filters

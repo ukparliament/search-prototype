@@ -9,6 +9,8 @@
 <%#= render 'search/fragments/data', data: @search_data.facets, title: 'Facets' %>
 <%#= render 'search/fragments/data', data: @hierarchy_data, title: 'Hierarchy data' %>
 <%#= render 'search/fragments/data', data: @top_level, title: 'Hierarchy top level types' %>
+<%= render 'search/fragments/data', data: @toggled_facets, title: 'Toggled facets' %>
+<%= render 'search/fragments/data', data: request.params, title: 'All params' %>
 
 <%= form_with url: search_url, method: :get, remote: true, id: 'search-form' do |f| %>
   <section id="search" class="content-section white-slim">
@@ -31,7 +33,7 @@
 <% else %>
   <section id="search-results">
     <div class="results-grid-container">
-      <div class="filter-container">
+      <div class="filter-container" data-controller="expand-facet">
         <% unless request.params.dig(:filter).blank? %>
           <section class="applied-filters">
             <div class="applied-filter-container">
@@ -54,7 +56,7 @@
             <summary>
               <strong>Type</strong>
             </summary>
-            <div class="facets" data-controller="expand-hierarchy">
+            <div class="facets" data-controller="expand-types">
               <% @hierarchy_builder.top_level_types&.each do |top_level_type| %>
                 <%= render 'hierarchy_layer', hash: top_level_type, id: top_level_type[:id], tier: 1, parent_id: 0 %>
               <% end %>
@@ -64,13 +66,13 @@
 
         <% @search_data.facets.select { |h| ["legislature_ses", "session_t", "date_dt", "department_ses", "member_ses"].include?(h.dig(:field_name)) }.each do |facet_field| %>
           <% unless facet_field[:facets].blank? %>
-            <%= render 'filter_section', facet_field: format_facets(facet_field), open: true %>
+            <%= render 'filter_section', facet_field: format_facets(facet_field), open: !@toggled_facets.include?(facet_field[:field_name]) %>
           <% end %>
         <% end %>
 
         <% @search_data.facets.select { |h| ["tablingMember_ses", "askingMember_ses", "leadMember_ses", "answeringMember_ses", "legistativeStage_ses", "legislationTitle_ses", "subject_ses"].include?(h.dig(:field_name)) }.each do |facet_field| %>
           <% unless facet_field[:facets].blank? %>
-            <%= render 'filter_section', facet_field: format_facets(facet_field), open: false %>
+            <%= render 'filter_section', facet_field: format_facets(facet_field), open: @toggled_facets.include?(facet_field[:field_name]) %>
           <% end %>
         <% end %>
       </div>
@@ -89,6 +91,7 @@
               <span class="slider"></span>
             </label>
             <div class="flex-spacer"></div>
+
             <%= form_with url: request.url, method: :get, remote: true, id: 'results-per-page' do |rf| %>
               <% unless request.params.dig(:filter).blank? %>
                 <% request.params.dig(:filter).keys.each do |filter_key| %>
@@ -101,10 +104,12 @@
               <% unless request.params.dig(:sort_by).blank? %>
                 <%= rf.hidden_field :sort_by, value: request.params.dig(:sort_by) %>
               <% end %>
-              <%= rf.hidden_field :expanded_ids, value: request.params.dig(:expanded_ids), class: 'hidden-existing-ids' %>
+              <%= rf.hidden_field :expanded_types, value: request.params.dig(:expanded_types), class: 'hidden-existing-ids' %>
               <%= rf.hidden_field :show_detailed, value: request.params.dig(:show_detailed), class: 'hidden-show-detailed' %>
+              <%= rf.hidden_field :toggled_facets, value: request.params.dig(:toggled_facets), class: 'hidden-toggled-facets' %>
               <%= rf.select "results_per_page", options_for_select([["Show 10 results", 10], ["Show 20 results", 20], ["Show 50 results", 50], ["Show 100 results", 100]], selected: @search_data.results_per_page), {}, { onchange: "this.form.submit()", class: 'form-select' } %>
             <% end %>
+
             <%= form_with url: request.url, method: :get, remote: true, id: 'sort-by' do |sf| %>
               <% unless request.params.dig(:filter).blank? %>
                 <% request.params.dig(:filter).keys.each do |filter_key| %>
@@ -117,10 +122,12 @@
               <% unless request.params.dig(:results_per_page).blank? %>
                 <%= sf.hidden_field :results_per_page, value: request.params.dig(:results_per_page) %>
               <% end %>
-              <%= sf.hidden_field :expanded_ids, value: request.params.dig(:expanded_ids), class: 'hidden-existing-ids' %>
+              <%= sf.hidden_field :expanded_types, value: request.params.dig(:expanded_types), class: 'hidden-existing-ids' %>
               <%= sf.hidden_field :show_detailed, value: request.params.dig(:show_detailed), class: 'hidden-show-detailed' %>
+              <%= sf.hidden_field :toggled_facets, value: request.params.dig(:toggled_facets), class: 'hidden-toggled-facets' %>
               <%= sf.select("sort_by", options_for_select([["Newest first", "date_desc"], ["Oldest first", "date_asc"]], selected: @search_data.sort), {}, { onchange: 'this.form.submit()', class: 'form-select' }) %>
             <% end %>
+
           </div>
         </section>
 

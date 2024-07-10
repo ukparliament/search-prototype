@@ -1,6 +1,6 @@
 import {Controller} from "@hotwired/stimulus"
 
-// Connects to data-controller="expand-hierarchy"
+// Connects to data-controller="expand-types"
 export default class extends Controller {
 
     connect() {
@@ -19,7 +19,7 @@ export default class extends Controller {
 
         // read in current values from params
         if (typeof first_link_params !== "undefined") {
-            const ids_from_params = first_link_params.getAll('expanded_ids');
+            const ids_from_params = first_link_params.getAll('expanded_types');
 
             ids_from_params.forEach(param => {
                 const ids_array = param.split(',')
@@ -44,8 +44,8 @@ export default class extends Controller {
 
         links.forEach(link => {
             const url = new URL(link.href);
-            url.searchParams.delete('expanded_ids');
-            url.searchParams.append('expanded_ids', existingIds);
+            url.searchParams.delete('expanded_types');
+            url.searchParams.append('expanded_types', existingIds);
             link.href = url.toString();
         });
 
