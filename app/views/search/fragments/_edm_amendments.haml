@@ -34,12 +34,11 @@
         %span= "."
 
   .content-text
-    .amendment-title
-      %strong= "Amendment "
-      %strong= amendment[:index] + 1
-      %strong= " - "
-      %strong= title
-      %strong= " ("
-      %span.amendment-title-ref>= amendment[:reference][:value]
-      %strong= ") "
+    %strong= "Amendment "
+    %strong= amendment[:index] + 1
+    %strong= " - "
+    %strong= title
+    %span= " ("
+    %span>= amendment[:reference][:value]
+    %span= ") "
     .amendment-text= amendment[:text][:value]

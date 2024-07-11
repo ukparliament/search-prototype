@@ -22,7 +22,13 @@
       <%= raw object.abstract_text[:value] %>
     </div>
   <% end %>
-  <% unless object.deposited_file.blank? %>
+  <% if object.deposited_file.blank? %>
+    <div class="content-text">
+    <span>
+      Available in hard copy only. For information on access, please see <%= link_to 'https://www.parliament.uk/about/how/publications/deposited/' %>
+    </span>
+    </div>
+  <% else %>
     <h3 class="content-heading" id="available-files">Available files</h3>
     <% object.deposited_file.each do |uri| %>
       <%= link_to(uri, uri.to_s) %>
