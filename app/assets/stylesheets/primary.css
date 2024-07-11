@@ -314,16 +314,6 @@ div.callout {
         background: none;
     }
 
-    .amendment-title {
-        color: #181818;
-        font-weight: 700;
-    }
-
-    .amendment-title-ref {
-        color: #181818;
-        font-weight: 350;
-    }
-
     .amendment-text {
         align-self: stretch;
         color: #181818;
