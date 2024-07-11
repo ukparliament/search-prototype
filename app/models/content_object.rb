@@ -58,6 +58,10 @@ class ContentObject
     get_all_from('subtype_ses')
   end
 
+  def types
+    get_all_from('type_ses')
+  end
+
   def subtype_or_type
     fallback(subtype, type)
   end
