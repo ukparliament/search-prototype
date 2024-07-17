@@ -1,6 +1,6 @@
 <% unless corporate_author.blank? %>
   <div class="item-details">
-    <label>Corporate author</label>
+    <div class="item-details-label">Corporate author</label>
     <% corporate_author.each do |item| %>
       <%= object_display_name(item, singular: false) %><br/>
     <% end %>

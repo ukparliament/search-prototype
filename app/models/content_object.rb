@@ -42,6 +42,11 @@ class ContentObject
     ids.flatten.compact.uniq
   end
 
+  def amendments
+    # TODO: temporary superclass method for non-EDM objects to be able to use a standard view for all result types
+    nil
+  end
+
   def get_associated_objects
     ObjectsFromUriList.new(associated_objects).get_objects
   end
@@ -335,6 +340,10 @@ class ContentObject
 
   def ministerial_correction?
     false
+  end
+
+  def standard_house
+    get_all_from('legislature_ses')
   end
 
   def standard_reference

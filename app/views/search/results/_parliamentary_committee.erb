@@ -1,37 +1,37 @@
 <section class="result-item">
-  <div class="row title">
+  <div class="row" id="title">
     <%= link_to(object.object_title, object_show_url(object: object.object_uri[:value])) %>
   </div>
-  <div class="row content">
+  <div class="row" id="content">
 
   </div>
   <div class="row">
     <div class="three-panel">
-      <div class="left member">
+      <div class="left" id="primary-person">
 
       </div>
-      <div class="centre other-member">
+      <div class="centre" id="secondary-person">
 
       </div>
-      <div class="right department">
+      <div class="right" id="primary-group">
 
       </div>
     </div>
   </div>
   <div class="row">
     <div class="three-panel">
-      <div class="left type">
+      <div class="left" id="type">
         <%= render 'search/results/item_details/type', type: object.object_name %>
       </div>
-      <div class="centre status">
+      <div class="centre" id="status">
 
       </div>
-      <div class="right corporate-author">
+      <div class="right" id="secondary-group">
         <%= render 'search/results/item_details/corporate_author', corporate_author: object.corporate_author %>
       </div>
     </div>
   </div>
-  <div hidden class="row detailed-view" data-detailed-results-target="toggleHidden">
+  <div hidden class="row" id="detailed-view" data-detailed-results-target="toggleHidden">
     <%= render 'search/results/item_details/legislation', legislation: object.legislation %>
     <%= render 'search/results/item_details/notes', notes: object.notes %>
     <%= render 'search/results/item_details/witnesses', witnesses: object.witnesses %>
@@ -40,13 +40,13 @@
   </div>
   <div class="row">
     <div class="three-panel">
-      <div class="left date">
+      <div class="left" id="significant-date">
         <%= render 'search/results/item_details/date', date: object.standard_date %>
       </div>
-      <div class="centre reference">
+      <div class="centre" id="reference">
         <%= render 'search/results/item_details/reference', reference: object.standard_reference %>
       </div>
-      <div class="right house">
+      <div class="right" id="house">
         <%= render 'search/results/item_details/legislature', legislature: object.legislature %>
       </div>
     </div>
