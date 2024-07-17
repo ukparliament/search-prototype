@@ -1,5 +1,10 @@
 <% unless date_laid.blank? %>
   <div class="item-details">
+    <div class="item-details-label">
+      Laid on
+    </div>
+    <span>
     <%= format_date(date_laid) %>
+    </span>
   </div>
 <% end %>

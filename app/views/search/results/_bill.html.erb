@@ -1,4 +1,4 @@
-<div class="result-item">
+<section class="result-item">
   <div class="row" id="title">
     <%= link_to(object.object_title, object_show_url(object: object.object_uri[:value])) %>
   </div>
@@ -104,16 +104,16 @@
     <%= render 'search/results/item_details/topics', topics: object.topics unless object.topics.blank? %>
     <%= render 'search/results/item_details/notes', notes: object.notes unless object.notes.blank? %>
 
-    <!--    <div class="row">-->
-    <!--      <div class="two-panel">-->
-    <!--        <div class="left" id="commons-library-location">-->
-
-    <!--        </div>-->
-    <!--        <div class="right" id="lords-library-location">-->
-
-    <!--        </div>-->
-    <!--      </div>-->
-    <!--    </div>-->
+    <div class="row">
+      <div class="two-panel">
+        <div class="left" id="commons-library-location">
+          <%= render 'search/results/item_details/commons_library_location', location: object.commons_library_location unless object.commons_library_location.blank? %>
+        </div>
+        <div class="right" id="lords-library-location">
+          <%= render 'search/results/item_details/lords_library_location', location: object.lords_library_location unless object.lords_library_location.blank? %>
+        </div>
+      </div>
+    </div>
 
   </div>
 
@@ -130,5 +130,5 @@
       </div>
     </div>
   </div>
-</div>
+</section>
 <hr/>
