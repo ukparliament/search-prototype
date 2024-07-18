@@ -14,7 +14,7 @@
 
       </div>
       <div class="right" id="primary-group">
-        <%= render 'search/results/item_details/departments', departments: object.departments %>
+        <%= render 'search/results/item_details/departments', departments: object.departments, hide_label: false %>
       </div>
     </div>
   </div>
@@ -27,7 +27,7 @@
 
       </div>
       <div class="right" id="secondary-group">
-        <%= render 'search/results/item_details/corporate_author', corporate_author: object.corporate_author %>
+        <%= render 'search/results/item_details/corporate_author', corporate_author: object.corporate_author, hide_label: false %>
       </div>
     </div>
   </div>

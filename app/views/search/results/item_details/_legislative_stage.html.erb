@@ -1,6 +1,8 @@
 <% unless legislative_stage.blank? %>
-  <div class="item-details-label">Legislative stage</label>
   <div class="item-details">
-    <%= object_display_name(legislative_stage, singular: false) %>
+    <div class="item-details-label">Legislative stage</div>
+    <span>
+        <%= object_display_name(legislative_stage, singular: false) %>
+    </span>
   </div>
 <% end %>
