@@ -1,23 +1,26 @@
-<section class="result-item">
+<div class="result-item">
   <div class="row" id="title">
     <%= link_to(object.object_title, object_show_url(object: object.object_uri[:value])) %>
   </div>
-  <div class="row" id="content">
 
+  <div class="row" id="content">
+    <%#= render 'search/results/item_details/description', description: object.abstract_text %>
   </div>
+
   <div class="row">
     <div class="three-panel">
       <div class="left" id="primary-person">
-
+        <%#= render 'search/results/item_details/member', member: object.member, member_party: object.member_party %>
       </div>
       <div class="centre" id="secondary-person">
-
+        <%#= render 'search/results/item_details/member', member: object.member, member_party: object.member_party %>
       </div>
       <div class="right" id="primary-group">
-
+        <%#= render 'search/results/item_details/departments', departments: object.departments, hide_label: false %>
       </div>
     </div>
   </div>
+
   <div class="row">
     <div class="three-panel">
       <div class="left" id="type">
@@ -27,17 +30,99 @@
 
       </div>
       <div class="right" id="secondary-group">
-
+        <%#= render 'search/results/item_details/corporate_author', corporate_author: object.corporate_author, hide_label: false %>
       </div>
     </div>
   </div>
+
   <div <%= 'hidden' unless params[:show_detailed] == "true" %> class="row" id="detailed-view" data-detailed-results-target="toggleHidden">
-    <%= render 'search/results/item_details/debate_date', debate_date: object.debate_date %>
+
+    <div class="row">
+      <div class="two-panel">
+        <div class="left" id="legislative-stage">
+          <%#= render 'search/results/item_details/legislative_stage', legislative_stage: object.legislative_stage %>
+        </div>
+        <div class="right" id="procedure">
+          <%#= render 'search/results/item_details/procedure', procedure: object.procedure %>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="four-panel">
+        <div class="left-outer" id="specific-date-1">
+          <%= render 'search/results/item_details/date_reported', date_reported: object.date_reported %>
+        </div>
+        <div class="left-inner" id="specific-date-2">
+          <%= render 'search/results/item_details/date_debated', date_debated: object.date_debated %>
+        </div>
+        <div class="right-inner" id="specific-date-3">
+
+        </div>
+        <div class="right-outer" id="specific-date-4">
+
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div id="coming-into-force">
+
+      </div>
+    </div>
+
+    <div class="row">
+      <div id="supplementary-content">
+
+      </div>
+    </div>
+
+    <div class="row">
+      <div id="corrected">
+
+      </div>
+    </div>
+
+    <% unless object.amendments.blank? %>
+      <% object.amendments.each do |amendment| %>
+        <div class="row">
+          <div class="two-panel">
+            <div class="left" id="amending-member">
+              <%#= render 'search/results/item_details/amended_by', primary_sponsor: amendment.dig(:primary_sponsor, :value) unless amendment.dig(:primary_sponsor, :value).blank? %>
+            </div>
+            <div class="right" id="amendment-date">
+              <%#= render 'search/results/item_details/amended_on', date_tabled: amendment.dig(:date_tabled, :value) unless amendment.dig(:date_tabled, :value).blank? %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+
+    <%#= render 'search/results/item_details/legislation', legislation: object.legislation unless object.legislation.blank? %>
+    <%#= render 'search/results/item_details/witnesses', witnesses: object.witnesses unless object.witnesses.blank? %>
+    <%#= render 'search/results/item_details/subjects', subjects: object.subjects unless object.subjects.blank? %>
+    <%#= render 'search/results/item_details/topics', topics: object.topics unless object.topics.blank? %>
+    <%#= render 'search/results/item_details/notes', notes: object.notes unless object.notes.blank? %>
+
+    <% unless object.commons_library_location.blank? && object.lords_library_location.blank? %>
+      <div class="row">
+        <div class="two-panel">
+          <div class="left" id="commons-library-location">
+            <%#= render 'search/results/item_details/commons_library_location', location: object.commons_library_location unless object.commons_library_location.blank? %>
+          </div>
+          <div class="right" id="lords-library-location">
+            <%#= render 'search/results/item_details/lords_library_location', location: object.lords_library_location unless object.lords_library_location.blank? %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+
   </div>
+
   <div class="row">
     <div class="three-panel">
       <div class="left" id="significant-date">
-        <%= render 'search/results/item_details/report_date', report_date: object.report_date %>
+        <%= render 'search/results/item_details/date', date: object.standard_date %>
       </div>
       <div class="centre" id="reference">
         <%= render 'search/results/item_details/reference', reference: object.standard_reference %>
@@ -47,5 +132,5 @@
       </div>
     </div>
   </div>
-</section>
+</div>
 <hr/>

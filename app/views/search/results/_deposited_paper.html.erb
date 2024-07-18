@@ -54,10 +54,10 @@
           <%= render 'search/results/item_details/commitment_to_deposit_date', commitment_to_deposit_date: object.commitment_to_deposit_date %>
         </div>
         <div class="left-inner" id="specific-date-2">
-          <%= render 'search/results/item_details/date_originated', date_originated: object.date_originated %>
+          <%= render 'search/results/item_details/date_originated', date_originated: object.date_originated, title: 'Written on' %>
         </div>
         <div class="right-inner" id="specific-date-3">
-          <%= render 'search/results/item_details/date_deposited', date_deposited: object.deposited_date %>
+          <%= render 'search/results/item_details/date_deposited', date_deposited: object.deposited_date, title: 'Received on' %>
         </div>
         <div class="right-outer" id="specific-date-4">
 
