@@ -13,7 +13,7 @@
         <%= render 'search/results/item_details/lead_member', lead_member: object.lead_member, lead_member_party: object.lead_member_party %>
       </div>
       <div class="centre" id="secondary-person">
-        <%= render 'search/results/item_details/answering_member', answering_member: object.answering_member, answering_member_party: nil %>
+        <%= render 'search/results/item_details/answering_member', answering_member: object.answering_member, answering_member_party: nil, label: 'Answering Member' %>
       </div>
       <div class="right" id="primary-group">
         <%= render 'search/results/item_details/departments', departments: object.departments, hide_label: true %>

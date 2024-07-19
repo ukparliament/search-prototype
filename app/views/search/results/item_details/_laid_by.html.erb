@@ -1,10 +1,10 @@
-<% unless depositing_applicant.blank? %>
+<% unless laid_by.blank? %>
   <div class="item-details">
     <div class="item-details-label">
-      Applicant
+      Laid by
     </div>
     <span>
-      <%= depositing_applicant[:value] %>
+      <%= object_display_name(laid_by, singular: false) %>
     </span>
   </div>
 <% end %>

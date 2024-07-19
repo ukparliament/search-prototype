@@ -1,12 +1,12 @@
-<% unless date_made.blank? %>
+<% unless date_of_order_to_print.blank? %>
   <div class="item-details">
     <% unless label.blank? %>
       <div class="item-details-label">
-        <%= label %>
+        Ordered to be printed on
       </div>
     <% end %>
     <span>
-      <%= format_date(date_made) %>
-      </span>
+      <%= format_date(date_of_order_to_print) %>
+    </span>
   </div>
 <% end %>

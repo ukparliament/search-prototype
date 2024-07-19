@@ -1,5 +1,10 @@
 <% unless date_of_holding_answer.blank? %>
   <div class="item-details">
-    <%= format_date(date_of_holding_answer) %>
+    <div class="item-details-label">
+      Holding answer on
+    </div>
+    <span>
+      <%= format_date(date_of_holding_answer) %>
+    </span>
   </div>
 <% end %>

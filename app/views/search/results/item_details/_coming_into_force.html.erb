@@ -1,5 +1,8 @@
 <% unless notes.blank? && date.blank? %>
   <div class="item-details">
+    <div class="item-details-label">
+      Coming into force
+    </div>
     <% unless date.blank? %>
       <%= format_date(date) %>
     <% end %>

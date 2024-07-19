@@ -1,8 +1,10 @@
 <% unless answering_member.blank? %>
   <div class="item-details">
-    <div class="item-details-label">
-      Answering Member
-    </div>
+    <% unless label.blank? %>
+      <div class="item-details-label">
+        <%= label %>
+      </div>
+    <% end %>
     <span>
       <%= object_display_name(answering_member, singular: false) %>
     </span>

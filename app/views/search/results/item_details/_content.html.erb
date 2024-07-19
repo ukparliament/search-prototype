@@ -1,7 +1,7 @@
 <% unless content.blank? %>
   <div class="item-details">
     <span>
-      <%= raw content[:value] %>
+      <%= raw content[:value].truncate(250) %>
     </span>
   </div>
 <% end %>
