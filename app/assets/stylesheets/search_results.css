@@ -81,6 +81,8 @@
                         }
 
                         a {
+                            vertical-align: text-top;
+                            padding-left: 10px;
                             font-weight: bold;
                             font-size: small;
                             /*padding: 0 5px;*/
