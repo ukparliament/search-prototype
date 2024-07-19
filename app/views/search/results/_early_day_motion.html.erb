@@ -88,10 +88,10 @@
         <div class="row">
           <div class="two-panel">
             <div class="left" id="amending-member">
-              <%= render 'search/results/item_details/amended_by', primary_sponsor: amendment.dig(:primary_sponsor, :value) unless amendment.dig(:primary_sponsor, :value).blank? %>
+              <%= render 'search/results/item_details/amended_by', primary_sponsor: amendment.dig(:primary_sponsor) unless amendment.dig(:primary_sponsor, :value).blank? %>
             </div>
             <div class="right" id="amendment-date">
-              <%= render 'search/results/item_details/amended_on', date_tabled: amendment.dig(:date_tabled, :value) unless amendment.dig(:date_tabled, :value).blank? %>
+              <%= render 'search/results/item_details/amended_on', date_tabled: amendment.dig(:date_tabled) unless amendment.dig(:date_tabled, :value).blank? %>
             </div>
           </div>
         </div>

@@ -36,8 +36,7 @@ class EuropeanDepositedDocument < ContentObject
     get_first_from('otherNumber_t')
   end
 
-  def date_of_origin
-    # TODO: this method is named differently on different object types; should be the same
+  def date_originated
     get_first_as_date_from('dateOriginated_dt')
   end
 
