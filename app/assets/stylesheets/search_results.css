@@ -65,20 +65,36 @@
                 display: flex;
 
                 .filter {
-                    display: flex;
-                    color: white;
-                }
+                    .top-row {
+                        padding-top: 5px;
+                        display: flex;
+                        flex-direction: row;
+                        color: white;
+                        line-height: 12px;
 
-                .filter-name {
-                }
+                        .filter-name-label {
+                            font-size: small;
+                        }
 
-                .filter a {
-                    padding: 0 10px;
-                    text-align: center;
-                    color: white;
-                    line-height: 22.48px;
-                    text-decoration: none;
-                    background: none;
+                        .flex-spacer {
+                            flex-grow: 1;
+                        }
+
+                        a {
+                            font-weight: bold;
+                            font-size: small;
+                            /*padding: 0 5px;*/
+                            color: white;
+                            text-decoration: none;
+                            background: none;
+                        }
+                    }
+
+                    .bottom-row {
+                        .filter-name {
+                            color: white;
+                        }
+                    }
                 }
             }
 

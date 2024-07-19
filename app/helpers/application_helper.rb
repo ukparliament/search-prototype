@@ -44,9 +44,9 @@ module ApplicationHelper
     # returns display name for a SES field, e.g. 'Content Type' for type_ses
 
     field_names = {
-      type_ses: 'Content type',
-      type_sesrollup: 'Content type (Rollup)',
-      legislature_ses: 'Legislature',
+      type_ses: 'Type',
+      type_sesrollup: 'Type',
+      legislature_ses: 'House',
       session_t: 'Session',
       date_dt: 'Date',
       member_ses: 'Member',
