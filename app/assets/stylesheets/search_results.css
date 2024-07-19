@@ -139,6 +139,27 @@
     .row {
         margin: 12px 0;
 
+        .four-panel {
+            display: grid;
+            grid-template-columns: 25% 25% 25% 25%;
+
+            .left-outer {
+                text-align: start;
+            }
+
+            .left-inner {
+                text-align: start;
+            }
+
+            .right-inner {
+                text-align: start;
+            }
+
+            .right-outer {
+                text-align: start;
+            }
+        }
+
         .three-panel {
             display: grid;
             grid-template-columns: 33.3% 33.3% 33.3%;
@@ -155,6 +176,25 @@
                 text-align: start;
             }
         }
+
+        .two-panel {
+            display: grid;
+            grid-template-columns: 50% 50%;
+
+            .left {
+                text-align: start;
+            }
+
+            .right {
+                text-align: start;
+            }
+        }
+    }
+
+    .item-details-label {
+        color: grey;
+        font-size: small;
+        line-height: 10px;
     }
 }
 

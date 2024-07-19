@@ -1,0 +1,10 @@
+<% unless laid_by.blank? %>
+  <div class="item-details">
+    <div class="item-details-label">
+      Laid by
+    </div>
+    <span>
+      <%= object_display_name(laid_by, singular: false) %>
+    </span>
+  </div>
+<% end %>

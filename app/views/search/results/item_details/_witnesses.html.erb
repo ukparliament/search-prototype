@@ -1,7 +1,8 @@
-<% unless witnesses.blank? %>
-  <div class="item-details">
-    <% witnesses.each do |witness| %>
-      <%= object_display_name(witness, singular: false) %><br/>
-    <% end %>
+<div class="row">
+  <div class="item-details" id="witnesses">
+    <div class="item-details-label">
+      Witnesses
+    </div>
+    <%= render 'search/fragments/simple_list', items: witnesses, terminator: "", singular: false %>
   </div>
-<% end %>
+</div>

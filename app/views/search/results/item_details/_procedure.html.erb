@@ -1,8 +1,8 @@
 <% unless procedure.blank? %>
   <div class="item-details">
-    <label>Procedure</label>
-    <% procedure.each do |p| %>
-      <%= object_display_name(p, singular: false) %><br/>
-    <% end %>
+    <div class="item-details-label">
+      Procedure
+    </div>
+    <%= render 'search/fragments/simple_list', items: procedure, terminator: "", singular: false %>
   </div>
 <% end %>

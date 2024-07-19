@@ -1,7 +1,15 @@
 <% unless primary_sponsor.blank? %>
   <div class="item-details">
+    <div class="item-details-label">
+      Primary sponsor
+    </div>
     <span>
       <%= object_display_name(primary_sponsor, singular: false) %>
     </span>
+    <% unless primary_sponsor_party.blank? %>
+      <span>
+        (<%= object_display_name(primary_sponsor_party, singular: false) %>)
+      </span>
+    <% end %>
   </div>
 <% end %>

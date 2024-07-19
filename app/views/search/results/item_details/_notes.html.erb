@@ -1,5 +1,12 @@
 <% unless notes.blank? %>
-  <div class="item-details">
-    <%= notes[:value] %>
+  <div class="row">
+    <div class="item-details" id="notes">
+      <div class="item-details-label">
+        Note
+      </div>
+      <span>
+      <%= notes[:value] %>
+    </span>
+    </div>
   </div>
 <% end %>

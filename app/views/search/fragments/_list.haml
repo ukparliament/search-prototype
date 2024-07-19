@@ -14,6 +14,6 @@
       %span= search_link(item)
       %span>= ", "
     %span= search_link(items.last(2).first, singular: singular)
-    %span= " and "
+    %span>= " and "
     %span= search_link(items.last, singular: singular)
     %span>= terminator

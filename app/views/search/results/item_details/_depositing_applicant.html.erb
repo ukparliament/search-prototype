@@ -1,5 +1,10 @@
 <% unless depositing_applicant.blank? %>
   <div class="item-details">
-    <%= depositing_applicant[:value] %>
+    <div class="item-details-label">
+      Applicant
+    </div>
+    <span>
+      <%= depositing_applicant[:value] %>
+    </span>
   </div>
 <% end %>

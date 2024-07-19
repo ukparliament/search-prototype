@@ -1,5 +1,10 @@
 <% unless date_for_answer.blank? %>
   <div class="item-details">
-    <%= format_date(date_for_answer) %>
+    <% unless label.blank? %>
+      <div class="item-details-label"><%= label %></div>
+    <% end %>
+    <span>
+      <%= format_date(date_for_answer) %>
+    </span>
   </div>
 <% end %>

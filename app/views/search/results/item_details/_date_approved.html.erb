@@ -1,5 +1,12 @@
 <% unless date_approved.blank? %>
   <div class="item-details">
-    <%= format_date(date_approved) %>
+    <% unless label.blank? %>
+      <div class="item-details-label">
+        <%= label %>
+      </div>
+    <% end %>
+    <span>
+      <%= format_date(date_approved) %>
+    </span>
   </div>
 <% end %>

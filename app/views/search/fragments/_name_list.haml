@@ -14,6 +14,6 @@
       %span= object_display_name(item)
       %span>= ", "
     %span= object_display_name(items.last(2).first, singular: singular)
-    %span= " and "
+    %span>= " and "
     %span= object_display_name(items.last, singular: singular)
     %span>= terminator

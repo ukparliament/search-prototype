@@ -1,8 +1,15 @@
 <% unless member.blank? %>
   <div class="item-details">
-    <label>Member:</label>
+    <div class="item-details-label">
+      Member
+    </div>
     <span>
       <%= object_display_name(member, singular: false) %>
     </span>
+    <% unless member_party.blank? %>
+      <span>
+        (<%= object_display_name(member_party, singular: false) %>)
+      </span>
+    <% end %>
   </div>
 <% end %>

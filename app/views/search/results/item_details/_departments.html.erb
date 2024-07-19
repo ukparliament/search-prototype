@@ -1,8 +1,10 @@
 <% unless departments.blank? %>
   <div class="item-details">
-    <label>Department:</label>
-    <% departments.each do |department| %>
-      <%= object_display_name(department, singular: false) %><br/>
+    <% unless hide_label %>
+      <div class="item-details-label">
+        Department
+      </div>
     <% end %>
+    <%= render 'search/fragments/simple_list', items: departments, terminator: "", singular: false %>
   </div>
 <% end %>

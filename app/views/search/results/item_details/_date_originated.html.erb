@@ -1,5 +1,10 @@
 <% unless date_originated.blank? %>
   <div class="item-details">
-    <%= format_date(date_originated) %>
+    <div class="item-details-label">
+      <%= label %>
+    </div>
+    <span>
+      <%= format_date(date_originated) %>
+    </span>
   </div>
 <% end %>

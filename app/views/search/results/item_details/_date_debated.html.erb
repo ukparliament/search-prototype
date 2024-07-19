@@ -1,0 +1,10 @@
+<% unless date_reported.blank? %>
+  <div class="item-details">
+    <div class="item-details-label">
+      Reported on
+    </div>
+    <span>
+      <%= format_date(date_reported) %>
+    </span>
+  </div>
+<% end %>

@@ -1,7 +1,8 @@
-<% unless legislation.blank? %>
-  <div class="item-details">
-    <% legislation.each do |legislation| %>
-      <%= object_display_name(legislation, singular: false) %><br/>
-    <% end %>
+<div class="row">
+  <div class="item-details" id="legislation">
+    <div class="item-details-label">
+      Legislation
+    </div>
+    <%= render 'search/fragments/simple_list', items: legislation, terminator: "", singular: false %>
   </div>
-<% end %>
+</div>
