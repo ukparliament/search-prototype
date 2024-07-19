@@ -24,7 +24,7 @@
   <%= render 'search/fragments/other_number', other_number: object.other_number %>
   <%= render 'search/fragments/responsible_departments', responsible_departments: object.departments %>
   <%= render 'search/fragments/subsidiarity_protocol_period', from: object.subsidiarity_from_date, to: object.subsidiarity_to_date %>
-  <%= render 'search/fragments/date', date: object.date_of_origin, title: 'Date of origin' %>
+  <%= render 'search/fragments/date', date: object.date_originated, title: 'Date of origin' %>
   <%= render 'search/fragments/related_items', related_item_ids: object.related_item_ids %>
   <%= render 'search/fragments/pills', pills_heading: 'Subjects', pills: object.subjects %>
   <%= render 'search/fragments/contains_statistics', contains_statistics: object.contains_statistics %>

@@ -11,7 +11,7 @@
         %span= " for "
         %span>= search_link(object.depositing_applicant)
         %span= " as the applicant, "
-      - unless object.date_of_origin.blank?
+      - unless object.date_originated.blank?
         %span= " on "
-        %strong>= format_date(object.date_of_origin)
+        %strong>= format_date(object.date_originated)
       %span= "."

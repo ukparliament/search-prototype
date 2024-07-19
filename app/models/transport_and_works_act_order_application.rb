@@ -20,7 +20,7 @@ class TransportAndWorksActOrderApplication < ContentObject
     fallback(get_first_from('applicant_ses'), get_first_from('applicant_t'))
   end
 
-  def date_of_origin
+  def date_originated
     get_first_as_date_from('dateOfOrigin_dt')
   end
 
