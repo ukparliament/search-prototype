@@ -1,26 +1,12 @@
-<% if id %>
-  <div class="grid-row">
-    <span class="facet-toggle toggle-<%= parent_id %> <%= 'collapse' if (tier > 1 && !@expanded_types.include?(parent_id.to_s)) %>" style="margin-left: <%= (tier - 1) * 0 %>px;">
-      <% if @hierarchy_data.dig(id, :children).select { |child| @search_data.content_type_rollup_ids.include?(child.dig(:id)) }.any? %>
-        <a data-expand-types-id-param="<%= id %>" data-action="click->expand-types#toggle">
-          <% if @expanded_types.include?(id.to_s) %>
-            -
-            <% else %>
-            &#43;
-          <% end %>
-        </a>
-      <% end %>
-    </span>
-
-    <span class="facet-link toggle-<%= parent_id %> <%= 'collapse' if (tier > 1 && !@expanded_types.include?(parent_id.to_s)) %>">
-    <%= link_to "#{@hierarchy_data.dig(id, :name)} (#{(@search_data.facets.select { |h| h.dig(:field_name) == "type_sesrollup" }.first.dig(:facets).to_h.dig(id.to_s))})", url_for(apply_filter_url(request.params, 'type_sesrollup', id)), class: 'modifiable-link' %>
-      <% if @hierarchy_data.dig(id) %>
-      <% @hierarchy_data.dig(id, :children).each do |child| %>
-        <% if @search_data.content_type_rollup_ids.include?(child.dig(:id)) %>
-          <%= render 'hierarchy_layer', id: child.dig(:id), tier: tier + 1, parent_id: id %>
-        <% end %>
+<% if id && @hierarchy_data.dig(id) %>
+  <details class="<%= @hierarchy_data.dig(id, :children).any? ? 'hierarchy-expander' : 'hierarchy-static' %>" style="padding-left: <%= 10 + (10 * (tier - 1)) %>px;" name="type-tier-<%= tier %>">
+    <summary>
+      <%= link_to "#{@hierarchy_data.dig(id, :name)} (#{(@search_data.facets.select { |h| h.dig(:field_name) == "type_sesrollup" }.first.dig(:facets).to_h.dig(id.to_s))})", url_for(replace_filter_url(request.params, 'type_sesrollup', id)), class: 'modifiable-link' %>
+    </summary>
+    <% @hierarchy_data.dig(id, :children).each do |child| %>
+      <% if @search_data.content_type_rollup_ids.include?(child.dig(:id)) %>
+        <%= render 'hierarchy_layer', id: child.dig(:id), tier: tier + 1, parent_id: id %>
       <% end %>
     <% end %>
-    </span>
-  </div>
+  </details>
 <% end %>

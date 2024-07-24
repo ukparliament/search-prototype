@@ -79,4 +79,13 @@ module ApplicationHelper
   def apply_filter_url(params, filter_name, filter_value)
     params.except(:page).merge(filter: params.dig(:filter).nil? ? { filter_name => [filter_value] } : params.dig(:filter).merge(filter_name => [filter_value, params.dig(:filter, filter_name)].compact.flatten))
   end
+
+  def replace_filter_url(params, filter_name, filter_value)
+    new_type_params = { filter: { filter_name.to_sym => [filter_value.to_s] } }
+    params.merge!(new_type_params)
+  end
+
+  def toggle_state(expanded_types, id, parent_id)
+    'show' if expanded_types.include?(id.to_s) || expanded_types.include?(parent_id.to_s)
+  end
 end

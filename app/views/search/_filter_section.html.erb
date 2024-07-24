@@ -1,6 +1,7 @@
 <section class="facet">
   <details <%= 'open' if open %> data-expand-facet-name-param=<%= facet_field[:field_name] %>>
-    <summary data-action="click->expand-facet#toggle">
+    <!--    <summary data-action="click->expand-facet#toggle">-->
+    <summary>
       <strong><%= ses_field_name(facet_field[:field_name]) %></strong>
     </summary>
     <% facet_field[:facets][0..4].each do |facet| %>

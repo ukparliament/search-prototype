@@ -15,7 +15,10 @@ class SearchController < ApplicationController
       @ses_data = @search_data.ses_data
       @hierarchy_builder = HierarchyBuilder.new(@search_data.content_type_rollup_ids)
       @hierarchy_data = @hierarchy_builder.hierarchy_data
-      @expanded_types = @search_data.expanded_types
+
+      # TODO: is name required here?
+      @expanded_types = @search_data.expanded_types.map { |id| { id: id.to_i, name: 'Test name' } }
+
       @toggled_facets = @search_data.toggled_facets
     end
   end

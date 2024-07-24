@@ -69,7 +69,8 @@ class SearchData
   def expanded_types
     return unless search
 
-    expanded_id_param = search.dig(:search_parameters, :expanded_types)
+    # expanded_id_param = search.dig(:search_parameters, :expanded_types)
+    expanded_id_param = search.dig(:search_parameters, :filter, :type_sesrollup)
 
     ret = []
 
@@ -77,7 +78,7 @@ class SearchData
       ret = expanded_id_param.split(',').compact_blank.uniq
     end
 
-    ret
+    ret.flatten
   end
 
   def toggled_facets

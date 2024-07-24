@@ -7,7 +7,7 @@
 <%#= render 'search/fragments/data', data: @metadata, title: 'Search metadata' %>
 <%#= render 'search/fragments/data', data: @ses_data, title: 'SES results' %>
 <%#= render 'search/fragments/data', data: @search_data.facets, title: 'Facets' %>
-<%#= render 'search/fragments/data', data: @hierarchy_data, title: 'Hierarchy data' %>
+<%= render 'search/fragments/data', data: @hierarchy_data, title: 'Hierarchy data' %>
 <%#= render 'search/fragments/data', data: @top_level, title: 'Hierarchy top level types' %>
 <%#= render 'search/fragments/data', data: @toggled_facets, title: 'Toggled facets' %>
 <%#= render 'search/fragments/data', data: request.params, title: 'All params' %>
@@ -69,8 +69,14 @@
               <strong>Type</strong>
             </summary>
             <div class="facets" data-controller="expand-types">
-              <% @hierarchy_builder.top_level_types&.each do |top_level_type| %>
-                <%= render 'hierarchy_layer', hash: top_level_type, id: top_level_type[:id], tier: 1, parent_id: 0 %>
+              <% if @expanded_types.blank? %>
+                <% @hierarchy_builder.top_level_types&.each do |top_level_type| %>
+                  <%= render 'hierarchy_layer', hash: top_level_type, id: top_level_type[:id], tier: 1, parent_id: 0 %>
+                <% end %>
+              <% else %>
+                <% @expanded_types&.each do |filtered_type| %>
+                  <%= render 'hierarchy_layer', hash: filtered_type, id: filtered_type[:id], tier: 1, parent_id: 0 %>
+                <% end %>
               <% end %>
             </div>
           </details>
