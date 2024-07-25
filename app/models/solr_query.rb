@@ -15,8 +15,6 @@ class SolrQuery < ApiCall
   def search_params
     {
       "q": "uri:#{object_uri}"
-      # "rows": 1,
-      # "wt": "json"
     }
   end
 end
