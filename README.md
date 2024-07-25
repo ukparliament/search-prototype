@@ -2,17 +2,13 @@
 
 ## General notes
 
-Ruby 3.3, Rails 7.1
-
-We have intentionally kept dependencies to a minimum.
-
-This app currrently does not use a database, however future development may necessitate this.
-
-Unit test suite uses RSpec
-Some request specs have been written for particular 'items' (source data variants), however the task of creating these
-for all object types has not yet been completed.
-
-Currently the app is deployed via Heroku
+- Ruby 3.3, Rails 7.1
+- We have intentionally kept dependencies to a minimum.
+- This app currrently does not use a database, however future development may necessitate this.
+- Unit test suite uses RSpec
+- Some request specs have been written for particular 'items' (source data variants), however the task of creating these
+  for all object types has not yet been completed.
+- Currently the app is deployed via Heroku
 
 ## High level overview
 
@@ -23,7 +19,25 @@ The intended route through the app is for a search to be performed, the results 
 then for a single result to be clicked on. This then takes the user to the item view, which displayed more detailed
 information.
 
+## Standard data format
+
+Because the data returned by Solr is often treated differently throughout the application based on the name or type of
+Solr field it originated from, most data passing between various methods is in the form of a hash with the data keyed
+to 'value' and its Solr field name keyed to 'field_name', instead of simply passing a collection of unaccompanied data. 
+
 ## Feature details
+
+### Item pages
+
+An object ID is required, and used to retrieve the data for that object from Solr using an instance of SolrQuery. The
+returned data is passed to the ContentObject class, using the 'generate' class method to identify and initialise the
+relevant subclass corresponding to the item type (based on its type and subtype SES IDs, type_ses and subtype_ses).
+
+The class, for example WrittenQuestion, contains instance methods used to extract the necessary data to render the page
+from the returned JSON. The numerous subclasses of ContentObject are organised in several layers where beneficial, for
+example WrittenQuestion inherits from Question, which also has the subclass OralQuestion and holds methods common to
+both subclasses. A number of instance methods belong to ContentObject itself, as their behaviour is common across all
+object types.
 
 ### The search page
 
@@ -31,43 +45,8 @@ The search bar on the main search page makes a request to Solr via an interstiti
 does some basic formatting of the query before assembling a Solr query and making a GET request.
 
 The app forms the search query using the SolrSearch class, which is a subclass of ApiCall, which holds generic API
-request methods. Solr returns results as JSON (as configured) which can then be parsed by the app.
-
-### ApiCall and its subclasses
-
-ApiCall is a class containing common methods for making requests to an external API, handling errors and interpreting
-results. It has several subclasses. For each, the object_data method returns the objects as JSON.
-
-- SolrSearch: Performs a Solr search (POST request) and returns all results. Includes all facets supported by the app
-  for every search, which are detailed in the class method facet_fields. Optionally accepts query string, filter,
-  results count, sort by and page.
-- SolrQuery: A simple Solr POST request that accepts an object_uri (primary key in Solr index) and returns the first
-  result.
-- SolrMultiQuery: A simple Solr POST request that accepts any number of object_uris and returns all results.
-- SesLookup: A GET request to the SES API. Accepts any number of integer IDs, and returns a hash of names keyed to their
-  SES IDs.
-
-### SES data
-
-Many of the names within the Solr data (Members, Legislatures, Topics etc.) are given as a SES ID (any Solr field name
-ending '_ses') which must be resolved using the SES API. This is a Smartlogic Semaphore service. Because it only accepts
-GET requests, and most of the integer IDs are 5 or 6 characters in length, we encounter limitations in how many IDs can
-be resolved in a single request. The SesLookup class accepts any number of IDs, removes any duplicates, then splits them
-into chunks of 250 to ensure the request does not exceed the 2048 character limit for a GET request.
-
-Each chunk of 250 or fewer IDs is assigned a new thread, as it is significantly quicker to make all requests
-simultaneously.
-
-As part of performance improvement work to the ContentObjectsController show action, used on item pages, the call to SES
-is now only carried out once the SES IDs relevant to items related to the result are collated and added to the list.
-This avoids needing to make further SES requests later on, reducing page load times. A similar change will be made to
-the SearchController index action, used for the search results page, collating the related item IDs needed to present a
-page of results, however this has not yet been implemented.
-
-#### API endpoints
-
-The Solr and SES API endpoints are protected via an API key (Azure) which is stored in the app encrypted credentials.
-Note that there are specific credentials files for each environment.
+request methods. Solr returns results as JSON (as configured) which can then be parsed by the app. This process is
+identical to that described above for the item pages, but a collection of objects is returned instead.
 
 #### Search expansion (yet to be implemented)
 
@@ -119,21 +98,66 @@ following approach to achieve this:
   shown.
 
 At the time of writing, work is underway to refactor a javascript based interactive type hierarchy (using
-expand_types_controller.js) to an HTML5 based approach which uses a series of nested <details> tags.
+expand_types_controller.js) to an HTML5 based approach which uses a series of nested 'details' tags.
 
-### ContentObject
+## Views, partials and helpers
 
-Both the search/results page and item pages use the ContentObject class, which contains class methods to identify the
-returned items based on their type_ses or subtype_ses IDs.
-
-Once an item type has been identified, an instance of the relevant subclass of ContentObject is initialised. This
-object class, for example a WrittenQuestion, contains instance methods to query the received JSON correctly to extract
-the data to present on the page.
-
-### Views
-
-The pages make use of numerous partials. For the most part the approach has been to keep seperate partials for each item
+Both item and search pages make use of numerous partials. For the most part the approach has been to keep separate
+partials for each item
 type even if the content and/or the underlying data query is the same as that for another object. This is because the
 requirements for the application are generally quite dynamic and it seemed prudent to avoid patterns that would make
 future divergence of what are currently identical views difficult.
 
+### Helpers
+
+At the time of writing, a number of helper methods in ApplicationHelper are yet to be moved to a more suitable location.
+
+#### Link Helper
+
+Used to generate and format the various links used throughout the app. Also includes methods for formatting titles and
+names, the latter including disambiguation steps. Some links include depluralisation steps, which can be enabled or
+disabled when called.
+
+#### FacetHelper
+
+This helper includes a method to check facets (returned from Solr and used to filter results) and format them if
+necessary. This is done by initialising an instance of the relevant subclass of the Facet class. At the time of writing,
+the framework for formatting session facets has been implemented, but no business logic added as of yet.
+
+## External APIs
+
+### ApiCall and its subclasses
+
+ApiCall is a class containing common methods for making requests to an external API, handling errors and interpreting
+results. It has several subclasses. For each, the object_data method returns the objects as JSON.
+
+- SolrSearch: Performs a Solr search (POST request) and returns all results. Includes all facets supported by the app
+  for every search, which are detailed in the class method facet_fields. Optionally accepts query string, filter,
+  results count, sort by and page.
+- SolrQuery: A simple Solr POST request that accepts an object_uri (primary key in Solr index) and returns the first
+  result.
+- SolrMultiQuery: A simple Solr POST request that accepts any number of object_uris and returns all results.
+- SesLookup: A GET request to the SES API. Accepts any number of integer IDs, and returns a hash of names keyed to their
+  SES IDs.
+
+### API endpoints
+
+The Solr and SES API endpoints are protected via an API key (Azure) which is stored in the app encrypted credentials.
+Note that there are specific credentials files for each environment.
+
+### SES data
+
+Many of the names within the Solr data (Members, Legislatures, Topics etc.) are given as a SES ID (any Solr field name
+ending '_ses') which must be resolved using the SES API. This is a Smartlogic Semaphore service. Because it only accepts
+GET requests, and most of the integer IDs are 5 or 6 characters in length, we encounter limitations in how many IDs can
+be resolved in a single request. The SesLookup class accepts any number of IDs, removes any duplicates, then splits them
+into chunks of 250 to ensure the request does not exceed the 2048 character limit for a GET request.
+
+Each chunk of 250 or fewer IDs is assigned a new thread, as it is significantly quicker to make all requests
+simultaneously.
+
+As part of performance improvement work to the ContentObjectsController show action, used on item pages, the call to SES
+is now only carried out once the SES IDs relevant to items related to the result are collated and added to the list.
+This avoids needing to make further SES requests later on, reducing page load times. A similar change will be made to
+the SearchController index action, used for the search results page, collating the related item IDs needed to present a
+page of results, however this has not yet been implemented.
