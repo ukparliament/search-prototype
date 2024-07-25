@@ -44,7 +44,7 @@ class HierarchyBuilder
     return unless ses_data.is_a?(Hash)
 
     ret = []
-
+    # select types that have 'Content Type' as their parent
     ses_data.select { |k, v| v.first.dig("fields").first.dig("field", "id") == "346696" }.keys.map do |id, name|
       # filter out types that aren't actually present in results (facet data)
       next unless facet_data.include?(id)

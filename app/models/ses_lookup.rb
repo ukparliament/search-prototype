@@ -3,10 +3,6 @@ class SesLookup < ApiCall
 
   BASE_API_URL = "https://api.parliament.uk/ses/"
 
-  # Note that this class has been refactored to operate on the 'standard data structure' (one or more hashes
-  # of value and field_name) used elsewhere in the application:
-  # [{value: w, field_name: 'x'}, { value: 'y', field_name: 'z'}...]
-
   def initialize(input_data)
     @input_data = input_data
   end
