@@ -7,8 +7,8 @@ class HierarchyBuilder
     @facet_data = facet_ids.map(&:to_i)
   end
 
-  def get_data_from_ses(facet_ids)
-    SesLookup.new([{ value: facet_ids }]).hierarchy_data
+  def get_data_from_ses(root_id = 346696)
+    SesLookup.new([{ value: root_id }]).extract_hierarchy_data
   end
 
   def hierarchy_data
@@ -46,9 +46,6 @@ class HierarchyBuilder
     ret = []
     # select types that have 'Content Type' as their parent
     ses_data.select { |k, v| v.first.dig("fields").first.dig("field", "id") == "346696" }.keys.map do |id, name|
-      # filter out types that aren't actually present in results (facet data)
-      next unless facet_data.include?(id)
-
       ret << { id: id, name: name }
     end
 

@@ -38,22 +38,25 @@ class SesLookup < ApiCall
       # one request per group of IDs; one thread per request
       threads << Thread.new do
         puts "Begin thread" if Rails.env.development?
+
+        # build uri
+        uri = ses_term_service_uri(id_group)
+
+        # fetch response
+        response = api_response(uri)
+
+        # try to parse the response as JSON & extract terms
         begin
-          # try to parse the response as JSON & extract terms
-          response = JSON.parse(api_response(id_group)).dig('terms')
-
-          # for debugging API
-          # service = "stats"
-          # test_uri = build_uri("#{BASE_API_URL}select.exe?TBDB=disp_taxonomy&TEMPLATE=service.json&SERVICE=#{service}")
-
+          parsed_response = JSON.parse(response)
+          evaluated = parsed_response.dig('terms')
         rescue JSON::ParserError
           # contrary to SES API documentation, errors seem to be returned as XML regardless of specified TEMPLATE
-          response = Hash.from_xml(api_response(id_group))
-          puts "Error: #{response}" if Rails.env.development?
+          evaluated = Hash.from_xml(response)
+          puts "Error: #{evaluated}" if Rails.env.development?
         end
 
         # collate responses
-        output << response
+        output << evaluated
       end
     end
 
@@ -63,6 +66,12 @@ class SesLookup < ApiCall
 
     # flatten responses
     output.flatten
+  end
+
+  def evaluated_hierarchy_response
+    uri = ses_browse_service_uri('346696', true)
+    response = JSON.parse(api_response(uri))
+    response.dig("terms")
   end
 
   def data
@@ -87,12 +96,12 @@ class SesLookup < ApiCall
     ret
   end
 
-  def hierarchy_data
+  def extract_hierarchy_data
     # for returning all data in a structured format for further querying
     return if input_data.blank?
 
     ret = {}
-    responses = evaluated_responses
+    responses = evaluated_hierarchy_response
 
     # responses is an array of hashes
     # each hash is the parsed response from individual lookups (one per [group_size] IDs)
@@ -113,9 +122,14 @@ class SesLookup < ApiCall
     ret
   end
 
-  def ruby_uri(id_group_string, hierarchy_expanded = true)
+  def ses_term_service_uri(id_group_string, hierarchy_expanded = true)
     expand_hierarchy_int = hierarchy_expanded ? 1 : 0
     build_uri("#{BASE_API_URL}select.exe?TBDB=disp_taxonomy&TEMPLATE=service.json&expand_hierarchy=#{expand_hierarchy_int}&SERVICE=term&ID=#{id_group_string}")
+  end
+
+  def ses_browse_service_uri(browse_id, hierarchy_expanded = true)
+    expand_hierarchy_int = hierarchy_expanded ? 1 : 0
+    build_uri("#{BASE_API_URL}select.exe?TBDB=disp_taxonomy&TEMPLATE=service.json&expand_hierarchy=#{expand_hierarchy_int}&SERVICE=allterms&CLASS=CTP")
   end
 
   private
@@ -124,9 +138,9 @@ class SesLookup < ApiCall
     250
   end
 
-  def api_response(id_group_string)
+  def api_response(uri)
     raise 'Please stub this method to avoid HTTP requests in test environment' if Rails.env.test?
 
-    api_get_request(ruby_uri(id_group_string))
+    api_get_request(uri)
   end
 end

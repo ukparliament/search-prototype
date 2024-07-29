@@ -14,10 +14,6 @@ class PaperSubmitted < Paper
     valid_subtypes.blank? ? type : valid_subtypes.first
   end
 
-  def date_of_order_to_print
-    get_first_as_date_from('dateOfOrderToPrint_dt')
-  end
-
   def paper_type
     # subtype, but excluding 528119 and 528127
     valid_paper_types = super&.reject { |i| [528129].include?(i[:value]) }
