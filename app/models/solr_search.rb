@@ -73,7 +73,17 @@ class SolrSearch < ApiCall
   end
 
   def search_filter
-    filter.to_h.flat_map { |field_name, values| values.map { |value| "#{field_name}:#{value}" } }
+    # search filter submitted as fq
+    # "fq": ["field_name:value1", "field_name:value2", ...],
+
+    # input data ('filter') is a params object, e.g.:
+    # {"type_sesrollup"=>["445871", "90996"]}
+
+    # For 'OR'
+    filter.to_h.flat_map { |field_name, values| values.map { |value| "#{field_name}:#{value}" }.join(" OR ") }
+
+    # Default is 'AND'; we have elected to use 'OR' except for date (further requirements needed)
+    # filter.to_h.flat_map { |field_name, values| values.map { |value| "#{field_name}:#{value}" } }
   end
 
   def sort
@@ -87,9 +97,9 @@ class SolrSearch < ApiCall
 
   def search_params
     {
-      q: search_query,
+      q: search_query, # q (query) is the main criteria for matching results
       'q.op': 'AND',
-      fq: search_filter,
+      fq: search_filter, # fq (filter query) is used to apply filters that cut down the result set without affecting scoring
       start: start,
       rows: rows,
       sort: sort,

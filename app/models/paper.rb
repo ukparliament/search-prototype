@@ -28,6 +28,10 @@ class Paper < ContentObject
     get_first_as_date_from('dateWithdrawn_dt')
   end
 
+  def date_of_order_to_print
+    get_first_as_date_from('dateOfOrderToPrint_dt')
+  end
+
   def referred_to
     get_first_from('referral_t')
   end
