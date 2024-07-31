@@ -84,6 +84,11 @@ class SolrSearch < ApiCall
 
     # Default is 'AND'; we have elected to use 'OR' except for date (further requirements needed)
     # filter.to_h.flat_map { |field_name, values| values.map { |value| "#{field_name}:#{value}" } }
+
+    # TODO: reformat and tag filters such that they can be excluded when setting up facets
+    # "filter": "{!tag=TAGNAME}field_name:term",
+
+    # search_filters = "{!tag=CTP}type_sesrollup:90996"
   end
 
   def sort
@@ -91,6 +96,25 @@ class SolrSearch < ApiCall
     return 'date_dt asc' if sort_by == "date_asc"
 
     'date_dt desc'
+  end
+
+  def facet_hash
+    # hash with keys as names of facets
+
+    ret = {}
+    SolrSearch.facet_fields.each do |field_name|
+
+      ret[field_name] = {
+        'type' => 'terms',
+        'field' => field_name,
+        'limit' => 100
+      }
+
+    end
+
+    # domain: { excludeTags: 'CTP' }
+    ret.to_json
+
   end
 
   private
@@ -103,9 +127,7 @@ class SolrSearch < ApiCall
       start: start,
       rows: rows,
       sort: sort,
-      facet: true,
-      'facet.limit': 100,
-      'facet.field': SolrSearch.facet_fields,
+      'json.facet': facet_hash
     }
   end
 end

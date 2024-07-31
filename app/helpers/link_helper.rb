@@ -14,10 +14,18 @@ module LinkHelper
 
     return if data.blank? || data[:value].blank?
 
-    field_name = data[:field_name]
+    field_name = substitute_field_name(data[:field_name])
     value = data[:value]
 
     link_to(formatted_name(data, ses_data, singular), search_path(filter: { field_name => [value] }))
+  end
+
+  def substitute_field_name(field_name)
+    if ['subtype_ses', 'type_ses'].include?(field_name)
+      'type_sesrollup'
+    else
+      field_name
+    end
   end
 
   def object_display_name(data, singular: true, case_formatting: false)

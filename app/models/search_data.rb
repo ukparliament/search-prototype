@@ -130,20 +130,24 @@ class SearchData
     return unless search
 
     ses_ids = object_data.pluck('all_ses').flatten
+
+    return ses_ids if facet_ses_ids.blank?
+
     facet_ses_ids + ses_ids
   end
 
   def facet_ses_ids
-    search.dig(:data, 'facet_counts', 'facet_fields').select { |k, v| ["ses", "sesrollup"].include?(k.split("_").last) }.flat_map { |k, v| Hash[*v].keys.map(&:to_i) }
+    facet_data = search.dig(:data, 'facets')
+    return if facet_data.blank?
+
+    # original, where we received facet data in the form [90775, 285] instead of new format of {"val"=>90775, "count"=>285}
+    # facet_data.select { |k, v| ["ses", "sesrollup"].include?(k.split("_").last) }.flat_map { |k, v| Hash[*v].keys.map(&:to_i) }
+
+    facet_data.select { |k, v| ["ses", "sesrollup"].include?(k.split("_").last) }.flat_map { |k, v| v["buckets"].pluck("val") }
   end
 
   def content_type_rollup_ids
-    arr = []
-    type_data = search.dig(:data, 'facet_counts', 'facet_fields', 'type_sesrollup')
-    subtype_data = search.dig(:data, 'facet_counts', 'facet_fields', 'subtype_sesrollup')
-    arr << Hash[*type_data].keys.uniq
-    arr << Hash[*subtype_data].keys.uniq
-    arr.flatten.map(&:to_i)
+    search.dig(:data, "facets", "type_sesrollup", "buckets").pluck("val")
   end
 
   def ses_data
@@ -152,10 +156,13 @@ class SearchData
   end
 
   def facets
-    return unless search
+    return [] unless search
 
-    search.dig(:data, 'facet_counts', 'facet_fields').map do |facet_field|
-      { field_name: facet_field.first, facets: sort_facets(facet_field) }
+    facet_field_data = search.dig(:data, 'facets')
+    return [] if facet_field_data.blank?
+
+    facet_field_data.except("count").map do |k, v|
+      { field_name: k, facets: sort_facets(v['buckets']) }
     end
   end
 
@@ -172,9 +179,18 @@ class SearchData
     search.dig(:search_parameters, :filter)
   end
 
+  def type_facets
+    ret = {}
+    facets.select { |facet| facet.dig(:field_name) == "type_sesrollup" }.first.dig(:facets).map { |h| ret[h.dig("val")] = ret[h.dig("count")] }
+    ret
+  end
+
   private
 
   def sort_facets(facet_field)
-    Hash[*facet_field.last].sort_by { |name, count| count }.reverse
+    # input is now an array of hashes of [{ "val" => 12345, "count" => 3 }, ...]
+    # this is already correctly formatted, just needs sorting by count
+
+    facet_field.sort_by { |id, count| count }.reverse
   end
 end
