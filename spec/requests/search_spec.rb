@@ -16,8 +16,8 @@ RSpec.describe 'Search', type: :request do
         allow(SolrSearch).to receive(:new).and_return(solr_search_instance)
         allow(solr_search_instance).to receive(:all_data).and_return(test_search_response)
         allow(SesLookup).to receive(:new).and_return(ses_lookup_instance)
-        allow(ses_lookup_instance).to receive(:data).and_return('test ses response')
-        allow(ses_lookup_instance).to receive(:extract_hierarchy_data).and_return('test ses response')
+        allow(ses_lookup_instance).to receive(:data).and_return({ 45678 => 'string', 67890 => 'string' })
+        allow(ses_lookup_instance).to receive(:extract_hierarchy_data).and_return({ [92424, "Personal statements"] => [{"typeId"=>"1", "qty"=>"1", "name"=>"Broader Term", "abbr"=>"BT", "fields"=>[{"field"=>{"name"=>"Oral statements", "id"=>"350073", "zid"=>"52566919", "class"=>"CTP", "freq"=>"0", "facets"=>[{"id"=>"346696", "name"=>"Content type"}]}}]}] })
 
         get '/search', params: { "filter" => { "type_ses" => ["90996"] } }
         expect(response).to have_http_status(:ok)
@@ -37,8 +37,8 @@ RSpec.describe 'Search', type: :request do
         allow(SolrSearch).to receive(:new).and_return(solr_search_instance)
         allow(solr_search_instance).to receive(:all_data).and_return(test_search_response)
         allow(SesLookup).to receive(:new).and_return(ses_lookup_instance)
-        allow(ses_lookup_instance).to receive(:data).and_return('test ses response')
-        allow(ses_lookup_instance).to receive(:extract_hierarchy_data).and_return('test ses response')
+        allow(ses_lookup_instance).to receive(:data).and_return({ 45678 => 'string', 67890 => 'string' })
+        allow(ses_lookup_instance).to receive(:extract_hierarchy_data).and_return({ [92424, "Personal statements"] => [{"typeId"=>"1", "qty"=>"1", "name"=>"Broader Term", "abbr"=>"BT", "fields"=>[{"field"=>{"name"=>"Oral statements", "id"=>"350073", "zid"=>"52566919", "class"=>"CTP", "freq"=>"0", "facets"=>[{"id"=>"346696", "name"=>"Content type"}]}}]}] })
 
         # a new instance of SolrSearch is created
         expect(SolrSearch).to receive(:new)
@@ -59,8 +59,8 @@ RSpec.describe 'Search', type: :request do
 
       it 'returns items found by search' do
         allow_any_instance_of(SolrSearch).to receive(:all_data).and_return(test_search_response)
-        allow_any_instance_of(SesLookup).to receive(:data).and_return('test ses response')
-        allow_any_instance_of(SesLookup).to receive(:extract_hierarchy_data).and_return('test ses response')
+        allow_any_instance_of(SesLookup).to receive(:data).and_return({ 45678 => 'string', 67890 => 'string' })
+        allow_any_instance_of(SesLookup).to receive(:extract_hierarchy_data).and_return({ [92424, "Personal statements"] => [{"typeId"=>"1", "qty"=>"1", "name"=>"Broader Term", "abbr"=>"BT", "fields"=>[{"field"=>{"name"=>"Oral statements", "id"=>"350073", "zid"=>"52566919", "class"=>"CTP", "freq"=>"0", "facets"=>[{"id"=>"346696", "name"=>"Content type"}]}}]}] })
 
         get '/search', params: { "filter" => { "type_ses" => ["90996"] } }
         expect(response).to have_http_status(:ok)
@@ -86,8 +86,8 @@ RSpec.describe 'Search', type: :request do
         allow(SolrSearch).to receive(:new).and_return(solr_search_instance)
         allow(solr_search_instance).to receive(:all_data).and_return(test_search_response)
         allow(SesLookup).to receive(:new).and_return(ses_lookup_instance)
-        allow(ses_lookup_instance).to receive(:data).and_return('test ses response')
-        allow(ses_lookup_instance).to receive(:extract_hierarchy_data).and_return('test ses response')
+        allow(ses_lookup_instance).to receive(:data).and_return({ 45678 => 'string', 67890 => 'string' })
+        allow(ses_lookup_instance).to receive(:extract_hierarchy_data).and_return({ [92424, "Personal statements"] => [{"typeId"=>"1", "qty"=>"1", "name"=>"Broader Term", "abbr"=>"BT", "fields"=>[{"field"=>{"name"=>"Oral statements", "id"=>"350073", "zid"=>"52566919", "class"=>"CTP", "freq"=>"0", "facets"=>[{"id"=>"346696", "name"=>"Content type"}]}}]}] })
 
         expect(SolrSearch).to receive(:new)
         expect(solr_search_instance).to receive(:all_data)
