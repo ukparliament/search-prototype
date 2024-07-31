@@ -160,7 +160,7 @@
                 (<%= "#{(Time.now - @start_time).round(3)} seconds" %>).
               </strong>
             </p>
-            <%= render 'pagination', user_requested_page: @search_data.current_page, last_page: @search_data.total_pages, query: @search_data.query, filter: @search_data.filter, sort_by: @search_data.sort, results_per_page: @search_data.results_per_page %>
+            <%= render 'pagination', user_requested_page: @search_data.current_page, last_page: @search_data.total_pages, query: @search_data.query, filter: @search_data.filter, sort_by: @search_data.sort, results_per_page: @search_data.results_per_page, expanded_types: @search_data.expanded_types %>
           <% end %>
         </div>
       </div>

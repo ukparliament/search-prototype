@@ -1,7 +1,7 @@
 <div id="pagination">
   <% if user_requested_page > 3 %>
     <div>
-      <%= link_to "1", search_url(query: query, filter: filter, sort_by: sort_by, results_per_page: results_per_page, page: 1), class: 'modifiable-link' %>
+      <%= link_to "1", search_url(query: query, filter: filter, sort_by: sort_by, results_per_page: results_per_page, page: 1, expanded_types: expanded_types), class: 'modifiable-link' %>
     </div>
     <% if user_requested_page > 4 %>
       <div>
@@ -11,27 +11,27 @@
   <% end %>
   <% if user_requested_page > 2 %>
     <div>
-      <%= link_to user_requested_page - 2, search_url(query: query, filter: filter, sort_by: sort_by, results_per_page: results_per_page, page: user_requested_page - 2), class: 'modifiable-link' %>
+      <%= link_to user_requested_page - 2, search_url(query: query, filter: filter, sort_by: sort_by, results_per_page: results_per_page, page: user_requested_page - 2, expanded_types: expanded_types), class: 'modifiable-link' %>
     </div>
   <% end %>
   <% if user_requested_page > 1 %>
     <div>
-      <%= link_to user_requested_page -1, search_url(query: query, filter: filter, sort_by: sort_by, results_per_page: results_per_page, page: user_requested_page -1), class: 'modifiable-link' %>
+      <%= link_to user_requested_page -1, search_url(query: query, filter: filter, sort_by: sort_by, results_per_page: results_per_page, page: user_requested_page -1, expanded_types: expanded_types), class: 'modifiable-link' %>
     </div>
   <% end %>
 
   <div>
-    <%= link_to user_requested_page, search_url(query: query, filter: filter, sort_by: sort_by, results_per_page: results_per_page, page: user_requested_page), class: 'selected modifiable-link' %>
+    <%= link_to user_requested_page, search_url(query: query, filter: filter, sort_by: sort_by, results_per_page: results_per_page, page: user_requested_page, expanded_types: expanded_types), class: 'selected modifiable-link' %>
   </div>
 
   <% if user_requested_page < last_page %>
     <div>
-      <%= link_to user_requested_page + 1, search_url(query: query, filter: filter, sort_by: sort_by, results_per_page: results_per_page, page: user_requested_page + 1), class: 'modifiable-link' %>
+      <%= link_to user_requested_page + 1, search_url(query: query, filter: filter, sort_by: sort_by, results_per_page: results_per_page, page: user_requested_page + 1, expanded_types: expanded_types), class: 'modifiable-link' %>
     </div>
   <% end %>
   <% if user_requested_page < last_page - 1 %>
     <div>
-      <%= link_to user_requested_page + 2, search_url(query: query, filter: filter, sort_by: sort_by, results_per_page: results_per_page, page: user_requested_page + 2), class: 'modifiable-link' %>
+      <%= link_to user_requested_page + 2, search_url(query: query, filter: filter, sort_by: sort_by, results_per_page: results_per_page, page: user_requested_page + 2, expanded_types: expanded_types), class: 'modifiable-link' %>
     </div>
   <% end %>
   <% if user_requested_page < last_page - 2 %>
@@ -41,7 +41,7 @@
       </div>
     <% end %>
     <div>
-      <%= link_to last_page, search_url(query: query, filter: filter, sort_by: sort_by, results_per_page: results_per_page, page: last_page), class: 'modifiable-link' %>
+      <%= link_to last_page, search_url(query: query, filter: filter, sort_by: sort_by, results_per_page: results_per_page, page: last_page, expanded_types: expanded_types), class: 'modifiable-link' %>
     </div>
   <% end %>
 </div>
