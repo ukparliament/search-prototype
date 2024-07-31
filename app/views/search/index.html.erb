@@ -76,15 +76,11 @@
         </section>
 
         <% @search_data.facets.select { |h| ["legislature_ses", "session_t", "date_dt", "department_ses", "member_ses"].include?(h.dig(:field_name)) }.each do |facet_field| %>
-          <% unless facet_field[:facets].blank? %>
-            <%= render 'filter_section', facet_field: format_facets(facet_field), open: !@toggled_facets.include?(facet_field[:field_name]) %>
-          <% end %>
+          <%= render 'filter_section', facet_field: format_facets(facet_field), open: !@toggled_facets.include?(facet_field[:field_name]) %>
         <% end %>
 
         <% @search_data.facets.select { |h| ["tablingMember_ses", "askingMember_ses", "leadMember_ses", "answeringMember_ses", "legislativeStage_ses", "legislationTitle_ses", "subject_ses"].include?(h.dig(:field_name)) }.each do |facet_field| %>
-          <% unless facet_field[:facets].blank? %>
-            <%= render 'filter_section', facet_field: format_facets(facet_field), open: @toggled_facets.include?(facet_field[:field_name]) %>
-          <% end %>
+          <%= render 'filter_section', facet_field: format_facets(facet_field), open: @toggled_facets.include?(facet_field[:field_name]) %>
         <% end %>
       </div>
 

@@ -5,7 +5,7 @@
     </summary>
     <% facet_field[:facets][0..4].each do |facet| %>
       <div>
-        <%= link_to "#{object_display_name({ value: facet["val"], field_name: facet_field[:field_name] }, singular: false)} (#{facet["count"]})", url_for(apply_filter_url(request.params, facet_field[:field_name], facet["val"])), class: "modifiable-link" %>
+        <%= link_to_if(!request.params.dig(:filter, facet_field[:field_name])&.include?(facet["val"].to_s), "#{object_display_name({ value: facet["val"], field_name: facet_field[:field_name] }, singular: false)} (#{facet["count"]})", url_for(apply_filter_url(request.params, facet_field[:field_name], facet["val"])), class: "modifiable-link") %>
       </div>
     <% end %>
     <% unless facet_field[:facets][5..].blank? %>
@@ -13,7 +13,7 @@
         <summary>More</summary>
         <% facet_field[:facets][5...].each do |facet| %>
           <div>
-            <%= link_to "#{object_display_name({ value: facet["val"], field_name: facet_field[:field_name] }, singular: false)} (#{facet["count"]})", url_for(apply_filter_url(request.params, facet_field[:field_name], facet["val"])), class: "modifiable-link" %>
+            <%= link_to_if(!request.params.dig(:filter, facet_field[:field_name])&.include?(facet["val"].to_s), "#{object_display_name({ value: facet["val"], field_name: facet_field[:field_name] }, singular: false)} (#{facet["count"]})", url_for(apply_filter_url(request.params, facet_field[:field_name], facet["val"])), class: "modifiable-link") %>
           </div>
         <% end %>
       </details>
