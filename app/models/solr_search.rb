@@ -80,7 +80,8 @@ class SolrSearch < ApiCall
     # {"type_sesrollup"=>["445871", "90996"]}
 
     # For 'OR'
-    filter.to_h.flat_map { |field_name, values| values.map { |value| "#{field_name}:#{value}" }.join(" OR ") }
+    # filter.to_h.flat_map { |field_name, values| values.map { |value| "#{field_name}:#{value}" }.join(" OR ") }
+    filter.to_h.flat_map { |field_name, values| values.map { |value| "{!tag=#{field_name}}#{field_name}:#{value}" }.join(" OR ") }
 
     # Default is 'AND'; we have elected to use 'OR' except for date (further requirements needed)
     # filter.to_h.flat_map { |field_name, values| values.map { |value| "#{field_name}:#{value}" } }
@@ -107,7 +108,8 @@ class SolrSearch < ApiCall
       ret[field_name] = {
         'type' => 'terms',
         'field' => field_name,
-        'limit' => 100
+        'limit' => 100,
+        'domain' => { excludeTags: field_name }
       }
 
     end

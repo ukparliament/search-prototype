@@ -12,11 +12,13 @@ class SearchController < ApplicationController
       render template: @search_data.error_partial_path, locals: { status: @search_data.error_code,
                                                                   message: @search_data.error_message }
     else
-      @ses_data = @search_data.ses_data
       @hierarchy_builder = HierarchyBuilder.new(@search_data.content_type_rollup_ids)
       @hierarchy_data = @hierarchy_builder.hierarchy_data
+      @hierarchy_ses_ids = @hierarchy_builder.formatted_ses_data
       @expanded_types = @search_data.expanded_types
       @toggled_facets = @search_data.toggled_facets
+
+      @ses_data = @search_data.ses_data.merge(@hierarchy_ses_ids)
     end
   end
 

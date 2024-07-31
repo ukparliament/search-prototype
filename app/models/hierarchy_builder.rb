@@ -15,6 +15,13 @@ class HierarchyBuilder
     organise_hierarchy_data(ses_data)
   end
 
+  def formatted_ses_data
+    ret = {}
+    ses_data.keys.each {|a| ret[a.first] = a.last }
+
+    ret
+  end
+
   def organise_hierarchy_data(ses_data)
     ret = {}
 
