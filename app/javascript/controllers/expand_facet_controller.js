@@ -7,9 +7,6 @@ export default class extends Controller {
     }
 
     toggle(event) {
-        // the toggle event is being triggered on a regular page load via the search button
-        // possibly due to the CSS showing/hiding the details
-
         const facetName = event.params.name.toString();
 
         const links = document.querySelectorAll('.modifiable-link');

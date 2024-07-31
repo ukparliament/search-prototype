@@ -183,9 +183,9 @@ RSpec.describe SolrSearch, type: :model do
     context 'with a single filter' do
       let!(:solr_search) { SolrSearch.new({ filter: { 'field_name' => ['test'] } }) }
 
-      it 'returns an array of filter strings' do
+      it 'returns an array of tagged filter strings' do
         allow(solr_search).to receive(:evaluated_response).and_return(mock_response)
-        expect(solr_search.search_filter).to eq(["field_name:test"])
+        expect(solr_search.search_filter).to eq(["{!tag=field_name}field_name:test"])
       end
     end
     context 'with multiple filters' do
@@ -193,7 +193,7 @@ RSpec.describe SolrSearch, type: :model do
 
       it 'returns an array of filter strings' do
         allow(solr_search).to receive(:evaluated_response).and_return(mock_response)
-        expect(solr_search.search_filter).to eq(["type_ses:347163", "subtype_ses:363905"])
+        expect(solr_search.search_filter).to eq(["{!tag=type_ses}type_ses:347163", "{!tag=subtype_ses}subtype_ses:363905"])
       end
     end
   end
