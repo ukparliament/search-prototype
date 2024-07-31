@@ -181,7 +181,7 @@ class SearchData
 
   def type_facets
     ret = {}
-    facets.select { |facet| facet.dig(:field_name) == "type_sesrollup" }.first.dig(:facets).map { |h| ret[h.dig("val")] = ret[h.dig("count")] }
+    facets.select { |facet| facet.dig(:field_name) == "type_sesrollup" }.first&.dig(:facets)&.each { |h| ret[h.dig("val")] = h.dig("count") }
     ret
   end
 
