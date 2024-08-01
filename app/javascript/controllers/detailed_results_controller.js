@@ -35,5 +35,10 @@ export default class extends Controller {
             link.href = url.toString();
         });
 
+        // ensure show_detailed is recorded in the current URL
+        let current_url = new URL(window.location);
+        current_url.searchParams.delete('show_detailed')
+        current_url.searchParams.append('show_detailed', showDetailed)
+        history.pushState(null, '', current_url);
     }
 }
