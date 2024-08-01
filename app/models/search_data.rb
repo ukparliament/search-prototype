@@ -161,9 +161,7 @@ class SearchData
     facet_field_data = search.dig(:data, 'facets')
     return [] if facet_field_data.blank?
 
-    facet_field_data.except("count").map do |k, v|
-      { field_name: k, facets: sort_facets(v['buckets']) }
-    end
+    facet_field_data.except("count").map { |k, v| { field_name: k, facets: sort_facets(v['buckets']) } }
   end
 
   def query_time
@@ -185,12 +183,7 @@ class SearchData
     ret
   end
 
-  private
-
   def sort_facets(facet_field)
-    # input is now an array of hashes of [{ "val" => 12345, "count" => 3 }, ...]
-    # this is already correctly formatted, just needs sorting by count
-
-    facet_field.sort_by { |id, count| count }.reverse
+    facet_field.sort_by { |h| h["count"] }.reverse
   end
 end

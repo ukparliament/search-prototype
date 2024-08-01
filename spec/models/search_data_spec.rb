@@ -3,22 +3,29 @@ require 'rails_helper'
 RSpec.describe SearchData, type: :model do
   let!(:search_data) { SearchData.new(search_output) }
   let!(:search_output) { { search_parameters: { filter: ['type_ses:12345'], query: 'horse' },
-                           data: { "responseHeader" => {
-                             "status" => 0,
-                             "QTime" => 4,
-                             "params" => { "q" => "externalLocation_uri:\"test_external_location_uri\"", "wt" => "json" }
+                           data: {
+                             "responseHeader" => {
+                               "status" => 0,
+                               "QTime" => 4,
+                               "params" => { "q" => "externalLocation_uri:\"test_external_location_uri\"", "wt" => "json" }
+                             },
+                             "response" => {
+                               "numFound" => 3,
+                               "start" => 0,
+                               "docs" => [
+                                 { 'test_string' => 'test string 1', 'uri' => 'test1' },
+                                 { 'test_string' => 'test string 2', 'uri' => 'test2' },
+                                 { 'test_string' => 'test string 3', 'uri' => 'test3' },
+                               ]
+                             },
+                             "highlighting" => { "test_url" => {} },
+                             "facets" => {
+                               "count" => 1234,
+                               "type_ses" => { "buckets" => [{ "val" => 90996, "count" => 123 }, { "val" => 90995, "count" => 234 }] },
+                               "subtype_ses" => { "buckets" => [{ "val" => 123456, "count" => 455 }, { "val" => 234556, "count" => 66 }] }
+                             }
                            },
-                                   "response" => {
-                                     "numFound" => 3,
-                                     "start" => 0,
-                                     "docs" => [
-                                       { 'test_string' => 'test string 1', 'uri' => 'test1' },
-                                       { 'test_string' => 'test string 2', 'uri' => 'test2' },
-                                       { 'test_string' => 'test string 3', 'uri' => 'test3' },
-                                     ]
-                                   },
-                                   "highlighting" => { "test_url" => {} }
-                           } }
+  }
   }
 
   describe 'solr_error?' do
@@ -238,6 +245,33 @@ RSpec.describe SearchData, type: :model do
       let!(:search_output) { { data: { 'response' => { 'start' => 15 } } } }
       it 'returns the start + per page' do
         expect(search_data.end).to eq(35)
+      end
+    end
+  end
+
+  describe 'facets' do
+    context 'where search is nil' do
+      let!(:search_data) { SearchData.new(nil) }
+      it 'returns an empty array' do
+        expect(search_data.facets).to eq([])
+      end
+    end
+
+    context 'where search is not nil' do
+      it 'returns an array' do
+        expect(search_data.facets.class).to eq(Array)
+      end
+
+      it 'has field_name and facets keys' do
+        expect(search_data.facets.first.keys).to eq([:field_name, :facets])
+      end
+
+      it 'includes the field name string' do
+        expect(search_data.facets.pluck(:field_name)).to eq(["type_ses", "subtype_ses"])
+      end
+
+      it 'includes facets sorted by count (descending)' do
+        expect(search_data.facets.pluck(:facets)).to eq([[{ "count" => 234, "val" => 90995 }, { "count" => 123, "val" => 90996 }], [{ "count" => 455, "val" => 123456 }, { "count" => 66, "val" => 234556 }]])
       end
     end
   end
