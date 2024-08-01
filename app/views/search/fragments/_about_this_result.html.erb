@@ -1,4 +1,4 @@
-<section hidden data-controller="claw" id="about-this-result">
+<section hidden data-controller="claw" data-action="keydown@document->claw#handleKeyDown" id="about-this-result">
   <h3 class="content-heading">About this result</h3>
   <div class="claw-grid-container">
     <% unless object.date.blank? %>
@@ -18,8 +18,13 @@
       </div>
     <% end %>
 
+    <% unless object.indexing_link.blank? %>
+      <b class="grid-item" id="about-uri">In Indexing</b>
+      <span class="grid-item"><%= link_to object.indexing_link, object.indexing_link %></span>
+    <% end %>
+
     <% unless object.solr_deep_link.blank? %>
-      <b class="grid-item" id="about-uri">Solr URI</b>
+      <b class="grid-item" id="about-uri">In Solr</b>
       <span class="grid-item"><%= link_to object.solr_deep_link, object.solr_deep_link %></span>
     <% end %>
 
