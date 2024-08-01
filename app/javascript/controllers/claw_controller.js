@@ -2,13 +2,6 @@ import {Controller} from "@hotwired/stimulus"
 
 // Connects to data-controller="claw"
 export default class extends Controller {
-    connect() {
-        document.addEventListener("keydown", this.handleKeyDown.bind(this));
-    }
-
-    disconnect() {
-        document.removeEventListener("keydown", this.handleKeyDown.bind(this));
-    }
 
     handleKeyDown(event) {
         // detect code of "KeyD" rather than key of "D" as use of modifiers
@@ -21,7 +14,7 @@ export default class extends Controller {
     }
 
     showClaw() {
-        const element= document.querySelector("#about-this-result");
+        const element = document.querySelector("#about-this-result");
         if (element) {
             element.toggleAttribute("hidden");
         }

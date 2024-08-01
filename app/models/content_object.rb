@@ -202,6 +202,13 @@ class ContentObject
     get_as_string_from('uri')
   end
 
+  def indexing_link
+    base = 'http://indexing.parliament.uk/Content/Edit/1?uri='
+    return if object_uri.blank?
+
+    base + object_uri[:value]
+  end
+
   def external_location_uri
     get_first_from('externalLocation_uri')
   end
