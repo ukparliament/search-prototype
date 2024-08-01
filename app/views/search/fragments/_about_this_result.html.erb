@@ -1,5 +1,5 @@
 <section hidden data-controller="claw" data-action="keydown@document->claw#handleKeyDown" id="about-this-result">
-  <h3 class="content-heading">About this result</h3>
+  <h3 class="content-heading">Librarians' tools</h3>
   <div class="claw-grid-container">
     <% unless object.date.blank? %>
       <b class="grid-item" id="about-timestamp">Timestamp</b>
@@ -29,7 +29,7 @@
     <% end %>
 
     <% unless object.internal_location_uri.blank? %>
-      <b class="grid-item" id="about-internal-uri">Internal location URI</b>
+      <b class="grid-item" id="about-internal-uri">Internal location</b>
       <span class="grid-item"><%= link_to object.internal_location_uri[:value], object.internal_location_uri[:value] %></span>
     <% end %>
   </div>
