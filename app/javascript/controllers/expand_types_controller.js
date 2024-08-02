@@ -49,6 +49,12 @@ export default class extends Controller {
             link.href = url.toString();
         });
 
+        // ensure expanded_types are recorded in the current URL
+        let current_url = new URL(window.location);
+        current_url.searchParams.delete('expanded_types')
+        current_url.searchParams.append('expanded_types', existingIds)
+        history.pushState(null, '', current_url);
+
         const all_toggles = Array.from(document.getElementsByClassName('toggle-' + container_id));
         const button = event.currentTarget;
         all_toggles.forEach(element => {

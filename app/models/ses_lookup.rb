@@ -69,7 +69,7 @@ class SesLookup < ApiCall
   end
 
   def evaluated_hierarchy_response
-    uri = ses_browse_service_uri('346696', true)
+    uri = ses_browse_service_uri
     response = JSON.parse(api_response(uri))
     response.dig("terms")
   end
@@ -122,14 +122,12 @@ class SesLookup < ApiCall
     ret
   end
 
-  def ses_term_service_uri(id_group_string, hierarchy_expanded = true)
-    expand_hierarchy_int = hierarchy_expanded ? 1 : 0
-    build_uri("#{BASE_API_URL}select.exe?TBDB=disp_taxonomy&TEMPLATE=service.json&expand_hierarchy=#{expand_hierarchy_int}&SERVICE=term&ID=#{id_group_string}")
+  def ses_term_service_uri(id_group_string)
+    build_uri("#{BASE_API_URL}select.exe?TBDB=disp_taxonomy&TEMPLATE=service.json&SERVICE=term&ID=#{id_group_string}")
   end
 
-  def ses_browse_service_uri(browse_id, hierarchy_expanded = true)
-    expand_hierarchy_int = hierarchy_expanded ? 1 : 0
-    build_uri("#{BASE_API_URL}select.exe?TBDB=disp_taxonomy&TEMPLATE=service.json&expand_hierarchy=#{expand_hierarchy_int}&SERVICE=allterms&CLASS=CTP")
+  def ses_browse_service_uri
+    build_uri("#{BASE_API_URL}select.exe?TBDB=disp_taxonomy&TEMPLATE=service.json&expand_hierarchy=1&SERVICE=allterms&CLASS=CTP")
   end
 
   private

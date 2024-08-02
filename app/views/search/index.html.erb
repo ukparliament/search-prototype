@@ -6,7 +6,6 @@
 <%#= render 'search/fragments/data', data: @metadata, title: 'Search metadata' %>
 <%#= render 'search/fragments/data', data: @ses_data, title: 'SES results' %>
 <%#= render 'search/fragments/data', data: @search_data.facets, title: 'Facets' %>
-<%#= render 'search/fragments/data', data: @hierarchy_data, title: 'Hierarchy data' %>
 <%#= render 'search/fragments/data', data: @top_level, title: 'Hierarchy top level types' %>
 <%#= render 'search/fragments/data', data: @toggled_facets, title: 'Toggled facets' %>
 <%#= render 'search/fragments/data', data: request.params, title: 'All params' %>
@@ -68,7 +67,7 @@
               <strong>Type</strong>
             </div>
             <div class="facets" data-controller="expand-types">
-              <% @hierarchy_builder.top_level_types&.each do |top_level_type| %>
+              <% @search_data.hierarchy_builder.top_level_types&.each do |top_level_type| %>
                 <%= render 'hierarchy_layer', hash: top_level_type, id: top_level_type[:id], tier: 1, parent_id: 0 %>
               <% end %>
             </div>
@@ -76,11 +75,11 @@
         </section>
 
         <% @search_data.facets.select { |h| ["legislature_ses", "session_t", "date_dt", "department_ses", "member_ses", "tablingMember_ses", "askingMember_ses", "leadMember_ses", "answeringMember_ses", "legislativeStage_ses", "legislationTitle_ses", "subject_ses"].include?(h.dig(:field_name)) }.each do |facet_field| %>
-          <%= render 'filter_section', facet_field: format_facets(facet_field), open: !@toggled_facets.include?(facet_field[:field_name]) %>
+          <%= render 'filter_section', facet_field: format_facets(facet_field) %>
         <% end %>
 
         <%# @search_data.facets.select { |h| [].include?(h.dig(:field_name)) }.each do |facet_field| %>
-        <%#= render 'filter_section', facet_field: format_facets(facet_field), open: @toggled_facets.include?(facet_field[:field_name]) %>
+        <%#= render 'filter_section', facet_field: format_facets(facet_field) %>
         <%# end %>
       </div>
 
@@ -113,7 +112,7 @@
               <% unless request.params.dig(:sort_by).blank? %>
                 <%= rf.hidden_field :sort_by, value: request.params.dig(:sort_by) %>
               <% end %>
-              <%= rf.hidden_field :expanded_types, value: request.params.dig(:expanded_types), class: 'hidden-existing-ids' %>
+              <%= rf.hidden_field :expanded_types, value: @search_data.expanded_types_string, class: 'hidden-existing-ids' %>
               <%= rf.hidden_field :show_detailed, value: request.params.dig(:show_detailed), class: 'hidden-show-detailed' %>
               <%= rf.select "results_per_page", options_for_select([["Show 10 results", 10], ["Show 20 results", 20], ["Show 50 results", 50], ["Show 100 results", 100]], selected: @search_data.results_per_page), {}, { onchange: "this.form.submit()", class: 'form-select' } %>
             <% end %>
@@ -132,7 +131,7 @@
               <% unless request.params.dig(:results_per_page).blank? %>
                 <%= sf.hidden_field :results_per_page, value: request.params.dig(:results_per_page) %>
               <% end %>
-              <%= sf.hidden_field :expanded_types, value: request.params.dig(:expanded_types), class: 'hidden-existing-ids' %>
+              <%= sf.hidden_field :expanded_types, value: @search_data.expanded_types_string, class: 'hidden-existing-ids' %>
               <%= sf.hidden_field :show_detailed, value: request.params.dig(:show_detailed), class: 'hidden-show-detailed' %>
               <%= sf.select("sort_by", options_for_select([["Newest first", "date_desc"], ["Oldest first", "date_asc"]], selected: @search_data.sort), {}, { onchange: 'this.form.submit()', class: 'form-select' }) %>
             <% end %>
@@ -156,7 +155,7 @@
                 (<%= "#{(Time.now - @start_time).round(3)} seconds" %>).
               </strong>
             </p>
-            <%= render 'pagination', user_requested_page: @search_data.current_page, last_page: @search_data.total_pages, query: @search_data.query, filter: @search_data.filter, sort_by: @search_data.sort, results_per_page: @search_data.results_per_page, expanded_types: @search_data.expanded_types %>
+            <%= render 'pagination', user_requested_page: @search_data.current_page, last_page: @search_data.total_pages, query: @search_data.query, filter: @search_data.filter, sort_by: @search_data.sort, results_per_page: @search_data.results_per_page, expanded_types: @search_data.expanded_types_string %>
           <% end %>
         </div>
       </div>

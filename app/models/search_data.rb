@@ -1,10 +1,11 @@
 class SearchData
 
-  attr_reader :search
+  attr_reader :search, :hierarchy_builder
 
   def initialize(search)
     # @search is a hash of search parameters and data
     @search = search
+    @hierarchy_builder = HierarchyBuilder.new
   end
 
   def solr_error?
@@ -80,6 +81,12 @@ class SearchData
     ret
   end
 
+  def expanded_types_string
+    return if expanded_types.blank?
+
+    expanded_types.join(',')
+  end
+
   def toggled_facets
     return unless search
 
@@ -140,10 +147,18 @@ class SearchData
     facet_data = search.dig(:data, 'facets')
     return if facet_data.blank?
 
-    # original, where we received facet data in the form [90775, 285] instead of new format of {"val"=>90775, "count"=>285}
-    # facet_data.select { |k, v| ["ses", "sesrollup"].include?(k.split("_").last) }.flat_map { |k, v| Hash[*v].keys.map(&:to_i) }
-
     facet_data.select { |k, v| ["ses", "sesrollup"].include?(k.split("_").last) }.flat_map { |k, v| v["buckets"].pluck("val") }
+  end
+
+  def hierarchy_data
+    hierarchy_builder.hierarchy_data
+  end
+
+  def hierarchy_ses_data
+    # The hierarchy builder has to make a seperate SES request to a different serivce in order to retrieve the
+    # hierarchy. We assemble the type name lookup from that request, rather than adding the IDs to the main bundled
+    # request.
+    hierarchy_builder.formatted_ses_data
   end
 
   def content_type_rollup_ids
@@ -151,8 +166,13 @@ class SearchData
   end
 
   def ses_data
+    # - Need to get IDs for any related items
+
     unique_ses_ids = { value: combined_ses_ids.uniq.sort }
-    SesLookup.new([unique_ses_ids]).data unless unique_ses_ids.blank?
+    returned_data = SesLookup.new([unique_ses_ids]).data unless unique_ses_ids.blank?
+    return hierarchy_ses_data if returned_data.blank?
+
+    hierarchy_ses_data.merge(returned_data)
   end
 
   def facets
