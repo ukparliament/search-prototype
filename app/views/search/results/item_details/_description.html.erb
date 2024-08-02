@@ -1,7 +1,11 @@
 <% unless description.blank? %>
   <div class="item-details">
     <span>
-      <%= raw description[:value].truncate(250) %>
+      <% if full_text == true %>
+      <%= raw description[:value] %>
+        <% else %>
+      <%= raw description[:value].truncate_words(50) %>
+        <% end %>
     </span>
   </div>
 <% end %>

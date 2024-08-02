@@ -3,8 +3,11 @@
     <%= link_to(object.object_title, object_show_url(object: object.object_uri[:value])) %>
   </div>
 
-  <div class="row" id="content">
-    <%= render 'search/results/item_details/petition_text', petition_text: object.content %>
+  <div <%= 'hidden' unless params[:show_detailed] == "true" %> class="row" id="content" data-detailed-results-target="toggleHidden">
+    <%= render 'search/results/item_details/petition_text', petition_text: object.content, full_text: true %>
+  </div>
+  <div <%= 'hidden' if params[:show_detailed] == "true" %> class="row" id="content" data-detailed-results-target="toggleHidden">
+    <%= render 'search/results/item_details/petition_text', petition_text: object.content, full_text: false %>
   </div>
 
   <div class="row">
