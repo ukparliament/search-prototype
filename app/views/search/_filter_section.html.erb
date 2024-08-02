@@ -1,8 +1,8 @@
 <section class="facet">
-  <details <%= 'open' if open %> data-expand-facet-name-param=<%= facet_field[:field_name] %>>
-    <summary data-action="click->expand-facet#toggle">
+  <div>
+    <div>
       <strong><%= ses_field_name(facet_field[:field_name]) %></strong>
-    </summary>
+    </div>
     <% facet_field[:facets][0..4].each do |facet| %>
       <div>
         <%= link_to_if(!request.params.dig(:filter, facet_field[:field_name])&.include?(facet["val"].to_s), "#{object_display_name({ value: facet["val"], field_name: facet_field[:field_name] }, singular: false)} (#{facet["count"]})", url_for(apply_filter_url(request.params, facet_field[:field_name], facet["val"])), class: "modifiable-link") %>
@@ -18,5 +18,5 @@
         <% end %>
       </details>
     <% end %>
-  </details>
+  </div>
 </section>
