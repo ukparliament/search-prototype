@@ -1,7 +1,7 @@
 <% unless motion_text.blank? %>
   <div class="item-details">
     <span>
-      <%= raw motion_text[:value].truncate(250) %>
+      <%= raw motion_text[:value].truncate_words(50) %>
     </span>
   </div>
 <% end %>

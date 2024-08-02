@@ -4,7 +4,7 @@
 <% end %>
 
 <%#= render 'search/fragments/data', data: @metadata, title: 'Search metadata' %>
-<%= render 'search/fragments/data', data: @ses_data, title: 'SES results' %>
+<%#= render 'search/fragments/data', data: @ses_data, title: 'SES results' %>
 <%#= render 'search/fragments/data', data: @search_data.facets, title: 'Facets' %>
 <%#= render 'search/fragments/data', data: @hierarchy_data, title: 'Hierarchy data' %>
 <%#= render 'search/fragments/data', data: @top_level, title: 'Hierarchy top level types' %>
@@ -63,16 +63,16 @@
         <% end %>
 
         <section class="facet">
-          <details open>
-            <summary>
+          <div>
+            <div>
               <strong>Type</strong>
-            </summary>
+            </div>
             <div class="facets" data-controller="expand-types">
               <% @hierarchy_builder.top_level_types&.each do |top_level_type| %>
                 <%= render 'hierarchy_layer', hash: top_level_type, id: top_level_type[:id], tier: 1, parent_id: 0 %>
               <% end %>
             </div>
-          </details>
+          </div>
         </section>
 
         <% @search_data.facets.select { |h| ["legislature_ses", "session_t", "date_dt", "department_ses", "member_ses", "tablingMember_ses", "askingMember_ses", "leadMember_ses", "answeringMember_ses", "legislativeStage_ses", "legislationTitle_ses", "subject_ses"].include?(h.dig(:field_name)) }.each do |facet_field| %>
@@ -115,7 +115,6 @@
               <% end %>
               <%= rf.hidden_field :expanded_types, value: request.params.dig(:expanded_types), class: 'hidden-existing-ids' %>
               <%= rf.hidden_field :show_detailed, value: request.params.dig(:show_detailed), class: 'hidden-show-detailed' %>
-              <%= rf.hidden_field :toggled_facets, value: request.params.dig(:toggled_facets), class: 'hidden-toggled-facets' %>
               <%= rf.select "results_per_page", options_for_select([["Show 10 results", 10], ["Show 20 results", 20], ["Show 50 results", 50], ["Show 100 results", 100]], selected: @search_data.results_per_page), {}, { onchange: "this.form.submit()", class: 'form-select' } %>
             <% end %>
 
@@ -135,7 +134,6 @@
               <% end %>
               <%= sf.hidden_field :expanded_types, value: request.params.dig(:expanded_types), class: 'hidden-existing-ids' %>
               <%= sf.hidden_field :show_detailed, value: request.params.dig(:show_detailed), class: 'hidden-show-detailed' %>
-              <%= sf.hidden_field :toggled_facets, value: request.params.dig(:toggled_facets), class: 'hidden-toggled-facets' %>
               <%= sf.select("sort_by", options_for_select([["Newest first", "date_desc"], ["Oldest first", "date_asc"]], selected: @search_data.sort), {}, { onchange: 'this.form.submit()', class: 'form-select' }) %>
             <% end %>
 

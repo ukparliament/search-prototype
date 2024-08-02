@@ -1,7 +1,7 @@
 <% unless contribution_text.blank? %>
   <div class="item-details">
     <span>
-      <%= raw contribution_text[:value].truncate(250) %>
+      <%= raw contribution_text[:value].truncate_words(50) %>
     </span>
   </div>
 <% end %>
