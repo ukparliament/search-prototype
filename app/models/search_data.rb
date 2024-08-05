@@ -170,7 +170,7 @@ class SearchData
   end
 
   def ses_data
-    # - Need to get IDs for any related items
+    # TODO: Include IDs for any related items
 
     unique_ses_ids = { value: combined_ses_ids.uniq.sort }
     returned_data = SesLookup.new([unique_ses_ids]).data unless unique_ses_ids.blank?
