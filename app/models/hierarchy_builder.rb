@@ -1,14 +1,13 @@
 class HierarchyBuilder
 
-  attr_reader :ses_data, :facet_data
+  attr_reader :ses_data
 
-  def initialize(facet_ids)
-    @ses_data = get_data_from_ses(facet_ids)
-    @facet_data = facet_ids.map(&:to_i)
+  def initialize
+    @ses_data = get_data_from_ses
   end
 
-  def get_data_from_ses(root_id = 346696)
-    SesLookup.new([{ value: root_id }]).extract_hierarchy_data
+  def get_data_from_ses
+    SesLookup.new([{ value: 346696 }]).extract_hierarchy_data
   end
 
   def hierarchy_data
