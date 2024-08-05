@@ -5,7 +5,11 @@ class SearchData
   def initialize(search)
     # @search is a hash of search parameters and data
     @search = search
-    @hierarchy_builder = HierarchyBuilder.new
+    @hierarchy_builder = initialise_hierarchy
+  end
+
+  def initialise_hierarchy
+    HierarchyBuilder.new
   end
 
   def solr_error?

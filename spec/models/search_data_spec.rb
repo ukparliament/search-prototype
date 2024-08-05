@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe SearchData, type: :model do
-  let!(:search_data) { SearchData.new(search_output) }
+  let(:search_data) { SearchData.new(search_output) }
   let!(:search_output) { { search_parameters: { filter: ['type_ses:12345'], query: 'horse' },
                            data: {
                              "responseHeader" => {
@@ -27,6 +27,11 @@ RSpec.describe SearchData, type: :model do
                            },
   }
   }
+  let!(:hierarchy_test_response) { { [92424, "Personal statements"] => [{ "typeId" => "1", "qty" => "1", "name" => "Broader Term", "abbr" => "BT", "fields" => [{ "field" => { "name" => "Oral statements", "id" => "350073", "zid" => "52566919", "class" => "CTP", "freq" => "0", "facets" => [{ "id" => "346696", "name" => "Content type" }] } }] }] } }
+
+  before do
+    allow_any_instance_of(SesLookup).to receive(:extract_hierarchy_data).and_return(hierarchy_test_response)
+  end
 
   describe 'solr_error?' do
     context 'with a successful search' do
@@ -251,7 +256,7 @@ RSpec.describe SearchData, type: :model do
 
   describe 'facets' do
     context 'where search is nil' do
-      let!(:search_data) { SearchData.new(nil) }
+      let(:search_data) { SearchData.new(nil) }
       it 'returns an empty array' do
         expect(search_data.facets).to eq([])
       end
