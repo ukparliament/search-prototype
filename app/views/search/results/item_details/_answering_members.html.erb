@@ -1,4 +1,12 @@
-<div class="item-details">
-  <div class="item-details-label">Answering Member</div>
-  <%= render 'search/fragments/name_list', items: items, terminator: "", singular: false %>
-</div>
+<% unless answering_members.blank? %>
+  <div class="item-details">
+    <% unless label.blank? %>
+      <div class="item-details-label">
+        <%= label %>
+      </div>
+    <% end %>
+    <span>
+        <%= render 'search/fragments/simple_list', items: answering_members, terminator: "", singular: false %>
+    </span>
+  </div>
+<% end %>
