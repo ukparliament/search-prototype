@@ -8,6 +8,10 @@ class PaperOrderedToBePrinted < Paper
     'search/objects/paper_ordered_to_be_printed'
   end
 
+  def search_result_partial
+    'search/results/paper_ordered_to_be_printed'
+  end
+
   def object_name
     # only subtypes 528119 and 528127, otherwise show type
     valid_subtypes = subtypes&.select { |i| [528119, 528127].include?(i[:value]) }

@@ -49,7 +49,7 @@ module LinkHelper
     return if data.blank? || data[:value].blank?
 
     formatted = formatted_name(data, ses_data, singular)
-    field_name = data[:field_name]
+    field_name = substitute_field_name(data[:field_name])
     value = data[:value]
 
     if case_formatting
