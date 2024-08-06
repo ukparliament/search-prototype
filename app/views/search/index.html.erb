@@ -141,7 +141,7 @@
 
         <div>
           <% @search_data.objects.each do |object| %>
-            <%= render object.search_result_partial, object: object %>
+            <%= render object.search_result_partial, object: object unless object.class == NotSupported %>
           <% end %>
 
           <% unless @search_data.current_page.blank? || @search_data.total_pages.blank? %>
