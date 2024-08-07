@@ -1,5 +1,5 @@
 <% unless answering_department.blank? %>
   <div class="item-details">
-    <%= answering_department[:value] %>
+    <%= object_display_name(answering_department, singular: false) %>
   </div>
 <% end %>
