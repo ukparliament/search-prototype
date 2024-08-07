@@ -6,7 +6,7 @@ FROM ruby:3.3.1
 ENV RAILS_ENV development
 
 # Install dependencies
-RUN apt-get update -qq
+RUN apt-get update -qq && apt-get install -y nginx
 
 # Set the working directory
 WORKDIR /app
@@ -24,8 +24,17 @@ COPY . /app
 # Precompile assets (if you have any)
 RUN bundle exec rails assets:precompile
 
-# Expose port 3000 to the outside world
-EXPOSE 3000
+# Copy entrypoint script
+COPY entrypoint.sh /usr/bin/
 
-# The command to run the application
-CMD ["bundle", "exec", "rails", "server", "-b", "0.0.0.0"]
+# Configure Nginx
+COPY nginx.conf /etc/nginx/nginx.conf
+
+# Ensure the directories for Puma sockets and logs exist
+RUN mkdir -p /app/tmp/sockets /app/tmp/pids /app/log
+
+# Expose port 80 as we're using nginx as a reverse proxy
+EXPOSE 80
+
+# Set entry point script as the container's entry point
+ENTRYPOINT ["entrypoint.sh"]
