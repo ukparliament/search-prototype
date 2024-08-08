@@ -35,7 +35,9 @@
         <%= render 'search/results/item_details/state', state: object.state %>
       </div>
       <div class="right" id="secondary-group">
-        <%= render 'search/results/item_details/asked_to_reply_author', asked_to_reply_author: object.asked_to_reply_author %>
+        <div <%= 'hidden' unless params[:show_detailed] == "true" %> class="item-details" data-detailed-results-target="toggleHidden">
+          <%= render 'search/results/item_details/asked_to_reply_author', asked_to_reply_author: object.asked_to_reply_author %>
+        </div>
       </div>
     </div>
   </div>
