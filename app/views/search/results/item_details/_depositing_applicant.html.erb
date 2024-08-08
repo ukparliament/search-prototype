@@ -1,10 +1,10 @@
-<% unless depositing_applicant.blank? %>
+<% unless applicant.blank? %>
   <div class="item-details">
     <div class="item-details-label">
       Applicant
     </div>
     <span>
-      <%= depositing_applicant[:value] %>
+      <%= object_display_name(applicant, singular: false) %>
     </span>
   </div>
 <% end %>
