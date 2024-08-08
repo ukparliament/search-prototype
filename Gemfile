@@ -5,8 +5,8 @@ ruby "3.3.1"
 
 gem "rails", ">= 7.1.3.2"
 gem 'bundler-audit'
-gem "sprockets-rails"
 gem "sqlite3", "~> 1.4"
+gem "sprockets-rails"
 gem "puma", "~> 6.3.1"
 gem "importmap-rails"
 gem "font-awesome-rails"

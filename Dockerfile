@@ -3,7 +3,7 @@
 FROM ruby:3.3.1
 
 # Set environment variables
-ENV RAILS_ENV production
+ENV RAILS_ENV development
 
 # Install dependencies
 RUN apt-get update -qq
@@ -22,7 +22,7 @@ RUN bundle install
 COPY . /app
 
 # Precompile assets (if you have any)
-RUN bundle exec rake assets:precompile
+RUN bundle exec rails assets:precompile
 
 # Expose port 3000 to the outside world
 EXPOSE 3000
