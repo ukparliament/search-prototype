@@ -16,7 +16,9 @@
         <%= render 'search/results/item_details/asking_member', asking_member: object.asking_member, asking_member_party: object.asking_or_tabling_member_party, label: 'Asked by' %>
       </div>
       <div class="centre" id="secondary-person">
-        <%= render 'search/results/item_details/answering_member', answering_member: object.answering_member, answering_member_party: object.answering_member_party, label: 'Answered by' %>
+        <div <%= 'hidden' unless params[:show_detailed] == "true" %> class="item-details" data-detailed-results-target="toggleHidden">
+          <%= render 'search/results/item_details/answering_member', answering_member: object.answering_member, answering_member_party: object.answering_member_party, label: 'Answered by' %>
+        </div>
       </div>
       <div class="right" id="primary-group">
         <%= render 'search/results/item_details/answering_body', answering_body: object.answering_body %>
@@ -33,7 +35,9 @@
         <%= render 'search/results/item_details/state', state: object.state %>
       </div>
       <div class="right" id="secondary-group">
-        <%= render 'search/results/item_details/asked_to_reply_author', asked_to_reply_author: object.asked_to_reply_author %>
+        <div <%= 'hidden' unless params[:show_detailed] == "true" %> class="item-details" data-detailed-results-target="toggleHidden">
+          <%= render 'search/results/item_details/asked_to_reply_author', asked_to_reply_author: object.asked_to_reply_author %>
+        </div>
       </div>
     </div>
   </div>
