@@ -36,6 +36,11 @@ class DepositedPaper < Paper
     https_uris
   end
 
+  def authors
+    # combines personal and corporate authors
+    combine_fields(personal_author, corporate_author)
+  end
+
   def personal_author
     combine_fields(get_all_from('personalAuthor_ses'), get_all_from('personalAuthor_t'))
   end

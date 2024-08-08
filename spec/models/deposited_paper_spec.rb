@@ -125,6 +125,45 @@ RSpec.describe DepositedPaper, type: :model do
     end
   end
 
+  describe 'authors' do
+    context 'where there is no data' do
+      it 'returns nil' do
+        expect(deposited_paper.authors).to be_nil
+      end
+    end
+
+    context 'where there is personal author data' do
+      let!(:deposited_paper) { DepositedPaper.new({ 'personalAuthor_ses' => [12345, 23456], 'personalAuthor_t' => [45678, 67890] }) }
+      it 'returns all authors from both fields' do
+        expect(deposited_paper.authors).to match_array([{ :field_name => "personalAuthor_ses", :value => 12345 },
+                                                        { :field_name => "personalAuthor_ses", :value => 23456 },
+                                                        { :field_name => "personalAuthor_t", :value => 45678 },
+                                                        { :field_name => "personalAuthor_t", :value => 67890 }])
+      end
+    end
+
+    context 'where there is corporate author data' do
+      let!(:deposited_paper) { DepositedPaper.new({ 'corporateAuthor_ses' => [54321, 65432], 'corporateAuthor_t' => [87654, 9876] }) }
+      it 'returns all authors from both fields' do
+        expect(deposited_paper.authors).to match_array([{ :field_name => "corporateAuthor_ses", :value => 54321 },
+                                                        { :field_name => "corporateAuthor_ses", :value => 65432 },
+                                                        { :field_name => "corporateAuthor_t", :value => 87654 },
+                                                        { :field_name => "corporateAuthor_t", :value => 9876 }])
+      end
+    end
+
+    context 'where there is corporate and personal author data' do
+      let!(:deposited_paper) { DepositedPaper.new({ 'corporateAuthor_ses' => [54321, 65432], 'personalAuthor_ses' => [87654, 9876] }) }
+      it 'returns all authors from both fields' do
+        puts "#{deposited_paper.authors}"
+        expect(deposited_paper.authors).to match_array([{ :field_name => "corporateAuthor_ses", :value => 54321 },
+                                                        { :field_name => "corporateAuthor_ses", :value => 65432 },
+                                                        { :field_name => "personalAuthor_ses", :value => 87654 },
+                                                        { :field_name => "personalAuthor_ses", :value => 9876 }])
+      end
+    end
+  end
+
   describe 'subjects' do
     context 'where there is no data' do
       it 'returns nil' do
