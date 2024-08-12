@@ -23,7 +23,7 @@ class AssociatedObjects
 
     obj = get_associated_objects
 
-    obj_ses_ids = obj.flat_map(&:ses_lookup_ids)
+    obj_ses_ids = obj.flat_map(&:ses_lookup_ids).uniq
 
     obj_data = {}
     obj.each do |o|
