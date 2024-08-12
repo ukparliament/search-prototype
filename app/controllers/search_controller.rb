@@ -1,10 +1,10 @@
-# # The one and only search controller.
 class SearchController < ApplicationController
   before_action :begin_timer
 
   def index
     @page_title = "Search results"
     @search_data = SearchData.new(SolrSearch.new(search_params).data)
+    @associated_object_data = @search_data.associated_object_data
 
     if @search_data.solr_error?
       render template: @search_data.error_partial_path, locals: { status: @search_data.error_code, message: @search_data.error_message }
