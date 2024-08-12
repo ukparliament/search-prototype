@@ -6,6 +6,7 @@ class SearchData
     # @search is a hash of search parameters and data
     @search = search
     @hierarchy_builder = initialise_hierarchy
+    @associated_object_query_response = get_associated_object_data
   end
 
   def initialise_hierarchy
@@ -137,21 +138,36 @@ class SearchData
     page_parameter.blank? ? 1 : page_parameter.to_i
   end
 
+  def get_associated_object_data
+    AssociatedObjects.new(objects).data
+  end
+
+  def associated_object_data
+    @associated_object_query_response&.dig(:object_data)
+  end
+
+  def associated_ses_ids
+    ids = @associated_object_query_response&.dig(:ses_ids)
+    return [] if ids.blank?
+
+    ids
+  end
+
   def combined_ses_ids
     return unless search
 
     ses_ids = object_data.pluck('all_ses').flatten
-
-    return ses_ids if facet_ses_ids.blank?
-
-    facet_ses_ids + ses_ids
+    facet_ses_ids + ses_ids + associated_ses_ids.pluck(:value)
   end
 
   def facet_ses_ids
     facet_data = search.dig(:data, 'facets')
-    return if facet_data.blank?
+    return [] if facet_data.blank?
 
-    facet_data.select { |k, v| ["ses", "sesrollup"].include?(k.split("_").last) }.flat_map { |k, v| v["buckets"].pluck("val") }
+    ids = facet_data.select { |k, v| ["ses", "sesrollup"].include?(k.split("_").last) }.flat_map { |k, v| v["buckets"].pluck("val") }
+    return [] if ids.blank?
+
+    ids
   end
 
   def hierarchy_data
@@ -170,8 +186,6 @@ class SearchData
   end
 
   def ses_data
-    # TODO: Include IDs for any related items
-
     unique_ses_ids = { value: combined_ses_ids.uniq.sort }
     returned_data = SesLookup.new([unique_ses_ids]).data unless unique_ses_ids.blank?
     return hierarchy_ses_data if returned_data.blank?

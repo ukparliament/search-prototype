@@ -4,6 +4,10 @@ class EuropeanScrutinyRecommendation < EuropeanScrutiny
     super
   end
 
+  def search_result_partial
+    'search/results/european_scrutiny_recommendation'
+  end
+
   def decision
     get_first_from('decisionType_t')
   end
@@ -24,11 +28,11 @@ class EuropeanScrutinyRecommendation < EuropeanScrutiny
     get_first_as_boolean_from('cleared_b')
   end
 
-  def report_date
+  def date_reported
     fallback(get_first_as_date_from('reportDate_dt'), get_first_as_date_from('date_dt'))
   end
 
-  def debate_date
+  def date_debated
     get_first_as_date_from('debateDate_dt')
   end
 

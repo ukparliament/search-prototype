@@ -26,19 +26,13 @@ class ContentObjectsController < ApplicationController
     else
       object_data = @response['docs'].first
       @object = ContentObject.generate(object_data)
-      @associated_object_ids = @object.associated_objects.compact
-      all_ses_ids = @object.ses_lookup_ids
 
-      # TODO: refactor into an object
-      if @associated_object_ids.any?
-        @associated_objects_query = @object.get_associated_objects
-        @associated_objects = @associated_objects_query[:items]
+      associated_object_query = AssociatedObjects.new(@object).data
+      @associated_object_data = associated_object_query[:object_data]
 
-        @associated_object_data = {}
-        @associated_objects.each { |o| @associated_object_data[o.object_uri[:value]] = o }
-        assoc_ses_ids = @associated_objects.flat_map(&:ses_lookup_ids)
-        all_ses_ids = @object.ses_lookup_ids + assoc_ses_ids
-      end
+      # Combine SES IDs from associated objects if any
+      associated_ses_ids = associated_object_query&.dig(:ses_ids)
+      all_ses_ids = associated_ses_ids.blank? ? @object.ses_lookup_ids : @object.ses_lookup_ids + associated_ses_ids
 
       # Single SES lookup using all IDs
       @ses_data = SesLookup.new(all_ses_ids).data
