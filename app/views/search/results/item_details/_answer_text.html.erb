@@ -1,7 +1,7 @@
-<% unless answer_text.blank? %>
+<% unless object.answer_text.blank? %>
   <div class="item-details">
     <span>
-      <%= raw(answer_text[:value]) %>
+      <%= raw(object.answer_text[:value]) %>
     </span>
   </div>
 <% end %>
