@@ -13,7 +13,9 @@
   <div class="row">
     <div class="three-panel">
       <div class="left" id="primary-person">
-        <%= render 'search/results/item_details/laid_by', laid_by: object.member_name %>
+        <div <%= 'hidden' unless params[:show_detailed] == "true" %> class="item-details" data-detailed-results-target="toggleHidden">
+          <%= render 'search/results/item_details/laid_by', laid_by: object.member_name %>
+        </div>
       </div>
       <div class="centre" id="secondary-person">
         <%#= render 'search/results/item_details/member', member: object.member, member_party: object.member_party %>
