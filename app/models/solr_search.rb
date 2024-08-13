@@ -13,8 +13,6 @@ class SolrSearch < ApiCall
   end
 
   def self.facet_fields
-    # ['type_sesrollup', 'subtype_sesrollup', 'legislativeStage_ses', 'session_t', 'member_ses', 'tablingMember_ses', 'answeringMember_ses', 'legislature_ses']
-
     [
       'type_sesrollup',
       'legislature_ses',
@@ -79,17 +77,15 @@ class SolrSearch < ApiCall
     # input data ('filter') is a params object, e.g.:
     # {"type_sesrollup"=>["445871", "90996"]}
 
-    # For 'OR'
-    # filter.to_h.flat_map { |field_name, values| values.map { |value| "#{field_name}:#{value}" }.join(" OR ") }
-    filter.to_h.flat_map { |field_name, values| values.map { |value| "{!tag=#{field_name}}#{field_name}:#{value}" }.join(" OR ") }
-
-    # Default is 'AND'; we have elected to use 'OR' except for date (further requirements needed)
-    # filter.to_h.flat_map { |field_name, values| values.map { |value| "#{field_name}:#{value}" } }
-
-    # TODO: reformat and tag filters such that they can be excluded when setting up facets
+    # filters are tagged so that they can be excluded from facet counts
     # "filter": "{!tag=TAGNAME}field_name:term",
 
-    # search_filters = "{!tag=CTP}type_sesrollup:90996"
+    # Alternative syntax for logical union of multiple values for the same field:
+    # &fq={!tag=COLOR}color:(Blue Black)
+
+    filter.to_h.flat_map do |field_name, values|
+      "{!tag=#{field_name}}#{field_name}:(#{values.join(" ")})"
+    end
   end
 
   def sort
@@ -104,28 +100,40 @@ class SolrSearch < ApiCall
 
     ret = {}
     SolrSearch.facet_fields.each do |field_name|
-
       ret[field_name] = {
-        'type' => 'terms',
-        'field' => field_name,
-        'limit' => 100,
-        'domain' => { excludeTags: field_name }
+        "type" => facet_type(field_name),
+        "field" => field_name,
+        "limit" => 80,
+        "missing" => true,
+        "mincount" => facet_mincount(field_name),
+        "domain" => { excludeTags: field_name }
       }
-
     end
 
-    # domain: { excludeTags: 'CTP' }
     ret.to_json
+  end
 
+  def facet_type(field_name)
+    arr = []
+    return "terms" unless arr.include?(field_name)
+
+    " " # replacement type
+  end
+
+  def facet_mincount(field_name)
+    arr = []
+    return 1 unless arr.include?(field_name)
+
+    0 # replacement mincount
   end
 
   private
 
   def search_params
     {
-      q: search_query, # q (query) is the main criteria for matching results
+      q: search_query,
       'q.op': 'AND',
-      fq: search_filter, # fq (filter query) is used to apply filters that cut down the result set without affecting scoring
+      fq: search_filter,
       start: start,
       rows: rows,
       sort: sort,
