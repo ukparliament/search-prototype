@@ -4,10 +4,10 @@
   </div>
 
   <div <%= 'hidden' unless params[:show_detailed] == "true" %> class="row" id="content" data-detailed-results-target="toggleHidden">
-    <%= render 'search/results/item_details/answer_text', answer_text: object.answer_text, full_text: true %>
+    <%= render 'search/results/item_details/answer_text', object: object, full_text: true %>
   </div>
   <div <%= 'hidden' if params[:show_detailed] == "true" %> class="row" id="content" data-detailed-results-target="toggleHidden">
-    <%= render 'search/results/item_details/answer_text', answer_text: object.answer_text, full_text: false %>
+    <%= render 'search/results/item_details/answer_text', object: object, full_text: false %>
   </div>
 
   <div class="row">
