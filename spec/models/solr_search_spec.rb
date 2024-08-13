@@ -183,17 +183,25 @@ RSpec.describe SolrSearch, type: :model do
     context 'with a single filter' do
       let!(:solr_search) { SolrSearch.new({ filter: { 'field_name' => ['test'] } }) }
 
-      it 'returns an array of tagged filter strings' do
+      it 'returns an array containing the tagged filter string' do
         allow(solr_search).to receive(:evaluated_response).and_return(mock_response)
-        expect(solr_search.search_filter).to eq(["{!tag=field_name}field_name:test"])
+        expect(solr_search.search_filter).to eq(["{!tag=field_name}field_name:(test)"])
       end
     end
     context 'with multiple filters' do
       let!(:solr_search) { SolrSearch.new({ filter: { "type_ses" => ["347163"], "subtype_ses" => ["363905"] } }) }
 
-      it 'returns an array of filter strings' do
+      it 'returns an array of tagged filter strings' do
         allow(solr_search).to receive(:evaluated_response).and_return(mock_response)
-        expect(solr_search.search_filter).to eq(["{!tag=type_ses}type_ses:347163", "{!tag=subtype_ses}subtype_ses:363905"])
+        expect(solr_search.search_filter).to eq(["{!tag=type_ses}type_ses:(347163)", "{!tag=subtype_ses}subtype_ses:(363905)"])
+      end
+    end
+    context 'with multiple values for the same filter' do
+      let!(:solr_search) { SolrSearch.new({ filter: { "type_sesrollup" => ["347163", "363905"] } }) }
+
+      it 'returns an array containing the tagged filter string, with multiple values' do
+        allow(solr_search).to receive(:evaluated_response).and_return(mock_response)
+        expect(solr_search.search_filter).to eq(["{!tag=type_sesrollup}type_sesrollup:(347163 363905)"])
       end
     end
   end
