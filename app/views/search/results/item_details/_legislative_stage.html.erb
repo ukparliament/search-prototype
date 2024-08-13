@@ -2,7 +2,7 @@
   <div class="item-details">
     <div class="item-details-label">Legislative stage</div>
     <span>
-        <%= object_display_name(legislative_stage, singular: false) %>
+        <%= render 'search/fragments/name_list', items: legislative_stage, terminator: "", singular: false %>
     </span>
   </div>
 <% end %>
