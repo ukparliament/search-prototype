@@ -21,10 +21,12 @@ class SearchController < ApplicationController
 
   def search_params
     params.permit(:commit, :query, :page, :results_per_page, :sort_by, :expanded_types, :toggled_facets,
-                  :show_detailed, filter: permitted_filters)
+                  :show_detailed, filter: {})
   end
 
   def permitted_filters
+    # Not currently used
+
     hash = {}
     SolrSearch.facet_fields.each do |field|
       hash[field.to_sym] = []
