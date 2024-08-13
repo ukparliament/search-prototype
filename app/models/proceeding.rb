@@ -9,6 +9,6 @@ class Proceeding < ContentObject
   end
 
   def legislative_stage
-    get_first_from('legislativeStage_ses')
+    get_all_from('legislativeStage_ses')
   end
 end

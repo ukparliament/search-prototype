@@ -155,7 +155,6 @@ RSpec.describe DepositedPaper, type: :model do
     context 'where there is corporate and personal author data' do
       let!(:deposited_paper) { DepositedPaper.new({ 'corporateAuthor_ses' => [54321, 65432], 'personalAuthor_ses' => [87654, 9876] }) }
       it 'returns all authors from both fields' do
-        puts "#{deposited_paper.authors}"
         expect(deposited_paper.authors).to match_array([{ :field_name => "corporateAuthor_ses", :value => 54321 },
                                                         { :field_name => "corporateAuthor_ses", :value => 65432 },
                                                         { :field_name => "personalAuthor_ses", :value => 87654 },

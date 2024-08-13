@@ -186,6 +186,10 @@ class SearchData
   end
 
   def ses_data
+    # TODO: Using a master list of fields, it should be possible to reduce the number of SES IDs requested from
+    # related items, e.g. don't fetch all_ses as the IDs we need will be in fields we know the names of which have
+    # fewer IDs to resolve overall.
+
     unique_ses_ids = { value: combined_ses_ids.uniq.sort }
     returned_data = SesLookup.new([unique_ses_ids]).data unless unique_ses_ids.blank?
     return hierarchy_ses_data if returned_data.blank?

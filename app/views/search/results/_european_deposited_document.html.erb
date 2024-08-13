@@ -47,13 +47,12 @@
     <div class="row">
       <div class="four-panel">
         <div class="left-outer" id="specific-date-1">
-          <%#= render 'search/results/item_details/date_laid', date_laid: object.date_laid %>
-        </div>
-        <div class="left-inner" id="specific-date-2">
           <%= render 'search/results/item_details/date_originated', date_originated: object.date_originated, label: 'Originated on' %>
         </div>
-        <div class="right-inner" id="specific-date-3">
+        <div class="left-inner" id="specific-date-2">
           <%= render 'search/results/item_details/date_deposited', date_deposited: object.deposited_date, label: 'Deposited on' %>
+        </div>
+        <div class="right-inner" id="specific-date-3">
         </div>
         <div class="right-outer" id="specific-date-4">
 
