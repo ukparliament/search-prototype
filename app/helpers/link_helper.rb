@@ -102,12 +102,8 @@ module LinkHelper
       name_string = ses_data[data[:value].to_i]
 
       if name_string.nil?
-        if Rails.env.development?
-          skip = []
-          puts "Missing SES name for ID #{data[:value]}" unless skip.include?(data[:field_name])
-        else
-          name_string = "unknown"
-        end
+        puts "Missing SES name for ID #{data[:value]}" if Rails.env.development?
+        name_string = fallback_ses_lookup(data)
       end
     else
       # we already have a string
@@ -200,6 +196,21 @@ module LinkHelper
       'witness_ses',
       'witness_t'
     ]
+  end
+
+  def fallback_ses_lookup(ses_data_hash)
+    # an inefficient method that a SES name for a single ID, used as a last resort if names are still missing when
+    # links / names are being formatted.
+
+    custom_ses_lookup = SesLookup.new([ses_data_hash]).data
+    name_string = custom_ses_lookup[ses_data_hash[:value].to_i]
+
+    # where we still don't have a string (e.g. if SES is missing an entry for this ID) then
+    # present the SES ID itself as a string (in development), or "Unknown" in other environments.
+
+    return name_string unless name_string.blank?
+
+    Rails.env.development? ? data[:value].to_s : "Unknown"
   end
 
 end

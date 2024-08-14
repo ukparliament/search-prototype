@@ -164,6 +164,28 @@ RSpec.describe LinkHelper, type: :helper do
         end
       end
     end
+
+    context 'where the provided SES data does not include the required information' do
+      let!(:mock_ses_data) { { 123 => 'Last, First' } }
+      let!(:fallback_ses_data) { { 234 => 'Name, Another' } }
+      let!(:input_data_type_ses) { { value: 234, field_name: 'answeringMember_ses' } }
+
+      it 'performs a new SES lookup and returns the name correctly formatted' do
+        allow_any_instance_of(SesLookup).to receive(:data).and_return(fallback_ses_data)
+        expect(helper.send(:format_name, input_data_type_ses, mock_ses_data)).to eq("Another Name")
+      end
+    end
+
+    context 'where the provided SES data does not include the required information and neither does SES' do
+      let!(:mock_ses_data) { { 123 => 'Last, First' } }
+      let!(:fallback_ses_data) { { 234 => 'Name, Another' } }
+      let!(:input_data_type_ses) { { value: 456, field_name: 'answeringMember_ses' } }
+
+      it 'returns "Unknown"' do
+        allow_any_instance_of(SesLookup).to receive(:data).and_return(fallback_ses_data)
+        expect(helper.send(:format_name, input_data_type_ses, mock_ses_data)).to eq("Unknown")
+      end
+    end
   end
 
 end
