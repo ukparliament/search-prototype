@@ -42,7 +42,7 @@
                     <div class="filter">
                       <div class="top-row">
                         <span class="filter-name-label">
-                          <%= ses_field_name(filter.first) %>
+                          <%= filter_field_name(filter.first) %>
                         </span>
                         <span class="flex-spacer"></span>
                         <span class="filter-link">
@@ -51,7 +51,7 @@
                       </div>
                       <div class="bottom-row">
                         <div class="filter-name">
-                          <%= object_display_name({ value: filter_value.to_i, field_name: filter.first }, singular: false) %>
+                          <%= object_display_name({ value: filter_value, field_name: filter.first }, singular: false) %>
                         </div>
                       </div>
                     </div>
