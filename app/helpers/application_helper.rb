@@ -40,8 +40,8 @@ module ApplicationHelper
     end
   end
 
-  def ses_field_name(field)
-    # returns display name for a SES field, e.g. 'Content Type' for type_ses
+  def filter_field_name(field)
+    # returns display name for a filter field, e.g. 'Content Type' for type_ses
 
     field_names = {
       type_ses: 'Type',
@@ -66,6 +66,11 @@ module ApplicationHelper
       leadMember_ses: 'Lead member',
       leadMemberParty_ses: 'Lead member party',
       legislationTitle_ses: 'Legislation',
+      memberPrinted_t: 'Member',
+      procedure_t: 'Procedure',
+      subject_t: 'Subject',
+      legislationTitle_t: 'Legislation',
+      department_t: 'Department'
     }
 
     field_names[field.to_sym]
