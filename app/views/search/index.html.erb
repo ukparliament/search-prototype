@@ -3,6 +3,7 @@
   <div id="top"></div>
 <% end %>
 
+<% if Rails.env.development? %>
 <%#= render 'search/fragments/data', data: @associated_object_data, title: 'Associated object data' %>
 <%#= render 'search/fragments/data', data: @search_data.search, title: 'Search response' %>
 <%#= render 'search/fragments/data', data: @ses_data, title: 'SES results' %>
@@ -10,6 +11,7 @@
 <%#= render 'search/fragments/data', data: @top_level, title: 'Hierarchy top level types' %>
 <%#= render 'search/fragments/data', data: @toggled_facets, title: 'Toggled facets' %>
 <%#= render 'search/fragments/data', data: request.params, title: 'All params' %>
+<% end %>
 
 <%= form_with url: search_url, method: :get, remote: true, id: 'search-form' do |f| %>
   <section id="search" class="content-section white-slim">
