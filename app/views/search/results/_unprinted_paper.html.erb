@@ -35,7 +35,9 @@
 
       </div>
       <div class="right" id="secondary-group">
-        <%= render 'search/results/item_details/corporate_author', corporate_author: object.corporate_author, hide_label: false %>
+        <div <%= 'hidden' unless params[:show_detailed] == "true" %> class="item-details" data-detailed-results-target="toggleHidden">
+          <%= render 'search/results/item_details/corporate_author', corporate_author: object.corporate_author, hide_label: false %>
+        </div>
       </div>
     </div>
   </div>
