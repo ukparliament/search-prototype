@@ -14,7 +14,7 @@
       <img src="./assets/0.12.3/loading.gif" alt="loading"/>
     </div>
     <div id="wrapper" class="hide">
-      <div class="timestamp">Generated <abbr class="timeago" title="2024-08-14T09:46:30+01:00">2024-08-14T09:46:30+01:00</abbr></div>
+      <div class="timestamp">Generated <abbr class="timeago" title="2024-08-14T13:46:41+01:00">2024-08-14T13:46:41+01:00</abbr></div>
       <ul class="group_tabs"></ul>
 
       <div id="content">
@@ -23,14 +23,14 @@
     <span class="group_name">All Files</span>
     (<span class="covered_percent">
       <span class="yellow">
-  84.25%
+  84.15%
 </span>
 
      </span>
      covered at
      <span class="covered_strength">
        <span class="green">
-         94.46
+         94.28
        </span>
     </span> hits/line
     )
@@ -43,11 +43,11 @@
   </div>
 
   <div class="t-line-summary">
-    <b>1543</b> relevant lines,
-    <span class="green"><b>1300</b> lines covered</span> and
-    <span class="red"><b>243</b> lines missed. </span>
+    <b>1546</b> relevant lines,
+    <span class="green"><b>1301</b> lines covered</span> and
+    <span class="red"><b>245</b> lines missed. </span>
     (<span class="yellow">
-  84.25%
+  84.15%
 </span>
 )
   </div>
@@ -139,7 +139,7 @@
           <tr class="t-file">
             <td class="strong t-file__name"><a href="#905b6e9b10254dc0d6b80aa4b294aa33db207cc2" class="src_link" title="app/helpers/application_helper.rb">app/helpers/application_helper.rb</a></td>
             <td class="yellow strong cell--number t-file__coverage">89.29 %</td>
-            <td class="cell--number">87</td>
+            <td class="cell--number">92</td>
             <td class="cell--number">28</td>
             <td class="cell--number">25</td>
             <td class="cell--number">3</td>
@@ -710,12 +710,12 @@
         
           <tr class="t-file">
             <td class="strong t-file__name"><a href="#203b5ceddabb059ab45ddbd195f87f71e4414c72" class="src_link" title="app/models/search_data.rb">app/models/search_data.rb</a></td>
-            <td class="yellow strong cell--number t-file__coverage">85.71 %</td>
-            <td class="cell--number">231</td>
-            <td class="cell--number">119</td>
-            <td class="cell--number">102</td>
-            <td class="cell--number">17</td>
-            <td class="cell--number">7.13</td>
+            <td class="yellow strong cell--number t-file__coverage">84.43 %</td>
+            <td class="cell--number">237</td>
+            <td class="cell--number">122</td>
+            <td class="cell--number">103</td>
+            <td class="cell--number">19</td>
+            <td class="cell--number">6.96</td>
             
           </tr>
         
@@ -2803,7 +2803,7 @@
 
             
 
-            <code class="ruby">  def ses_field_name(field)</code>
+            <code class="ruby">  def filter_field_name(field)</code>
           </li>
         </div>
       
@@ -2814,7 +2814,7 @@
 
             
 
-            <code class="ruby">    # returns display name for a SES field, e.g. &#39;Content Type&#39; for type_ses</code>
+            <code class="ruby">    # returns display name for a filter field, e.g. &#39;Content Type&#39; for type_ses</code>
           </li>
         </div>
       
@@ -3089,7 +3089,7 @@
 
             
 
-            <code class="ruby">    }</code>
+            <code class="ruby">      memberPrinted_t: &#39;Member&#39;,</code>
           </li>
         </div>
       
@@ -3100,18 +3100,18 @@
 
             
 
-            <code class="ruby"></code>
+            <code class="ruby">      procedure_t: &#39;Procedure&#39;,</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="2" data-linenumber="71">
-            <span class="hits">2</span>
+          <li class="never" data-hits="" data-linenumber="71">
+            
             
 
             
 
-            <code class="ruby">    field_names[field.to_sym]</code>
+            <code class="ruby">      subject_t: &#39;Subject&#39;,</code>
           </li>
         </div>
       
@@ -3122,7 +3122,7 @@
 
             
 
-            <code class="ruby">  end</code>
+            <code class="ruby">      legislationTitle_t: &#39;Legislation&#39;,</code>
           </li>
         </div>
       
@@ -3133,34 +3133,23 @@
 
             
 
-            <code class="ruby"></code>
+            <code class="ruby">      department_t: &#39;Department&#39;</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="74">
-            <span class="hits">1</span>
+          <li class="never" data-hits="" data-linenumber="74">
+            
             
 
             
 
-            <code class="ruby">  def checked_field(filter_params, facet_field_name, text_field_name)</code>
+            <code class="ruby">    }</code>
           </li>
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="75">
-            
-            
-
-            
-
-            <code class="ruby">    return false if filter_params.blank?</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="76">
+          <li class="never" data-hits="" data-linenumber="75">
             
             
 
@@ -3171,13 +3160,24 @@
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="77">
+          <li class="covered" data-hits="2" data-linenumber="76">
+            <span class="hits">2</span>
+            
+
+            
+
+            <code class="ruby">    field_names[field.to_sym]</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="77">
             
             
 
             
 
-            <code class="ruby">    filter_params[facet_field_name]&amp;.include?(text_field_name)</code>
+            <code class="ruby">  end</code>
           </li>
         </div>
       
@@ -3188,12 +3188,34 @@
 
             
 
-            <code class="ruby">  end</code>
+            <code class="ruby"></code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="79">
+          <li class="covered" data-hits="1" data-linenumber="79">
+            <span class="hits">1</span>
+            
+
+            
+
+            <code class="ruby">  def checked_field(filter_params, facet_field_name, text_field_name)</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="missed" data-hits="0" data-linenumber="80">
+            
+            
+
+            
+
+            <code class="ruby">    return false if filter_params.blank?</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="81">
             
             
 
@@ -3204,35 +3226,13 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="80">
-            <span class="hits">1</span>
-            
-
-            
-
-            <code class="ruby">  def remove_filter_url(params, filter_name, filter_value)</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="covered" data-hits="2" data-linenumber="81">
-            <span class="hits">2</span>
-            
-
-            
-
-            <code class="ruby">    params.except(:page).merge(filter: params[:filter].merge({ filter_name =&gt; params.dig(:filter, filter_name)&amp;.excluding(filter_value) }))</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="82">
+          <li class="missed" data-hits="0" data-linenumber="82">
             
             
 
             
 
-            <code class="ruby">  end</code>
+            <code class="ruby">    filter_params[facet_field_name]&amp;.include?(text_field_name)</code>
           </li>
         </div>
       
@@ -3243,34 +3243,45 @@
 
             
 
+            <code class="ruby">  end</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="84">
+            
+            
+
+            
+
             <code class="ruby"></code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="84">
+          <li class="covered" data-hits="1" data-linenumber="85">
             <span class="hits">1</span>
             
 
             
 
-            <code class="ruby">  def apply_filter_url(params, filter_name, filter_value)</code>
+            <code class="ruby">  def remove_filter_url(params, filter_name, filter_value)</code>
           </li>
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="85">
-            
-            
-
+          <li class="covered" data-hits="2" data-linenumber="86">
+            <span class="hits">2</span>
             
 
-            <code class="ruby">    params.except(:page).merge(filter: params.dig(:filter).nil? ? { filter_name =&gt; [filter_value] } : params.dig(:filter).merge(filter_name =&gt; [filter_value, params.dig(:filter, filter_name)].compact.flatten))</code>
+            
+
+            <code class="ruby">    params.except(:page).merge(filter: params[:filter].merge({ filter_name =&gt; params.dig(:filter, filter_name)&amp;.excluding(filter_value) }))</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="86">
+          <li class="never" data-hits="" data-linenumber="87">
             
             
 
@@ -3281,7 +3292,51 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="87">
+          <li class="never" data-hits="" data-linenumber="88">
+            
+            
+
+            
+
+            <code class="ruby"></code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="1" data-linenumber="89">
+            <span class="hits">1</span>
+            
+
+            
+
+            <code class="ruby">  def apply_filter_url(params, filter_name, filter_value)</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="missed" data-hits="0" data-linenumber="90">
+            
+            
+
+            
+
+            <code class="ruby">    params.except(:page).merge(filter: params.dig(:filter).nil? ? { filter_name =&gt; [filter_value] } : params.dig(:filter).merge(filter_name =&gt; [filter_value, params.dig(:filter, filter_name)].compact.flatten))</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="91">
+            
+            
+
+            
+
+            <code class="ruby">  end</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="92">
             
             
 
@@ -29819,7 +29874,7 @@
     <h3>app/models/search_data.rb</h3>
     <h4>
       <span class="yellow">
-  85.71%
+  84.43%
 </span>
 
       lines covered
@@ -29828,9 +29883,9 @@
     
 
     <div class="t-line-summary">
-      <b>119</b> relevant lines.
-      <span class="green"><b>102</b> lines covered</span> and
-      <span class="red"><b>17</b> lines missed.</span>
+      <b>122</b> relevant lines.
+      <span class="green"><b>103</b> lines covered</span> and
+      <span class="red"><b>19</b> lines missed.</span>
     </div>
 
     
@@ -30661,13 +30716,13 @@
 
             
 
-            <code class="ruby">  def expanded_types</code>
+            <code class="ruby">  def show_detailed</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="6" data-linenumber="76">
-            <span class="hits">6</span>
+          <li class="missed" data-hits="0" data-linenumber="76">
+            
             
 
             
@@ -30688,13 +30743,13 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="6" data-linenumber="78">
-            <span class="hits">6</span>
+          <li class="missed" data-hits="0" data-linenumber="78">
+            
             
 
             
 
-            <code class="ruby">    expanded_id_param = search.dig(:search_parameters, :expanded_types)</code>
+            <code class="ruby">    search.dig(:search_parameters, :show_detailed)</code>
           </li>
         </div>
       
@@ -30705,29 +30760,29 @@
 
             
 
-            <code class="ruby"></code>
+            <code class="ruby">  end</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="6" data-linenumber="80">
-            <span class="hits">6</span>
-            
-
-            
-
-            <code class="ruby">    ret = []</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="81">
+          <li class="never" data-hits="" data-linenumber="80">
             
             
 
             
 
             <code class="ruby"></code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="1" data-linenumber="81">
+            <span class="hits">1</span>
+            
+
+            
+
+            <code class="ruby">  def expanded_types</code>
           </li>
         </div>
       
@@ -30738,29 +30793,29 @@
 
             
 
-            <code class="ruby">    unless expanded_id_param.blank?</code>
+            <code class="ruby">    return unless search</code>
           </li>
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="83">
+          <li class="never" data-hits="" data-linenumber="83">
             
             
 
             
 
-            <code class="ruby">      ret = expanded_id_param.split(&#39;,&#39;).compact_blank.uniq</code>
+            <code class="ruby"></code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="84">
-            
-            
-
+          <li class="covered" data-hits="6" data-linenumber="84">
+            <span class="hits">6</span>
             
 
-            <code class="ruby">    end</code>
+            
+
+            <code class="ruby">    expanded_id_param = search.dig(:search_parameters, :expanded_types)</code>
           </li>
         </div>
       
@@ -30782,7 +30837,7 @@
 
             
 
-            <code class="ruby">    ret</code>
+            <code class="ruby">    ret = []</code>
           </li>
         </div>
       
@@ -30793,40 +30848,40 @@
 
             
 
-            <code class="ruby">  end</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="88">
-            
-            
-
-            
-
             <code class="ruby"></code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="89">
-            <span class="hits">1</span>
-            
-
-            
-
-            <code class="ruby">  def expanded_types_string</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="covered" data-hits="6" data-linenumber="90">
+          <li class="covered" data-hits="6" data-linenumber="88">
             <span class="hits">6</span>
             
 
             
 
-            <code class="ruby">    return if expanded_types.blank?</code>
+            <code class="ruby">    unless expanded_id_param.blank?</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="missed" data-hits="0" data-linenumber="89">
+            
+            
+
+            
+
+            <code class="ruby">      ret = expanded_id_param.split(&#39;,&#39;).compact_blank.uniq</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="90">
+            
+            
+
+            
+
+            <code class="ruby">    end</code>
           </li>
         </div>
       
@@ -30842,13 +30897,13 @@
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="92">
-            
-            
-
+          <li class="covered" data-hits="6" data-linenumber="92">
+            <span class="hits">6</span>
             
 
-            <code class="ruby">    expanded_types.join(&#39;,&#39;)</code>
+            
+
+            <code class="ruby">    ret</code>
           </li>
         </div>
       
@@ -30881,18 +30936,18 @@
 
             
 
-            <code class="ruby">  def toggled_facets</code>
+            <code class="ruby">  def expanded_types_string</code>
           </li>
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="96">
-            
-            
-
+          <li class="covered" data-hits="6" data-linenumber="96">
+            <span class="hits">6</span>
             
 
-            <code class="ruby">    return unless search</code>
+            
+
+            <code class="ruby">    return if expanded_types.blank?</code>
           </li>
         </div>
       
@@ -30914,7 +30969,7 @@
 
             
 
-            <code class="ruby">    toggled_facet_param = search.dig(:search_parameters, :toggled_facets)</code>
+            <code class="ruby">    expanded_types.join(&#39;,&#39;)</code>
           </li>
         </div>
       
@@ -30925,29 +30980,29 @@
 
             
 
-            <code class="ruby"></code>
+            <code class="ruby">  end</code>
           </li>
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="100">
-            
-            
-
-            
-
-            <code class="ruby">    ret = []</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="101">
+          <li class="never" data-hits="" data-linenumber="100">
             
             
 
             
 
             <code class="ruby"></code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="1" data-linenumber="101">
+            <span class="hits">1</span>
+            
+
+            
+
+            <code class="ruby">  def toggled_facets</code>
           </li>
         </div>
       
@@ -30958,29 +31013,29 @@
 
             
 
-            <code class="ruby">    unless toggled_facet_param.blank?</code>
+            <code class="ruby">    return unless search</code>
           </li>
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="103">
+          <li class="never" data-hits="" data-linenumber="103">
             
             
 
             
 
-            <code class="ruby">      ret = toggled_facet_param.split(&#39;,&#39;).compact_blank.uniq</code>
+            <code class="ruby"></code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="104">
+          <li class="missed" data-hits="0" data-linenumber="104">
             
             
 
             
 
-            <code class="ruby">    end</code>
+            <code class="ruby">    toggled_facet_param = search.dig(:search_parameters, :toggled_facets)</code>
           </li>
         </div>
       
@@ -31002,7 +31057,7 @@
 
             
 
-            <code class="ruby">    ret</code>
+            <code class="ruby">    ret = []</code>
           </li>
         </div>
       
@@ -31013,40 +31068,40 @@
 
             
 
-            <code class="ruby">  end</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="108">
-            
-            
-
-            
-
             <code class="ruby"></code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="109">
-            <span class="hits">1</span>
+          <li class="missed" data-hits="0" data-linenumber="108">
+            
             
 
             
 
-            <code class="ruby">  def sort</code>
+            <code class="ruby">    unless toggled_facet_param.blank?</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="5" data-linenumber="110">
-            <span class="hits">5</span>
+          <li class="missed" data-hits="0" data-linenumber="109">
+            
             
 
             
 
-            <code class="ruby">    return unless search</code>
+            <code class="ruby">      ret = toggled_facet_param.split(&#39;,&#39;).compact_blank.uniq</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="110">
+            
+            
+
+            
+
+            <code class="ruby">    end</code>
           </li>
         </div>
       
@@ -31062,13 +31117,13 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="5" data-linenumber="112">
-            <span class="hits">5</span>
+          <li class="missed" data-hits="0" data-linenumber="112">
+            
             
 
             
 
-            <code class="ruby">    search.dig(:search_parameters, &#39;sort_by&#39;)</code>
+            <code class="ruby">    ret</code>
           </li>
         </div>
       
@@ -31101,13 +31156,13 @@
 
             
 
-            <code class="ruby">  def start</code>
+            <code class="ruby">  def sort</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="4" data-linenumber="116">
-            <span class="hits">4</span>
+          <li class="covered" data-hits="5" data-linenumber="116">
+            <span class="hits">5</span>
             
 
             
@@ -31128,13 +31183,13 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="4" data-linenumber="118">
-            <span class="hits">4</span>
+          <li class="covered" data-hits="5" data-linenumber="118">
+            <span class="hits">5</span>
             
 
             
 
-            <code class="ruby">    search.dig(:data, &#39;response&#39;, &#39;start&#39;)</code>
+            <code class="ruby">    search.dig(:search_parameters, &#39;sort_by&#39;)</code>
           </li>
         </div>
       
@@ -31167,18 +31222,18 @@
 
             
 
-            <code class="ruby">  def end</code>
+            <code class="ruby">  def start</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="2" data-linenumber="122">
-            <span class="hits">2</span>
+          <li class="covered" data-hits="4" data-linenumber="122">
+            <span class="hits">4</span>
             
 
             
 
-            <code class="ruby">    start + results_per_page</code>
+            <code class="ruby">    return unless search</code>
           </li>
         </div>
       
@@ -31189,12 +31244,34 @@
 
             
 
+            <code class="ruby"></code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="4" data-linenumber="124">
+            <span class="hits">4</span>
+            
+
+            
+
+            <code class="ruby">    search.dig(:data, &#39;response&#39;, &#39;start&#39;)</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="125">
+            
+            
+
+            
+
             <code class="ruby">  end</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="124">
+          <li class="never" data-hits="" data-linenumber="126">
             
             
 
@@ -31205,57 +31282,35 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="125">
+          <li class="covered" data-hits="1" data-linenumber="127">
             <span class="hits">1</span>
             
 
             
 
-            <code class="ruby">  def results_per_page</code>
+            <code class="ruby">  def end</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="5" data-linenumber="126">
-            <span class="hits">5</span>
+          <li class="covered" data-hits="2" data-linenumber="128">
+            <span class="hits">2</span>
             
 
             
 
-            <code class="ruby">    return unless search</code>
+            <code class="ruby">    start + results_per_page</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="127">
+          <li class="never" data-hits="" data-linenumber="129">
             
             
 
             
 
-            <code class="ruby"></code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="covered" data-hits="5" data-linenumber="128">
-            <span class="hits">5</span>
-            
-
-            
-
-            <code class="ruby">    per_page = search.dig(:search_parameters, &#39;results_per_page&#39;)</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="covered" data-hits="5" data-linenumber="129">
-            <span class="hits">5</span>
-            
-
-            
-
-            <code class="ruby">    per_page.blank? ? 20 : per_page.to_i</code>
+            <code class="ruby">  end</code>
           </li>
         </div>
       
@@ -31266,12 +31321,34 @@
 
             
 
-            <code class="ruby">  end</code>
+            <code class="ruby"></code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="131">
+          <li class="covered" data-hits="1" data-linenumber="131">
+            <span class="hits">1</span>
+            
+
+            
+
+            <code class="ruby">  def results_per_page</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="5" data-linenumber="132">
+            <span class="hits">5</span>
+            
+
+            
+
+            <code class="ruby">    return unless search</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="133">
             
             
 
@@ -31282,7 +31359,51 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="132">
+          <li class="covered" data-hits="5" data-linenumber="134">
+            <span class="hits">5</span>
+            
+
+            
+
+            <code class="ruby">    per_page = search.dig(:search_parameters, &#39;results_per_page&#39;)</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="5" data-linenumber="135">
+            <span class="hits">5</span>
+            
+
+            
+
+            <code class="ruby">    per_page.blank? ? 20 : per_page.to_i</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="136">
+            
+            
+
+            
+
+            <code class="ruby">  end</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="137">
+            
+            
+
+            
+
+            <code class="ruby"></code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="1" data-linenumber="138">
             <span class="hits">1</span>
             
 
@@ -31293,7 +31414,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="3" data-linenumber="133">
+          <li class="covered" data-hits="3" data-linenumber="139">
             <span class="hits">3</span>
             
 
@@ -31304,7 +31425,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="134">
+          <li class="never" data-hits="" data-linenumber="140">
             
             
 
@@ -31315,7 +31436,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="135">
+          <li class="never" data-hits="" data-linenumber="141">
             
             
 
@@ -31326,7 +31447,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="136">
+          <li class="covered" data-hits="1" data-linenumber="142">
             <span class="hits">1</span>
             
 
@@ -31337,7 +31458,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="3" data-linenumber="137">
+          <li class="covered" data-hits="3" data-linenumber="143">
             <span class="hits">3</span>
             
 
@@ -31348,7 +31469,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="3" data-linenumber="138">
+          <li class="covered" data-hits="3" data-linenumber="144">
             <span class="hits">3</span>
             
 
@@ -31359,7 +31480,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="139">
+          <li class="never" data-hits="" data-linenumber="145">
             
             
 
@@ -31370,7 +31491,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="140">
+          <li class="never" data-hits="" data-linenumber="146">
             
             
 
@@ -31381,7 +31502,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="141">
+          <li class="covered" data-hits="1" data-linenumber="147">
             <span class="hits">1</span>
             
 
@@ -31392,7 +31513,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="35" data-linenumber="142">
+          <li class="covered" data-hits="35" data-linenumber="148">
             <span class="hits">35</span>
             
 
@@ -31403,7 +31524,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="143">
+          <li class="never" data-hits="" data-linenumber="149">
             
             
 
@@ -31414,7 +31535,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="144">
+          <li class="never" data-hits="" data-linenumber="150">
             
             
 
@@ -31425,7 +31546,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="145">
+          <li class="covered" data-hits="1" data-linenumber="151">
             <span class="hits">1</span>
             
 
@@ -31436,7 +31557,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="4" data-linenumber="146">
+          <li class="covered" data-hits="4" data-linenumber="152">
             <span class="hits">4</span>
             
 
@@ -31447,79 +31568,13 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="147">
+          <li class="never" data-hits="" data-linenumber="153">
             
             
 
             
 
             <code class="ruby">  end</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="148">
-            
-            
-
-            
-
-            <code class="ruby"></code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="covered" data-hits="1" data-linenumber="149">
-            <span class="hits">1</span>
-            
-
-            
-
-            <code class="ruby">  def associated_ses_ids</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="covered" data-hits="3" data-linenumber="150">
-            <span class="hits">3</span>
-            
-
-            
-
-            <code class="ruby">    ids = @associated_object_query_response&amp;.dig(:ses_ids)</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="covered" data-hits="3" data-linenumber="151">
-            <span class="hits">3</span>
-            
-
-            
-
-            <code class="ruby">    return [] if ids.blank?</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="152">
-            
-            
-
-            
-
-            <code class="ruby"></code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="missed" data-hits="0" data-linenumber="153">
-            
-            
-
-            
-
-            <code class="ruby">    ids</code>
           </li>
         </div>
       
@@ -31530,29 +31585,29 @@
 
             
 
-            <code class="ruby">  end</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="155">
-            
-            
-
-            
-
             <code class="ruby"></code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="156">
+          <li class="covered" data-hits="1" data-linenumber="155">
             <span class="hits">1</span>
             
 
             
 
-            <code class="ruby">  def combined_ses_ids</code>
+            <code class="ruby">  def associated_ses_ids</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="3" data-linenumber="156">
+            <span class="hits">3</span>
+            
+
+            
+
+            <code class="ruby">    ids = @associated_object_query_response&amp;.dig(:ses_ids)</code>
           </li>
         </div>
       
@@ -31563,7 +31618,7 @@
 
             
 
-            <code class="ruby">    return unless search</code>
+            <code class="ruby">    return [] if ids.blank?</code>
           </li>
         </div>
       
@@ -31579,24 +31634,24 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="3" data-linenumber="159">
-            <span class="hits">3</span>
+          <li class="missed" data-hits="0" data-linenumber="159">
+            
             
 
             
 
-            <code class="ruby">    ses_ids = object_data.pluck(&#39;all_ses&#39;).flatten</code>
+            <code class="ruby">    ids</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="3" data-linenumber="160">
-            <span class="hits">3</span>
+          <li class="never" data-hits="" data-linenumber="160">
+            
             
 
             
 
-            <code class="ruby">    facet_ses_ids + ses_ids + associated_ses_ids.pluck(:value)</code>
+            <code class="ruby">  end</code>
           </li>
         </div>
       
@@ -31607,40 +31662,40 @@
 
             
 
-            <code class="ruby">  end</code>
+            <code class="ruby"></code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="162">
+          <li class="covered" data-hits="1" data-linenumber="162">
+            <span class="hits">1</span>
+            
+
+            
+
+            <code class="ruby">  def combined_ses_ids</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="3" data-linenumber="163">
+            <span class="hits">3</span>
+            
+
+            
+
+            <code class="ruby">    return unless search</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="164">
             
             
 
             
 
             <code class="ruby"></code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="covered" data-hits="1" data-linenumber="163">
-            <span class="hits">1</span>
-            
-
-            
-
-            <code class="ruby">  def facet_ses_ids</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="covered" data-hits="3" data-linenumber="164">
-            <span class="hits">3</span>
-            
-
-            
-
-            <code class="ruby">    facet_data = search.dig(:data, &#39;facets&#39;)</code>
           </li>
         </div>
       
@@ -31651,51 +31706,51 @@
 
             
 
-            <code class="ruby">    return [] if facet_data.blank?</code>
+            <code class="ruby">    ses_ids = object_data.pluck(&#39;all_ses&#39;).flatten</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="166">
-            
-            
-
-            
-
-            <code class="ruby"></code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="covered" data-hits="12" data-linenumber="167">
-            <span class="hits">12</span>
-            
-
-            
-
-            <code class="ruby">    ids = facet_data.select { |k, v| [&quot;ses&quot;, &quot;sesrollup&quot;].include?(k.split(&quot;_&quot;).last) }.flat_map { |k, v| v[&quot;buckets&quot;].pluck(&quot;val&quot;) }</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="covered" data-hits="3" data-linenumber="168">
+          <li class="covered" data-hits="3" data-linenumber="166">
             <span class="hits">3</span>
             
 
             
 
-            <code class="ruby">    return [] if ids.blank?</code>
+            <code class="ruby">    facet_ses_ids + ses_ids + associated_ses_ids.pluck(:value)</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="169">
+          <li class="never" data-hits="" data-linenumber="167">
+            
+            
+
+            
+
+            <code class="ruby">  end</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="168">
             
             
 
             
 
             <code class="ruby"></code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="1" data-linenumber="169">
+            <span class="hits">1</span>
+            
+
+            
+
+            <code class="ruby">  def facet_ses_ids</code>
           </li>
         </div>
       
@@ -31706,18 +31761,18 @@
 
             
 
-            <code class="ruby">    ids</code>
+            <code class="ruby">    facet_data = search.dig(:data, &#39;facets&#39;)</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="171">
-            
-            
-
+          <li class="covered" data-hits="3" data-linenumber="171">
+            <span class="hits">3</span>
             
 
-            <code class="ruby">  end</code>
+            
+
+            <code class="ruby">    return [] if facet_data.blank?</code>
           </li>
         </div>
       
@@ -31733,24 +31788,24 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="173">
-            <span class="hits">1</span>
+          <li class="covered" data-hits="12" data-linenumber="173">
+            <span class="hits">12</span>
             
 
             
 
-            <code class="ruby">  def hierarchy_data</code>
+            <code class="ruby">    ids = facet_data.select { |k, v| [&quot;ses&quot;, &quot;sesrollup&quot;].include?(k.split(&quot;_&quot;).last) }.flat_map { |k, v| v[&quot;buckets&quot;].pluck(&quot;val&quot;) }</code>
           </li>
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="174">
-            
-            
-
+          <li class="covered" data-hits="3" data-linenumber="174">
+            <span class="hits">3</span>
             
 
-            <code class="ruby">    hierarchy_builder.hierarchy_data</code>
+            
+
+            <code class="ruby">    return [] if ids.blank?</code>
           </li>
         </div>
       
@@ -31761,29 +31816,29 @@
 
             
 
-            <code class="ruby">  end</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="176">
-            
-            
-
-            
-
             <code class="ruby"></code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="177">
-            <span class="hits">1</span>
+          <li class="covered" data-hits="3" data-linenumber="176">
+            <span class="hits">3</span>
             
 
             
 
-            <code class="ruby">  def hierarchy_ses_data</code>
+            <code class="ruby">    ids</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="177">
+            
+            
+
+            
+
+            <code class="ruby">  end</code>
           </li>
         </div>
       
@@ -31794,40 +31849,40 @@
 
             
 
-            <code class="ruby">    # The hierarchy builder has to make a seperate SES request to a different serivce in order to retrieve the</code>
+            <code class="ruby"></code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="179">
-            
-            
-
+          <li class="covered" data-hits="1" data-linenumber="179">
+            <span class="hits">1</span>
             
 
-            <code class="ruby">    # hierarchy. We assemble the type name lookup from that request, rather than adding the IDs to the main bundled</code>
+            
+
+            <code class="ruby">  def hierarchy_data</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="180">
+          <li class="missed" data-hits="0" data-linenumber="180">
             
             
 
             
 
-            <code class="ruby">    # request.</code>
+            <code class="ruby">    hierarchy_builder.hierarchy_data</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="3" data-linenumber="181">
-            <span class="hits">3</span>
+          <li class="never" data-hits="" data-linenumber="181">
+            
             
 
             
 
-            <code class="ruby">    hierarchy_builder.formatted_ses_data</code>
+            <code class="ruby">  end</code>
           </li>
         </div>
       
@@ -31838,40 +31893,40 @@
 
             
 
-            <code class="ruby">  end</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="183">
-            
-            
-
-            
-
             <code class="ruby"></code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="184">
+          <li class="covered" data-hits="1" data-linenumber="183">
             <span class="hits">1</span>
             
 
             
 
-            <code class="ruby">  def content_type_rollup_ids</code>
+            <code class="ruby">  def hierarchy_ses_data</code>
           </li>
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="185">
+          <li class="never" data-hits="" data-linenumber="184">
             
             
 
             
 
-            <code class="ruby">    search.dig(:data, &quot;facets&quot;, &quot;type_sesrollup&quot;, &quot;buckets&quot;).pluck(&quot;val&quot;)</code>
+            <code class="ruby">    # The hierarchy builder has to make a seperate SES request to a different serivce in order to retrieve the</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="185">
+            
+            
+
+            
+
+            <code class="ruby">    # hierarchy. We assemble the type name lookup from that request, rather than adding the IDs to the main bundled</code>
           </li>
         </div>
       
@@ -31882,29 +31937,29 @@
 
             
 
+            <code class="ruby">    # request.</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="3" data-linenumber="187">
+            <span class="hits">3</span>
+            
+
+            
+
+            <code class="ruby">    hierarchy_builder.formatted_ses_data</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="188">
+            
+            
+
+            
+
             <code class="ruby">  end</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="187">
-            
-            
-
-            
-
-            <code class="ruby"></code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="covered" data-hits="1" data-linenumber="188">
-            <span class="hits">1</span>
-            
-
-            
-
-            <code class="ruby">  def ses_data</code>
           </li>
         </div>
       
@@ -31915,29 +31970,29 @@
 
             
 
-            <code class="ruby">    # TODO: Using a master list of fields, it should be possible to reduce the number of SES IDs requested from</code>
+            <code class="ruby"></code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="190">
-            
-            
-
+          <li class="covered" data-hits="1" data-linenumber="190">
+            <span class="hits">1</span>
             
 
-            <code class="ruby">    # related items, e.g. don&#39;t fetch all_ses as the IDs we need will be in fields we know the names of which have</code>
+            
+
+            <code class="ruby">  def content_type_rollup_ids</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="191">
+          <li class="missed" data-hits="0" data-linenumber="191">
             
             
 
             
 
-            <code class="ruby">    # fewer IDs to resolve overall.</code>
+            <code class="ruby">    search.dig(:data, &quot;facets&quot;, &quot;type_sesrollup&quot;, &quot;buckets&quot;).pluck(&quot;val&quot;)</code>
           </li>
         </div>
       
@@ -31948,40 +32003,40 @@
 
             
 
+            <code class="ruby">  end</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="193">
+            
+            
+
+            
+
             <code class="ruby"></code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="3" data-linenumber="193">
-            <span class="hits">3</span>
+          <li class="covered" data-hits="1" data-linenumber="194">
+            <span class="hits">1</span>
             
 
             
 
-            <code class="ruby">    unique_ses_ids = { value: combined_ses_ids.uniq.sort }</code>
+            <code class="ruby">  def ses_data</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="3" data-linenumber="194">
-            <span class="hits">3</span>
+          <li class="never" data-hits="" data-linenumber="195">
+            
             
 
             
 
-            <code class="ruby">    returned_data = SesLookup.new([unique_ses_ids]).data unless unique_ses_ids.blank?</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="covered" data-hits="3" data-linenumber="195">
-            <span class="hits">3</span>
-            
-
-            
-
-            <code class="ruby">    return hierarchy_ses_data if returned_data.blank?</code>
+            <code class="ruby">    # TODO: Using a master list of fields, it should be possible to reduce the number of SES IDs requested from</code>
           </li>
         </div>
       
@@ -31992,18 +32047,18 @@
 
             
 
-            <code class="ruby"></code>
+            <code class="ruby">    # related items, e.g. don&#39;t fetch all_ses as the IDs we need will be in fields we know the names of which have</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="3" data-linenumber="197">
-            <span class="hits">3</span>
+          <li class="never" data-hits="" data-linenumber="197">
+            
             
 
             
 
-            <code class="ruby">    hierarchy_ses_data.merge(returned_data)</code>
+            <code class="ruby">    # fewer IDs to resolve overall.</code>
           </li>
         </div>
       
@@ -32014,40 +32069,40 @@
 
             
 
-            <code class="ruby">  end</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="199">
-            
-            
-
-            
-
             <code class="ruby"></code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="200">
-            <span class="hits">1</span>
+          <li class="covered" data-hits="3" data-linenumber="199">
+            <span class="hits">3</span>
             
 
             
 
-            <code class="ruby">  def facets</code>
+            <code class="ruby">    unique_ses_ids = { value: combined_ses_ids.uniq.sort }</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="8" data-linenumber="201">
-            <span class="hits">8</span>
+          <li class="covered" data-hits="3" data-linenumber="200">
+            <span class="hits">3</span>
             
 
             
 
-            <code class="ruby">    return [] unless search</code>
+            <code class="ruby">    returned_data = SesLookup.new([unique_ses_ids]).data unless unique_ses_ids.blank?</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="3" data-linenumber="201">
+            <span class="hits">3</span>
+            
+
+            
+
+            <code class="ruby">    return hierarchy_ses_data if returned_data.blank?</code>
           </li>
         </div>
       
@@ -32063,24 +32118,24 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="7" data-linenumber="203">
-            <span class="hits">7</span>
+          <li class="covered" data-hits="3" data-linenumber="203">
+            <span class="hits">3</span>
             
 
             
 
-            <code class="ruby">    facet_field_data = search.dig(:data, &#39;facets&#39;)</code>
+            <code class="ruby">    hierarchy_ses_data.merge(returned_data)</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="7" data-linenumber="204">
-            <span class="hits">7</span>
+          <li class="never" data-hits="" data-linenumber="204">
+            
             
 
             
 
-            <code class="ruby">    return [] if facet_field_data.blank?</code>
+            <code class="ruby">  end</code>
           </li>
         </div>
       
@@ -32096,24 +32151,24 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="18" data-linenumber="206">
-            <span class="hits">18</span>
+          <li class="covered" data-hits="1" data-linenumber="206">
+            <span class="hits">1</span>
             
 
             
 
-            <code class="ruby">    facet_field_data.except(&quot;count&quot;).map { |k, v| { field_name: k, facets: sort_facets(v[&#39;buckets&#39;]) } }</code>
+            <code class="ruby">  def facets</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="207">
-            
-            
-
+          <li class="covered" data-hits="8" data-linenumber="207">
+            <span class="hits">8</span>
             
 
-            <code class="ruby">  end</code>
+            
+
+            <code class="ruby">    return [] unless search</code>
           </li>
         </div>
       
@@ -32129,24 +32184,24 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="209">
-            <span class="hits">1</span>
+          <li class="covered" data-hits="7" data-linenumber="209">
+            <span class="hits">7</span>
             
 
             
 
-            <code class="ruby">  def query_time</code>
+            <code class="ruby">    facet_field_data = search.dig(:data, &#39;facets&#39;)</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="2" data-linenumber="210">
-            <span class="hits">2</span>
+          <li class="covered" data-hits="7" data-linenumber="210">
+            <span class="hits">7</span>
             
 
             
 
-            <code class="ruby">    return unless search&amp;.dig(:data, &#39;responseHeader&#39;, &#39;QTime&#39;)</code>
+            <code class="ruby">    return [] if facet_field_data.blank?</code>
           </li>
         </div>
       
@@ -32162,24 +32217,24 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="212">
-            <span class="hits">1</span>
+          <li class="covered" data-hits="18" data-linenumber="212">
+            <span class="hits">18</span>
             
 
             
 
-            <code class="ruby">    time = search&amp;.dig(:data, &#39;responseHeader&#39;, &#39;QTime&#39;)</code>
+            <code class="ruby">    facet_field_data.except(&quot;count&quot;).map { |k, v| { field_name: k, facets: sort_facets(v[&#39;buckets&#39;]) } }</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="213">
-            <span class="hits">1</span>
+          <li class="never" data-hits="" data-linenumber="213">
+            
             
 
             
 
-            <code class="ruby">    return if time.blank?</code>
+            <code class="ruby">  end</code>
           </li>
         </div>
       
@@ -32201,18 +32256,18 @@
 
             
 
-            <code class="ruby">    time.to_f / 1000</code>
+            <code class="ruby">  def query_time</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="216">
-            
-            
-
+          <li class="covered" data-hits="2" data-linenumber="216">
+            <span class="hits">2</span>
             
 
-            <code class="ruby">  end</code>
+            
+
+            <code class="ruby">    return unless search&amp;.dig(:data, &#39;responseHeader&#39;, &#39;QTime&#39;)</code>
           </li>
         </div>
       
@@ -32234,18 +32289,18 @@
 
             
 
-            <code class="ruby">  def filter</code>
+            <code class="ruby">    time = search&amp;.dig(:data, &#39;responseHeader&#39;, &#39;QTime&#39;)</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="2" data-linenumber="219">
-            <span class="hits">2</span>
+          <li class="covered" data-hits="1" data-linenumber="219">
+            <span class="hits">1</span>
             
 
             
 
-            <code class="ruby">    search.dig(:search_parameters, :filter)</code>
+            <code class="ruby">    return if time.blank?</code>
           </li>
         </div>
       
@@ -32256,12 +32311,34 @@
 
             
 
+            <code class="ruby"></code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="1" data-linenumber="221">
+            <span class="hits">1</span>
+            
+
+            
+
+            <code class="ruby">    time.to_f / 1000</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="222">
+            
+            
+
+            
+
             <code class="ruby">  end</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="221">
+          <li class="never" data-hits="" data-linenumber="223">
             
             
 
@@ -32272,46 +32349,24 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="222">
+          <li class="covered" data-hits="1" data-linenumber="224">
             <span class="hits">1</span>
             
 
             
 
-            <code class="ruby">  def type_facets</code>
+            <code class="ruby">  def filter</code>
           </li>
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="223">
-            
-            
-
-            
-
-            <code class="ruby">    ret = {}</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="missed" data-hits="0" data-linenumber="224">
-            
+          <li class="covered" data-hits="2" data-linenumber="225">
+            <span class="hits">2</span>
             
 
             
 
-            <code class="ruby">    facets.select { |facet| facet.dig(:field_name) == &quot;type_sesrollup&quot; }.first&amp;.dig(:facets)&amp;.each { |h| ret[h.dig(&quot;val&quot;)] = h.dig(&quot;count&quot;) }</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="missed" data-hits="0" data-linenumber="225">
-            
-            
-
-            
-
-            <code class="ruby">    ret</code>
+            <code class="ruby">    search.dig(:search_parameters, :filter)</code>
           </li>
         </div>
       
@@ -32344,23 +32399,45 @@
 
             
 
-            <code class="ruby">  def sort_facets(facet_field)</code>
+            <code class="ruby">  def type_facets</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="33" data-linenumber="229">
-            <span class="hits">33</span>
+          <li class="missed" data-hits="0" data-linenumber="229">
+            
             
 
             
 
-            <code class="ruby">    facet_field.sort_by { |h| h[&quot;count&quot;] }.reverse</code>
+            <code class="ruby">    ret = {}</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="230">
+          <li class="missed" data-hits="0" data-linenumber="230">
+            
+            
+
+            
+
+            <code class="ruby">    facets.select { |facet| facet.dig(:field_name) == &quot;type_sesrollup&quot; }.first&amp;.dig(:facets)&amp;.each { |h| ret[h.dig(&quot;val&quot;)] = h.dig(&quot;count&quot;) }</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="missed" data-hits="0" data-linenumber="231">
+            
+            
+
+            
+
+            <code class="ruby">    ret</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="232">
             
             
 
@@ -32371,7 +32448,51 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="231">
+          <li class="never" data-hits="" data-linenumber="233">
+            
+            
+
+            
+
+            <code class="ruby"></code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="1" data-linenumber="234">
+            <span class="hits">1</span>
+            
+
+            
+
+            <code class="ruby">  def sort_facets(facet_field)</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="33" data-linenumber="235">
+            <span class="hits">33</span>
+            
+
+            
+
+            <code class="ruby">    facet_field.sort_by { |h| h[&quot;count&quot;] }.reverse</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="236">
+            
+            
+
+            
+
+            <code class="ruby">  end</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="237">
             
             
 
