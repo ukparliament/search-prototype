@@ -9,7 +9,7 @@
 <% end %>
 
 <% content_for(:title) do %>
-  <%= formatted_page_title(@page_title) %>
+  <%= format_object_title(@page_title, @ses_data) %>
 <% end %>
 
 <section id="prelim">
