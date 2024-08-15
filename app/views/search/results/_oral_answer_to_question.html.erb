@@ -129,8 +129,7 @@
         <%= render 'search/results/item_details/reference', reference: object.standard_reference %>
       </div>
       <div class="right" id="house">
-        <%= render 'search/results/item_details/legislature', legislature: object.legislature %>
-        <%= render 'search/results/item_details/place', place: object.place %>
+        <%= render 'search/results/item_details/place_and_house', place: object.place, house: object.legislature %>
       </div>
     </div>
   </div>
