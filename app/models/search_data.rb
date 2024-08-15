@@ -72,6 +72,12 @@ class SearchData
     search.dig(:search_parameters, :query)
   end
 
+  def show_detailed
+    return unless search
+
+    search.dig(:search_parameters, :show_detailed)
+  end
+
   def expanded_types
     return unless search
 

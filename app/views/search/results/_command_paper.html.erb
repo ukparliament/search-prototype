@@ -1,6 +1,6 @@
 <div class="result-item">
   <div class="row" id="title">
-    <%= link_to(object.object_title, object_show_url(object: object.object_uri[:value])) %>
+    <%= link_to(format_object_title(object.object_title, @ses_data), object_show_url(object: object.object_uri[:value])) %>
   </div>
 
   <div class="row">
@@ -67,7 +67,7 @@
 
     <div class="row">
       <div id="coming-into-force">
-
+        <%= render 'search/results/item_details/coming_into_force', notes: object.coming_into_force, date: object.coming_into_force_date %>
       </div>
     </div>
 

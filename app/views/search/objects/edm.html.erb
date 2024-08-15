@@ -9,7 +9,7 @@
 <% end %>
 
 <% content_for(:title) do %>
-  <%= object.object_title %>
+  <%= format_object_title(object.object_title, @ses_data) %>
 <% end %>
 
 <section id="prelim">
@@ -21,7 +21,7 @@
     <div class="content-text">
       <%= object.motion_text[:value] %>
     </div>
-    <%= render 'search/fragments/edm_amendments', title: formatted_page_title(@page_title), amendments: object.amendments unless object.amendments.blank? %>
+    <%= render 'search/fragments/edm_amendments', title: format_object_title(@page_title, @ses_data), amendments: object.amendments unless object.amendments.blank? %>
   </section>
 <% end %>
 

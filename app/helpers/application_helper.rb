@@ -40,6 +40,29 @@ module ApplicationHelper
     end
   end
 
+  def format_object_title(object_title, ses_data)
+    return "Untitled" if object_title.blank?
+
+    # object title is either a string: "Title"
+    return object_title if object_title.is_a?(String)
+
+    # or it's a SES ID and accompanying field name: {:value=>91910, :field_name=>"subtype_ses"}
+    if object_title.is_a?(Hash)
+      return "Untitled" if object_title.dig(:value).blank?
+
+      ses_id = object_title.dig(:value)
+      type = ses_data.dig(ses_id)&.singularize
+
+      return type.blank? ? "Untitled" : "Untitled #{type}"
+    end
+
+    # in development, raise an error if we have any other data type
+    raise "Unknown object title" if Rails.env.development?
+
+    # or return "Untitled" in production
+    "Untitled"
+  end
+
   def filter_field_name(field)
     # returns display name for a filter field, e.g. 'Content Type' for type_ses
 

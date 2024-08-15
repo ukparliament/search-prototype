@@ -1,5 +1,5 @@
-<% unless contribution_type.blank? %>
+<% unless object.contribution_type.blank? %>
   <div class="item-details">
-    <%= contribution_type[:value] %>
+    <%= object_display_name(object.subtype_or_type) %> - <%= object.contribution_type[:value] %>
   </div>
 <% end %>

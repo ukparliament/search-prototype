@@ -63,31 +63,6 @@ module LinkHelper
     singular ? format_name(data, ses_data)&.singularize : format_name(data, ses_data)
   end
 
-  def formatted_page_title(data)
-    return "Untitled" if data.blank?
-
-    if data.is_a?(String)
-      # We have a string, so just display it
-      data.to_s
-    elsif data.is_a?(Hash)
-      return "Untitled" if data[:value].blank?
-
-      if data[:field_name].last(4) == "_ses"
-        if @ses_data.blank?
-          # We have a SES ID, but no lookup
-          return "Untitled"
-        else
-          # We have a SES ID and a populated lookup
-          resolved_name = @ses_data[data[:value].to_i]
-          return "Untitled #{resolved_name}"
-        end
-      else
-        # We have a string data field
-        return data[:value].to_s
-      end
-    end
-  end
-
   private
 
   def format_name(data, ses_data)

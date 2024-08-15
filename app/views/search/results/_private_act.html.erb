@@ -1,18 +1,15 @@
 <div class="result-item">
   <div class="row" id="title">
-    <%= link_to(object.object_title, object_show_url(object: object.object_uri[:value])) %>
+    <%= link_to(format_object_title(object.object_title, @ses_data), object_show_url(object: object.object_uri[:value])) %>
   </div>
 
   <div class="row">
     <div class="three-panel">
       <div class="left" id="primary-person">
-        <%#= render 'search/results/item_details/member', member: object.member, member_party: object.member_party %>
       </div>
       <div class="centre" id="secondary-person">
-        <%#= render 'search/results/item_details/member', member: object.member, member_party: object.member_party %>
       </div>
       <div class="right" id="primary-group">
-        <%#= render 'search/results/item_details/departments', departments: object.departments, hide_label: false %>
       </div>
     </div>
   </div>

@@ -10,7 +10,7 @@
 <% end %>
 
 <% content_for(:title) do %>
-  <%= object.object_title %>
+  <%= format_object_title(object.object_title, @ses_data) %>
 <% end %>
 
 <section id="prelim">

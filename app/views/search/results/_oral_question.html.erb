@@ -1,6 +1,6 @@
 <div class="result-item">
   <div class="row" id="title">
-    <%= link_to(object.object_title, object_show_url(object: object.object_uri[:value])) %>
+    <%= link_to(format_object_title(object.object_title, @ses_data), object_show_url(object: object.object_uri[:value])) %>
   </div>
 
   <div <%= 'hidden' unless params[:show_detailed] == "true" %> class="row" id="content" data-detailed-results-target="toggleHidden">
@@ -29,7 +29,7 @@
   <div class="row">
     <div class="three-panel">
       <div class="left" id="type">
-        <%= render 'search/results/item_details/contribution_type', contribution_type: object.contribution_type %>
+        <%= render 'search/results/item_details/contribution_type', object: object %>
       </div>
       <div class="centre" id="status">
         <%= render 'search/results/item_details/state', state: object.state %>
