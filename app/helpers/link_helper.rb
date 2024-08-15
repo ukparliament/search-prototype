@@ -185,7 +185,7 @@ module LinkHelper
 
     return name_string unless name_string.blank?
 
-    Rails.env.development? ? data[:value].to_s : "Unknown"
+    Rails.env.development? ? ses_data_hash[:value].to_s : "Unknown"
   end
 
 end
