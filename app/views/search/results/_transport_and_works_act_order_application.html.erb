@@ -19,7 +19,9 @@
         <%#= render 'search/results/item_details/member', member: object.member, member_party: object.member_party %>
       </div>
       <div class="right" id="primary-group">
-        <%= render 'search/results/item_details/depositing_applicant', applicant: object.depositing_applicant, hide_label: false %>
+        <div <%= 'hidden' unless params[:show_detailed] == "true" %> id="content" data-detailed-results-target="toggleHidden">
+          <%= render 'search/results/item_details/depositing_applicant', applicant: object.depositing_applicant, hide_label: false %>
+        </div>
       </div>
     </div>
   </div>
