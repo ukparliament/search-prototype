@@ -16,7 +16,7 @@
         <%= render 'search/results/item_details/answering_member', answering_member: object.answering_member, answering_member_party: object.answering_member_party, label: 'Answered by' %>
       </div>
       <div class="centre" id="secondary-person">
-        <div <%= 'hidden' unless params[:show_detailed] == "true" %> class="row" data-detailed-results-target="toggleHidden">
+        <div <%= 'hidden' unless params[:show_detailed] == "true" %> data-detailed-results-target="toggleHidden">
           <%= render 'search/results/item_details/asking_member', asking_member: @associated_object_data[object.question_id].asking_member, asking_member_party: @associated_object_data[object.question_id].asking_member_party, label: 'Asked by' %>
         </div>
       </div>
@@ -44,7 +44,6 @@
     <div class="row">
       <div class="two-panel">
         <div class="left" id="legislative-stage">
-          <%#= render 'search/results/item_details/legislative_stage', legislative_stage: object.legislative_stage %>
         </div>
         <div class="right" id="procedure">
           <%= render 'search/results/item_details/procedure', procedure: object.procedure %>
@@ -55,10 +54,8 @@
     <div class="row">
       <div class="four-panel">
         <div class="left-outer" id="specific-date-1">
-          <%#= render 'search/results/item_details/date_laid', date_laid: object.date_laid %>
         </div>
         <div class="left-inner" id="specific-date-2">
-          <%#= render 'search/results/item_details/date_withdrawn', date_withdrawn: object.date_withdrawn %>
         </div>
         <div class="right-inner" id="specific-date-3">
 
@@ -132,7 +129,7 @@
         <%= render 'search/results/item_details/reference', reference: object.standard_reference %>
       </div>
       <div class="right" id="house">
-        <%= render 'search/results/item_details/place', place: object.place %>
+        <%= render 'search/results/item_details/place_and_house', place: object.place, house: object.legislature %>
       </div>
     </div>
   </div>
