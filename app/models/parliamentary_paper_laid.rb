@@ -30,14 +30,6 @@ class ParliamentaryPaperLaid < Paper
     super
   end
 
-  def reference
-    return if type.blank? || type[:value] == 352261
-
-    return get_all_from('reference_t') if type[:value] == 51288
-
-    super
-  end
-
   def is_considered_by_eu_si_committee
     get_first_as_date_from('ConsideredByESICDate_dt')
   end
