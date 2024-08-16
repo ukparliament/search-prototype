@@ -4,6 +4,10 @@ class DepositedPaper < Paper
     super
   end
 
+  def object_name
+    subtype_and_type
+  end
+
   def template
     'search/objects/deposited_paper'
   end
