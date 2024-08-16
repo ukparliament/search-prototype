@@ -16,7 +16,11 @@ class ParliamentaryPaperLaid < Paper
     # type shown for most papers, except 92347 which uses subtypes (plural)
     return if type.blank?
 
-    type[:value] == 92347 ? subtypes : [type]
+    if type[:value] != 92347 || subtypes.blank?
+      [type]
+    else
+      subtypes
+    end
   end
 
   def is_withdrawn
@@ -26,14 +30,6 @@ class ParliamentaryPaperLaid < Paper
   def paper_type
     # show subtypes, except if type is 92347
     return if type[:value] == 92347
-
-    super
-  end
-
-  def reference
-    return if type.blank? || type[:value] == 352261
-
-    return get_all_from('reference_t') if type[:value] == 51288
 
     super
   end

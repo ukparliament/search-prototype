@@ -6,7 +6,9 @@
   <div class="row">
     <div class="three-panel">
       <div class="left" id="primary-person">
-        <%= render 'search/results/item_details/rapporteur', rapporteur: object.rapporteur %>
+        <div <%= 'hidden' unless params[:show_detailed] == "true" %> id="detailed-view" data-detailed-results-target="toggleHidden">
+          <%= render 'search/results/item_details/rapporteur', rapporteur: object.rapporteur %>
+        </div>
       </div>
       <div class="centre" id="secondary-person">
         <%#= render 'search/results/item_details/member', member: object.member, member_party: object.member_party %>
@@ -20,7 +22,7 @@
   <div class="row">
     <div class="three-panel">
       <div class="left" id="type">
-        <%= render 'search/results/item_details/type', type: object.object_name %>
+        <%= render 'search/results/item_details/category_and_subtype_or_type', category: object.category, subtype: object.subtype, type: object.type %>
       </div>
       <div class="centre" id="status">
 
