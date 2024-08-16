@@ -105,6 +105,10 @@
 
     section.facet {
         margin: 8px 0;
+
+        .inactive {
+            color: grey;
+        }
     }
 
     .grid-row {

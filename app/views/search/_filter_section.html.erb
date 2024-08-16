@@ -1,7 +1,7 @@
 <section class="facet">
   <div>
     <div>
-      <strong><%= filter_field_name(facet_field[:field_name]) %></strong>
+      <strong class="<%= 'inactive' if facet_field[:facets].size == 0 %>"><%= filter_field_name(facet_field[:field_name]) %></strong>
     </div>
     <% facet_field[:facets][0..4].each do |facet| %>
       <div>
