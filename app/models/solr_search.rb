@@ -145,7 +145,7 @@ class SolrSearch < ApiCall
         "type": "range",
         "field": "date_dt",
         "start": "1500-01-01T00:00:00Z",
-        "end": "2024-01-01T00:00:00Z",
+        "end": "#{Date.today.strftime("%Y-%m-%d")}T23:59:59Z",
         "gap": "+1YEAR",
         "mincount": 1
       }

@@ -95,13 +95,13 @@
             </section>
           <% end %>
         <% else %>
-          <section class="facet">
-            <div>
+          <% unless @search_data.years.blank? %>
+            <section class="facet">
               <div>
-                <strong>Year</strong>
-              </div>
-              <div class="facets">
-                <% unless @search_data.years.blank? %>
+                <div>
+                  <strong>Year</strong>
+                </div>
+                <div class="facets">
                   <% @search_data.years[0..4].each do |year_data| %>
                     <div>
                       <%= link_to("#{year_data["val"].to_date.year} (#{year_data["count"]})", url_for(apply_filter_url(request.params, "year", year_data["val"].to_date.year)), class: "modifiable-link") %>
@@ -117,10 +117,10 @@
                       <% end %>
                     </details>
                   <% end %>
-                <% end %>
+                </div>
               </div>
-            </div>
-          </section>
+            </section>
+          <% end %>
         <% end %>
 
         <% @search_data.facets.select { |h| ["legislature_ses", "session_t", "department_ses", "member_ses", "tablingMember_ses", "askingMember_ses", "leadMember_ses", "answeringMember_ses", "legislativeStage_ses", "legislationTitle_ses", "subject_ses"].include?(h.dig(:field_name)) }.each do |facet_field| %>
