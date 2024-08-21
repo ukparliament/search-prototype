@@ -176,6 +176,22 @@ class SearchData
     ids
   end
 
+  def years
+    # extract years from returned facet data
+    year_buckets = search&.dig(:data, "facets", "year", "buckets")
+    return if year_buckets.blank?
+
+    year_buckets.sort_by { |h| h["val"] }.uniq.reverse
+  end
+
+  def months
+    # extract months from returned facet data
+    month_buckets = search.dig(:data, "facets", "month", "buckets")
+    return if month_buckets.blank?
+
+    month_buckets.sort_by { |h| h["val"] }.uniq
+  end
+
   def hierarchy_data
     hierarchy_builder.hierarchy_data
   end

@@ -93,10 +93,23 @@ module ApplicationHelper
       procedure_t: 'Procedure',
       subject_t: 'Subject',
       legislationTitle_t: 'Legislation',
-      department_t: 'Department'
+      department_t: 'Department',
+      year: 'Year',
+      month: 'Month'
     }
 
     field_names[field.to_sym]
+  end
+
+  def filter_field_value(filter, filter_value)
+    return filter_value unless filter.first == "month"
+
+    split = filter_value.split("-")
+    year = split.first
+    month = split.last
+
+    month_string = Date::MONTHNAMES[month.to_i]
+    "#{month_string} #{year}"
   end
 
   def checked_field(filter_params, facet_field_name, text_field_name)
@@ -110,6 +123,12 @@ module ApplicationHelper
   end
 
   def apply_filter_url(params, filter_name, filter_value)
+    # example output:
+    # {"query"=>"horses", "commit"=>"Search", "controller"=>"search", "action"=>"index", "filter"=>{"type_sesrollup"=>[90996]}}
     params.except(:page).merge(filter: params.dig(:filter).nil? ? { filter_name => [filter_value] } : params.dig(:filter).merge(filter_name => [filter_value, params.dig(:filter, filter_name)].compact.flatten))
+  end
+
+  def year_filter
+    params.dig(:filter, :year)
   end
 end
