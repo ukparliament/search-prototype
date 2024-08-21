@@ -7,7 +7,7 @@
 <%#= render 'search/fragments/data', data: @associated_object_data, title: 'Associated object data' %>
 <%#= render 'search/fragments/data', data: @search_data.search, title: 'Search response' %>
 <%#= render 'search/fragments/data', data: @ses_data, title: 'SES results' %>
-<%#= render 'search/fragments/data', data: @search_data.facets, title: 'Facets' %>
+  <%= render 'search/fragments/data', data: @search_data.facets, title: 'Facets' %>
 <%#= render 'search/fragments/data', data: @top_level, title: 'Hierarchy top level types' %>
 <%#= render 'search/fragments/data', data: @toggled_facets, title: 'Toggled facets' %>
 <%#= render 'search/fragments/data', data: request.params, title: 'All params' %>
@@ -17,7 +17,7 @@
   <section id="search" class="content-section white-slim">
     <div class="search-grid-container">
       <%= f.text_field :query, class: 'grid-item', id: 'search-input', value: @search_data.query %>
-      <%= f.submit 'Search', class: 'grid-item', id: 'search-button' %>
+      <%= f.submit 'New search', class: 'grid-item', id: 'search-button' %>
     </div>
   </section>
 <% end %>
@@ -53,7 +53,7 @@
                       </div>
                       <div class="bottom-row">
                         <div class="filter-name">
-                          <%= object_display_name({ value: filter_value, field_name: filter.first }, singular: false) %>
+                          <%= object_display_name({ value: filter_field_value(filter, filter_value), field_name: filter.first }, singular: false) %>
                         </div>
                       </div>
                     </div>
@@ -77,7 +77,53 @@
           </div>
         </section>
 
-        <% @search_data.facets.select { |h| ["legislature_ses", "session_t", "date_dt", "department_ses", "member_ses", "tablingMember_ses", "askingMember_ses", "leadMember_ses", "answeringMember_ses", "legislativeStage_ses", "legislationTitle_ses", "subject_ses"].include?(h.dig(:field_name)) }.each do |facet_field| %>
+        <% if year_filter.present? %>
+          <% year_filter.each do |year| %>
+            <section class="facet">
+              <div>
+                <div>
+                  <strong>Month</strong>
+                </div>
+                <div class="facets">
+                  <% @search_data.months.each_with_index do |month, index| %>
+                    <div>
+                      <%= link_to("#{month['val'].to_date.strftime("%B")} #{year} (#{month['count']})", url_for(apply_filter_url(request.params, "month", year + "-#{index + 1}")), class: "modifiable-link") %>
+                    </div>
+                  <% end %>
+                </div>
+              </div>
+            </section>
+          <% end %>
+        <% else %>
+          <section class="facet">
+            <div>
+              <div>
+                <strong>Year</strong>
+              </div>
+              <div class="facets">
+                <% unless @search_data.years.blank? %>
+                  <% @search_data.years[0..4].each do |year_data| %>
+                    <div>
+                      <%= link_to("#{year_data["val"].to_date.year} (#{year_data["count"]})", url_for(apply_filter_url(request.params, "year", year_data["val"].to_date.year)), class: "modifiable-link") %>
+                    </div>
+                  <% end %>
+                  <% unless @search_data.years[5..].blank? %>
+                    <details>
+                      <summary>More</summary>
+                      <% @search_data.years[5..].each do |year_data| %>
+                        <div>
+                          <%= link_to("#{year_data["val"].to_date.year} (#{year_data["count"]})", url_for(apply_filter_url(request.params, "year", year_data["val"].to_date.year)), class: "modifiable-link") %>
+                        </div>
+                      <% end %>
+                    </details>
+                  <% end %>
+                <% end %>
+              </div>
+            </div>
+          </section>
+        <% end %>
+
+        <% @search_data.facets.select { |h| ["legislature_ses", "session_t", "department_ses", "member_ses", "tablingMember_ses", "askingMember_ses", "leadMember_ses", "answeringMember_ses", "legislativeStage_ses", "legislationTitle_ses", "subject_ses"].include?(h.dig(:field_name)) }.each do |facet_field| %>
           <%= render 'filter_section', facet_field: format_facets(facet_field) %>
         <% end %>
 
