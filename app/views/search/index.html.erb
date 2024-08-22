@@ -142,9 +142,9 @@
               <span>Show detailed:</span>
             </label>
             <div class="search-control-panel-link">
-              <%= link_to "On", search_url(query: @search_data.query, filter: @search_data.filter, sort_by: @search_data.sort, results_per_page: @search_data.results_per_page, page: @search_data.current_page, expanded_types: @search_data.expanded_types, show_detailed: true), class: "#{'selected' if @search_data.show_detailed} modifiable-link" %>
+              <%= link_to_unless @search_data.show_detailed?, "On", search_url(query: @search_data.query, filter: @search_data.filter, sort_by: @search_data.sort, results_per_page: @search_data.results_per_page, page: @search_data.current_page, expanded_types: @search_data.expanded_types, show_detailed: true), class: "#{'selected' if @search_data.show_detailed} modifiable-link" %>
               |
-              <%= link_to "Off", search_url(query: @search_data.query, filter: @search_data.filter, sort_by: @search_data.sort, results_per_page: @search_data.results_per_page, page: @search_data.current_page, expanded_types: @search_data.expanded_types, show_detailed: false), class: "#{'selected' if @search_data.show_detailed} modifiable-link" %>
+              <%= link_to_if @search_data.show_detailed?, "Off", search_url(query: @search_data.query, filter: @search_data.filter, sort_by: @search_data.sort, results_per_page: @search_data.results_per_page, page: @search_data.current_page, expanded_types: @search_data.expanded_types, show_detailed: false), class: "#{'selected' if @search_data.show_detailed} modifiable-link" %>
             </div>
             <!--            <label class="toggle">-->
             <!--              <input hidden id="show-detailed" type="checkbox" <%#= 'checked' if params[:show_detailed] == "true" %> data-action="change->detailed-results#toggle">-->
@@ -155,21 +155,21 @@
               <span>Results:</span>
             </label>
             <div class="search-control-panel-link">
-              <%= link_to "10", search_url(query: @search_data.query, filter: @search_data.filter, sort_by: @search_data.sort, results_per_page: 10, page: @search_data.current_page, expanded_types: @search_data.expanded_types, show_detailed: @search_data.show_detailed), class: "#{'selected' if @search_data.show_detailed} modifiable-link" %>
+              <%= link_to_unless @search_data.results_per_page == 10, "10", search_url(query: @search_data.query, filter: @search_data.filter, sort_by: @search_data.sort, results_per_page: 10, page: @search_data.current_page, expanded_types: @search_data.expanded_types, show_detailed: @search_data.show_detailed), class: "#{'selected' if @search_data.show_detailed} modifiable-link" %>
               |
-              <%= link_to "20", search_url(query: @search_data.query, filter: @search_data.filter, sort_by: @search_data.sort, results_per_page: 20, page: @search_data.current_page, expanded_types: @search_data.expanded_types, show_detailed: @search_data.show_detailed), class: "#{'selected' if @search_data.show_detailed} modifiable-link" %>
+              <%= link_to_unless @search_data.results_per_page == 20, "20", search_url(query: @search_data.query, filter: @search_data.filter, sort_by: @search_data.sort, results_per_page: 20, page: @search_data.current_page, expanded_types: @search_data.expanded_types, show_detailed: @search_data.show_detailed), class: "#{'selected' if @search_data.show_detailed} modifiable-link" %>
               |
-              <%= link_to "50", search_url(query: @search_data.query, filter: @search_data.filter, sort_by: @search_data.sort, results_per_page: 50, page: @search_data.current_page, expanded_types: @search_data.expanded_types, show_detailed: @search_data.show_detailed), class: "#{'selected' if @search_data.show_detailed} modifiable-link" %>
+              <%= link_to_unless @search_data.results_per_page == 50, "50", search_url(query: @search_data.query, filter: @search_data.filter, sort_by: @search_data.sort, results_per_page: 50, page: @search_data.current_page, expanded_types: @search_data.expanded_types, show_detailed: @search_data.show_detailed), class: "#{'selected' if @search_data.show_detailed} modifiable-link" %>
               |
-              <%= link_to "100", search_url(query: @search_data.query, filter: @search_data.filter, sort_by: @search_data.sort, results_per_page: 100, page: @search_data.current_page, expanded_types: @search_data.expanded_types, show_detailed: @search_data.show_detailed), class: "#{'selected' if @search_data.show_detailed} modifiable-link" %>
+              <%= link_to_unless @search_data.results_per_page == 100, "100", search_url(query: @search_data.query, filter: @search_data.filter, sort_by: @search_data.sort, results_per_page: 100, page: @search_data.current_page, expanded_types: @search_data.expanded_types, show_detailed: @search_data.show_detailed), class: "#{'selected' if @search_data.show_detailed} modifiable-link" %>
             </div>
             <label class="search-control-panel-label">
               <span>Sort by:</span>
             </label>
             <div class="search-control-panel-link">
-              <%= link_to "Newest first", search_url(query: @search_data.query, filter: @search_data.filter, sort_by: 'date_desc', results_per_page: @search_data.results_per_page, page: @search_data.current_page, expanded_types: @search_data.expanded_types, show_detailed: @search_data.show_detailed), class: "#{'selected' if @search_data.show_detailed} modifiable-link" %>
+              <%= link_to_unless @search_data.sort == "date_desc", "Newest first", search_url(query: @search_data.query, filter: @search_data.filter, sort_by: 'date_desc', results_per_page: @search_data.results_per_page, page: @search_data.current_page, expanded_types: @search_data.expanded_types, show_detailed: @search_data.show_detailed), class: "#{'selected' if @search_data.show_detailed} modifiable-link" %>
               |
-              <%= link_to "Oldest first", search_url(query: @search_data.query, filter: @search_data.filter, sort_by: 'date_asc', results_per_page: @search_data.results_per_page, page: @search_data.current_page, expanded_types: @search_data.expanded_types, show_detailed: @search_data.show_detailed), class: "#{'selected' if @search_data.show_detailed} modifiable-link" %>
+              <%= link_to_unless @search_data.sort == "date_asc", "Oldest first", search_url(query: @search_data.query, filter: @search_data.filter, sort_by: 'date_asc', results_per_page: @search_data.results_per_page, page: @search_data.current_page, expanded_types: @search_data.expanded_types, show_detailed: @search_data.show_detailed), class: "#{'selected' if @search_data.show_detailed} modifiable-link" %>
             </div>
 
             <%#= form_with url: request.url, method: :get, remote: true, id: 'results-per-page' do |rf| %>

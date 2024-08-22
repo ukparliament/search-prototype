@@ -78,6 +78,10 @@ class SearchData
     search.dig(:search_parameters, :show_detailed)
   end
 
+  def show_detailed?
+    show_detailed == "true" ? true : false
+  end
+
   def expanded_types
     return unless search
 
@@ -115,7 +119,9 @@ class SearchData
   def sort
     return unless search
 
-    search.dig(:search_parameters, 'sort_by')
+    from_params = search.dig(:search_parameters, 'sort_by')
+
+    from_params.blank? ? 'date_desc' : from_params
   end
 
   def start
