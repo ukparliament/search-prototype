@@ -186,8 +186,8 @@ RSpec.describe SearchData, type: :model do
     end
 
     context 'where no sort is present' do
-      it 'returns nil' do
-        expect(search_data.sort).to be nil
+      it 'defaults to date descending' do
+        expect(search_data.sort).to be 'date_desc'
       end
     end
   end
