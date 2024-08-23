@@ -6,10 +6,9 @@
   <div class="row">
     <div class="three-panel">
       <div class="left" id="primary-person">
-        <%= render 'search/results/item_details/member', member: object.member, member_party: object.member_party %>
+        <%= render 'search/results/item_details/member', member: object.member, member_party: object.member_parties %>
       </div>
       <div class="centre" id="secondary-person">
-
       </div>
       <div class="right" id="primary-group">
         <%= render 'search/results/item_details/departments', departments: object.departments, hide_label: false %>

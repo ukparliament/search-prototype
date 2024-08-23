@@ -16,7 +16,6 @@
         <%= render 'search/results/item_details/lead_member', lead_member: object.lead_member, lead_member_party: object.lead_member_party %>
       </div>
       <div class="centre" id="secondary-person">
-        <%#= render 'search/results/item_details/member', member: object.member, member_party: object.member_party %>
       </div>
       <div class="right" id="primary-group">
         <%= render 'search/results/item_details/departments', departments: object.departments, hide_label: true %>
@@ -86,10 +85,8 @@
         <div class="row">
           <div class="two-panel">
             <div class="left" id="amending-member">
-              <%#= render 'search/results/item_details/amended_by', primary_sponsor: amendment.dig(:primary_sponsor, :value) unless amendment.dig(:primary_sponsor, :value).blank? %>
             </div>
             <div class="right" id="amendment-date">
-              <%#= render 'search/results/item_details/amended_on', date_tabled: amendment.dig(:date_tabled, :value) unless amendment.dig(:date_tabled, :value).blank? %>
             </div>
           </div>
         </div>
@@ -97,9 +94,7 @@
     <% end %>
 
     <%= render 'search/results/item_details/legislation', legislation: object.legislation unless object.legislation.blank? %>
-    <%#= render 'search/results/item_details/witnesses', witnesses: object.witnesses unless object.witnesses.blank? %>
     <%= render 'search/results/item_details/subjects', subjects: object.subjects unless object.subjects.blank? %>
-    <%#= render 'search/results/item_details/topics', topics: object.topics unless object.topics.blank? %>
     <%= render 'search/results/item_details/notes', notes: object.notes unless object.notes.blank? %>
 
     <% unless object.commons_library_location.blank? && object.lords_library_location.blank? %>

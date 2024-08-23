@@ -187,7 +187,7 @@ class ContentObject
   end
 
   def primary_sponsor_party
-    get_first_from('primarySponsorParty_ses')
+    get_all_from('primarySponsorParty_ses')
   end
 
   def legislature
@@ -286,6 +286,10 @@ class ContentObject
 
   def member_party
     get_first_from('memberParty_ses')
+  end
+
+  def member_parties
+    get_all_from('memberParty_ses')
   end
 
   def answering_member

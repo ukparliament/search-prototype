@@ -76,10 +76,6 @@ class WrittenQuestion < Question
     get_first_from('departmentPrinted_t')
   end
 
-  def asking_or_tabling_member_party
-    fallback(get_first_from('tablingMemberParty_ses'), get_first_from('askingMemberParty_ses'))
-  end
-
   def attachment
     # this is the title of the attachment, rather than a link to the resource
     # there can be multiple titles, all of which will be displayed

@@ -88,10 +88,8 @@
         <div class="row">
           <div class="two-panel">
             <div class="left" id="amending-member">
-              <%#= render 'search/results/item_details/amended_by', primary_sponsor: amendment.dig(:primary_sponsor, :value) unless amendment.dig(:primary_sponsor, :value).blank? %>
             </div>
             <div class="right" id="amendment-date">
-              <%#= render 'search/results/item_details/amended_on', date_tabled: amendment.dig(:date_tabled, :value) unless amendment.dig(:date_tabled, :value).blank? %>
             </div>
           </div>
         </div>
@@ -99,19 +97,15 @@
     <% end %>
 
     <%= render 'search/results/item_details/legislation', legislation: object.legislation unless object.legislation.blank? %>
-    <%#= render 'search/results/item_details/witnesses', witnesses: object.witnesses unless object.witnesses.blank? %>
     <%= render 'search/results/item_details/subjects', subjects: object.subjects unless object.subjects.blank? %>
-    <%#= render 'search/results/item_details/topics', topics: object.topics unless object.topics.blank? %>
     <%= render 'search/results/item_details/notes', notes: object.notes unless object.notes.blank? %>
 
     <% unless object.commons_library_location.blank? && object.lords_library_location.blank? %>
       <div class="row">
         <div class="two-panel">
           <div class="left" id="commons-library-location">
-            <%#= render 'search/results/item_details/commons_library_location', location: object.commons_library_location unless object.commons_library_location.blank? %>
           </div>
           <div class="right" id="lords-library-location">
-            <%#= render 'search/results/item_details/lords_library_location', location: object.lords_library_location unless object.lords_library_location.blank? %>
           </div>
         </div>
       </div>

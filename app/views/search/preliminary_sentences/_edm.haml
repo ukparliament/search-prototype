@@ -13,7 +13,7 @@
           %span= " (primary sponsor)"
         - else
           %span= " (primary sponsor, "
-          %span>= search_link(object.primary_sponsor_party)
+          %span>= render 'search/fragments/list', items: object.primary_sponsor_party, terminator: '', singular: false
           %span= ")"
         - unless object.other_sponsors.blank?
           %span>= render 'search/fragments/edm_sponsor_list', items: object.other_sponsors, terminator: '', singular: false
