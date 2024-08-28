@@ -43,7 +43,6 @@ class ContentObject
   end
 
   def amendments
-    # TODO: temporary superclass method for non-EDM objects to be able to use a standard view for all result types
     nil
   end
 

@@ -20,38 +20,29 @@ class Edm < ContentObject
     # Title is the title of the motion itself, with 'Amendment N' on the front
     # Reference is taken from identifier_t, after removing the first item
 
-    return if content_object_data['amendmentText_t'].blank?
-    return if content_object_data['amendment_numberOfSignatures_s'].blank?
-    return if content_object_data['amendment_primarySponsorPrinted_t'].blank?
-    return if content_object_data['amendment_primarySponsorParty_ses'].blank?
-    return if content_object_data['identifier_t'].blank?
-    return if content_object_data['amendment_dateTabled_dt'].blank?
-
     original_hash = {
-      text: content_object_data['amendmentText_t'],
-      number_of_signatures: content_object_data['amendment_numberOfSignatures_s'],
-      primary_sponsor: content_object_data['amendment_primarySponsorPrinted_t'],
-      primary_sponsor_party: content_object_data['amendment_primarySponsorParty_ses'],
-      reference: content_object_data['identifier_t'].drop(1),
-      date_tabled: content_object_data['amendment_dateTabled_dt'],
+      text: content_object_data['amendmentText_t'].blank? ? {} : { value: content_object_data['amendmentText_t'], field_name: 'amendmentText_t' },
+      number_of_signatures: content_object_data['amendment_numberOfSignatures_s'].blank? ? {} : { value: content_object_data['amendment_numberOfSignatures_s'], field_name: 'amendment_numberOfSignatures_s' },
+      primary_sponsor: content_object_data['amendment_primarySponsor_ses'].blank? ? {} : { value: content_object_data['amendment_primarySponsor_ses'], field_name: 'amendment_primarySponsor_ses' },
+      primary_sponsor_text: content_object_data['amendment_primarySponsorPrinted_t'].blank? ? {} : { value: content_object_data['amendment_primarySponsorPrinted_t'], field_name: 'amendment_primarySponsorPrinted_t' },
+      primary_sponsor_party: content_object_data['amendment_primarySponsorParty_ses'].blank? ? {} : { value: content_object_data['amendment_primarySponsorParty_ses'], field_name: 'amendment_primarySponsorParty_ses' },
+      reference: content_object_data['identifier_t']&.drop(1).blank? ? {} : { value: content_object_data['identifier_t']&.drop(1), field_name: 'identifier_t' },
+      date_tabled: content_object_data['amendment_dateTabled_dt'].blank? ? {} : { value: content_object_data['amendment_dateTabled_dt'], field_name: 'amendment_dateTabled_dt' }
     }
 
-    result_hashes = original_hash[:text].zip(
-      original_hash[:number_of_signatures],
-      original_hash[:primary_sponsor],
-      original_hash[:primary_sponsor_party],
-      original_hash[:reference],
-      original_hash[:date_tabled],
-    ).map.with_index do |values, index|
-      {
-        index: index,
-        text: { value: values[0], field_name: 'amendmentText_t' },
-        number_of_signatures: { value: values[1], field_name: 'amendment_numberOfSignatures_s' },
-        primary_sponsor: { value: values[2], field_name: 'amendment_primarySponsorPrinted_t' },
-        primary_sponsor_party: { value: values[3], field_name: 'amendment_primarySponsorParty_ses' },
-        reference: { value: values[4], field_name: 'identifier_t' },
-        date_tabled: { value: values[5]&.to_date, field_name: 'amendment_dateTabled_dt' },
-      }
+    return [] if original_hash.values.pluck(:value).compact.blank?
+
+    number_of_amendments = original_hash.values.pluck(:value).compact.map(&:size).max
+    keys = original_hash.keys
+    result_hashes = []
+
+    number_of_amendments.times do |iteration|
+      ret = {}
+      keys.each do |key|
+        ret[key] = { value: original_hash.dig(key, :value).blank? ? nil : original_hash.dig(key, :value)[iteration], field_name: original_hash.dig(key, :field_name) }
+      end
+      ret[:index] = iteration
+      result_hashes << ret
     end
 
     result_hashes
