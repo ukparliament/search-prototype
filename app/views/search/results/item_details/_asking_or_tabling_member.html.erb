@@ -8,18 +8,14 @@
       <%= object_display_name(tabling_member, singular: false) %>
       </span>
       <% unless tabling_member_party.blank? %>
-        <span>
-          (<%= object_display_name(tabling_member_party, singular: false) %>)
-        </span>
+        (<%= render 'search/fragments/simple_list', items: tabling_member_party, terminator: "", singular: false %>)
       <% end %>
     <% else %>
       <span>
       <%= object_display_name(asking_member, singular: false) %>
       </span>
       <% unless asking_member_party.blank? %>
-      <span>
-        (<%= object_display_name(asking_member_party, singular: false) %>)
-      </span>
+        (<%= render 'search/fragments/simple_list', items: asking_member_party, terminator: "", singular: false %>)
       <% end %>
     <% end %>
   </div>

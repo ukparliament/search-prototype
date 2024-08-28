@@ -303,6 +303,10 @@ class ContentObject
     get_first_from('askingMemberParty_ses')
   end
 
+  def asking_member_parties
+    get_all_from('askingMemberParty_ses')
+  end
+
   def lead_member
     get_first_from('leadMember_ses')
   end

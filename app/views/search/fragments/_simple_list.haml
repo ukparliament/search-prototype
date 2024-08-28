@@ -4,7 +4,7 @@
     %span>= terminator
   - elsif items.size == 2
     %span= object_display_name(items.first, singular: singular)
-    %span= "; "
+    %span>= "; "
     %span= object_display_name(items.last, singular: singular)
     %span>= terminator
   - elsif items.size > 2

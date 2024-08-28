@@ -13,7 +13,7 @@
   <div class="row">
     <div class="three-panel">
       <div class="left" id="primary-person">
-        <%= render 'search/results/item_details/lead_member', lead_member: object.lead_member, lead_member_party: object.lead_member_party %>
+        <%= render 'search/results/item_details/lead_members', lead_members: object.lead_members, label: 'Lead Member' %>
       </div>
       <div class="centre" id="secondary-person">
         <%= render 'search/results/item_details/answering_members', answering_members: object.answering_members, label: 'Answering Member' %>
