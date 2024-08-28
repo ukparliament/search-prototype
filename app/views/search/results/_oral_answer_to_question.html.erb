@@ -13,7 +13,7 @@
   <div class="row">
     <div class="three-panel">
       <div class="left" id="primary-person">
-        <%= render 'search/results/item_details/answering_member', answering_member: object.answering_member, answering_member_party: object.answering_member_party, label: 'Answered by' %>
+        <%= render 'search/results/item_details/answering_member', answering_member: object.answering_member, answering_member_party: object.answering_member_parties, label: 'Answered by' %>
       </div>
       <div class="centre" id="secondary-person">
         <div <%= 'hidden' unless params[:show_detailed] == "true" %> data-detailed-results-target="toggleHidden">

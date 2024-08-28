@@ -14,7 +14,7 @@
       <img src="./assets/0.12.3/loading.gif" alt="loading"/>
     </div>
     <div id="wrapper" class="hide">
-      <div class="timestamp">Generated <abbr class="timeago" title="2024-08-28T09:31:58+01:00">2024-08-28T09:31:58+01:00</abbr></div>
+      <div class="timestamp">Generated <abbr class="timeago" title="2024-08-28T15:37:30+01:00">2024-08-28T15:37:30+01:00</abbr></div>
       <ul class="group_tabs"></ul>
 
       <div id="content">
@@ -23,14 +23,14 @@
     <span class="group_name">All Files</span>
     (<span class="covered_percent">
       <span class="yellow">
-  83.14%
+  83.02%
 </span>
 
      </span>
      covered at
      <span class="covered_strength">
        <span class="green">
-         92.7
+         92.35
        </span>
     </span> hits/line
     )
@@ -43,11 +43,11 @@
   </div>
 
   <div class="t-line-summary">
-    <b>1590</b> relevant lines,
-    <span class="green"><b>1322</b> lines covered</span> and
-    <span class="red"><b>268</b> lines missed. </span>
+    <b>1596</b> relevant lines,
+    <span class="green"><b>1325</b> lines covered</span> and
+    <span class="red"><b>271</b> lines missed. </span>
     (<span class="yellow">
-  83.14%
+  83.02%
 </span>
 )
   </div>
@@ -303,12 +303,12 @@
         
           <tr class="t-file">
             <td class="strong t-file__name"><a href="#a8074314ec42e9d18f2a1b7a8a8b6aa16ff9617f" class="src_link" title="app/models/content_object.rb">app/models/content_object.rb</a></td>
-            <td class="green strong cell--number t-file__coverage">97.09 %</td>
-            <td class="cell--number">572</td>
-            <td class="cell--number">275</td>
-            <td class="cell--number">267</td>
-            <td class="cell--number">8</td>
-            <td class="cell--number">290.42</td>
+            <td class="green strong cell--number t-file__coverage">96.75 %</td>
+            <td class="cell--number">576</td>
+            <td class="cell--number">277</td>
+            <td class="cell--number">268</td>
+            <td class="cell--number">9</td>
+            <td class="cell--number">288.33</td>
             
           </tr>
         
@@ -688,12 +688,12 @@
         
           <tr class="t-file">
             <td class="strong t-file__name"><a href="#966d37c0ea01a5ba0a2131d15cf162a950f939b3" class="src_link" title="app/models/question.rb">app/models/question.rb</a></td>
-            <td class="yellow strong cell--number t-file__coverage">88.00 %</td>
-            <td class="cell--number">106</td>
-            <td class="cell--number">50</td>
-            <td class="cell--number">44</td>
-            <td class="cell--number">6</td>
-            <td class="cell--number">44.32</td>
+            <td class="yellow strong cell--number t-file__coverage">85.19 %</td>
+            <td class="cell--number">114</td>
+            <td class="cell--number">54</td>
+            <td class="cell--number">46</td>
+            <td class="cell--number">8</td>
+            <td class="cell--number">41.07</td>
             
           </tr>
         
@@ -9191,7 +9191,7 @@
     <h3>app/models/content_object.rb</h3>
     <h4>
       <span class="green">
-  97.09%
+  96.75%
 </span>
 
       lines covered
@@ -9200,9 +9200,9 @@
     
 
     <div class="t-line-summary">
-      <b>275</b> relevant lines.
-      <span class="green"><b>267</b> lines covered</span> and
-      <span class="red"><b>8</b> lines missed.</span>
+      <b>277</b> relevant lines.
+      <span class="green"><b>268</b> lines covered</span> and
+      <span class="red"><b>9</b> lines missed.</span>
     </div>
 
     
@@ -12574,18 +12574,18 @@
 
             
 
-            <code class="ruby">  def lead_member</code>
+            <code class="ruby">  def asking_member_parties</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="3" data-linenumber="307">
-            <span class="hits">3</span>
+          <li class="missed" data-hits="0" data-linenumber="307">
+            
             
 
             
 
-            <code class="ruby">    get_first_from(&#39;leadMember_ses&#39;)</code>
+            <code class="ruby">    get_all_from(&#39;askingMemberParty_ses&#39;)</code>
           </li>
         </div>
       
@@ -12618,7 +12618,7 @@
 
             
 
-            <code class="ruby">  def lead_members</code>
+            <code class="ruby">  def lead_member</code>
           </li>
         </div>
       
@@ -12629,7 +12629,7 @@
 
             
 
-            <code class="ruby">    get_all_from(&#39;leadMember_ses&#39;)</code>
+            <code class="ruby">    get_first_from(&#39;leadMember_ses&#39;)</code>
           </li>
         </div>
       
@@ -12662,7 +12662,7 @@
 
             
 
-            <code class="ruby">  def lead_member_party</code>
+            <code class="ruby">  def lead_members</code>
           </li>
         </div>
       
@@ -12673,7 +12673,7 @@
 
             
 
-            <code class="ruby">    get_first_from(&#39;leadMemberParty_ses&#39;)</code>
+            <code class="ruby">    get_all_from(&#39;leadMember_ses&#39;)</code>
           </li>
         </div>
       
@@ -12706,18 +12706,18 @@
 
             
 
-            <code class="ruby">  def corporate_author</code>
+            <code class="ruby">  def lead_member_party</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="7" data-linenumber="319">
-            <span class="hits">7</span>
+          <li class="covered" data-hits="3" data-linenumber="319">
+            <span class="hits">3</span>
             
 
             
 
-            <code class="ruby">    combine_fields(get_all_from(&#39;corporateAuthor_ses&#39;), get_all_from(&#39;corporateAuthor_t&#39;))</code>
+            <code class="ruby">    get_first_from(&#39;leadMemberParty_ses&#39;)</code>
           </li>
         </div>
       
@@ -12750,18 +12750,18 @@
 
             
 
-            <code class="ruby">  def witnesses</code>
+            <code class="ruby">  def corporate_author</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="3" data-linenumber="323">
-            <span class="hits">3</span>
+          <li class="covered" data-hits="7" data-linenumber="323">
+            <span class="hits">7</span>
             
 
             
 
-            <code class="ruby">    combine_fields(get_all_from(&#39;witness_ses&#39;), get_all_from(&#39;witness_t&#39;))</code>
+            <code class="ruby">    combine_fields(get_all_from(&#39;corporateAuthor_ses&#39;), get_all_from(&#39;corporateAuthor_t&#39;))</code>
           </li>
         </div>
       
@@ -12794,18 +12794,18 @@
 
             
 
-            <code class="ruby">  def contains_statistics</code>
+            <code class="ruby">  def witnesses</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="327">
-            
-            
-
+          <li class="covered" data-hits="3" data-linenumber="327">
+            <span class="hits">3</span>
             
 
-            <code class="ruby">    # TODO: pass all three field names via filter</code>
+            
+
+            <code class="ruby">    combine_fields(get_all_from(&#39;witness_ses&#39;), get_all_from(&#39;witness_t&#39;))</code>
           </li>
         </div>
       
@@ -12816,40 +12816,40 @@
 
             
 
+            <code class="ruby">  end</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="329">
+            
+            
+
+            
+
             <code class="ruby"></code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="206" data-linenumber="329">
-            <span class="hits">206</span>
+          <li class="covered" data-hits="1" data-linenumber="330">
+            <span class="hits">1</span>
             
 
             
 
-            <code class="ruby">    contains_stats = get_first_as_boolean_from(&#39;containsStatistics_b&#39;)</code>
+            <code class="ruby">  def contains_statistics</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="206" data-linenumber="330">
-            <span class="hits">206</span>
+          <li class="never" data-hits="" data-linenumber="331">
+            
             
 
             
 
-            <code class="ruby">    has_table = get_first_as_boolean_from(&#39;hasTable_b&#39;)</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="covered" data-hits="206" data-linenumber="331">
-            <span class="hits">206</span>
-            
-
-            
-
-            <code class="ruby">    stats_indicated = get_first_as_boolean_from(&#39;statisticsIndicated_b&#39;)</code>
+            <code class="ruby">    # TODO: pass all three field names via filter</code>
           </li>
         </div>
       
@@ -12871,29 +12871,29 @@
 
             
 
-            <code class="ruby">    return { value: true } if contains_stats &amp;&amp; contains_stats[:value] == true</code>
+            <code class="ruby">    contains_stats = get_first_as_boolean_from(&#39;containsStatistics_b&#39;)</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="334">
-            
-            
-
+          <li class="covered" data-hits="206" data-linenumber="334">
+            <span class="hits">206</span>
             
 
-            <code class="ruby"></code>
+            
+
+            <code class="ruby">    has_table = get_first_as_boolean_from(&#39;hasTable_b&#39;)</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="157" data-linenumber="335">
-            <span class="hits">157</span>
+          <li class="covered" data-hits="206" data-linenumber="335">
+            <span class="hits">206</span>
             
 
             
 
-            <code class="ruby">    return { value: true } if has_table &amp;&amp; has_table[:value] == true</code>
+            <code class="ruby">    stats_indicated = get_first_as_boolean_from(&#39;statisticsIndicated_b&#39;)</code>
           </li>
         </div>
       
@@ -12909,13 +12909,13 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="154" data-linenumber="337">
-            <span class="hits">154</span>
+          <li class="covered" data-hits="206" data-linenumber="337">
+            <span class="hits">206</span>
             
 
             
 
-            <code class="ruby">    return { value: true } if stats_indicated &amp;&amp; stats_indicated[:value] == true</code>
+            <code class="ruby">    return { value: true } if contains_stats &amp;&amp; contains_stats[:value] == true</code>
           </li>
         </div>
       
@@ -12931,13 +12931,13 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="137" data-linenumber="339">
-            <span class="hits">137</span>
+          <li class="covered" data-hits="157" data-linenumber="339">
+            <span class="hits">157</span>
             
 
             
 
-            <code class="ruby">    { value: false }</code>
+            <code class="ruby">    return { value: true } if has_table &amp;&amp; has_table[:value] == true</code>
           </li>
         </div>
       
@@ -12948,12 +12948,23 @@
 
             
 
-            <code class="ruby">  end</code>
+            <code class="ruby"></code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="341">
+          <li class="covered" data-hits="154" data-linenumber="341">
+            <span class="hits">154</span>
+            
+
+            
+
+            <code class="ruby">    return { value: true } if stats_indicated &amp;&amp; stats_indicated[:value] == true</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="342">
             
             
 
@@ -12964,35 +12975,24 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="342">
-            <span class="hits">1</span>
+          <li class="covered" data-hits="137" data-linenumber="343">
+            <span class="hits">137</span>
             
 
             
 
-            <code class="ruby">  def date</code>
+            <code class="ruby">    { value: false }</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="343">
+          <li class="never" data-hits="" data-linenumber="344">
             
             
 
             
 
-            <code class="ruby">    # generic date field</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="covered" data-hits="373" data-linenumber="344">
-            <span class="hits">373</span>
-            
-
-            
-
-            <code class="ruby">    get_as_date_from(&#39;date_dt&#39;)</code>
+            <code class="ruby">  end</code>
           </li>
         </div>
       
@@ -13003,40 +13003,40 @@
 
             
 
-            <code class="ruby">  end</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="346">
-            
-            
-
-            
-
             <code class="ruby"></code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="347">
+          <li class="covered" data-hits="1" data-linenumber="346">
             <span class="hits">1</span>
             
 
             
 
-            <code class="ruby">  def dual_type?</code>
+            <code class="ruby">  def date</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="348">
-            <span class="hits">1</span>
+          <li class="never" data-hits="" data-linenumber="347">
+            
             
 
             
 
-            <code class="ruby">    false</code>
+            <code class="ruby">    # generic date field</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="373" data-linenumber="348">
+            <span class="hits">373</span>
+            
+
+            
+
+            <code class="ruby">    get_as_date_from(&#39;date_dt&#39;)</code>
           </li>
         </div>
       
@@ -13069,7 +13069,7 @@
 
             
 
-            <code class="ruby">  def ministerial_correction?</code>
+            <code class="ruby">  def dual_type?</code>
           </li>
         </div>
       
@@ -13113,18 +13113,18 @@
 
             
 
-            <code class="ruby">  def standard_house</code>
+            <code class="ruby">  def ministerial_correction?</code>
           </li>
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="356">
-            
-            
-
+          <li class="covered" data-hits="1" data-linenumber="356">
+            <span class="hits">1</span>
             
 
-            <code class="ruby">    get_all_from(&#39;legislature_ses&#39;)</code>
+            
+
+            <code class="ruby">    false</code>
           </li>
         </div>
       
@@ -13157,29 +13157,29 @@
 
             
 
-            <code class="ruby">  def standard_reference</code>
+            <code class="ruby">  def standard_house</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="360">
+          <li class="missed" data-hits="0" data-linenumber="360">
             
             
 
             
 
-            <code class="ruby">    # this is always just identifier_t</code>
+            <code class="ruby">    get_all_from(&#39;legislature_ses&#39;)</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="9" data-linenumber="361">
-            <span class="hits">9</span>
+          <li class="never" data-hits="" data-linenumber="361">
+            
             
 
             
 
-            <code class="ruby">    get_all_from(&#39;identifier_t&#39;)</code>
+            <code class="ruby">  end</code>
           </li>
         </div>
       
@@ -13190,51 +13190,51 @@
 
             
 
-            <code class="ruby">  end</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="363">
-            
-            
-
-            
-
             <code class="ruby"></code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="364">
+          <li class="covered" data-hits="1" data-linenumber="363">
             <span class="hits">1</span>
             
 
             
 
-            <code class="ruby">  def standard_date</code>
+            <code class="ruby">  def standard_reference</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="365">
+          <li class="never" data-hits="" data-linenumber="364">
             
             
 
             
 
-            <code class="ruby">    # this is always just date_dt</code>
+            <code class="ruby">    # this is always just identifier_t</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="9" data-linenumber="366">
+          <li class="covered" data-hits="9" data-linenumber="365">
             <span class="hits">9</span>
             
 
             
 
-            <code class="ruby">    get_as_date_from(&#39;date_dt&#39;)</code>
+            <code class="ruby">    get_all_from(&#39;identifier_t&#39;)</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="366">
+            
+            
+
+            
+
+            <code class="ruby">  end</code>
           </li>
         </div>
       
@@ -13245,12 +13245,56 @@
 
             
 
+            <code class="ruby"></code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="1" data-linenumber="368">
+            <span class="hits">1</span>
+            
+
+            
+
+            <code class="ruby">  def standard_date</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="369">
+            
+            
+
+            
+
+            <code class="ruby">    # this is always just date_dt</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="9" data-linenumber="370">
+            <span class="hits">9</span>
+            
+
+            
+
+            <code class="ruby">    get_as_date_from(&#39;date_dt&#39;)</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="371">
+            
+            
+
+            
+
             <code class="ruby">  end</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="368">
+          <li class="never" data-hits="" data-linenumber="372">
             
             
 
@@ -13261,7 +13305,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="369">
+          <li class="covered" data-hits="1" data-linenumber="373">
             <span class="hits">1</span>
             
 
@@ -13272,7 +13316,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="370">
+          <li class="never" data-hits="" data-linenumber="374">
             
             
 
@@ -13283,7 +13327,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="371">
+          <li class="covered" data-hits="1" data-linenumber="375">
             <span class="hits">1</span>
             
 
@@ -13294,7 +13338,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="3038" data-linenumber="372">
+          <li class="covered" data-hits="3038" data-linenumber="376">
             <span class="hits">3038</span>
             
 
@@ -13305,7 +13349,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="373">
+          <li class="never" data-hits="" data-linenumber="377">
             
             
 
@@ -13316,7 +13360,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="3016" data-linenumber="374">
+          <li class="covered" data-hits="3016" data-linenumber="378">
             <span class="hits">3016</span>
             
 
@@ -13327,7 +13371,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="375">
+          <li class="never" data-hits="" data-linenumber="379">
             
             
 
@@ -13338,7 +13382,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="376">
+          <li class="never" data-hits="" data-linenumber="380">
             
             
 
@@ -13349,7 +13393,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="377">
+          <li class="covered" data-hits="1" data-linenumber="381">
             <span class="hits">1</span>
             
 
@@ -13360,57 +13404,13 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1381" data-linenumber="378">
+          <li class="covered" data-hits="1381" data-linenumber="382">
             <span class="hits">1381</span>
             
 
             
 
             <code class="ruby">    return unless [&#39;true&#39;, &#39;false&#39;, true, false].include?(content_object_data[field_name]&amp;.first)</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="379">
-            
-            
-
-            
-
-            <code class="ruby"></code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="covered" data-hits="658" data-linenumber="380">
-            <span class="hits">658</span>
-            
-
-            
-
-            <code class="ruby">    result = [&#39;true&#39;, true].include?(content_object_data[field_name].first) ? true : false</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="covered" data-hits="658" data-linenumber="381">
-            <span class="hits">658</span>
-            
-
-            
-
-            <code class="ruby">    { value: result, field_name: field_name }</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="382">
-            
-            
-
-            
-
-            <code class="ruby">  end</code>
           </li>
         </div>
       
@@ -13426,24 +13426,24 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="384">
-            <span class="hits">1</span>
+          <li class="covered" data-hits="658" data-linenumber="384">
+            <span class="hits">658</span>
             
 
             
 
-            <code class="ruby">  def get_first_from(field_name)</code>
+            <code class="ruby">    result = [&#39;true&#39;, true].include?(content_object_data[field_name].first) ? true : false</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="6057" data-linenumber="385">
-            <span class="hits">6057</span>
+          <li class="covered" data-hits="658" data-linenumber="385">
+            <span class="hits">658</span>
             
 
             
 
-            <code class="ruby">    return if content_object_data[field_name].blank?</code>
+            <code class="ruby">    { value: result, field_name: field_name }</code>
           </li>
         </div>
       
@@ -13454,12 +13454,56 @@
 
             
 
+            <code class="ruby">  end</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="387">
+            
+            
+
+            
+
             <code class="ruby"></code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="4010" data-linenumber="387">
+          <li class="covered" data-hits="1" data-linenumber="388">
+            <span class="hits">1</span>
+            
+
+            
+
+            <code class="ruby">  def get_first_from(field_name)</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="6057" data-linenumber="389">
+            <span class="hits">6057</span>
+            
+
+            
+
+            <code class="ruby">    return if content_object_data[field_name].blank?</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="390">
+            
+            
+
+            
+
+            <code class="ruby"></code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="4010" data-linenumber="391">
             <span class="hits">4010</span>
             
 
@@ -13470,7 +13514,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="388">
+          <li class="never" data-hits="" data-linenumber="392">
             
             
 
@@ -13481,7 +13525,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="389">
+          <li class="never" data-hits="" data-linenumber="393">
             
             
 
@@ -13492,7 +13536,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="390">
+          <li class="covered" data-hits="1" data-linenumber="394">
             <span class="hits">1</span>
             
 
@@ -13503,7 +13547,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="556" data-linenumber="391">
+          <li class="covered" data-hits="556" data-linenumber="395">
             <span class="hits">556</span>
             
 
@@ -13514,7 +13558,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="392">
+          <li class="never" data-hits="" data-linenumber="396">
             
             
 
@@ -13525,7 +13569,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="13" data-linenumber="393">
+          <li class="covered" data-hits="13" data-linenumber="397">
             <span class="hits">13</span>
             
 
@@ -13536,7 +13580,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="394">
+          <li class="never" data-hits="" data-linenumber="398">
             
             
 
@@ -13547,7 +13591,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="395">
+          <li class="never" data-hits="" data-linenumber="399">
             
             
 
@@ -13558,7 +13602,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="396">
+          <li class="covered" data-hits="1" data-linenumber="400">
             <span class="hits">1</span>
             
 
@@ -13569,7 +13613,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="641" data-linenumber="397">
+          <li class="covered" data-hits="641" data-linenumber="401">
             <span class="hits">641</span>
             
 
@@ -13580,7 +13624,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="398">
+          <li class="never" data-hits="" data-linenumber="402">
             
             
 
@@ -13591,7 +13635,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="92" data-linenumber="399">
+          <li class="covered" data-hits="92" data-linenumber="403">
             <span class="hits">92</span>
             
 
@@ -13602,7 +13646,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="400">
+          <li class="never" data-hits="" data-linenumber="404">
             
             
 
@@ -13613,7 +13657,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="401">
+          <li class="never" data-hits="" data-linenumber="405">
             
             
 
@@ -13624,7 +13668,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="402">
+          <li class="covered" data-hits="1" data-linenumber="406">
             <span class="hits">1</span>
             
 
@@ -13635,7 +13679,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="420" data-linenumber="403">
+          <li class="covered" data-hits="420" data-linenumber="407">
             <span class="hits">420</span>
             
 
@@ -13646,7 +13690,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="404">
+          <li class="never" data-hits="" data-linenumber="408">
             
             
 
@@ -13657,7 +13701,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="405" data-linenumber="405">
+          <li class="covered" data-hits="405" data-linenumber="409">
             <span class="hits">405</span>
             
 
@@ -13668,7 +13712,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="406">
+          <li class="never" data-hits="" data-linenumber="410">
             
             
 
@@ -13679,7 +13723,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="407">
+          <li class="never" data-hits="" data-linenumber="411">
             
             
 
@@ -13690,7 +13734,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="408">
+          <li class="covered" data-hits="1" data-linenumber="412">
             <span class="hits">1</span>
             
 
@@ -13701,7 +13745,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="7" data-linenumber="409">
+          <li class="covered" data-hits="7" data-linenumber="413">
             <span class="hits">7</span>
             
 
@@ -13712,7 +13756,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="410">
+          <li class="never" data-hits="" data-linenumber="414">
             
             
 
@@ -13723,7 +13767,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="4" data-linenumber="411">
+          <li class="covered" data-hits="4" data-linenumber="415">
             <span class="hits">4</span>
             
 
@@ -13734,57 +13778,13 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="412">
+          <li class="never" data-hits="" data-linenumber="416">
             
             
 
             
 
             <code class="ruby">  end</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="413">
-            
-            
-
-            
-
-            <code class="ruby"></code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="covered" data-hits="1" data-linenumber="414">
-            <span class="hits">1</span>
-            
-
-            
-
-            <code class="ruby">  def get_first_as_date_from(field_name)</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="415">
-            
-            
-
-            
-
-            <code class="ruby">    # some dates are single strings stored in arrays</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="covered" data-hits="386" data-linenumber="416">
-            <span class="hits">386</span>
-            
-
-            
-
-            <code class="ruby">    return if content_object_data[field_name].blank?</code>
           </li>
         </div>
       
@@ -13800,7 +13800,51 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="273" data-linenumber="418">
+          <li class="covered" data-hits="1" data-linenumber="418">
+            <span class="hits">1</span>
+            
+
+            
+
+            <code class="ruby">  def get_first_as_date_from(field_name)</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="419">
+            
+            
+
+            
+
+            <code class="ruby">    # some dates are single strings stored in arrays</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="386" data-linenumber="420">
+            <span class="hits">386</span>
+            
+
+            
+
+            <code class="ruby">    return if content_object_data[field_name].blank?</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="421">
+            
+            
+
+            
+
+            <code class="ruby"></code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="273" data-linenumber="422">
             <span class="hits">273</span>
             
 
@@ -13811,7 +13855,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="273" data-linenumber="419">
+          <li class="covered" data-hits="273" data-linenumber="423">
             <span class="hits">273</span>
             
 
@@ -13822,7 +13866,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="420">
+          <li class="never" data-hits="" data-linenumber="424">
             
             
 
@@ -13833,7 +13877,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="247" data-linenumber="421">
+          <li class="covered" data-hits="247" data-linenumber="425">
             <span class="hits">247</span>
             
 
@@ -13844,57 +13888,13 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="422">
+          <li class="never" data-hits="" data-linenumber="426">
             
             
 
             
 
             <code class="ruby">  end</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="423">
-            
-            
-
-            
-
-            <code class="ruby"></code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="covered" data-hits="1" data-linenumber="424">
-            <span class="hits">1</span>
-            
-
-            
-
-            <code class="ruby">  def get_as_date_from(field_name)</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="425">
-            
-            
-
-            
-
-            <code class="ruby">    # some dates are stored as strings</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="covered" data-hits="582" data-linenumber="426">
-            <span class="hits">582</span>
-            
-
-            
-
-            <code class="ruby">    return if content_object_data[field_name].blank?</code>
           </li>
         </div>
       
@@ -13910,7 +13910,51 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="559" data-linenumber="428">
+          <li class="covered" data-hits="1" data-linenumber="428">
+            <span class="hits">1</span>
+            
+
+            
+
+            <code class="ruby">  def get_as_date_from(field_name)</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="429">
+            
+            
+
+            
+
+            <code class="ruby">    # some dates are stored as strings</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="582" data-linenumber="430">
+            <span class="hits">582</span>
+            
+
+            
+
+            <code class="ruby">    return if content_object_data[field_name].blank?</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="431">
+            
+            
+
+            
+
+            <code class="ruby"></code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="559" data-linenumber="432">
             <span class="hits">559</span>
             
 
@@ -13921,7 +13965,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="559" data-linenumber="429">
+          <li class="covered" data-hits="559" data-linenumber="433">
             <span class="hits">559</span>
             
 
@@ -13932,7 +13976,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="430">
+          <li class="never" data-hits="" data-linenumber="434">
             
             
 
@@ -13943,7 +13987,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="556" data-linenumber="431">
+          <li class="covered" data-hits="556" data-linenumber="435">
             <span class="hits">556</span>
             
 
@@ -13954,57 +13998,13 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="432">
-            
-            
-
-            
-
-            <code class="ruby">  end</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="433">
-            
-            
-
-            
-
-            <code class="ruby"></code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="covered" data-hits="1" data-linenumber="434">
-            <span class="hits">1</span>
-            
-
-            
-
-            <code class="ruby">  def get_all_from(field_name)</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="435">
-            
-            
-
-            
-
-            <code class="ruby">    # returns an array of hashes that follow the standard structure</code>
-          </li>
-        </div>
-      
-        <div>
           <li class="never" data-hits="" data-linenumber="436">
             
             
 
             
 
-            <code class="ruby">    # when / if refactored this will be an array of data structure objects</code>
+            <code class="ruby">  end</code>
           </li>
         </div>
       
@@ -14015,29 +14015,29 @@
 
             
 
-            <code class="ruby">    # this is done so a view can iterate across the result of get_all_from (e.g. legislation)</code>
+            <code class="ruby"></code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="438">
-            
-            
-
+          <li class="covered" data-hits="1" data-linenumber="438">
+            <span class="hits">1</span>
             
 
-            <code class="ruby">    # and build links for each item using the same helper methods as used for a single data object</code>
+            
+
+            <code class="ruby">  def get_all_from(field_name)</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="5968" data-linenumber="439">
-            <span class="hits">5968</span>
+          <li class="never" data-hits="" data-linenumber="439">
+            
             
 
             
 
-            <code class="ruby">    return if content_object_data[field_name].blank?</code>
+            <code class="ruby">    # returns an array of hashes that follow the standard structure</code>
           </li>
         </div>
       
@@ -14048,18 +14048,18 @@
 
             
 
-            <code class="ruby"></code>
+            <code class="ruby">    # when / if refactored this will be an array of data structure objects</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="16892" data-linenumber="441">
-            <span class="hits">16892</span>
+          <li class="never" data-hits="" data-linenumber="441">
+            
             
 
             
 
-            <code class="ruby">    content_object_data[field_name].map { |value| { value: value, field_name: field_name } }</code>
+            <code class="ruby">    # this is done so a view can iterate across the result of get_all_from (e.g. legislation)</code>
           </li>
         </div>
       
@@ -14070,12 +14070,23 @@
 
             
 
-            <code class="ruby">  end</code>
+            <code class="ruby">    # and build links for each item using the same helper methods as used for a single data object</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="443">
+          <li class="covered" data-hits="5968" data-linenumber="443">
+            <span class="hits">5968</span>
+            
+
+            
+
+            <code class="ruby">    return if content_object_data[field_name].blank?</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="444">
             
             
 
@@ -14086,24 +14097,13 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="444">
-            <span class="hits">1</span>
+          <li class="covered" data-hits="16892" data-linenumber="445">
+            <span class="hits">16892</span>
             
 
             
 
-            <code class="ruby">  def self.content_object_class(type_id, subtype_ids)</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="covered" data-hits="135" data-linenumber="445">
-            <span class="hits">135</span>
-            
-
-            
-
-            <code class="ruby">    case type_id</code>
+            <code class="ruby">    content_object_data[field_name].map { |value| { value: value, field_name: field_name } }</code>
           </li>
         </div>
       
@@ -14114,40 +14114,40 @@
 
             
 
-            <code class="ruby">    when 363376</code>
+            <code class="ruby">  end</code>
           </li>
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="447">
+          <li class="never" data-hits="" data-linenumber="447">
             
             
 
             
 
-            <code class="ruby">      &#39;NotSupported&#39;</code>
+            <code class="ruby"></code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="448">
-            
-            
-
+          <li class="covered" data-hits="1" data-linenumber="448">
+            <span class="hits">1</span>
             
 
-            <code class="ruby">    when 90996</code>
+            
+
+            <code class="ruby">  def self.content_object_class(type_id, subtype_ids)</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="31" data-linenumber="449">
-            <span class="hits">31</span>
+          <li class="covered" data-hits="135" data-linenumber="449">
+            <span class="hits">135</span>
             
 
             
 
-            <code class="ruby">      &#39;Edm&#39;</code>
+            <code class="ruby">    case type_id</code>
           </li>
         </div>
       
@@ -14158,18 +14158,18 @@
 
             
 
-            <code class="ruby">    when 346697</code>
+            <code class="ruby">    when 363376</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="13" data-linenumber="451">
-            <span class="hits">13</span>
+          <li class="missed" data-hits="0" data-linenumber="451">
+            
             
 
             
 
-            <code class="ruby">      &#39;ResearchBriefing&#39;</code>
+            <code class="ruby">      &#39;NotSupported&#39;</code>
           </li>
         </div>
       
@@ -14180,18 +14180,18 @@
 
             
 
-            <code class="ruby">    when 93522</code>
+            <code class="ruby">    when 90996</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="453">
-            <span class="hits">1</span>
+          <li class="covered" data-hits="31" data-linenumber="453">
+            <span class="hits">31</span>
             
 
             
 
-            <code class="ruby">      &#39;WrittenQuestion&#39;</code>
+            <code class="ruby">      &#39;Edm&#39;</code>
           </li>
         </div>
       
@@ -14202,18 +14202,18 @@
 
             
 
-            <code class="ruby">    when 352211</code>
+            <code class="ruby">    when 346697</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="455">
-            <span class="hits">1</span>
+          <li class="covered" data-hits="13" data-linenumber="455">
+            <span class="hits">13</span>
             
 
             
 
-            <code class="ruby">      &#39;WrittenStatement&#39;</code>
+            <code class="ruby">      &#39;ResearchBriefing&#39;</code>
           </li>
         </div>
       
@@ -14224,7 +14224,7 @@
 
             
 
-            <code class="ruby">    when 347125</code>
+            <code class="ruby">    when 93522</code>
           </li>
         </div>
       
@@ -14235,7 +14235,7 @@
 
             
 
-            <code class="ruby">      &#39;ChurchOfEnglandMeasure&#39;</code>
+            <code class="ruby">      &#39;WrittenQuestion&#39;</code>
           </li>
         </div>
       
@@ -14246,7 +14246,7 @@
 
             
 
-            <code class="ruby">    when 352234</code>
+            <code class="ruby">    when 352211</code>
           </li>
         </div>
       
@@ -14257,7 +14257,7 @@
 
             
 
-            <code class="ruby">      &#39;PrivateAct&#39;</code>
+            <code class="ruby">      &#39;WrittenStatement&#39;</code>
           </li>
         </div>
       
@@ -14268,7 +14268,7 @@
 
             
 
-            <code class="ruby">    when 347135</code>
+            <code class="ruby">    when 347125</code>
           </li>
         </div>
       
@@ -14279,7 +14279,7 @@
 
             
 
-            <code class="ruby">      &#39;PublicAct&#39;</code>
+            <code class="ruby">      &#39;ChurchOfEnglandMeasure&#39;</code>
           </li>
         </div>
       
@@ -14290,7 +14290,7 @@
 
             
 
-            <code class="ruby">    when 92034</code>
+            <code class="ruby">    when 352234</code>
           </li>
         </div>
       
@@ -14301,7 +14301,7 @@
 
             
 
-            <code class="ruby">      &#39;MinisterialCorrection&#39;</code>
+            <code class="ruby">      &#39;PrivateAct&#39;</code>
           </li>
         </div>
       
@@ -14312,7 +14312,7 @@
 
             
 
-            <code class="ruby">    when 91613</code>
+            <code class="ruby">    when 347135</code>
           </li>
         </div>
       
@@ -14323,7 +14323,7 @@
 
             
 
-            <code class="ruby">      &#39;ImpactAssessment&#39;</code>
+            <code class="ruby">      &#39;PublicAct&#39;</code>
           </li>
         </div>
       
@@ -14334,7 +14334,7 @@
 
             
 
-            <code class="ruby">    when 347163</code>
+            <code class="ruby">    when 92034</code>
           </li>
         </div>
       
@@ -14345,7 +14345,7 @@
 
             
 
-            <code class="ruby">      &#39;DepositedPaper&#39;</code>
+            <code class="ruby">      &#39;MinisterialCorrection&#39;</code>
           </li>
         </div>
       
@@ -14356,7 +14356,7 @@
 
             
 
-            <code class="ruby">    when 360977</code>
+            <code class="ruby">    when 91613</code>
           </li>
         </div>
       
@@ -14367,7 +14367,7 @@
 
             
 
-            <code class="ruby">      &#39;TransportAndWorksActOrderApplication&#39;</code>
+            <code class="ruby">      &#39;ImpactAssessment&#39;</code>
           </li>
         </div>
       
@@ -14378,7 +14378,7 @@
 
             
 
-            <code class="ruby">    when 347122</code>
+            <code class="ruby">    when 347163</code>
           </li>
         </div>
       
@@ -14389,7 +14389,7 @@
 
             
 
-            <code class="ruby">      &#39;Bill&#39;</code>
+            <code class="ruby">      &#39;DepositedPaper&#39;</code>
           </li>
         </div>
       
@@ -14400,12 +14400,56 @@
 
             
 
+            <code class="ruby">    when 360977</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="1" data-linenumber="473">
+            <span class="hits">1</span>
+            
+
+            
+
+            <code class="ruby">      &#39;TransportAndWorksActOrderApplication&#39;</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="474">
+            
+            
+
+            
+
+            <code class="ruby">    when 347122</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="1" data-linenumber="475">
+            <span class="hits">1</span>
+            
+
+            
+
+            <code class="ruby">      &#39;Bill&#39;</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="476">
+            
+            
+
+            
+
             <code class="ruby">    when 92435</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="3" data-linenumber="473">
+          <li class="covered" data-hits="3" data-linenumber="477">
             <span class="hits">3</span>
             
 
@@ -14416,7 +14460,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="474">
+          <li class="covered" data-hits="1" data-linenumber="478">
             <span class="hits">1</span>
             
 
@@ -14427,7 +14471,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="2" data-linenumber="475">
+          <li class="covered" data-hits="2" data-linenumber="479">
             <span class="hits">2</span>
             
 
@@ -14438,7 +14482,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="476">
+          <li class="covered" data-hits="1" data-linenumber="480">
             <span class="hits">1</span>
             
 
@@ -14449,7 +14493,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="477">
+          <li class="never" data-hits="" data-linenumber="481">
             
             
 
@@ -14460,7 +14504,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="478">
+          <li class="covered" data-hits="1" data-linenumber="482">
             <span class="hits">1</span>
             
 
@@ -14471,7 +14515,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="479">
+          <li class="never" data-hits="" data-linenumber="483">
             
             
 
@@ -14482,7 +14526,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="480">
+          <li class="never" data-hits="" data-linenumber="484">
             
             
 
@@ -14493,7 +14537,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="481">
+          <li class="covered" data-hits="1" data-linenumber="485">
             <span class="hits">1</span>
             
 
@@ -14504,7 +14548,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="482">
+          <li class="never" data-hits="" data-linenumber="486">
             
             
 
@@ -14515,7 +14559,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="483">
+          <li class="never" data-hits="" data-linenumber="487">
             
             
 
@@ -14526,7 +14570,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="484">
+          <li class="covered" data-hits="1" data-linenumber="488">
             <span class="hits">1</span>
             
 
@@ -14537,7 +14581,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="485">
+          <li class="never" data-hits="" data-linenumber="489">
             
             
 
@@ -14548,7 +14592,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="486">
+          <li class="never" data-hits="" data-linenumber="490">
             
             
 
@@ -14559,7 +14603,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="487">
+          <li class="covered" data-hits="1" data-linenumber="491">
             <span class="hits">1</span>
             
 
@@ -14570,7 +14614,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="488">
+          <li class="never" data-hits="" data-linenumber="492">
             
             
 
@@ -14581,7 +14625,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="489">
+          <li class="never" data-hits="" data-linenumber="493">
             
             
 
@@ -14592,7 +14636,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="490">
+          <li class="covered" data-hits="1" data-linenumber="494">
             <span class="hits">1</span>
             
 
@@ -14603,7 +14647,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="491">
+          <li class="never" data-hits="" data-linenumber="495">
             
             
 
@@ -14614,7 +14658,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="492">
+          <li class="never" data-hits="" data-linenumber="496">
             
             
 
@@ -14625,7 +14669,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="493">
+          <li class="covered" data-hits="1" data-linenumber="497">
             <span class="hits">1</span>
             
 
@@ -14636,7 +14680,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="494">
+          <li class="never" data-hits="" data-linenumber="498">
             
             
 
@@ -14647,7 +14691,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="495">
+          <li class="never" data-hits="" data-linenumber="499">
             
             
 
@@ -14658,7 +14702,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="496">
+          <li class="covered" data-hits="1" data-linenumber="500">
             <span class="hits">1</span>
             
 
@@ -14669,7 +14713,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="497">
+          <li class="never" data-hits="" data-linenumber="501">
             
             
 
@@ -14680,7 +14724,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="498">
+          <li class="never" data-hits="" data-linenumber="502">
             
             
 
@@ -14691,7 +14735,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="499">
+          <li class="covered" data-hits="1" data-linenumber="503">
             <span class="hits">1</span>
             
 
@@ -14702,7 +14746,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="500">
+          <li class="never" data-hits="" data-linenumber="504">
             
             
 
@@ -14713,7 +14757,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="4" data-linenumber="501">
+          <li class="covered" data-hits="4" data-linenumber="505">
             <span class="hits">4</span>
             
 
@@ -14724,7 +14768,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="502">
+          <li class="covered" data-hits="1" data-linenumber="506">
             <span class="hits">1</span>
             
 
@@ -14735,7 +14779,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="3" data-linenumber="503">
+          <li class="covered" data-hits="3" data-linenumber="507">
             <span class="hits">3</span>
             
 
@@ -14746,7 +14790,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="504">
+          <li class="covered" data-hits="1" data-linenumber="508">
             <span class="hits">1</span>
             
 
@@ -14757,7 +14801,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="2" data-linenumber="505">
+          <li class="covered" data-hits="2" data-linenumber="509">
             <span class="hits">2</span>
             
 
@@ -14768,7 +14812,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="506">
+          <li class="covered" data-hits="1" data-linenumber="510">
             <span class="hits">1</span>
             
 
@@ -14779,7 +14823,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="507">
+          <li class="covered" data-hits="1" data-linenumber="511">
             <span class="hits">1</span>
             
 
@@ -14790,7 +14834,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="508">
+          <li class="never" data-hits="" data-linenumber="512">
             
             
 
@@ -14801,7 +14845,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="509">
+          <li class="covered" data-hits="1" data-linenumber="513">
             <span class="hits">1</span>
             
 
@@ -14812,7 +14856,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="510">
+          <li class="never" data-hits="" data-linenumber="514">
             
             
 
@@ -14823,7 +14867,7 @@
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="511">
+          <li class="missed" data-hits="0" data-linenumber="515">
             
             
 
@@ -14834,7 +14878,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="512">
+          <li class="never" data-hits="" data-linenumber="516">
             
             
 
@@ -14845,7 +14889,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="513">
+          <li class="never" data-hits="" data-linenumber="517">
             
             
 
@@ -14856,7 +14900,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="514">
+          <li class="covered" data-hits="1" data-linenumber="518">
             <span class="hits">1</span>
             
 
@@ -14867,7 +14911,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="515">
+          <li class="never" data-hits="" data-linenumber="519">
             
             
 
@@ -14878,7 +14922,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="516">
+          <li class="covered" data-hits="1" data-linenumber="520">
             <span class="hits">1</span>
             
 
@@ -14889,7 +14933,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="517">
+          <li class="never" data-hits="" data-linenumber="521">
             
             
 
@@ -14900,7 +14944,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="518">
+          <li class="covered" data-hits="1" data-linenumber="522">
             <span class="hits">1</span>
             
 
@@ -14911,7 +14955,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="519">
+          <li class="never" data-hits="" data-linenumber="523">
             
             
 
@@ -14922,7 +14966,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="520">
+          <li class="covered" data-hits="1" data-linenumber="524">
             <span class="hits">1</span>
             
 
@@ -14933,7 +14977,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="521">
+          <li class="never" data-hits="" data-linenumber="525">
             
             
 
@@ -14944,7 +14988,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="522">
+          <li class="never" data-hits="" data-linenumber="526">
             
             
 
@@ -14955,7 +14999,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="523">
+          <li class="covered" data-hits="1" data-linenumber="527">
             <span class="hits">1</span>
             
 
@@ -14966,7 +15010,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="524">
+          <li class="never" data-hits="" data-linenumber="528">
             
             
 
@@ -14977,7 +15021,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="525">
+          <li class="never" data-hits="" data-linenumber="529">
             
             
 
@@ -14988,7 +15032,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="526">
+          <li class="covered" data-hits="1" data-linenumber="530">
             <span class="hits">1</span>
             
 
@@ -14999,7 +15043,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="527">
+          <li class="never" data-hits="" data-linenumber="531">
             
             
 
@@ -15010,7 +15054,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="528">
+          <li class="covered" data-hits="1" data-linenumber="532">
             <span class="hits">1</span>
             
 
@@ -15021,7 +15065,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="529">
+          <li class="never" data-hits="" data-linenumber="533">
             
             
 
@@ -15032,7 +15076,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="530">
+          <li class="covered" data-hits="1" data-linenumber="534">
             <span class="hits">1</span>
             
 
@@ -15043,7 +15087,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="531">
+          <li class="never" data-hits="" data-linenumber="535">
             
             
 
@@ -15054,7 +15098,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="532">
+          <li class="covered" data-hits="1" data-linenumber="536">
             <span class="hits">1</span>
             
 
@@ -15065,7 +15109,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="533">
+          <li class="never" data-hits="" data-linenumber="537">
             
             
 
@@ -15076,7 +15120,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="534">
+          <li class="covered" data-hits="1" data-linenumber="538">
             <span class="hits">1</span>
             
 
@@ -15087,7 +15131,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="535">
+          <li class="never" data-hits="" data-linenumber="539">
             
             
 
@@ -15098,7 +15142,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="536">
+          <li class="covered" data-hits="1" data-linenumber="540">
             <span class="hits">1</span>
             
 
@@ -15109,7 +15153,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="537">
+          <li class="never" data-hits="" data-linenumber="541">
             
             
 
@@ -15120,7 +15164,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="538">
+          <li class="covered" data-hits="1" data-linenumber="542">
             <span class="hits">1</span>
             
 
@@ -15131,7 +15175,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="539">
+          <li class="never" data-hits="" data-linenumber="543">
             
             
 
@@ -15142,7 +15186,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="540">
+          <li class="covered" data-hits="1" data-linenumber="544">
             <span class="hits">1</span>
             
 
@@ -15153,7 +15197,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="541">
+          <li class="never" data-hits="" data-linenumber="545">
             
             
 
@@ -15164,7 +15208,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="54" data-linenumber="542">
+          <li class="covered" data-hits="54" data-linenumber="546">
             <span class="hits">54</span>
             
 
@@ -15175,57 +15219,13 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="543">
-            
-            
-
-            
-
-            <code class="ruby">    end</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="544">
-            
-            
-
-            
-
-            <code class="ruby">  end</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="545">
-            
-            
-
-            
-
-            <code class="ruby"></code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="covered" data-hits="1" data-linenumber="546">
-            <span class="hits">1</span>
-            
-
-            
-
-            <code class="ruby">  def validate_datetime(date)</code>
-          </li>
-        </div>
-      
-        <div>
           <li class="never" data-hits="" data-linenumber="547">
             
             
 
             
 
-            <code class="ruby">    # All dates are stored as datetimes in the UK timezone</code>
+            <code class="ruby">    end</code>
           </li>
         </div>
       
@@ -15236,7 +15236,7 @@
 
             
 
-            <code class="ruby"></code>
+            <code class="ruby">  end</code>
           </li>
         </div>
       
@@ -15247,18 +15247,18 @@
 
             
 
-            <code class="ruby">    begin</code>
+            <code class="ruby"></code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="832" data-linenumber="550">
-            <span class="hits">832</span>
+          <li class="covered" data-hits="1" data-linenumber="550">
+            <span class="hits">1</span>
             
 
             
 
-            <code class="ruby">      date_string = DateTime.parse(date).in_time_zone(&#39;London&#39;)</code>
+            <code class="ruby">  def validate_datetime(date)</code>
           </li>
         </div>
       
@@ -15269,18 +15269,18 @@
 
             
 
-            <code class="ruby">    rescue Date::Error</code>
+            <code class="ruby">    # All dates are stored as datetimes in the UK timezone</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="29" data-linenumber="552">
-            <span class="hits">29</span>
+          <li class="never" data-hits="" data-linenumber="552">
+            
             
 
             
 
-            <code class="ruby">      return nil</code>
+            <code class="ruby"></code>
           </li>
         </div>
       
@@ -15291,40 +15291,40 @@
 
             
 
-            <code class="ruby">    end</code>
+            <code class="ruby">    begin</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="554">
-            
-            
-
+          <li class="covered" data-hits="832" data-linenumber="554">
+            <span class="hits">832</span>
             
 
-            <code class="ruby"></code>
+            
+
+            <code class="ruby">      date_string = DateTime.parse(date).in_time_zone(&#39;London&#39;)</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="803" data-linenumber="555">
-            <span class="hits">803</span>
+          <li class="never" data-hits="" data-linenumber="555">
+            
             
 
             
 
-            <code class="ruby">    date_string</code>
+            <code class="ruby">    rescue Date::Error</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="556">
-            
-            
-
+          <li class="covered" data-hits="29" data-linenumber="556">
+            <span class="hits">29</span>
             
 
-            <code class="ruby">  end</code>
+            
+
+            <code class="ruby">      return nil</code>
           </li>
         </div>
       
@@ -15335,29 +15335,29 @@
 
             
 
+            <code class="ruby">    end</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="558">
+            
+            
+
+            
+
             <code class="ruby"></code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="558">
-            <span class="hits">1</span>
+          <li class="covered" data-hits="803" data-linenumber="559">
+            <span class="hits">803</span>
             
 
             
 
-            <code class="ruby">  def combine_fields(first, second)</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="covered" data-hits="2488" data-linenumber="559">
-            <span class="hits">2488</span>
-            
-
-            
-
-            <code class="ruby">    return nil if first.blank? &amp;&amp; second.blank?</code>
+            <code class="ruby">    date_string</code>
           </li>
         </div>
       
@@ -15368,23 +15368,12 @@
 
             
 
-            <code class="ruby"></code>
+            <code class="ruby">  end</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="1672" data-linenumber="561">
-            <span class="hits">1672</span>
-            
-
-            
-
-            <code class="ruby">    return first if second.blank?</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="562">
+          <li class="never" data-hits="" data-linenumber="561">
             
             
 
@@ -15395,13 +15384,24 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="158" data-linenumber="563">
-            <span class="hits">158</span>
+          <li class="covered" data-hits="1" data-linenumber="562">
+            <span class="hits">1</span>
             
 
             
 
-            <code class="ruby">    return second if first.blank?</code>
+            <code class="ruby">  def combine_fields(first, second)</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="2488" data-linenumber="563">
+            <span class="hits">2488</span>
+            
+
+            
+
+            <code class="ruby">    return nil if first.blank? &amp;&amp; second.blank?</code>
           </li>
         </div>
       
@@ -15417,13 +15417,13 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="85" data-linenumber="565">
-            <span class="hits">85</span>
+          <li class="covered" data-hits="1672" data-linenumber="565">
+            <span class="hits">1672</span>
             
 
             
 
-            <code class="ruby">    first + second</code>
+            <code class="ruby">    return first if second.blank?</code>
           </li>
         </div>
       
@@ -15434,12 +15434,23 @@
 
             
 
-            <code class="ruby">  end</code>
+            <code class="ruby"></code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="567">
+          <li class="covered" data-hits="158" data-linenumber="567">
+            <span class="hits">158</span>
+            
+
+            
+
+            <code class="ruby">    return second if first.blank?</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="568">
             
             
 
@@ -15450,24 +15461,13 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="568">
-            <span class="hits">1</span>
+          <li class="covered" data-hits="85" data-linenumber="569">
+            <span class="hits">85</span>
             
 
             
 
-            <code class="ruby">  def fallback(preferred, alternative)</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="covered" data-hits="1176" data-linenumber="569">
-            <span class="hits">1176</span>
-            
-
-            
-
-            <code class="ruby">    preferred.blank? ? alternative : preferred</code>
+            <code class="ruby">    first + second</code>
           </li>
         </div>
       
@@ -15494,7 +15494,51 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="572">
+          <li class="covered" data-hits="1" data-linenumber="572">
+            <span class="hits">1</span>
+            
+
+            
+
+            <code class="ruby">  def fallback(preferred, alternative)</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="1176" data-linenumber="573">
+            <span class="hits">1176</span>
+            
+
+            
+
+            <code class="ruby">    preferred.blank? ? alternative : preferred</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="574">
+            
+            
+
+            
+
+            <code class="ruby">  end</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="575">
+            
+            
+
+            
+
+            <code class="ruby"></code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="576">
             
             
 
@@ -28129,7 +28173,7 @@
     <h3>app/models/question.rb</h3>
     <h4>
       <span class="yellow">
-  88.0%
+  85.19%
 </span>
 
       lines covered
@@ -28138,9 +28182,9 @@
     
 
     <div class="t-line-summary">
-      <b>50</b> relevant lines.
-      <span class="green"><b>44</b> lines covered</span> and
-      <span class="red"><b>6</b> lines missed.</span>
+      <b>54</b> relevant lines.
+      <span class="green"><b>46</b> lines covered</span> and
+      <span class="red"><b>8</b> lines missed.</span>
     </div>
 
     
@@ -28971,18 +29015,18 @@
 
             
 
-            <code class="ruby">  def answer_text</code>
+            <code class="ruby">  def tabling_member_parties</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="100" data-linenumber="76">
-            <span class="hits">100</span>
+          <li class="missed" data-hits="0" data-linenumber="76">
+            
             
 
             
 
-            <code class="ruby">    get_first_as_html_from(&#39;answerText_t&#39;)</code>
+            <code class="ruby">    get_all_from(&#39;tablingMemberParty_ses&#39;)</code>
           </li>
         </div>
       
@@ -29015,18 +29059,18 @@
 
             
 
-            <code class="ruby">  def corrected_answer</code>
+            <code class="ruby">  def answer_text</code>
           </li>
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="80">
-            
-            
-
+          <li class="covered" data-hits="100" data-linenumber="80">
+            <span class="hits">100</span>
             
 
-            <code class="ruby">    get_first_as_html_from(&#39;correctionText_t&#39;)</code>
+            
+
+            <code class="ruby">    get_first_as_html_from(&#39;answerText_t&#39;)</code>
           </li>
         </div>
       
@@ -29059,18 +29103,18 @@
 
             
 
-            <code class="ruby">  def question_text</code>
+            <code class="ruby">  def corrected_answer</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="103" data-linenumber="84">
-            <span class="hits">103</span>
+          <li class="missed" data-hits="0" data-linenumber="84">
+            
             
 
             
 
-            <code class="ruby">    get_first_as_html_from(&#39;questionText_t&#39;)</code>
+            <code class="ruby">    get_first_as_html_from(&#39;correctionText_t&#39;)</code>
           </li>
         </div>
       
@@ -29103,18 +29147,18 @@
 
             
 
-            <code class="ruby">  def question_type</code>
+            <code class="ruby">  def question_text</code>
           </li>
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="88">
-            
-            
-
+          <li class="covered" data-hits="103" data-linenumber="88">
+            <span class="hits">103</span>
             
 
-            <code class="ruby">    get_first_from(&#39;wpqType_t&#39;)</code>
+            
+
+            <code class="ruby">    get_first_as_html_from(&#39;questionText_t&#39;)</code>
           </li>
         </div>
       
@@ -29147,7 +29191,7 @@
 
             
 
-            <code class="ruby">  def named_day?</code>
+            <code class="ruby">  def question_type</code>
           </li>
         </div>
       
@@ -29158,7 +29202,7 @@
 
             
 
-            <code class="ruby">    question_type &amp;&amp; question_type[:value]&amp;.downcase == &#39;named day&#39;</code>
+            <code class="ruby">    get_first_from(&#39;wpqType_t&#39;)</code>
           </li>
         </div>
       
@@ -29191,7 +29235,7 @@
 
             
 
-            <code class="ruby">  def answering_department</code>
+            <code class="ruby">  def named_day?</code>
           </li>
         </div>
       
@@ -29202,7 +29246,7 @@
 
             
 
-            <code class="ruby">    get_first_from(&#39;answeringDept_ses&#39;)</code>
+            <code class="ruby">    question_type &amp;&amp; question_type[:value]&amp;.downcase == &#39;named day&#39;</code>
           </li>
         </div>
       
@@ -29235,7 +29279,7 @@
 
             
 
-            <code class="ruby">  def answering_member_party</code>
+            <code class="ruby">  def answering_department</code>
           </li>
         </div>
       
@@ -29246,7 +29290,7 @@
 
             
 
-            <code class="ruby">    get_first_from(&#39;answeringMemberParty_ses&#39;)</code>
+            <code class="ruby">    get_first_from(&#39;answeringDept_ses&#39;)</code>
           </li>
         </div>
       
@@ -29279,7 +29323,7 @@
 
             
 
-            <code class="ruby">  def question?</code>
+            <code class="ruby">  def answering_member_party</code>
           </li>
         </div>
       
@@ -29290,7 +29334,7 @@
 
             
 
-            <code class="ruby">    true</code>
+            <code class="ruby">    get_first_from(&#39;answeringMemberParty_ses&#39;)</code>
           </li>
         </div>
       
@@ -29307,6 +29351,94 @@
       
         <div>
           <li class="never" data-hits="" data-linenumber="106">
+            
+            
+
+            
+
+            <code class="ruby"></code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="1" data-linenumber="107">
+            <span class="hits">1</span>
+            
+
+            
+
+            <code class="ruby">  def answering_member_parties</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="missed" data-hits="0" data-linenumber="108">
+            
+            
+
+            
+
+            <code class="ruby">    get_all_from(&#39;answeringMemberParty_ses&#39;)</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="109">
+            
+            
+
+            
+
+            <code class="ruby">  end</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="110">
+            
+            
+
+            
+
+            <code class="ruby"></code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="1" data-linenumber="111">
+            <span class="hits">1</span>
+            
+
+            
+
+            <code class="ruby">  def question?</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="missed" data-hits="0" data-linenumber="112">
+            
+            
+
+            
+
+            <code class="ruby">    true</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="113">
+            
+            
+
+            
+
+            <code class="ruby">  end</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="114">
             
             
 
