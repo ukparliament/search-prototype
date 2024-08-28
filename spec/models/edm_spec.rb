@@ -266,8 +266,8 @@ RSpec.describe Edm, type: :model do
     context 'where there  is missing data' do
       let!(:edm) { Edm.new({}) }
 
-      it 'returns nil' do
-        expect(edm.amendments).to eq(nil)
+      it 'returns an empty array' do
+        expect(edm.amendments).to eq([])
       end
     end
 
@@ -276,30 +276,33 @@ RSpec.describe Edm, type: :model do
                              'amendmentText_t' => ['first item', 'second item'],
                              'amendment_numberOfSignatures_s' => [20, 10],
                              'amendment_primarySponsorPrinted_t' => ['sponsor one', 'sponsor two'],
+                             'amendment_primarySponsor_ses' => [54321, 76543],
                              'amendment_primarySponsorParty_ses' => [12345, 54321],
                              'identifier_t' => ['main id', 'amendment 1 id', 'amendment 2 id'],
                              'amendment_dateTabled_dt' => [DateTime.commercial(2022), DateTime.commercial(2021)],
                            }) }
 
-      it 'returns nil' do
+      it 'returns an array containing a hash for each amendment' do
         expect(edm.amendments).to eq(
                                     [{
                                        date_tabled: { value: DateTime.commercial(2022), field_name: 'amendment_dateTabled_dt' },
-                                       index: 0,
                                        number_of_signatures: { value: 20, field_name: 'amendment_numberOfSignatures_s' },
-                                       primary_sponsor: { value: 'sponsor one', field_name: 'amendment_primarySponsorPrinted_t' },
+                                       primary_sponsor: { value: 54321, field_name: 'amendment_primarySponsor_ses' },
+                                       primary_sponsor_text: { value: 'sponsor one', field_name: 'amendment_primarySponsorPrinted_t' },
                                        primary_sponsor_party: { value: 12345, field_name: 'amendment_primarySponsorParty_ses' },
                                        reference: { value: 'amendment 1 id', field_name: 'identifier_t' },
-                                       text: { value: 'first item', field_name: 'amendmentText_t' }
+                                       text: { value: 'first item', field_name: 'amendmentText_t' },
+                                       index: 0
                                      },
                                      {
                                        date_tabled: { value: DateTime.commercial(2021), field_name: 'amendment_dateTabled_dt' },
-                                       index: 1,
                                        number_of_signatures: { value: 10, field_name: 'amendment_numberOfSignatures_s' },
-                                       primary_sponsor: { value: 'sponsor two', field_name: 'amendment_primarySponsorPrinted_t' },
+                                       primary_sponsor: { value: 76543, field_name: 'amendment_primarySponsor_ses' },
+                                       primary_sponsor_text: { value: 'sponsor two', field_name: 'amendment_primarySponsorPrinted_t' },
                                        primary_sponsor_party: { value: 54321, field_name: 'amendment_primarySponsorParty_ses' },
                                        reference: { value: 'amendment 2 id', field_name: 'identifier_t' },
-                                       text: { value: 'second item', field_name: 'amendmentText_t' }
+                                       text: { value: 'second item', field_name: 'amendmentText_t' },
+                                       index: 1
                                      }
                                     ]
                                   )
@@ -311,6 +314,7 @@ RSpec.describe Edm, type: :model do
                              'amendmentText_t' => ['first item'],
                              'amendment_numberOfSignatures_s' => [20],
                              'amendment_primarySponsorPrinted_t' => ['sponsor one'],
+                             'amendment_primarySponsor_ses' => [23456],
                              'amendment_primarySponsorParty_ses' => [12345],
                              'identifier_t' => ['main id', 'amendment 1 id'],
                              'amendment_dateTabled_dt' => [DateTime.commercial(2022)],
@@ -320,12 +324,39 @@ RSpec.describe Edm, type: :model do
         expect(edm.amendments).to eq(
                                     [{
                                        date_tabled: { value: DateTime.commercial(2022), field_name: 'amendment_dateTabled_dt' },
-                                       index: 0,
                                        number_of_signatures: { value: 20, field_name: 'amendment_numberOfSignatures_s' },
-                                       primary_sponsor: { value: 'sponsor one', field_name: 'amendment_primarySponsorPrinted_t' },
+                                       primary_sponsor: { value: 23456, field_name: 'amendment_primarySponsor_ses' },
+                                       primary_sponsor_text: { value: 'sponsor one', field_name: 'amendment_primarySponsorPrinted_t' },
                                        primary_sponsor_party: { value: 12345, field_name: 'amendment_primarySponsorParty_ses' },
                                        reference: { value: 'amendment 1 id', field_name: 'identifier_t' },
-                                       text: { value: 'first item', field_name: 'amendmentText_t' }
+                                       text: { value: 'first item', field_name: 'amendmentText_t' },
+                                       index: 0
+                                     }
+                                    ]
+                                  )
+      end
+    end
+
+    context 'where some data is missing for an amendment' do
+      let!(:edm) { Edm.new({
+                             'amendmentText_t' => ['first item'],
+                             'amendment_numberOfSignatures_s' => [20],
+                             'amendment_primarySponsorPrinted_t' => ['sponsor one'],
+                             'identifier_t' => ['main id', 'amendment 1 id'],
+                             'amendment_dateTabled_dt' => [DateTime.commercial(2022)],
+                           }) }
+
+      it 'returns all available data and some nil values where data is missing' do
+        expect(edm.amendments).to eq(
+                                    [{
+                                       date_tabled: { value: DateTime.commercial(2022), field_name: 'amendment_dateTabled_dt' },
+                                       number_of_signatures: { value: 20, field_name: 'amendment_numberOfSignatures_s' },
+                                       primary_sponsor: { value: nil, field_name: nil },
+                                       primary_sponsor_text: { value: 'sponsor one', field_name: 'amendment_primarySponsorPrinted_t' },
+                                       primary_sponsor_party: { value: nil, field_name: nil },
+                                       reference: { value: 'amendment 1 id', field_name: 'identifier_t' },
+                                       text: { value: 'first item', field_name: 'amendmentText_t' },
+                                       index: 0
                                      }
                                     ]
                                   )

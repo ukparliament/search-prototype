@@ -5,6 +5,6 @@ module DateHelper
 
     return if data[:value].blank?
 
-    data[:value].strftime(ApplicationHelper::DATE_DISPLAY_FORMAT)
+    data[:value].to_date.strftime(ApplicationHelper::DATE_DISPLAY_FORMAT)
   end
 end

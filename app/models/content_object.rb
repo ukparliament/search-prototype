@@ -43,7 +43,6 @@ class ContentObject
   end
 
   def amendments
-    # TODO: temporary superclass method for non-EDM objects to be able to use a standard view for all result types
     nil
   end
 
@@ -187,7 +186,7 @@ class ContentObject
   end
 
   def primary_sponsor_party
-    get_first_from('primarySponsorParty_ses')
+    get_all_from('primarySponsorParty_ses')
   end
 
   def legislature
@@ -288,6 +287,10 @@ class ContentObject
     get_first_from('memberParty_ses')
   end
 
+  def member_parties
+    get_all_from('memberParty_ses')
+  end
+
   def answering_member
     get_first_from('answeringMember_ses')
   end
@@ -298,6 +301,10 @@ class ContentObject
 
   def asking_member_party
     get_first_from('askingMemberParty_ses')
+  end
+
+  def asking_member_parties
+    get_all_from('askingMemberParty_ses')
   end
 
   def lead_member

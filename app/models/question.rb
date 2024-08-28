@@ -72,6 +72,10 @@ class Question < ContentObject
     get_first_from('tablingMemberParty_ses')
   end
 
+  def tabling_member_parties
+    get_all_from('tablingMemberParty_ses')
+  end
+
   def answer_text
     get_first_as_html_from('answerText_t')
   end
@@ -98,6 +102,10 @@ class Question < ContentObject
 
   def answering_member_party
     get_first_from('answeringMemberParty_ses')
+  end
+
+  def answering_member_parties
+    get_all_from('answeringMemberParty_ses')
   end
 
   def question?
