@@ -361,6 +361,25 @@ ul.unformatted {
     }
 }
 
+/*tables*/
+
+table, td, th {
+    border: 1px solid
+}
+
+table {
+    display: table;
+    border-collapse: collapse;
+
+    p {
+        margin-bottom: 18px;
+        margin-top: 0;
+        padding: 1px;
+        margin-block-start: 18px;
+        margin-block-end: 18px;
+    }
+}
+
 /* Back to top & any other on-page buttons */
 .mini-button-container {
     .page-button {
