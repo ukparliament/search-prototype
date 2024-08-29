@@ -102,8 +102,8 @@ module ApplicationHelper
       subject_t: 'Subject',
       legislationTitle_t: 'Legislation',
       department_t: 'Department',
-      year: 'Year',
-      month: 'Month'
+      year: 'Date',
+      month: 'Date'
     }
 
     field_names[field.to_sym]
