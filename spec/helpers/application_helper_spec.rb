@@ -2,6 +2,21 @@ require 'rails_helper'
 
 RSpec.describe ApplicationHelper, type: :helper do
 
+  describe 'format_html' do
+    context 'when not truncating html' do
+      let!(:content) { "<div><strong>Hello world!</strong></div>" }
+      it 'returns valid html' do
+        expect(helper.format_html(content, 50)).to eq(content)
+      end
+    end
+    context 'when truncating html' do
+      let!(:content) { "<div><strong>Hello world!</strong></div>" }
+      it 'returns valid html' do
+        expect(helper.format_html(content, 1)).to eq("<div><strong>Hello...</strong></div>")
+      end
+    end
+  end
+
   describe 'boolean_yes_no' do
     context 'when given nil' do
       it 'returns no' do

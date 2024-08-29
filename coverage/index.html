@@ -14,7 +14,7 @@
       <img src="./assets/0.12.3/loading.gif" alt="loading"/>
     </div>
     <div id="wrapper" class="hide">
-      <div class="timestamp">Generated <abbr class="timeago" title="2024-08-28T15:37:30+01:00">2024-08-28T15:37:30+01:00</abbr></div>
+      <div class="timestamp">Generated <abbr class="timeago" title="2024-08-29T08:13:36+01:00">2024-08-29T08:13:36+01:00</abbr></div>
       <ul class="group_tabs"></ul>
 
       <div id="content">
@@ -23,14 +23,14 @@
     <span class="group_name">All Files</span>
     (<span class="covered_percent">
       <span class="yellow">
-  83.02%
+  83.04%
 </span>
 
      </span>
      covered at
      <span class="covered_strength">
        <span class="green">
-         92.35
+         92.24
        </span>
     </span> hits/line
     )
@@ -43,11 +43,11 @@
   </div>
 
   <div class="t-line-summary">
-    <b>1596</b> relevant lines,
-    <span class="green"><b>1325</b> lines covered</span> and
+    <b>1598</b> relevant lines,
+    <span class="green"><b>1327</b> lines covered</span> and
     <span class="red"><b>271</b> lines missed. </span>
     (<span class="yellow">
-  83.02%
+  83.04%
 </span>
 )
   </div>
@@ -138,12 +138,12 @@
         
           <tr class="t-file">
             <td class="strong t-file__name"><a href="#905b6e9b10254dc0d6b80aa4b294aa33db207cc2" class="src_link" title="app/helpers/application_helper.rb">app/helpers/application_helper.rb</a></td>
-            <td class="red strong cell--number t-file__coverage">78.72 %</td>
-            <td class="cell--number">134</td>
-            <td class="cell--number">47</td>
-            <td class="cell--number">37</td>
+            <td class="red strong cell--number t-file__coverage">79.59 %</td>
+            <td class="cell--number">138</td>
+            <td class="cell--number">49</td>
+            <td class="cell--number">39</td>
             <td class="cell--number">10</td>
-            <td class="cell--number">21.43</td>
+            <td class="cell--number">20.61</td>
             
           </tr>
         
@@ -2313,7 +2313,7 @@
     <h3>app/helpers/application_helper.rb</h3>
     <h4>
       <span class="red">
-  78.72%
+  79.59%
 </span>
 
       lines covered
@@ -2322,8 +2322,8 @@
     
 
     <div class="t-line-summary">
-      <b>47</b> relevant lines.
-      <span class="green"><b>37</b> lines covered</span> and
+      <b>49</b> relevant lines.
+      <span class="green"><b>39</b> lines covered</span> and
       <span class="red"><b>10</b> lines missed.</span>
     </div>
 
@@ -2429,18 +2429,18 @@
 
             
 
-            <code class="ruby">  def boolean_yes_no(boolean)</code>
+            <code class="ruby">  def format_html(html, truncate_words)</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="10">
-            
-            
-
+          <li class="covered" data-hits="2" data-linenumber="10">
+            <span class="hits">2</span>
             
 
-            <code class="ruby">    # outputs &#39;Yes&#39; or &#39;No&#39; strings from a boolean (an instance of Ruby TrueClass or FalseClass)</code>
+            
+
+            <code class="ruby">    Nokogiri::HTML::DocumentFragment.parse(html.truncate_words(truncate_words)).to_html</code>
           </li>
         </div>
       
@@ -2451,7 +2451,7 @@
 
             
 
-            <code class="ruby">    # for presenting output of methods such as WrittenQuestion transferred?</code>
+            <code class="ruby">  end</code>
           </li>
         </div>
       
@@ -2462,18 +2462,18 @@
 
             
 
-            <code class="ruby">    # Note that in most cases the partial will not be rendered except where the answer is &#39;Yes&#39;, but exceptions exist</code>
+            <code class="ruby"></code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="72" data-linenumber="13">
-            <span class="hits">72</span>
+          <li class="covered" data-hits="1" data-linenumber="13">
+            <span class="hits">1</span>
             
 
             
 
-            <code class="ruby">    return &#39;Yes&#39; if boolean &amp;&amp; boolean[:value] == true</code>
+            <code class="ruby">  def boolean_yes_no(boolean)</code>
           </li>
         </div>
       
@@ -2484,18 +2484,18 @@
 
             
 
-            <code class="ruby"></code>
+            <code class="ruby">    # outputs &#39;Yes&#39; or &#39;No&#39; strings from a boolean (an instance of Ruby TrueClass or FalseClass)</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="2" data-linenumber="15">
-            <span class="hits">2</span>
+          <li class="never" data-hits="" data-linenumber="15">
+            
             
 
             
 
-            <code class="ruby">    &#39;No&#39;</code>
+            <code class="ruby">    # for presenting output of methods such as WrittenQuestion transferred?</code>
           </li>
         </div>
       
@@ -2506,12 +2506,23 @@
 
             
 
-            <code class="ruby">  end</code>
+            <code class="ruby">    # Note that in most cases the partial will not be rendered except where the answer is &#39;Yes&#39;, but exceptions exist</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="17">
+          <li class="covered" data-hits="72" data-linenumber="17">
+            <span class="hits">72</span>
+            
+
+            
+
+            <code class="ruby">    return &#39;Yes&#39; if boolean &amp;&amp; boolean[:value] == true</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="18">
             
             
 
@@ -2522,24 +2533,13 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="18">
-            <span class="hits">1</span>
+          <li class="covered" data-hits="2" data-linenumber="19">
+            <span class="hits">2</span>
             
 
             
 
-            <code class="ruby">  def ordinal_text(index)</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="covered" data-hits="12" data-linenumber="19">
-            <span class="hits">12</span>
-            
-
-            
-
-            <code class="ruby">    case index</code>
+            <code class="ruby">    &#39;No&#39;</code>
           </li>
         </div>
       
@@ -2550,40 +2550,40 @@
 
             
 
-            <code class="ruby">    when 0</code>
+            <code class="ruby">  end</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="21">
+          <li class="never" data-hits="" data-linenumber="21">
+            
+            
+
+            
+
+            <code class="ruby"></code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="1" data-linenumber="22">
             <span class="hits">1</span>
             
 
             
 
-            <code class="ruby">      &quot;first&quot;</code>
+            <code class="ruby">  def ordinal_text(index)</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="22">
-            
-            
-
-            
-
-            <code class="ruby">    when 1</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="covered" data-hits="3" data-linenumber="23">
-            <span class="hits">3</span>
+          <li class="covered" data-hits="12" data-linenumber="23">
+            <span class="hits">12</span>
             
 
             
 
-            <code class="ruby">      &quot;second&quot;</code>
+            <code class="ruby">    case index</code>
           </li>
         </div>
       
@@ -2594,7 +2594,7 @@
 
             
 
-            <code class="ruby">    when 2</code>
+            <code class="ruby">    when 0</code>
           </li>
         </div>
       
@@ -2605,7 +2605,7 @@
 
             
 
-            <code class="ruby">      &quot;third&quot;</code>
+            <code class="ruby">      &quot;first&quot;</code>
           </li>
         </div>
       
@@ -2616,18 +2616,18 @@
 
             
 
-            <code class="ruby">    when 3</code>
+            <code class="ruby">    when 1</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="27">
-            <span class="hits">1</span>
+          <li class="covered" data-hits="3" data-linenumber="27">
+            <span class="hits">3</span>
             
 
             
 
-            <code class="ruby">      &quot;fourth&quot;</code>
+            <code class="ruby">      &quot;second&quot;</code>
           </li>
         </div>
       
@@ -2638,7 +2638,7 @@
 
             
 
-            <code class="ruby">    when 4</code>
+            <code class="ruby">    when 2</code>
           </li>
         </div>
       
@@ -2649,7 +2649,7 @@
 
             
 
-            <code class="ruby">      &quot;fifth&quot;</code>
+            <code class="ruby">      &quot;third&quot;</code>
           </li>
         </div>
       
@@ -2660,7 +2660,7 @@
 
             
 
-            <code class="ruby">    when 5</code>
+            <code class="ruby">    when 3</code>
           </li>
         </div>
       
@@ -2671,7 +2671,7 @@
 
             
 
-            <code class="ruby">      &quot;sixth&quot;</code>
+            <code class="ruby">      &quot;fourth&quot;</code>
           </li>
         </div>
       
@@ -2682,7 +2682,7 @@
 
             
 
-            <code class="ruby">    when 6</code>
+            <code class="ruby">    when 4</code>
           </li>
         </div>
       
@@ -2693,7 +2693,7 @@
 
             
 
-            <code class="ruby">      &quot;seventh&quot;</code>
+            <code class="ruby">      &quot;fifth&quot;</code>
           </li>
         </div>
       
@@ -2704,7 +2704,7 @@
 
             
 
-            <code class="ruby">    when 7</code>
+            <code class="ruby">    when 5</code>
           </li>
         </div>
       
@@ -2715,7 +2715,7 @@
 
             
 
-            <code class="ruby">      &quot;eighth&quot;</code>
+            <code class="ruby">      &quot;sixth&quot;</code>
           </li>
         </div>
       
@@ -2726,7 +2726,7 @@
 
             
 
-            <code class="ruby">    when 8</code>
+            <code class="ruby">    when 6</code>
           </li>
         </div>
       
@@ -2737,7 +2737,7 @@
 
             
 
-            <code class="ruby">      &quot;ninth&quot;</code>
+            <code class="ruby">      &quot;seventh&quot;</code>
           </li>
         </div>
       
@@ -2748,7 +2748,7 @@
 
             
 
-            <code class="ruby">    else</code>
+            <code class="ruby">    when 7</code>
           </li>
         </div>
       
@@ -2759,7 +2759,7 @@
 
             
 
-            <code class="ruby">      (index + 1).ordinalize</code>
+            <code class="ruby">      &quot;eighth&quot;</code>
           </li>
         </div>
       
@@ -2770,18 +2770,18 @@
 
             
 
-            <code class="ruby">    end</code>
+            <code class="ruby">    when 8</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="41">
-            
-            
-
+          <li class="covered" data-hits="1" data-linenumber="41">
+            <span class="hits">1</span>
             
 
-            <code class="ruby">  end</code>
+            
+
+            <code class="ruby">      &quot;ninth&quot;</code>
           </li>
         </div>
       
@@ -2792,7 +2792,7 @@
 
             
 
-            <code class="ruby"></code>
+            <code class="ruby">    else</code>
           </li>
         </div>
       
@@ -2803,18 +2803,18 @@
 
             
 
-            <code class="ruby">  def format_object_title(object_title, ses_data)</code>
+            <code class="ruby">      (index + 1).ordinalize</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="435" data-linenumber="44">
-            <span class="hits">435</span>
+          <li class="never" data-hits="" data-linenumber="44">
+            
             
 
             
 
-            <code class="ruby">    return &quot;Untitled&quot; if object_title.blank?</code>
+            <code class="ruby">    end</code>
           </li>
         </div>
       
@@ -2825,7 +2825,7 @@
 
             
 
-            <code class="ruby"></code>
+            <code class="ruby">  end</code>
           </li>
         </div>
       
@@ -2836,29 +2836,29 @@
 
             
 
-            <code class="ruby">    # object title is either a string: &quot;Title&quot;</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="covered" data-hits="427" data-linenumber="47">
-            <span class="hits">427</span>
-            
-
-            
-
-            <code class="ruby">    return object_title if object_title.is_a?(String)</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="48">
-            
-            
-
-            
-
             <code class="ruby"></code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="1" data-linenumber="47">
+            <span class="hits">1</span>
+            
+
+            
+
+            <code class="ruby">  def format_object_title(object_title, ses_data)</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="435" data-linenumber="48">
+            <span class="hits">435</span>
+            
+
+            
+
+            <code class="ruby">    return &quot;Untitled&quot; if object_title.blank?</code>
           </li>
         </div>
       
@@ -2869,29 +2869,29 @@
 
             
 
-            <code class="ruby">    # or it&#39;s a SES ID and accompanying field name: {:value=&gt;91910, :field_name=&gt;&quot;subtype_ses&quot;}</code>
+            <code class="ruby"></code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="6" data-linenumber="50">
-            <span class="hits">6</span>
+          <li class="never" data-hits="" data-linenumber="50">
+            
             
 
             
 
-            <code class="ruby">    if object_title.is_a?(Hash)</code>
+            <code class="ruby">    # object title is either a string: &quot;Title&quot;</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="6" data-linenumber="51">
-            <span class="hits">6</span>
+          <li class="covered" data-hits="427" data-linenumber="51">
+            <span class="hits">427</span>
             
 
             
 
-            <code class="ruby">      return &quot;Untitled&quot; if object_title.dig(:value).blank?</code>
+            <code class="ruby">    return object_title if object_title.is_a?(String)</code>
           </li>
         </div>
       
@@ -2907,7 +2907,51 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="4" data-linenumber="53">
+          <li class="never" data-hits="" data-linenumber="53">
+            
+            
+
+            
+
+            <code class="ruby">    # or it&#39;s a SES ID and accompanying field name: {:value=&gt;91910, :field_name=&gt;&quot;subtype_ses&quot;}</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="6" data-linenumber="54">
+            <span class="hits">6</span>
+            
+
+            
+
+            <code class="ruby">    if object_title.is_a?(Hash)</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="6" data-linenumber="55">
+            <span class="hits">6</span>
+            
+
+            
+
+            <code class="ruby">      return &quot;Untitled&quot; if object_title.dig(:value).blank?</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="56">
+            
+            
+
+            
+
+            <code class="ruby"></code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="4" data-linenumber="57">
             <span class="hits">4</span>
             
 
@@ -2918,7 +2962,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="4" data-linenumber="54">
+          <li class="covered" data-hits="4" data-linenumber="58">
             <span class="hits">4</span>
             
 
@@ -2929,7 +2973,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="55">
+          <li class="never" data-hits="" data-linenumber="59">
             
             
 
@@ -2940,7 +2984,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="4" data-linenumber="56">
+          <li class="covered" data-hits="4" data-linenumber="60">
             <span class="hits">4</span>
             
 
@@ -2951,7 +2995,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="57">
+          <li class="never" data-hits="" data-linenumber="61">
             
             
 
@@ -2962,7 +3006,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="58">
+          <li class="never" data-hits="" data-linenumber="62">
             
             
 
@@ -2973,7 +3017,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="59">
+          <li class="never" data-hits="" data-linenumber="63">
             
             
 
@@ -2984,57 +3028,13 @@
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="60">
+          <li class="missed" data-hits="0" data-linenumber="64">
             
             
 
             
 
             <code class="ruby">    raise &quot;Unknown object title&quot; if Rails.env.development?</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="61">
-            
-            
-
-            
-
-            <code class="ruby"></code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="62">
-            
-            
-
-            
-
-            <code class="ruby">    # or return &quot;Untitled&quot; in production</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="missed" data-hits="0" data-linenumber="63">
-            
-            
-
-            
-
-            <code class="ruby">    &quot;Untitled&quot;</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="64">
-            
-            
-
-            
-
-            <code class="ruby">  end</code>
           </li>
         </div>
       
@@ -3050,24 +3050,24 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="66">
-            <span class="hits">1</span>
+          <li class="never" data-hits="" data-linenumber="66">
+            
             
 
             
 
-            <code class="ruby">  def filter_field_name(field)</code>
+            <code class="ruby">    # or return &quot;Untitled&quot; in production</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="67">
+          <li class="missed" data-hits="0" data-linenumber="67">
             
             
 
             
 
-            <code class="ruby">    # returns display name for a filter field, e.g. &#39;Content Type&#39; for type_ses</code>
+            <code class="ruby">    &quot;Untitled&quot;</code>
           </li>
         </div>
       
@@ -3078,7 +3078,7 @@
 
             
 
-            <code class="ruby"></code>
+            <code class="ruby">  end</code>
           </li>
         </div>
       
@@ -3089,18 +3089,18 @@
 
             
 
-            <code class="ruby">    field_names = {</code>
+            <code class="ruby"></code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="2" data-linenumber="70">
-            <span class="hits">2</span>
+          <li class="covered" data-hits="1" data-linenumber="70">
+            <span class="hits">1</span>
             
 
             
 
-            <code class="ruby">      type_ses: &#39;Type&#39;,</code>
+            <code class="ruby">  def filter_field_name(field)</code>
           </li>
         </div>
       
@@ -3111,7 +3111,7 @@
 
             
 
-            <code class="ruby">      type_sesrollup: &#39;Type&#39;,</code>
+            <code class="ruby">    # returns display name for a filter field, e.g. &#39;Content Type&#39; for type_ses</code>
           </li>
         </div>
       
@@ -3122,7 +3122,7 @@
 
             
 
-            <code class="ruby">      legislature_ses: &#39;House&#39;,</code>
+            <code class="ruby"></code>
           </li>
         </div>
       
@@ -3133,18 +3133,18 @@
 
             
 
-            <code class="ruby">      session_t: &#39;Session&#39;,</code>
+            <code class="ruby">    field_names = {</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="74">
-            
-            
-
+          <li class="covered" data-hits="2" data-linenumber="74">
+            <span class="hits">2</span>
             
 
-            <code class="ruby">      date_dt: &#39;Date&#39;,</code>
+            
+
+            <code class="ruby">      type_ses: &#39;Type&#39;,</code>
           </li>
         </div>
       
@@ -3155,7 +3155,7 @@
 
             
 
-            <code class="ruby">      member_ses: &#39;Member&#39;,</code>
+            <code class="ruby">      type_sesrollup: &#39;Type&#39;,</code>
           </li>
         </div>
       
@@ -3166,7 +3166,7 @@
 
             
 
-            <code class="ruby">      memberParty_ses: &#39;Member party&#39;,</code>
+            <code class="ruby">      legislature_ses: &#39;House&#39;,</code>
           </li>
         </div>
       
@@ -3177,7 +3177,7 @@
 
             
 
-            <code class="ruby">      legislativeStage_ses: &#39;Legislative stage&#39;,</code>
+            <code class="ruby">      session_t: &#39;Session&#39;,</code>
           </li>
         </div>
       
@@ -3188,7 +3188,7 @@
 
             
 
-            <code class="ruby">      department_ses: &#39;Department&#39;,</code>
+            <code class="ruby">      date_dt: &#39;Date&#39;,</code>
           </li>
         </div>
       
@@ -3199,7 +3199,7 @@
 
             
 
-            <code class="ruby">      subject_ses: &#39;Subject&#39;,</code>
+            <code class="ruby">      member_ses: &#39;Member&#39;,</code>
           </li>
         </div>
       
@@ -3210,7 +3210,7 @@
 
             
 
-            <code class="ruby">      topic_ses: &#39;Topic&#39;,</code>
+            <code class="ruby">      memberParty_ses: &#39;Member party&#39;,</code>
           </li>
         </div>
       
@@ -3221,7 +3221,7 @@
 
             
 
-            <code class="ruby">      party_ses: &#39;Party&#39;,</code>
+            <code class="ruby">      legislativeStage_ses: &#39;Legislative stage&#39;,</code>
           </li>
         </div>
       
@@ -3232,7 +3232,7 @@
 
             
 
-            <code class="ruby">      subtype_ses: &#39;Subtype&#39;,</code>
+            <code class="ruby">      department_ses: &#39;Department&#39;,</code>
           </li>
         </div>
       
@@ -3243,7 +3243,7 @@
 
             
 
-            <code class="ruby">      tablingMember_ses: &#39;Tabling member&#39;,</code>
+            <code class="ruby">      subject_ses: &#39;Subject&#39;,</code>
           </li>
         </div>
       
@@ -3254,7 +3254,7 @@
 
             
 
-            <code class="ruby">      tablingMemberParty_ses: &#39;Tabling member party&#39;,</code>
+            <code class="ruby">      topic_ses: &#39;Topic&#39;,</code>
           </li>
         </div>
       
@@ -3265,7 +3265,7 @@
 
             
 
-            <code class="ruby">      answeringMember_ses: &#39;Answering member&#39;,</code>
+            <code class="ruby">      party_ses: &#39;Party&#39;,</code>
           </li>
         </div>
       
@@ -3276,7 +3276,7 @@
 
             
 
-            <code class="ruby">      answeringMemberParty_ses: &#39;Answering member party&#39;,</code>
+            <code class="ruby">      subtype_ses: &#39;Subtype&#39;,</code>
           </li>
         </div>
       
@@ -3287,7 +3287,7 @@
 
             
 
-            <code class="ruby">      askingMember_ses: &#39;Asking member&#39;,</code>
+            <code class="ruby">      tablingMember_ses: &#39;Tabling member&#39;,</code>
           </li>
         </div>
       
@@ -3298,7 +3298,7 @@
 
             
 
-            <code class="ruby">      askingMemberParty_ses: &#39;Asking member party&#39;,</code>
+            <code class="ruby">      tablingMemberParty_ses: &#39;Tabling member party&#39;,</code>
           </li>
         </div>
       
@@ -3309,7 +3309,7 @@
 
             
 
-            <code class="ruby">      leadMember_ses: &#39;Lead member&#39;,</code>
+            <code class="ruby">      answeringMember_ses: &#39;Answering member&#39;,</code>
           </li>
         </div>
       
@@ -3320,7 +3320,7 @@
 
             
 
-            <code class="ruby">      leadMemberParty_ses: &#39;Lead member party&#39;,</code>
+            <code class="ruby">      answeringMemberParty_ses: &#39;Answering member party&#39;,</code>
           </li>
         </div>
       
@@ -3331,7 +3331,7 @@
 
             
 
-            <code class="ruby">      legislationTitle_ses: &#39;Legislation&#39;,</code>
+            <code class="ruby">      askingMember_ses: &#39;Asking member&#39;,</code>
           </li>
         </div>
       
@@ -3342,7 +3342,7 @@
 
             
 
-            <code class="ruby">      memberPrinted_t: &#39;Member&#39;,</code>
+            <code class="ruby">      askingMemberParty_ses: &#39;Asking member party&#39;,</code>
           </li>
         </div>
       
@@ -3353,7 +3353,7 @@
 
             
 
-            <code class="ruby">      procedure_t: &#39;Procedure&#39;,</code>
+            <code class="ruby">      leadMember_ses: &#39;Lead member&#39;,</code>
           </li>
         </div>
       
@@ -3364,7 +3364,7 @@
 
             
 
-            <code class="ruby">      subject_t: &#39;Subject&#39;,</code>
+            <code class="ruby">      leadMemberParty_ses: &#39;Lead member party&#39;,</code>
           </li>
         </div>
       
@@ -3375,7 +3375,7 @@
 
             
 
-            <code class="ruby">      legislationTitle_t: &#39;Legislation&#39;,</code>
+            <code class="ruby">      legislationTitle_ses: &#39;Legislation&#39;,</code>
           </li>
         </div>
       
@@ -3386,7 +3386,7 @@
 
             
 
-            <code class="ruby">      department_t: &#39;Department&#39;,</code>
+            <code class="ruby">      memberPrinted_t: &#39;Member&#39;,</code>
           </li>
         </div>
       
@@ -3397,7 +3397,7 @@
 
             
 
-            <code class="ruby">      year: &#39;Year&#39;,</code>
+            <code class="ruby">      procedure_t: &#39;Procedure&#39;,</code>
           </li>
         </div>
       
@@ -3408,7 +3408,7 @@
 
             
 
-            <code class="ruby">      month: &#39;Month&#39;</code>
+            <code class="ruby">      subject_t: &#39;Subject&#39;,</code>
           </li>
         </div>
       
@@ -3419,7 +3419,7 @@
 
             
 
-            <code class="ruby">    }</code>
+            <code class="ruby">      legislationTitle_t: &#39;Legislation&#39;,</code>
           </li>
         </div>
       
@@ -3430,18 +3430,18 @@
 
             
 
-            <code class="ruby"></code>
+            <code class="ruby">      department_t: &#39;Department&#39;,</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="2" data-linenumber="101">
-            <span class="hits">2</span>
+          <li class="never" data-hits="" data-linenumber="101">
+            
             
 
             
 
-            <code class="ruby">    field_names[field.to_sym]</code>
+            <code class="ruby">      year: &#39;Year&#39;,</code>
           </li>
         </div>
       
@@ -3452,7 +3452,7 @@
 
             
 
-            <code class="ruby">  end</code>
+            <code class="ruby">      month: &#39;Month&#39;</code>
           </li>
         </div>
       
@@ -3463,18 +3463,18 @@
 
             
 
-            <code class="ruby"></code>
+            <code class="ruby">    }</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="104">
-            <span class="hits">1</span>
+          <li class="never" data-hits="" data-linenumber="104">
+            
             
 
             
 
-            <code class="ruby">  def filter_field_value(filter, filter_value)</code>
+            <code class="ruby"></code>
           </li>
         </div>
       
@@ -3485,7 +3485,7 @@
 
             
 
-            <code class="ruby">    return filter_value unless filter.first == &quot;month&quot;</code>
+            <code class="ruby">    field_names[field.to_sym]</code>
           </li>
         </div>
       
@@ -3496,40 +3496,40 @@
 
             
 
+            <code class="ruby">  end</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="107">
+            
+            
+
+            
+
             <code class="ruby"></code>
           </li>
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="107">
-            
-            
-
+          <li class="covered" data-hits="1" data-linenumber="108">
+            <span class="hits">1</span>
             
 
-            <code class="ruby">    split = filter_value.split(&quot;-&quot;)</code>
+            
+
+            <code class="ruby">  def filter_field_value(filter, filter_value)</code>
           </li>
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="108">
-            
-            
-
-            
-
-            <code class="ruby">    year = split.first</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="missed" data-hits="0" data-linenumber="109">
-            
+          <li class="covered" data-hits="2" data-linenumber="109">
+            <span class="hits">2</span>
             
 
             
 
-            <code class="ruby">    month = split.last</code>
+            <code class="ruby">    return filter_value unless filter.first == &quot;month&quot;</code>
           </li>
         </div>
       
@@ -3551,7 +3551,7 @@
 
             
 
-            <code class="ruby">    month_string = Date::MONTHNAMES[month.to_i]</code>
+            <code class="ruby">    split = filter_value.split(&quot;-&quot;)</code>
           </li>
         </div>
       
@@ -3562,18 +3562,18 @@
 
             
 
-            <code class="ruby">    &quot;#{month_string} #{year}&quot;</code>
+            <code class="ruby">    year = split.first</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="113">
+          <li class="missed" data-hits="0" data-linenumber="113">
             
             
 
             
 
-            <code class="ruby">  end</code>
+            <code class="ruby">    month = split.last</code>
           </li>
         </div>
       
@@ -3589,13 +3589,13 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="115">
-            <span class="hits">1</span>
+          <li class="missed" data-hits="0" data-linenumber="115">
+            
             
 
             
 
-            <code class="ruby">  def checked_field(filter_params, facet_field_name, text_field_name)</code>
+            <code class="ruby">    month_string = Date::MONTHNAMES[month.to_i]</code>
           </li>
         </div>
       
@@ -3606,7 +3606,7 @@
 
             
 
-            <code class="ruby">    return false if filter_params.blank?</code>
+            <code class="ruby">    &quot;#{month_string} #{year}&quot;</code>
           </li>
         </div>
       
@@ -3617,62 +3617,62 @@
 
             
 
+            <code class="ruby">  end</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="118">
+            
+            
+
+            
+
             <code class="ruby"></code>
           </li>
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="118">
+          <li class="covered" data-hits="1" data-linenumber="119">
+            <span class="hits">1</span>
+            
+
+            
+
+            <code class="ruby">  def checked_field(filter_params, facet_field_name, text_field_name)</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="missed" data-hits="0" data-linenumber="120">
+            
+            
+
+            
+
+            <code class="ruby">    return false if filter_params.blank?</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="121">
+            
+            
+
+            
+
+            <code class="ruby"></code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="missed" data-hits="0" data-linenumber="122">
             
             
 
             
 
             <code class="ruby">    filter_params[facet_field_name]&amp;.include?(text_field_name)</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="119">
-            
-            
-
-            
-
-            <code class="ruby">  end</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="120">
-            
-            
-
-            
-
-            <code class="ruby"></code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="covered" data-hits="1" data-linenumber="121">
-            <span class="hits">1</span>
-            
-
-            
-
-            <code class="ruby">  def remove_filter_url(params, filter_name, filter_value)</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="covered" data-hits="2" data-linenumber="122">
-            <span class="hits">2</span>
-            
-
-            
-
-            <code class="ruby">    params.except(:page).merge(filter: params[:filter].merge({ filter_name =&gt; params.dig(:filter, filter_name)&amp;.excluding(filter_value) }))</code>
           </li>
         </div>
       
@@ -3705,18 +3705,18 @@
 
             
 
-            <code class="ruby">  def apply_filter_url(params, filter_name, filter_value)</code>
+            <code class="ruby">  def remove_filter_url(params, filter_name, filter_value)</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="126">
-            
-            
-
+          <li class="covered" data-hits="2" data-linenumber="126">
+            <span class="hits">2</span>
             
 
-            <code class="ruby">    # example output:</code>
+            
+
+            <code class="ruby">    params.except(:page).merge(filter: params[:filter].merge({ filter_name =&gt; params.dig(:filter, filter_name)&amp;.excluding(filter_value) }))</code>
           </li>
         </div>
       
@@ -3727,34 +3727,12 @@
 
             
 
-            <code class="ruby">    # {&quot;query&quot;=&gt;&quot;horses&quot;, &quot;commit&quot;=&gt;&quot;Search&quot;, &quot;controller&quot;=&gt;&quot;search&quot;, &quot;action&quot;=&gt;&quot;index&quot;, &quot;filter&quot;=&gt;{&quot;type_sesrollup&quot;=&gt;[90996]}}</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="missed" data-hits="0" data-linenumber="128">
-            
-            
-
-            
-
-            <code class="ruby">    params.except(:page).merge(filter: params.dig(:filter).nil? ? { filter_name =&gt; [filter_value] } : params.dig(:filter).merge(filter_name =&gt; [filter_value, params.dig(:filter, filter_name)].compact.flatten))</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="129">
-            
-            
-
-            
-
             <code class="ruby">  end</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="130">
+          <li class="never" data-hits="" data-linenumber="128">
             
             
 
@@ -3765,24 +3743,46 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="131">
+          <li class="covered" data-hits="1" data-linenumber="129">
             <span class="hits">1</span>
             
 
             
 
-            <code class="ruby">  def year_filter</code>
+            <code class="ruby">  def apply_filter_url(params, filter_name, filter_value)</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="3" data-linenumber="132">
-            <span class="hits">3</span>
+          <li class="never" data-hits="" data-linenumber="130">
+            
             
 
             
 
-            <code class="ruby">    params.dig(:filter, :year)</code>
+            <code class="ruby">    # example output:</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="131">
+            
+            
+
+            
+
+            <code class="ruby">    # {&quot;query&quot;=&gt;&quot;horses&quot;, &quot;commit&quot;=&gt;&quot;Search&quot;, &quot;controller&quot;=&gt;&quot;search&quot;, &quot;action&quot;=&gt;&quot;index&quot;, &quot;filter&quot;=&gt;{&quot;type_sesrollup&quot;=&gt;[90996]}}</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="missed" data-hits="0" data-linenumber="132">
+            
+            
+
+            
+
+            <code class="ruby">    params.except(:page).merge(filter: params.dig(:filter).nil? ? { filter_name =&gt; [filter_value] } : params.dig(:filter).merge(filter_name =&gt; [filter_value, params.dig(:filter, filter_name)].compact.flatten))</code>
           </li>
         </div>
       
@@ -3799,6 +3799,50 @@
       
         <div>
           <li class="never" data-hits="" data-linenumber="134">
+            
+            
+
+            
+
+            <code class="ruby"></code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="1" data-linenumber="135">
+            <span class="hits">1</span>
+            
+
+            
+
+            <code class="ruby">  def year_filter</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="3" data-linenumber="136">
+            <span class="hits">3</span>
+            
+
+            
+
+            <code class="ruby">    params.dig(:filter, :year)</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="137">
+            
+            
+
+            
+
+            <code class="ruby">  end</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="138">
             
             
 

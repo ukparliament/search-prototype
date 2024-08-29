@@ -6,6 +6,10 @@ module ApplicationHelper
   # ## We set the date display format.
   DATE_DISPLAY_FORMAT = '%A, %e %B %Y'
 
+  def format_html(html, truncate_words)
+    Nokogiri::HTML::DocumentFragment.parse(html.truncate_words(truncate_words)).to_html
+  end
+
   def boolean_yes_no(boolean)
     # outputs 'Yes' or 'No' strings from a boolean (an instance of Ruby TrueClass or FalseClass)
     # for presenting output of methods such as WrittenQuestion transferred?
