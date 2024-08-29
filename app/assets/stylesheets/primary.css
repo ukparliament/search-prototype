@@ -351,15 +351,14 @@ h3.content-heading {
     margin-bottom: 0;
 }
 
-/* Lists */
-/* Remove all list styling */
-ul {
+/* Unformatted lists */
+ul.unformatted {
     padding: 0;
     margin: 0;
-}
 
-li {
-    list-style-type: none;
+    li {
+        list-style-type: none;
+    }
 }
 
 /* Back to top & any other on-page buttons */
