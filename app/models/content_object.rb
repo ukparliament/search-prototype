@@ -448,7 +448,7 @@ class ContentObject
   def self.content_object_class(type_id, subtype_ids)
     case type_id
     when 363376
-      'NotSupported'
+      'ResearchMaterial'
     when 90996
       'Edm'
     when 346697
