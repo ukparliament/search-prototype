@@ -351,15 +351,33 @@ h3.content-heading {
     margin-bottom: 0;
 }
 
-/* Lists */
-/* Remove all list styling */
-ul {
+/* Unformatted lists */
+ul.unformatted {
     padding: 0;
     margin: 0;
+
+    li {
+        list-style-type: none;
+    }
 }
 
-li {
-    list-style-type: none;
+/*tables*/
+
+table, td, th {
+    border: 1px solid
+}
+
+table {
+    display: table;
+    border-collapse: collapse;
+
+    p {
+        margin-bottom: 18px;
+        margin-top: 0;
+        padding: 1px;
+        margin-block-start: 18px;
+        margin-block-end: 18px;
+    }
 }
 
 /* Back to top & any other on-page buttons */

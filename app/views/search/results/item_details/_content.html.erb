@@ -1,8 +1,7 @@
 <% unless content.blank? %>
   <div class="item-details">
     <span>
-      <%= raw content[:value].truncate_words(50) %>
-      <!--      Nokogiri::HTML::DocumentFragment.parse(html).to_html-->
+      <%= raw format_html(content[:value], 50) %>
     </span>
   </div>
 <% end %>

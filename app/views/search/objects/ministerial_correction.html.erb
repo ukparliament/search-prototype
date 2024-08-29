@@ -19,7 +19,7 @@
 <% unless object.correction_text.blank? %>
   <section id="main-content" class="content-section white">
     <div class="content-text">
-      <%= raw(object.correction_text[:value]) %>
+      <%= raw format_html(object.correction_text[:value], false) %>
     </div>
     <% unless object.corrected_item_link.blank? || @associated_object_data[object.corrected_item_id].blank? %>
       <div class="about-item">

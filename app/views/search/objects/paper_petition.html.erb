@@ -19,7 +19,7 @@
 <% unless object.content.blank? %>
   <section id="main-content" class="content-section white">
     <div class="content-text">
-      <%= raw(object.content[:value]) %>
+      <%= raw format_html(object.content[:value], false) %>
     </div>
   </section>
 <% end %>
