@@ -7,7 +7,11 @@ module ApplicationHelper
   DATE_DISPLAY_FORMAT = '%A, %e %B %Y'
 
   def format_html(html, truncate_words)
-    Nokogiri::HTML::DocumentFragment.parse(html.truncate_words(truncate_words)).to_html
+    if truncate_words == false
+      Nokogiri::HTML::DocumentFragment.parse(html).to_html
+    else
+      Nokogiri::HTML::DocumentFragment.parse(html.truncate_words(truncate_words)).to_html
+    end
   end
 
   def boolean_yes_no(boolean)

@@ -8,9 +8,9 @@
   <div id="top"></div>
 <% end %>
 
-  <% content_for(:title) do %>
-    <%= format_object_title(object.object_title, @ses_data) %>
-  <% end %>
+<% content_for(:title) do %>
+  <%= format_object_title(object.object_title, @ses_data) %>
+<% end %>
 
 <section id="prelim">
   <%= render 'search/preliminary_sentences/written_statement', object: object %>
@@ -19,7 +19,7 @@
 <% unless object.content.blank? %>
   <section id="main-content" class="content-section white">
     <div class="about-item">
-      <%= raw(object.statement_text[:value]) %>
+      <%= raw format_html(object.statement_text[:value], false) %>
     </div>
   </section>
 <% end %>

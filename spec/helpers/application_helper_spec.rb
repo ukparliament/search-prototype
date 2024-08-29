@@ -15,6 +15,12 @@ RSpec.describe ApplicationHelper, type: :helper do
         expect(helper.format_html(content, 1)).to eq("<div><strong>Hello...</strong></div>")
       end
     end
+    context 'when passed false as a truncation limit' do
+      let!(:content) { "<div><strong>Hello world!</strong></div>" }
+      it 'returns the entire content' do
+        expect(helper.format_html(content, false)).to eq(content)
+      end
+    end
   end
 
   describe 'boolean_yes_no' do
