@@ -507,6 +507,7 @@ class ContentObject
       elsif subtype_ids&.include?(528127)
         'PaperOrderedToBePrinted'
       elsif subtype_ids&.include?(528129)
+        # Paper submitted has its own object view but uses the papers laid results view
         'PaperSubmitted'
       elsif subtype_ids&.include?(51288)
         # changed from ParliamentaryPaperLaid when object added

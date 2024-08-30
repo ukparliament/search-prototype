@@ -28,12 +28,10 @@ class DepositedPaper < Paper
     uris = get_all_from('depositedFile_uri')
     return if uris.blank?
 
-    https_uris = uris.map do |uri|
+    uris.map do |uri|
       full = URI.parse(uri[:value])
       URI::HTTPS.build(host: full.host, path: full.path)
     end
-
-    https_uris
   end
 
   def authors
