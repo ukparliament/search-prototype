@@ -10,8 +10,9 @@ export default class extends Controller {
         const container_id = event.params.id
         const container_id_string = container_id.toString();
 
+        // find all search links marked as modifiable, as these will be updated with hierarchy interaction data
         const links = document.querySelectorAll('.modifiable-link');
-        const hidden_existing_id_fields = document.querySelectorAll('.hidden-existing-ids');
+
         let existingIds = [];
         const first_link = links.item(0).href;
         const first_url = new URL(first_link);
@@ -37,11 +38,6 @@ export default class extends Controller {
             existingIds.push(container_id_string);
         }
 
-        // Update form hidden fields with existing IDs
-        hidden_existing_id_fields.forEach(field => {
-            field.value = existingIds;
-        })
-
         links.forEach(link => {
             const url = new URL(link.href);
             url.searchParams.delete('expanded_types');
@@ -55,6 +51,7 @@ export default class extends Controller {
         current_url.searchParams.append('expanded_types', existingIds)
         history.pushState(null, '', current_url);
 
+        // find all "toggle-1234" elements within the hierarchy layers
         const all_toggles = Array.from(document.getElementsByClassName('toggle-' + container_id));
         const button = event.currentTarget;
         all_toggles.forEach(element => {
