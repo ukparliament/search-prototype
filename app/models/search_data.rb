@@ -249,7 +249,15 @@ class SearchData
 
   def type_facets
     ret = {}
-    facets.select { |facet| facet.dig(:field_name) == "type_sesrollup" }.first&.dig(:facets)&.each { |h| ret[h.dig("val")] = h.dig("count") }
+
+    type_facet_names = ["type_sesrollup", "subtype_sesrollup"]
+    relevant_facet_data = facets.select { |facet| type_facet_names.include?(facet.dig(:field_name)) }
+    return {} if relevant_facet_data.blank?
+
+    relevant_facet_data.each do |facet|
+      facet.dig(:facets)&.each { |h| ret[h.dig("val")] = h.dig("count") }
+    end
+
     ret
   end
 
