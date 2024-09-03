@@ -21,14 +21,14 @@ RSpec.describe ParliamentaryPaperReported, type: :model do
       let!(:parliamentary_paper_reported) { ParliamentaryPaperReported.new({ 'type_ses' => [12345], 'subtype_ses' => [23456, 91561, 67890] }) }
 
       context 'subtypes includes any of: 91561, 91563, 51288' do
-        it 'returns the first subtype not equal to 91561, 91563 or 51288' do
-          expect(parliamentary_paper_reported.object_name).to eq({ value: 23456, field_name: 'subtype_ses' })
+        it 'returns all subtypes not equal to 91561, 91563 or 51288' do
+          expect(parliamentary_paper_reported.object_name).to eq([{ value: 23456, field_name: 'subtype_ses' }, { value: 67890, field_name: 'subtype_ses' }])
         end
       end
       context 'subtypes does not include any of: 91561, 91563, 51288' do
         let!(:parliamentary_paper_reported) { ParliamentaryPaperReported.new({ 'type_ses' => [12345], 'subtype_ses' => [23456, 56789, 67890] }) }
-        it 'returns the first subtype' do
-          expect(parliamentary_paper_reported.object_name).to eq({ value: 23456, field_name: 'subtype_ses' })
+        it 'returns all subtypes' do
+          expect(parliamentary_paper_reported.object_name).to eq([{ value: 23456, field_name: 'subtype_ses' }, { value: 56789, field_name: 'subtype_ses' }, { value: 67890, field_name: 'subtype_ses' }])
         end
       end
     end
