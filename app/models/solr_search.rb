@@ -167,7 +167,7 @@ class SolrSearch < ApiCall
 
     return 80 unless type_facet_names.include?(field_name)
 
-    500
+    -1
   end
 
   def facet_mincount(field_name)
