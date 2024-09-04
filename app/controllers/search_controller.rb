@@ -4,6 +4,11 @@ class SearchController < ApplicationController
   def index
     @page_title = "Search results"
     @search_data = SearchData.new(SolrSearch.new(search_params).data)
+
+    @type_facets = @search_data.type_facets
+    @expanded_types = @search_data.expanded_types
+    @hierarchy_data = @search_data.hierarchy_data
+
     @associated_object_data = @search_data.associated_object_data
 
     if @search_data.solr_error?

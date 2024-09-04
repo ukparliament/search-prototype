@@ -15,7 +15,6 @@ class SolrSearch < ApiCall
   def self.facet_fields
     [
       'type_sesrollup',
-      'subtype_sesrollup',
       'legislature_ses',
       'session_t',
       'date_dt',
@@ -164,7 +163,7 @@ class SolrSearch < ApiCall
   end
 
   def facet_limit(field_name)
-    type_facet_names = ["type_sesrollup", "subtype_sesrollup"]
+    type_facet_names = ["type_sesrollup"]
 
     return 80 unless type_facet_names.include?(field_name)
 
