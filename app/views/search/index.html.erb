@@ -79,6 +79,10 @@
           </div>
         </section>
 
+        <% @search_data.facets.select { |h| ["publisher_ses"].include?(h.dig(:field_name)) }.each do |facet_field| %>
+          <%= render 'filter_section', facet_field: format_facets(facet_field) %>
+        <% end %>
+
         <% if year_filter.present? %>
           <% year_filter.each do |year| %>
             <section class="facet">
@@ -125,7 +129,7 @@
           <% end %>
         <% end %>
 
-        <% @search_data.facets.select { |h| ["legislature_ses", "session_t", "department_ses", "member_ses", "tablingMember_ses", "askingMember_ses", "leadMember_ses", "answeringMember_ses", "legislativeStage_ses", "legislationTitle_ses", "subject_ses"].include?(h.dig(:field_name)) }.each do |facet_field| %>
+        <% @search_data.facets.select { |h| ["session_t", "department_ses", "member_ses", "tablingMember_ses", "askingMember_ses", "leadMember_ses", "answeringMember_ses", "legislativeStage_ses", "legislationTitle_ses", "subject_ses"].include?(h.dig(:field_name)) }.each do |facet_field| %>
           <%= render 'filter_section', facet_field: format_facets(facet_field) %>
         <% end %>
 
@@ -207,7 +211,8 @@
           <% unless @search_data.current_page.blank? || @search_data.total_pages.blank? %>
             <p>
               Showing results
-              <strong><%= @search_data.start %> - <%= [@search_data.end, @search_data.number_of_results].min %></strong>
+              <strong><%= @search_data.start %>
+                - <%= [@search_data.end, @search_data.number_of_results].min %></strong>
               of
               <strong><%= number_to_delimited(@search_data.number_of_results, separator: ",") %></strong> in
               <strong>

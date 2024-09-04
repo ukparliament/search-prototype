@@ -15,7 +15,7 @@ class SolrSearch < ApiCall
   def self.facet_fields
     [
       'type_sesrollup',
-      'legislature_ses',
+      'publisher_ses',
       'session_t',
       'date_dt',
       'department_ses',
