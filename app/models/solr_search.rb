@@ -122,7 +122,7 @@ class SolrSearch < ApiCall
       ret[field_name] = {
         "type" => facet_type(field_name),
         "field" => field_name,
-        "limit" => 80,
+        "limit" => facet_limit(field_name),
         "missing" => true,
         "mincount" => facet_mincount(field_name),
         "domain" => { excludeTags: field_name }
@@ -160,6 +160,14 @@ class SolrSearch < ApiCall
     return "terms" unless arr.include?(field_name)
 
     " " # replacement type
+  end
+
+  def facet_limit(field_name)
+    type_facet_names = ["type_sesrollup"]
+
+    return 80 unless type_facet_names.include?(field_name)
+
+    -1
   end
 
   def facet_mincount(field_name)
