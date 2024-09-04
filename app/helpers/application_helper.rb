@@ -77,6 +77,7 @@ module ApplicationHelper
     field_names = {
       type_ses: 'Type',
       type_sesrollup: 'Type',
+      publisher_ses: 'Publisher',
       legislature_ses: 'House',
       session_t: 'Session',
       date_dt: 'Date',
