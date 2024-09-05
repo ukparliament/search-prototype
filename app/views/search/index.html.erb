@@ -93,7 +93,7 @@
                 <div class="facets">
                   <% @search_data.months.each_with_index do |month, index| %>
                     <div>
-                      <%= link_to("#{month['val'].to_date.strftime("%B")} #{year} (#{month['count']})", url_for(apply_filter_url(request.params, "month", year + "-#{index + 1}")), class: "modifiable-link") %>
+                      <%= link_to("#{month['val'].to_date.strftime("%B")} #{year} (#{month['count']})", url_for(apply_filter_url(request.params, "month", year + "-#{index + 1}")), class: "menu-link modifiable-link") %>
                     </div>
                   <% end %>
                 </div>
@@ -110,7 +110,7 @@
                 <div class="facets">
                   <% @search_data.years[0..4].each do |year_data| %>
                     <div>
-                      <%= link_to("#{year_data["val"].to_date.year} (#{year_data["count"]})", url_for(apply_filter_url(request.params, "year", year_data["val"].to_date.year)), class: "modifiable-link") %>
+                      <%= link_to("#{year_data["val"].to_date.year} (#{year_data["count"]})", url_for(apply_filter_url(request.params, "year", year_data["val"].to_date.year)), class: "menu-link modifiable-link") %>
                     </div>
                   <% end %>
                   <% unless @search_data.years[5..].blank? %>
@@ -118,7 +118,7 @@
                       <summary>More</summary>
                       <% @search_data.years[5..].each do |year_data| %>
                         <div>
-                          <%= link_to("#{year_data["val"].to_date.year} (#{year_data["count"]})", url_for(apply_filter_url(request.params, "year", year_data["val"].to_date.year)), class: "modifiable-link") %>
+                          <%= link_to("#{year_data["val"].to_date.year} (#{year_data["count"]})", url_for(apply_filter_url(request.params, "year", year_data["val"].to_date.year)), class: "menu-link modifiable-link") %>
                         </div>
                       <% end %>
                     </details>
@@ -132,33 +132,22 @@
         <% @search_data.facets.select { |h| ["session_t", "department_ses", "member_ses", "tablingMember_ses", "askingMember_ses", "leadMember_ses", "answeringMember_ses", "legislativeStage_ses", "legislationTitle_ses", "subject_ses"].include?(h.dig(:field_name)) }.each do |facet_field| %>
           <%= render 'filter_section', facet_field: format_facets(facet_field) %>
         <% end %>
-
-        <%# @search_data.facets.select { |h| [].include?(h.dig(:field_name)) }.each do |facet_field| %>
-        <%#= render 'filter_section', facet_field: format_facets(facet_field) %>
-        <%# end %>
       </div>
 
-      <div class="results-container" data-controller="detailed-results">
+      <div class="results-container">
         <section class="search-control-panel">
           <div class="search-control-panel-row">
             <strong><%= number_to_delimited(@search_data.number_of_results, separator: ",") %><%= @search_data.number_of_results && @search_data.number_of_results > 1 ? " results" : " result" %></strong>
-            <div class="flex-spacer"></div>
+          </div>
+          <div class="search-control-panel-row">
             <span class="search-control-panel-item">
               <span class="search-control-panel-label">Show detailed:</span>
               <% if @search_data.show_detailed? %>
-                <span class="search-control-panel-current">
-                On
-                </span>
-                <span class="search-control-panel-link">
-                <%= link_to "Off", search_url(query: @search_data.query, filter: @search_data.filter, sort_by: @search_data.sort, results_per_page: @search_data.results_per_page, page: @search_data.current_page, expanded_types: @search_data.expanded_types, show_detailed: false), class: "modifiable-link" %>
-                </span>
+                <%= render 'control_panel_current', value: 'On' %>
+                <%= render 'control_panel_link', link_text: 'Off', link_url: search_url(query: @search_data.query, filter: @search_data.filter, sort_by: @search_data.sort, results_per_page: @search_data.results_per_page, page: @search_data.current_page, expanded_types: @search_data.expanded_types, show_detailed: false) %>
               <% else %>
-                <span class="search-control-panel-link">
-                <%= link_to "On", search_url(query: @search_data.query, filter: @search_data.filter, sort_by: @search_data.sort, results_per_page: @search_data.results_per_page, page: @search_data.current_page, expanded_types: @search_data.expanded_types, show_detailed: true), class: "modifiable-link" %>
-                </span>
-                <span class="search-control-panel-current">
-                Off
-                </span>
+                <%= render 'control_panel_link', link_text: 'On', link_url: search_url(query: @search_data.query, filter: @search_data.filter, sort_by: @search_data.sort, results_per_page: @search_data.results_per_page, page: @search_data.current_page, expanded_types: @search_data.expanded_types, show_detailed: true) %>
+                <%= render 'control_panel_current', value: 'Off' %>
               <% end %>
             </span>
 
@@ -168,13 +157,9 @@
               </label>
               <% [10, 20, 50, 100].each do |per_page_option| %>
                 <% if @search_data.results_per_page == per_page_option %>
-                <span class="search-control-panel-current">
-                  <%= per_page_option %>
-                </span>
+                  <%= render 'control_panel_current', value: per_page_option.to_i %>
                 <% else %>
-                <span class="search-control-panel-link">
-                  <%= link_to per_page_option, search_url(query: @search_data.query, filter: @search_data.filter, sort_by: @search_data.sort, results_per_page: per_page_option, page: @search_data.current_page, expanded_types: @search_data.expanded_types, show_detailed: @search_data.show_detailed), class: "modifiable-link" %>
-                </span>
+                  <%= render 'control_panel_link', link_text: per_page_option.to_s, link_url: search_url(query: @search_data.query, filter: @search_data.filter, sort_by: @search_data.sort, results_per_page: per_page_option, page: @search_data.current_page, expanded_types: @search_data.expanded_types, show_detailed: @search_data.show_detailed) %>
                 <% end %>
               <% end %>
             </span>
@@ -184,19 +169,11 @@
                 <span>Sort by:</span>
               </label>
               <% if @search_data.sort == "date_desc" %>
-                <span class="search-control-panel-current">
-                  Newest first
-                </span>
-                <span class="search-control-panel-link">
-                  <%= link_to "Oldest first", search_url(query: @search_data.query, filter: @search_data.filter, sort_by: 'date_asc', results_per_page: @search_data.results_per_page, page: @search_data.current_page, expanded_types: @search_data.expanded_types, show_detailed: @search_data.show_detailed), class: "modifiable-link" %>
-                </span>
+                <%= render 'control_panel_current', value: 'Newest first' %>
+                <%= render 'control_panel_link', link_text: 'Oldest first', link_url: search_url(query: @search_data.query, filter: @search_data.filter, sort_by: 'date_asc', results_per_page: @search_data.results_per_page, page: @search_data.current_page, expanded_types: @search_data.expanded_types, show_detailed: @search_data.show_detailed) %>
               <% else %>
-                <span class="search-control-panel-link">
-                  <%= link_to "Newest first", search_url(query: @search_data.query, filter: @search_data.filter, sort_by: 'date_desc', results_per_page: @search_data.results_per_page, page: @search_data.current_page, expanded_types: @search_data.expanded_types, show_detailed: @search_data.show_detailed), class: "modifiable-link" %>
-                </span>
-                <span class="search-control-panel-current">
-                  Oldest first
-                </span>
+                <%= render 'control_panel_link', link_text: 'Newest first', link_url: search_url(query: @search_data.query, filter: @search_data.filter, sort_by: 'date_desc', results_per_page: @search_data.results_per_page, page: @search_data.current_page, expanded_types: @search_data.expanded_types, show_detailed: @search_data.show_detailed) %>
+                <%= render 'control_panel_current', value: 'Oldest first' %>
               <% end %>
             </span>
 
