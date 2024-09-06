@@ -18,8 +18,13 @@
 <%= form_with url: search_url, method: :get, remote: true, id: 'search-form' do |f| %>
   <section id="search" class="content-section white-slim">
     <div class="search-grid-container">
-      <%= f.text_field :query, class: 'grid-item', id: 'search-input', value: @search_data.query %>
-      <%= f.submit 'New search', class: 'grid-item', id: 'search-button' %>
+      <%= f.text_field :query, id: 'search-input', value: @search_data.query %>
+      <button id="search-button-large">
+        New search
+      </button>
+      <button id="search-button-small">
+        New search
+      </button>
     </div>
   </section>
 <% end %>

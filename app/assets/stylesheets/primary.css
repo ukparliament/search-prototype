@@ -447,11 +447,12 @@ table {
 
 /* Reactivity */
 
-/* Mobile & Tablet View */
+/* Mobile */
 @media only screen and (max-width: 640px) {
 
     /*nav bar*/
     .nav-container {
+        min-width: 250px;
         max-width: 640px;
 
         .nav-bar {
@@ -463,22 +464,80 @@ table {
         }
     }
 
+    #search-button-large {
+        display: none;
+    }
+
+    #search-button-small {
+        display: inline-block;
+    }
+
+    #search-input {
+        /*border-radius: 4px;*/
+    }
+
     main {
         max-width: 640px;
+        min-width: 250px;
     }
 
     section {
         margin: 16px 0;
     }
 
+    .search-control-panel-row {
+        flex-direction: column;
+    }
+
 }
 
-/* Above 1280px width, show the nav menu in full desktop mode */
-@media only screen and (min-width: 640px) {
+/* Tablet */
+@media only screen and (min-width: 640px) and (max-width: 1020px) {
 
     /*nav bar*/
     .nav-container {
-        width: 1020px;
+        max-width: 1020px;
+
+        .nav-bar {
+            padding: 24px 16px;
+
+            .nav-item-container {
+                display: none;
+            }
+        }
+    }
+
+
+    #search-button-large {
+        display: inline-block;
+    }
+
+    #search-button-small {
+        display: none;
+    }
+
+    #search-input {
+    }
+
+    main {
+        max-width: 1020px;
+    }
+
+    section {
+        margin: 16px 0;
+    }
+
+    .search-control-panel-row {
+        flex-direction: column;
+    }
+}
+
+/* Desktop */
+@media only screen and (min-width: 1020px) {
+
+    /*nav bar*/
+    .nav-container {
+        max-width: 1020px;
 
         .nav-bar {
             padding: 24px 32px;
@@ -489,6 +548,17 @@ table {
         }
     }
 
+    #search-button-large {
+        display: inline-block;
+    }
+
+    #search-button-small {
+        display: none;
+    }
+
+    #search-input {
+    }
+
     main, footer {
         max-width: 1020px;
     }
@@ -497,4 +567,7 @@ table {
         margin: 16px 0;
     }
 
+    .search-control-panel-row {
+        flex-direction: row;
+    }
 }
