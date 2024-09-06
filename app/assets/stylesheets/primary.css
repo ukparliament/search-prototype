@@ -131,7 +131,6 @@ footer {
     }
 }
 
-
 /* Object views */
 /* Object view preliminary text */
 .content-prelim-box {
@@ -446,8 +445,7 @@ table {
 }
 
 /* Reactivity */
-
-/* Mobile */
+/* Mobile, below 640px */
 @media only screen and (max-width: 640px) {
 
     /*nav bar*/
@@ -489,10 +487,15 @@ table {
         flex-direction: column;
     }
 
+    .result-panel {
+        flex-direction: column;
+        gap: 0;
+    }
+
 }
 
-/* Tablet */
-@media only screen and (min-width: 640px) and (max-width: 1020px) {
+/* Tablet, 640-900px */
+@media only screen and (min-width: 640px) and (max-width: 900px) {
 
     /*nav bar*/
     .nav-container {
@@ -530,10 +533,16 @@ table {
     .search-control-panel-row {
         flex-direction: column;
     }
+
+    .result-panel {
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 0;
+    }
 }
 
-/* Desktop */
-@media only screen and (min-width: 1020px) {
+/* Desktop, from 900px */
+@media only screen and (min-width: 900px) {
 
     /*nav bar*/
     .nav-container {
@@ -569,5 +578,11 @@ table {
 
     .search-control-panel-row {
         flex-direction: row;
+    }
+
+    .result-panel {
+        flex-direction: row;
+        justify-content: space-between;
+        gap: 1rem;
     }
 }
