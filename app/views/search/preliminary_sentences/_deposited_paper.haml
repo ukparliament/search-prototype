@@ -7,10 +7,10 @@
       - unless object.legislature.blank?
         %span= " in the "
         %span>= render 'search/fragments/list', items: object.legislature, terminator: "", singular: false
-      - unless object.department.blank?
+      - unless object.departments.blank?
         %span= " by the "
-      - unless object.department.blank?
-        %span= search_link(object.department)
+      - unless object.departments.blank?
+        %span>= render 'search/fragments/list', items: object.departments, terminator: "", singular: false
       - unless object.deposited_date.blank?
         %span= " on "
         %strong>= format_date(object.deposited_date)
