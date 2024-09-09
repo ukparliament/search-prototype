@@ -211,15 +211,15 @@ RSpec.describe SearchData, type: :model do
 
   describe 'start' do
     context 'where no data is present' do
-      it 'returns the number of results' do
-        expect(search_data.start).to eq(0)
+      it 'returns the number of results +1' do
+        expect(search_data.start).to eq(1)
       end
     end
 
     context 'where data is present' do
       let!(:search_output) { { data: { 'response' => { 'start' => 15 } } } }
-      it 'returns the number of results' do
-        expect(search_data.start).to eq(15)
+      it 'returns the number of results + 1' do
+        expect(search_data.start).to eq(16)
       end
     end
   end
