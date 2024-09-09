@@ -131,7 +131,6 @@ footer {
     }
 }
 
-
 /* Object views */
 /* Object view preliminary text */
 .content-prelim-box {
@@ -446,14 +445,13 @@ table {
 }
 
 /* Reactivity */
-/* Mobile View */
-/* Below 360px width, reduce padding & margins and hide the nav menu */
-/* TODO: add nav menu to show in its place */
-@media only screen and (max-width: 360px) {
+/* Mobile, below 640px */
+@media only screen and (max-width: 640px) {
 
     /*nav bar*/
     .nav-container {
-        width: 360px;
+        min-width: 250px;
+        max-width: 640px;
 
         .nav-bar {
             padding: 24px 16px;
@@ -464,26 +462,47 @@ table {
         }
     }
 
+    #search-button-large {
+        display: none;
+    }
+
+    #search-button-small {
+        display: inline-block;
+    }
+
+    #search-input {
+        /*border-radius: 4px;*/
+    }
+
     main {
-        max-width: 360px;
+        max-width: 640px;
+        min-width: 250px;
     }
 
     section {
         margin: 16px 0;
     }
 
+    .search-control-panel-row {
+        flex-direction: column;
+    }
+
+    .result-panel {
+        flex-direction: column;
+        gap: 0;
+    }
+
 }
 
-/* Between 360px and 1280px widths, use larger margins & padding but use mobile menu */
-/* Wireframes don't cover these screen sizes so this may need some adjustments later */
-@media only screen and (min-width: 360px) and (max-width: 1280px) {
+/* Tablet, 640-900px */
+@media only screen and (min-width: 640px) and (max-width: 900px) {
 
     /*nav bar*/
     .nav-container {
-        max-width: 1280px;
+        max-width: 1020px;
 
         .nav-bar {
-            padding: 24px 32px;
+            padding: 24px 16px;
 
             .nav-item-container {
                 display: none;
@@ -491,22 +510,43 @@ table {
         }
     }
 
+
+    #search-button-large {
+        display: inline-block;
+    }
+
+    #search-button-small {
+        display: none;
+    }
+
+    #search-input {
+    }
+
     main {
-        max-width: 1280px;
+        max-width: 1020px;
     }
 
     section {
         margin: 16px 0;
     }
 
+    .search-control-panel-row {
+        flex-direction: column;
+    }
+
+    .result-panel {
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 0;
+    }
 }
 
-/* Above 1280px width, show the nav menu in full desktop mode */
-@media only screen and (min-width: 1280px) {
+/* Desktop, from 900px */
+@media only screen and (min-width: 900px) {
 
     /*nav bar*/
     .nav-container {
-        width: 1440px;
+        max-width: 1020px;
 
         .nav-bar {
             padding: 24px 32px;
@@ -517,12 +557,32 @@ table {
         }
     }
 
+    #search-button-large {
+        display: inline-block;
+    }
+
+    #search-button-small {
+        display: none;
+    }
+
+    #search-input {
+    }
+
     main, footer {
-        max-width: 1440px;
+        max-width: 1020px;
     }
 
     section {
         margin: 16px 0;
     }
 
+    .search-control-panel-row {
+        flex-direction: row;
+    }
+
+    .result-panel {
+        flex-direction: row;
+        justify-content: space-between;
+        gap: 1rem;
+    }
 }

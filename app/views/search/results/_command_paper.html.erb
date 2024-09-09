@@ -4,7 +4,7 @@
   </div>
 
   <div class="row">
-    <div class="three-panel">
+    <div class="result-panel">
       <div class="left" id="primary-person">
         <div <%= 'hidden' unless params[:show_detailed] == "true" %> class="item-details" data-detailed-results-target="toggleHidden">
           <%= render 'search/results/item_details/laid_by', laid_by: object.member_name %>
@@ -19,7 +19,7 @@
   </div>
 
   <div class="row">
-    <div class="three-panel">
+    <div class="result-panel">
       <div class="left" id="type">
         <%= render 'search/results/item_details/subtype_and_type', subtype: object.subtypes, type: object.type %>
       </div>
@@ -37,7 +37,7 @@
   <div <%= 'hidden' unless params[:show_detailed] == "true" %> class="row" id="detailed-view" data-detailed-results-target="toggleHidden">
 
     <div class="row">
-      <div class="two-panel">
+      <div class="result-panel">
         <div class="left" id="legislative-stage">
 
         </div>
@@ -48,7 +48,7 @@
     </div>
 
     <div class="row">
-      <div class="four-panel">
+      <div class="result-panel">
         <div class="left-outer" id="specific-date-1">
           <%= render 'search/results/item_details/date_laid', date_laid: object.date_laid %>
         </div>
@@ -85,7 +85,7 @@
     <% unless object.amendments.blank? %>
       <% object.amendments.each do |amendment| %>
         <div class="row">
-          <div class="two-panel">
+          <div class="result-panel">
             <div class="left" id="amending-member">
 
             </div>
@@ -105,7 +105,7 @@
 
     <% unless object.commons_library_location.blank? && object.lords_library_location.blank? %>
       <div class="row">
-        <div class="two-panel">
+        <div class="result-panel">
           <div class="left" id="commons-library-location">
             <%= render 'search/results/item_details/commons_library_location', location: object.commons_library_location unless object.commons_library_location.blank? %>
           </div>
@@ -119,7 +119,7 @@
   </div>
 
   <div class="row">
-    <div class="three-panel">
+    <div class="result-panel">
       <div class="left" id="significant-date">
         <%= render 'search/results/item_details/date', date: object.standard_date %>
       </div>

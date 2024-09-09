@@ -43,7 +43,6 @@ class SolrSearch < ApiCall
     # start at 0 (the first record) by default:
     return 0 if user_requested_page.zero? || user_requested_page.blank?
 
-    # if a page number is given, offset by a number of records equal to the number per page * (solr) page number
     current_page * rows
   end
 
@@ -65,7 +64,7 @@ class SolrSearch < ApiCall
 
   def rows
     # number of results per page; default is 10 in SOLR
-    return 10 if results_per_page.blank? || results_per_page.zero?
+    return 20 if results_per_page.blank? || results_per_page.zero?
 
     results_per_page
   end

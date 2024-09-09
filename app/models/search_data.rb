@@ -127,11 +127,16 @@ class SearchData
   def start
     return unless search
 
-    search.dig(:data, 'response', 'start')
+    solr_value = search.dig(:data, 'response', 'start')
+
+    # start is zero-indexed in solr and our interactions with it, so + 1 for display
+    solr_value + 1
   end
 
   def end
-    start + results_per_page
+    # start + results per page would be the start of the following page
+    # so subtract 1 to get the end of the current page
+    start + results_per_page - 1
   end
 
   def results_per_page

@@ -116,7 +116,7 @@ RSpec.describe SolrSearch, type: :model do
 
     context 'page parameter is present' do
       context 'first page requested' do
-        let!(:solr_search) { SolrSearch.new({ page: 1 }) }
+        let!(:solr_search) { SolrSearch.new({ page: 1, results_per_page: 20 }) }
 
         it 'returns 0' do
           # first page is results 0-19 if rows is set to 10
@@ -125,18 +125,18 @@ RSpec.describe SolrSearch, type: :model do
       end
       context 'second page requested' do
         # second page is results 10-19 if rows is set to 10
-        let!(:solr_search) { SolrSearch.new({ page: 2 }) }
+        let!(:solr_search) { SolrSearch.new({ page: 2, results_per_page: 20 }) }
 
         it 'returns number of rows per page times the page number' do
-          expect(solr_search.start).to eq(10)
+          expect(solr_search.start).to eq(20)
         end
       end
       context 'third page requested' do
         # thid page is results 20-29 if rows is set to 10
-        let!(:solr_search) { SolrSearch.new({ page: 3 }) }
+        let!(:solr_search) { SolrSearch.new({ page: 3, results_per_page: 20 }) }
 
         it 'returns number of rows per page times the page number' do
-          expect(solr_search.start).to eq(20)
+          expect(solr_search.start).to eq(40)
         end
       end
     end
@@ -145,15 +145,15 @@ RSpec.describe SolrSearch, type: :model do
   describe 'rows' do
     context 'where per page parameter is blank' do
       let!(:solr_search) { SolrSearch.new({ results_per_page: nil }) }
-      it 'returns 10' do
-        expect(solr_search.rows).to eq(10)
+      it 'returns 20' do
+        expect(solr_search.rows).to eq(20)
       end
     end
 
     context 'where per page parameter is not an integer' do
       let!(:solr_search) { SolrSearch.new({ results_per_page: 'test' }) }
-      it 'returns 10' do
-        expect(solr_search.rows).to eq(10)
+      it 'returns 20' do
+        expect(solr_search.rows).to eq(20)
       end
     end
 
