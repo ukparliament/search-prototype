@@ -227,7 +227,6 @@ class SolrSearch < ApiCall
         "type" => facet_type(field_name),
         "field" => field_name,
         "limit" => facet_limit(field_name),
-        "missing" => true,
         "mincount" => facet_mincount(field_name),
         "domain" => { excludeTags: field_name }
       }
@@ -253,6 +252,13 @@ class SolrSearch < ApiCall
         "gap": "+1YEAR",
         "mincount": 1,
         "limit": 100
+      }
+    end
+
+    SolrSearch.sessions.each do |session|
+      ret["session_#{session}"] = {
+        "type": "query",
+        "q": "(session_t:#{session} OR date_dt:#{session_range_lookup(session)})"
       }
     end
 
