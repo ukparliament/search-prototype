@@ -1,0 +1,28 @@
+<% unless request.params.dig(:filter).blank? %>
+  <section class="applied-filters">
+    <div class="applied-filter-container">
+      <% request.params.dig(:filter).sort.each do |filter| %>
+        <% filter.last.sort.each do |filter_value| %>
+          <div class="filter-wrapper">
+            <div class="filter">
+              <div class="top-row">
+                        <span class="filter-name-label">
+                          <%= filter_field_name(filter.first) %>
+                        </span>
+                <span class="flex-spacer"></span>
+                <span class="filter-link">
+                          <%= link_to sanitize("&#x2717;"), url_for(remove_filter_url(request.params, filter.first, filter_value)), class: 'modifiable-link' %>
+                        </span>
+              </div>
+              <div class="bottom-row">
+                <div class="filter-name">
+                  <%= object_display_name({ value: filter_field_value(filter, filter_value), field_name: filter.first }, singular: false) %>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  </section>
+<% end %>

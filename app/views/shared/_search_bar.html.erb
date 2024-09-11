@@ -2,7 +2,8 @@
   <section id="search" class="content-section white-slim">
     <div class="search-grid-container">
       <%= f.text_field :query, class: 'grid-item', id: 'search-input', value: @search.blank? ? nil : @search.query %>
-      <%= f.submit 'Search', class: 'grid-item', id: 'search-button' %>
+      <%= f.submit 'Search', class: 'grid-item', id: 'search-button-large' %>
+      <%= f.submit 'Search', class: 'grid-item', id: 'search-button-small' %>
     </div>
   </section>
 <% end %>

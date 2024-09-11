@@ -1,0 +1,12 @@
+<section class="facet">
+  <div>
+    <div>
+      <strong>Type</strong>
+    </div>
+    <div class="facets" data-controller="expand-types">
+      <% @search_data.hierarchy_builder.top_level_types&.each do |top_level_type| %>
+        <%= render 'hierarchy_layer', hash: top_level_type, id: top_level_type[:id], tier: 1, parent_id: 0 %>
+      <% end %>
+    </div>
+  </div>
+</section>
