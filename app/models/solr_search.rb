@@ -258,7 +258,8 @@ class SolrSearch < ApiCall
     SolrSearch.sessions.each do |session|
       ret["session_#{session}"] = {
         "type": "query",
-        "q": "(session_t:#{session} OR date_dt:#{session_range_lookup(session)})"
+        "q": "(session_t:#{session} OR date_dt:#{session_range_lookup(session)})",
+        "domain": { excludeTags: 'session_t' }
       }
     end
 
