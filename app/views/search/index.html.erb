@@ -1,7 +1,10 @@
+<meta name="robots" content="noindex, nofollow">
+
 <% content_for(:before_title) do %>
   <%= link_to('UK Parliament', root_path) %> / <%= link_to('Open data', root_path) %><br/>
   <div id="top"></div>
 <% end %>
+
 
 <% if Rails.env.development? %>
   <%#= render 'search/fragments/data', data: @associated_object_data, title: 'Associated object data' %>
