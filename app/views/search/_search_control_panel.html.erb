@@ -1,0 +1,44 @@
+<section class="search-control-panel">
+  <div class="search-control-panel-row">
+    <strong><%= number_to_delimited(@search_data.number_of_results, separator: ",") %><%= @search_data.number_of_results && @search_data.number_of_results > 1 ? " results" : " result" %></strong>
+  </div>
+  <div class="search-control-panel-row">
+            <span class="search-control-panel-item">
+              <span class="search-control-panel-label">Show detailed:</span>
+              <% if @search_data.show_detailed? %>
+                <%= render 'control_panel_current', value: 'On' %>
+                <%= render 'control_panel_link', link_text: 'Off', link_url: search_url(query: @search_data.query, filter: @search_data.filter, sort_by: @search_data.sort, results_per_page: @search_data.results_per_page, page: @search_data.current_page, expanded_types: @search_data.expanded_types, show_detailed: false) %>
+              <% else %>
+                <%= render 'control_panel_link', link_text: 'On', link_url: search_url(query: @search_data.query, filter: @search_data.filter, sort_by: @search_data.sort, results_per_page: @search_data.results_per_page, page: @search_data.current_page, expanded_types: @search_data.expanded_types, show_detailed: true) %>
+                <%= render 'control_panel_current', value: 'Off' %>
+              <% end %>
+            </span>
+
+    <span class="search-control-panel-item">
+              <label class="search-control-panel-label">
+                <span>Results:</span>
+              </label>
+      <% [10, 20, 50, 100].each do |per_page_option| %>
+                <% if @search_data.results_per_page == per_page_option %>
+                  <%= render 'control_panel_current', value: per_page_option.to_i %>
+                <% else %>
+                  <%= render 'control_panel_link', link_text: per_page_option.to_s, link_url: search_url(query: @search_data.query, filter: @search_data.filter, sort_by: @search_data.sort, results_per_page: per_page_option, page: @search_data.current_page, expanded_types: @search_data.expanded_types, show_detailed: @search_data.show_detailed) %>
+                <% end %>
+              <% end %>
+            </span>
+
+    <span class="search-control-panel-item">
+              <label class="search-control-panel-label">
+                <span>Sort by:</span>
+              </label>
+      <% if @search_data.sort == "date_desc" %>
+                <%= render 'control_panel_current', value: 'Newest first' %>
+        <%= render 'control_panel_link', link_text: 'Oldest first', link_url: search_url(query: @search_data.query, filter: @search_data.filter, sort_by: 'date_asc', results_per_page: @search_data.results_per_page, page: @search_data.current_page, expanded_types: @search_data.expanded_types, show_detailed: @search_data.show_detailed) %>
+              <% else %>
+                <%= render 'control_panel_link', link_text: 'Newest first', link_url: search_url(query: @search_data.query, filter: @search_data.filter, sort_by: 'date_desc', results_per_page: @search_data.results_per_page, page: @search_data.current_page, expanded_types: @search_data.expanded_types, show_detailed: @search_data.show_detailed) %>
+        <%= render 'control_panel_current', value: 'Oldest first' %>
+              <% end %>
+            </span>
+
+  </div>
+</section>

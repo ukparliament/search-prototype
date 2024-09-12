@@ -1,0 +1,45 @@
+<% if year_filter.present? %>
+  <% year_filter.each do |year| %>
+    <section class="facet">
+      <div>
+        <div>
+          <strong>Date</strong>
+        </div>
+        <div class="facets">
+          <% @search_data.months.each_with_index do |month, index| %>
+            <div>
+              <%= link_to("#{month['val'].to_date.strftime("%B")} #{year} (#{month['count']})", url_for(apply_filter_url(request.params, "month", year + "-#{index + 1}")), class: "menu-link modifiable-link") %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </section>
+  <% end %>
+<% else %>
+  <% unless @search_data.years.blank? %>
+    <section class="facet">
+      <div>
+        <div>
+          <strong>Date</strong>
+        </div>
+        <div class="facets">
+          <% @search_data.years[0..4].each do |year_data| %>
+            <div>
+              <%= link_to("#{year_data["val"].to_date.year} (#{year_data["count"]})", url_for(apply_filter_url(request.params, "year", year_data["val"].to_date.year)), class: "menu-link modifiable-link") %>
+            </div>
+          <% end %>
+          <% unless @search_data.years[5..].blank? %>
+            <details>
+              <summary>More</summary>
+              <% @search_data.years[5..].each do |year_data| %>
+                <div>
+                  <%= link_to("#{year_data["val"].to_date.year} (#{year_data["count"]})", url_for(apply_filter_url(request.params, "year", year_data["val"].to_date.year)), class: "menu-link modifiable-link") %>
+                </div>
+              <% end %>
+            </details>
+          <% end %>
+        </div>
+      </div>
+    </section>
+  <% end %>
+<% end %>
