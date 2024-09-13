@@ -22,7 +22,7 @@
                 <% if @search_data.results_per_page == per_page_option %>
                   <%= render 'control_panel_current', value: per_page_option.to_i %>
                 <% else %>
-                  <%= render 'control_panel_link', link_text: per_page_option.to_s, link_url: search_url(query: @search_data.query, filter: @search_data.filter, sort_by: @search_data.sort, results_per_page: per_page_option, page: @search_data.current_page, expanded_types: @search_data.expanded_types, show_detailed: @search_data.show_detailed) %>
+                  <%= render 'control_panel_link', link_text: per_page_option.to_s, link_url: search_url(query: @search_data.query, filter: @search_data.filter, sort_by: @search_data.sort, results_per_page: per_page_option, page: 1, expanded_types: @search_data.expanded_types, show_detailed: @search_data.show_detailed) %>
                 <% end %>
               <% end %>
             </span>
@@ -33,9 +33,9 @@
               </label>
       <% if @search_data.sort == "date_desc" %>
                 <%= render 'control_panel_current', value: 'Newest first' %>
-        <%= render 'control_panel_link', link_text: 'Oldest first', link_url: search_url(query: @search_data.query, filter: @search_data.filter, sort_by: 'date_asc', results_per_page: @search_data.results_per_page, page: @search_data.current_page, expanded_types: @search_data.expanded_types, show_detailed: @search_data.show_detailed) %>
+        <%= render 'control_panel_link', link_text: 'Oldest first', link_url: search_url(query: @search_data.query, filter: @search_data.filter, sort_by: 'date_asc', results_per_page: @search_data.results_per_page, page: 1, expanded_types: @search_data.expanded_types, show_detailed: @search_data.show_detailed) %>
               <% else %>
-                <%= render 'control_panel_link', link_text: 'Newest first', link_url: search_url(query: @search_data.query, filter: @search_data.filter, sort_by: 'date_desc', results_per_page: @search_data.results_per_page, page: @search_data.current_page, expanded_types: @search_data.expanded_types, show_detailed: @search_data.show_detailed) %>
+                <%= render 'control_panel_link', link_text: 'Newest first', link_url: search_url(query: @search_data.query, filter: @search_data.filter, sort_by: 'date_desc', results_per_page: @search_data.results_per_page, page: 1, expanded_types: @search_data.expanded_types, show_detailed: @search_data.show_detailed) %>
         <%= render 'control_panel_current', value: 'Oldest first' %>
               <% end %>
             </span>
