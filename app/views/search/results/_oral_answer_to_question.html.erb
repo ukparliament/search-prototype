@@ -17,7 +17,7 @@
       </div>
       <div class="centre" id="secondary-person">
         <div <%= 'hidden' unless params[:show_detailed] == "true" %> data-detailed-results-target="toggleHidden">
-          <%= render 'search/results/item_details/asking_member', asking_member: @associated_object_data[object.question_id].asking_member, asking_member_party: @associated_object_data[object.question_id].asking_member_party, label: 'Asked by' %>
+          <%= render 'search/results/item_details/asking_member', asking_member: @associated_object_data[object.question_id]&.asking_member, asking_member_party: @associated_object_data[object.question_id]&.asking_member_party, label: 'Asked by' %>
         </div>
       </div>
       <div class="right" id="primary-group">
@@ -74,7 +74,7 @@
 
     <div class="row">
       <div id="supplementary-content">
-        <%= render 'search/results/item_details/question_text', question_text: @associated_object_data[object.question_id].question_text %>
+        <%= render 'search/results/item_details/question_text', question_text: @associated_object_data[object.question_id]&.question_text %>
       </div>
     </div>
 

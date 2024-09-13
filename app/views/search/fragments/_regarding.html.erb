@@ -3,30 +3,32 @@
     <h3 class="content-heading" id="regarding-deposited-document">Regarding deposited document</h3>
     <div class="flex-list">
       <% regarding_object_ids.each do |r_id| %>
-        <div>
-          <% unless @associated_object_data[r_id].object_uri.blank? %>
-            <%= object_show_link(@associated_object_data[r_id].object_title, @associated_object_data[r_id].object_uri) %>
-            <br/>
-          <% end %>
-          <% if @associated_object_data[r_id].date %>
-            <%= format_date(@associated_object_data[r_id].date) %><br/>
-          <% end %>
-          <% if @associated_object_data[r_id].dual_type? %>
-            <%= @ses_data[@associated_object_data[r_id].subtype[:value]] %>
-            and <%= @ses_data[@associated_object_data[r_id].type[:value]] %><br/>
-          <% else %>
-            <% if @associated_object_data[r_id].subtype %>
-              <%= @ses_data[@associated_object_data[r_id].subtype[:value]] %><br/>
-            <% elsif @associated_object_data[r_id].type %>
-              <%= @ses_data[@associated_object_data[r_id].type[:value]] %><br/>
+        <% unless @associated_object_data[r_id].blank? %>
+          <div>
+            <% unless @associated_object_data[r_id].object_uri.blank? %>
+              <%= object_show_link(@associated_object_data[r_id].object_title, @associated_object_data[r_id].object_uri) %>
+              <br/>
             <% end %>
-          <% end %>
-          <% unless @associated_object_data[r_id].legislature.blank? %>
-            <% @associated_object_data[r_id].legislature.each do |house| %>
-              <%= @ses_data[house[:value]] %><br/>
+            <% if @associated_object_data[r_id].date %>
+              <%= format_date(@associated_object_data[r_id].date) %><br/>
             <% end %>
-          <% end %>
-        </div>
+            <% if @associated_object_data[r_id].dual_type? %>
+              <%= @ses_data[@associated_object_data[r_id].subtype[:value]] %>
+              and <%= @ses_data[@associated_object_data[r_id].type[:value]] %><br/>
+            <% else %>
+              <% if @associated_object_data[r_id].subtype %>
+                <%= @ses_data[@associated_object_data[r_id].subtype[:value]] %><br/>
+              <% elsif @associated_object_data[r_id].type %>
+                <%= @ses_data[@associated_object_data[r_id].type[:value]] %><br/>
+              <% end %>
+            <% end %>
+            <% unless @associated_object_data[r_id].legislature.blank? %>
+              <% @associated_object_data[r_id].legislature.each do |house| %>
+                <%= @ses_data[house[:value]] %><br/>
+              <% end %>
+            <% end %>
+          </div>
+        <% end %>
       <% end %>
     </div>
   </div>
