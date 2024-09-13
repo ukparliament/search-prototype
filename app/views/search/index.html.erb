@@ -47,12 +47,12 @@
       <div class="filter-container" data-controller="expand-facet">
         <%= render 'applied_filters' %>
         <%= render 'search/results/facets/type_facet' %>
-        <% @search_data.facets.select { |h| ["publisher_ses"].include?(h.dig(:field_name)) }.each do |facet_field| %>
+        <% @search_data.facets.select { |h| ["legislature_ses"].include?(h.dig(:field_name)) }.each do |facet_field| %>
           <%= render 'filter_section', facet_field: format_facets(facet_field) %>
         <% end %>
         <%= render 'search/results/facets/date_facet' %>
         <%= render 'search/results/facets/session_facet', facet_data: @search_data.session_facets %>
-        <% @search_data.facets.select { |h| ["session_t", "department_ses", "member_ses", "tablingMember_ses", "askingMember_ses", "leadMember_ses", "answeringMember_ses", "legislativeStage_ses", "legislationTitle_ses", "subject_ses"].include?(h.dig(:field_name)) }.each do |facet_field| %>
+        <% @search_data.facets.select { |h| ["session_t", "department_ses", "member_ses", "tablingMember_ses", "askingMember_ses", "leadMember_ses", "answeringMember_ses", "legislativeStage_ses", "legislationTitle_ses", "subject_ses", "publisher_ses"].include?(h.dig(:field_name)) }.each do |facet_field| %>
           <%= render 'filter_section', facet_field: format_facets(facet_field) %>
         <% end %>
       </div>
