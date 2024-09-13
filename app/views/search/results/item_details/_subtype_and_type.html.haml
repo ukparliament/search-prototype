@@ -6,6 +6,6 @@
     %span>= "; "
 - unless type.blank?
   - if type.is_a?(Array)
-    = render 'search/fragments/simple_list', items: type, separator: ';', terminator: ';', singular: false
+    = render 'search/fragments/simple_list', items: type, separator: ';', terminator: '', singular: false
   - else
     %span.item-details= object_display_name(type, singular: true)
