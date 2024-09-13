@@ -249,10 +249,10 @@ class SearchData
     facet_field_data = search.dig(:data, 'facets')
     return [] if facet_field_data.blank?
 
-    facet_field_data.slice("type_sesrollup", "publisher_ses", "legislature_ses", "date_dt", "department_ses",
+    facet_field_data.slice("type_sesrollup", "legislature_ses", "date_dt", "department_ses",
                            "member_ses", "tablingMember_ses", "askingMember_ses", "leadMember_ses",
                            "answeringMember_ses", "legislativeStage_ses", "legislationTitle_ses", "subject_ses",
-                           "topic_ses", "year").map { |k, v| { field_name: k, facets: sort_facets(v['buckets']) } }
+                           "topic_ses", "year", "publisher_ses").map { |k, v| { field_name: k, facets: sort_facets(v['buckets']) } }
   end
 
   def type_facets
