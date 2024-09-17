@@ -6,7 +6,7 @@
     <div class="facets">
       <% SolrSearch.sessions[0..4].each do |session| %>
         <div>
-          <%= link_to_unless(request.params.dig(:filter, "session")&.include?(session), "#{session} (#{facet_data.dig("session_#{session}", "count")})", url_for(apply_filter_url(request.params, "session", session)), class: "menu-link modifiable-link") %>
+          <%= link_to_unless(request.params.dig(:filter, "session")&.include?(session), "#{session} (#{number_to_delimited(facet_data.dig("session_#{session}", "count"), separator: ",")})", url_for(apply_filter_url(request.params, "session", session)), class: "menu-link modifiable-link") %>
         </div>
       <% end %>
 
@@ -15,7 +15,7 @@
           <summary>More</summary>
           <% SolrSearch.sessions[5..].each do |session| %>
             <div>
-              <%= link_to_unless(request.params.dig(:filter, "session")&.include?(session), "#{session} (#{facet_data.dig("session_#{session}", "count")})", url_for(apply_filter_url(request.params, "session", session)), class: "menu-link modifiable-link") %>
+              <%= link_to_unless(request.params.dig(:filter, "session")&.include?(session), "#{session} (#{number_to_delimited(facet_data.dig("session_#{session}", "count"), separator: ",")})", url_for(apply_filter_url(request.params, "session", session)), class: "menu-link modifiable-link") %>
             </div>
           <% end %>
         </details>

@@ -13,7 +13,7 @@
     </span>
 
     <span class="facet-link toggle-<%= parent_id %> <%= 'collapse' if (tier > 1 && !@expanded_types.include?(parent_id.to_s)) %>">
-      <%= link_to_if(!request.params.dig(:filter, "type_sesrollup")&.include?(id.to_s), "#{@hierarchy_data.dig(id, :name)} (#{ @type_facets[id] || 0 })", url_for(apply_filter_url(request.params, 'type_sesrollup', id)), class: 'modifiable-link') %>
+      <%= link_to_if(!request.params.dig(:filter, "type_sesrollup")&.include?(id.to_s), "#{@hierarchy_data.dig(id, :name)} (#{ number_to_delimited(@type_facets[id] || 0, separator: ",") })", url_for(apply_filter_url(request.params, 'type_sesrollup', id)), class: 'modifiable-link') %>
       <% if @hierarchy_data.dig(id) %>
       <% @hierarchy_data.dig(id, :children).each do |child| %>
           <%= render 'hierarchy_layer', id: child.dig(:id), tier: tier + 1, parent_id: id %>
