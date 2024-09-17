@@ -1,7 +1,7 @@
 <% unless request.params.dig(:filter).blank? %>
   <section class="applied-filters">
     <div class="applied-filter-container">
-      <% request.params.dig(:filter).sort.each do |filter| %>
+      <% request.params.dig(:filter).sort.uniq.each do |filter| %>
         <% filter.last.sort.each do |filter_value| %>
           <div class="filter-wrapper">
             <div class="filter">

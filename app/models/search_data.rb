@@ -188,19 +188,17 @@ class SearchData
   end
 
   def years
-    # extract years from returned facet data
     year_buckets = search&.dig(:data, "facets", "year", "buckets")
-    return if year_buckets.blank?
+    return [] if year_buckets.blank?
 
     year_buckets.sort_by { |h| h["val"] }.uniq.reverse
   end
 
-  def months
-    # extract months from returned facet data
-    month_buckets = search.dig(:data, "facets", "month", "buckets")
-    return if month_buckets.blank?
+  def months(year_string)
+    month_buckets = search&.dig(:data, "facets", "month", "buckets")
+    return [] if month_buckets.blank?
 
-    month_buckets.sort_by { |h| h["val"] }.uniq
+    month_buckets.select { |m| m['val'].first(4) == year_string }.sort_by { |h| h["val"] }.uniq
   end
 
   def hierarchy_data
@@ -272,5 +270,19 @@ class SearchData
 
   def sort_facets(facet_field)
     facet_field.sort_by { |h| h["count"] }.reverse
+  end
+
+  def single_data_year?
+    data_years.size == 1
+  end
+
+  def data_years
+    return [] unless search
+
+    date_facet = search.dig(:data, 'facets', 'date_dt')
+
+    return [] if date_facet.blank?
+
+    date_facet.dig("buckets").map { |b| b.dig("val").to_date.strftime("%Y") }.uniq
   end
 end
