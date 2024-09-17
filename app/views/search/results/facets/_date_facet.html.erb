@@ -6,9 +6,26 @@
           <strong>Date</strong>
         </div>
         <div class="facets">
-          <% @search_data.months.each_with_index do |month, index| %>
+          <% @search_data.months(year).each_with_index do |month, index| %>
             <div>
-              <%= link_to("#{month['val'].to_date.strftime("%B")} #{year} (#{month['count']})", url_for(apply_filter_url(request.params, "month", year + "-#{index + 1}")), class: "menu-link modifiable-link") %>
+              <%= link_to_unless(request.params.dig(:filter, "month")&.include?(month['val'].to_date.strftime("%Y-%-m")), "#{month['val'].to_date.strftime("%B")} #{year} (#{month['count']})", url_for(replace_filter_url(request.params, "month", year + "-#{index + 1}")), class: "menu-link modifiable-link") %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </section>
+  <% end %>
+<% elsif @search_data.single_data_year? %>
+  <% @search_data.data_years.each do |year| %>
+    <section class="facet">
+      <div>
+        <div>
+          <strong>Date</strong>
+        </div>
+        <div class="facets">
+          <% @search_data.months(year).each_with_index do |month, index| %>
+            <div>
+              <%= link_to_unless(request.params.dig(:filter, "month")&.include?(month['val'].to_date.strftime("%Y-%-m")), "#{month['val'].to_date.strftime("%B")} #{year} (#{month['count']})", url_for(replace_filter_url(request.params, "month", year + "-#{index + 1}")), class: "menu-link modifiable-link") %>
             </div>
           <% end %>
         </div>

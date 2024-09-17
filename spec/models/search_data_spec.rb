@@ -2,6 +2,11 @@ require 'rails_helper'
 
 RSpec.describe SearchData, type: :model do
   let(:search_data) { SearchData.new(search_output) }
+  let!(:facet_data) { {
+    "count" => 1234,
+    "topic_ses" => { "buckets" => [{ "val" => 90996, "count" => 123 }, { "val" => 90995, "count" => 234 }] },
+    "subject_ses" => { "buckets" => [{ "val" => 123456, "count" => 455 }, { "val" => 234556, "count" => 66 }] }
+  } }
   let!(:search_output) { { search_parameters: { filter: ['topic_ses:12345'], query: 'horse' },
                            data: {
                              "responseHeader" => {
@@ -19,14 +24,9 @@ RSpec.describe SearchData, type: :model do
                                ]
                              },
                              "highlighting" => { "test_url" => {} },
-                             "facets" => {
-                               "count" => 1234,
-                               "topic_ses" => { "buckets" => [{ "val" => 90996, "count" => 123 }, { "val" => 90995, "count" => 234 }] },
-                               "subject_ses" => { "buckets" => [{ "val" => 123456, "count" => 455 }, { "val" => 234556, "count" => 66 }] }
-                             }
+                             "facets" => facet_data
                            },
-  }
-  }
+  } }
   let!(:hierarchy_test_response) { { [92424, "Personal statements"] => [{ "typeId" => "1", "qty" => "1", "name" => "Broader Term", "abbr" => "BT", "fields" => [{ "field" => { "name" => "Oral statements", "id" => "350073", "zid" => "52566919", "class" => "CTP", "freq" => "0", "facets" => [{ "id" => "346696", "name" => "Content type" }] } }] }] } }
 
   before do
@@ -277,6 +277,80 @@ RSpec.describe SearchData, type: :model do
 
       it 'includes facets sorted by count (descending)' do
         expect(search_data.facets.pluck(:facets)).to eq([[{ "count" => 455, "val" => 123456 }, { "count" => 66, "val" => 234556 }], [{ "count" => 234, "val" => 90995 }, { "count" => 123, "val" => 90996 }]])
+      end
+    end
+  end
+
+  describe 'data years' do
+    context 'where search is nil' do
+      let(:search_data) { SearchData.new(nil) }
+
+      it 'returns an empty array' do
+        expect(search_data.data_years).to eq([])
+      end
+    end
+    context 'where search is not nil' do
+      let!(:facet_data) { { "date_dt" => { "buckets" => [{ "val" => "2020-10-22T23:00:00Z", "count" => 12 }, { "val" => "2020-07-06T23:00:00Z", "count" => 9 }] } } }
+
+      it 'extracts unique years from the date facet' do
+        expect(search_data.data_years).to eq(["2020"])
+      end
+    end
+  end
+
+  describe 'single_data_year?' do
+    context 'where search is nil' do
+      let(:search_data) { SearchData.new(nil) }
+      it 'returns false' do
+        expect(search_data.single_data_year?).to be false
+      end
+    end
+
+    context 'where search is not nil' do
+      context 'where all data falls within a single year' do
+        let!(:facet_data) { { "date_dt" => { "buckets" => [{ "val" => "2020-10-22T23:00:00Z", "count" => 12 }, { "val" => "2020-07-06T23:00:00Z", "count" => 9 }] } } }
+
+        it 'returns true' do
+          expect(search_data.single_data_year?).to be true
+        end
+      end
+
+      context 'where there are multiple years represented by the data' do
+        let!(:facet_data) { { "date_dt" => { "buckets" => [{ "val" => "2017-10-22T23:00:00Z", "count" => 12 }, { "val" => "2020-07-06T23:00:00Z", "count" => 9 }] } } }
+
+        it 'returns false' do
+          expect(search_data.single_data_year?).to be false
+        end
+      end
+    end
+  end
+
+  describe 'years' do
+    context 'where search is nil' do
+      let(:search_data) { SearchData.new(nil) }
+      it 'returns an empty array' do
+        expect(search_data.years).to eq([])
+      end
+    end
+    context 'where search is not nil' do
+      let!(:facet_data) { { "year" => { "buckets" => [{ "val" => "2017-01-01T00:00:00Z", "count" => 12 }, { "val" => "2020-01-01T00:00:00Z", "count" => 9 }] } } }
+      it 'returns years as date strings' do
+        expect(search_data.years).to eq([{ "count" => 9, "val" => "2020-01-01T00:00:00Z" }, { "count" => 12, "val" => "2017-01-01T00:00:00Z" }])
+      end
+    end
+  end
+
+  describe 'months' do
+    context 'where search is nil' do
+      let(:search_data) { SearchData.new(nil) }
+      it 'returns an empty array' do
+        expect(search_data.months("2017")).to eq([])
+      end
+    end
+    context 'where search is not nil' do
+      let!(:facet_data) { { "month" => { "buckets" => [{ "val" => "2017-01-03T00:00:00Z", "count" => 12 }, { "val" => "2020-01-03T00:00:00Z", "count" => 9 }] } } }
+      it 'returns months for the given year as date strings' do
+        expect(search_data.months("2017")).to eq([{ "val" => "2017-01-03T00:00:00Z", "count" => 12 }])
       end
     end
   end
