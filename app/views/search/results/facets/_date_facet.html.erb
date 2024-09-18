@@ -8,7 +8,7 @@
         <div class="facets">
           <% @search_data.months(year).each_with_index do |month, index| %>
             <div>
-              <%= link_to_unless(request.params.dig(:filter, "month")&.include?(month['val'].to_date.strftime("%Y-%-m")), "#{month['val'].to_date.strftime("%B")} #{year} (#{month['count']})", url_for(replace_filter_url(request.params, "month", year + "-#{index + 1}")), class: "menu-link modifiable-link") %>
+              <%= link_to_unless(request.params.dig(:filter, "month")&.include?(month['val'].to_date.strftime("%Y-%-m")), "#{month['val'].to_date.strftime("%B")} #{year} (#{number_to_delimited(month['count'], separator: ",")})", url_for(replace_filter_url(request.params, "month", year + "-#{index + 1}")), class: "menu-link modifiable-link") %>
             </div>
           <% end %>
         </div>
@@ -25,7 +25,7 @@
         <div class="facets">
           <% @search_data.months(year).each_with_index do |month, index| %>
             <div>
-              <%= link_to_unless(request.params.dig(:filter, "month")&.include?(month['val'].to_date.strftime("%Y-%-m")), "#{month['val'].to_date.strftime("%B")} #{year} (#{month['count']})", url_for(replace_filter_url(request.params, "month", year + "-#{index + 1}")), class: "menu-link modifiable-link") %>
+              <%= link_to_unless(request.params.dig(:filter, "month")&.include?(month['val'].to_date.strftime("%Y-%-m")), "#{month['val'].to_date.strftime("%B")} #{year} (#{number_to_delimited(month['count'], separator: ",")})", url_for(replace_filter_url(request.params, "month", year + "-#{index + 1}")), class: "menu-link modifiable-link") %>
             </div>
           <% end %>
         </div>
@@ -42,7 +42,7 @@
         <div class="facets">
           <% @search_data.years[0..4].each do |year_data| %>
             <div>
-              <%= link_to("#{year_data["val"].to_date.year} (#{year_data["count"]})", url_for(apply_filter_url(request.params, "year", year_data["val"].to_date.year)), class: "menu-link modifiable-link") %>
+              <%= link_to("#{year_data["val"].to_date.year} (#{number_to_delimited(year_data['count'], separator: ",")})", url_for(apply_filter_url(request.params, "year", year_data["val"].to_date.year)), class: "menu-link modifiable-link") %>
             </div>
           <% end %>
           <% unless @search_data.years[5..].blank? %>
@@ -50,7 +50,7 @@
               <summary>More</summary>
               <% @search_data.years[5..].each do |year_data| %>
                 <div>
-                  <%= link_to("#{year_data["val"].to_date.year} (#{year_data["count"]})", url_for(apply_filter_url(request.params, "year", year_data["val"].to_date.year)), class: "menu-link modifiable-link") %>
+                  <%= link_to("#{year_data["val"].to_date.year} (#{number_to_delimited(year_data['count'], separator: ",")})", url_for(apply_filter_url(request.params, "year", year_data["val"].to_date.year)), class: "menu-link modifiable-link") %>
                 </div>
               <% end %>
             </details>

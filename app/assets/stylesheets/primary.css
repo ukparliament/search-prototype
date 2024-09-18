@@ -462,6 +462,15 @@ table {
         }
     }
 
+    #facet-container-large {
+        display: none;
+    }
+
+    #facet-container-small {
+        margin: 8px 0;
+        display: block;
+    }
+
     #search-button-large {
         display: none;
     }
@@ -510,6 +519,13 @@ table {
         }
     }
 
+    #facet-container-large {
+        display: block;
+    }
+
+    #facet-container-small {
+        display: none;
+    }
 
     #search-button-large {
         display: inline-block;
@@ -555,6 +571,14 @@ table {
                 display: flex;
             }
         }
+    }
+
+    #facet-container-large {
+        display: block;
+    }
+
+    #facet-container-small {
+        display: none;
     }
 
     #search-button-large {
