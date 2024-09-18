@@ -118,13 +118,28 @@
   <div class="row">
     <div class="result-panel">
       <div class="left" id="significant-date">
+        <div class="item-details-label">
+          Date
+        </div>
         <%= render 'search/results/item_details/date', date: object.standard_date %>
       </div>
       <div class="centre" id="reference">
+        <div class="item-details-label">
+          Reference
+        </div>
         <%= render 'search/results/item_details/reference', reference: object.standard_reference %>
       </div>
+      <div id="place" <%= 'hidden' unless params[:show_detailed] == "true" %> data-detailed-results-target="toggleHidden">
+        <div class="item-details-label">
+          Chamber / Committee
+        </div>
+        <%= render 'search/results/item_details/place', place: object.place %>
+      </div>
       <div class="right" id="house">
-        <%= render 'search/results/item_details/place_and_house', place: object.place, house: object.legislature %>
+        <div class="item-details-label">
+          House
+        </div>
+        <%= render 'search/results/item_details/legislature', legislature: object.legislature %>
       </div>
     </div>
   </div>

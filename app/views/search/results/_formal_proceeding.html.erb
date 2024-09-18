@@ -117,12 +117,21 @@
   <div class="row">
     <div class="result-panel">
       <div class="left" id="significant-date">
+        <div class="item-details-label">
+          Date
+        </div>
         <%= render 'search/results/item_details/date', date: object.standard_date %>
       </div>
       <div class="centre" id="reference">
+        <div class="item-details-label">
+          Reference
+        </div>
         <%= render 'search/results/item_details/reference', reference: object.standard_reference %>
       </div>
       <div class="right" id="house">
+        <div class="item-details-label">
+          House
+        </div>
         <%= render 'search/results/item_details/legislature', legislature: object.legislature %>
       </div>
     </div>
