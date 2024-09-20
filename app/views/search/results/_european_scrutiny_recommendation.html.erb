@@ -5,24 +5,24 @@
 
   <div class="row">
     <div class="result-panel">
-      <div class="left" id="primary-person">
+      <div id="primary-person">
       </div>
-      <div class="centre" id="secondary-person">
+      <div id="secondary-person">
       </div>
-      <div class="right" id="primary-group">
+      <div id="primary-group">
       </div>
     </div>
   </div>
 
   <div class="row">
     <div class="result-panel">
-      <div class="left" id="type">
+      <div id="type">
         <%= render 'search/results/item_details/type', type: object.object_name %>
       </div>
-      <div class="centre" id="status">
+      <div id="status">
 
       </div>
-      <div class="right" id="secondary-group">
+      <div id="secondary-group">
       </div>
     </div>
   </div>
@@ -31,25 +31,25 @@
 
     <div class="row">
       <div class="result-panel">
-        <div class="left" id="legislative-stage">
+        <div id="legislative-stage">
         </div>
-        <div class="right" id="procedure">
+        <div id="procedure">
         </div>
       </div>
     </div>
 
     <div class="row">
       <div class="result-panel">
-        <div class="left-outer" id="specific-date-1">
+        <div id="specific-date-1">
           <%= render 'search/results/item_details/date_reported', date_reported: object.date_reported %>
         </div>
-        <div class="left-inner" id="specific-date-2">
+        <div id="specific-date-2">
           <%= render 'search/results/item_details/date_debated', date_debated: object.date_debated %>
         </div>
-        <div class="right-inner" id="specific-date-3">
+        <div id="specific-date-3">
 
         </div>
-        <div class="right-outer" id="specific-date-4">
+        <div id="specific-date-4">
 
         </div>
       </div>
@@ -77,9 +77,9 @@
       <% object.amendments.each do |amendment| %>
         <div class="row">
           <div class="result-panel">
-            <div class="left" id="amending-member">
+            <div id="amending-member">
             </div>
-            <div class="right" id="amendment-date">
+            <div id="amendment-date">
             </div>
           </div>
         </div>
@@ -89,9 +89,9 @@
     <% unless object.commons_library_location.blank? && object.lords_library_location.blank? %>
       <div class="row">
         <div class="result-panel">
-          <div class="left" id="commons-library-location">
+          <div id="commons-library-location">
           </div>
-          <div class="right" id="lords-library-location">
+          <div id="lords-library-location">
           </div>
         </div>
       </div>
@@ -101,13 +101,13 @@
 
   <div class="row">
     <div class="result-panel">
-      <div class="left" id="significant-date">
+      <div id="significant-date">
         <%= render 'search/results/item_details/date', date: object.standard_date %>
       </div>
-      <div class="centre" id="reference">
+      <div id="reference">
         <%= render 'search/results/item_details/reference', reference: object.standard_reference %>
       </div>
-      <div class="right" id="house">
+      <div id="house">
 
       </div>
     </div>

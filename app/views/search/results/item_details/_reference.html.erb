@@ -1,5 +1,8 @@
 <% unless reference.blank? || reference.pluck(:value) == ["."] %>
   <div class="item-details">
+    <div class="item-details-label">
+      Reference
+    </div>
     <%= reference.pluck(:value).join('; ') %>
   </div>
 <% end %>

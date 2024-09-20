@@ -4,7 +4,7 @@
       Coming into force
     </div>
     <% unless date.blank? %>
-      <%= format_date(date) %>
+      <%= format_date_without_day(date) %>
     <% end %>
     <% unless date.blank? || notes.blank? %>
       ,

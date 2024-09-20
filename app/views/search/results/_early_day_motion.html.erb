@@ -12,25 +12,25 @@
 
   <div class="row">
     <div class="result-panel">
-      <div class="left" id="primary-person">
+      <div id="primary-person">
         <%= render 'search/results/item_details/primary_sponsor', primary_sponsor: object.primary_sponsor, primary_sponsor_party: object.primary_sponsor_party %>
       </div>
-      <div class="centre" id="secondary-person">
+      <div id="secondary-person">
       </div>
-      <div class="right" id="primary-group">
+      <div id="primary-group">
       </div>
     </div>
   </div>
 
   <div class="row">
     <div class="result-panel">
-      <div class="left" id="type">
+      <div id="type">
         <%= render 'search/results/item_details/subtype_or_type', subtype: object.subtype, type: object.type %>
       </div>
-      <div class="centre" id="status">
+      <div id="status">
 
       </div>
-      <div class="right" id="secondary-group">
+      <div id="secondary-group">
       </div>
     </div>
   </div>
@@ -39,22 +39,22 @@
 
     <div class="row">
       <div class="result-panel">
-        <div class="left" id="legislative-stage">
+        <div id="legislative-stage">
         </div>
-        <div class="right" id="procedure">
+        <div id="procedure">
         </div>
       </div>
     </div>
 
     <div class="row">
       <div class="result-panel">
-        <div class="left-outer" id="specific-date-1">
+        <div id="specific-date-1">
         </div>
-        <div class="left-inner" id="specific-date-2">
+        <div id="specific-date-2">
         </div>
-        <div class="right-inner" id="specific-date-3">
+        <div id="specific-date-3">
         </div>
-        <div class="right-outer" id="specific-date-4">
+        <div id="specific-date-4">
         </div>
       </div>
     </div>
@@ -81,10 +81,10 @@
       <% object.amendments.each do |amendment| %>
         <div class="row">
           <div class="result-panel">
-            <div class="left" id="amending-member">
+            <div id="amending-member">
               <%= render 'search/results/item_details/amended_by', primary_sponsor: amendment.dig(:primary_sponsor) unless amendment.dig(:primary_sponsor, :value).blank? %>
             </div>
-            <div class="right" id="amendment-date">
+            <div id="amendment-date">
               <%= render 'search/results/item_details/amended_on', date_tabled: amendment.dig(:date_tabled) unless amendment.dig(:date_tabled, :value).blank? %>
             </div>
           </div>
@@ -99,9 +99,9 @@
     <% unless object.commons_library_location.blank? && object.lords_library_location.blank? %>
       <div class="row">
         <div class="result-panel">
-          <div class="left" id="commons-library-location">
+          <div id="commons-library-location">
           </div>
-          <div class="right" id="lords-library-location">
+          <div id="lords-library-location">
           </div>
         </div>
       </div>
@@ -111,13 +111,13 @@
 
   <div class="row">
     <div class="result-panel">
-      <div class="left" id="significant-date">
+      <div id="significant-date">
         <%= render 'search/results/item_details/date', date: object.standard_date %>
       </div>
-      <div class="centre" id="reference">
+      <div id="reference">
         <%= render 'search/results/item_details/reference', reference: object.standard_reference %>
       </div>
-      <div class="right" id="house">
+      <div id="house">
         <%= render 'search/results/item_details/legislature', legislature: object.legislature %>
       </div>
     </div>

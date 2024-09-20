@@ -4,7 +4,8 @@ module ApplicationHelper
   include ActiveSupport::NumberHelper
 
   # ## We set the date display format.
-  DATE_DISPLAY_FORMAT = '%A, %e %B %Y'
+  DATE_FORMAT_WITH_DAY = '%A, %e %B %Y'
+  DATE_FORMAT_WITHOUT_DAY = '%e %B %Y'
 
   def format_html(html, truncate_words)
     if truncate_words == false

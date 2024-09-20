@@ -34,9 +34,9 @@
         %strong= "signed by "
         %strong= object.number_of_signatures[:value]
         - if object.number_of_signatures[:value] == 1
-          %strong>= " Member in total"
+          %strong>= " member in total"
         - else
-          %strong>= " Members in total"
+          %strong>= " members in total"
       - unless object.subtype.blank? && object.number_of_signatures.blank?
         %span= "."
       - if object.withdrawn?

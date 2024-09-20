@@ -176,10 +176,9 @@
     padding: 4px 0;
 
     .row {
-        margin: 12px 0;
-
-        .result-panel {
-            display: flex;
+        .item-details {
+            padding-top: 3px;
+            padding-bottom: 3px;
         }
     }
 

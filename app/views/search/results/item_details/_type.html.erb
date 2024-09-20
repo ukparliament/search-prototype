@@ -1,9 +1,9 @@
 <% unless type.blank? %>
-  <% if type.is_a?(Array) %>
-    <%= render 'search/fragments/simple_list', items: type, seperator: ';', terminator: '', singular: false %>
-  <% else %>
-    <div class="item-details">
+  <div class="item-details">
+    <% if type.is_a?(Array) %>
+      <%= render 'search/fragments/simple_list', items: type, seperator: ';', terminator: '', singular: false %>
+    <% else %>
       <%= object_display_name(type, singular: true) %>
-    </div>
-  <% end %>
+    <% end %>
+  </div>
 <% end %>
