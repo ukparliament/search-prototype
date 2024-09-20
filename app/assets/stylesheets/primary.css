@@ -497,6 +497,7 @@ table {
     }
 
     .result-panel {
+        display: flex;
         flex-direction: column;
         gap: 0;
     }
@@ -551,6 +552,7 @@ table {
     }
 
     .result-panel {
+        display: flex;
         flex-direction: column;
         justify-content: space-between;
         gap: 0;
@@ -604,13 +606,10 @@ table {
         flex-direction: row;
     }
 
+    /* for full-size displays we switch to a grid system, as it gives us alignment between multiple rows */
     .result-panel {
-        flex-direction: row;
-        justify-content: space-between;
-        gap: 0.75rem;
-
-        div {
-            flex: 1 0 100px;
-        }
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 6px;
     }
 }

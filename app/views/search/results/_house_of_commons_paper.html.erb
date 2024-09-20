@@ -5,14 +5,14 @@
 
   <div class="row">
     <div class="result-panel">
-      <div class="left" id="primary-person">
+      <div id="primary-person">
         <div <%= 'hidden' unless params[:show_detailed] == "true" %> class="item-details" data-detailed-results-target="toggleHidden">
           <%= render 'search/results/item_details/laid_by', laid_by: object.member_name %>
         </div>
       </div>
-      <div class="centre" id="secondary-person">
+      <div id="secondary-person">
       </div>
-      <div class="right" id="primary-group">
+      <div id="primary-group">
         <%= render 'search/results/item_details/departments', departments: object.departments, hide_label: true %>
       </div>
     </div>
@@ -20,13 +20,13 @@
 
   <div class="row">
     <div class="result-panel">
-      <div class="left" id="type">
+      <div id="type">
         <%= render 'search/results/item_details/subtype_and_type', subtype: object.subtypes, type: object.type %>
       </div>
-      <div class="centre" id="status">
+      <div id="status">
 
       </div>
-      <div class="right" id="secondary-group">
+      <div id="secondary-group">
         <div <%= 'hidden' unless params[:show_detailed] == "true" %> class="item-details" data-detailed-results-target="toggleHidden">
           <%= render 'search/results/item_details/corporate_author', corporate_author: object.corporate_author, hide_label: false %>
         </div>
@@ -38,9 +38,9 @@
 
     <div class="row">
       <div class="result-panel">
-        <div class="left" id="legislative-stage">
+        <div id="legislative-stage">
         </div>
-        <div class="right" id="procedure">
+        <div id="procedure">
           <%= render 'search/results/item_details/paper_procedure', procedure: object.paper_procedure %>
         </div>
       </div>
@@ -48,16 +48,16 @@
 
     <div class="row">
       <div class="result-panel">
-        <div class="left-outer" id="specific-date-1">
+        <div id="specific-date-1">
           <%= render 'search/results/item_details/date_laid', date_laid: object.date_laid %>
         </div>
-        <div class="left-inner" id="specific-date-2">
+        <div id="specific-date-2">
           <%= render 'search/results/item_details/date_withdrawn', date_withdrawn: object.date_withdrawn %>
         </div>
-        <div class="right-inner" id="specific-date-3">
+        <div id="specific-date-3">
           <%= render 'search/results/item_details/date_approved', date_approved: object.date_approved, label: 'Approved on' %>
         </div>
-        <div class="right-outer" id="specific-date-4">
+        <div id="specific-date-4">
 
         </div>
       </div>
@@ -85,9 +85,9 @@
       <% object.amendments.each do |amendment| %>
         <div class="row">
           <div class="result-panel">
-            <div class="left" id="amending-member">
+            <div id="amending-member">
             </div>
-            <div class="right" id="amendment-date">
+            <div id="amendment-date">
             </div>
           </div>
         </div>
@@ -101,10 +101,10 @@
     <% unless object.commons_library_location.blank? && object.lords_library_location.blank? %>
       <div class="row">
         <div class="result-panel">
-          <div class="left" id="commons-library-location">
+          <div id="commons-library-location">
             <%= render 'search/results/item_details/commons_library_location', location: object.commons_library_location unless object.commons_library_location.blank? %>
           </div>
-          <div class="right" id="lords-library-location">
+          <div id="lords-library-location">
             <%= render 'search/results/item_details/lords_library_location', location: object.lords_library_location unless object.lords_library_location.blank? %>
           </div>
         </div>
@@ -115,22 +115,13 @@
 
   <div class="row">
     <div class="result-panel">
-      <div class="left" id="significant-date">
-        <div class="item-details-label">
-          Date
-        </div>
+      <div id="significant-date">
         <%= render 'search/results/item_details/date', date: object.standard_date %>
       </div>
-      <div class="centre" id="reference">
-        <div class="item-details-label">
-          Reference
-        </div>
+      <div id="reference">
         <%= render 'search/results/item_details/reference', reference: object.reference %>
       </div>
-      <div class="right" id="house">
-        <div class="item-details-label">
-          House
-        </div>
+      <div id="house">
         <%= render 'search/results/item_details/legislature', legislature: object.legislature %>
       </div>
     </div>

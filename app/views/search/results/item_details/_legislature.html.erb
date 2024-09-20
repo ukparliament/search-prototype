@@ -1,3 +1,8 @@
-<div class="item-details">
-  <%= render 'search/fragments/simple_list', items: legislature, terminator: "", singular: false %>
-</div>
+<% unless legislature.blank? %>
+  <div class="item-details">
+    <div class="item-details-label">
+      House
+    </div>
+    <%= render 'search/fragments/simple_list', items: legislature, terminator: "", singular: false %>
+  </div>
+<% end %>
