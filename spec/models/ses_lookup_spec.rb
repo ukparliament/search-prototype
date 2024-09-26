@@ -91,15 +91,15 @@ RSpec.describe SesLookup, type: :model do
 
   describe 'evaluated_responses' do
     let!(:ses_api_call) { SesLookup.new([{ value: 92347, field_name: 'type_ses' }, { value: 92350, field_name: 'type_ses' }, { value: 92352, field_name: 'type_ses' }]) }
-    let!(:deserialised_response) { { "1" => "a", "2" => "b" } }
+    let!(:deserialised_response) { { "terms" => { "1" => "a", "2" => "b" } } }
     let!(:serialised_response) { "{\"terms\":{\"1\":\"a\",\"2\":\"b\"}}" }
 
     it 'parses the response' do
       # artificially reduce the threshold for grouping
       allow(ses_api_call).to receive(:group_size).and_return(2)
 
-      allow(ses_api_call).to receive(:api_response).and_return(serialised_response)
-      expect(ses_api_call.send(:evaluated_responses)).to eq([deserialised_response, deserialised_response])
+      allow(ses_api_call).to receive(:api_response).and_return(deserialised_response)
+      expect(ses_api_call.send(:evaluated_responses)).to eq([deserialised_response['terms'], deserialised_response['terms']])
     end
   end
 end

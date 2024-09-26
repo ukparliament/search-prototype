@@ -272,6 +272,22 @@ class SolrSearch < ApiCall
       }
     end
 
+    ret['primaryMember_ses'] = {
+      "type": "terms",
+      "field": "askingMember_ses",
+      "limit": 80,
+      "facet": {
+        "unique_combined": {
+          "type": "terms",
+          "field": "leadMember_ses",
+          "limit": -1,
+          "facet": {
+            "unique_count": "unique(askingMember_ses)"
+          }
+        }
+      }
+    }
+
     ret.to_json
   end
 

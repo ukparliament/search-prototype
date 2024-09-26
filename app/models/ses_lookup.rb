@@ -45,18 +45,11 @@ class SesLookup < ApiCall
         # fetch response
         response = api_response(uri)
 
-        # try to parse the response as JSON & extract terms
-        begin
-          parsed_response = JSON.parse(response)
-          evaluated = parsed_response.dig('terms')
-        rescue JSON::ParserError
-          # contrary to SES API documentation, errors seem to be returned as XML regardless of specified TEMPLATE
-          evaluated = Hash.from_xml(response)
-          puts "Error: #{evaluated}" if Rails.env.development?
-        end
+        # extract terms
+        terms = response.dig('terms')
 
-        # collate responses
-        output << evaluated
+        # collate terms from all responses
+        output << terms
       end
     end
 
@@ -70,8 +63,12 @@ class SesLookup < ApiCall
 
   def evaluated_hierarchy_response
     uri = ses_browse_service_uri
-    response = JSON.parse(api_response(uri))
-    response.dig("terms")
+    api_response(uri)
+  end
+
+  def test_api_response
+    uri = ses_term_service_uri("346696")
+    api_response(uri)
   end
 
   def data
@@ -108,14 +105,15 @@ class SesLookup < ApiCall
     # the hashes contain a nested 'term' hash containing 'id' and 'name'
 
     # If SES returns an error, we'll get an error key returned from evaluated_response
-    return responses.first if responses.first&.has_key?(:error)
+    return responses if responses.has_key?("error")
 
-    unless responses.compact.blank?
-      responses.each do |response|
+    terms = responses.dig('terms')
+    unless terms.compact.blank?
+      terms.each do |term|
         new_key = []
-        new_key << response.dig('term', 'id')&.to_i
-        new_key << response.dig('term', 'name')
-        ret[new_key] = response.dig('term', 'hierarchy')
+        new_key << term.dig('term', 'id')&.to_i
+        new_key << term.dig('term', 'name')
+        ret[new_key] = term.dig('term', 'hierarchy')
       end
     end
 
@@ -139,6 +137,14 @@ class SesLookup < ApiCall
   def api_response(uri)
     raise 'Please stub this method to avoid HTTP requests in test environment' if Rails.env.test?
 
-    api_get_request(uri)
+    raw_response = api_get_request(uri)
+
+    begin
+      JSON.parse(raw_response)
+    rescue JSON::ParserError
+      # contrary to SES API documentation, errors seem to be returned as XML regardless of specified TEMPLATE
+      evaluated_as_xml = Hash.from_xml(raw_response)
+      puts "Error: #{evaluated_as_xml}" if Rails.env.development?
+    end
   end
 end
