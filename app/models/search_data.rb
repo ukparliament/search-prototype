@@ -250,7 +250,7 @@ class SearchData
     facet_field_data.slice("type_sesrollup", "legislature_ses", "date_dt", "department_ses",
                            "member_ses", "tablingMember_ses", "askingMember_ses", "leadMember_ses",
                            "answeringMember_ses", "legislativeStage_ses", "legislationTitle_ses", "subject_ses",
-                           "topic_ses", "year", "publisher_ses").map { |k, v| { field_name: k, facets: sort_facets(v['buckets']) } }
+                           "topic_ses", "year", "publisher_ses", "primaryMember_ses").map { |k, v| { field_name: k, facets: sort_facets(v['buckets']) } }
   end
 
   def type_facets
@@ -266,6 +266,22 @@ class SearchData
     return [] if facet_field_data.blank?
 
     facet_field_data.select { |field| field.split('_').first == "session" }
+  end
+
+  def primary_member_facets
+    return [] unless search
+
+    facet_field_data = search.dig(:data, 'facets')
+    return [] if facet_field_data.blank?
+
+    ret = []
+    facet_field_data.dig("primaryMember_ses", "buckets").each do |bucket|
+      bucket.dig("unique_combined", "buckets").each do |sub_bucket|
+        ret << sub_bucket
+      end
+    end
+
+    ret
   end
 
   def sort_facets(facet_field)

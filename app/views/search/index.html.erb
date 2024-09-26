@@ -11,10 +11,10 @@
   <%#= render 'search/fragments/data', data: @search_data.search, title: 'Search response' %>
   <%#= render 'search/fragments/data', data: @ses_data, title: 'SES results' %>
   <%#= render 'search/fragments/data', data: @search_data.facets, title: 'Facets' %>
+  <%#= render 'search/fragments/data', data: @search_data.primary_member_facets, title: 'Primary Member Facets' %>
   <%#= render 'search/fragments/data', data: @search_data.type_facets, title: 'Type facets' %>
   <%#= render 'search/fragments/data', data: @search_data.hierarchy_data, title: 'Hierarchy data' %>
   <%#= render 'search/fragments/data', data: @top_level, title: 'Hierarchy top level types' %>
-  <%#= render 'search/fragments/data', data: @toggled_facets, title: 'Toggled facets' %>
   <%#= render 'search/fragments/data', data: request.params, title: 'All params' %>
 <% end %>
 
@@ -53,7 +53,7 @@
           <% end %>
           <%= render 'search/results/facets/date_facet' %>
           <%= render 'search/results/facets/session_facet', facet_data: @search_data.session_facets %>
-          <% @search_data.facets.select { |h| ["session_t", "department_ses", "member_ses", "tablingMember_ses", "askingMember_ses", "leadMember_ses", "answeringMember_ses", "legislativeStage_ses", "legislationTitle_ses", "subject_ses", "publisher_ses"].include?(h.dig(:field_name)) }.each do |facet_field| %>
+          <% @search_data.facets.select { |h| ["session_t", "department_ses", "member_ses", "primaryMember_ses", "tablingMember_ses", "askingMember_ses", "leadMember_ses", "answeringMember_ses", "legislativeStage_ses", "legislationTitle_ses", "subject_ses", "publisher_ses"].include?(h.dig(:field_name)) }.each do |facet_field| %>
             <%= render 'filter_section', facet_field: format_facets(facet_field) %>
           <% end %>
         </div>

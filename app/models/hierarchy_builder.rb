@@ -16,7 +16,7 @@ class HierarchyBuilder
 
   def formatted_ses_data
     ret = {}
-    ses_data.keys.each {|a| ret[a.first] = a.last }
+    ses_data.keys.each { |a| ret[a.first] = a.last }
 
     ret
   end
@@ -49,7 +49,10 @@ class HierarchyBuilder
   def top_level_types
     return unless ses_data.is_a?(Hash)
 
+    return [] if ses_data.has_key?("error")
+
     ret = []
+
     # select types that have 'Content Type' as their parent
     ses_data.select { |k, v| v.first.dig("fields").first.dig("field", "id") == "346696" }.keys.map do |id, name|
       ret << { id: id, name: name }

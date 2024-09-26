@@ -106,8 +106,11 @@ module ApplicationHelper
       department_t: 'Department',
       year: 'Date',
       month: 'Date',
-      session: 'Session'
+      session: 'Session',
+      primaryMember_ses: 'Primary member'
     }
+
+    raise "Unknown field name '#{field}'" if Rails.env.development? && !field_names.keys.include?(field.to_sym)
 
     field_names[field.to_sym]
   end
