@@ -1,6 +1,10 @@
 <% unless author.blank? %>
   <div class="about-item">
-    <h3 class="content-heading" id="corporate-author">Corporate author</h3>
+    <% unless label.blank? %>
+      <h3 class="content-heading" id="corporate-author">
+        <%= label %>
+      </h3>
+    <% end %>
     <% author.each do |item| %>
       <%= search_link(item) %><br/>
     <% end %>

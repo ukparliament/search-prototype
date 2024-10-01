@@ -20,7 +20,7 @@
   <h2 class="content-heading">About this <%= object_display_name(object.type, case_formatting: true) %></h2>
   <%= render 'search/fragments/reference', reference: object.reference %>
   <%= render 'search/fragments/rapporteur', rapporteur: object.rapporteur %>
-  <%= render 'search/fragments/corporate_author', author: object.corporate_author %>
+  <%= render 'search/fragments/corporate_author', label: 'Corporate author', author: object.corporate_author %>
   <%= render 'search/fragments/eu_parliament_committee', eu_parliament_committee: object.eu_parliament_committee %>
   <%= render 'search/fragments/related_items', related_item_ids: object.related_item_ids %>
   <%= render 'search/fragments/ec_documents', ec_documents: object.ec_documents %>
