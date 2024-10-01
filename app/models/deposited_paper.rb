@@ -36,7 +36,7 @@ class DepositedPaper < Paper
 
   def authors
     # combines personal and corporate authors
-    combine_fields(personal_author, corporate_author)
+    combine_fields(corporate_author, personal_author)
   end
 
   def personal_author
