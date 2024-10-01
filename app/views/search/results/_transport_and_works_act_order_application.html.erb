@@ -18,7 +18,7 @@
       </div>
       <div id="primary-group">
         <div <%= 'hidden' unless params[:show_detailed] == "true" %> id="content" data-detailed-results-target="toggleHidden">
-          <%= render 'search/results/item_details/depositing_applicant', applicant: object.depositing_applicant, hide_label: false %>
+          <%= render 'search/results/item_details/depositing_applicant', applicant: object.depositing_applicant, label: 'Author' %>
         </div>
       </div>
     </div>

@@ -1,8 +1,8 @@
 <% unless corporate_author.blank? %>
   <div class="item-details">
-    <% unless hide_label %>
+    <% unless label.blank? %>
       <div class="item-details-label">
-        Author
+        <%= label %>
       </div>
     <% end %>
     <%= render 'search/fragments/simple_list', items: corporate_author, terminator: "", singular: false %>
