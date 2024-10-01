@@ -29,7 +29,7 @@
   <%= render 'search/fragments/reference', reference: object.reference %>
   <%= render 'search/fragments/session', session: object.parliamentary_session %>
   <%= render 'search/fragments/departments', departments: object.departments %>
-  <%= render 'search/fragments/corporate_author', author: object.corporate_author %>
+  <%= render 'search/fragments/corporate_author', label: 'Committee', author: object.corporate_author %>
   <%= render 'search/fragments/witnesses', witnesses: object.witnesses %>
   <%= render 'search/fragments/legislative_stage', legislative_stage: object.legislative_stage %>
   <%= render 'search/fragments/procedure', procedure: object.procedure %>

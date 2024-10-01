@@ -40,8 +40,7 @@
   <h2 class="content-heading">About this <%= object_display_name(object.type, case_formatting: true) %></h2>
   <%= render 'search/fragments/reference', reference: object.reference %>
   <%= render 'search/fragments/date', title: 'Originated on', date: object.date_originated %>
-  <%= render 'search/fragments/corporate_author', author: object.corporate_author %>
-  <%= render 'search/fragments/personal_author', author: object.personal_author %>
+  <%= render 'search/fragments/corporate_author', label: 'Author', author: object.corporate_author %>
   <%= render 'search/fragments/paper_type', paper_type: object.paper_type %>
   <%= render 'search/fragments/related_items', related_item_ids: object.related_item_ids %>
   <%= render 'search/fragments/pills', pills_heading: 'Subjects', pills: object.subjects %>
