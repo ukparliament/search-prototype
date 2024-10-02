@@ -1,4 +1,9 @@
 <% unless answering_department.blank? %>
+  <% unless label.blank? %>
+    <span class="item-details-label">
+      <%= label %>
+    </span>
+  <% end %>
   <div class="item-details">
     <%= object_display_name(answering_department, singular: false) %>
   </div>

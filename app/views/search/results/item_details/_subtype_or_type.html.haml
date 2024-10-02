@@ -1,3 +1,5 @@
+- unless subtype.blank? && type.blank?
+  %div.item-details-label= "Type"
 - unless subtype.blank?
   - if subtype.is_a?(Array)
     = render 'search/fragments/simple_list', items: subtype, separator: ';', terminator: '', singular: false

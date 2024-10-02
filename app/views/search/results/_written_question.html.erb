@@ -19,7 +19,7 @@
         <%= render 'search/results/item_details/answering_member', answering_member: object.answering_member, answering_member_party: object.answering_member_parties, label: 'Answered by' %>
       </div>
       <div id="primary-group">
-        <%= render 'search/results/item_details/answering_body', answering_body: object.answering_body %>
+        <%= render 'search/results/item_details/answering_body', answering_body: object.answering_body, label: 'Answering body' %>
       </div>
     </div>
   </div>
@@ -30,7 +30,7 @@
         <%= render 'search/results/item_details/type', type: object.object_name %>
       </div>
       <div id="status">
-        <%= render 'search/results/item_details/state', state: object.state %>
+        <%= render 'search/results/item_details/state', state: object.state, label: 'Status' %>
       </div>
       <div id="secondary-group">
         <div <%= 'hidden' unless params[:show_detailed] == "true" %> class="item-details" data-detailed-results-target="toggleHidden">

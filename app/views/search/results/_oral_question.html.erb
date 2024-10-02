@@ -21,7 +21,7 @@
         </div>
       </div>
       <div id="primary-group">
-        <%= render 'search/results/item_details/answering_department', answering_department: object.answering_department %>
+        <%= render 'search/results/item_details/answering_department', answering_department: object.answering_department, label: 'Answering body' %>
       </div>
     </div>
   </div>
@@ -32,7 +32,7 @@
         <%= render 'search/results/item_details/contribution_type', object: object %>
       </div>
       <div id="status">
-        <%= render 'search/results/item_details/state', state: object.state %>
+        <%= render 'search/results/item_details/state', state: object.state, label: 'Status' %>
       </div>
       <div id="secondary-group">
       </div>
