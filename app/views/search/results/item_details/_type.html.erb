@@ -1,5 +1,8 @@
 <% unless type.blank? %>
   <div class="item-details">
+    <div class="item-details-label">
+      Type
+    </div>
     <% if type.is_a?(Array) %>
       <%= render 'search/fragments/simple_list', items: type, seperator: ';', terminator: '', singular: false %>
     <% else %>
