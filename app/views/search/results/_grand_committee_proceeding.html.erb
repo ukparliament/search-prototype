@@ -29,9 +29,7 @@
       <div id="type">
         <%= render 'search/results/item_details/type', type: object.object_name %>
       </div>
-      <div id="status">
-
-      </div>
+      <div id="status"></div>
       <div id="secondary-group">
         <%= render 'search/results/item_details/corporate_author', corporate_author: object.corporate_author, label: 'Committee' %>
       </div>
@@ -42,76 +40,18 @@
 
     <div class="row">
       <div class="result-panel">
-        <div id="legislative-stage">
-        </div>
+        <div id="legislative-stage"></div>
         <div id="procedure">
           <%= render 'search/results/item_details/procedure', procedure: object.procedure %>
         </div>
       </div>
     </div>
 
-    <div class="row">
-      <div class="result-panel">
-        <div id="specific-date-1">
-        </div>
-        <div id="specific-date-2">
-        </div>
-        <div id="specific-date-3">
-
-        </div>
-        <div id="specific-date-4">
-
-        </div>
-      </div>
-    </div>
-
-    <div class="row">
-      <div id="coming-into-force">
-
-      </div>
-    </div>
-
-    <div class="row">
-      <div id="supplementary-content">
-
-      </div>
-    </div>
-
-    <div class="row">
-      <div id="corrected">
-
-      </div>
-    </div>
-
-    <% unless object.amendments.blank? %>
-      <% object.amendments.each do |amendment| %>
-        <div class="row">
-          <div class="result-panel">
-            <div id="amending-member">
-            </div>
-            <div id="amendment-date">
-            </div>
-          </div>
-        </div>
-      <% end %>
-    <% end %>
-
     <%= render 'search/results/item_details/legislation', legislation: object.legislation unless object.legislation.blank? %>
     <%= render 'search/results/item_details/subjects', subjects: object.subjects unless object.subjects.blank? %>
-    <%= render 'search/results/item_details/notes', notes: object.notes unless object.notes.blank? %>
-
-    <% unless object.commons_library_location.blank? && object.lords_library_location.blank? %>
-      <div class="row">
-        <div class="result-panel">
-          <div id="commons-library-location">
-          </div>
-          <div id="lords-library-location">
-          </div>
-        </div>
-      </div>
-    <% end %>
-
   </div>
+
+  <%= render 'search/results/item_details/notes', notes: object.notes unless object.notes.blank? %>
 
   <div class="row">
     <div class="result-panel">
