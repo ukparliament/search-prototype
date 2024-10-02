@@ -1,4 +1,9 @@
 <% unless state.blank? %>
+  <% unless label.blank? %>
+    <div class="item-details-label">
+      <%= label %>
+    </div>
+  <% end %>
   <div class="item-details">
     <%= state[:value] %>
   </div>
