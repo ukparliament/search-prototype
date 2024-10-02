@@ -3,103 +3,14 @@
     <%= format_object_title(object.object_title, @ses_data) %>
   </div>
 
-  <div class="row" id="content">
-  </div>
-
-  <div class="row">
-    <div class="result-panel">
-      <div id="primary-person">
-      </div>
-      <div id="secondary-person">
-      </div>
-      <div id="primary-group">
-      </div>
-    </div>
-  </div>
-
   <div class="row">
     <div class="result-panel">
       <div id="type">
         <%= render 'search/results/item_details/type', type: object.object_name %>
       </div>
-      <div id="status">
-
-      </div>
-      <div id="secondary-group">
-      </div>
+      <div id="status"></div>
+      <div id="secondary-group"></div>
     </div>
-  </div>
-
-  <div <%= 'hidden' unless params[:show_detailed] == "true" %> class="row" id="detailed-view" data-detailed-results-target="toggleHidden">
-
-    <div class="row">
-      <div class="result-panel">
-        <div id="legislative-stage">
-        </div>
-        <div id="procedure">
-        </div>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="result-panel">
-        <div id="specific-date-1">
-        </div>
-        <div id="specific-date-2">
-        </div>
-        <div id="specific-date-3">
-
-        </div>
-        <div id="specific-date-4">
-
-        </div>
-      </div>
-    </div>
-
-    <div class="row">
-      <div id="coming-into-force">
-
-      </div>
-    </div>
-
-    <div class="row">
-      <div id="supplementary-content">
-
-      </div>
-    </div>
-
-    <div class="row">
-      <div id="corrected">
-
-      </div>
-    </div>
-
-    <% unless object.amendments.blank? %>
-      <% object.amendments.each do |amendment| %>
-        <div class="row">
-          <div class="result-panel">
-            <div id="amending-member">
-              <%#= render 'search/results/item_details/amended_by', primary_sponsor: amendment.dig(:primary_sponsor, :value) unless amendment.dig(:primary_sponsor, :value).blank? %>
-            </div>
-            <div id="amendment-date">
-              <%#= render 'search/results/item_details/amended_on', date_tabled: amendment.dig(:date_tabled, :value) unless amendment.dig(:date_tabled, :value).blank? %>
-            </div>
-          </div>
-        </div>
-      <% end %>
-    <% end %>
-
-    <% unless object.commons_library_location.blank? && object.lords_library_location.blank? %>
-      <div class="row">
-        <div class="result-panel">
-          <div id="commons-library-location">
-          </div>
-          <div id="lords-library-location">
-          </div>
-        </div>
-      </div>
-    <% end %>
-
   </div>
 
   <div class="row">
