@@ -18,7 +18,7 @@
       %span= "."
       - unless  @associated_object_data[object.proceeding_contribution_uri].blank?
         %span= " It occurred during "
-        %span>= render 'search/fragments/list', items: @associated_object_data[object.proceeding_contribution_uri].object_name, terminator: '', singular: true
+        %span>= render 'search/fragments/list', items: [@associated_object_data[object.proceeding_contribution_uri].object_name].flatten, terminator: '', singular: true
         %span= " on "
         %span>= object_show_link(@associated_object_data[object.proceeding_contribution_uri].object_title, @associated_object_data[object.proceeding_contribution_uri].object_uri)
         %span= "."
