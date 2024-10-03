@@ -523,6 +523,9 @@ class ContentObject
       'OralQuestionTimeIntervention'
     when 356750
       'ProceedingContribution'
+    when 356744
+      # Members' contributions treated as proceeding contribution type
+      'ProceedingContribution'
     when 352161
       # Grand committee proceeding inherits from parliamentary proceeding
       'GrandCommitteeProceeding'
