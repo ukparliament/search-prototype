@@ -12,13 +12,13 @@ class ParliamentaryPaperReported < Paper
     # subtype, but not if it's 91561, 81563, 51288
     # there will be multiple subtypes to look through, but we're using the first remaining one
     valid_subtypes = subtypes&.reject { |i| [91561, 91563, 51288].include?(i[:value]) }
-    valid_subtypes.blank? ? type : valid_subtypes
+    valid_subtypes.blank? ? [type] : valid_subtypes
   end
 
   def paper_type
     # subtype, but only if it's 91561, 81563, 51288
     valid_paper_types = super&.select { |i| [91561, 91563, 51288].include?(i[:value]) }
-    valid_paper_types.blank? ? nil : valid_paper_types
+    valid_paper_types.blank? ? [] : valid_paper_types
   end
 
   def display_link

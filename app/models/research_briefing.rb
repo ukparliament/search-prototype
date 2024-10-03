@@ -16,6 +16,10 @@ class ResearchBriefing < ContentObject
     get_first_as_html_from('htmlsummary_t')
   end
 
+  def main_content
+    fallback(html_summary, description)
+  end
+
   def object_name
     subtype
   end
