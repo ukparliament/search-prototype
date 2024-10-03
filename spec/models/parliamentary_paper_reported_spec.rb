@@ -13,8 +13,8 @@ RSpec.describe ParliamentaryPaperReported, type: :model do
     context 'where a single type is present' do
       let!(:parliamentary_paper_reported) { ParliamentaryPaperReported.new({ 'type_ses' => [12345] }) }
 
-      it 'returns object type' do
-        expect(parliamentary_paper_reported.object_name).to eq({ value: 12345, field_name: 'type_ses' })
+      it 'returns object type in an array' do
+        expect(parliamentary_paper_reported.object_name).to eq([{ value: 12345, field_name: 'type_ses' }])
       end
     end
     context 'where subtypes are present' do
@@ -38,8 +38,8 @@ RSpec.describe ParliamentaryPaperReported, type: :model do
     context 'where a single type is present' do
       let!(:parliamentary_paper_reported) { ParliamentaryPaperReported.new({ 'type_ses' => [12345] }) }
 
-      it 'returns nil' do
-        expect(parliamentary_paper_reported.paper_type).to be_nil
+      it 'returns an empty array' do
+        expect(parliamentary_paper_reported.paper_type).to eq([])
       end
     end
     context 'where subtypes are present' do
@@ -52,8 +52,8 @@ RSpec.describe ParliamentaryPaperReported, type: :model do
       end
       context 'subtypes does not include any of: 91561, 91563, 51288' do
         let!(:parliamentary_paper_reported) { ParliamentaryPaperReported.new({ 'type_ses' => [12345], 'subtype_ses' => [23456, 67890] }) }
-        it 'returns nil' do
-          expect(parliamentary_paper_reported.paper_type).to be_nil
+        it 'returns an empty array' do
+          expect(parliamentary_paper_reported.paper_type).to eq([])
         end
       end
     end
