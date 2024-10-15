@@ -1,10 +1,10 @@
 <% unless answering_body.blank? %>
-  <% unless label.blank? %>
-    <span class="item-details-label">
-      <%= label %>
-    </span>
-  <% end %>
   <div class="item-details">
+    <% unless label.blank? %>
+      <div class="item-details-label">
+        <%= label %>
+      </div>
+    <% end %>
     <%= answering_body[:value] %>
   </div>
 <% end %>
