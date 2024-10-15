@@ -4,6 +4,7 @@ class ApiCall
 
   attr_reader :object_uri
 
+  # BASE_API_URL = "https://api.parliament.uk/test-solr/select?"
   BASE_API_URL = "https://api.parliament.uk/new-solr/select?"
 
   def initialize(params)
@@ -41,13 +42,19 @@ class ApiCall
     _uri = URI(BASE_API_URL).dup
     data = URI.encode_www_form(params)
     puts "POST request from #{self.class.name}: #{_uri} with data: #{params} encoded as: #{data}"
+    start_time = Time.now
 
-    Net::HTTP.post(_uri, data, request_headers)
+    ret = Net::HTTP.post(_uri, data, request_headers)
+    puts "Completed POST request in #{Time.now - start_time} seconds"
+    ret
   end
 
   def api_get_request(uri)
     puts "GET request from #{self.class.name}: #{uri}"
-    Net::HTTP.get(uri, request_headers)
+    start_time = Time.now
+    ret = Net::HTTP.get(uri, request_headers)
+    puts "Completed GET request in #{Time.now - start_time} seconds"
+    ret
   end
 
   def api_subscription_key

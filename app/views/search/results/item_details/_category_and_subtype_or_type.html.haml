@@ -1,17 +1,29 @@
 - unless category.blank?
   - if category.is_a?(Array)
-    %span.item-details= render 'search/fragments/simple_list', items: category, separator: ';', terminator: ';', singular: false
+    %div.item-details
+      %div.item-details-label= "Type"
+      = render 'search/fragments/simple_list', items: category, separator: ';', terminator: ';', singular: false
   - else
-    %span.item-details>= object_display_name(category, singular: true)
+    %div.item-details
+      %div.item-details-label= "Type"
+      = object_display_name(category, singular: true)
 - unless subtype.blank?
   - unless category.blank?
     %span>= "; "
   - if subtype.is_a?(Array)
-    %span.item-details= render 'search/fragments/simple_list', items: subtype, separator: ';', terminator: ';', singular: false
+    %div.item-details
+      %div.item-details-label= "Type"
+      = render 'search/fragments/simple_list', items: subtype, separator: ';', terminator: ';', singular: false
   - else
-    %span.item-details>= object_display_name(subtype, singular: true)
+    %div.item-details
+      %div.item-details-label= "Type"
+      = object_display_name(subtype, singular: true)
 - if subtype.blank? && category.blank?
   - if type.is_a?(Array)
-    %span.item-details= render 'search/fragments/simple_list', items: type, separator: ';', terminator: ';', singular: false
+    %div.item-details
+      %div.item-details-label= "Type"
+      = render 'search/fragments/simple_list', items: type, separator: ';', terminator: ';', singular: false
   - else
-    %span.item-details= object_display_name(type, singular: true)
+    %div.item-details
+      %div.item-details-label= "Type"
+      = object_display_name(type, singular: true)

@@ -34,6 +34,8 @@ class SesLookup < ApiCall
     threads = []
 
     puts "Making #{lookup_id_groups.size} requests to SES..." if Rails.env.development?
+    start_time = Time.now
+
     lookup_id_groups.each do |id_group|
       # one request per group of IDs; one thread per request
       threads << Thread.new do
@@ -55,15 +57,19 @@ class SesLookup < ApiCall
 
     # wait for all threads to have finished executing
     threads.each(&:join)
-    puts "All requests completed" if Rails.env.development?
+    puts "All requests completed in #{Time.now - start_time} seconds" if Rails.env.development?
 
     # flatten responses
     output.flatten
   end
 
   def evaluated_hierarchy_response
+    puts "Getting hierarchy data..." if Rails.env.development?
+    start_time = Time.now
     uri = ses_browse_service_uri
-    api_response(uri)
+    ret = api_response(uri)
+    puts "Retrieved hierarchy data in #{Time.now - start_time} seconds" if Rails.env.development?
+    ret
   end
 
   def test_api_response
@@ -97,8 +103,11 @@ class SesLookup < ApiCall
     # for returning all data in a structured format for further querying
     return if input_data.blank?
 
+
     ret = {}
     responses = evaluated_hierarchy_response
+    puts "Reformatting retrieved hierarchy data" if Rails.env.development?
+    start_time = Time.now
 
     # responses is an array of hashes
     # each hash is the parsed response from individual lookups (one per [group_size] IDs)
@@ -116,6 +125,8 @@ class SesLookup < ApiCall
         ret[new_key] = term.dig('term', 'hierarchy')
       end
     end
+
+    puts "Completed reformatting in #{Time.now - start_time} seconds" if Rails.env.development?
 
     ret
   end

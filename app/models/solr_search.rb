@@ -24,6 +24,7 @@ class SolrSearch < ApiCall
       'askingMember_ses',
       'leadMember_ses',
       'answeringMember_ses',
+      'primaryMember_ses',
       'legislativeStage_ses',
       'legislationTitle_ses',
       'subject_ses',
@@ -271,22 +272,6 @@ class SolrSearch < ApiCall
         "domain": { excludeTags: 'session_t' }
       }
     end
-
-    ret['primaryMember_ses'] = {
-      "type": "terms",
-      "field": "askingMember_ses",
-      "limit": 80,
-      "facet": {
-        "unique_combined": {
-          "type": "terms",
-          "field": "leadMember_ses",
-          "limit": -1,
-          "facet": {
-            "unique_count": "unique(askingMember_ses)"
-          }
-        }
-      }
-    }
 
     ret.to_json
   end

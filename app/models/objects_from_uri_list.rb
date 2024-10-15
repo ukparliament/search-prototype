@@ -10,6 +10,7 @@ class ObjectsFromUriList
     return unless valid_input
 
     puts "Get #{relation_uris.size} objects..." if Rails.env.development?
+    start_time = Time.now
 
     ret = {}
     ret[:items] = []
@@ -27,7 +28,7 @@ class ObjectsFromUriList
     end
 
     threads.each(&:join)
-    puts "All requests completed" if Rails.env.development?
+    puts "All requests completed in #{Time.now - start_time} seconds" if Rails.env.development?
 
     ret
   end
