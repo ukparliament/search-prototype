@@ -1,6 +1,6 @@
 <% unless referred_to.blank? || referred_to[:value]&.downcase == "none" %>
   <div class="about-item">
-    <h3 class="content-heading" id="referred-to">Referred to</h3>
+    <div class="content-heading-small" id="referred-to">Referred to</div>
     <%= referred_to[:value] %>
   </div>
 <% end %>

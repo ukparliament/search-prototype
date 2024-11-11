@@ -25,7 +25,7 @@ main {
     font-weight: 400;
     color: #4d4d4d;
     word-wrap: break-word;
-    line-height: 28px;
+    line-height: 1.5em;
     flex-grow: 1;
 }
 
@@ -192,6 +192,8 @@ div.callout {
     justify-content: flex-start;
     align-items: flex-start;
     gap: 8px;
+    padding-top: 4px;
+    padding-bottom: 4px;
 }
 
 .pill-wrapper {
@@ -285,6 +287,8 @@ div.callout {
         justify-content: flex-start;
         align-items: flex-start;
         gap: 8px;
+        padding-top: 4px;
+        padding-bottom: 4px;
     }
 
     .pill-wrapper {
@@ -333,19 +337,19 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h1 {
-    line-height: 42.00px;
+    line-height: 1.2em;
 }
 
 h2.content-heading {
     font-size: 27px;
-    line-height: 37.80px;
+    line-height: 1.2em;
     margin-top: 0;
     margin-bottom: 0;
 }
 
 h3.content-heading {
-    font-size: 22px;
-    line-height: 30.80px;
+    font-size: 16px;
+    line-height: 1.2em;
     margin-top: 0;
     margin-bottom: 0;
 }
@@ -357,6 +361,14 @@ ul.unformatted {
 
     li {
         list-style-type: none;
+    }
+}
+
+div.about-item {
+    div.content-heading-small {
+        color: grey;
+        font-size: small;
+        line-height: normal;
     }
 }
 

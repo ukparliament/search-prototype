@@ -1,6 +1,6 @@
 <% unless attachments.blank? %>
   <div class="about-item">
-    <h3 class="content-heading" id="attachment">Attachment</h3>
+    <div class="content-heading-small" id="attachment">Attachment</div>
     <%= attachments.pluck(:value).join('; ') %>
   </div>
 <% end %>

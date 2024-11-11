@@ -1,6 +1,6 @@
 <% unless departments.blank? %>
   <div class="about-item">
-    <h3 class="content-heading" id="department">Department</h3>
+    <div class="content-heading-small" id="department">Department</div>
     <% departments.each do |department| %>
       <%= search_link(department) %><br/>
     <% end %>

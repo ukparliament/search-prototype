@@ -1,6 +1,6 @@
 <% unless regarding_object_ids.blank? %>
   <div class="about-item">
-    <h3 class="content-heading" id="regarding-deposited-document">Regarding deposited document</h3>
+    <div class="content-heading-small" id="regarding-deposited-document">Regarding deposited document</div>
     <div class="flex-list">
       <% regarding_object_ids.each do |r_id| %>
         <% unless @associated_object_data[r_id].blank? %>
