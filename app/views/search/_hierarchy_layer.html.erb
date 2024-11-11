@@ -1,4 +1,4 @@
-<% if id %>
+<% if id && @type_facets[id] %>
   <div class="grid-row">
     <span class="facet-toggle toggle-<%= parent_id %> <%= 'collapse' if (tier > 1 && !@expanded_types.include?(parent_id.to_s)) %>" style="margin-left: <%= (tier - 1) * 0 %>px;">
       <% if @hierarchy_data.dig(id, :children).any? %>
