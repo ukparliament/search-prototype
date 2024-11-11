@@ -1,6 +1,6 @@
 <% unless previous_version.blank? %>
   <div class="about-item">
-    <h3 class="content-heading" id="previous-version">Previous version</h3>
+    <div class="content-heading-small" id="previous-version">Previous version</div>
     <%= object_show_link(previous_version.version_title, previous_version.object_uri) %>
     <% unless previous_version.date_of_order.blank? %>
       <br/><%= format_date(previous_version.date_of_order) %>

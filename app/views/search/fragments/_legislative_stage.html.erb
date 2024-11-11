@@ -1,6 +1,6 @@
 <% unless legislative_stage.blank? %>
   <div class="about-item">
-    <h3 class="content-heading" id="legislative-stage">Legislative stage</h3>
+    <div class="content-heading-small" id="legislative-stage">Legislative stage</div>
     <%= render 'search/fragments/list', items: legislative_stage, terminator: "", singular: false %>
   </div>
 <% end %>

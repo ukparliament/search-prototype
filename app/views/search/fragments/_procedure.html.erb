@@ -1,6 +1,6 @@
 <% unless procedure.blank? %>
   <div class="about-item">
-    <h3 class="content-heading" id="procedure">Procedure</h3>
+    <div class="content-heading-small" id="procedure">Procedure</div>
     <% procedure.each do |p| %>
       <%= search_link(p) %><br/>
     <% end %>

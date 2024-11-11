@@ -1,6 +1,6 @@
 <% if object.has_link? %>
   <div class="about-item">
-    <h3 class="content-heading" id="link">Link</h3>
+    <div class="content-heading-small" id="link">Link</div>
     <%= link_to "View this #{object_display_name(object.type)} on #{ URI.parse(object.display_link[:value]).host}", object.display_link[:value] %>
   </div>
 <% end %>

@@ -1,9 +1,9 @@
 <% unless author.blank? %>
   <div class="about-item">
     <% unless label.blank? %>
-      <h3 class="content-heading" id="corporate-author">
+      <div class="content-heading-small" id="corporate-author">
         <%= label %>
-      </h3>
+      </div>
     <% end %>
     <% author.each do |item| %>
       <%= search_link(item) %><br/>

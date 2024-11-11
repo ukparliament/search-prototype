@@ -25,7 +25,7 @@
 <% end %>
 
 <section id="about" class="content-section grey">
-  <h2 class="content-heading">About this <%= object_display_name(object.type, case_formatting: true) %></h2>
+  <%= render 'search/fragments/type', type: object.type %>
   <%= render 'search/fragments/reference', reference: object.reference %>
   <%= render 'search/fragments/related_items', related_item_ids: object.related_item_ids %>
   <%= render 'search/fragments/notes', notes: object.notes %>

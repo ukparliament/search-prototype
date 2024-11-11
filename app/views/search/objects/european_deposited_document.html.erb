@@ -17,7 +17,7 @@
 </section>
 
 <section id="about" class="content-section grey">
-  <h2 class="content-heading">About this <%= object_display_name(object.type, case_formatting: true) %></h2>
+  <%= render 'search/fragments/type', type: object.type %>
   <%= render 'search/fragments/commission_number', commission_number: object.commission_number %>
   <%= render 'search/fragments/elc_number', elc_number: object.elc_number %>
   <%= render 'search/fragments/council_number', council_number: object.council_number %>

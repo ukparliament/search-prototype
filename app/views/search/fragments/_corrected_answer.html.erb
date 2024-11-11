@@ -1,6 +1,6 @@
 <% unless object.corrected_answer.blank? && object.correcting_item_link.blank? %>
   <div class="about-item">
-    <h3 class="content-heading" id="corrected-answer">Corrected answer</h3>
+    <div class="content-heading-small" id="corrected-answer">Corrected answer</div>
     <% unless object.corrected_answer.blank? %>
       <p class="html-content">
         <%= raw(object.corrected_answer[:value]) %>

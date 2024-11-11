@@ -1,6 +1,6 @@
 <% unless contribution_ids.blank? %>
   <div class="about-item">
-    <h3 class="content-heading" id="contributions">Proceeding contributions</h3>
+    <div class="content-heading-small" id="contributions">Proceeding contributions</div>
     <div class="flex-list">
       <% contribution_ids[..1].each do |contribution_id| %>
         <%= render 'search/fragments/contribution', contribution: @associated_object_data[contribution_id] %>

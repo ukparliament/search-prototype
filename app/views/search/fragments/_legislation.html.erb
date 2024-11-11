@@ -1,6 +1,6 @@
 <% unless legislation.blank? %>
   <div class="about-item">
-    <h3 class="content-heading" id="legislation">Legislation</h3>
+    <div class="content-heading-small" id="legislation">Legislation</div>
     <% legislation.each do |legislation| %>
       <%= search_link(legislation) %><br/>
     <% end %>

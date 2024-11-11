@@ -1,6 +1,6 @@
 <% unless notes.blank? && date.blank? %>
   <div class="about-item">
-    <h3 class="content-heading" id="coming-into-force">Coming into force</h3>
+    <div class="content-heading-small" id="coming-into-force">Coming into force</div>
     <% unless date.blank? %>
       <%= format_date(date) %>
     <% end %>
