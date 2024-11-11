@@ -17,7 +17,7 @@
 </section>
 
 <section id="about" class="content-section grey">
-  <h2 class="content-heading">About this <%= object_display_name(object.type, case_formatting: true) %></h2>
+  <%= render 'search/fragments/type', type: object.type %>
   <%= render 'search/fragments/decision', decision: object.decision %>
   <%= render 'search/fragments/assessment', assessment: object.assessment %>
   <%= render 'search/fragments/cleared', cleared: object.is_cleared %>
