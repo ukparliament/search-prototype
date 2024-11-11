@@ -177,8 +177,9 @@
 
     .row {
         .item-details {
-            padding-top: 3px;
-            padding-bottom: 3px;
+            line-height: normal;
+            padding-top: 4px;
+            padding-bottom: 4px;
 
             * {
                 max-width: 100%;
@@ -189,7 +190,7 @@
     .item-details-label {
         color: grey;
         font-size: small;
-        line-height: 10px;
+        line-height: normal;
     }
 }
 
