@@ -7,7 +7,7 @@
         %span>= render 'search/fragments/list', items: object.legislature, terminator: '', singular: false
       - unless object.date.blank?
         %span= " on "
-        %strong>= format_date(object.date)
+        %span>= format_date(object.date)
       - unless object.corporate_author.blank?
         %span= " from the "
         %span>= render 'search/fragments/list', items: object.corporate_author, terminator: '', singular: false

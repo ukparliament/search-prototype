@@ -13,9 +13,9 @@
         %span>= render 'search/fragments/list', items: object.departments, terminator: "", singular: false
       - unless object.deposited_date.blank?
         %span= " on "
-        %strong>= format_date(object.deposited_date)
+        %span>= format_date(object.deposited_date)
       %span= "."
       - unless object.commitment_to_deposit_date.blank?
         %span= " The commitment to deposit was made on "
-        %strong>= format_date(object.commitment_to_deposit_date)
+        %span>= format_date(object.commitment_to_deposit_date)
         %span= "."

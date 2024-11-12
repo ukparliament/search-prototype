@@ -23,7 +23,7 @@
           %span>=")"
       - unless object.date_of_answer.blank?
         %span= " on "
-        %strong>= format_date(object.date_of_answer)
+        %span>= format_date(object.date_of_answer)
       - unless object.answering_department.blank?
         %span= " on behalf of the "
         %span>= search_link(object.answering_department)

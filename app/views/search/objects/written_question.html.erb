@@ -16,7 +16,7 @@
   <%= render object.prelim_partial, object: object %>
 </section>
 
-<section id="main-content" class="content-section white">
+<section id="main-content" class="content-section white-padded">
   <%= render 'search/fragments/question', object: object %>
   <%= render 'search/fragments/answer', object: object if object.answered? || object.answered_was_holding? %>
   <%= render 'search/fragments/corrected_written_question_follow_up', correcting_object: @associated_object_data[object.correcting_item_link] if object.corrected? %>

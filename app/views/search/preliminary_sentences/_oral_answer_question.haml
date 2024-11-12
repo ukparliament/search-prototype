@@ -4,7 +4,7 @@
     %span>= object_show_link(formatted_name(question.subtype_or_type, @ses_data, true), object.question_url)
     - unless object.date_of_question.blank?
       %span= " asked on "
-      %strong>= format_date(object.date_of_question)
+      %span>= format_date(object.date_of_question)
     - unless question.asking_member.blank?
       %span= " by "
       %span>= search_link(question.asking_member)

@@ -8,5 +8,5 @@
         %span>= render 'search/fragments/list', items: object.legislature, terminator: '', singular: false
       - unless object.date_of_order_to_print.blank?
         %span= " on "
-        %strong>= format_date(object.date_of_order_to_print)
+        %span>= format_date(object.date_of_order_to_print)
         %span= "."

@@ -5,7 +5,7 @@
       %span= " laid in the "
       %span>= render 'search/fragments/list', items: object.legislature, terminator: ",", singular: false
       %span= " on "
-      %strong>= format_date(object.date_laid)
+      %span>= format_date(object.date_laid)
       - unless object.member_name.blank?
         %span= " by "
         %span>= search_link(object.member_name)
@@ -15,16 +15,16 @@
       \.
       - unless object.date_approved.blank?
         It was approved by the House of Commons on&nbsp
-        %strong>= format_date(object.date_approved)
+        %span>= format_date(object.date_approved)
         \.
       - unless object.date_made.blank?
         It was made on&nbsp
-        %strong>= format_date(object.date_made)
+        %span>= format_date(object.date_made)
         \.
       - if object.date_withdrawn.blank?
         - if object.is_withdrawn && object.is_withdrawn[:value]
           It was subsequently withdrawn.
       - else
         It was withdrawn on&nbsp
-        %strong>= format_date(object.date_withdrawn)
+        %span>= format_date(object.date_withdrawn)
         \.

@@ -19,7 +19,7 @@
           %span>= render 'search/fragments/edm_sponsor_list', items: object.other_sponsors, terminator: '', singular: false
           %span= " and "
       %span= " tabled on "
-      %strong>= format_date(object.date_tabled)
+      %span>= format_date(object.date_tabled)
       %span= ", in the "
       %span= render 'search/fragments/list', items: object.legislature, terminator: '.', singular: false
       - if object.subtype.blank?
@@ -31,12 +31,12 @@
       - unless object.number_of_signatures.blank?
         - unless object.subtype.blank?
           %span= ", "
-        %strong= "signed by "
-        %strong= object.number_of_signatures[:value]
+        %span= "signed by "
+        %span= object.number_of_signatures[:value]
         - if object.number_of_signatures[:value] == 1
-          %strong>= " member in total"
+          %span>= " member in total"
         - else
-          %strong>= " members in total"
+          %span>= " members in total"
       - unless object.subtype.blank? && object.number_of_signatures.blank?
         %span= "."
       - if object.withdrawn?

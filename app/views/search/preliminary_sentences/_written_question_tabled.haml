@@ -12,7 +12,7 @@
           %span= ") "
       - unless object.date_of_question.blank?
         %span= " on "
-        %strong>= format_date(object.date_of_question)
+        %span>= format_date(object.date_of_question)
       %span= ", "
       - unless object.legislature.blank?
         %span= " in the "
@@ -23,7 +23,7 @@
       %span= "."
       - unless object.date_for_answer.blank?
         %span= " It is due for an answer on "
-        %strong>= format_date(object.date_for_answer)
+        %span>= format_date(object.date_for_answer)
         - if object.named_day?
           %span= " ("
           %span>= object.question_type[:value]&.downcase

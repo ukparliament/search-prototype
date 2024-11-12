@@ -8,6 +8,6 @@
         %span>= render 'search/fragments/list', items: object.legislature, terminator: '', singular: false
       - unless object.date.blank?
         %span= " on "
-        %strong>= format_date(object.date)
+        %span>= format_date(object.date)
       %span= " by the Examiners of Petitions for Private Bills"
       %span>= "."

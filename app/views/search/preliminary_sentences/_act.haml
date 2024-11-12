@@ -3,7 +3,7 @@
     .content-prelim-text#prelim-text
       %span>= object_display_name_link(object.object_name)
       %span= " became law on "
-      %strong>= format_date(object.date)
+      %span>= format_date(object.date)
       - unless bill.blank?
         %span= " when the "
         %span>= object_show_link(bill.object_title, bill.object_uri)

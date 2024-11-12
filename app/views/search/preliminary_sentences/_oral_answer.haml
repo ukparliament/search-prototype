@@ -4,7 +4,7 @@
       %span>= object_display_name_link(object.object_name)
       - unless object.date_of_answer.blank?
         %span= " provided on "
-        %strong= format_date(object.date_of_answer)
+        %span= format_date(object.date_of_answer)
       - unless object.legislature.blank?
         %span= " in the "
         %span>= render 'search/fragments/list', items: object.legislature, terminator: ',', singular: false

@@ -10,7 +10,7 @@
           %span>= search_link(object.member_party)
           %span>=")"
       %span= " on "
-      %strong>= format_date(object.statement_date)
+      %span>= format_date(object.statement_date)
       %span= " in the "
       %span= render 'search/fragments/list', items: object.legislature, terminator: ',', singular: false
       - unless object.department.blank?

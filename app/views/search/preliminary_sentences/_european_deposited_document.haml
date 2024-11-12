@@ -4,5 +4,5 @@
       %span>= object_display_name_link(object.object_name)
       - unless object.deposited_date.blank?
         %span=" deposited on "
-      %strong>= format_date(object.deposited_date)
+      %span>= format_date(object.deposited_date)
       %span= "."

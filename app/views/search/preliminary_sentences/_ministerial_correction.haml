@@ -11,7 +11,7 @@
         %span= ") "
       - unless object.correction_date.blank?
         %span= " on "
-        %strong>= format_date(object.correction_date)
+        %span>= format_date(object.correction_date)
       - unless object.legislature.blank?
         %span= ", in the "
         %span>= render 'search/fragments/list', items: object.legislature, terminator: "", singular: false
