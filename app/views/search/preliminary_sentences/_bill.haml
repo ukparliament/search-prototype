@@ -3,7 +3,7 @@
     .content-prelim-text#prelim-text
       %span>= object_display_name_link(object.object_name)
       %span= " on "
-      %strong>= format_date(object.date_of_order)
+      %span>= format_date(object.date_of_order)
       %span= ", in the "
       %span>= render 'search/fragments/list', items: object.legislature, terminator: "", singular: false
       - unless object.member.blank?

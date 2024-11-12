@@ -16,7 +16,7 @@
   <%= render 'search/preliminary_sentences/deposited_paper', object: object %>
 </section>
 
-<section id="main-content" class="content-section white">
+<section id="main-content" class="content-section white-padded">
   <% unless object.abstract_text.blank? %>
     <div class="content-text">
       <%= raw format_html(object.abstract_text[:value], false) %>

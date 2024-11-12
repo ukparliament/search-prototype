@@ -12,14 +12,14 @@
           %span>= ")"
       - unless object.date_of_question.blank?
         %span= " on "
-        %strong>= format_date(object.date_of_question)
+        %span>= format_date(object.date_of_question)
       - unless object.legislature.blank?
         %span= ", in the "
         %span>= render 'search/fragments/list', items: object.legislature, terminator: '', singular: false
       %span= "."
       - unless object.date_for_answer.blank?
         %span= " It was due for an answer on "
-        %strong>= format_date(object.date_for_answer)
+        %span>= format_date(object.date_for_answer)
         - if object.named_day?
           %span= " ("
           %span>= object.question_type[:value]&.downcase
@@ -28,7 +28,7 @@
       - unless object.date_of_holding_answer.blank?
         %span= " A holding answer was provided "
         %span= " on "
-        %strong>= format_date(object.date_of_holding_answer)
+        %span>= format_date(object.date_of_holding_answer)
         %span= "."
       - unless object.date_of_answer.blank?
         %span= " A substantive answer was provided "
@@ -40,7 +40,7 @@
             %span>= search_link(object.answering_member_party)
             %span= ") "
         %span= " on "
-        %strong>= format_date(object.date_of_answer)
+        %span>= format_date(object.date_of_answer)
         - unless object.department.blank?
           %span= " on behalf of the "
           %span>= search_link(object.department)

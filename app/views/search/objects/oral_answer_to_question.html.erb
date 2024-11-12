@@ -17,14 +17,14 @@
 </section>
 
 <% unless object.answer_text.blank? %>
-  <section id="main-content" class="content-section white">
+  <section id="main-content" class="content-section white-padded">
     <%= render 'search/fragments/answer', object: object %>
   </section>
 <% end %>
 
 <% if object.has_question? %>
   <%= render 'search/preliminary_sentences/oral_answer_question', object: object, question: @associated_object_data[object.question_id] %>
-  <section id="main-content" class="content-section white">
+  <section id="main-content" class="content-section white-padded">
     <%= render 'search/fragments/question', object: @associated_object_data[object.question_id] %>
   </section>
 <% end %>

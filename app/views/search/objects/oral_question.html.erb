@@ -31,7 +31,7 @@
   <%= render object.prelim_partial, object: object %>
 </section>
 
-<section id="main-content" class="content-section white">
+<section id="main-content" class="content-section white-padded">
   <%= render 'search/fragments/question', object: object %>
   <% unless object.answer_item_link.blank? %>
     <%= render 'search/fragments/answer', object: @associated_object_data[object.answer_item_link] unless object.tabled? || object.withdrawn? %>

@@ -237,6 +237,13 @@ div.callout {
         padding: 16px 0;
     }
 
+    &.white-padded {
+        /*background: #EBEBEB;*/
+        /*border: 1px solid lightgrey*/
+        background: none;
+        padding: 16px;
+    }
+
     &.white-slim {
         background: none;
         padding: 0;
@@ -423,7 +430,7 @@ table {
     }
 
     &.top-button-container {
-        margin: 48px 32px 32px 32px;
+        margin: 32px 16px 16px 16px;
     }
 
     .page-button {

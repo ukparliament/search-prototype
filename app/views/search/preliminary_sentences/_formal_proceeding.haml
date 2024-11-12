@@ -4,7 +4,7 @@
       %span>= object_display_name_link(object.object_name)
       - unless object.date.blank?
         %span= " on "
-        %strong>= format_date(object.date)
+        %span>= format_date(object.date)
       - unless object.legislature.blank?
         %span= ","
         %span= " in the "

@@ -6,7 +6,7 @@
       %span>= render 'search/fragments/list', items: object.legislature, terminator: "", singular: false
       - unless object.date.blank?
         %span= " on "
-        %strong>= format_date(object.date)
+        %span>= format_date(object.date)
       - unless object.lead_member.blank?
         %span= " by "
         %span= search_link(object.lead_member)

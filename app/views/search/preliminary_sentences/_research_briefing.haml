@@ -8,11 +8,11 @@
       %span= "."
       - if object.last_updated.blank?
         %span= " It was published on "
-        %strong>= format_date(object.published_on)
+        %span>= format_date(object.published_on)
       - else
         %span= " It was first published on "
-        %strong>= format_date(object.published_on)
+        %span>= format_date(object.published_on)
         %span= "."
         %span= " It was last updated on "
-        %strong>= format_date(object.last_updated)
+        %span>= format_date(object.last_updated)
       %span= "."

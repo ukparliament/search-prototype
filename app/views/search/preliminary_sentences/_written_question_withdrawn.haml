@@ -12,7 +12,7 @@
           %span= ") "
       - unless object.date_of_question.blank?
         %span= " on "
-        %strong>= format_date(object.date_of_question)
+        %span>= format_date(object.date_of_question)
       %span= ", "
       - unless object.legislature.blank?
         %span= " in the "

@@ -4,7 +4,7 @@
       %span>= object_display_name_link(object.object_name)
       - unless object.date_originated.blank?
         %span= " dated "
-        %strong>= format_date(object.date_originated)
+        %span>= format_date(object.date_originated)
       - unless object.corresponding_minister.blank?
         %span= " from "
         %span>= search_link(object.corresponding_minister)
