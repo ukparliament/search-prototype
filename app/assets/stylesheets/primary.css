@@ -137,7 +137,7 @@ footer {
     width: 100%;
     box-sizing: border-box;
     align-self: stretch;
-    padding: 0;
+    padding: 8px 0;
     justify-content: flex-start;
     align-items: flex-start;
     display: inline-flex;
@@ -145,7 +145,8 @@ footer {
     .content-prelim-inner {
         flex: 1 1 0;
         padding: 16px 16px;
-        background: #EBEBEB;
+        background: none;
+        border: 2px solid;
         justify-content: space-between;
         align-items: flex-start;
         gap: 10px;
@@ -228,8 +229,9 @@ div.callout {
 
 .content-section {
     &.grey {
-        background: #EBEBEB;
+        background: none;
         padding: 16px;
+        border: 2px solid
     }
 
     &.white {
@@ -238,10 +240,8 @@ div.callout {
     }
 
     &.white-padded {
-        /*background: #EBEBEB;*/
-        /*border: 1px solid lightgrey*/
         background: none;
-        padding: 16px;
+        padding: 8px 0;
     }
 
     &.white-slim {
