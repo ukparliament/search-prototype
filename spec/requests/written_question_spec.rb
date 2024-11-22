@@ -5,8 +5,8 @@ RSpec.describe 'Written Question', type: :request do
     let!(:written_question_instance) { WrittenQuestion.new('type_ses' => [12345]) }
 
     it 'returns http success' do
-      allow_any_instance_of(SolrQuery).to receive(:all_data).and_return({ 'response' => { "docs" => ['test'] } })
-      allow_any_instance_of(SolrMultiQuery).to receive(:object_data).and_return([])
+      allow_any_instance_of(SolrQuery).to receive(:all_data).and_return({ 'response' => { 'docs' => [{ 'type_ses' => [12345] }] } })
+      allow_any_instance_of(SolrMultiQuery).to receive(:object_data).and_return([{ 'type_ses' => [12345] }])
       allow_any_instance_of(SesLookup).to receive(:data).and_return({})
       allow(ContentObject).to receive(:generate).and_return(written_question_instance)
       allow(written_question_instance).to receive(:tabled?).and_return(true)
@@ -41,8 +41,8 @@ RSpec.describe 'Written Question', type: :request do
             end
           end
 
-          allow_any_instance_of(SolrQuery).to receive(:all_data).and_return({ 'response' => { "docs" => ['test'] } })
-          allow_any_instance_of(SolrMultiQuery).to receive(:object_data).and_return([])
+          allow_any_instance_of(SolrQuery).to receive(:all_data).and_return({ 'response' => { "docs" => [{ 'type_ses' => [12345] }] } })
+          allow_any_instance_of(SolrMultiQuery).to receive(:object_data).and_return([{ 'type_ses' => [12345] }])
           allow(ContentObject).to receive(:generate).and_return(written_question_instance)
           allow(written_question_instance).to receive(:tabled?).and_return(true)
           allow_any_instance_of(SesLookup).to receive(:data).and_return(test_ses_data)

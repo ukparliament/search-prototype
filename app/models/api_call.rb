@@ -12,7 +12,7 @@ class ApiCall
   end
 
   def object_data
-    all_data['response']['docs']
+    all_data['response']['docs']&.reject{|h| h.dig('type_ses').blank?}
   end
 
   def all_data

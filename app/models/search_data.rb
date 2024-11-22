@@ -49,7 +49,7 @@ class SearchData
   def object_data
     return unless search
 
-    search.dig(:data, 'response', 'docs')
+    search.dig(:data, 'response', 'docs')&.reject { |h| h.dig('type_ses').blank? }
   end
 
   def objects

@@ -11,7 +11,7 @@ RSpec.describe SolrQuery, type: :model do
     "response" => {
       "numFound" => 1,
       "start" => 0,
-      "docs" => [{ test_string: 'test' }]
+      "docs" => [{ 'type_ses' => [12345] }]
     },
     "highlighting" => { "test_url" => {} }
   } }
@@ -19,7 +19,7 @@ RSpec.describe SolrQuery, type: :model do
   describe 'object_data' do
     it 'returns the data for the object' do
       allow(api_call).to receive(:evaluated_response).and_return(mock_response)
-      expect(api_call.object_data).to eq({ test_string: 'test' })
+      expect(api_call.object_data).to eq({ 'type_ses' => [12345] })
     end
   end
 end

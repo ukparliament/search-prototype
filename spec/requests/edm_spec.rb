@@ -5,7 +5,7 @@ RSpec.describe 'Edm', type: :request do
     let!(:edm_instance) { Edm.new('type_ses' => [12345]) }
 
     it 'returns http success' do
-      allow_any_instance_of(SolrQuery).to receive(:all_data).and_return({ 'response' => { "docs" => ['test'] } })
+      allow_any_instance_of(SolrQuery).to receive(:all_data).and_return({ 'response' => { "docs" => [{ 'type_ses' => [12345] }] } })
       allow_any_instance_of(SesLookup).to receive(:data).and_return({})
       allow(ContentObject).to receive(:generate).and_return(edm_instance)
       get '/objects', params: { :object => 'test_string' }
@@ -45,7 +45,7 @@ RSpec.describe 'Edm', type: :request do
             end
           end
 
-          allow_any_instance_of(SolrQuery).to receive(:all_data).and_return({ 'response' => { "docs" => ['test'] } })
+          allow_any_instance_of(SolrQuery).to receive(:all_data).and_return({ 'response' => { "docs" => [{ 'type_ses' => [12345] }] } })
           allow(ContentObject).to receive(:generate).and_return(edm_instance)
           allow_any_instance_of(SesLookup).to receive(:data).and_return(test_ses_data)
 
