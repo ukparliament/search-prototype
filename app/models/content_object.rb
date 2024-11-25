@@ -252,7 +252,7 @@ class ContentObject
   end
 
   def related_item_ids
-    get_all_ids_from('relation_t')
+    combine_fields(get_all_ids_from('relation_t'), get_all_ids_from('relation_uri'))
   end
 
   def contribution_text

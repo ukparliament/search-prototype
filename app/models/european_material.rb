@@ -61,7 +61,8 @@ class EuropeanMaterial < ContentObject
   def related_item_ids
     doc_text = get_all_ids_from('referencingDD_t')
     doc_uri = get_all_ids_from('referencingDD_uri')
-    relation_uris = get_all_ids_from('relation_t')
-    [doc_text, doc_uri, relation_uris].flatten.compact
+    relation_text_uris = get_all_ids_from('relation_t')
+    relation_uris = get_all_ids_from('relation_uri')
+    [doc_text, doc_uri, relation_text_uris, relation_uris].flatten.compact
   end
 end
