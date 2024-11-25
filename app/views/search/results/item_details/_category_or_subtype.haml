@@ -1,0 +1,13 @@
+- unless category.blank? && subtype.blank?
+  %div.item-details
+    %div.item-details-label= "Type"
+    - unless category.blank?
+      - if category.is_a?(Array)
+        = render 'search/fragments/simple_list', items: category, separator: ';', terminator: '', singular: false
+      - else
+        = object_display_name(category, singular: false)
+    - if category.blank?
+      - if subtype.is_a?(Array)
+        = render 'search/fragments/simple_list', items: subtype, separator: ';', terminator: '', singular: false
+      - else
+        = object_display_name(subtype, singular: true)

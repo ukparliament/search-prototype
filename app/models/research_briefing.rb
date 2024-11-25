@@ -40,6 +40,10 @@ class ResearchBriefing < ContentObject
     get_first_from('category_ses')
   end
 
+  def category
+    get_first_from('category_ses')
+  end
+
   def creator_party
     get_first_from('creatorParty_ses')
   end
