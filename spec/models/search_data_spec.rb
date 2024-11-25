@@ -18,9 +18,9 @@ RSpec.describe SearchData, type: :model do
                                "numFound" => 3,
                                "start" => 0,
                                "docs" => [
-                                 { 'test_string' => 'test string 1', 'uri' => 'test1' },
-                                 { 'test_string' => 'test string 2', 'uri' => 'test2' },
-                                 { 'test_string' => 'test string 3', 'uri' => 'test3' },
+                                 { 'type_ses' => [12345], 'test_string' => 'test string 1', 'uri' => 'test1' },
+                                 { 'type_ses' => [23456], 'test_string' => 'test string 2', 'uri' => 'test2' },
+                                 { 'type_ses' => [34567], 'test_string' => 'test string 3', 'uri' => 'test3' },
                                ]
                              },
                              "highlighting" => { "test_url" => {} },
@@ -93,9 +93,38 @@ RSpec.describe SearchData, type: :model do
     context 'where data is present' do
       it 'returns the array of docs' do
         expect(search_data.object_data).to eq([
-                                                { 'test_string' => 'test string 1', 'uri' => 'test1' },
-                                                { 'test_string' => 'test string 2', 'uri' => 'test2' },
-                                                { 'test_string' => 'test string 3', 'uri' => 'test3' },
+                                                { 'type_ses' => [12345], 'test_string' => 'test string 1', 'uri' => 'test1' },
+                                                { 'type_ses' => [23456], 'test_string' => 'test string 2', 'uri' => 'test2' },
+                                                { 'type_ses' => [34567], 'test_string' => 'test string 3', 'uri' => 'test3' },
+                                              ])
+      end
+    end
+    context 'where type_ses is missing' do
+      let!(:search_output) { { search_parameters: { filter: ['topic_ses:12345'], query: 'horse' },
+                               data: {
+                                 "responseHeader" => {
+                                   "status" => 0,
+                                   "QTime" => 4,
+                                   "params" => { "q" => "externalLocation_uri:\"test_external_location_uri\"", "wt" => "json" }
+                                 },
+                                 "response" => {
+                                   "numFound" => 3,
+                                   "start" => 0,
+                                   "docs" => [
+                                     { 'type_ses' => [12345], 'test_string' => 'test string 1', 'uri' => 'test1' },
+                                     { 'test_string' => 'test string 2', 'uri' => 'test2' },
+                                     { 'type_ses' => [34567], 'test_string' => 'test string 3', 'uri' => 'test3' },
+                                   ]
+                                 },
+                                 "highlighting" => { "test_url" => {} },
+                                 "facets" => facet_data
+                               },
+      } }
+
+      it 'returns only data that has type_ses present' do
+        expect(search_data.object_data).to eq([
+                                                { 'type_ses' => [12345], 'test_string' => 'test string 1', 'uri' => 'test1' },
+                                                { 'type_ses' => [34567], 'test_string' => 'test string 3', 'uri' => 'test3' },
                                               ])
       end
     end

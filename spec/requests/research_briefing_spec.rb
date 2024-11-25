@@ -5,8 +5,8 @@ RSpec.describe 'Research Briefing', type: :request do
     let!(:research_briefing_instance) { ResearchBriefing.new('test') }
 
     it 'returns http success' do
-      allow_any_instance_of(SolrQuery).to receive(:all_data).and_return({ 'response' => { "docs" => ['test'] } })
-      allow_any_instance_of(SolrMultiQuery).to receive(:object_data).and_return([])
+      allow_any_instance_of(SolrQuery).to receive(:all_data).and_return({ 'response' => { "docs" => [{ 'type_ses' => [12345] }] } })
+      allow_any_instance_of(SolrMultiQuery).to receive(:object_data).and_return([{ 'type_ses' => [12345] }])
       allow_any_instance_of(SesLookup).to receive(:data).and_return({})
       allow(ContentObject).to receive(:generate).and_return(research_briefing_instance)
       get '/objects', params: { :object => 'test_string' }
@@ -47,8 +47,8 @@ RSpec.describe 'Research Briefing', type: :request do
             end
           end
 
-          allow_any_instance_of(SolrQuery).to receive(:all_data).and_return({ 'response' => { "docs" => ['test'] } })
-          allow_any_instance_of(SolrMultiQuery).to receive(:object_data).and_return([])
+          allow_any_instance_of(SolrQuery).to receive(:all_data).and_return({ 'response' => { "docs" => [{ 'type_ses' => [12345] }] } })
+          allow_any_instance_of(SolrMultiQuery).to receive(:object_data).and_return([{ 'type_ses' => [12345] }])
           allow(ContentObject).to receive(:generate).and_return(research_briefing_instance)
           allow_any_instance_of(SesLookup).to receive(:data).and_return(test_ses_data)
 
