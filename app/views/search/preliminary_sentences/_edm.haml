@@ -2,12 +2,8 @@
   .content-prelim-inner
     .content-prelim-text#prelim-text
       %span>= object_display_name_link(object.object_name)
-      - unless object.primary_sponsor.blank? && object.other_sponsors.blank?
-        %span=" sponsored by "
-      - if object.primary_sponsor.blank?
-        %span= render 'search/fragments/list', items: object.other_sponsors, terminator: '', singular: false
-        %span= " and "
-      - else object.primary_sponsor.blank?
+      - unless object.primary_sponsor.blank?
+        %span=" tabled by "
         %span>= search_link(object.primary_sponsor)
         - if object.primary_sponsor_party.blank?
           %span= " (primary sponsor)"
@@ -15,8 +11,6 @@
           %span= " (primary sponsor, "
           %span>= render 'search/fragments/list', items: object.primary_sponsor_party, terminator: '', singular: false
           %span= ")"
-        - unless object.other_sponsors.blank?
-          %span>= render 'search/fragments/edm_sponsor_list', items: object.other_sponsors, terminator: '', singular: false
           %span= " and "
       %span= " tabled on "
       %span>= format_date(object.date_tabled)
