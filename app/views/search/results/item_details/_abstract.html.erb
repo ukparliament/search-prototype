@@ -1,7 +1,7 @@
 <% unless abstract.blank? %>
   <div class="item-details">
     <span>
-      <%= raw abstract[:value].truncate_words(50) %>
+      <%= raw format_html(abstract[:value], 50) %>
     </span>
   </div>
 <% end %>
