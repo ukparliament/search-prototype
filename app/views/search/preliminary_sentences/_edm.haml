@@ -3,16 +3,13 @@
     .content-prelim-text#prelim-text
       %span>= object_display_name_link(object.object_name)
       - unless object.primary_sponsor.blank?
-        %span=" tabled by "
+        %span=" tabled by primary sponsor "
         %span>= search_link(object.primary_sponsor)
-        - if object.primary_sponsor_party.blank?
-          %span= " (primary sponsor)"
-        - else
-          %span= " (primary sponsor, "
+        - unless object.primary_sponsor_party.blank?
+          %span= " ("
           %span>= render 'search/fragments/list', items: object.primary_sponsor_party, terminator: '', singular: false
-          %span= ")"
-          %span= " and "
-      %span= " tabled on "
+          %span>= ")"
+      %span= ", on "
       %span>= format_date(object.date_tabled)
       %span= ", in the "
       %span= render 'search/fragments/list', items: object.legislature, terminator: '.', singular: false
