@@ -14,9 +14,12 @@ export default class extends Controller {
     }
 
     showClaw() {
-        const element = document.querySelector("#about-this-result");
-        if (element) {
-            element.toggleAttribute("hidden");
-        }
+        const all_elements = Array.from(document.getElementsByClassName('claw'));
+
+        all_elements.forEach(
+            element => {
+                element.toggleAttribute("hidden");
+            }
+        )
     }
 }
