@@ -166,7 +166,7 @@ div.callout {
 
 /* Object view sections */
 
-#about-this-result {
+.object-claw {
     border: 1px solid black;
     padding: 16px;
 
@@ -409,7 +409,6 @@ table {
         padding: 4px 8px;
         cursor: pointer;
         font-size: small;
-        /*width: 250px;*/
 
         &:hover {
             background: #f1f1f1;
