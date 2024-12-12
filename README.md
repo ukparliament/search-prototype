@@ -143,7 +143,17 @@ results. It has several subclasses. For each, the object_data method returns the
 ### API endpoints
 
 The Solr and SES API endpoints are protected via an API key (Azure) which is stored in the app encrypted credentials.
-Note that there are specific credentials files for each environment.
+There are multiple environments within a single credentials file, as a deliberate choice to avoid the complications
+of using environment specific credentials files. The correct key for Solr, for example, is found using:
+
+``` Rails.application.credentials.dig(Rails.env.to_sym, :solr_api, :subscription_key) ```
+
+which will function correctly in any environment, so long as a subsection matching the environment name has been added
+to the credentials file and the correct data added within.
+
+The master key is needed to decrypt the credentials file. This should be provided to anyone developing the application
+and also included on any servers, usually as an environment variable. Please see the Rails credentials documentation
+for more information.
 
 ### SES data
 

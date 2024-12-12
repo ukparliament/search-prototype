@@ -4,9 +4,6 @@ class ApiCall
 
   attr_reader :object_uri
 
-  # BASE_API_URL = "https://api.parliament.uk/test-solr/select?"
-  BASE_API_URL = "https://api.parliament.uk/new-solr/select?"
-
   def initialize(params)
     @object_uri = params[:object_uri]
   end
@@ -39,7 +36,9 @@ class ApiCall
   end
 
   def api_post_request(params)
-    _uri = URI(BASE_API_URL).dup
+    api_endpoint = Rails.application.credentials.dig(Rails.env.to_sym, :solr_api, :endpoint)
+
+    _uri = URI(api_endpoint).dup
     data = URI.encode_www_form(params)
     puts "POST request from #{self.class.name}: #{_uri} with data: #{params} encoded as: #{data}"
     start_time = Time.now
@@ -58,7 +57,7 @@ class ApiCall
   end
 
   def api_subscription_key
-    Rails.application.credentials.dig(:solr_api, :subscription_key)
+    Rails.application.credentials.dig(Rails.env.to_sym, :solr_api, :subscription_key)
   end
 
   def request_headers

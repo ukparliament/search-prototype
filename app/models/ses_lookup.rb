@@ -1,8 +1,6 @@
 class SesLookup < ApiCall
   attr_reader :input_data
 
-  BASE_API_URL = "https://api.parliament.uk/ses/"
-
   def initialize(input_data)
     @input_data = input_data
   end
@@ -131,12 +129,18 @@ class SesLookup < ApiCall
     ret
   end
 
+  def ses_base_url
+    Rails.application.credentials.dig(Rails.env.to_sym, :ses_api, :endpoint)
+  end
+
   def ses_term_service_uri(id_group_string)
-    build_uri("#{BASE_API_URL}select.exe?TBDB=disp_taxonomy&TEMPLATE=service.json&SERVICE=term&ID=#{id_group_string}")
+    base_url = ses_base_url
+    build_uri("#{base_url}select.exe?TBDB=disp_taxonomy&TEMPLATE=service.json&SERVICE=term&ID=#{id_group_string}")
   end
 
   def ses_browse_service_uri
-    build_uri("#{BASE_API_URL}select.exe?TBDB=disp_taxonomy&TEMPLATE=service.json&expand_hierarchy=1&SERVICE=allterms&CLASS=CTP")
+    base_url = ses_base_url
+    build_uri("#{base_url}select.exe?TBDB=disp_taxonomy&TEMPLATE=service.json&expand_hierarchy=1&SERVICE=allterms&CLASS=CTP")
   end
 
   private
