@@ -18,6 +18,12 @@ class OralQuestion < Question
     'search/results/oral_question'
   end
 
+  def search_result_ses_fields
+    %w[type_ses subtype_ses askingMember_ses askingMemberParty_ses tablingMember_ses tablingMemberParty_ses
+      answeringMember_ses answeringMemberParty_ses answeringDept_ses procedural_ses
+      legislationTitle_ses subject_ses place_ses legislature_ses]
+  end
+
   def object_name
     subtype_or_type
   end

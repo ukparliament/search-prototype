@@ -4,6 +4,10 @@ class ChurchOfEnglandMeasure < ContentObject
     super
   end
 
+  def search_result_ses_fields
+    %w[type_ses subtype_ses legislationTitle_ses subject_ses legislature_ses]
+  end
+
   def date_of_royal_assent
     get_first_as_date_from('dateOfRoyalAssent_dt')
   end

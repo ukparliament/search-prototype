@@ -12,6 +12,10 @@ class PaperPetition < Petition
     'search/results/paper_petition'
   end
 
+  def search_result_ses_fields
+    %w[type_ses subtype_ses leadMember_ses legislationTitle_ses subject_ses legislature_ses]
+  end
+
   def object_name
     subtype
   end

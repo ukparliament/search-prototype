@@ -24,6 +24,11 @@ class MinisterialCorrection < ContentObject
     'search/results/ministerial_correction'
   end
 
+  def search_result_ses_fields
+    %w[type_ses subtype_ses member_ses memberParty_ses department_ses
+       legislationTitle_ses subject_ses legislature_ses]
+  end
+
   def correction_text
     get_first_from('correctionText_t')
   end

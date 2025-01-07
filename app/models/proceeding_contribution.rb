@@ -10,12 +10,21 @@ class ProceedingContribution < ContentObject
     ids.compact.flatten.uniq
   end
 
+  def self.required_solr_fields
+    %w[title_t uri type_ses subtype_ses contributionText_t member_ses memberParty_ses procedural_ses legislationTitle_ses legislationTitle_t subject_ses subject_t searcherNote_t legislature_ses identifier_t place_ses date_dt]
+  end
+
   def template
     'search/objects/proceeding_contribution'
   end
 
   def search_result_partial
     'search/results/proceeding_contribution'
+  end
+
+  def search_result_ses_fields
+    %w[type_ses subtype_ses member_ses memberParty_ses procedural_ses
+       legislationTitle_ses subject_ses place_ses legislature_ses]
   end
 
   def object_name

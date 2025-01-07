@@ -16,6 +16,11 @@ class Edm < ContentObject
     'search/results/early_day_motion'
   end
 
+  def search_result_ses_fields
+    %w[type_ses subtype_ses primarySponsor_ses primarySponsorParty_ses
+       legislationTitle_ses subject_ses legislature_ses]
+  end
+
   def amendments
     # Title is the title of the motion itself, with 'Amendment N' on the front
     # Reference is taken from identifier_t, after removing the first item

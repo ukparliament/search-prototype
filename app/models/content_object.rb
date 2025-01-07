@@ -15,6 +15,11 @@ class ContentObject
     content_object_class(type_id, subtype_ids).classify.constantize.new(content_object_data)
   end
 
+  def self.required_solr_fields
+    # fallback only
+    %w[title_t uri date_dt type_ses subtype_ses]
+  end
+
   def object_name
     type
   end
@@ -44,10 +49,6 @@ class ContentObject
 
   def amendments
     nil
-  end
-
-  def get_associated_objects
-    ObjectsFromUriList.new(associated_objects).get_objects
   end
 
   def ses_lookup_ids
@@ -257,10 +258,6 @@ class ContentObject
 
   def contribution_text
     get_first_as_html_from('contributionText_t')
-  end
-
-  def contribution_short_text
-    get_first_as_html_from('contributionText_s')
   end
 
   def parliamentary_session

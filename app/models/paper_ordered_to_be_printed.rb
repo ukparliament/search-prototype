@@ -12,6 +12,11 @@ class PaperOrderedToBePrinted < Paper
     'search/results/paper_ordered_to_be_printed'
   end
 
+  def search_result_ses_fields
+    %w[type_ses subtype_ses member_ses department_ses corporateAuthor_ses procedural_ses
+       legislationTitle_ses subject_ses legislature_ses]
+  end
+
   def object_name
     # only subtypes 528119 and 528127, otherwise show type
     valid_subtypes = subtypes&.select { |i| [528119, 528127].include?(i[:value]) }

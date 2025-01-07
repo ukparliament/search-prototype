@@ -12,6 +12,10 @@ class EuropeanScrutinyExplanatoryMemorandum < EuropeanScrutiny
     'search/results/european_scrutiny_explanatory_memorandum'
   end
 
+  def search_result_ses_fields
+    %w[type_ses subtype_ses department_ses subject_ses legislature_ses]
+  end
+
   def object_name
     subtype_or_type
   end

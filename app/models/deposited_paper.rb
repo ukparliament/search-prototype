@@ -12,6 +12,10 @@ class DepositedPaper < Paper
     'search/results/deposited_paper'
   end
 
+  def search_result_ses_fields
+    %w[type_ses subtype_ses department_ses corporateAuthor_ses legislationTitle_ses subject_ses legislature_ses]
+  end
+
   def deposited_date
     get_first_as_date_from('dateReceived_dt')
   end

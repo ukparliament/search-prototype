@@ -12,6 +12,10 @@ class EuropeanDepositedDocument < ContentObject
     'search/results/european_deposited_document'
   end
 
+  def search_result_ses_fields
+    %w[type_ses subtype_ses department_ses subject_ses legislature_ses]
+  end
+
   def object_name
     subtype_or_type
   end

@@ -1,7 +1,7 @@
 require 'rails_helper'
 
-RSpec.describe ObjectsFromUriList, type: :model do
-  let!(:instance) { ObjectsFromUriList.new(['test_uri1']) }
+RSpec.describe SolrQueryWrapper, type: :model do
+  let!(:instance) { SolrQueryWrapper.new(['test_uri1']) }
 
   describe 'get_objects' do
     let!(:solr_query_object_data) { [

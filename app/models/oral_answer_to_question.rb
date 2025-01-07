@@ -18,6 +18,11 @@ class OralAnswerToQuestion < Question
     'search/results/oral_answer_to_question'
   end
 
+  def search_result_ses_fields
+    %w[type_ses subtype_ses answeringMember_ses answeringMemberParty_ses answeringDept_ses procedural_ses
+       legislationTitle_ses subject_ses place_ses legislature_ses]
+  end
+
   def has_question?
     question_id.blank? ? false : true
   end

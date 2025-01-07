@@ -8,8 +8,18 @@ class WrittenQuestion < Question
     'search/objects/written_question'
   end
 
+  def self.required_solr_fields
+    %w[title_t uri type_ses subtype_ses questionText_t askingMember_ses askingMemberParty_ses tablingMember_ses tablingMemberParty_ses answeringMember_ses answeringMemberParty_ses departmentPrinted_t pqStatus_t askedToReplyAuthor_ses procedural_ses dateTabled_dt dateForAnswer_dt dateOfHoldingAnswer_dt dateOfAnswer_dt answerText_t correctingItem_uri correctingItem_t correctedWmsMc_b legislationTitle_ses legislationTitle_t subject_ses subject_t searcherNote_t legislature_ses identifier_t date_dt]
+  end
+
   def search_result_partial
     'search/results/written_question'
+  end
+
+  def search_result_ses_fields
+    %w[type_ses subtype_ses askingMember_ses askingMemberParty_ses tablingMember_ses tablingMemberParty_ses
+       answeringMember_ses answeringMemberParty_ses askedToReplyAuthor_ses procedural_ses legislationTitle_ses
+       subject_ses legislature_ses]
   end
 
   def holding?

@@ -12,6 +12,11 @@ class TransportAndWorksActOrderApplication < ContentObject
     'search/results/transport_and_works_act_order_application'
   end
 
+  def search_result_ses_fields
+    %w[type_ses subtype_ses applicant_ses
+       legislationTitle_ses subject_ses legislature_ses]
+  end
+
   def depositing_agent
     fallback(get_first_from('agent_ses'), get_first_from('agent_t'))
   end

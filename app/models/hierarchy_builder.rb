@@ -7,7 +7,11 @@ class HierarchyBuilder
   end
 
   def get_data_from_ses
-    SesLookup.new([{ value: 346696 }]).extract_hierarchy_data
+    puts "Fetching Hierarchy data..."
+    start_time = Time.now
+    ret = SesLookup.new([{ value: 346696 }]).extract_hierarchy_data
+    puts "Done in #{(Time.now - start_time).round(2)} seconds"
+    ret
   end
 
   def hierarchy_data

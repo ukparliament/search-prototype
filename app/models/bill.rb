@@ -12,6 +12,11 @@ class Bill < ContentObject
     'search/results/bill'
   end
 
+  def search_result_ses_fields
+    %w[type_ses subtype_ses member_ses memberParty_ses department_ses corporateAuthor_ses
+       legislationTitle_ses witness_ses subject_ses topic_ses legislature_ses]
+  end
+
   def object_name
     subtype_or_type
   end

@@ -24,7 +24,7 @@ RSpec.describe AssociatedObjects, type: :model do
 
     describe 'get_associated_objects' do
       it 'makes a Solr request' do
-        allow_any_instance_of(ObjectsFromUriList).to receive(:get_objects).and_return({ items: 'test response' })
+        allow_any_instance_of(SolrQueryWrapper).to receive(:get_objects).and_return({ items: 'test response' })
         expect(associated_objects.get_associated_objects).to eq('test response')
       end
     end
@@ -48,7 +48,7 @@ RSpec.describe AssociatedObjects, type: :model do
 
     describe 'get_associated_objects' do
       it 'makes a Solr request' do
-        allow_any_instance_of(ObjectsFromUriList).to receive(:get_objects).and_return({ items: 'test response' })
+        allow_any_instance_of(SolrQueryWrapper).to receive(:get_objects).and_return({ items: 'test response' })
         expect(associated_objects.get_associated_objects).to eq('test response')
       end
     end
@@ -57,7 +57,7 @@ RSpec.describe AssociatedObjects, type: :model do
       let!(:test_response) { [parent_proceeding, answer] }
 
       it 'returns structured data' do
-        allow_any_instance_of(ObjectsFromUriList).to receive(:get_objects).and_return({ items: test_response })
+        allow_any_instance_of(SolrQueryWrapper).to receive(:get_objects).and_return({ items: test_response })
         expect(associated_objects.data[:object_data]).to eq({ 'uri_of_answer' => answer, 'uri_of_parent_proceeding' => parent_proceeding })
         expect(associated_objects.data[:ses_ids]).to match_array([{ :field_name => "all_ses", :value => 123 }, { :field_name => "all_ses", :value => 456 }, { :field_name => "all_ses", :value => 654 }])
       end

@@ -6,7 +6,6 @@ class SearchData
     # @search is a hash of search parameters and data
     @search = search
     @hierarchy_builder = initialise_hierarchy
-    @associated_object_query_response = get_associated_object_data
   end
 
   def initialise_hierarchy
@@ -46,18 +45,36 @@ class SearchData
     end
   end
 
-  def object_data
+  def initial_query_data
+    # The first search returns only a URI, type_ses, and the all_ses field
+    # TODO: We may wish to move SES ID acquisition to the second query once this refactor is done, or we can't split
     return unless search
 
     search.dig(:data, 'response', 'docs')&.reject { |h| h.dig('type_ses').blank? }
   end
 
-  def objects
-    return [] if object_data.blank?
+  def object_uris
+    initial_query_data.pluck('uri').uniq
+  end
 
-    ret = []
-    object_data.each { |object_data| ret << ContentObject.generate(object_data) }
-    ret
+  def empty_objects
+    objects = []
+    initial_query_data.each do |object_data|
+      objects << ContentObject.generate(object_data)
+    end
+    objects
+  end
+
+  def object_data
+    solr_fields = []
+    empty_objects.each do |object|
+      solr_fields << object.class.required_solr_fields
+    end
+
+    solr_fields_string = solr_fields.flatten.uniq.join(' ')
+
+    # returns {items: []}, unsorted, date_dt must be added to solr_fields_string if date sort required
+    SolrQueryWrapper.new(object_uris: object_uris, solr_fields: solr_fields_string).get_objects
   end
 
   def number_of_results
@@ -155,29 +172,9 @@ class SearchData
     page_parameter.blank? ? 1 : page_parameter.to_i
   end
 
-  def get_associated_object_data
-    AssociatedObjects.new(objects).data
-  end
-
-  def associated_object_data
-    @associated_object_query_response&.dig(:object_data)
-  end
-
-  def associated_ses_ids
-    ids = @associated_object_query_response&.dig(:ses_ids)
-    return [] if ids.blank?
-
-    ids
-  end
-
-  def combined_ses_ids
-    return unless search
-
-    ses_ids = object_data.pluck('all_ses').flatten
-    facet_ses_ids + ses_ids + associated_ses_ids.pluck(:value)
-  end
-
   def facet_ses_ids
+    # TODO: check that this still works?
+
     facet_data = search.dig(:data, 'facets')
     return [] if facet_data.blank?
 
@@ -214,18 +211,6 @@ class SearchData
 
   def content_type_rollup_ids
     search.dig(:data, "facets", "type_sesrollup", "buckets").pluck("val")
-  end
-
-  def ses_data
-    # TODO: Using a master list of fields, it should be possible to reduce the number of SES IDs requested from
-    # related items, e.g. don't fetch all_ses as the IDs we need will be in fields we know the names of which have
-    # fewer IDs to resolve overall.
-
-    unique_ses_ids = { value: combined_ses_ids.uniq.sort }
-    returned_data = SesLookup.new([unique_ses_ids]).data unless unique_ses_ids.blank?
-    return hierarchy_ses_data if returned_data.blank?
-
-    hierarchy_ses_data.merge(returned_data)
   end
 
   def query_time

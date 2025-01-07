@@ -8,6 +8,10 @@ class EuropeanScrutinyRecommendation < EuropeanScrutiny
     'search/results/european_scrutiny_recommendation'
   end
 
+  def search_result_ses_fields
+    %w[type_ses subtype_ses]
+  end
+
   def decision
     get_first_from('decisionType_t')
   end

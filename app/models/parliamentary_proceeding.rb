@@ -18,6 +18,11 @@ class ParliamentaryProceeding < Proceeding
     'search/results/parliamentary_proceeding'
   end
 
+  def search_result_ses_fields
+    %w[type_ses subtype_ses leadMember_ses answeringMember_ses department_ses
+       legislativeStage_ses procedural_ses legislationTitle_ses subject_ses place_ses legislature_ses]
+  end
+
   def object_name
     subtypes_or_type
   end

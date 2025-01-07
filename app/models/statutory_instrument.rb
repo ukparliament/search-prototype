@@ -12,6 +12,11 @@ class StatutoryInstrument < Paper
     'search/results/statutory_instrument'
   end
 
+  def search_result_ses_fields
+    %w[type_ses subtype_ses department_ses
+       legislationTitle_ses subject_ses legislature_ses]
+  end
+
   def object_name
     # differs from subtype_or_type as there can be multiple subtypes for SIs
 

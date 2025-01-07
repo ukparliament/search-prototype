@@ -20,6 +20,11 @@ class EuropeanMaterial < ContentObject
     'search/results/european_material'
   end
 
+  def search_result_ses_fields
+    %w[type_ses subtype_ses mep_ses category_ses corporateAuthor_ses
+       legislationTitle_ses subject_ses legislature_ses]
+  end
+
   def category
     get_first_from('category_ses')
   end

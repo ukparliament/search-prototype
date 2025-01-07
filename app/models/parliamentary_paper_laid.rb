@@ -12,6 +12,11 @@ class ParliamentaryPaperLaid < Paper
     'search/results/parliamentary_paper_laid'
   end
 
+  def search_result_ses_fields
+    %w[type_ses subtype_ses member_ses department_ses corporateAuthor_ses
+       legislationTitle_ses subject_ses legislature_ses]
+  end
+
   def object_name
     # type shown for most papers, except 92347 which uses subtypes (plural)
     return if type.blank?

@@ -176,6 +176,7 @@ module LinkHelper
   def fallback_ses_lookup(ses_data_hash)
     # an inefficient method that a SES name for a single ID, used as a last resort if names are still missing when
     # links / names are being formatted.
+    return "Unknown" if Rails.env.development?
 
     custom_ses_lookup = SesLookup.new([ses_data_hash]).data
     name_string = custom_ses_lookup[ses_data_hash[:value].to_i]
@@ -185,7 +186,7 @@ module LinkHelper
 
     return name_string unless name_string.blank?
 
-    Rails.env.development? ? ses_data_hash[:value].to_s : "Unknown"
+    ses_data_hash[:value].to_s
   end
 
 end
