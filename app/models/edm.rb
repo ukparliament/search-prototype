@@ -20,25 +20,15 @@ class Edm < ContentObject
     # fields requested in Solr search for search results page
     %w[
     title_t uri
-    member_ses
-    department_ses department_t
+    motionText_t
+    primarySponsor_ses primarySponsorParty_ses
+    amendmentText_t amendment_numberOfSignatures_s amendment_primarySponsor_ses amendment_primarySponsorPrinted_t amendment_primarySponsorParty_ses identifier_t amendment_dateTabled_dt
     type_ses subtype_ses
-    corporateAuthor_ses corporateAuthor_t
-    procedure_t
-    dateLaid_dt dateWithdrawn_dt
-    comingIntoForceNotes_t comingIntoForce_dt
     legislationTitle_ses legislationTitle_t
-    witness_ses witness_t
     subject_ses subject_t
     searcherNote_t
-    commonsLibraryLocation_t lordsLibraryLocation_t
     date_dt identifier_t legislature_ses
     ]
-  end
-
-  def search_result_ses_fields
-    %w[type_ses subtype_ses primarySponsor_ses primarySponsorParty_ses
-       legislationTitle_ses subject_ses legislature_ses]
   end
 
   def amendments

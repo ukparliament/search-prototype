@@ -12,8 +12,17 @@ class EuropeanDepositedDocument < ContentObject
     'search/results/european_deposited_document'
   end
 
-  def search_result_ses_fields
-    %w[type_ses subtype_ses department_ses subject_ses legislature_ses]
+  def search_result_solr_fields
+    # fields requested in Solr search for search results page
+    %w[
+    title_t uri
+    department_ses department_t
+    type_ses subtype_ses
+    dateOriginated_dt
+    dateDeposited_dt
+    subject_ses subject_t
+    date_dt identifier_t legislature_ses
+    ]
   end
 
   def object_name
