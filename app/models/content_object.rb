@@ -28,6 +28,14 @@ class ContentObject
     'search/results/content_object'
   end
 
+  def search_result_ses_fields
+    # solr fields to be requested from SES for search results page
+
+    search_result_solr_fields.select do |field|
+      field.last(4) == "_ses"
+    end
+  end
+
   def page_title
     content_object_data['title_t']
   end
