@@ -24,9 +24,19 @@ class MinisterialCorrection < ContentObject
     'search/results/ministerial_correction'
   end
 
-  def search_result_ses_fields
-    %w[type_ses subtype_ses member_ses memberParty_ses department_ses
-       legislationTitle_ses subject_ses legislature_ses]
+  def search_result_solr_fields
+    # fields requested in Solr search for search results page
+    %w[
+    title_t uri
+    correctionText_t
+    member_ses memberParty_ses
+    department_ses department_t
+    type_ses subtype_ses
+    legislationTitle_ses legislationTitle_t
+    subject_ses subject_t
+    searcherNote_t
+    date_dt identifier_t legislature_ses
+    ]
   end
 
   def correction_text

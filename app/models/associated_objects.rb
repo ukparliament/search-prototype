@@ -17,7 +17,7 @@ class AssociatedObjects
 
     # ideally we can dispense with all_ses
 
-    'uri type_ses subtype_ses member_ses legislature_ses correctingMember_ses correctingMemberParty_ses department_ses'
+    'uri type_ses subtype_ses member_ses legislature_ses questionText_t answerText_t correctingMember_ses correctingMemberParty_ses department_ses'
   end
 
   def ses_fields
