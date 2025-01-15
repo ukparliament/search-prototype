@@ -25,9 +25,4 @@ class GrandCommitteeProceeding < ParliamentaryProceeding
     date_dt identifier_t legislature_ses
     ]
   end
-
-  def search_result_ses_fields
-    %w[type_ses subtype_ses leadMember_ses answeringMember_ses department_ses corporateAuthor_ses
-       procedural_ses legislationTitle_ses subject_ses legislature_ses]
-  end
 end

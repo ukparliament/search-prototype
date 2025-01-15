@@ -25,7 +25,7 @@ class DepositedPaper < Paper
     dateReceived_dt
     legislationTitle_ses legislationTitle_t
     subject_ses subject_t
-    commonsLibraryLocation_t lordsLibraryLocation_t
+    physicalLocationCommons_t physicalLocationLords_t
     date_dt identifier_t legislature_ses
     ]
   end

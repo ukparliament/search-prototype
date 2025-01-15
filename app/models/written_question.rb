@@ -16,10 +16,26 @@ class WrittenQuestion < Question
     'search/results/written_question'
   end
 
-  def search_result_ses_fields
-    %w[type_ses subtype_ses askingMember_ses askingMemberParty_ses tablingMember_ses tablingMemberParty_ses
-       answeringMember_ses answeringMemberParty_ses askedToReplyAuthor_ses procedural_ses legislationTitle_ses
-       subject_ses legislature_ses]
+  def search_result_solr_fields
+    # fields requested in Solr search for search results page
+    %w[
+    title_t uri
+    questionText_t
+    askingMember_ses tablingMember_ses askingMemberParty_ses tablingMemberParty_ses
+    answeringMember_ses answeringMemberParty_ses
+    departmentPrinted_t
+    type_ses subtype_ses
+    pqStatus_t
+    askedToReplyAuthor_ses
+    procedural_ses
+    dateTabled_dt dateForAnswer_dt dateOfHoldingAnswer_dt dateOfAnswer_dt
+    answerText_t
+    correctingItem_uri correctingItem_t correctedWmsMc_b
+    legislationTitle_ses legislationTitle_t
+    subject_ses subject_t
+    searcherNote_t
+    date_dt identifier_t legislature_ses
+    ]
   end
 
   def holding?

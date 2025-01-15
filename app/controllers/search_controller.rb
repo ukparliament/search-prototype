@@ -23,11 +23,11 @@ class SearchController < ApplicationController
 
       # Assemble SES IDs for minimal SES querying
       query_ses = @objects.map { |o| o.content_object_data.select { |k| o.search_result_ses_fields.include?(k) }.values }
-      puts "#{query_ses.flatten.uniq.size} SES IDs from the requested objects"
+      puts "#{query_ses.flatten.uniq.size} SES IDs from the requested objects" if Rails.env.development?
       associated_ses = @associated_object_results.dig(:ses_ids)
-      puts "#{associated_ses.flatten.uniq.size} SES IDs from associated objects"
+      puts "#{associated_ses.flatten.uniq.size} SES IDs from associated objects" if Rails.env.development?
       facet_ses = @search_data.facet_ses_ids
-      puts "#{facet_ses.flatten.uniq.size} SES IDs from facets"
+      puts "#{facet_ses.flatten.uniq.size} SES IDs from facets" if Rails.env.development?
       @ses_ids = [facet_ses + associated_ses + query_ses].flatten.uniq
       @ses_data = SesData.new(@search_data.hierarchy_ses_data, @ses_ids).combined_ses_data
     end

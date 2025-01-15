@@ -16,9 +16,20 @@ class ResearchBriefing < ContentObject
     'search/results/research_briefing'
   end
 
-  def search_result_ses_fields
-    %w[type_ses subtype_ses creator_ses category_ses
-       legislationTitle_ses subject_ses topic_ses legislature_ses]
+  def search_result_solr_fields
+    # fields requested in Solr search for search results page
+    %w[
+    title_t uri
+    htmlsummary_t
+    description_t
+    creator_ses creator_t
+    category_ses
+    type_ses subtype_ses
+    legislationTitle_ses legislationTitle_t
+    subject_ses subject_t
+    topic_ses
+    date_dt identifier_t legislature_ses
+    ]
   end
 
   def html_summary

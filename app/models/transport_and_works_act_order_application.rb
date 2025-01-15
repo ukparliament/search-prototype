@@ -12,9 +12,18 @@ class TransportAndWorksActOrderApplication < ContentObject
     'search/results/transport_and_works_act_order_application'
   end
 
-  def search_result_ses_fields
-    %w[type_ses subtype_ses applicant_ses
-       legislationTitle_ses subject_ses legislature_ses]
+  def search_result_solr_fields
+    # fields requested in Solr search for search results page
+    %w[
+    title_t uri
+    abstract_t
+    applicant_ses applicant_t
+    type_ses subtype_ses
+    legislationTitle_ses legislationTitle_t
+    subject_ses subject_t
+    commonsLibraryLocation_t lordsLibraryLocation_t
+    date_dt identifier_t legislature_ses
+    ]
   end
 
   def depositing_agent

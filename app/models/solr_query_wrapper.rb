@@ -17,8 +17,6 @@ class SolrQueryWrapper
     ret[:items] = []
     threads = []
 
-    raise 'halt'
-
     object_uris.each_slice(500) do |slice|
       threads << Thread.new do
         puts "Begin thread" if Rails.env.development?
