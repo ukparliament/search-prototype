@@ -9,7 +9,6 @@ class SearchController < ApplicationController
     if @search_data.solr_error?
       render template: @search_data.error_partial_path, locals: { status: @search_data.error_code, message: @search_data.error_message }
     else
-      # TODO: for the time being, filter filtering (via field list) is disabled pending a test of effectiveness
       @objects = @search_data.object_data[:items]
 
       # Type facet hierarchy

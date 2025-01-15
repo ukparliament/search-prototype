@@ -230,45 +230,45 @@ class SolrSearch < ApiCall
       }
     end
 
-    # if filter&.dig(:year).present?
-    #   year = filter.dig(:year).first
-    #   ret['month'] = {
-    #     "type": "range",
-    #     "field": "date_dt",
-    #     "start": "#{year}-01-01T00:00:00Z",
-    #     "end": "#{year}-12-31T23:59:59Z",
-    #     "gap": "+1MONTH",
-    #     "mincount": 0,
-    #     "domain": { excludeTags: 'month' }
-    #   }
-    # else
-    #   ret['year'] = {
-    #     "type": "range",
-    #     "field": "date_dt",
-    #     "start": "1500-01-01T00:00:00Z",
-    #     "end": "#{Date.today.strftime("%Y-%m-%d")}T23:59:59Z",
-    #     "gap": "+1YEAR",
-    #     "mincount": 1,
-    #     "limit": 100
-    #   }
-    #   ret['month'] = {
-    #     "type": "range",
-    #     "field": "date_dt",
-    #     "start": "1500-01-01T00:00:00Z",
-    #     "end": "#{Date.today.strftime("%Y-%m-%d")}T23:59:59Z",
-    #     "gap": "+1MONTH",
-    #     "mincount": 0,
-    #     "domain": { excludeTags: 'month' }
-    #   }
-    # end
-    #
-    # SolrSearch.sessions.each do |session|
-    #   ret["session_#{session}"] = {
-    #     "type": "query",
-    #     "q": "(session_t:#{session} OR date_dt:#{session_range_lookup(session)})",
-    #     "domain": { excludeTags: 'session_t' }
-    #   }
-    # end
+    if filter&.dig(:year).present?
+      year = filter.dig(:year).first
+      ret['month'] = {
+        "type": "range",
+        "field": "date_dt",
+        "start": "#{year}-01-01T00:00:00Z",
+        "end": "#{year}-12-31T23:59:59Z",
+        "gap": "+1MONTH",
+        "mincount": 0,
+        "domain": { excludeTags: 'month' }
+      }
+    else
+      ret['year'] = {
+        "type": "range",
+        "field": "date_dt",
+        "start": "1500-01-01T00:00:00Z",
+        "end": "#{Date.today.strftime("%Y-%m-%d")}T23:59:59Z",
+        "gap": "+1YEAR",
+        "mincount": 1,
+        "limit": 100
+      }
+      ret['month'] = {
+        "type": "range",
+        "field": "date_dt",
+        "start": "1500-01-01T00:00:00Z",
+        "end": "#{Date.today.strftime("%Y-%m-%d")}T23:59:59Z",
+        "gap": "+1MONTH",
+        "mincount": 0,
+        "domain": { excludeTags: 'month' }
+      }
+    end
+
+    SolrSearch.sessions.each do |session|
+      ret["session_#{session}"] = {
+        "type": "query",
+        "q": "(session_t:#{session} OR date_dt:#{session_range_lookup(session)})",
+        "domain": { excludeTags: 'session_t' }
+      }
+    end
 
     ret.to_json
   end
