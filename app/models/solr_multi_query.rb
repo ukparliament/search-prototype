@@ -22,7 +22,6 @@ class SolrMultiQuery < ApiCall
   private
 
   def search_params
-    # TODO: investigate row limit here
     {
       q: object_filter,
       fl: field_list,

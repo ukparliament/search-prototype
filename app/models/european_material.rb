@@ -5,8 +5,6 @@ class EuropeanMaterial < ContentObject
   end
 
   def associated_objects
-    # TODO: consider moving related item IDs to subclasses, as its use varies
-
     ids = super
     ids << related_item_ids
     ids.flatten.compact.uniq

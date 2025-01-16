@@ -81,7 +81,7 @@ class SolrSearch < ApiCall
     # &fq={!tag=COLOR}color:(Blue Black)
 
     filter.to_h.flat_map do |field_name, values|
-      # TODO: refactor once rough logic for different fields is in place
+      # TODO: remove these by implementing new Solr fields (more performant option)
 
       if field_name == "year"
         # value will be "YYYY"
@@ -112,9 +112,6 @@ class SolrSearch < ApiCall
   end
 
   def session_range_lookup(value)
-    # TODO: this will likely become a Session model, with persistance and admin features to set the names
-    # as well as 'from' and 'to' dates.
-
     case value
     when '2024-25'
       '[2024-05-25T00:00:00Z TO *]'
@@ -281,7 +278,6 @@ class SolrSearch < ApiCall
   end
 
   def facet_limit(field_name)
-    # limit to 50 except for
     facet_names = ["type_sesrollup"]
 
     return 100 unless facet_names.include?(field_name)

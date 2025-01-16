@@ -11,26 +11,19 @@ class AssociatedObjects
     @associated_object_ids ||= normalised_objects.map { |o| o.associated_objects }.compact.flatten.uniq
   end
 
-  def solr_fields
-    # the fields we want for associated objects
-    # TODO: will come back to this
-
-    # ideally we can dispense with all_ses
-
-    'uri type_ses subtype_ses member_ses legislature_ses questionText_t answerText_t correctingMember_ses correctingMemberParty_ses department_ses'
-  end
-
-  def ses_fields
-    # across all search result page associated objects, the only SES IDs are for asking members / parties on questions
-    %w[askingMember_ses askingMemberParty_ses]
-  end
-
   def get_associated_objects
     puts "Fetching objects associated with the search results" if Rails.env.development?
-    associated_objects = SolrQueryWrapper.new(object_uris: associated_object_ids, solr_fields: solr_fields).get_objects
+    solr_fields_string = solr_fields.flatten.uniq.join(' ')
+    associated_objects = SolrQueryWrapper.new(object_uris: associated_object_ids, solr_fields: solr_fields_string).get_objects
     return {} if associated_objects.blank?
 
     associated_objects.dig(:items)
+  end
+
+  def ses_fields
+    solr_fields.select do |field|
+      field.last(4) == "_ses"
+    end
   end
 
   def data

@@ -3,7 +3,6 @@ class SearchController < ApplicationController
 
   def index
     @page_title = "Search results"
-    # TODO: this initial query is simple and could be cached - check
     @search_data = SearchData.new(SolrSearch.new(search_params).data)
 
     if @search_data.solr_error?
@@ -17,17 +16,12 @@ class SearchController < ApplicationController
       @hierarchy_data = @search_data.hierarchy_data
 
       # Associated objects
-      @associated_object_results = AssociatedObjects.new(@objects).data
+      @associated_object_results = AssociatedObjectsForSearchResults.new(@objects).data
       @associated_object_data = @associated_object_results.dig(:object_data)
 
-      # Assemble SES IDs for minimal SES querying
+      # SES data
       query_ses = @objects.map { |o| o.content_object_data.select { |k| o.search_result_ses_fields.include?(k) }.values }
-      puts "#{query_ses.flatten.uniq.size} SES IDs from the requested objects" if Rails.env.development?
-      associated_ses = @associated_object_results.dig(:ses_ids)
-      puts "#{associated_ses.flatten.uniq.size} SES IDs from associated objects" if Rails.env.development?
-      facet_ses = @search_data.facet_ses_ids
-      puts "#{facet_ses.flatten.uniq.size} SES IDs from facets" if Rails.env.development?
-      @ses_ids = [facet_ses + associated_ses + query_ses].flatten.uniq
+      @ses_ids = [@search_data.facet_ses_ids + @associated_object_results.dig(:ses_ids) + query_ses].flatten.uniq
       @ses_data = SesData.new(@search_data.hierarchy_ses_data, @ses_ids).combined_ses_data
     end
   end

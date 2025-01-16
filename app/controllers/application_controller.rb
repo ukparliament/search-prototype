@@ -1,11 +1,12 @@
 class ApplicationController < ActionController::Base
 
   # before_action :check_api_status
+  # Disabled - performance impact
+  # TODO: Add sensible timeout to SES API calls as an alternative
 
   def check_api_status
     # Make a simple SES request to check the service is working
     # This is skipped during tests
-    # TODO: find another solution: this adds about 0.3-0.4 seconds to every page load
 
     unless Rails.env.test?
       check = SesLookup.new([{ value: 346696 }]).test_api_response

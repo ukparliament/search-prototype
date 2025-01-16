@@ -46,8 +46,7 @@ class SearchData
   end
 
   def initial_query_data
-    # The first search returns only a URI, type_ses, and the all_ses field
-    # TODO: We may wish to move SES ID acquisition to the second query once this refactor is done, or we can't split
+    # The first search returns only a URI & type_ses (see field list of SolrSearch)
     return unless search
 
     search.dig(:data, 'response', 'docs')&.reject { |h| h.dig('type_ses').blank? }
@@ -173,8 +172,6 @@ class SearchData
   end
 
   def facet_ses_ids
-    # TODO: check that this still works?
-
     facet_data = search.dig(:data, 'facets')
     return [] if facet_data.blank?
 

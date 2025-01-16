@@ -1,5 +1,4 @@
 class MinisterialCorrection < ContentObject
-
   # TODO: rename to written correction for clarity
 
   def initialize(content_object_data)

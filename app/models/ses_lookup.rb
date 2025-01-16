@@ -86,7 +86,7 @@ class SesLookup < ApiCall
     # If SES returns an error, we'll get an error key returned from evaluated_response
     return responses.first if responses.first&.has_key?(:error)
 
-    # TODO: the fields we're requesting from SES can be optimised - what do we actually use?
+    # TODO: reduce data retreived from SES if possible (API limitations - vendor input needed)
 
     unless responses.compact.blank?
       responses.each do |response|

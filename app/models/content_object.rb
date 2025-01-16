@@ -15,17 +15,17 @@ class ContentObject
     content_object_class(type_id, subtype_ids).classify.constantize.new(content_object_data)
   end
 
-  def self.required_solr_fields
-    # fallback only
-    %w[title_t uri date_dt type_ses subtype_ses]
-  end
-
   def object_name
     type
   end
 
   def search_result_partial
     'search/results/content_object'
+  end
+
+  def self.required_solr_fields
+    # fallback only - types have their own lists
+    %w[title_t uri date_dt type_ses subtype_ses]
   end
 
   def search_result_ses_fields
@@ -333,8 +333,6 @@ class ContentObject
   end
 
   def contains_statistics
-    # TODO: pass all three field names via filter
-
     contains_stats = get_first_as_boolean_from('containsStatistics_b')
     has_table = get_first_as_boolean_from('hasTable_b')
     stats_indicated = get_first_as_boolean_from('statisticsIndicated_b')

@@ -30,11 +30,11 @@ class ContentObjectsController < ApplicationController
       else
         @object = ContentObject.generate(object_data)
 
-        associated_object_query = AssociatedObjects.new(@object).data
-        @associated_object_data = associated_object_query[:object_data]
+        associated_object_results = AssociatedObjectsForObjectView.new(@object).data
+        @associated_object_data = associated_object_results.dig(:object_data)
 
         # Combine SES IDs from associated objects if any
-        associated_ses_ids = associated_object_query&.dig(:ses_ids)
+        associated_ses_ids = associated_object_results.dig(:ses_ids)
         all_ses_ids = associated_ses_ids.blank? ? @object.ses_lookup_ids : @object.ses_lookup_ids + associated_ses_ids
 
         # Single SES lookup using all IDs
