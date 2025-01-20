@@ -8,7 +8,7 @@ class GrandCommitteeProceeding < ParliamentaryProceeding
     'search/results/grand_committee_proceeding'
   end
 
-  def search_result_solr_fields
+  def self.search_result_solr_fields
     # fields requested in Solr search for search results page
     %w[
     title_t uri

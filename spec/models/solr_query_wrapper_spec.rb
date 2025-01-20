@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe SolrQueryWrapper, type: :model do
-  let!(:instance) { SolrQueryWrapper.new(['test_uri1']) }
+  let!(:instance) { SolrQueryWrapper.new({ object_uris: ['test_uri1'], solr_fields: ['test_solr_field'] }) }
 
   describe 'get_objects' do
     let!(:solr_query_object_data) { [

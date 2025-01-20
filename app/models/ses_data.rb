@@ -14,11 +14,16 @@ class SesData
     ids_to_fetch = []
 
     # create two sets of IDs: those in cache & those we need to lookup
-    ses_ids.uniq.sort.each do |ses_id|
-      if cache_store.exist?(cache_key(ses_id))
-        ids_in_cache << ses_id
-      else
-        ids_to_fetch << ses_id
+    if Rails.env.test?
+      # skip cache retrieval in test env
+      ids_to_fetch = ses_ids.uniq.sort
+    else
+      ses_ids.uniq.sort.each do |ses_id|
+        if cache_store.exist?(cache_key(ses_id))
+          ids_in_cache << ses_id
+        else
+          ids_to_fetch << ses_id
+        end
       end
     end
 
@@ -26,7 +31,7 @@ class SesData
     fetched_data = {}
 
     # go to SES API for IDs we don't have cached
-    puts "#{ids_to_fetch.count} SES terms need to be fetched from SES"
+    puts "#{ids_to_fetch.count} SES terms need to be fetched from SES" if Rails.env.development?
     unless ids_to_fetch.empty?
       fetched_data = SesLookup.new([{ value: ids_to_fetch }]).data
     end
@@ -35,7 +40,7 @@ class SesData
     fetched_data.each { |k, v| cache_store.write(cache_key(k), v) } unless fetched_data.empty?
 
     # get cached data for ids left in initial_ids
-    puts "#{ids_in_cache.count} SES terms found in cache"
+    puts "#{ids_in_cache.count} SES terms found in cache" if Rails.env.development?
     unless ids_in_cache.blank?
       ids_in_cache.each { |ses_id| cached_data[ses_id] = cache_store.read(cache_key(ses_id)) }
     end

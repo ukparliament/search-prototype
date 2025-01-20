@@ -23,12 +23,11 @@ class ContentObject
     'search/results/content_object'
   end
 
-  def self.required_solr_fields
-    # fallback only - types have their own lists
-    %w[title_t uri date_dt type_ses subtype_ses]
+  def self.search_result_solr_fields
+    raise 'Subclass should implement'
   end
 
-  def search_result_ses_fields
+  def self.search_result_ses_fields
     # solr fields to be requested from SES for search results page
 
     search_result_solr_fields.select do |field|

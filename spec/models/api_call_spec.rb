@@ -11,8 +11,7 @@ RSpec.describe ApiCall, type: :model do
     let!(:serialised_response) { "{\"terms\":{\"1\":\"a\",\"2\":\"b\"}}" }
 
     it 'parses the response' do
-      allow(api_call).to receive(:api_response).and_return(test_response)
-      allow(test_response).to receive(:body).and_return(serialised_response)
+      allow(api_call).to receive(:api_response).and_return(serialised_response)
       expect(api_call.send(:evaluated_response)).to eq(deserialised_response)
     end
   end

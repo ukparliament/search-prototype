@@ -7,10 +7,10 @@ class HierarchyBuilder
   end
 
   def get_data_from_ses
-    puts "Fetching Hierarchy data..."
+    puts "Fetching Hierarchy data..." if Rails.env.development?
     start_time = Time.now
     ret = SesLookup.new([{ value: 346696 }]).extract_hierarchy_data
-    puts "Done in #{(Time.now - start_time).round(2)} seconds"
+    puts "Done in #{(Time.now - start_time).round(2)} seconds" if Rails.env.development?
     ret
   end
 

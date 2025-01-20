@@ -78,14 +78,14 @@ RSpec.describe SesLookup, type: :model do
     end
   end
 
-  describe 'ruby_uri' do
+  describe 'ses_term_service_uri' do
     let!(:ses_api_call) { SesLookup.new([{ value: 12345, field_name: 'type_ses' }]) }
     let!(:mock_response) { "test" }
 
     it 'returns a ruby uri with the base prepended' do
       allow(ses_api_call).to receive(:evaluated_responses).and_return(mock_response)
       expect(ses_api_call.ses_term_service_uri('test')).to be_a(URI)
-      expect(ses_api_call.ses_term_service_uri('test').to_s).to eq('https://api.parliament.uk/ses/select.exe?TBDB=disp_taxonomy&TEMPLATE=service.json&SERVICE=term&ID=test')
+      expect(ses_api_call.ses_term_service_uri('test').to_s).to eq('https://api.parliament.uk/ses/select.exe?TBDB=disp_taxonomy&TEMPLATE=service.json&expand_hierarchy=0&SERVICE=termlite&ID=test')
     end
   end
 

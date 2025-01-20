@@ -53,12 +53,16 @@ class SearchData
   end
 
   def object_uris
+    return nil if initial_query_data.blank?
+
     initial_query_data.pluck('uri').uniq
   end
 
   def empty_objects
     objects = []
-    initial_query_data.each do |object_data|
+    initial_query_data&.each do |object_data|
+      next if object_data['type_ses'].blank?
+
       objects << ContentObject.generate(object_data)
     end
     objects
@@ -67,12 +71,12 @@ class SearchData
   def object_data
     solr_fields = []
     empty_objects.each do |object|
-      solr_fields << object.class.required_solr_fields
+      solr_fields << object.class.search_result_solr_fields
     end
 
     solr_fields_string = solr_fields.flatten.uniq.join(' ')
 
-    # returns {items: []}, unsorted, date_dt must be added to solr_fields_string if date sort required
+    # returns {items: []}, unsorted
     SolrQueryWrapper.new(object_uris: object_uris, solr_fields: solr_fields_string).get_objects
   end
 

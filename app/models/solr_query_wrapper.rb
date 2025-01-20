@@ -7,6 +7,7 @@ class SolrQueryWrapper
   end
 
   def get_objects
+    # TODO: re-enable this
     # return unless valid_input
 
     puts "Get #{object_uris.size} objects..." if Rails.env.development?
@@ -17,12 +18,14 @@ class SolrQueryWrapper
     ret[:items] = []
     threads = []
 
-    object_uris.each_slice(500) do |slice|
-      threads << Thread.new do
-        puts "Begin thread" if Rails.env.development?
-        data = SolrMultiQuery.new(object_uris: slice, field_list: solr_fields).object_data
-        data.each do |object|
-          ret[:items] << ContentObject.generate(object)
+    unless object_uris.blank?
+      object_uris.each_slice(500) do |slice|
+        threads << Thread.new do
+          puts "Begin thread" if Rails.env.development?
+          data = SolrMultiQuery.new(object_uris: slice, field_list: solr_fields).object_data
+          data.each do |object|
+            ret[:items] << ContentObject.generate(object)
+          end
         end
       end
     end

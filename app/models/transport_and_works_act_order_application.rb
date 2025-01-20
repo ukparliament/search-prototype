@@ -12,7 +12,7 @@ class TransportAndWorksActOrderApplication < ContentObject
     'search/results/transport_and_works_act_order_application'
   end
 
-  def search_result_solr_fields
+  def self.search_result_solr_fields
     # fields requested in Solr search for search results page
     %w[
     title_t uri

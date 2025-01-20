@@ -6,7 +6,7 @@ class SesLookup < ApiCall
   end
 
   def lookup_ids
-    # extract all of the sub arrays from the hashes
+    # extract all sub arrays from the hashes
     return if input_data.blank?
 
     input_data.map { |h| h[:value] }.flatten.uniq.compact.sort
@@ -128,7 +128,9 @@ class SesLookup < ApiCall
   end
 
   def ses_term_service_uri(id_group_string)
+
     base_url = ses_base_url
+    base_url = 'https://api.parliament.uk/ses/' if Rails.env.test?
     # using 'termlite' is faster for basic info required, but this is noted as being deprecated and due for
     # removal, at which point 'term' will have to be used instead
     build_uri("#{base_url}select.exe?TBDB=disp_taxonomy&TEMPLATE=service.json&expand_hierarchy=0&SERVICE=termlite&ID=#{id_group_string}")

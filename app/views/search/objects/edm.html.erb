@@ -1,6 +1,6 @@
 <% if Rails.env.development? %>
-  <%= render 'search/fragments/data', data: object.content_object_data, title: 'SOLR Data' %>
-  <%= render 'search/fragments/data', data: @ses_data, title: 'SES Data' %>
+  <%#= render 'search/fragments/data', data: object.content_object_data, title: 'SOLR Data' %>
+  <%#= render 'search/fragments/data', data: @ses_data, title: 'SES Data' %>
 <% end %>
 
 <% content_for(:before_title) do %>
