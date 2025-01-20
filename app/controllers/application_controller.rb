@@ -1,6 +1,8 @@
 class ApplicationController < ActionController::Base
 
-  before_action :check_api_status
+  # before_action :check_api_status
+  # Disabled - performance impact
+  # TODO: Add sensible timeout to SES API calls as an alternative
 
   def check_api_status
     # Make a simple SES request to check the service is working

@@ -18,6 +18,24 @@ class ParliamentaryProceeding < Proceeding
     'search/results/parliamentary_proceeding'
   end
 
+  def self.search_result_solr_fields
+    # fields requested in Solr search for search results page
+    %w[
+    title_t uri
+    abstract_t
+    leadMember_ses
+    answeringMember_ses
+    department_ses department_t
+    type_ses subtype_ses
+    legislativeStage_ses
+    procedural_ses
+    legislationTitle_ses legislationTitle_t
+    subject_ses subject_t
+    searcherNote_t
+    date_dt identifier_t place_ses legislature_ses
+    ]
+  end
+
   def object_name
     subtypes_or_type
   end

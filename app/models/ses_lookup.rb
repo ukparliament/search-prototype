@@ -6,7 +6,7 @@ class SesLookup < ApiCall
   end
 
   def lookup_ids
-    # extract all of the sub arrays from the hashes
+    # extract all sub arrays from the hashes
     return if input_data.blank?
 
     input_data.map { |h| h[:value] }.flatten.uniq.compact.sort
@@ -31,7 +31,6 @@ class SesLookup < ApiCall
     output = []
     threads = []
 
-    puts "Making #{lookup_id_groups.size} requests to SES..." if Rails.env.development?
     start_time = Time.now
 
     lookup_id_groups.each do |id_group|
@@ -62,17 +61,15 @@ class SesLookup < ApiCall
   end
 
   def evaluated_hierarchy_response
-    puts "Getting hierarchy data..." if Rails.env.development?
-    start_time = Time.now
-    uri = ses_browse_service_uri
-    ret = api_response(uri)
-    puts "Retrieved hierarchy data in #{Time.now - start_time} seconds" if Rails.env.development?
-    ret
+    api_response(ses_browse_service_uri, true)
   end
 
   def test_api_response
+    start_time = Time.now
     uri = ses_term_service_uri("346696")
-    api_response(uri)
+    response = api_response(uri)
+    puts "Completed SES check in #{Time.now - start_time} seconds" if Rails.env.development?
+    response
   end
 
   def data
@@ -89,6 +86,8 @@ class SesLookup < ApiCall
     # If SES returns an error, we'll get an error key returned from evaluated_response
     return responses.first if responses.first&.has_key?(:error)
 
+    # TODO: reduce data retreived from SES if possible (API limitations - vendor input needed)
+
     unless responses.compact.blank?
       responses.each do |response|
         ret[response['term']['id'].to_i] = response['term']['name']
@@ -101,11 +100,8 @@ class SesLookup < ApiCall
     # for returning all data in a structured format for further querying
     return if input_data.blank?
 
-
     ret = {}
     responses = evaluated_hierarchy_response
-    puts "Reformatting retrieved hierarchy data" if Rails.env.development?
-    start_time = Time.now
 
     # responses is an array of hashes
     # each hash is the parsed response from individual lookups (one per [group_size] IDs)
@@ -124,8 +120,6 @@ class SesLookup < ApiCall
       end
     end
 
-    puts "Completed reformatting in #{Time.now - start_time} seconds" if Rails.env.development?
-
     ret
   end
 
@@ -134,8 +128,12 @@ class SesLookup < ApiCall
   end
 
   def ses_term_service_uri(id_group_string)
+
     base_url = ses_base_url
-    build_uri("#{base_url}select.exe?TBDB=disp_taxonomy&TEMPLATE=service.json&SERVICE=term&ID=#{id_group_string}")
+    base_url = 'https://api.parliament.uk/ses/' if Rails.env.test?
+    # using 'termlite' is faster for basic info required, but this is noted as being deprecated and due for
+    # removal, at which point 'term' will have to be used instead
+    build_uri("#{base_url}select.exe?TBDB=disp_taxonomy&TEMPLATE=service.json&expand_hierarchy=0&SERVICE=termlite&ID=#{id_group_string}")
   end
 
   def ses_browse_service_uri
@@ -149,10 +147,11 @@ class SesLookup < ApiCall
     250
   end
 
-  def api_response(uri)
+  def api_response(uri, cached = false)
     raise 'Please stub this method to avoid HTTP requests in test environment' if Rails.env.test?
 
-    raw_response = api_get_request(uri)
+    raw_response = cached ? api_cached_get_request(uri) : api_get_request(uri)
+    raise "Nil response from API" if raw_response.nil?
 
     begin
       JSON.parse(raw_response)

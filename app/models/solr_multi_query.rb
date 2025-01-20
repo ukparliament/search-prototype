@@ -1,13 +1,13 @@
 class SolrMultiQuery < ApiCall
-  # for fetching related item data etc.
 
   require 'open-uri'
   require 'net/http'
 
-  attr_reader :object_uris
+  attr_reader :object_uris, :field_list
 
   def initialize(params)
     @object_uris = params[:object_uris]
+    @field_list = params[:field_list]
   end
 
   def object_data
@@ -24,6 +24,7 @@ class SolrMultiQuery < ApiCall
   def search_params
     {
       q: object_filter,
+      fl: field_list,
       'q.op': 'OR',
       rows: 500
     }

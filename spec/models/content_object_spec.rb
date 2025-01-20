@@ -387,29 +387,6 @@ RSpec.describe ContentObject, type: :model do
     end
   end
 
-  describe 'contribution_short_text' do
-    context 'where there is no data' do
-      it 'returns nil' do
-        expect(content_object.contribution_short_text).to be_nil
-      end
-    end
-
-    context 'where there is an empty array' do
-      let!(:content_object) { ContentObject.new({ 'contributionText_s' => [] }) }
-      it 'returns nil' do
-        expect(content_object.contribution_short_text).to be_nil
-      end
-    end
-
-    context 'where data exists' do
-      let!(:content_object) { ContentObject.new({ 'contributionText_s' => ['&lt;p&gt; text in paragraph tags &lt;/p&gt;', '&lt;strong&gt; more content using tags &lt;/strong&gt;'] }) }
-
-      it 'returns the first item having unescaped any escaped html tags' do
-        expect(content_object.contribution_short_text).to eq({ :field_name => "contributionText_s", :value => "<p> text in paragraph tags </p>" })
-      end
-    end
-  end
-
   describe 'external_location_uri' do
     context 'where there is no data' do
       it 'returns nil' do

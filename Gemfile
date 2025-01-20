@@ -7,7 +7,6 @@ gem "rails", ">= 7.1.3.2"
 gem 'bundler-audit'
 gem "sqlite3", "~> 1.4"
 gem "sprockets-rails"
-gem "puma", "~> 6.3.1"
 gem "importmap-rails"
 gem "font-awesome-rails"
 gem "haml"
@@ -16,9 +15,9 @@ gem "stimulus-rails"
 gem "jbuilder"
 gem "tzinfo-data", platforms: %i[ mingw mswin x64_mingw jruby ]
 gem "bootsnap", require: false
+gem "passenger", ">= 5.3.2", require: "phusion_passenger/rack_handler"
 
 group :development, :test do
-  gem "debug", platforms: %i[ mri mingw x64_mingw ]
   gem 'rspec-rails'
   gem 'factory_bot_rails'
   gem "faker"
@@ -35,4 +34,5 @@ group :test do
   gem "selenium-webdriver"
   gem "webdrivers"
   gem 'simplecov'
+  gem 'rails-controller-testing'
 end
