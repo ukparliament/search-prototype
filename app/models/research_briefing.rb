@@ -4,12 +4,32 @@ class ResearchBriefing < ContentObject
     super
   end
 
+  def self.required_solr_fields
+    %w[title_t subtype_ses type_ses uri abstract_t memberPrinted_t department_ses department_t procedure_t dateLaid_dt date_dt dateWithdrawn_dt dateMade_dt dateApproved_dt comingIntoForceNotes_t comingIntoForce_dt legislationTitle_ses legislationTitle_t subject_ses subject_t searcherNote_t lordsLibraryLocation_t commonsLibraryLocation_t identifier_t legislature_ses]
+  end
+
   def template
     'search/objects/research_briefing'
   end
 
   def search_result_partial
     'search/results/research_briefing'
+  end
+
+  def self.search_result_solr_fields
+    # fields requested in Solr search for search results page
+    %w[
+    title_t uri
+    htmlsummary_t
+    description_t
+    creator_ses creator_t
+    category_ses
+    type_ses subtype_ses
+    legislationTitle_ses legislationTitle_t
+    subject_ses subject_t
+    topic_ses
+    date_dt identifier_t legislature_ses
+    ]
   end
 
   def html_summary

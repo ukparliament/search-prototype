@@ -12,6 +12,21 @@ class WrittenStatement < ContentObject
     'search/results/written_statement'
   end
 
+  def self.search_result_solr_fields
+    # fields requested in Solr search for search results page
+    %w[
+    title_t uri
+    statementText_t
+    member_ses memberParty_ses
+    department_ses department_t
+    type_ses subtype_ses
+    legislationTitle_ses legislationTitle_t
+    subject_ses subject_t
+    searcherNote_t
+    date_dt identifier_t legislature_ses
+    ]
+  end
+
   def attachment
     get_all_from('attachmentTitle_t')
   end

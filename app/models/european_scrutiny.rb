@@ -10,6 +10,17 @@ class EuropeanScrutiny < ContentObject
     ids.flatten.compact.uniq
   end
 
+  def self.search_result_solr_fields
+    # fields requested in Solr search for search results page
+    %w[
+    title_t uri
+    department_ses department_t
+    type_ses subtype_ses
+    subject_ses subject_t
+    date_dt identifier_t legislature_ses
+    ]
+  end
+
   def department
     fallback(get_first_from('department_ses'), get_first_from('department_t'))
   end

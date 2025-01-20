@@ -23,6 +23,18 @@ class ContentObject
     'search/results/content_object'
   end
 
+  def self.search_result_solr_fields
+    raise 'Subclass should implement'
+  end
+
+  def self.search_result_ses_fields
+    # solr fields to be requested from SES for search results page
+
+    search_result_solr_fields.select do |field|
+      field.last(4) == "_ses"
+    end
+  end
+
   def page_title
     content_object_data['title_t']
   end
@@ -44,10 +56,6 @@ class ContentObject
 
   def amendments
     nil
-  end
-
-  def get_associated_objects
-    ObjectsFromUriList.new(associated_objects).get_objects
   end
 
   def ses_lookup_ids
@@ -259,10 +267,6 @@ class ContentObject
     get_first_as_html_from('contributionText_t')
   end
 
-  def contribution_short_text
-    get_first_as_html_from('contributionText_s')
-  end
-
   def parliamentary_session
     get_first_from('session_t')
   end
@@ -328,8 +332,6 @@ class ContentObject
   end
 
   def contains_statistics
-    # TODO: pass all three field names via filter
-
     contains_stats = get_first_as_boolean_from('containsStatistics_b')
     has_table = get_first_as_boolean_from('hasTable_b')
     stats_indicated = get_first_as_boolean_from('statisticsIndicated_b')

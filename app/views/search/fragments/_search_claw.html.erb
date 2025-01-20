@@ -6,25 +6,28 @@
     <% unless object.object_uri.blank? %>
       <span class="claw-uri"><%= object.object_uri[:value] %></span>
     <% end %>
-    <% unless object.object_uri.blank? %>
-    <span data-controller="clipboard" class="mini-button-container">
-      <span hidden data-clipboard-target="source" data-clipboard-text="<%= object.object_uri.dig(:value) %>"></span>
-      <button data-action="clipboard#copy" title="Copy" class="page-button">
-        Copy
-      </button>
+    <span>
+      <% unless object.object_uri.blank? %>
+        <span data-controller="clipboard" class="mini-button-container">
+          <span hidden data-clipboard-target="source" data-clipboard-text="<%= object.object_uri.dig(:value) %>">
+          </span>
+          <button data-action="clipboard#copy" title="Copy" class="page-button">
+            Copy
+          </button>
+        </span>
+      <% end %>
+
+      <% unless object.indexing_link.blank? %>
+        <span class="mini-button-container">
+          <%= link_to 'Indexing', object.indexing_link, target: :_blank, class: 'page-button' %>
+        </span>
+      <% end %>
+
+      <% unless object.solr_deep_link.blank? %>
+        <span class="mini-button-container">
+          <%= link_to 'Solr', object.solr_deep_link, target: :_blank, class: 'page-button' %>
+        </span>
+      <% end %>
     </span>
-    <% end %>
-
-    <% unless object.indexing_link.blank? %>
-      <span class="mini-button-container">
-        <%= link_to 'Indexing', object.indexing_link, target: :_blank, class: 'page-button' %>
-      </span>
-    <% end %>
-
-    <% unless object.solr_deep_link.blank? %>
-      <span class="mini-button-container">
-        <%= link_to 'Solr', object.solr_deep_link, target: :_blank, class: 'page-button' %>
-      </span>
-    <% end %>
   </div>
 </div>

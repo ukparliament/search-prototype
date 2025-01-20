@@ -18,9 +18,9 @@ RSpec.describe SearchData, type: :model do
                                "numFound" => 3,
                                "start" => 0,
                                "docs" => [
-                                 { 'type_ses' => [12345], 'test_string' => 'test string 1', 'uri' => 'test1' },
-                                 { 'type_ses' => [23456], 'test_string' => 'test string 2', 'uri' => 'test2' },
-                                 { 'type_ses' => [34567], 'test_string' => 'test string 3', 'uri' => 'test3' },
+                                 { 'type_ses' => [90996], 'uri' => 'QZH4EFc_uri' },
+                                 { 'type_ses' => [90996], 'uri' => 'SL9RT6y_uri' },
+                                 { 'type_ses' => [90996], 'uri' => 'BZ34eDD_uri' },
                                ]
                              },
                              "highlighting" => { "test_url" => {} },
@@ -28,9 +28,16 @@ RSpec.describe SearchData, type: :model do
                            },
   } }
   let!(:hierarchy_test_response) { { [92424, "Personal statements"] => [{ "typeId" => "1", "qty" => "1", "name" => "Broader Term", "abbr" => "BT", "fields" => [{ "field" => { "name" => "Oral statements", "id" => "350073", "zid" => "52566919", "class" => "CTP", "freq" => "0", "facets" => [{ "id" => "346696", "name" => "Content type" }] } }] }] } }
+  let!(:solr_multi_query_instance) { SolrMultiQuery.new({ object_uris: ['QZH4EFc_uri', 'SL9RT6y_uri', 'BZ34eDD_uri'], solr_fields: Edm.search_result_solr_fields }) }
+  let!(:secondary_query_response) { [item1_data, item2_data, item3_data] }
+  let!(:item1_data) { { 'type_ses' => [90996], 'title_t' => 'QZH4EFc', 'uri' => 'QZH4EFc_uri', 'all_ses' => [90996, 12345] } }
+  let!(:item2_data) { { 'type_ses' => [90996], 'title_t' => 'SL9RT6y', 'uri' => 'SL9RT6y_uri', 'all_ses' => [90996, 56789] } }
+  let!(:item3_data) { { 'type_ses' => [90996], 'title_t' => 'BZ34eDD', 'uri' => 'BZ34eDD_uri', 'all_ses' => [90996, 34567] } }
 
   before do
     allow_any_instance_of(SesLookup).to receive(:extract_hierarchy_data).and_return(hierarchy_test_response)
+    allow(SolrMultiQuery).to receive(:new).and_return(solr_multi_query_instance)
+    allow(solr_multi_query_instance).to receive(:object_data).and_return(secondary_query_response)
   end
 
   describe 'solr_error?' do
@@ -91,67 +98,20 @@ RSpec.describe SearchData, type: :model do
 
   describe 'object_data' do
     context 'where data is present' do
-      it 'returns the array of docs' do
-        expect(search_data.object_data).to eq([
-                                                { 'type_ses' => [12345], 'test_string' => 'test string 1', 'uri' => 'test1' },
-                                                { 'type_ses' => [23456], 'test_string' => 'test string 2', 'uri' => 'test2' },
-                                                { 'type_ses' => [34567], 'test_string' => 'test string 3', 'uri' => 'test3' },
-                                              ])
-      end
-    end
-    context 'where type_ses is missing' do
-      let!(:search_output) { { search_parameters: { filter: ['topic_ses:12345'], query: 'horse' },
-                               data: {
-                                 "responseHeader" => {
-                                   "status" => 0,
-                                   "QTime" => 4,
-                                   "params" => { "q" => "externalLocation_uri:\"test_external_location_uri\"", "wt" => "json" }
-                                 },
-                                 "response" => {
-                                   "numFound" => 3,
-                                   "start" => 0,
-                                   "docs" => [
-                                     { 'type_ses' => [12345], 'test_string' => 'test string 1', 'uri' => 'test1' },
-                                     { 'test_string' => 'test string 2', 'uri' => 'test2' },
-                                     { 'type_ses' => [34567], 'test_string' => 'test string 3', 'uri' => 'test3' },
-                                   ]
-                                 },
-                                 "highlighting" => { "test_url" => {} },
-                                 "facets" => facet_data
-                               },
-      } }
-
-      it 'returns only data that has type_ses present' do
-        expect(search_data.object_data).to eq([
-                                                { 'type_ses' => [12345], 'test_string' => 'test string 1', 'uri' => 'test1' },
-                                                { 'type_ses' => [34567], 'test_string' => 'test string 3', 'uri' => 'test3' },
-                                              ])
-      end
-    end
-    context 'where data is missing' do
-      let!(:search_output) { { search_parameters: { filter: ['topic_ses:12345'] },
-                               data: { "responseHeader" => {
-                                 "status" => 0,
-                                 "QTime" => 4,
-                                 "params" => { "q" => "externalLocation_uri:\"test_external_location_uri\"", "wt" => "json" }
-                               },
-                                       "response" => {
-                                         "numFound" => 1,
-                                         "start" => 0
-                                       },
-                                       "highlighting" => { "test_url" => {} }
-                               } }
-      }
-      it 'returns nil' do
-        expect(search_data.object_data).to be nil
+      it 'returns the array of inflated objects' do
+        expect(search_data.object_data).to be_a(Hash)
+        expect(search_data.object_data.keys).to eq([:items])
+        expect(search_data.object_data[:items]).to be_a(Array)
+        expect(search_data.object_data[:items].map(&:class)).to eq([Edm, Edm, Edm])
+        expect(search_data.object_data[:items].map(&:content_object_data)).to eq([item1_data, item2_data, item3_data])
       end
     end
   end
 
-  describe 'objects' do
+  describe 'empty_objects' do
     context 'where data is present' do
       it 'returns an array of object instances' do
-        expect(search_data.objects.map(&:class)).to eq([ContentObject, ContentObject, ContentObject])
+        expect(search_data.empty_objects.map(&:class)).to eq([Edm, Edm, Edm])
       end
     end
     context 'where data is missing' do
@@ -169,7 +129,7 @@ RSpec.describe SearchData, type: :model do
                                } }
       }
       it 'returns an empty array' do
-        expect(search_data.objects).to eq([])
+        expect(search_data.empty_objects).to eq([])
       end
     end
   end

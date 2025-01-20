@@ -16,6 +16,21 @@ class Edm < ContentObject
     'search/results/early_day_motion'
   end
 
+  def self.search_result_solr_fields
+    # fields requested in Solr search for search results page
+    %w[
+    title_t uri
+    motionText_t
+    primarySponsor_ses primarySponsorParty_ses
+    amendmentText_t amendment_numberOfSignatures_s amendment_primarySponsor_ses amendment_primarySponsorPrinted_t amendment_primarySponsorParty_ses identifier_t amendment_dateTabled_dt
+    type_ses subtype_ses
+    legislationTitle_ses legislationTitle_t
+    subject_ses subject_t
+    searcherNote_t
+    date_dt identifier_t legislature_ses
+    ]
+  end
+
   def amendments
     # Title is the title of the motion itself, with 'Amendment N' on the front
     # Reference is taken from identifier_t, after removing the first item
