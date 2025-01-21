@@ -11,6 +11,8 @@ class SesData
   # Accepts SES IDs (array of ints) and optionally existing data (array of hashes)
 
   def combined_ses_data
+    return {} if ses_ids.blank?
+
     ids_in_cache = []
     ids_to_fetch = []
 
