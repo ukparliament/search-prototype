@@ -103,11 +103,6 @@ class WrittenQuestion < Question
   end
 
   def attachment
-    # this is the title of the attachment, rather than a link to the resource
-    # there can be multiple titles, all of which will be displayed
-
-    return if content_object_data['attachmentTitle_t'].blank?
-
-    content_object_data['attachmentTitle_t']
+    get_all_from('attachmentTitle_t')
   end
 end
