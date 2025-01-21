@@ -1,14 +1,17 @@
 class SesData
 
-  attr_reader :hierarchy_ses_data, :ses_ids, :cache_store
+  attr_reader :ses_ids, :existing_ses_data, :cache_store
 
-  def initialize(hierarchy_ses_data, ses_ids)
+  def initialize(ses_ids, existing_ses_data = [])
     @cache_store = Rails.cache
-    @hierarchy_ses_data = hierarchy_ses_data
+    @existing_ses_data = existing_ses_data
     @ses_ids = ses_ids
   end
 
+  # Accepts SES IDs (array of ints) and optionally existing data (array of hashes)
+
   def combined_ses_data
+    return {} if ses_ids.blank?
 
     ids_in_cache = []
     ids_to_fetch = []
@@ -48,8 +51,13 @@ class SesData
     # combine cached and fetched data
     combined_data = cached_data.merge(fetched_data)
 
-    return hierarchy_ses_data if combined_data.blank?
-    hierarchy_ses_data.merge(combined_data)
+    if existing_ses_data.blank?
+      combined_data
+    else
+      return existing_ses_data if combined_data.blank?
+
+      existing_ses_data.merge(combined_data)
+    end
   end
 
   def cache_key(id)

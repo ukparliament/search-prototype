@@ -21,8 +21,8 @@ class SearchController < ApplicationController
 
       # SES data
       query_ses = @objects.map { |o| o.content_object_data.select { |k| o.class.search_result_ses_fields.include?(k) }.values }
-      @ses_ids = [@search_data.facet_ses_ids + @associated_object_results.dig(:ses_ids) + query_ses].flatten.uniq
-      @ses_data = SesData.new(@search_data.hierarchy_ses_data, @ses_ids).combined_ses_data
+      ses_ids = [@search_data.facet_ses_ids + @associated_object_results.dig(:ses_ids) + query_ses].flatten.uniq
+      @ses_data = SesData.new(ses_ids, @search_data.hierarchy_ses_data).combined_ses_data
     end
   end
 
