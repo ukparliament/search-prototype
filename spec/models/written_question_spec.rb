@@ -463,7 +463,7 @@ RSpec.describe WrittenQuestion, type: :model do
       let!(:written_question) { WrittenQuestion.new({ 'attachmentTitle_t' => ['first item', 'second item'] }) }
 
       it 'returns all items' do
-        expect(written_question.attachment).to eq(['first item', 'second item'])
+        expect(written_question.attachment).to eq([{ :field_name => "attachmentTitle_t", :value => "first item" }, { :field_name => "attachmentTitle_t", :value => "second item" }])
       end
     end
   end
