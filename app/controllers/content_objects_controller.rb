@@ -35,10 +35,11 @@ class ContentObjectsController < ApplicationController
 
         # Combine SES IDs from associated objects if any
         associated_ses_ids = associated_object_results.dig(:ses_ids)
-        all_ses_ids = associated_ses_ids.blank? ? @object.ses_lookup_ids : @object.ses_lookup_ids + associated_ses_ids
+        object_ses_ids = @object.ses_lookup_ids.pluck(:value)
+        all_ses_ids = associated_ses_ids.blank? ? object_ses_ids : object_ses_ids + associated_ses_ids
 
-        # Single SES lookup using all IDs
-        @ses_data = SesLookup.new(all_ses_ids).data
+        # Use SesData class to handle SES retrival from cache / API
+        @ses_data = SesData.new(all_ses_ids).combined_ses_data
 
         @page_title = @object.object_title
 
