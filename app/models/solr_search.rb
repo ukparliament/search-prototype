@@ -343,7 +343,7 @@ class SolrSearch < ApiCall
 
   def field_list
     # Fields required from initial search; as few as possible for speed
-    'uri type_ses'
+    'uri type_ses subtype_ses'
   end
 
   private
