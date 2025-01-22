@@ -63,7 +63,7 @@ class SearchData
     initial_query_data&.each do |object_data|
       next if object_data['type_ses'].blank?
 
-      objects << ContentObject.generate(object_data)
+      objects << ContentTypeObject.generate(object_data)
     end
     objects
   end

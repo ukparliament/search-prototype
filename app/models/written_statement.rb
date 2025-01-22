@@ -1,11 +1,11 @@
-class WrittenStatement < ContentObject
+class WrittenStatement < ContentTypeObject
 
-  def initialize(content_object_data)
+  def initialize(content_type_object_data)
     super
   end
 
   def template
-    'search/objects/written_statement'
+    'content_type_objects/object_pages/written_statement'
   end
 
   def search_result_partial

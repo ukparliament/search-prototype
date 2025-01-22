@@ -1,11 +1,11 @@
 class PaperOrderedToBePrinted < Paper
 
-  def initialize(content_object_data)
+  def initialize(content_type_object_data)
     super
   end
 
   def template
-    'search/objects/paper_ordered_to_be_printed'
+    'content_type_objects/object_pages/paper_ordered_to_be_printed'
   end
 
   def search_result_partial

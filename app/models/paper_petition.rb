@@ -1,11 +1,11 @@
 class PaperPetition < Petition
 
-  def initialize(content_object_data)
+  def initialize(content_type_object_data)
     super
   end
 
   def template
-    'search/objects/paper_petition'
+    'content_type_objects/object_pages/paper_petition'
   end
 
   def search_result_partial

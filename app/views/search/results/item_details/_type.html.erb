@@ -4,7 +4,7 @@
       Type
     </div>
     <% if type.is_a?(Array) %>
-      <%= render 'search/fragments/simple_list', items: type, seperator: ';', terminator: '', singular: false %>
+      <%= render 'content_type_objects/fragments/simple_list', items: type, seperator: ';', terminator: '', singular: false %>
     <% else %>
       <%= object_display_name(type, singular: true) %>
     <% end %>

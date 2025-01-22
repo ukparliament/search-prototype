@@ -1,0 +1,24 @@
+.content-prelim-box
+  .content-prelim-inner
+    .content-prelim-text#prelim-text
+      %span>= render 'content_type_objects/fragments/list', items: object.object_name, terminator: '', singular: true
+      - unless object.date.blank?
+        %span= " on "
+        %span>= format_date(object.date)
+      - unless object.legislature.blank?
+        %span= ","
+        %span= " in the "
+        %span>= render 'content_type_objects/fragments/list', items: object.legislature, terminator: '', singular: false
+      - unless object.lead_members.blank?
+        %span= ","
+        %span= " led by "
+        %span>= render 'content_type_objects/fragments/list', items: object.lead_members, terminator: '', singular: false
+      %span= "."
+      - unless object.answering_members.blank?
+        %span= " The answering "
+        - if object.answering_members.size == 1
+          %span= " member was "
+        - else
+          %span= " members were "
+        %span>= render 'content_type_objects/fragments/list', items: object.answering_members, terminator: '', singular: false
+        %span= "."

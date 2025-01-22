@@ -1,0 +1,34 @@
+<% if Rails.env.development? %>
+  <%#= render 'content_type_objects/fragments/data', data: object.content_type_object_data, title: 'SOLR Data' %>
+  <%#= render 'content_type_objects/fragments/data', data: @ses_data, title: 'SES Data' %>
+<% end %>
+
+<% content_for(:before_title) do %>
+  <%= link_to('UK Parliament', root_path) %> / <%= link_to('Open data', root_path) %><br/>
+  <div id="top"></div>
+<% end %>
+
+  <% content_for(:title) do %>
+    <%= format_object_title(object.object_title, @ses_data) %>
+  <% end %>
+
+<section id="prelim">
+  <%= render 'content_type_objects/preliminary_sentences/european_deposited_document', object: object %>
+</section>
+
+<section id="about" class="content-section grey">
+  <%= render 'content_type_objects/fragments/type', type: object.type %>
+  <%= render 'content_type_objects/fragments/commission_number', commission_number: object.commission_number %>
+  <%= render 'content_type_objects/fragments/elc_number', elc_number: object.elc_number %>
+  <%= render 'content_type_objects/fragments/council_number', council_number: object.council_number %>
+  <%= render 'content_type_objects/fragments/other_number', other_number: object.other_number %>
+  <%= render 'content_type_objects/fragments/responsible_departments', responsible_departments: object.departments %>
+  <%= render 'content_type_objects/fragments/subsidiarity_protocol_period', from: object.subsidiarity_from_date, to: object.subsidiarity_to_date %>
+  <%= render 'content_type_objects/fragments/date', date: object.date_originated, title: 'Originated on' %>
+  <%= render 'content_type_objects/fragments/related_items', related_item_ids: object.related_item_ids %>
+  <%= render 'content_type_objects/fragments/pills', pills_heading: 'Subjects', pills: object.subjects %>
+  <%= render 'content_type_objects/fragments/contains_statistics', contains_statistics: object.contains_statistics %>
+</section>
+
+<%= render '/content_type_objects/fragments/about_this_result', object: object %>
+<%= render '/content_type_objects/fragments/back_to_top_button' %>

@@ -107,7 +107,10 @@ module ApplicationHelper
       year: 'Date',
       month: 'Date',
       session: 'Session',
-      primaryMember_ses: 'Primary member'
+      primaryMember_ses: 'Primary member',
+      primarySponsorParty_ses: 'Primary sponsor party',
+      primarySponsorParty: 'Primary sponsor',
+      sponsor_ses: 'Sponsor'
     }
 
     raise "Unknown field name '#{field}'" if Rails.env.development? && !field_names.keys.include?(field.to_sym)

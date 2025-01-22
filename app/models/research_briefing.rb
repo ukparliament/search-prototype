@@ -1,6 +1,6 @@
-class ResearchBriefing < ContentObject
+class ResearchBriefing < ContentTypeObject
 
-  def initialize(content_object_data)
+  def initialize(content_type_object_data)
     super
   end
 
@@ -9,7 +9,7 @@ class ResearchBriefing < ContentObject
   end
 
   def template
-    'search/objects/research_briefing'
+    'content_type_objects/object_pages/research_briefing'
   end
 
   def search_result_partial

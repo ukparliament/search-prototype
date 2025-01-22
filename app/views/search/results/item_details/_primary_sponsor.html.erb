@@ -7,7 +7,7 @@
       <%= object_display_name(primary_sponsor, singular: false) %>
     </span>
     <% unless primary_sponsor_party.blank? %>
-      (<%= render 'search/fragments/simple_list', items: primary_sponsor_party, terminator: "", singular: false %>)
+      (<%= render 'content_type_objects/fragments/simple_list', items: primary_sponsor_party, terminator: "", singular: false %>)
     <% end %>
   </div>
 <% end %>

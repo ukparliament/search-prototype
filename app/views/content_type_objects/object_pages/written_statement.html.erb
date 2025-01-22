@@ -1,0 +1,42 @@
+<% if Rails.env.development? %>
+  <%#= render 'content_type_objects/fragments/data', data: object.content_type_object_data, title: 'SOLR Data' %>
+  <%#= render 'content_type_objects/fragments/data', data: @ses_data, title: 'SES Data' %>
+<% end %>
+
+<% content_for(:before_title) do %>
+  <%= link_to('UK Parliament', root_path) %> / <%= link_to('Open data', root_path) %><br/>
+  <div id="top"></div>
+<% end %>
+
+<% content_for(:title) do %>
+  <%= format_object_title(object.object_title, @ses_data) %>
+<% end %>
+
+<section id="prelim">
+  <%= render 'content_type_objects/preliminary_sentences/written_statement', object: object %>
+</section>
+
+<% unless object.content.blank? %>
+  <section id="main-content" class="content-section white-padded">
+    <div class="about-item">
+      <%= raw format_html(object.statement_text[:value], false) %>
+    </div>
+  </section>
+<% end %>
+
+<section id="about" class="content-section grey">
+  <%= render 'content_type_objects/fragments/type', type: object.type %>
+  <%= render 'content_type_objects/fragments/reference', reference: object.reference %>
+  <%= render 'content_type_objects/fragments/session', session: object.parliamentary_session %>
+  <%= render 'content_type_objects/fragments/procedure', procedure: object.procedure %>
+  <%= render 'content_type_objects/fragments/attachment', attachments: object.attachment %>
+  <%= render 'content_type_objects/fragments/related_items', related_item_ids: object.related_item_ids %>
+  <%= render 'content_type_objects/fragments/notes', notes: object.notes %>
+  <%= render 'content_type_objects/fragments/pills', pills_heading: 'Subjects', pills: object.subjects %>
+  <%= render 'content_type_objects/fragments/legislation', legislation: object.legislation %>
+  <%= render 'content_type_objects/fragments/contains_statistics', contains_statistics: object.contains_statistics %>
+  <%= render 'content_type_objects/fragments/link', object: object %>
+</section>
+
+<%= render '/content_type_objects/fragments/about_this_result', object: object %>
+<%= render '/content_type_objects/fragments/back_to_top_button' %>

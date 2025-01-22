@@ -1,0 +1,12 @@
+.content-prelim-box
+  .content-prelim-inner
+    .content-prelim-text#prelim-text
+      %span>= object_display_name_link(object.object_name)
+      %span= " ordered to be printed "
+      - unless object.legislature.blank?
+        %span= " by the "
+        %span>= render 'content_type_objects/fragments/list', items: object.legislature, terminator: '', singular: false
+      - unless object.date_of_order_to_print.blank?
+        %span= " on "
+        %span>= format_date(object.date_of_order_to_print)
+        %span= "."

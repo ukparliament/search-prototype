@@ -1,0 +1,24 @@
+<% unless contribution_ids.blank? %>
+  <div class="about-item">
+    <div class="content-heading-small" id="contributions">Proceeding contributions</div>
+    <div class="flex-list">
+      <% contribution_ids[..1].each do |contribution_id| %>
+        <%= render 'content_type_objects/fragments/contribution', contribution: @associated_object_data[contribution_id] %>
+      <% end %>
+    </div>
+    <% if contribution_ids.size > 2 %>
+      <br/>
+      <details>
+        <summary>
+          Show all contributions (<%= contribution_ids.size %>)
+        </summary>
+        <br/>
+        <div class="flex-list">
+          <% contribution_ids[2..].each do |contribution_id| %>
+            <%= render 'content_type_objects/fragments/contribution', contribution: @associated_object_data[contribution_id] %>
+          <% end %>
+        </div>
+      </details>
+    <% end %>
+  </div>
+<% end %>

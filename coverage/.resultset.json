@@ -138,6 +138,9 @@
           null,
           null,
           null,
+          null,
+          null,
+          null,
           2,
           null,
           2,
@@ -425,7 +428,7 @@
           null
         ]
       },
-      "/Users/jon.corry/RubymineProjects/search-prototype/app/controllers/content_objects_controller.rb": {
+      "/Users/jon.corry/RubymineProjects/search-prototype/app/controllers/content_type_objects_controller.rb": {
         "lines": [
           1,
           null,
@@ -607,7 +610,7 @@
           null
         ]
       },
-      "/Users/jon.corry/RubymineProjects/search-prototype/app/models/content_object.rb": {
+      "/Users/jon.corry/RubymineProjects/search-prototype/app/models/content_type_object.rb": {
         "lines": [
           1,
           null,
@@ -4721,6 +4724,6 @@
         ]
       }
     },
-    "timestamp": 1737470913
+    "timestamp": 1737543883
   }
 }

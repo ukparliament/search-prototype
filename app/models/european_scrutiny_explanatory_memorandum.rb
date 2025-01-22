@@ -1,11 +1,11 @@
 class EuropeanScrutinyExplanatoryMemorandum < EuropeanScrutiny
 
-  def initialize(content_object_data)
+  def initialize(content_type_object_data)
     super
   end
 
   def template
-    'search/objects/european_scrutiny_explanatory_memorandum'
+    'content_type_objects/object_pages/european_scrutiny_explanatory_memorandum'
   end
 
   def search_result_partial

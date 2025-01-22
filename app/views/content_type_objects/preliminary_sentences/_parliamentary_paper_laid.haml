@@ -1,0 +1,32 @@
+.content-prelim-box
+  .content-prelim-inner
+    .content-prelim-text#prelim-text
+      %span>= render 'content_type_objects/fragments/list', items: object.object_name, terminator: '', singular: true
+      - unless object.legislature.blank?
+        %span= " laid in the "
+        %span>= render 'content_type_objects/fragments/list', items: object.legislature, terminator: '', singular: false
+      - unless object.date.blank?
+        %span= " on "
+        %span>= format_date(object.date)
+      - unless object.member_name.blank?
+        %span= " by "
+        %span>= search_link(object.member_name)
+      - unless object.department.blank?
+        %span= " on behalf of the "
+        %span>= search_link(object.department)
+      %span= "."
+      - unless object.date_approved.blank?
+        %span= " It was approved by the House of Commons on "
+        %span>= format_date(object.date_approved)
+        %span= "."
+      - unless object.date_made.blank?
+        %span= " It was made on "
+        %span>= format_date(object.date_made)
+        %span= "."
+      - if object.date_withdrawn.blank?
+        - if object.is_withdrawn && object.is_withdrawn[:value]
+          %span= " It was subsequently withdrawn. "
+      - else
+        %span= " It was withdrawn on "
+        %span>= format_date(object.date_withdrawn)
+        %span= "."

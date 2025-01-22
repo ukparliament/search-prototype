@@ -1,11 +1,11 @@
 class FormalProceeding < Proceeding
 
-  def initialize(content_object_data)
+  def initialize(content_type_object_data)
     super
   end
 
   def template
-    'search/objects/formal_proceeding'
+    'content_type_objects/object_pages/formal_proceeding'
   end
 
   def search_result_partial

@@ -1,6 +1,6 @@
-class Paper < ContentObject
+class Paper < ContentTypeObject
 
-  def initialize(content_object_data)
+  def initialize(content_type_object_data)
     super
   end
 

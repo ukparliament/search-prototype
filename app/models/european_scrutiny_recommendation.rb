@@ -1,6 +1,6 @@
 class EuropeanScrutinyRecommendation < EuropeanScrutiny
 
-  def initialize(content_object_data)
+  def initialize(content_type_object_data)
     super
   end
 
@@ -52,6 +52,6 @@ class EuropeanScrutinyRecommendation < EuropeanScrutiny
   end
 
   def template
-    'search/objects/european_scrutiny_recommendation'
+    'content_type_objects/object_pages/european_scrutiny_recommendation'
   end
 end

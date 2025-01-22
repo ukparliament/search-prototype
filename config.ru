@@ -2,8 +2,8 @@
 
 require_relative "config/environment"
 
-map ENV['RAILS_RELATIVE_URL_ROOT'] || "/search-prototype" do
-  run Rails.application
-end
+# map ENV['RAILS_RELATIVE_URL_ROOT'] || "/search-prototype" do
+run Rails.application
+# end
 
 Rails.application.load_server

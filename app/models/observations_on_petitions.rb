@@ -1,11 +1,11 @@
 class ObservationsOnPetitions < Petition
 
-  def initialize(content_object_data)
+  def initialize(content_type_object_data)
     super
   end
 
   def template
-    'search/objects/observations_on_petitions'
+    'content_type_objects/object_pages/observations_on_petitions'
   end
 
   def search_result_partial

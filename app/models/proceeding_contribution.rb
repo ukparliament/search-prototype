@@ -1,6 +1,6 @@
-class ProceedingContribution < ContentObject
+class ProceedingContribution < ContentTypeObject
 
-  def initialize(content_object_data)
+  def initialize(content_type_object_data)
     super
   end
 
@@ -15,7 +15,7 @@ class ProceedingContribution < ContentObject
   end
 
   def template
-    'search/objects/proceeding_contribution'
+    'content_type_objects/object_pages/proceeding_contribution'
   end
 
   def search_result_partial

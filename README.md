@@ -13,7 +13,7 @@
 ## High level overview
 
 This application is the front end for a (Solr 9) search and has two main interfaces: the search page (search#index),
-which also displays search results, and the 'item' view (content_objects#show).
+which also displays search results, and the 'item' view (content_type_objects#show).
 
 The intended route through the app is for a search to be performed, the results to be viewed, filtered and adjusted,
 then for a single result to be clicked on. This then takes the user to the item view, which displayed more detailed
@@ -30,13 +30,13 @@ to 'value' and its Solr field name keyed to 'field_name', instead of simply pass
 ### Item pages
 
 An object ID is required, and used to retrieve the data for that object from Solr using an instance of SolrQuery. The
-returned data is passed to the ContentObject class, using the 'generate' class method to identify and initialise the
+returned data is passed to the ContentTypeObject class, using the 'generate' class method to identify and initialise the
 relevant subclass corresponding to the item type (based on its type and subtype SES IDs, type_ses and subtype_ses).
 
 The class, for example WrittenQuestion, contains instance methods used to extract the necessary data to render the page
-from the returned JSON. The numerous subclasses of ContentObject are organised in several layers where beneficial, for
+from the returned JSON. The numerous subclasses of ContentTypeObject are organised in several layers where beneficial, for
 example WrittenQuestion inherits from Question, which also has the subclass OralQuestion and holds methods common to
-both subclasses. A number of instance methods belong to ContentObject itself, as their behaviour is common across all
+both subclasses. A number of instance methods belong to ContentTypeObject itself, as their behaviour is common across all
 object types.
 
 ### The search page
@@ -166,7 +166,7 @@ into chunks of 250 to ensure the request does not exceed the 2048 character limi
 Each chunk of 250 or fewer IDs is assigned a new thread, as it is significantly quicker to make all requests
 simultaneously.
 
-As part of performance improvement work to the ContentObjectsController show action, used on item pages, the call to SES
+As part of performance improvement work to the ContentTypeObjectsController show action, used on item pages, the call to SES
 is now only carried out once the SES IDs relevant to items related to the result are collated and added to the list.
 This avoids needing to make further SES requests later on, reducing page load times. A similar change will be made to
 the SearchController index action, used for the search results page, collating the related item IDs needed to present a

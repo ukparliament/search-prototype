@@ -1,0 +1,32 @@
+.content-prelim-box
+  .content-prelim-inner
+    .content-prelim-text#prelim-text
+      %span>= object_display_name_link(object.object_name)
+      %span= " asked "
+      - unless object.legislature.blank?
+        %span= " in the "
+        %span>= render 'content_type_objects/fragments/list', items: object.legislature, terminator: ',', singular: false
+      - unless object.asking_member.blank?
+        %span= " by "
+        %span= search_link(object.asking_member)
+        - unless object.asking_member_party.blank?
+          %span<="("
+          %span>= search_link(object.asking_member_party)
+          %span>=")."
+      %span>=" It was answered "
+      - unless object.answering_member.blank?
+        %span= " by "
+        %span= search_link(object.answering_member)
+        - unless object.answering_member_party.blank?
+          %span<="("
+          %span>= search_link(object.answering_member_party)
+          %span>=")"
+      - unless object.date_of_answer.blank?
+        %span= " on "
+        %span>= format_date(object.date_of_answer)
+      - unless object.answering_department.blank?
+        %span= " on behalf of the "
+        %span>= search_link(object.answering_department)
+      %span= "."
+      - if object.corrected?
+        %span= " The answer was corrected."

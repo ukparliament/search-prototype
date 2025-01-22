@@ -1,0 +1,9 @@
+<% unless certified_categories.blank? %>
+  <div class="about-item">
+    <div class="content-heading-small" id="certified-categories">Certified as</div>
+    <%= render 'content_type_objects/fragments/list', items: certified_categories, terminator: '', singular: false %>
+    <% unless certified_date.blank? %>
+      <br/><%= format_date(certified_date) %>
+    <% end %>
+  </div>
+<% end %>

@@ -103,7 +103,7 @@ RSpec.describe SearchData, type: :model do
         expect(search_data.object_data.keys).to eq([:items])
         expect(search_data.object_data[:items]).to be_a(Array)
         expect(search_data.object_data[:items].map(&:class)).to eq([Edm, Edm, Edm])
-        expect(search_data.object_data[:items].map(&:content_object_data)).to eq([item1_data, item2_data, item3_data])
+        expect(search_data.object_data[:items].map(&:content_type_object_data)).to eq([item1_data, item2_data, item3_data])
       end
     end
   end

@@ -1,6 +1,6 @@
 class OralQuestion < Question
 
-  def initialize(content_object_data)
+  def initialize(content_type_object_data)
     super
   end
 
@@ -11,7 +11,7 @@ class OralQuestion < Question
   end
 
   def template
-    'search/objects/oral_question'
+    'content_type_objects/object_pages/oral_question'
   end
 
   def search_result_partial
@@ -48,11 +48,11 @@ class OralQuestion < Question
   end
 
   def prelim_partial
-    return '/search/preliminary_sentences/oral_question_withdrawn' if withdrawn?
+    return '/content_type_objects/preliminary_sentences/oral_question_withdrawn' if withdrawn?
 
-    return '/search/preliminary_sentences/oral_question_tabled' if tabled?
+    return '/content_type_objects/preliminary_sentences/oral_question_tabled' if tabled?
 
-    return '/search/preliminary_sentences/oral_question_answered' if answered?
+    return '/content_type_objects/preliminary_sentences/oral_question_answered' if answered?
 
     nil
   end

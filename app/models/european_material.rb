@@ -1,6 +1,6 @@
-class EuropeanMaterial < ContentObject
+class EuropeanMaterial < ContentTypeObject
 
-  def initialize(content_object_data)
+  def initialize(content_type_object_data)
     super
   end
 
@@ -11,7 +11,7 @@ class EuropeanMaterial < ContentObject
   end
 
   def template
-    'search/objects/european_material'
+    'content_type_objects/object_pages/european_material'
   end
 
   def search_result_partial

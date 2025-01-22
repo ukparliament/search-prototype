@@ -1,6 +1,6 @@
-class ChurchOfEnglandMeasure < ContentObject
+class ChurchOfEnglandMeasure < ContentTypeObject
 
-  def initialize(content_object_data)
+  def initialize(content_type_object_data)
     super
   end
 
@@ -17,7 +17,7 @@ class ChurchOfEnglandMeasure < ContentObject
   end
 
   def template
-    'search/objects/church_of_england_measure'
+    'content_type_objects/object_pages/church_of_england_measure'
   end
 
   def search_result_partial

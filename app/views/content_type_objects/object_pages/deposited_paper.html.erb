@@ -1,0 +1,53 @@
+<% if Rails.env.development? %>
+  <%#= render 'content_type_objects/fragments/data', data: object.content_type_object_data, title: 'SOLR Data' %>
+  <%#= render 'content_type_objects/fragments/data', data: @ses_data, title: 'SES Data' %>
+<% end %>
+
+<% content_for(:before_title) do %>
+  <%= link_to('UK Parliament', root_path) %> / <%= link_to('Open data', root_path) %><br/>
+  <div id="top"></div>
+<% end %>
+
+<% content_for(:title) do %>
+  <%= format_object_title(object.object_title, @ses_data) %>
+<% end %>
+
+<section id="prelim">
+  <%= render 'content_type_objects/preliminary_sentences/deposited_paper', object: object %>
+</section>
+
+<section id="main-content" class="content-section white-padded">
+  <% unless object.abstract_text.blank? %>
+    <div class="content-text">
+      <%= raw format_html(object.abstract_text[:value], false) %>
+    </div>
+  <% end %>
+  <% if object.deposited_file.blank? %>
+    <div class="content-text">
+    <span>
+      Available in hard copy only. For information on access, please see <%= link_to 'https://www.parliament.uk/about/how/publications/deposited/', 'https://www.parliament.uk/about/how/publications/deposited/' %>
+    </span>
+    </div>
+  <% else %>
+    <h3 class="content-heading" id="available-files">Available files</h3>
+    <% object.deposited_file.each do |uri| %>
+      <%= link_to(uri, uri.to_s) %>
+    <% end %>
+  <% end %>
+</section>
+
+<section id="about" class="content-section grey">
+  <%= render 'content_type_objects/fragments/type', type: object.type %>
+  <%= render 'content_type_objects/fragments/reference', reference: object.reference %>
+  <%= render 'content_type_objects/fragments/date', title: 'Originated on', date: object.date_originated %>
+  <%= render 'content_type_objects/fragments/corporate_author', label: 'Author', author: object.authors %>
+  <%= render 'content_type_objects/fragments/paper_type', paper_type: object.paper_type %>
+  <%= render 'content_type_objects/fragments/related_items', related_item_ids: object.related_item_ids %>
+  <%= render 'content_type_objects/fragments/pills', pills_heading: 'Subjects', pills: object.subjects %>
+  <%= render 'content_type_objects/fragments/legislation', legislation: object.legislation %>
+  <%= render 'content_type_objects/fragments/library_location', commons: object.commons_library_location, lords: object.lords_library_location %>
+  <%= render 'content_type_objects/fragments/contains_statistics', contains_statistics: object.contains_statistics %>
+</section>
+
+<%= render '/content_type_objects/fragments/about_this_result', object: object %>
+<%= render '/content_type_objects/fragments/back_to_top_button' %>

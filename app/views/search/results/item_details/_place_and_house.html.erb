@@ -4,7 +4,7 @@
       <span><%= object_display_name(place, singular: false) %></span>,
     <% end %>
     <% unless house.blank? %>
-      <%= render 'search/fragments/simple_list', items: house, terminator: "", singular: false %>
+      <%= render 'content_type_objects/fragments/simple_list', items: house, terminator: "", singular: false %>
     <% end %>
   </div>
 <% end %>

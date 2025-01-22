@@ -1,6 +1,6 @@
-class OralQuestionTimeIntervention < ContentObject
+class OralQuestionTimeIntervention < ContentTypeObject
 
-  def initialize(content_object_data)
+  def initialize(content_type_object_data)
     super
   end
 
@@ -29,7 +29,7 @@ class OralQuestionTimeIntervention < ContentObject
   end
 
   def template
-    'search/objects/oral_question_time_intervention'
+    'content_type_objects/object_pages/oral_question_time_intervention'
   end
 
 end

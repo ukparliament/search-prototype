@@ -1,6 +1,6 @@
 class OralAnswerToQuestion < Question
 
-  def initialize(content_object_data)
+  def initialize(content_type_object_data)
     super
   end
 
@@ -11,7 +11,7 @@ class OralAnswerToQuestion < Question
   end
 
   def template
-    'search/objects/oral_answer_to_question'
+    'content_type_objects/object_pages/oral_answer_to_question'
   end
 
   def search_result_partial

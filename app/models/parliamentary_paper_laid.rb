@@ -1,11 +1,11 @@
 class ParliamentaryPaperLaid < Paper
 
-  def initialize(content_object_data)
+  def initialize(content_type_object_data)
     super
   end
 
   def template
-    'search/objects/parliamentary_paper_laid'
+    'content_type_objects/object_pages/parliamentary_paper_laid'
   end
 
   def search_result_partial

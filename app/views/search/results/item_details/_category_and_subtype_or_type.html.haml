@@ -2,7 +2,7 @@
   %div.item-details
   - if category.is_a?(Array)
     %div.item-details-label= "Type"
-    %span>= render 'search/fragments/simple_list', items: category, separator: ';', terminator: ';', singular: false
+    %span>= render 'content_type_objects/fragments/simple_list', items: category, separator: ';', terminator: ';', singular: false
   - else
     %div.item-details-label= "Type"
     %span>= object_display_name(category, singular: true)
@@ -10,11 +10,11 @@
   - unless category.blank?
     %span>= "; "
   - if subtype.is_a?(Array)
-    = render 'search/fragments/simple_list', items: subtype, separator: ';', terminator: ';', singular: false
+    = render 'content_type_objects/fragments/simple_list', items: subtype, separator: ';', terminator: ';', singular: false
   - else
     = object_display_name(subtype, singular: true)
 - if subtype.blank? && category.blank?
   - if type.is_a?(Array)
-    = render 'search/fragments/simple_list', items: type, separator: ';', terminator: ';', singular: false
+    = render 'content_type_objects/fragments/simple_list', items: type, separator: ';', terminator: ';', singular: false
   - else
     = object_display_name(type, singular: true)
