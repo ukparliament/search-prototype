@@ -176,16 +176,11 @@ RSpec.describe Bill, type: :model do
   describe 'version title' do
     let!(:bill1) { Bill.new({ 'subtype_ses' => [92585], 'title_t' => 'bill title', 'identifier_t' => ['ID part 1', 'ID part 2'] }) }
     let!(:bill2) { Bill.new({ 'subtype_ses' => [91436], 'title_t' => 'bill title', 'identifier_t' => ['ID part 1', 'ID part 2'] }) }
-
-    context 'where bill has subtype 92585' do
-      it 'uses the title' do
-        expect(bill1.version_title).to eq('bill title')
-      end
-    end
-
-    context 'for another subtype' do
+    
+    context 'for any subtype' do
       it 'uses all references, joined with a space' do
-        expect(bill2.version_title).to eq('ID part 1 ID part 2')
+        expect(bill1.version_title).to eq('bill title')
+        expect(bill2.version_title).to eq('bill title')
       end
     end
   end
