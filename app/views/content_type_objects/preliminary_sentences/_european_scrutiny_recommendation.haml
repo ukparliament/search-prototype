@@ -5,13 +5,15 @@
       - unless object.date_reported.blank?
         %span= " dated "
         %span>= format_date(object.date_reported)
-      %span= "."
-      - unless object.date_debated.blank? && object.debate_location.blank?
-        %span= " It was debated "
+      - if object.date_debated.blank? && object.debate_location.blank?
+        %span= "."
+      - else
+        %span= ","
+        %span= " which received a "
+        - unless object.debate_location.blank?
+          %span>= object.debate_location[:value]
+        %span>= " debate"
         - unless object.date_debated.blank?
           %span= " on "
           %span>= format_date(object.date_debated)
-        - unless object.debate_location.blank?
-          %span= " in "
-          %span>= object.debate_location[:value]
-        %span= "."
+        %span>= "."
