@@ -1,0 +1,31 @@
+<% if Rails.env.development? %>
+  <%#= render 'content_type_objects/fragments/data', data: object.content_type_object_data, title: 'SOLR Data' %>
+  <%#= render 'content_type_objects/fragments/data', data: @ses_data, title: 'SES Data' %>
+<% end %>
+
+<% content_for(:before_title) do %>
+  <%= link_to('UK Parliament', root_path) %> / <%= link_to('Open data', root_path) %><br/>
+  <div id="top"></div>
+<% end %>
+
+<% content_for(:title) do %>
+  <%= format_object_title(@page_title, @ses_data) %>
+<% end %>
+
+<section id="prelim">
+  <%= render 'content_type_objects/preliminary_sentences/european_scrutiny_recommendation', object: object %>
+</section>
+
+<section id="about" class="content-section grey">
+  <%= render 'content_type_objects/fragments/type', type: object.type %>
+  <%= render 'content_type_objects/fragments/decision', decision: object.decision %>
+  <%= render 'content_type_objects/fragments/assessment', assessment: object.assessment %>
+  <%= render 'content_type_objects/fragments/cleared', cleared: object.is_cleared %>
+  <%= render 'content_type_objects/fragments/status', status: object.status %>
+  <%= render 'content_type_objects/fragments/regarding', regarding_object_ids: object.regarding_object_ids %>
+  <%= render 'content_type_objects/fragments/report_number', report_number: object.report_number %>
+  <%= render 'content_type_objects/fragments/contains_statistics', contains_statistics: object.contains_statistics %>
+</section>
+
+<%= render '/content_type_objects/fragments/about_this_result', object: object %>
+<%= render '/content_type_objects/fragments/back_to_top_button' %>

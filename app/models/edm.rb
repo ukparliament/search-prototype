@@ -1,11 +1,11 @@
-class Edm < ContentObject
+class Edm < ContentTypeObject
 
-  def initialize(content_object_data)
+  def initialize(content_type_object_data)
     super
   end
 
   def template
-    'search/objects/edm'
+    'content_type_objects/object_pages/edm'
   end
 
   def edm_number
@@ -36,13 +36,13 @@ class Edm < ContentObject
     # Reference is taken from identifier_t, after removing the first item
 
     original_hash = {
-      text: content_object_data['amendmentText_t'].blank? ? {} : { value: content_object_data['amendmentText_t'], field_name: 'amendmentText_t' },
-      number_of_signatures: content_object_data['amendment_numberOfSignatures_s'].blank? ? {} : { value: content_object_data['amendment_numberOfSignatures_s'], field_name: 'amendment_numberOfSignatures_s' },
-      primary_sponsor: content_object_data['amendment_primarySponsor_ses'].blank? ? {} : { value: content_object_data['amendment_primarySponsor_ses'], field_name: 'amendment_primarySponsor_ses' },
-      primary_sponsor_text: content_object_data['amendment_primarySponsorPrinted_t'].blank? ? {} : { value: content_object_data['amendment_primarySponsorPrinted_t'], field_name: 'amendment_primarySponsorPrinted_t' },
-      primary_sponsor_party: content_object_data['amendment_primarySponsorParty_ses'].blank? ? {} : { value: content_object_data['amendment_primarySponsorParty_ses'], field_name: 'amendment_primarySponsorParty_ses' },
-      reference: content_object_data['identifier_t']&.drop(1).blank? ? {} : { value: content_object_data['identifier_t']&.drop(1), field_name: 'identifier_t' },
-      date_tabled: content_object_data['amendment_dateTabled_dt'].blank? ? {} : { value: content_object_data['amendment_dateTabled_dt'], field_name: 'amendment_dateTabled_dt' }
+      text: content_type_object_data['amendmentText_t'].blank? ? {} : { value: content_type_object_data['amendmentText_t'], field_name: 'amendmentText_t' },
+      number_of_signatures: content_type_object_data['amendment_numberOfSignatures_s'].blank? ? {} : { value: content_type_object_data['amendment_numberOfSignatures_s'], field_name: 'amendment_numberOfSignatures_s' },
+      primary_sponsor: content_type_object_data['amendment_primarySponsor_ses'].blank? ? {} : { value: content_type_object_data['amendment_primarySponsor_ses'], field_name: 'amendment_primarySponsor_ses' },
+      primary_sponsor_text: content_type_object_data['amendment_primarySponsorPrinted_t'].blank? ? {} : { value: content_type_object_data['amendment_primarySponsorPrinted_t'], field_name: 'amendment_primarySponsorPrinted_t' },
+      primary_sponsor_party: content_type_object_data['amendment_primarySponsorParty_ses'].blank? ? {} : { value: content_type_object_data['amendment_primarySponsorParty_ses'], field_name: 'amendment_primarySponsorParty_ses' },
+      reference: content_type_object_data['identifier_t']&.drop(1).blank? ? {} : { value: content_type_object_data['identifier_t']&.drop(1), field_name: 'identifier_t' },
+      date_tabled: content_type_object_data['amendment_dateTabled_dt'].blank? ? {} : { value: content_type_object_data['amendment_dateTabled_dt'], field_name: 'amendment_dateTabled_dt' }
     }
 
     return [] if original_hash.values.pluck(:value).compact.blank?

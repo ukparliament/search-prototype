@@ -1,0 +1,21 @@
+.content-prelim-box
+  .content-prelim-inner
+    .content-prelim-text#prelim-text
+      %span>= object_display_name_link(object.object_name)
+      - unless object.legislature.blank? && object.department.blank? && object.deposited_date.blank?
+        %span= " deposited "
+      - unless object.legislature.blank?
+        %span= " in the "
+        %span>= render 'content_type_objects/fragments/list', items: object.legislature, terminator: "", singular: false
+      - unless object.departments.blank?
+        %span= " by the "
+      - unless object.departments.blank?
+        %span>= render 'content_type_objects/fragments/list', items: object.departments, terminator: "", singular: false
+      - unless object.deposited_date.blank?
+        %span= " on "
+        %span>= format_date(object.deposited_date)
+      %span= "."
+      - unless object.commitment_to_deposit_date.blank?
+        %span= " The commitment to deposit was made on "
+        %span>= format_date(object.commitment_to_deposit_date)
+        %span= "."

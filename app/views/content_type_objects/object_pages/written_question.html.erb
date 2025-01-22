@@ -1,0 +1,49 @@
+<% if Rails.env.development? %>
+  <%#= render 'content_type_objects/fragments/data', data: object.content_type_object_data, title: 'SOLR Data' %>
+  <%#= render 'content_type_objects/fragments/data', data: @ses_data, title: 'SES Data' %>
+<% end %>
+
+<% content_for(:before_title) do %>
+  <%= link_to('UK Parliament', root_path) %> / <%= link_to('Open data', root_path) %><br/>
+  <div id="top"></div>
+<% end %>
+
+<% content_for(:title) do %>
+  <%= format_object_title(object.object_title, @ses_data) %>
+<% end %>
+
+<section id="prelim">
+  <%= render object.prelim_partial, object: object %>
+</section>
+
+<section id="main-content" class="content-section white-padded">
+  <%= render 'content_type_objects/fragments/question', object: object %>
+  <%= render 'content_type_objects/fragments/answer', object: object if object.answered? || object.answered_was_holding? %>
+  <%= render 'content_type_objects/fragments/corrected_written_question_follow_up', correcting_object: @associated_object_data[object.correcting_item_link] if object.corrected? %>
+  <%= render 'content_type_objects/fragments/corrected_answer', object: object if object.corrected? %>
+</section>
+
+<section id="about" class="content-section grey">
+  <%= render 'content_type_objects/fragments/type', type: object.type %>
+  <%= render 'content_type_objects/fragments/uin', uins: object.uin %>
+  <%= render 'content_type_objects/fragments/session', session: object.parliamentary_session %>
+  <%= render 'content_type_objects/fragments/procedure', procedure: object.procedure %>
+  <%= render 'content_type_objects/fragments/attachment', attachments: object.attachment %>
+  <%= render 'content_type_objects/fragments/related_items', related_item_ids: object.related_item_ids %>
+  <%= render 'content_type_objects/fragments/ec_documents', ec_documents: object.ec_documents %>
+  <%= render 'content_type_objects/fragments/notes', notes: object.notes %>
+  <%= render 'content_type_objects/fragments/registered_interest_declared', registered_interest: object.registered_interest_declared %>
+  <% unless object.tabled? || object.withdrawn? %>
+    <%= render 'content_type_objects/fragments/grouped_for_answer', grouped: object.is_grouped_for_answer %>
+    <%= render 'content_type_objects/fragments/transferred', transferred: object.is_transferred %>
+  <% end %>
+  <%= render 'content_type_objects/fragments/failed_oral', failed_oral: object.has_failed_oral %>
+  <%= render 'content_type_objects/fragments/unstarred', unstarred: object.is_unstarred_question %>
+  <%= render 'content_type_objects/fragments/pills', pills_heading: 'Subjects', pills: object.subjects %>
+  <%= render 'content_type_objects/fragments/legislation', legislation: object.legislation %>
+  <%= render 'content_type_objects/fragments/contains_statistics', contains_statistics: object.contains_statistics %>
+  <%= render 'content_type_objects/fragments/link', object: object %>
+</section>
+
+<%= render '/content_type_objects/fragments/about_this_result', object: object %>
+<%= render '/content_type_objects/fragments/back_to_top_button' %>

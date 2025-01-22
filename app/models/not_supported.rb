@@ -1,11 +1,11 @@
-class NotSupported < ContentObject
+class NotSupported < ContentTypeObject
 
-  def initialize(content_object_data)
+  def initialize(content_type_object_data)
     super
   end
 
   def template
-    'search/objects/not_supported'
+    'content_type_objects/object_pages/not_supported'
   end
 
   def search_result_partial

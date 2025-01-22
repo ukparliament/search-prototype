@@ -104,7 +104,7 @@
           </tr>
         
           <tr class="t-file">
-            <td class="strong t-file__name"><a href="#f7d318c3ace62575d97bbef2060e6c2175195e60" class="src_link" title="app/controllers/content_objects_controller.rb">app/controllers/content_objects_controller.rb</a></td>
+            <td class="strong t-file__name"><a href="#f7d318c3ace62575d97bbef2060e6c2175195e60" class="src_link" title="app/controllers/content_type_objects_controller.rb">app/controllers/content_type_objects_controller.rb</a></td>
             <td class="yellow strong cell--number t-file__coverage">81.48 %</td>
             <td class="cell--number">55</td>
             <td class="cell--number">27</td>
@@ -313,7 +313,7 @@
           </tr>
         
           <tr class="t-file">
-            <td class="strong t-file__name"><a href="#a8074314ec42e9d18f2a1b7a8a8b6aa16ff9617f" class="src_link" title="app/models/content_object.rb">app/models/content_object.rb</a></td>
+            <td class="strong t-file__name"><a href="#a8074314ec42e9d18f2a1b7a8a8b6aa16ff9617f" class="src_link" title="app/models/content_type_object.rb">app/models/content_type_object.rb</a></td>
             <td class="green strong cell--number t-file__coverage">96.77 %</td>
             <td class="cell--number">582</td>
             <td class="cell--number">279</td>
@@ -1106,7 +1106,7 @@
       
         <div class="source_table" id="f7d318c3ace62575d97bbef2060e6c2175195e60">
   <div class="header">
-    <h3>app/controllers/content_objects_controller.rb</h3>
+    <h3>app/controllers/content_type_objects_controller.rb</h3>
     <h4>
       <span class="yellow">
   81.48%
@@ -1137,7 +1137,7 @@
 
             
 
-            <code class="ruby">class ContentObjectsController &lt; ApplicationController</code>
+            <code class="ruby">class ContentTypeObjectsController &lt; ApplicationController</code>
           </li>
         </div>
       
@@ -2244,7 +2244,7 @@
 
             
 
-            <code class="ruby">      query_ses = @objects.map { |o| o.content_object_data.select { |k| o.class.search_result_ses_fields.include?(k) }.values }</code>
+            <code class="ruby">      query_ses = @objects.map { |o| o.content_type_object_data.select { |k| o.class.search_result_ses_fields.include?(k) }.values }</code>
           </li>
         </div>
       
@@ -7134,7 +7134,7 @@
 
             
 
-            <code class="ruby">  def initialize(content_object_data)</code>
+            <code class="ruby">  def initialize(content_type_object_data)</code>
           </li>
         </div>
       
@@ -8813,7 +8813,7 @@
 
             
 
-            <code class="ruby">    obj_ses_ids = obj.map { |ao| ao.content_object_data.select { |k| ses_fields.include?(k) }.values }.flatten.uniq</code>
+            <code class="ruby">    obj_ses_ids = obj.map { |ao| ao.content_type_object_data.select { |k| ses_fields.include?(k) }.values }.flatten.uniq</code>
           </li>
         </div>
       
@@ -9555,7 +9555,7 @@
 
             
 
-            <code class="ruby">  def initialize(content_object_data)</code>
+            <code class="ruby">  def initialize(content_type_object_data)</code>
           </li>
         </div>
       
@@ -10257,7 +10257,7 @@
 
             
 
-            <code class="ruby">  def initialize(content_object_data)</code>
+            <code class="ruby">  def initialize(content_type_object_data)</code>
           </li>
         </div>
       
@@ -10618,7 +10618,7 @@
 
             
 
-            <code class="ruby">  def initialize(content_object_data)</code>
+            <code class="ruby">  def initialize(content_type_object_data)</code>
           </li>
         </div>
       
@@ -10979,7 +10979,7 @@
 
             
 
-            <code class="ruby">  def initialize(content_object_data)</code>
+            <code class="ruby">  def initialize(content_type_object_data)</code>
           </li>
         </div>
       
@@ -11287,7 +11287,7 @@
       
         <div class="source_table" id="a8074314ec42e9d18f2a1b7a8a8b6aa16ff9617f">
   <div class="header">
-    <h3>app/models/content_object.rb</h3>
+    <h3>app/models/content_type_object.rb</h3>
     <h4>
       <span class="green">
   96.77%
@@ -11340,7 +11340,7 @@
 
             
 
-            <code class="ruby">  attr_reader :content_object_data</code>
+            <code class="ruby">  attr_reader :content_type_object_data</code>
           </li>
         </div>
       
@@ -11362,7 +11362,7 @@
 
             
 
-            <code class="ruby">  def initialize(content_object_data)</code>
+            <code class="ruby">  def initialize(content_type_object_data)</code>
           </li>
         </div>
       
@@ -11373,7 +11373,7 @@
 
             
 
-            <code class="ruby">    @content_object_data = content_object_data</code>
+            <code class="ruby">    @content_type_object_data = content_type_object_data</code>
           </li>
         </div>
       
@@ -11406,7 +11406,7 @@
 
             
 
-            <code class="ruby">  def self.generate(content_object_data)</code>
+            <code class="ruby">  def self.generate(content_type_object_data)</code>
           </li>
         </div>
       
@@ -11439,7 +11439,7 @@
 
             
 
-            <code class="ruby">    type_id = content_object_data[&#39;type_ses&#39;]&amp;.first</code>
+            <code class="ruby">    type_id = content_type_object_data[&#39;type_ses&#39;]&amp;.first</code>
           </li>
         </div>
       
@@ -11450,7 +11450,7 @@
 
             
 
-            <code class="ruby">    subtype_ids = content_object_data[&#39;subtype_ses&#39;]</code>
+            <code class="ruby">    subtype_ids = content_type_object_data[&#39;subtype_ses&#39;]</code>
           </li>
         </div>
       
@@ -11472,7 +11472,7 @@
 
             
 
-            <code class="ruby">    content_object_class(type_id, subtype_ids).classify.constantize.new(content_object_data)</code>
+            <code class="ruby">    content_type_object_class(type_id, subtype_ids).classify.constantize.new(content_type_object_data)</code>
           </li>
         </div>
       
@@ -11560,7 +11560,7 @@
 
             
 
-            <code class="ruby">    &#39;search/results/content_object&#39;</code>
+            <code class="ruby">    &#39;search/results/content_type_object&#39;</code>
           </li>
         </div>
       
@@ -11736,7 +11736,7 @@
 
             
 
-            <code class="ruby">    content_object_data[&#39;title_t&#39;]</code>
+            <code class="ruby">    content_type_object_data[&#39;title_t&#39;]</code>
           </li>
         </div>
       
@@ -15465,7 +15465,7 @@
 
             
 
-            <code class="ruby">    return if content_object_data[field_name].blank?</code>
+            <code class="ruby">    return if content_type_object_data[field_name].blank?</code>
           </li>
         </div>
       
@@ -15487,7 +15487,7 @@
 
             
 
-            <code class="ruby">    { value: content_object_data[field_name], field_name: field_name }</code>
+            <code class="ruby">    { value: content_type_object_data[field_name], field_name: field_name }</code>
           </li>
         </div>
       
@@ -15531,7 +15531,7 @@
 
             
 
-            <code class="ruby">    return unless [&#39;true&#39;, &#39;false&#39;, true, false].include?(content_object_data[field_name]&amp;.first)</code>
+            <code class="ruby">    return unless [&#39;true&#39;, &#39;false&#39;, true, false].include?(content_type_object_data[field_name]&amp;.first)</code>
           </li>
         </div>
       
@@ -15553,7 +15553,7 @@
 
             
 
-            <code class="ruby">    result = [&#39;true&#39;, true].include?(content_object_data[field_name].first) ? true : false</code>
+            <code class="ruby">    result = [&#39;true&#39;, true].include?(content_type_object_data[field_name].first) ? true : false</code>
           </li>
         </div>
       
@@ -15608,7 +15608,7 @@
 
             
 
-            <code class="ruby">    return if content_object_data[field_name].blank?</code>
+            <code class="ruby">    return if content_type_object_data[field_name].blank?</code>
           </li>
         </div>
       
@@ -15630,7 +15630,7 @@
 
             
 
-            <code class="ruby">    { value: content_object_data[field_name].first, field_name: field_name }</code>
+            <code class="ruby">    { value: content_type_object_data[field_name].first, field_name: field_name }</code>
           </li>
         </div>
       
@@ -15674,7 +15674,7 @@
 
             
 
-            <code class="ruby">    return if content_object_data[field_name].blank?</code>
+            <code class="ruby">    return if content_type_object_data[field_name].blank?</code>
           </li>
         </div>
       
@@ -15696,7 +15696,7 @@
 
             
 
-            <code class="ruby">    content_object_data[field_name].first</code>
+            <code class="ruby">    content_type_object_data[field_name].first</code>
           </li>
         </div>
       
@@ -15740,7 +15740,7 @@
 
             
 
-            <code class="ruby">    return if content_object_data[field_name].blank?</code>
+            <code class="ruby">    return if content_type_object_data[field_name].blank?</code>
           </li>
         </div>
       
@@ -15762,7 +15762,7 @@
 
             
 
-            <code class="ruby">    content_object_data[field_name]</code>
+            <code class="ruby">    content_type_object_data[field_name]</code>
           </li>
         </div>
       
@@ -15806,7 +15806,7 @@
 
             
 
-            <code class="ruby">    return if content_object_data[field_name].blank?</code>
+            <code class="ruby">    return if content_type_object_data[field_name].blank?</code>
           </li>
         </div>
       
@@ -15828,7 +15828,7 @@
 
             
 
-            <code class="ruby">    { value: CGI::unescapeHTML(content_object_data[field_name].first), field_name: field_name }</code>
+            <code class="ruby">    { value: CGI::unescapeHTML(content_type_object_data[field_name].first), field_name: field_name }</code>
           </li>
         </div>
       
@@ -15872,7 +15872,7 @@
 
             
 
-            <code class="ruby">    return if content_object_data[field_name].blank?</code>
+            <code class="ruby">    return if content_type_object_data[field_name].blank?</code>
           </li>
         </div>
       
@@ -15894,7 +15894,7 @@
 
             
 
-            <code class="ruby">    { value: CGI::unescapeHTML(content_object_data[field_name]), field_name: field_name }</code>
+            <code class="ruby">    { value: CGI::unescapeHTML(content_type_object_data[field_name]), field_name: field_name }</code>
           </li>
         </div>
       
@@ -15949,7 +15949,7 @@
 
             
 
-            <code class="ruby">    return if content_object_data[field_name].blank?</code>
+            <code class="ruby">    return if content_type_object_data[field_name].blank?</code>
           </li>
         </div>
       
@@ -15971,7 +15971,7 @@
 
             
 
-            <code class="ruby">    valid_date_string = validate_datetime(content_object_data[field_name].first)</code>
+            <code class="ruby">    valid_date_string = validate_datetime(content_type_object_data[field_name].first)</code>
           </li>
         </div>
       
@@ -16059,7 +16059,7 @@
 
             
 
-            <code class="ruby">    return if content_object_data[field_name].blank?</code>
+            <code class="ruby">    return if content_type_object_data[field_name].blank?</code>
           </li>
         </div>
       
@@ -16081,7 +16081,7 @@
 
             
 
-            <code class="ruby">    valid_date_string = validate_datetime(content_object_data[field_name])</code>
+            <code class="ruby">    valid_date_string = validate_datetime(content_type_object_data[field_name])</code>
           </li>
         </div>
       
@@ -16202,7 +16202,7 @@
 
             
 
-            <code class="ruby">    return if content_object_data[field_name].blank?</code>
+            <code class="ruby">    return if content_type_object_data[field_name].blank?</code>
           </li>
         </div>
       
@@ -16224,7 +16224,7 @@
 
             
 
-            <code class="ruby">    content_object_data[field_name].map { |value| { value: value, field_name: field_name } }</code>
+            <code class="ruby">    content_type_object_data[field_name].map { |value| { value: value, field_name: field_name } }</code>
           </li>
         </div>
       
@@ -16257,7 +16257,7 @@
 
             
 
-            <code class="ruby">  def self.content_object_class(type_id, subtype_ids)</code>
+            <code class="ruby">  def self.content_type_object_class(type_id, subtype_ids)</code>
           </li>
         </div>
       
@@ -17773,7 +17773,7 @@
 
             
 
-            <code class="ruby">  def initialize(content_object_data)</code>
+            <code class="ruby">  def initialize(content_type_object_data)</code>
           </li>
         </div>
       
@@ -18585,7 +18585,7 @@
 
             
 
-            <code class="ruby">  def initialize(content_object_data)</code>
+            <code class="ruby">  def initialize(content_type_object_data)</code>
           </li>
         </div>
       
@@ -18981,7 +18981,7 @@
 
             
 
-            <code class="ruby">      text: content_object_data[&#39;amendmentText_t&#39;].blank? ? {} : { value: content_object_data[&#39;amendmentText_t&#39;], field_name: &#39;amendmentText_t&#39; },</code>
+            <code class="ruby">      text: content_type_object_data[&#39;amendmentText_t&#39;].blank? ? {} : { value: content_type_object_data[&#39;amendmentText_t&#39;], field_name: &#39;amendmentText_t&#39; },</code>
           </li>
         </div>
       
@@ -18992,7 +18992,7 @@
 
             
 
-            <code class="ruby">      number_of_signatures: content_object_data[&#39;amendment_numberOfSignatures_s&#39;].blank? ? {} : { value: content_object_data[&#39;amendment_numberOfSignatures_s&#39;], field_name: &#39;amendment_numberOfSignatures_s&#39; },</code>
+            <code class="ruby">      number_of_signatures: content_type_object_data[&#39;amendment_numberOfSignatures_s&#39;].blank? ? {} : { value: content_type_object_data[&#39;amendment_numberOfSignatures_s&#39;], field_name: &#39;amendment_numberOfSignatures_s&#39; },</code>
           </li>
         </div>
       
@@ -19003,7 +19003,7 @@
 
             
 
-            <code class="ruby">      primary_sponsor: content_object_data[&#39;amendment_primarySponsor_ses&#39;].blank? ? {} : { value: content_object_data[&#39;amendment_primarySponsor_ses&#39;], field_name: &#39;amendment_primarySponsor_ses&#39; },</code>
+            <code class="ruby">      primary_sponsor: content_type_object_data[&#39;amendment_primarySponsor_ses&#39;].blank? ? {} : { value: content_type_object_data[&#39;amendment_primarySponsor_ses&#39;], field_name: &#39;amendment_primarySponsor_ses&#39; },</code>
           </li>
         </div>
       
@@ -19014,7 +19014,7 @@
 
             
 
-            <code class="ruby">      primary_sponsor_text: content_object_data[&#39;amendment_primarySponsorPrinted_t&#39;].blank? ? {} : { value: content_object_data[&#39;amendment_primarySponsorPrinted_t&#39;], field_name: &#39;amendment_primarySponsorPrinted_t&#39; },</code>
+            <code class="ruby">      primary_sponsor_text: content_type_object_data[&#39;amendment_primarySponsorPrinted_t&#39;].blank? ? {} : { value: content_type_object_data[&#39;amendment_primarySponsorPrinted_t&#39;], field_name: &#39;amendment_primarySponsorPrinted_t&#39; },</code>
           </li>
         </div>
       
@@ -19025,7 +19025,7 @@
 
             
 
-            <code class="ruby">      primary_sponsor_party: content_object_data[&#39;amendment_primarySponsorParty_ses&#39;].blank? ? {} : { value: content_object_data[&#39;amendment_primarySponsorParty_ses&#39;], field_name: &#39;amendment_primarySponsorParty_ses&#39; },</code>
+            <code class="ruby">      primary_sponsor_party: content_type_object_data[&#39;amendment_primarySponsorParty_ses&#39;].blank? ? {} : { value: content_type_object_data[&#39;amendment_primarySponsorParty_ses&#39;], field_name: &#39;amendment_primarySponsorParty_ses&#39; },</code>
           </li>
         </div>
       
@@ -19036,7 +19036,7 @@
 
             
 
-            <code class="ruby">      reference: content_object_data[&#39;identifier_t&#39;]&amp;.drop(1).blank? ? {} : { value: content_object_data[&#39;identifier_t&#39;]&amp;.drop(1), field_name: &#39;identifier_t&#39; },</code>
+            <code class="ruby">      reference: content_type_object_data[&#39;identifier_t&#39;]&amp;.drop(1).blank? ? {} : { value: content_type_object_data[&#39;identifier_t&#39;]&amp;.drop(1), field_name: &#39;identifier_t&#39; },</code>
           </li>
         </div>
       
@@ -19047,7 +19047,7 @@
 
             
 
-            <code class="ruby">      date_tabled: content_object_data[&#39;amendment_dateTabled_dt&#39;].blank? ? {} : { value: content_object_data[&#39;amendment_dateTabled_dt&#39;], field_name: &#39;amendment_dateTabled_dt&#39; }</code>
+            <code class="ruby">      date_tabled: content_type_object_data[&#39;amendment_dateTabled_dt&#39;].blank? ? {} : { value: content_type_object_data[&#39;amendment_dateTabled_dt&#39;], field_name: &#39;amendment_dateTabled_dt&#39; }</code>
           </li>
         </div>
       
@@ -19540,7 +19540,7 @@
 
             
 
-            <code class="ruby">  def initialize(content_object_data)</code>
+            <code class="ruby">  def initialize(content_type_object_data)</code>
           </li>
         </div>
       
@@ -20264,7 +20264,7 @@
 
             
 
-            <code class="ruby">  def initialize(content_object_data)</code>
+            <code class="ruby">  def initialize(content_type_object_data)</code>
           </li>
         </div>
       
@@ -21175,7 +21175,7 @@
 
             
 
-            <code class="ruby">  def initialize(content_object_data)</code>
+            <code class="ruby">  def initialize(content_type_object_data)</code>
           </li>
         </div>
       
@@ -21547,7 +21547,7 @@
 
             
 
-            <code class="ruby">  def initialize(content_object_data)</code>
+            <code class="ruby">  def initialize(content_type_object_data)</code>
           </li>
         </div>
       
@@ -21930,7 +21930,7 @@
 
             
 
-            <code class="ruby">  def initialize(content_object_data)</code>
+            <code class="ruby">  def initialize(content_type_object_data)</code>
           </li>
         </div>
       
@@ -22379,7 +22379,7 @@
 
             
 
-            <code class="ruby">  def initialize(content_object_data)</code>
+            <code class="ruby">  def initialize(content_type_object_data)</code>
           </li>
         </div>
       
@@ -23090,7 +23090,7 @@
 
             
 
-            <code class="ruby">  def initialize(content_object_data)</code>
+            <code class="ruby">  def initialize(content_type_object_data)</code>
           </li>
         </div>
       
@@ -23462,7 +23462,7 @@
 
             
 
-            <code class="ruby">  def initialize(content_object_data)</code>
+            <code class="ruby">  def initialize(content_type_object_data)</code>
           </li>
         </div>
       
@@ -24569,7 +24569,7 @@
 
             
 
-            <code class="ruby">  def initialize(content_object_data)</code>
+            <code class="ruby">  def initialize(content_type_object_data)</code>
           </li>
         </div>
       
@@ -24908,7 +24908,7 @@
 
             
 
-            <code class="ruby">  def initialize(content_object_data)</code>
+            <code class="ruby">  def initialize(content_type_object_data)</code>
           </li>
         </div>
       
@@ -25313,7 +25313,7 @@
 
             
 
-            <code class="ruby">  def initialize(content_object_data)</code>
+            <code class="ruby">  def initialize(content_type_object_data)</code>
           </li>
         </div>
       
@@ -26081,7 +26081,7 @@
 
             
 
-            <code class="ruby">  def initialize(content_object_data)</code>
+            <code class="ruby">  def initialize(content_type_object_data)</code>
           </li>
         </div>
       
@@ -26277,7 +26277,7 @@
 
             
 
-            <code class="ruby">  def initialize(content_object_data)</code>
+            <code class="ruby">  def initialize(content_type_object_data)</code>
           </li>
         </div>
       
@@ -26704,7 +26704,7 @@
 
             
 
-            <code class="ruby">  def initialize(content_object_data)</code>
+            <code class="ruby">  def initialize(content_type_object_data)</code>
           </li>
         </div>
       
@@ -27274,7 +27274,7 @@
 
             
 
-            <code class="ruby">  def initialize(content_object_data)</code>
+            <code class="ruby">  def initialize(content_type_object_data)</code>
           </li>
         </div>
       
@@ -27965,7 +27965,7 @@
 
             
 
-            <code class="ruby">  def initialize(content_object_data)</code>
+            <code class="ruby">  def initialize(content_type_object_data)</code>
           </li>
         </div>
       
@@ -28381,7 +28381,7 @@
 
             
 
-            <code class="ruby">  def initialize(content_object_data)</code>
+            <code class="ruby">  def initialize(content_type_object_data)</code>
           </li>
         </div>
       
@@ -29094,7 +29094,7 @@
 
             
 
-            <code class="ruby">  def initialize(content_object_data)</code>
+            <code class="ruby">  def initialize(content_type_object_data)</code>
           </li>
         </div>
       
@@ -29653,7 +29653,7 @@
 
             
 
-            <code class="ruby">  def initialize(content_object_data)</code>
+            <code class="ruby">  def initialize(content_type_object_data)</code>
           </li>
         </div>
       
@@ -30091,7 +30091,7 @@
 
             
 
-            <code class="ruby">  def initialize(content_object_data)</code>
+            <code class="ruby">  def initialize(content_type_object_data)</code>
           </li>
         </div>
       
@@ -30452,7 +30452,7 @@
 
             
 
-            <code class="ruby">  def initialize(content_object_data)</code>
+            <code class="ruby">  def initialize(content_type_object_data)</code>
           </li>
         </div>
       
@@ -30758,7 +30758,7 @@
 
             
 
-            <code class="ruby">  def initialize(content_object_data)</code>
+            <code class="ruby">  def initialize(content_type_object_data)</code>
           </li>
         </div>
       
@@ -31647,7 +31647,7 @@
 
             
 
-            <code class="ruby">  def initialize(content_object_data)</code>
+            <code class="ruby">  def initialize(content_type_object_data)</code>
           </li>
         </div>
       
@@ -32008,7 +32008,7 @@
 
             
 
-            <code class="ruby">  def initialize(content_object_data)</code>
+            <code class="ruby">  def initialize(content_type_object_data)</code>
           </li>
         </div>
       
@@ -32589,7 +32589,7 @@
 
             
 
-            <code class="ruby">  def initialize(content_object_data)</code>
+            <code class="ruby">  def initialize(content_type_object_data)</code>
           </li>
         </div>
       
@@ -32873,7 +32873,7 @@
 
             
 
-            <code class="ruby">  def initialize(content_object_data)</code>
+            <code class="ruby">  def initialize(content_type_object_data)</code>
           </li>
         </div>
       
@@ -33190,7 +33190,7 @@
 
             
 
-            <code class="ruby">  def initialize(content_object_data)</code>
+            <code class="ruby">  def initialize(content_type_object_data)</code>
           </li>
         </div>
       
@@ -33375,7 +33375,7 @@
 
             
 
-            <code class="ruby">  def initialize(content_object_data)</code>
+            <code class="ruby">  def initialize(content_type_object_data)</code>
           </li>
         </div>
       
@@ -33923,7 +33923,7 @@
 
             
 
-            <code class="ruby">  def initialize(content_object_data)</code>
+            <code class="ruby">  def initialize(content_type_object_data)</code>
           </li>
         </div>
       
@@ -34251,7 +34251,7 @@
 
             
 
-            <code class="ruby">  def initialize(content_object_data)</code>
+            <code class="ruby">  def initialize(content_type_object_data)</code>
           </li>
         </div>
       
@@ -35536,7 +35536,7 @@
 
             
 
-            <code class="ruby">  def initialize(content_object_data)</code>
+            <code class="ruby">  def initialize(content_type_object_data)</code>
           </li>
         </div>
       
@@ -36513,7 +36513,7 @@
 
             
 
-            <code class="ruby">  def initialize(content_object_data)</code>
+            <code class="ruby">  def initialize(content_type_object_data)</code>
           </li>
         </div>
       
@@ -48045,7 +48045,7 @@
 
             
 
-            <code class="ruby">  def initialize(content_object_data)</code>
+            <code class="ruby">  def initialize(content_type_object_data)</code>
           </li>
         </div>
       
@@ -48703,7 +48703,7 @@
 
             
 
-            <code class="ruby">  def initialize(content_object_data)</code>
+            <code class="ruby">  def initialize(content_type_object_data)</code>
           </li>
         </div>
       
@@ -49218,7 +49218,7 @@
 
             
 
-            <code class="ruby">  def initialize(content_object_data)</code>
+            <code class="ruby">  def initialize(content_type_object_data)</code>
           </li>
         </div>
       
@@ -49557,7 +49557,7 @@
 
             
 
-            <code class="ruby">  def initialize(content_object_data)</code>
+            <code class="ruby">  def initialize(content_type_object_data)</code>
           </li>
         </div>
       
@@ -49962,7 +49962,7 @@
 
             
 
-            <code class="ruby">  def initialize(content_object_data)</code>
+            <code class="ruby">  def initialize(content_type_object_data)</code>
           </li>
         </div>
       
@@ -51181,7 +51181,7 @@
 
             
 
-            <code class="ruby">  def initialize(content_object_data)</code>
+            <code class="ruby">  def initialize(content_type_object_data)</code>
           </li>
         </div>
       

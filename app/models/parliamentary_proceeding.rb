@@ -1,6 +1,6 @@
 class ParliamentaryProceeding < Proceeding
 
-  def initialize(content_object_data)
+  def initialize(content_type_object_data)
     super
   end
 
@@ -11,7 +11,7 @@ class ParliamentaryProceeding < Proceeding
   end
 
   def template
-    'search/objects/parliamentary_proceeding'
+    'content_type_objects/object_pages/parliamentary_proceeding'
   end
 
   def search_result_partial

@@ -1,0 +1,11 @@
+.content-prelim-box
+  .content-prelim-inner
+    .content-prelim-text#prelim-text
+      %span>= object_display_name_link(object.type)
+      %span= " ("
+      %span>= render partial: '/content_type_objects/fragments/eu_material_subtype_and_category', locals: { category: object.category, subtype: object.subtype }
+      %span= ")"
+      - unless object.published_date.blank?
+        %span= " published on "
+        %span>= format_date(object.published_date)
+      %span= "."

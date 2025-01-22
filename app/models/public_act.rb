@@ -1,11 +1,11 @@
 class PublicAct < Act
 
-  def initialize(content_object_data)
+  def initialize(content_type_object_data)
     super
   end
 
   def template
-    'search/objects/public_act'
+    'content_type_objects/object_pages/public_act'
   end
 
   def search_result_partial

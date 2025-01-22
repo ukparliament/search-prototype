@@ -1,11 +1,11 @@
 class WrittenQuestion < Question
 
-  def initialize(content_object_data)
+  def initialize(content_type_object_data)
     super
   end
 
   def template
-    'search/objects/written_question'
+    'content_type_objects/object_pages/written_question'
   end
 
   def self.required_solr_fields
@@ -58,17 +58,17 @@ class WrittenQuestion < Question
   end
 
   def prelim_partial
-    return '/search/preliminary_sentences/written_question_corrected' if corrected?
+    return '/content_type_objects/preliminary_sentences/written_question_corrected' if corrected?
 
-    return '/search/preliminary_sentences/written_question_answered_was_holding' if answered_was_holding?
+    return '/content_type_objects/preliminary_sentences/written_question_answered_was_holding' if answered_was_holding?
 
-    return '/search/preliminary_sentences/written_question_holding' if holding?
+    return '/content_type_objects/preliminary_sentences/written_question_holding' if holding?
 
-    return '/search/preliminary_sentences/written_question_tabled' if tabled?
+    return '/content_type_objects/preliminary_sentences/written_question_tabled' if tabled?
 
-    return '/search/preliminary_sentences/written_question_withdrawn' if withdrawn?
+    return '/content_type_objects/preliminary_sentences/written_question_withdrawn' if withdrawn?
 
-    return '/search/preliminary_sentences/written_question_answered' if answered?
+    return '/content_type_objects/preliminary_sentences/written_question_answered' if answered?
 
     nil
   end

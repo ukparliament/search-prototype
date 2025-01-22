@@ -30,7 +30,7 @@ class AssociatedObjects
     ret = {}
     obj = get_associated_objects
 
-    obj_ses_ids = obj.map { |ao| ao.content_object_data.select { |k| ses_fields.include?(k) }.values }.flatten.uniq
+    obj_ses_ids = obj.map { |ao| ao.content_type_object_data.select { |k| ses_fields.include?(k) }.values }.flatten.uniq
 
     obj_data = {}
     obj.each do |o|

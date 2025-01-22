@@ -425,7 +425,7 @@
           null
         ]
       },
-      "/Users/jon.corry/RubymineProjects/search-prototype/app/controllers/content_objects_controller.rb": {
+      "/Users/jon.corry/RubymineProjects/search-prototype/app/controllers/content_type_objects_controller.rb": {
         "lines": [
           1,
           null,
@@ -607,7 +607,7 @@
           null
         ]
       },
-      "/Users/jon.corry/RubymineProjects/search-prototype/app/models/content_object.rb": {
+      "/Users/jon.corry/RubymineProjects/search-prototype/app/models/content_type_object.rb": {
         "lines": [
           1,
           null,

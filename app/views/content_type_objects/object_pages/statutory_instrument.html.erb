@@ -1,0 +1,52 @@
+<% if Rails.env.development? %>
+  <%#= render 'content_type_objects/fragments/data', data: object.content_type_object_data, title: 'SOLR Data' %>
+  <%#= render 'content_type_objects/fragments/data', data: @ses_data, title: 'SES Data' %>
+<% end %>
+
+<% content_for(:before_title) do %>
+  <%= link_to('UK Parliament', root_path) %> / <%= link_to('Open data', root_path) %><br/>
+  <div id="top"></div>
+<% end %>
+
+  <% content_for(:title) do %>
+    <%= format_object_title(object.object_title, @ses_data) %>
+  <% end %>
+
+<section id="prelim">
+  <%= render 'content_type_objects/preliminary_sentences/statutory_instrument', object: object %>
+</section>
+
+<% unless object.abstract_text.blank? %>
+  <section id="main-content" class="content-section white-padded">
+    <div class="content-text">
+      <%= object.abstract_text[:value] %>
+    </div>
+  </section>
+<% end %>
+
+<section id="about" class="content-section grey">
+  <%= render 'content_type_objects/fragments/type', type: object.type %>
+  <%= render 'content_type_objects/fragments/reference', reference: object.reference %>
+  <%= render 'content_type_objects/fragments/session', session: object.parliamentary_session %>
+  <%= render 'content_type_objects/fragments/coming_into_force', notes: object.coming_into_force, date: object.coming_into_force_date %>
+  <%= render 'content_type_objects/fragments/paper_procedure', procedure: object.paper_procedure, approval_days: object.procedure_scrutiny_period %>
+  <%= render 'content_type_objects/fragments/laying_authority', laying_authority: object.laying_authority %>
+  <%= render 'content_type_objects/fragments/laid_in_draft', laid_in_draft: object.is_laid_in_draft %>
+  <%= render 'content_type_objects/fragments/certified_categories', certified_categories: object.certified_categories, certified_date: object.certified_date %>
+  <%= render 'content_type_objects/fragments/referred_to', referred_to: object.referred_to %>
+  <%= render 'content_type_objects/fragments/reported_by_joint_committee', reported: object.is_reported_by_joint_committee %>
+  <%= render 'content_type_objects/fragments/related_items', related_item_ids: object.related_item_ids %>
+  <%= render 'content_type_objects/fragments/ec_documents', ec_documents: object.ec_documents %>
+  <%= render 'content_type_objects/fragments/notes', notes: object.notes %>
+  <%= render 'content_type_objects/fragments/contains_explanatory_memorandum', contains_em: object.contains_explanatory_memo %>
+  <%= render 'content_type_objects/fragments/contains_impact_assessment', contains_ia: object.contains_impact_assessment %>
+  <%= render 'content_type_objects/fragments/pills', pills_heading: 'Subjects', pills: object.subjects %>
+  <%= render 'content_type_objects/fragments/legislation', legislation: object.legislation %>
+  <%= render 'content_type_objects/fragments/library_location', commons: object.commons_library_location, lords: object.lords_library_location %>
+  <%= render 'content_type_objects/fragments/contains_statistics', contains_statistics: object.contains_statistics %>
+  <%= render 'content_type_objects/fragments/isbn', isbn: object.isbn %>
+  <%= render 'content_type_objects/fragments/link', object: object %>
+</section>
+
+<%= render '/content_type_objects/fragments/about_this_result', object: object %>
+<%= render '/content_type_objects/fragments/back_to_top_button' %>

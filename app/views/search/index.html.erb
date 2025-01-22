@@ -7,16 +7,16 @@
 
 
 <% if Rails.env.development? %>
-  <%#= render 'search/fragments/data', data: @objects, title: 'Secondary search objects' %>
-  <%#= render 'search/fragments/data', data: @associated_object_data, title: 'Associated object data' %>
-  <%#= render 'search/fragments/data', data: @search_data.search, title: 'Search response' %>
-  <%#= render 'search/fragments/data', data: @ses_data, title: 'SES results' %>
-  <%#= render 'search/fragments/data', data: @search_data.facets, title: 'Facets' %>
-  <%#= render 'search/fragments/data', data: @search_data.primary_member_facets, title: 'Primary Member Facets' %>
-  <%#= render 'search/fragments/data', data: @search_data.type_facets, title: 'Type facets' %>
-  <%#= render 'search/fragments/data', data: @search_data.hierarchy_data, title: 'Hierarchy data' %>
-  <%#= render 'search/fragments/data', data: @top_level, title: 'Hierarchy top level types' %>
-  <%#= render 'search/fragments/data', data: request.params, title: 'All params' %>
+  <%#= render 'content_type_objects/fragments/data', data: @objects, title: 'Secondary search objects' %>
+  <%#= render 'content_type_objects/fragments/data', data: @associated_object_data, title: 'Associated object data' %>
+  <%#= render 'content_type_objects/fragments/data', data: @search_data.search, title: 'Search response' %>
+  <%#= render 'content_type_objects/fragments/data', data: @ses_data, title: 'SES results' %>
+  <%#= render 'content_type_objects/fragments/data', data: @search_data.facets, title: 'Facets' %>
+  <%#= render 'content_type_objects/fragments/data', data: @search_data.primary_member_facets, title: 'Primary Member Facets' %>
+  <%#= render 'content_type_objects/fragments/data', data: @search_data.type_facets, title: 'Type facets' %>
+  <%#= render 'content_type_objects/fragments/data', data: @search_data.hierarchy_data, title: 'Hierarchy data' %>
+  <%#= render 'content_type_objects/fragments/data', data: @top_level, title: 'Hierarchy top level types' %>
+  <%#= render 'content_type_objects/fragments/data', data: request.params, title: 'All params' %>
 <% end %>
 
 <%= form_with url: search_url, method: :get, remote: true, id: 'search-form' do |f| %>
@@ -80,7 +80,7 @@
         <div data-controller="claw" data-action="keydown@document->claw#handleKeyDown">
           <% @objects.each do |object| %>
             <%= render object.search_result_partial, object: object unless object.class == NotSupported %>
-            <%= render 'search/fragments/search_claw', object: object %>
+            <%= render 'content_type_objects/fragments/search_claw', object: object %>
             <hr>
           <% end %>
 

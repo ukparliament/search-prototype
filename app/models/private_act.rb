@@ -1,11 +1,11 @@
 class PrivateAct < Act
 
-  def initialize(content_object_data)
+  def initialize(content_type_object_data)
     super
   end
 
   def template
-    'search/objects/private_act'
+    'content_type_objects/object_pages/private_act'
   end
 
   def search_result_partial

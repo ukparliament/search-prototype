@@ -13,7 +13,7 @@
 ## High level overview
 
 This application is the front end for a (Solr 9) search and has two main interfaces: the search page (search#index),
-which also displays search results, and the 'item' view (content_objects#show).
+which also displays search results, and the 'item' view (content_type_objects#show).
 
 The intended route through the app is for a search to be performed, the results to be viewed, filtered and adjusted,
 then for a single result to be clicked on. This then takes the user to the item view, which displayed more detailed
@@ -166,7 +166,7 @@ into chunks of 250 to ensure the request does not exceed the 2048 character limi
 Each chunk of 250 or fewer IDs is assigned a new thread, as it is significantly quicker to make all requests
 simultaneously.
 
-As part of performance improvement work to the ContentObjectsController show action, used on item pages, the call to SES
+As part of performance improvement work to the ContentTypeObjectsController show action, used on item pages, the call to SES
 is now only carried out once the SES IDs relevant to items related to the result are collated and added to the list.
 This avoids needing to make further SES requests later on, reducing page load times. A similar change will be made to
 the SearchController index action, used for the search results page, collating the related item IDs needed to present a

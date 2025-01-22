@@ -24,7 +24,7 @@ class SolrQueryWrapper
           puts "Begin thread" if Rails.env.development?
           data = SolrMultiQuery.new(object_uris: slice, field_list: solr_fields).object_data
           data.each do |object|
-            ret[:items] << ContentObject.generate(object)
+            ret[:items] << ContentTypeObject.generate(object)
           end
         end
       end

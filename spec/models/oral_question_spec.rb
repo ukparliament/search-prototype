@@ -89,26 +89,26 @@ RSpec.describe OralQuestion, type: :model do
     context 'when state is tabled' do
       it 'returns the tabled partial' do
         allow(oral_question).to receive(:tabled?).and_return(true)
-        expect(oral_question.prelim_partial).to eq('/search/preliminary_sentences/oral_question_tabled')
+        expect(oral_question.prelim_partial).to eq('/content_type_objects/preliminary_sentences/oral_question_tabled')
       end
     end
     context 'when state is withdrawn' do
       it 'returns the withdrawn partial' do
         allow(oral_question).to receive(:withdrawn?).and_return(true)
-        expect(oral_question.prelim_partial).to eq('/search/preliminary_sentences/oral_question_withdrawn')
+        expect(oral_question.prelim_partial).to eq('/content_type_objects/preliminary_sentences/oral_question_withdrawn')
       end
     end
     context 'when state is answered' do
       it 'returns the answered partial' do
         allow(oral_question).to receive(:answered?).and_return(true)
-        expect(oral_question.prelim_partial).to eq('/search/preliminary_sentences/oral_question_answered')
+        expect(oral_question.prelim_partial).to eq('/content_type_objects/preliminary_sentences/oral_question_answered')
       end
     end
     context 'when state is answered and question is corrected' do
       it 'returns the answered partial' do
         allow(oral_question).to receive(:answered?).and_return(true)
         allow(oral_question).to receive(:corrected?).and_return(true)
-        expect(oral_question.prelim_partial).to eq('/search/preliminary_sentences/oral_question_answered')
+        expect(oral_question.prelim_partial).to eq('/content_type_objects/preliminary_sentences/oral_question_answered')
       end
     end
   end

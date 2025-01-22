@@ -1,0 +1,42 @@
+.content-prelim-box
+  .content-prelim-inner
+    .content-prelim-text#prelim-text
+      %span>= object_display_name_link(object.object_name)
+      %span= " asked "
+      - unless object.tabling_member.blank?
+        %span= " by "
+        %span>= search_link(object.tabling_member)
+        - unless object.tabling_member_party.blank?
+          %span= " ("
+          %span>= search_link(object.tabling_member_party)
+          %span>= ")"
+      - unless object.date_of_question.blank?
+        %span= " on "
+        %span>= format_date(object.date_of_question)
+      - unless object.legislature.blank?
+        %span= ", in the "
+        %span>= render 'content_type_objects/fragments/list', items: object.legislature, terminator: '', singular: false
+      %span= "."
+      - unless object.date_for_answer.blank?
+        %span= " It was due for an answer on "
+        %span>= format_date(object.date_for_answer)
+        - if object.named_day?
+          %span= " ("
+          %span>= object.question_type[:value]&.downcase
+          %span>= ")"
+        %span= "."
+      - unless object.date_of_holding_answer.blank?
+        %span= " A holding answer was provided "
+        - unless object.answering_member.blank?
+          %span= " by "
+          %span>= search_link(object.answering_member)
+          - unless object.answering_member_party.blank?
+            %span= " ("
+            %span>= search_link(object.answering_member_party)
+            %span= ") "
+        %span= " on "
+        %span>= format_date(object.date_of_holding_answer)
+        - unless object.department.blank?
+          %span= " on behalf of the "
+          %span>= search_link(object.department)
+        %span= "."

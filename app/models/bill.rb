@@ -1,11 +1,11 @@
-class Bill < ContentObject
+class Bill < ContentTypeObject
 
-  def initialize(content_object_data)
+  def initialize(content_type_object_data)
     super
   end
 
   def template
-    'search/objects/bill'
+    'content_type_objects/object_pages/bill'
   end
 
   def search_result_partial

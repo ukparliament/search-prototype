@@ -1,7 +1,7 @@
-class MinisterialCorrection < ContentObject
+class MinisterialCorrection < ContentTypeObject
   # TODO: rename to written correction for clarity
 
-  def initialize(content_object_data)
+  def initialize(content_type_object_data)
     super
   end
 
@@ -16,7 +16,7 @@ class MinisterialCorrection < ContentObject
   end
 
   def template
-    'search/objects/ministerial_correction'
+    'content_type_objects/object_pages/ministerial_correction'
   end
 
   def search_result_partial
