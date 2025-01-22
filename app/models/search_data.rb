@@ -69,6 +69,8 @@ class SearchData
   end
 
   def object_data
+    return { items: [] } if object_uris.blank?
+
     solr_fields = []
     empty_objects.each do |object|
       solr_fields << object.class.search_result_solr_fields
