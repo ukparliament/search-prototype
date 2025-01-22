@@ -14,7 +14,7 @@
       <img src="./assets/0.12.3/loading.gif" alt="loading"/>
     </div>
     <div id="wrapper" class="hide">
-      <div class="timestamp">Generated <abbr class="timeago" title="2025-01-21T14:48:33+00:00">2025-01-21T14:48:33+00:00</abbr></div>
+      <div class="timestamp">Generated <abbr class="timeago" title="2025-01-22T11:04:43+00:00">2025-01-22T11:04:43+00:00</abbr></div>
       <ul class="group_tabs"></ul>
 
       <div id="content">
@@ -104,7 +104,7 @@
           </tr>
         
           <tr class="t-file">
-            <td class="strong t-file__name"><a href="#f7d318c3ace62575d97bbef2060e6c2175195e60" class="src_link" title="app/controllers/content_type_objects_controller.rb">app/controllers/content_type_objects_controller.rb</a></td>
+            <td class="strong t-file__name"><a href="#e93977160e3f555b1867521588da310f9caa0e10" class="src_link" title="app/controllers/content_type_objects_controller.rb">app/controllers/content_type_objects_controller.rb</a></td>
             <td class="yellow strong cell--number t-file__coverage">81.48 %</td>
             <td class="cell--number">55</td>
             <td class="cell--number">27</td>
@@ -139,7 +139,7 @@
           <tr class="t-file">
             <td class="strong t-file__name"><a href="#905b6e9b10254dc0d6b80aa4b294aa33db207cc2" class="src_link" title="app/helpers/application_helper.rb">app/helpers/application_helper.rb</a></td>
             <td class="yellow strong cell--number t-file__coverage">80.36 %</td>
-            <td class="cell--number">154</td>
+            <td class="cell--number">157</td>
             <td class="cell--number">56</td>
             <td class="cell--number">45</td>
             <td class="cell--number">11</td>
@@ -313,7 +313,7 @@
           </tr>
         
           <tr class="t-file">
-            <td class="strong t-file__name"><a href="#a8074314ec42e9d18f2a1b7a8a8b6aa16ff9617f" class="src_link" title="app/models/content_type_object.rb">app/models/content_type_object.rb</a></td>
+            <td class="strong t-file__name"><a href="#25cab7a1ecda2938db25f31b9cc126a65c4bf482" class="src_link" title="app/models/content_type_object.rb">app/models/content_type_object.rb</a></td>
             <td class="green strong cell--number t-file__coverage">96.77 %</td>
             <td class="cell--number">582</td>
             <td class="cell--number">279</td>
@@ -1104,7 +1104,7 @@
 </div>
 
       
-        <div class="source_table" id="f7d318c3ace62575d97bbef2060e6c2175195e60">
+        <div class="source_table" id="e93977160e3f555b1867521588da310f9caa0e10">
   <div class="header">
     <h3>app/controllers/content_type_objects_controller.rb</h3>
     <h4>
@@ -1467,7 +1467,7 @@
 
             
 
-            <code class="ruby">        @object = ContentObject.generate(object_data)</code>
+            <code class="ruby">        @object = ContentTypeObject.generate(object_data)</code>
           </li>
         </div>
       
@@ -3782,7 +3782,7 @@
 
             
 
-            <code class="ruby">      primaryMember_ses: &#39;Primary member&#39;</code>
+            <code class="ruby">      primaryMember_ses: &#39;Primary member&#39;,</code>
           </li>
         </div>
       
@@ -3793,7 +3793,7 @@
 
             
 
-            <code class="ruby">    }</code>
+            <code class="ruby">      primarySponsorParty_ses: &#39;Primary sponsor party&#39;,</code>
           </li>
         </div>
       
@@ -3804,18 +3804,18 @@
 
             
 
-            <code class="ruby"></code>
+            <code class="ruby">      primarySponsorParty: &#39;Primary sponsor&#39;,</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="2" data-linenumber="113">
-            <span class="hits">2</span>
+          <li class="never" data-hits="" data-linenumber="113">
+            
             
 
             
 
-            <code class="ruby">    raise &quot;Unknown field name &#39;#{field}&#39;&quot; if Rails.env.development? &amp;&amp; !field_names.keys.include?(field.to_sym)</code>
+            <code class="ruby">      sponsor_ses: &#39;Sponsor&#39;</code>
           </li>
         </div>
       
@@ -3826,29 +3826,29 @@
 
             
 
+            <code class="ruby">    }</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="115">
+            
+            
+
+            
+
             <code class="ruby"></code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="2" data-linenumber="115">
+          <li class="covered" data-hits="2" data-linenumber="116">
             <span class="hits">2</span>
             
 
             
 
-            <code class="ruby">    field_names[field.to_sym]</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="116">
-            
-            
-
-            
-
-            <code class="ruby">  end</code>
+            <code class="ruby">    raise &quot;Unknown field name &#39;#{field}&#39;&quot; if Rails.env.development? &amp;&amp; !field_names.keys.include?(field.to_sym)</code>
           </li>
         </div>
       
@@ -3864,24 +3864,24 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="118">
-            <span class="hits">1</span>
-            
-
-            
-
-            <code class="ruby">  def filter_field_value(filter, filter_value)</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="covered" data-hits="2" data-linenumber="119">
+          <li class="covered" data-hits="2" data-linenumber="118">
             <span class="hits">2</span>
             
 
             
 
-            <code class="ruby">    return filter_value unless filter.first == &quot;month&quot;</code>
+            <code class="ruby">    field_names[field.to_sym]</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="119">
+            
+            
+
+            
+
+            <code class="ruby">  end</code>
           </li>
         </div>
       
@@ -3897,7 +3897,40 @@
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="121">
+          <li class="covered" data-hits="1" data-linenumber="121">
+            <span class="hits">1</span>
+            
+
+            
+
+            <code class="ruby">  def filter_field_value(filter, filter_value)</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="2" data-linenumber="122">
+            <span class="hits">2</span>
+            
+
+            
+
+            <code class="ruby">    return filter_value unless filter.first == &quot;month&quot;</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="123">
+            
+            
+
+            
+
+            <code class="ruby"></code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="missed" data-hits="0" data-linenumber="124">
             
             
 
@@ -3908,7 +3941,7 @@
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="122">
+          <li class="missed" data-hits="0" data-linenumber="125">
             
             
 
@@ -3919,7 +3952,7 @@
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="123">
+          <li class="missed" data-hits="0" data-linenumber="126">
             
             
 
@@ -3930,7 +3963,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="124">
+          <li class="never" data-hits="" data-linenumber="127">
             
             
 
@@ -3941,7 +3974,7 @@
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="125">
+          <li class="missed" data-hits="0" data-linenumber="128">
             
             
 
@@ -3952,7 +3985,7 @@
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="126">
+          <li class="missed" data-hits="0" data-linenumber="129">
             
             
 
@@ -3963,46 +3996,13 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="127">
+          <li class="never" data-hits="" data-linenumber="130">
             
             
 
             
 
             <code class="ruby">  end</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="128">
-            
-            
-
-            
-
-            <code class="ruby"></code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="covered" data-hits="1" data-linenumber="129">
-            <span class="hits">1</span>
-            
-
-            
-
-            <code class="ruby">  def checked_field(filter_params, facet_field_name, text_field_name)</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="missed" data-hits="0" data-linenumber="130">
-            
-            
-
-            
-
-            <code class="ruby">    return false if filter_params.blank?</code>
           </li>
         </div>
       
@@ -4018,24 +4018,24 @@
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="132">
-            
-            
-
+          <li class="covered" data-hits="1" data-linenumber="132">
+            <span class="hits">1</span>
             
 
-            <code class="ruby">    filter_params[facet_field_name]&amp;.include?(text_field_name)</code>
+            
+
+            <code class="ruby">  def checked_field(filter_params, facet_field_name, text_field_name)</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="133">
+          <li class="missed" data-hits="0" data-linenumber="133">
             
             
 
             
 
-            <code class="ruby">  end</code>
+            <code class="ruby">    return false if filter_params.blank?</code>
           </li>
         </div>
       
@@ -4051,24 +4051,24 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="135">
-            <span class="hits">1</span>
+          <li class="missed" data-hits="0" data-linenumber="135">
+            
             
 
             
 
-            <code class="ruby">  def remove_filter_url(params, filter_name, filter_value)</code>
+            <code class="ruby">    filter_params[facet_field_name]&amp;.include?(text_field_name)</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="2" data-linenumber="136">
-            <span class="hits">2</span>
+          <li class="never" data-hits="" data-linenumber="136">
+            
             
 
             
 
-            <code class="ruby">    params.except(:page).merge(filter: params[:filter].merge({ filter_name =&gt; params.dig(:filter, filter_name)&amp;.excluding(filter_value) }))</code>
+            <code class="ruby">  end</code>
           </li>
         </div>
       
@@ -4079,29 +4079,29 @@
 
             
 
-            <code class="ruby">  end</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="138">
-            
-            
-
-            
-
             <code class="ruby"></code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="139">
+          <li class="covered" data-hits="1" data-linenumber="138">
             <span class="hits">1</span>
             
 
             
 
-            <code class="ruby">  def apply_filter_url(params, filter_name, filter_value)</code>
+            <code class="ruby">  def remove_filter_url(params, filter_name, filter_value)</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="2" data-linenumber="139">
+            <span class="hits">2</span>
+            
+
+            
+
+            <code class="ruby">    params.except(:page).merge(filter: params[:filter].merge({ filter_name =&gt; params.dig(:filter, filter_name)&amp;.excluding(filter_value) }))</code>
           </li>
         </div>
       
@@ -4112,7 +4112,7 @@
 
             
 
-            <code class="ruby">    # example output:</code>
+            <code class="ruby">  end</code>
           </li>
         </div>
       
@@ -4123,18 +4123,18 @@
 
             
 
-            <code class="ruby">    # {&quot;query&quot;=&gt;&quot;horses&quot;, &quot;commit&quot;=&gt;&quot;Search&quot;, &quot;controller&quot;=&gt;&quot;search&quot;, &quot;action&quot;=&gt;&quot;index&quot;, &quot;filter&quot;=&gt;{&quot;type_sesrollup&quot;=&gt;[90996]}}</code>
+            <code class="ruby"></code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="352" data-linenumber="142">
-            <span class="hits">352</span>
+          <li class="covered" data-hits="1" data-linenumber="142">
+            <span class="hits">1</span>
             
 
             
 
-            <code class="ruby">    params.except(:page).merge(filter: params.dig(:filter).nil? ? { filter_name =&gt; [filter_value] } : params.dig(:filter).merge(filter_name =&gt; [filter_value, params.dig(:filter, filter_name)].compact.flatten))</code>
+            <code class="ruby">  def apply_filter_url(params, filter_name, filter_value)</code>
           </li>
         </div>
       
@@ -4145,7 +4145,7 @@
 
             
 
-            <code class="ruby">  end</code>
+            <code class="ruby">    # example output:</code>
           </li>
         </div>
       
@@ -4156,18 +4156,18 @@
 
             
 
-            <code class="ruby"></code>
+            <code class="ruby">    # {&quot;query&quot;=&gt;&quot;horses&quot;, &quot;commit&quot;=&gt;&quot;Search&quot;, &quot;controller&quot;=&gt;&quot;search&quot;, &quot;action&quot;=&gt;&quot;index&quot;, &quot;filter&quot;=&gt;{&quot;type_sesrollup&quot;=&gt;[90996]}}</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="145">
-            <span class="hits">1</span>
+          <li class="covered" data-hits="352" data-linenumber="145">
+            <span class="hits">352</span>
             
 
             
 
-            <code class="ruby">  def replace_filter_url(params, filter_name, filter_value)</code>
+            <code class="ruby">    params.except(:page).merge(filter: params.dig(:filter).nil? ? { filter_name =&gt; [filter_value] } : params.dig(:filter).merge(filter_name =&gt; [filter_value, params.dig(:filter, filter_name)].compact.flatten))</code>
           </li>
         </div>
       
@@ -4178,45 +4178,12 @@
 
             
 
-            <code class="ruby">    # used for year-month filters; performs the additional step of removing year filters first</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="missed" data-hits="0" data-linenumber="147">
-            
-            
-
-            
-
-            <code class="ruby">    adjusted_params = params.except(:filter, :year)</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="missed" data-hits="0" data-linenumber="148">
-            
-            
-
-            
-
-            <code class="ruby">    apply_filter_url(adjusted_params, filter_name, filter_value)</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="149">
-            
-            
-
-            
-
             <code class="ruby">  end</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="150">
+          <li class="never" data-hits="" data-linenumber="147">
             
             
 
@@ -4227,29 +4194,51 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="151">
+          <li class="covered" data-hits="1" data-linenumber="148">
             <span class="hits">1</span>
             
 
             
 
-            <code class="ruby">  def year_filter</code>
+            <code class="ruby">  def replace_filter_url(params, filter_name, filter_value)</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="8" data-linenumber="152">
-            <span class="hits">8</span>
+          <li class="never" data-hits="" data-linenumber="149">
+            
             
 
             
 
-            <code class="ruby">    params.dig(:filter, :year)</code>
+            <code class="ruby">    # used for year-month filters; performs the additional step of removing year filters first</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="153">
+          <li class="missed" data-hits="0" data-linenumber="150">
+            
+            
+
+            
+
+            <code class="ruby">    adjusted_params = params.except(:filter, :year)</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="missed" data-hits="0" data-linenumber="151">
+            
+            
+
+            
+
+            <code class="ruby">    apply_filter_url(adjusted_params, filter_name, filter_value)</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="152">
             
             
 
@@ -4260,7 +4249,51 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="154">
+          <li class="never" data-hits="" data-linenumber="153">
+            
+            
+
+            
+
+            <code class="ruby"></code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="1" data-linenumber="154">
+            <span class="hits">1</span>
+            
+
+            
+
+            <code class="ruby">  def year_filter</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="8" data-linenumber="155">
+            <span class="hits">8</span>
+            
+
+            
+
+            <code class="ruby">    params.dig(:filter, :year)</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="156">
+            
+            
+
+            
+
+            <code class="ruby">  end</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="157">
             
             
 
@@ -7112,7 +7145,7 @@
 
             
 
-            <code class="ruby">class Act &lt; ContentObject</code>
+            <code class="ruby">class Act &lt; ContentTypeObject</code>
           </li>
         </div>
       
@@ -9533,7 +9566,7 @@
 
             
 
-            <code class="ruby">class Bill &lt; ContentObject</code>
+            <code class="ruby">class Bill &lt; ContentTypeObject</code>
           </li>
         </div>
       
@@ -9610,7 +9643,7 @@
 
             
 
-            <code class="ruby">    &#39;search/objects/bill&#39;</code>
+            <code class="ruby">    &#39;content_type_objects/object_pages/bill&#39;</code>
           </li>
         </div>
       
@@ -10235,7 +10268,7 @@
 
             
 
-            <code class="ruby">class ChurchOfEnglandMeasure &lt; ContentObject</code>
+            <code class="ruby">class ChurchOfEnglandMeasure &lt; ContentTypeObject</code>
           </li>
         </div>
       
@@ -10444,7 +10477,7 @@
 
             
 
-            <code class="ruby">    &#39;search/objects/church_of_england_measure&#39;</code>
+            <code class="ruby">    &#39;content_type_objects/object_pages/church_of_england_measure&#39;</code>
           </li>
         </div>
       
@@ -11285,7 +11318,7 @@
 </div>
 
       
-        <div class="source_table" id="a8074314ec42e9d18f2a1b7a8a8b6aa16ff9617f">
+        <div class="source_table" id="25cab7a1ecda2938db25f31b9cc126a65c4bf482">
   <div class="header">
     <h3>app/models/content_type_object.rb</h3>
     <h4>
@@ -11318,7 +11351,7 @@
 
             
 
-            <code class="ruby">class ContentObject</code>
+            <code class="ruby">class ContentTypeObject</code>
           </li>
         </div>
       
@@ -16631,7 +16664,7 @@
 
             
 
-            <code class="ruby">        &#39;ContentObject&#39;</code>
+            <code class="ruby">        &#39;ContentTypeObject&#39;</code>
           </li>
         </div>
       
@@ -17379,7 +17412,7 @@
 
             
 
-            <code class="ruby">      &#39;ContentObject&#39;</code>
+            <code class="ruby">      &#39;ContentTypeObject&#39;</code>
           </li>
         </div>
       
@@ -17828,7 +17861,7 @@
 
             
 
-            <code class="ruby">    &#39;search/objects/deposited_paper&#39;</code>
+            <code class="ruby">    &#39;content_type_objects/object_pages/deposited_paper&#39;</code>
           </li>
         </div>
       
@@ -18563,7 +18596,7 @@
 
             
 
-            <code class="ruby">class Edm &lt; ContentObject</code>
+            <code class="ruby">class Edm &lt; ContentTypeObject</code>
           </li>
         </div>
       
@@ -18640,7 +18673,7 @@
 
             
 
-            <code class="ruby">    &#39;search/objects/edm&#39;</code>
+            <code class="ruby">    &#39;content_type_objects/object_pages/edm&#39;</code>
           </li>
         </div>
       
@@ -19518,7 +19551,7 @@
 
             
 
-            <code class="ruby">class EuropeanDepositedDocument &lt; ContentObject</code>
+            <code class="ruby">class EuropeanDepositedDocument &lt; ContentTypeObject</code>
           </li>
         </div>
       
@@ -19595,7 +19628,7 @@
 
             
 
-            <code class="ruby">    &#39;search/objects/european_deposited_document&#39;</code>
+            <code class="ruby">    &#39;content_type_objects/object_pages/european_deposited_document&#39;</code>
           </li>
         </div>
       
@@ -20242,7 +20275,7 @@
 
             
 
-            <code class="ruby">class EuropeanMaterial &lt; ContentObject</code>
+            <code class="ruby">class EuropeanMaterial &lt; ContentTypeObject</code>
           </li>
         </div>
       
@@ -20385,7 +20418,7 @@
 
             
 
-            <code class="ruby">    &#39;search/objects/european_material&#39;</code>
+            <code class="ruby">    &#39;content_type_objects/object_pages/european_material&#39;</code>
           </li>
         </div>
       
@@ -21153,7 +21186,7 @@
 
             
 
-            <code class="ruby">class EuropeanScrutiny &lt; ContentObject</code>
+            <code class="ruby">class EuropeanScrutiny &lt; ContentTypeObject</code>
           </li>
         </div>
       
@@ -21602,7 +21635,7 @@
 
             
 
-            <code class="ruby">    &#39;search/objects/european_scrutiny_explanatory_memorandum&#39;</code>
+            <code class="ruby">    &#39;content_type_objects/object_pages/european_scrutiny_explanatory_memorandum&#39;</code>
           </li>
         </div>
       
@@ -21985,7 +22018,7 @@
 
             
 
-            <code class="ruby">    &#39;search/objects/european_scrutiny_ministerial_correspondence&#39;</code>
+            <code class="ruby">    &#39;content_type_objects/object_pages/european_scrutiny_ministerial_correspondence&#39;</code>
           </li>
         </div>
       
@@ -22951,7 +22984,7 @@
 
             
 
-            <code class="ruby">    &#39;search/objects/european_scrutiny_recommendation&#39;</code>
+            <code class="ruby">    &#39;content_type_objects/object_pages/european_scrutiny_recommendation&#39;</code>
           </li>
         </div>
       
@@ -23145,7 +23178,7 @@
 
             
 
-            <code class="ruby">    &#39;search/objects/formal_proceeding&#39;</code>
+            <code class="ruby">    &#39;content_type_objects/object_pages/formal_proceeding&#39;</code>
           </li>
         </div>
       
@@ -24963,7 +24996,7 @@
 
             
 
-            <code class="ruby">    &#39;search/objects/impact_assessment&#39;</code>
+            <code class="ruby">    &#39;content_type_objects/object_pages/impact_assessment&#39;</code>
           </li>
         </div>
       
@@ -25280,7 +25313,7 @@
 
             
 
-            <code class="ruby">class MinisterialCorrection &lt; ContentObject</code>
+            <code class="ruby">class MinisterialCorrection &lt; ContentTypeObject</code>
           </li>
         </div>
       
@@ -25478,7 +25511,7 @@
 
             
 
-            <code class="ruby">    &#39;search/objects/ministerial_correction&#39;</code>
+            <code class="ruby">    &#39;content_type_objects/object_pages/ministerial_correction&#39;</code>
           </li>
         </div>
       
@@ -26059,7 +26092,7 @@
 
             
 
-            <code class="ruby">class NotSupported &lt; ContentObject</code>
+            <code class="ruby">class NotSupported &lt; ContentTypeObject</code>
           </li>
         </div>
       
@@ -26136,7 +26169,7 @@
 
             
 
-            <code class="ruby">    &#39;search/objects/not_supported&#39;</code>
+            <code class="ruby">    &#39;content_type_objects/object_pages/not_supported&#39;</code>
           </li>
         </div>
       
@@ -26332,7 +26365,7 @@
 
             
 
-            <code class="ruby">    &#39;search/objects/observations_on_petitions&#39;</code>
+            <code class="ruby">    &#39;content_type_objects/object_pages/observations_on_petitions&#39;</code>
           </li>
         </div>
       
@@ -26825,7 +26858,7 @@
 
             
 
-            <code class="ruby">    &#39;search/objects/oral_answer_to_question&#39;</code>
+            <code class="ruby">    &#39;content_type_objects/object_pages/oral_answer_to_question&#39;</code>
           </li>
         </div>
       
@@ -27395,7 +27428,7 @@
 
             
 
-            <code class="ruby">    &#39;search/objects/oral_question&#39;</code>
+            <code class="ruby">    &#39;content_type_objects/object_pages/oral_question&#39;</code>
           </li>
         </div>
       
@@ -27802,7 +27835,7 @@
 
             
 
-            <code class="ruby">    return &#39;/search/preliminary_sentences/oral_question_withdrawn&#39; if withdrawn?</code>
+            <code class="ruby">    return &#39;/content_type_objects/preliminary_sentences/oral_question_withdrawn&#39; if withdrawn?</code>
           </li>
         </div>
       
@@ -27824,7 +27857,7 @@
 
             
 
-            <code class="ruby">    return &#39;/search/preliminary_sentences/oral_question_tabled&#39; if tabled?</code>
+            <code class="ruby">    return &#39;/content_type_objects/preliminary_sentences/oral_question_tabled&#39; if tabled?</code>
           </li>
         </div>
       
@@ -27846,7 +27879,7 @@
 
             
 
-            <code class="ruby">    return &#39;/search/preliminary_sentences/oral_question_answered&#39; if answered?</code>
+            <code class="ruby">    return &#39;/content_type_objects/preliminary_sentences/oral_question_answered&#39; if answered?</code>
           </li>
         </div>
       
@@ -27943,7 +27976,7 @@
 
             
 
-            <code class="ruby">class OralQuestionTimeIntervention &lt; ContentObject</code>
+            <code class="ruby">class OralQuestionTimeIntervention &lt; ContentTypeObject</code>
           </li>
         </div>
       
@@ -28284,7 +28317,7 @@
 
             
 
-            <code class="ruby">    &#39;search/objects/oral_question_time_intervention&#39;</code>
+            <code class="ruby">    &#39;content_type_objects/object_pages/oral_question_time_intervention&#39;</code>
           </li>
         </div>
       
@@ -28359,7 +28392,7 @@
 
             
 
-            <code class="ruby">class Paper &lt; ContentObject</code>
+            <code class="ruby">class Paper &lt; ContentTypeObject</code>
           </li>
         </div>
       
@@ -29149,7 +29182,7 @@
 
             
 
-            <code class="ruby">    &#39;search/objects/paper_ordered_to_be_printed&#39;</code>
+            <code class="ruby">    &#39;content_type_objects/object_pages/paper_ordered_to_be_printed&#39;</code>
           </li>
         </div>
       
@@ -29708,7 +29741,7 @@
 
             
 
-            <code class="ruby">    &#39;search/objects/paper_petition&#39;</code>
+            <code class="ruby">    &#39;content_type_objects/object_pages/paper_petition&#39;</code>
           </li>
         </div>
       
@@ -30146,7 +30179,7 @@
 
             
 
-            <code class="ruby">    &#39;search/objects/paper_submitted&#39;</code>
+            <code class="ruby">    &#39;content_type_objects/object_pages/paper_submitted&#39;</code>
           </li>
         </div>
       
@@ -30813,7 +30846,7 @@
 
             
 
-            <code class="ruby">    &#39;search/objects/parliamentary_paper_laid&#39;</code>
+            <code class="ruby">    &#39;content_type_objects/object_pages/parliamentary_paper_laid&#39;</code>
           </li>
         </div>
       
@@ -31702,7 +31735,7 @@
 
             
 
-            <code class="ruby">    &#39;search/objects/parliamentary_paper_reported&#39;</code>
+            <code class="ruby">    &#39;content_type_objects/object_pages/parliamentary_paper_reported&#39;</code>
           </li>
         </div>
       
@@ -32129,7 +32162,7 @@
 
             
 
-            <code class="ruby">    &#39;search/objects/parliamentary_proceeding&#39;</code>
+            <code class="ruby">    &#39;content_type_objects/object_pages/parliamentary_proceeding&#39;</code>
           </li>
         </div>
       
@@ -32567,7 +32600,7 @@
 
             
 
-            <code class="ruby">class Petition &lt; ContentObject</code>
+            <code class="ruby">class Petition &lt; ContentTypeObject</code>
           </li>
         </div>
       
@@ -32928,7 +32961,7 @@
 
             
 
-            <code class="ruby">    &#39;search/objects/private_act&#39;</code>
+            <code class="ruby">    &#39;content_type_objects/object_pages/private_act&#39;</code>
           </li>
         </div>
       
@@ -33168,7 +33201,7 @@
 
             
 
-            <code class="ruby">class Proceeding &lt; ContentObject</code>
+            <code class="ruby">class Proceeding &lt; ContentTypeObject</code>
           </li>
         </div>
       
@@ -33353,7 +33386,7 @@
 
             
 
-            <code class="ruby">class ProceedingContribution &lt; ContentObject</code>
+            <code class="ruby">class ProceedingContribution &lt; ContentTypeObject</code>
           </li>
         </div>
       
@@ -33540,7 +33573,7 @@
 
             
 
-            <code class="ruby">    &#39;search/objects/proceeding_contribution&#39;</code>
+            <code class="ruby">    &#39;content_type_objects/object_pages/proceeding_contribution&#39;</code>
           </li>
         </div>
       
@@ -33978,7 +34011,7 @@
 
             
 
-            <code class="ruby">    &#39;search/objects/public_act&#39;</code>
+            <code class="ruby">    &#39;content_type_objects/object_pages/public_act&#39;</code>
           </li>
         </div>
       
@@ -34229,7 +34262,7 @@
 
             
 
-            <code class="ruby">class Question &lt; ContentObject</code>
+            <code class="ruby">class Question &lt; ContentTypeObject</code>
           </li>
         </div>
       
@@ -35514,7 +35547,7 @@
 
             
 
-            <code class="ruby">class ResearchBriefing &lt; ContentObject</code>
+            <code class="ruby">class ResearchBriefing &lt; ContentTypeObject</code>
           </li>
         </div>
       
@@ -35635,7 +35668,7 @@
 
             
 
-            <code class="ruby">    &#39;search/objects/research_briefing&#39;</code>
+            <code class="ruby">    &#39;content_type_objects/object_pages/research_briefing&#39;</code>
           </li>
         </div>
       
@@ -36491,7 +36524,7 @@
 
             
 
-            <code class="ruby">class ResearchMaterial &lt; ContentObject</code>
+            <code class="ruby">class ResearchMaterial &lt; ContentTypeObject</code>
           </li>
         </div>
       
@@ -36568,7 +36601,7 @@
 
             
 
-            <code class="ruby">    &#39;search/objects/research_material&#39;</code>
+            <code class="ruby">    &#39;content_type_objects/object_pages/research_material&#39;</code>
           </li>
         </div>
       
@@ -37490,7 +37523,7 @@
 
             
 
-            <code class="ruby">      objects &lt;&lt; ContentObject.generate(object_data)</code>
+            <code class="ruby">      objects &lt;&lt; ContentTypeObject.generate(object_data)</code>
           </li>
         </div>
       
@@ -43715,7 +43748,7 @@
 
             
 
-            <code class="ruby">            ret[:items] &lt;&lt; ContentObject.generate(object)</code>
+            <code class="ruby">            ret[:items] &lt;&lt; ContentTypeObject.generate(object)</code>
           </li>
         </div>
       
@@ -48100,7 +48133,7 @@
 
             
 
-            <code class="ruby">    &#39;search/objects/statutory_instrument&#39;</code>
+            <code class="ruby">    &#39;content_type_objects/object_pages/statutory_instrument&#39;</code>
           </li>
         </div>
       
@@ -48681,7 +48714,7 @@
 
             
 
-            <code class="ruby">class TransportAndWorksActOrderApplication &lt; ContentObject</code>
+            <code class="ruby">class TransportAndWorksActOrderApplication &lt; ContentTypeObject</code>
           </li>
         </div>
       
@@ -48758,7 +48791,7 @@
 
             
 
-            <code class="ruby">    &#39;search/objects/transport_and_works_act_order_application&#39;</code>
+            <code class="ruby">    &#39;content_type_objects/object_pages/transport_and_works_act_order_application&#39;</code>
           </li>
         </div>
       
@@ -50017,7 +50050,7 @@
 
             
 
-            <code class="ruby">    &#39;search/objects/written_question&#39;</code>
+            <code class="ruby">    &#39;content_type_objects/object_pages/written_question&#39;</code>
           </li>
         </div>
       
@@ -50600,7 +50633,7 @@
 
             
 
-            <code class="ruby">    return &#39;/search/preliminary_sentences/written_question_corrected&#39; if corrected?</code>
+            <code class="ruby">    return &#39;/content_type_objects/preliminary_sentences/written_question_corrected&#39; if corrected?</code>
           </li>
         </div>
       
@@ -50622,7 +50655,7 @@
 
             
 
-            <code class="ruby">    return &#39;/search/preliminary_sentences/written_question_answered_was_holding&#39; if answered_was_holding?</code>
+            <code class="ruby">    return &#39;/content_type_objects/preliminary_sentences/written_question_answered_was_holding&#39; if answered_was_holding?</code>
           </li>
         </div>
       
@@ -50644,7 +50677,7 @@
 
             
 
-            <code class="ruby">    return &#39;/search/preliminary_sentences/written_question_holding&#39; if holding?</code>
+            <code class="ruby">    return &#39;/content_type_objects/preliminary_sentences/written_question_holding&#39; if holding?</code>
           </li>
         </div>
       
@@ -50666,7 +50699,7 @@
 
             
 
-            <code class="ruby">    return &#39;/search/preliminary_sentences/written_question_tabled&#39; if tabled?</code>
+            <code class="ruby">    return &#39;/content_type_objects/preliminary_sentences/written_question_tabled&#39; if tabled?</code>
           </li>
         </div>
       
@@ -50688,7 +50721,7 @@
 
             
 
-            <code class="ruby">    return &#39;/search/preliminary_sentences/written_question_withdrawn&#39; if withdrawn?</code>
+            <code class="ruby">    return &#39;/content_type_objects/preliminary_sentences/written_question_withdrawn&#39; if withdrawn?</code>
           </li>
         </div>
       
@@ -50710,7 +50743,7 @@
 
             
 
-            <code class="ruby">    return &#39;/search/preliminary_sentences/written_question_answered&#39; if answered?</code>
+            <code class="ruby">    return &#39;/content_type_objects/preliminary_sentences/written_question_answered&#39; if answered?</code>
           </li>
         </div>
       
@@ -51159,7 +51192,7 @@
 
             
 
-            <code class="ruby">class WrittenStatement &lt; ContentObject</code>
+            <code class="ruby">class WrittenStatement &lt; ContentTypeObject</code>
           </li>
         </div>
       
@@ -51236,7 +51269,7 @@
 
             
 
-            <code class="ruby">    &#39;search/objects/written_statement&#39;</code>
+            <code class="ruby">    &#39;content_type_objects/object_pages/written_statement&#39;</code>
           </li>
         </div>
       

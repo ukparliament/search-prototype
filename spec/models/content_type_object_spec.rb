@@ -6,14 +6,14 @@ RSpec.describe ContentTypeObject, type: :model do
   describe 'self.generate' do
     context 'when passed invalid data' do
       let!(:test_data) { { "some_data" => [12345] } }
-      it 'returns an instance of the ContentObject class' do
+      it 'returns an instance of the ContentTypeObject class' do
         expect(ContentTypeObject.generate(test_data)).to be_an_instance_of(ContentTypeObject)
       end
     end
     context 'when passed an unknown object type' do
       let!(:test_data) { { "type_ses" => [12345] } }
 
-      it 'returns an instance of the ContentObject class' do
+      it 'returns an instance of the ContentTypeObject class' do
         expect(ContentTypeObject.generate(test_data)).to be_an_instance_of(ContentTypeObject)
       end
     end

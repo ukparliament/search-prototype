@@ -30,13 +30,13 @@ to 'value' and its Solr field name keyed to 'field_name', instead of simply pass
 ### Item pages
 
 An object ID is required, and used to retrieve the data for that object from Solr using an instance of SolrQuery. The
-returned data is passed to the ContentObject class, using the 'generate' class method to identify and initialise the
+returned data is passed to the ContentTypeObject class, using the 'generate' class method to identify and initialise the
 relevant subclass corresponding to the item type (based on its type and subtype SES IDs, type_ses and subtype_ses).
 
 The class, for example WrittenQuestion, contains instance methods used to extract the necessary data to render the page
-from the returned JSON. The numerous subclasses of ContentObject are organised in several layers where beneficial, for
+from the returned JSON. The numerous subclasses of ContentTypeObject are organised in several layers where beneficial, for
 example WrittenQuestion inherits from Question, which also has the subclass OralQuestion and holds methods common to
-both subclasses. A number of instance methods belong to ContentObject itself, as their behaviour is common across all
+both subclasses. A number of instance methods belong to ContentTypeObject itself, as their behaviour is common across all
 object types.
 
 ### The search page

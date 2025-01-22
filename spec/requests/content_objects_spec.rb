@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'ContentObjects', type: :request do
+RSpec.describe 'ContentTypeObjects', type: :request do
   describe 'GET /show' do
     let!(:edm_instance) { Edm.new('test') }
 
