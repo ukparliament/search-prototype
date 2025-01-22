@@ -39,11 +39,7 @@ class Bill < ContentTypeObject
   end
 
   def version_title
-    if subtype[:value] == 92585
-      title[:value]
-    else
-      reference.map { |r| r[:value] }.join(' ')
-    end
+    title[:value]
   end
 
   def title
