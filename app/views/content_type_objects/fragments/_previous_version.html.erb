@@ -5,7 +5,7 @@
     <% unless previous_version.date_of_order.blank? %>
       <br/><%= format_date(previous_version.date_of_order) %>
     <% end %>
-    <% unless previous_version.reference.blank? %>
+    <% unless previous_version.reference.blank? || previous_version.reference.pluck(:value) == ["."] %>
       <br/><%= previous_version.reference.pluck(:value).join(' ') %>
     <% end %>
   </div>

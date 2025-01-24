@@ -7,9 +7,6 @@ class SolrQueryWrapper
   end
 
   def get_objects
-    # TODO: re-enable this
-    # return unless valid_input
-
     puts "Get #{object_uris.size} objects..." if Rails.env.development?
 
     start_time = Time.now
