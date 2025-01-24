@@ -78,8 +78,22 @@ class SearchData
 
     solr_fields_string = solr_fields.flatten.uniq.join(' ')
 
-    # returns {items: []}, unsorted
-    SolrQueryWrapper.new(object_uris: object_uris, solr_fields: solr_fields_string).get_objects
+    unsorted_items = SolrQueryWrapper.new(object_uris: object_uris, solr_fields: solr_fields_string).get_objects.dig(:items)
+
+    # build unsorted items into a uri-keyed hash
+    unsorted_items_hash = {}
+    unsorted_items.each do |unsorted_item|
+      key = unsorted_item.object_uri.dig(:value)
+      unsorted_items_hash[key] = unsorted_item
+    end
+
+    # iterate through sorted uris and grab object from hash into array to return
+    ret = []
+    initial_query_data.pluck('uri').each do |sorted_uri|
+      ret << unsorted_items_hash.dig(sorted_uri)
+    end
+
+    ret
   end
 
   def number_of_results
