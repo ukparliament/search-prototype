@@ -1,0 +1,21 @@
+<% content_for(:before_title) do %>
+  <%= link_to('UK Parliament', root_path) %> / <%= link_to('Open data', root_path) %><br/>
+  <div id="top"></div>
+<% end %>
+
+<%= render '/shared/search_bar' %>
+
+<section id="welcome">
+  <h2>About this website</h2>
+  <p>This website is under development and may be unavailable at times.</p>
+  <p>We're working on a replacement for <%= link_to 'Parliamentary Search', 'https://search.parliament.uk/search' %>
+    (available to users on the Parliamentary network)
+    and <%= link_to 'Search Parliamentary Material', 'https://search-material.parliament.uk/' %> (the public-facing
+    version of Parliamentary Search).</p>
+  <p>Details of what we are working on can be found on
+    our <%= link_to 'Trello Board', 'https://trello.com/b/hP5FLFHA/search-frontend' %>.</p>
+  <p>You can reach the team
+    at <%= link_to 'parliamentarysearch@parliament.uk', 'mailto:parliamentarysearch@parliament.uk' %>.</p>
+</section>
+
+<%= render '/shared/examples' %>
