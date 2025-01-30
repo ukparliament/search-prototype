@@ -15,6 +15,7 @@ class EuropeanScrutinyRecommendation < EuropeanScrutiny
     type_ses subtype_ses
     reportDate_dt
     debateDate_dt
+    searcherNote_t
     date_dt identifier_t
     ]
   end

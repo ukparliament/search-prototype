@@ -17,6 +17,7 @@ class EuropeanScrutiny < ContentTypeObject
     department_ses department_t
     type_ses subtype_ses
     subject_ses subject_t
+    searcherNote_t
     date_dt identifier_t legislature_ses
     ]
   end

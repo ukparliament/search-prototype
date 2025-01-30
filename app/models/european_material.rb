@@ -28,6 +28,7 @@ class EuropeanMaterial < ContentTypeObject
     corporateAuthor_ses corporateAuthor_t
     legislationTitle_ses legislationTitle_t
     subject_ses subject_t
+    searcherNote_t
     date_dt identifier_t legislature_ses
     ]
   end

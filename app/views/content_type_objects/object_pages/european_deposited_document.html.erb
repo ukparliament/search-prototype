@@ -26,6 +26,7 @@
   <%= render 'content_type_objects/fragments/subsidiarity_protocol_period', from: object.subsidiarity_from_date, to: object.subsidiarity_to_date %>
   <%= render 'content_type_objects/fragments/date', date: object.date_originated, title: 'Originated on' %>
   <%= render 'content_type_objects/fragments/related_items', related_item_ids: object.related_item_ids %>
+  <%= render 'content_type_objects/fragments/notes', notes: object.notes %>
   <%= render 'content_type_objects/fragments/pills', pills_heading: 'Subjects', pills: object.subjects %>
   <%= render 'content_type_objects/fragments/contains_statistics', contains_statistics: object.contains_statistics %>
 </section>

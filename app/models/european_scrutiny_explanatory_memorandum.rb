@@ -18,6 +18,7 @@ class EuropeanScrutinyExplanatoryMemorandum < EuropeanScrutiny
     title_t uri
     department_ses department_t
     type_ses subtype_ses
+    searcherNote_t
     date_dt identifier_t legislature_ses
     ]
   end

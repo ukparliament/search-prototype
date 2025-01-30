@@ -22,6 +22,7 @@ class TransportAndWorksActOrderApplication < ContentTypeObject
     legislationTitle_ses legislationTitle_t
     subject_ses subject_t
     commonsLibraryLocation_t lordsLibraryLocation_t
+    searcherNote_t
     date_dt identifier_t legislature_ses
     ]
   end
