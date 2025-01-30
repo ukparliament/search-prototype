@@ -28,6 +28,8 @@
     </div>
   </div>
 
+  <%= render 'search/results/item_details/notes', notes: object.notes unless object.notes.blank? %>
+
   <div class="row">
     <div class="result-panel">
       <div id="significant-date">

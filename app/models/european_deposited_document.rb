@@ -21,6 +21,7 @@ class EuropeanDepositedDocument < ContentTypeObject
     dateOriginated_dt
     dateDeposited_dt
     subject_ses subject_t
+    searcherNote_t
     date_dt identifier_t legislature_ses
     ]
   end

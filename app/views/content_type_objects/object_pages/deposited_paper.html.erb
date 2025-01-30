@@ -39,6 +39,7 @@
 <section id="about" class="content-section grey">
   <%= render 'content_type_objects/fragments/type', type: object.type %>
   <%= render 'content_type_objects/fragments/reference', reference: object.reference %>
+  <%= render 'content_type_objects/fragments/notes', notes: object.notes %>
   <%= render 'content_type_objects/fragments/date', title: 'Originated on', date: object.date_originated %>
   <%= render 'content_type_objects/fragments/corporate_author', label: 'Author', author: object.authors %>
   <%= render 'content_type_objects/fragments/paper_type', paper_type: object.paper_type %>
