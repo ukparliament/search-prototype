@@ -86,11 +86,12 @@ class SesLookup < ApiCall
     # If SES returns an error, we'll get an error key returned from evaluated_response
     return responses.first if responses.first&.has_key?(:error)
 
-    # TODO: reduce data retreived from SES if possible (API limitations - vendor input needed)
+    # TODO: reduce data retrieved from SES if possible (API limitations - vendor input needed)
 
     unless responses.compact.blank?
       responses.each do |response|
         ret[response['term']['id'].to_i] = response['term']['name']
+        ret["#{response['term']['id'].to_i}_scope_note"] = response['term']['metadata']['Scope note']
       end
     end
     ret
