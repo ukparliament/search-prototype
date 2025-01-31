@@ -1,0 +1,9 @@
+<% unless date_debated.blank? && debate_location.blank? %>
+  <div class="about-item">
+    <div class="content-heading-small" id="debate">Debate</div>
+    <%= debate_location[:value] %>
+    <% unless date_debated.blank? %>
+      <br/><%= format_date(date_debated) %>
+    <% end %>
+  </div>
+<% end %>

@@ -20,6 +20,7 @@
   <%= render 'content_type_objects/fragments/type', type: object.type %>
   <%= render 'content_type_objects/fragments/decision', decision: object.decision %>
   <%= render 'content_type_objects/fragments/assessment', assessment: object.assessment %>
+  <%= render 'content_type_objects/fragments/debate', debate_location: object.debate_location, date_debated: object.date_debated %>
   <%= render 'content_type_objects/fragments/cleared', cleared: object.is_cleared %>
   <%= render 'content_type_objects/fragments/status', status: object.status %>
   <%= render 'content_type_objects/fragments/regarding', regarding_object_ids: object.regarding_object_ids %>
