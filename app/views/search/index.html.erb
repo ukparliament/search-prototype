@@ -83,6 +83,7 @@
             <%= render 'content_type_objects/fragments/search_claw', object: object %>
             <hr>
           <% end %>
+          <%= render '/content_type_objects/fragments/about_these_results' %>
 
           <% unless @search_data.current_page.blank? || @search_data.total_pages.blank? %>
 
