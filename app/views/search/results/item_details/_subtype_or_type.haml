@@ -5,9 +5,9 @@
       - if subtype.is_a?(Array)
         = render 'content_type_objects/fragments/simple_list', items: subtype, separator: ';', terminator: '', singular: false
       - else
-        = object_display_name(subtype, singular: true)
+        = object_display_name(subtype, singular: false)
     - if subtype.blank?
       - if type.is_a?(Array)
         = render 'content_type_objects/fragments/simple_list', items: type, separator: ';', terminator: '', singular: false
       - else
-        = object_display_name(type, singular: true)
+        = object_display_name(type, singular: false)
