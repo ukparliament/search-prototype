@@ -28,6 +28,15 @@ module LinkHelper
     end
   end
 
+  def scope_note(ses_id_string)
+    # look up scope note in SES data based on string
+    # string format is '12345_scope_note'
+
+    return if ses_id_string.blank?
+
+    @ses_data.dig(ses_id_string)
+  end
+
   def object_display_name(data, singular: true, case_formatting: false)
     # can used where the object type is dynamic by passing a SES ID
     # alternatively works with string names
