@@ -91,7 +91,7 @@ class SesLookup < ApiCall
     unless responses.compact.blank?
       responses.each do |response|
         ret[response['term']['id'].to_i] = response['term']['name']
-        ret["#{response['term']['id'].to_i}_scope_note"] = response['term']['metadata']['Scope note']
+        ret["#{response['term']['id'].to_i}_scope_note"] = response['term']['metadata']['Scope note'] unless response['term']['metadata']['Scope note'].blank?
       end
     end
     ret
