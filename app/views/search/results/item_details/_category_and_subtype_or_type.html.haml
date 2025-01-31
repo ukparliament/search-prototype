@@ -5,7 +5,7 @@
     %span>= render 'content_type_objects/fragments/simple_list', items: category, separator: ';', terminator: ';', singular: false
   - else
     %div.item-details-label= "Type"
-    %span>= object_display_name(category, singular: true)
+    %span>= object_display_name(category, singular: false)
 - unless subtype.blank?
   - unless category.blank?
     %span>= "; "

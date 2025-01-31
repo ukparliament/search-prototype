@@ -6,7 +6,7 @@
     <% if type.is_a?(Array) %>
       <%= render 'content_type_objects/fragments/simple_list', items: type, seperator: ';', terminator: '', singular: false %>
     <% else %>
-      <%= object_display_name(type, singular: true) %>
+      <%= object_display_name(type, singular: false) %>
     <% end %>
   </div>
 <% end %>
