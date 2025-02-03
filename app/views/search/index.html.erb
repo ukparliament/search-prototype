@@ -23,6 +23,9 @@
   <section id="search" class="content-section white-slim">
     <div class="search-grid-container">
       <%= f.text_field :query, id: 'search-input', value: @search_data.query %>
+      <%= f.hidden_field :show_detailed, value: @search_data.show_detailed %>
+      <%= f.hidden_field :sort_by, value: @search_data.sort %>
+      <%= f.hidden_field :results_per_page, value: @search_data.results_per_page %>
       <button id="search-button-large">
         New search
       </button>

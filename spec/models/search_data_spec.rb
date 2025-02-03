@@ -4,10 +4,10 @@ RSpec.describe SearchData, type: :model do
   let(:search_data) { SearchData.new(search_output) }
   let!(:facet_data) { {
     "count" => 1234,
-    "topic_ses" => { "buckets" => [{ "val" => 90996, "count" => 123 }, { "val" => 90995, "count" => 234 }] },
+    "legislature_ses" => { "buckets" => [{ "val" => 90996, "count" => 123 }, { "val" => 90995, "count" => 234 }] },
     "subject_ses" => { "buckets" => [{ "val" => 123456, "count" => 455 }, { "val" => 234556, "count" => 66 }] }
   } }
-  let!(:search_output) { { search_parameters: { filter: ['topic_ses:12345'], query: 'horse' },
+  let!(:search_output) { { search_parameters: { filter: ['legislature_ses:12345'], query: 'horse' },
                            data: {
                              "responseHeader" => {
                                "status" => 0,
@@ -47,7 +47,7 @@ RSpec.describe SearchData, type: :model do
       end
     end
     context 'when an error code is present' do
-      let!(:search_output) { { search_parameters: { filter: ['topic_ses:12345'] }, data: { "code" => 500, "msg" => "error_message" } } }
+      let!(:search_output) { { search_parameters: { filter: ['legislature_ses:12345'] }, data: { "code" => 500, "msg" => "error_message" } } }
       it 'returns true' do
         expect(search_data.solr_error?).to be true
       end
@@ -61,7 +61,7 @@ RSpec.describe SearchData, type: :model do
       end
     end
     context 'when an error code is present' do
-      let!(:search_output) { { search_parameters: { filter: ['topic_ses:12345'] }, data: { "code" => 500, "msg" => "error_message" } } }
+      let!(:search_output) { { search_parameters: { filter: ['legislature_ses:12345'] }, data: { "code" => 500, "msg" => "error_message" } } }
       it 'returns the message' do
         expect(search_data.error_message).to eq('error_message')
       end
@@ -75,7 +75,7 @@ RSpec.describe SearchData, type: :model do
       end
     end
     context 'when an error code is present' do
-      let!(:search_output) { { search_parameters: { filter: ['topic_ses:12345'] }, data: { "code" => 500, "msg" => "error_message" } } }
+      let!(:search_output) { { search_parameters: { filter: ['legislature_ses:12345'] }, data: { "code" => 500, "msg" => "error_message" } } }
       it 'returns the code' do
         expect(search_data.error_code).to eq(500)
       end
@@ -89,7 +89,7 @@ RSpec.describe SearchData, type: :model do
       end
     end
     context 'when an error code is present' do
-      let!(:search_output) { { search_parameters: { filter: ['topic_ses:12345'] }, data: { "code" => 500, "msg" => "error_message" } } }
+      let!(:search_output) { { search_parameters: { filter: ['legislature_ses:12345'] }, data: { "code" => 500, "msg" => "error_message" } } }
       it 'returns the partial path' do
         expect(search_data.error_partial_path).to eq('layouts/shared/error/500')
       end
@@ -113,7 +113,7 @@ RSpec.describe SearchData, type: :model do
       end
     end
     context 'where data is missing' do
-      let!(:search_output) { { search_parameters: { filter: ['topic_ses:12345'] },
+      let!(:search_output) { { search_parameters: { filter: ['legislature_ses:12345'] },
                                data: { "responseHeader" => {
                                  "status" => 0,
                                  "QTime" => 4,
@@ -140,7 +140,7 @@ RSpec.describe SearchData, type: :model do
     end
 
     context 'where no data is present' do
-      let!(:search_output) { { search_parameters: { filter: ['topic_ses:12345'] } } }
+      let!(:search_output) { { search_parameters: { filter: ['legislature_ses:12345'] } } }
 
       it 'returns nil' do
         expect(search_data.number_of_results).to be nil
@@ -156,7 +156,7 @@ RSpec.describe SearchData, type: :model do
     end
 
     context 'where no query is present' do
-      let!(:search_output) { { search_parameters: { filter: ['topic_ses:12345'] } } }
+      let!(:search_output) { { search_parameters: { filter: ['legislature_ses:12345'] } } }
 
       it 'returns nil' do
         expect(search_data.query).to be nil
@@ -181,9 +181,9 @@ RSpec.describe SearchData, type: :model do
 
   describe 'filter' do
     context 'where data is present' do
-      let!(:search_output) { { search_parameters: { filter: ['topic_ses:12345'] } } }
+      let!(:search_output) { { search_parameters: { filter: ['legislature_ses:12345'] } } }
       it 'returns an array of filter strings' do
-        expect(search_data.filter).to eq(["topic_ses:12345"])
+        expect(search_data.filter).to eq(["legislature_ses:12345"])
       end
     end
 
@@ -259,11 +259,11 @@ RSpec.describe SearchData, type: :model do
       end
 
       it 'includes the field name string' do
-        expect(search_data.facets.pluck(:field_name)).to match_array(["topic_ses", "subject_ses"])
+        expect(search_data.facets.pluck(:field_name)).to match_array(["legislature_ses", "subject_ses"])
       end
 
       it 'includes facets sorted by count (descending)' do
-        expect(search_data.facets.pluck(:facets)).to eq([[{ "count" => 455, "val" => 123456 }, { "count" => 66, "val" => 234556 }], [{ "count" => 234, "val" => 90995 }, { "count" => 123, "val" => 90996 }]])
+        expect(search_data.facets.pluck(:facets)).to eq([[{ "count" => 234, "val" => 90995 }, { "count" => 123, "val" => 90996 }], [{ "count" => 455, "val" => 123456 }, { "count" => 66, "val" => 234556 }]])
       end
     end
   end

@@ -14,7 +14,7 @@ class EuropeanScrutinyExplanatoryMemorandum < EuropeanScrutiny
 
   def self.search_result_solr_fields
     # fields requested in Solr search for search results page
-    %w[
+    super << %w[
     title_t uri
     department_ses department_t
     type_ses subtype_ses

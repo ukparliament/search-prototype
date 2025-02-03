@@ -10,10 +10,6 @@ class ProceedingContribution < ContentTypeObject
     ids.compact.flatten.uniq
   end
 
-  def self.required_solr_fields
-    %w[title_t uri type_ses subtype_ses contributionText_t member_ses memberParty_ses procedural_ses legislationTitle_ses legislationTitle_t subject_ses subject_t searcherNote_t legislature_ses identifier_t place_ses date_dt]
-  end
-
   def template
     'content_type_objects/object_pages/proceeding_contribution'
   end
@@ -24,7 +20,7 @@ class ProceedingContribution < ContentTypeObject
 
   def self.search_result_solr_fields
     # fields requested in Solr search for search results page
-    %w[
+    super << %w[
     title_t uri
     contributionText_t
     member_ses memberParty_ses

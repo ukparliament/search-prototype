@@ -249,16 +249,18 @@ class SearchData
     facet_field_data = search.dig(:data, 'facets')
     return [] if facet_field_data.blank?
 
-    facet_field_data.slice("type_sesrollup", "legislature_ses", "date_dt", "department_ses",
-                           "member_ses", "tablingMember_ses", "askingMember_ses", "leadMember_ses",
-                           "answeringMember_ses", "legislativeStage_ses", "legislationTitle_ses", "subject_ses",
-                           "topic_ses", "year", "publisher_ses", "primaryMember_ses").map { |k, v| { field_name: k, facets: sort_facets(v['buckets']) } }
+    facet_field_data.slice(*ordered_facet_fields).map { |k, v| { field_name: k, facets: sort_facets(v['buckets']) } }
   end
 
   def type_facets
     ret = {}
     facets.select { |facet| facet.dig(:field_name) == "type_sesrollup" }.first&.dig(:facets)&.each { |h| ret[h.dig("val")] = h.dig("count") }
     ret
+  end
+
+  def ordered_facet_fields
+    # used to extract Solr returned facet data in the correct order for display
+    %w[type_sesrollup legislature_ses date_dt department_ses member_ses primaryMember_ses answeringMember_ses legislativeStage_ses legislationTitle_ses subject_ses publisher_ses]
   end
 
   def session_facets

@@ -20,7 +20,7 @@ class OralQuestion < Question
 
   def self.search_result_solr_fields
     # fields requested in Solr search for search results page
-    %w[
+    super << %w[
     title_t uri
     questionText_t
     askingMember_ses askingMemberParty_ses tablingMember_ses tablingMemberParty_ses
@@ -36,6 +36,7 @@ class OralQuestion < Question
     searcherNote_t
     place_ses
     date_dt identifier_t legislature_ses
+    answerFor_uri
     ]
   end
 

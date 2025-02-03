@@ -8,17 +8,13 @@ class WrittenQuestion < Question
     'content_type_objects/object_pages/written_question'
   end
 
-  def self.required_solr_fields
-    %w[title_t uri type_ses subtype_ses questionText_t askingMember_ses askingMemberParty_ses tablingMember_ses tablingMemberParty_ses answeringMember_ses answeringMemberParty_ses departmentPrinted_t pqStatus_t askedToReplyAuthor_ses procedural_ses dateTabled_dt dateForAnswer_dt dateOfHoldingAnswer_dt dateOfAnswer_dt answerText_t correctingItem_uri correctingItem_t correctedWmsMc_b legislationTitle_ses legislationTitle_t subject_ses subject_t searcherNote_t legislature_ses identifier_t date_dt]
-  end
-
   def search_result_partial
     'search/results/written_question'
   end
 
   def self.search_result_solr_fields
     # fields requested in Solr search for search results page
-    %w[
+    super << %w[
     title_t uri
     questionText_t
     askingMember_ses tablingMember_ses askingMemberParty_ses tablingMemberParty_ses
