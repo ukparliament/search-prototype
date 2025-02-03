@@ -14,7 +14,7 @@
       <img src="./assets/0.12.3/loading.gif" alt="loading"/>
     </div>
     <div id="wrapper" class="hide">
-      <div class="timestamp">Generated <abbr class="timeago" title="2025-01-31T16:32:53+00:00">2025-01-31T16:32:53+00:00</abbr></div>
+      <div class="timestamp">Generated <abbr class="timeago" title="2025-02-03T13:44:55+00:00">2025-02-03T13:44:55+00:00</abbr></div>
       <ul class="group_tabs"></ul>
 
       <div id="content">
@@ -23,14 +23,14 @@
     <span class="group_name">All Files</span>
     (<span class="covered_percent">
       <span class="red">
-  78.74%
+  78.76%
 </span>
 
      </span>
      covered at
      <span class="covered_strength">
        <span class="green">
-         113.35
+         113.32
        </span>
     </span> hits/line
     )
@@ -43,11 +43,11 @@
   </div>
 
   <div class="t-line-summary">
-    <b>1896</b> relevant lines,
-    <span class="green"><b>1493</b> lines covered</span> and
+    <b>1897</b> relevant lines,
+    <span class="green"><b>1494</b> lines covered</span> and
     <span class="red"><b>403</b> lines missed. </span>
     (<span class="red">
-  78.74%
+  78.76%
 </span>
 )
   </div>
@@ -732,12 +732,12 @@
         
           <tr class="t-file">
             <td class="strong t-file__name"><a href="#203b5ceddabb059ab45ddbd195f87f71e4414c72" class="src_link" title="app/models/search_data.rb">app/models/search_data.rb</a></td>
-            <td class="yellow strong cell--number t-file__coverage">86.62 %</td>
-            <td class="cell--number">306</td>
-            <td class="cell--number">157</td>
-            <td class="cell--number">136</td>
+            <td class="yellow strong cell--number t-file__coverage">86.71 %</td>
+            <td class="cell--number">308</td>
+            <td class="cell--number">158</td>
+            <td class="cell--number">137</td>
             <td class="cell--number">21</td>
-            <td class="cell--number">9.87</td>
+            <td class="cell--number">10.16</td>
             
           </tr>
         
@@ -37273,7 +37273,7 @@
     <h3>app/models/search_data.rb</h3>
     <h4>
       <span class="yellow">
-  86.62%
+  86.71%
 </span>
 
       lines covered
@@ -37282,8 +37282,8 @@
     
 
     <div class="t-line-summary">
-      <b>157</b> relevant lines.
-      <span class="green"><b>136</b> lines covered</span> and
+      <b>158</b> relevant lines.
+      <span class="green"><b>137</b> lines covered</span> and
       <span class="red"><b>21</b> lines missed.</span>
     </div>
 
@@ -38516,8 +38516,8 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="20" data-linenumber="112">
-            <span class="hits">20</span>
+          <li class="covered" data-hits="24" data-linenumber="112">
+            <span class="hits">24</span>
             
 
             
@@ -38538,8 +38538,8 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="20" data-linenumber="114">
-            <span class="hits">20</span>
+          <li class="covered" data-hits="24" data-linenumber="114">
+            <span class="hits">24</span>
             
 
             
@@ -39000,8 +39000,8 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="22" data-linenumber="156">
-            <span class="hits">22</span>
+          <li class="covered" data-hits="26" data-linenumber="156">
+            <span class="hits">26</span>
             
 
             
@@ -39022,8 +39022,8 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="22" data-linenumber="158">
-            <span class="hits">22</span>
+          <li class="covered" data-hits="26" data-linenumber="158">
+            <span class="hits">26</span>
             
 
             
@@ -39044,8 +39044,8 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="22" data-linenumber="160">
-            <span class="hits">22</span>
+          <li class="covered" data-hits="26" data-linenumber="160">
+            <span class="hits">26</span>
             
 
             
@@ -39253,8 +39253,8 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="26" data-linenumber="179">
-            <span class="hits">26</span>
+          <li class="covered" data-hits="30" data-linenumber="179">
+            <span class="hits">30</span>
             
 
             
@@ -39275,8 +39275,8 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="26" data-linenumber="181">
-            <span class="hits">26</span>
+          <li class="covered" data-hits="30" data-linenumber="181">
+            <span class="hits">30</span>
             
 
             
@@ -39286,8 +39286,8 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="26" data-linenumber="182">
-            <span class="hits">26</span>
+          <li class="covered" data-hits="30" data-linenumber="182">
+            <span class="hits">30</span>
             
 
             
@@ -40056,13 +40056,13 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="24" data-linenumber="252">
-            <span class="hits">24</span>
+          <li class="covered" data-hits="52" data-linenumber="252">
+            <span class="hits">52</span>
             
 
             
 
-            <code class="ruby">    facet_field_data.slice(&quot;type_sesrollup&quot;, &quot;legislature_ses&quot;, &quot;date_dt&quot;, &quot;department_ses&quot;,</code>
+            <code class="ruby">    facet_field_data.slice(*ordered_facet_fields).map { |k, v| { field_name: k, facets: sort_facets(v[&#39;buckets&#39;]) } }</code>
           </li>
         </div>
       
@@ -40073,7 +40073,7 @@
 
             
 
-            <code class="ruby">                           &quot;member_ses&quot;, &quot;tablingMember_ses&quot;, &quot;askingMember_ses&quot;, &quot;leadMember_ses&quot;,</code>
+            <code class="ruby">  end</code>
           </li>
         </div>
       
@@ -40084,45 +40084,12 @@
 
             
 
-            <code class="ruby">                           &quot;answeringMember_ses&quot;, &quot;legislativeStage_ses&quot;, &quot;legislationTitle_ses&quot;, &quot;subject_ses&quot;,</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="covered" data-hits="28" data-linenumber="255">
-            <span class="hits">28</span>
-            
-
-            
-
-            <code class="ruby">                           &quot;topic_ses&quot;, &quot;year&quot;, &quot;publisher_ses&quot;, &quot;primaryMember_ses&quot;).map { |k, v| { field_name: k, facets: sort_facets(v[&#39;buckets&#39;]) } }</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="256">
-            
-            
-
-            
-
-            <code class="ruby">  end</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="257">
-            
-            
-
-            
-
             <code class="ruby"></code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="258">
+          <li class="covered" data-hits="1" data-linenumber="255">
             <span class="hits">1</span>
             
 
@@ -40133,7 +40100,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="4" data-linenumber="259">
+          <li class="covered" data-hits="4" data-linenumber="256">
             <span class="hits">4</span>
             
 
@@ -40144,7 +40111,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="16" data-linenumber="260">
+          <li class="covered" data-hits="16" data-linenumber="257">
             <span class="hits">16</span>
             
 
@@ -40155,7 +40122,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="4" data-linenumber="261">
+          <li class="covered" data-hits="4" data-linenumber="258">
             <span class="hits">4</span>
             
 
@@ -40166,7 +40133,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="262">
+          <li class="never" data-hits="" data-linenumber="259">
             
             
 
@@ -40177,7 +40144,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="263">
+          <li class="never" data-hits="" data-linenumber="260">
             
             
 
@@ -40188,7 +40155,62 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="264">
+          <li class="covered" data-hits="1" data-linenumber="261">
+            <span class="hits">1</span>
+            
+
+            
+
+            <code class="ruby">  def ordered_facet_fields</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="262">
+            
+            
+
+            
+
+            <code class="ruby">    # used to extract Solr returned facet data in the correct order for display</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="24" data-linenumber="263">
+            <span class="hits">24</span>
+            
+
+            
+
+            <code class="ruby">    %w[type_sesrollup legislature_ses date_dt department_ses member_ses primaryMember_ses answeringMember_ses legislativeStage_ses legislationTitle_ses subject_ses publisher_ses]</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="264">
+            
+            
+
+            
+
+            <code class="ruby">  end</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="265">
+            
+            
+
+            
+
+            <code class="ruby"></code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="1" data-linenumber="266">
             <span class="hits">1</span>
             
 
@@ -40199,7 +40221,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="8" data-linenumber="265">
+          <li class="covered" data-hits="8" data-linenumber="267">
             <span class="hits">8</span>
             
 
@@ -40210,7 +40232,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="266">
+          <li class="never" data-hits="" data-linenumber="268">
             
             
 
@@ -40221,7 +40243,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="8" data-linenumber="267">
+          <li class="covered" data-hits="8" data-linenumber="269">
             <span class="hits">8</span>
             
 
@@ -40232,35 +40254,13 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="8" data-linenumber="268">
+          <li class="covered" data-hits="8" data-linenumber="270">
             <span class="hits">8</span>
             
 
             
 
             <code class="ruby">    return [] if facet_field_data.blank?</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="269">
-            
-            
-
-            
-
-            <code class="ruby"></code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="covered" data-hits="24" data-linenumber="270">
-            <span class="hits">24</span>
-            
-
-            
-
-            <code class="ruby">    facet_field_data.select { |field| field.split(&#39;_&#39;).first == &quot;session&quot; }</code>
           </li>
         </div>
       
@@ -40271,12 +40271,34 @@
 
             
 
+            <code class="ruby"></code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="24" data-linenumber="272">
+            <span class="hits">24</span>
+            
+
+            
+
+            <code class="ruby">    facet_field_data.select { |field| field.split(&#39;_&#39;).first == &quot;session&quot; }</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="273">
+            
+            
+
+            
+
             <code class="ruby">  end</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="272">
+          <li class="never" data-hits="" data-linenumber="274">
             
             
 
@@ -40287,7 +40309,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="273">
+          <li class="covered" data-hits="1" data-linenumber="275">
             <span class="hits">1</span>
             
 
@@ -40298,7 +40320,7 @@
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="274">
+          <li class="missed" data-hits="0" data-linenumber="276">
             
             
 
@@ -40309,7 +40331,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="275">
+          <li class="never" data-hits="" data-linenumber="277">
             
             
 
@@ -40320,7 +40342,7 @@
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="276">
+          <li class="missed" data-hits="0" data-linenumber="278">
             
             
 
@@ -40331,7 +40353,7 @@
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="277">
+          <li class="missed" data-hits="0" data-linenumber="279">
             
             
 
@@ -40342,35 +40364,13 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="278">
+          <li class="never" data-hits="" data-linenumber="280">
             
             
 
             
 
             <code class="ruby"></code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="missed" data-hits="0" data-linenumber="279">
-            
-            
-
-            
-
-            <code class="ruby">    ret = []</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="missed" data-hits="0" data-linenumber="280">
-            
-            
-
-            
-
-            <code class="ruby">    facet_field_data.dig(&quot;primaryMember_ses&quot;, &quot;buckets&quot;).each do |bucket|</code>
           </li>
         </div>
       
@@ -40381,7 +40381,7 @@
 
             
 
-            <code class="ruby">      bucket.dig(&quot;unique_combined&quot;, &quot;buckets&quot;).each do |sub_bucket|</code>
+            <code class="ruby">    ret = []</code>
           </li>
         </div>
       
@@ -40392,29 +40392,29 @@
 
             
 
+            <code class="ruby">    facet_field_data.dig(&quot;primaryMember_ses&quot;, &quot;buckets&quot;).each do |bucket|</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="missed" data-hits="0" data-linenumber="283">
+            
+            
+
+            
+
+            <code class="ruby">      bucket.dig(&quot;unique_combined&quot;, &quot;buckets&quot;).each do |sub_bucket|</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="missed" data-hits="0" data-linenumber="284">
+            
+            
+
+            
+
             <code class="ruby">        ret &lt;&lt; sub_bucket</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="283">
-            
-            
-
-            
-
-            <code class="ruby">      end</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="284">
-            
-            
-
-            
-
-            <code class="ruby">    end</code>
           </li>
         </div>
       
@@ -40425,18 +40425,18 @@
 
             
 
-            <code class="ruby"></code>
+            <code class="ruby">      end</code>
           </li>
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="286">
+          <li class="never" data-hits="" data-linenumber="286">
             
             
 
             
 
-            <code class="ruby">    ret</code>
+            <code class="ruby">    end</code>
           </li>
         </div>
       
@@ -40447,12 +40447,34 @@
 
             
 
+            <code class="ruby"></code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="missed" data-hits="0" data-linenumber="288">
+            
+            
+
+            
+
+            <code class="ruby">    ret</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="289">
+            
+            
+
+            
+
             <code class="ruby">  end</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="288">
+          <li class="never" data-hits="" data-linenumber="290">
             
             
 
@@ -40463,7 +40485,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="289">
+          <li class="covered" data-hits="1" data-linenumber="291">
             <span class="hits">1</span>
             
 
@@ -40474,7 +40496,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="84" data-linenumber="290">
+          <li class="covered" data-hits="84" data-linenumber="292">
             <span class="hits">84</span>
             
 
@@ -40485,7 +40507,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="291">
+          <li class="never" data-hits="" data-linenumber="293">
             
             
 
@@ -40496,7 +40518,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="292">
+          <li class="never" data-hits="" data-linenumber="294">
             
             
 
@@ -40507,7 +40529,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="293">
+          <li class="covered" data-hits="1" data-linenumber="295">
             <span class="hits">1</span>
             
 
@@ -40518,7 +40540,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="11" data-linenumber="294">
+          <li class="covered" data-hits="11" data-linenumber="296">
             <span class="hits">11</span>
             
 
@@ -40529,7 +40551,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="295">
+          <li class="never" data-hits="" data-linenumber="297">
             
             
 
@@ -40540,7 +40562,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="296">
+          <li class="never" data-hits="" data-linenumber="298">
             
             
 
@@ -40551,7 +40573,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="297">
+          <li class="covered" data-hits="1" data-linenumber="299">
             <span class="hits">1</span>
             
 
@@ -40562,35 +40584,13 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="13" data-linenumber="298">
+          <li class="covered" data-hits="13" data-linenumber="300">
             <span class="hits">13</span>
             
 
             
 
             <code class="ruby">    return [] unless search</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="299">
-            
-            
-
-            
-
-            <code class="ruby"></code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="covered" data-hits="11" data-linenumber="300">
-            <span class="hits">11</span>
-            
-
-            
-
-            <code class="ruby">    date_facet = search.dig(:data, &#39;facets&#39;, &#39;date_dt&#39;)</code>
           </li>
         </div>
       
@@ -40612,7 +40612,7 @@
 
             
 
-            <code class="ruby">    return [] if date_facet.blank?</code>
+            <code class="ruby">    date_facet = search.dig(:data, &#39;facets&#39;, &#39;date_dt&#39;)</code>
           </li>
         </div>
       
@@ -40628,13 +40628,13 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="9" data-linenumber="304">
-            <span class="hits">9</span>
+          <li class="covered" data-hits="11" data-linenumber="304">
+            <span class="hits">11</span>
             
 
             
 
-            <code class="ruby">    date_facet.dig(&quot;buckets&quot;).map { |b| b.dig(&quot;val&quot;).to_date.strftime(&quot;%Y&quot;) }.uniq</code>
+            <code class="ruby">    return [] if date_facet.blank?</code>
           </li>
         </div>
       
@@ -40645,12 +40645,34 @@
 
             
 
+            <code class="ruby"></code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="9" data-linenumber="306">
+            <span class="hits">9</span>
+            
+
+            
+
+            <code class="ruby">    date_facet.dig(&quot;buckets&quot;).map { |b| b.dig(&quot;val&quot;).to_date.strftime(&quot;%Y&quot;) }.uniq</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="307">
+            
+            
+
+            
+
             <code class="ruby">  end</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="306">
+          <li class="never" data-hits="" data-linenumber="308">
             
             
 
