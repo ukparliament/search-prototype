@@ -14,7 +14,7 @@ class ResearchMaterial < ContentTypeObject
 
   def self.search_result_solr_fields
     # fields requested in Solr search for search results page
-    %w[
+    super << %w[
     title_t uri
     type_ses subtype_ses
     searcherNote_t

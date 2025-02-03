@@ -14,7 +14,7 @@ class PaperSubmitted < Paper
 
   def self.search_result_solr_fields
     # fields requested in Solr search for search results page
-    %w[
+    super << %w[
     title_t uri
     memberPrinted_t
     department_ses department_t

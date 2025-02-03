@@ -12,7 +12,7 @@ class ObservationsOnPetitions < Petition
     'search/results/observation_on_a_petition'
   end
 
-  def self.search_result_solr_fields
+  def self.associated_objects
     # fields requested in Solr search for search results page
     %w[
     title_t uri

@@ -24,7 +24,7 @@ class ContentTypeObject
   end
 
   def self.search_result_solr_fields
-    raise 'Subclass should implement'
+    %w[timestamp]
   end
 
   def self.search_result_ses_fields
