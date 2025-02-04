@@ -30,7 +30,7 @@ class ContentTypeObject
   def self.search_result_ses_fields
     # solr fields to be requested from SES for search results page
 
-    search_result_solr_fields.select do |field|
+    search_result_solr_fields.flatten.uniq.select do |field|
       field.last(4) == "_ses"
     end
   end

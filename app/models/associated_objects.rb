@@ -12,7 +12,7 @@ class AssociatedObjects
   end
 
   def get_associated_objects
-    puts "Fetching objects associated with the search results" if Rails.env.development?
+    puts "Fetching associated objects" if Rails.env.development?
     solr_fields_string = solr_fields.flatten.uniq.join(' ')
     associated_objects = SolrQueryWrapper.new(object_uris: associated_object_ids, solr_fields: solr_fields_string).get_objects
     return {} if associated_objects.blank?
