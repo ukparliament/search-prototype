@@ -15,17 +15,16 @@ class SolrSearch < ApiCall
   def self.facet_fields
     [
       'type_sesrollup',
-      'publisher_ses',
       'legislature_ses',
       'date_dt',
       'department_ses',
       'member_ses',
-      'answeringMember_ses',
       'primaryMember_ses',
+      'answeringMember_ses',
       'legislativeStage_ses',
       'legislationTitle_ses',
-      'subject_ses',
-      'topic_ses'
+      'publisher_ses',
+      'subject_ses'
     ]
   end
 
