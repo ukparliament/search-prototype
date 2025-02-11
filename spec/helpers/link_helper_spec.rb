@@ -4,25 +4,33 @@ RSpec.describe LinkHelper, type: :helper do
   describe 'search link' do
     let!(:mock_ses_data) { { 123 => 'Smith, John' } }
     let!(:input_data_type_ses) { { value: 123, field_name: 'member_ses' } }
-    let!(:input_data_string) { { value: 'John Smith', field_name: 'memberPrinted_t' } }
+    let!(:input_data_string) { { value: 'John Smith', field_name: 'subject_t' } }
+    let!(:non_searchable_string) { { value: 'John Smith', field_name: 'memberPrinted_t' } }
 
-    # used for member names etc
-    context 'when given nil' do
-      it 'returns nil' do
-        allow(helper).to receive(:ses_data).and_return(mock_ses_data)
-        expect(helper.search_link(nil)).to eq(nil)
+    context 'for searchable fields' do
+      # used for member names etc
+      context 'when given nil' do
+        it 'returns nil' do
+          allow(helper).to receive(:ses_data).and_return(mock_ses_data)
+          expect(helper.search_link(nil)).to eq(nil)
+        end
       end
-    end
-    context 'when given a SES ID & field name' do
-      it 'returns a link to a new search using the SES ID as a filter for the given field' do
-        # requires SES data to have been preloaded on the page - this is done for performance reasons
-        allow(helper).to receive(:ses_data).and_return(mock_ses_data)
-        expect(helper.search_link(input_data_type_ses)).to eq("<a href=\"/search?filter%5Bmember_ses%5D%5B%5D=123\">John Smith</a>")
+      context 'when given a SES ID & field name' do
+        it 'returns a link to a new search using the SES ID as a filter for the given field' do
+          # requires SES data to have been preloaded on the page - this is done for performance reasons
+          allow(helper).to receive(:ses_data).and_return(mock_ses_data)
+          expect(helper.search_link(input_data_type_ses)).to eq("<a href=\"/search?filter%5Bmember_ses%5D%5B%5D=123\">John Smith</a>")
+        end
       end
-    end
-    context 'when given a string value and a field name' do
-      it 'returns a link to a new search using the string as a filter for the given field' do
-        expect(helper.search_link(input_data_string)).to eq("<a href=\"/search?filter%5BmemberPrinted_t%5D%5B%5D=John+Smith\">John Smith</a>")
+      context 'when given a string value and a field name' do
+        it 'returns a link to a new search using the string as a filter for the given field' do
+          expect(helper.search_link(input_data_string)).to eq("<a href=\"/search?filter%5Bsubject_t%5D%5B%5D=John+Smith\">John Smith</a>")
+        end
+      end
+      context 'for non-searchable fields' do
+        it 'returns the name as a string without a link' do
+          expect(helper.search_link(non_searchable_string)).to eq("John Smith")
+        end
       end
     end
   end
