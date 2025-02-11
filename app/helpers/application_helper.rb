@@ -73,44 +73,34 @@ module ApplicationHelper
   end
 
   def filter_field_name(field)
-    # returns display name for a filter field, e.g. 'Content Type' for type_ses
+    # Returns display name for a filter field.
+
+    # Filter name entries will be needed for all fields that come under each heading, e.g.
+    # legislationTitle_ses and legislationTitle_t are both shown under 'Legislation' and both
+    # need to be included here with that label.
 
     field_names = {
-      type_ses: 'Type',
       type_sesrollup: 'Type',
-      publisher_ses: 'Publisher',
-      legislature_ses: 'House',
-      session_t: 'Session',
-      date_dt: 'Date',
-      member_ses: 'Member',
-      memberParty_ses: 'Member party',
-      legislativeStage_ses: 'Legislative stage',
-      department_ses: 'Department',
-      subject_ses: 'Subject',
-      topic_ses: 'Topic',
-      party_ses: 'Party',
+      type_ses: 'Type',
       subtype_ses: 'Subtype',
-      tablingMember_ses: 'Tabling member',
-      tablingMemberParty_ses: 'Tabling member party',
-      answeringMember_ses: 'Answering member',
-      answeringMemberParty_ses: 'Answering member party',
-      askingMember_ses: 'Asking member',
-      askingMemberParty_ses: 'Asking member party',
-      leadMember_ses: 'Lead member',
-      leadMemberParty_ses: 'Lead member party',
-      legislationTitle_ses: 'Legislation',
-      memberPrinted_t: 'Member',
-      procedure_t: 'Procedure',
-      subject_t: 'Subject',
-      legislationTitle_t: 'Legislation',
+      legislature_ses: 'House',
+      date_dt: 'Date',
+      department_ses: 'Department',
       department_t: 'Department',
-      year: 'Date',
-      month: 'Date',
-      session: 'Session',
+      answeringDepartment_ses: 'Department',
+      member_ses: 'Member',
       primaryMember_ses: 'Primary member',
-      primarySponsorParty_ses: 'Primary sponsor party',
-      primarySponsorParty: 'Primary sponsor',
-      sponsor_ses: 'Sponsor'
+      askingMember_ses: 'Primary member',
+      leadMember_ses: 'Primary member',
+      primarySponsor_ses: 'Primary member',
+      tablingMember_ses: 'Primary member',
+      answeringMember_ses: 'Answering member',
+      legislativeStage_ses: 'Legislative stage',
+      legislationTitle_ses: 'Legislation',
+      legislationTitle_t: 'Legislation',
+      subject_ses: 'Subject',
+      subject_t: 'Subject',
+      publisher_ses: 'Publisher'
     }
 
     raise "Unknown field name '#{field}'" if Rails.env.development? && !field_names.keys.include?(field.to_sym)

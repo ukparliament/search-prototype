@@ -81,7 +81,6 @@ class SolrSearch < ApiCall
 
     filter.to_h.flat_map do |field_name, values|
       # TODO: remove these by implementing new Solr fields (more performant option)
-
       if field_name == "year"
         # value will be "YYYY"
         selected_year = values.first
@@ -97,111 +96,9 @@ class SolrSearch < ApiCall
           ranges << "[#{first_day}T00:00:00Z TO #{last_day}T23:59:59Z]"
         end
         "{!tag=month}date_dt:(#{ranges.join(" OR ")})"
-      elsif field_name == "session"
-        ranges = []
-        values.each do |value|
-          ranges << session_range_lookup(value)
-        end
-        # "{!tag=session_t}date_dt:(#{ranges.join(" OR ")})"
-        "{!tag=session_t}(date_dt:(#{ranges.join(" OR ")}) OR session_t:(#{values.join(" OR ")}))"
       else
         "{!tag=#{field_name}}#{field_name}:(#{values.join(" ")})"
       end
-    end
-  end
-
-  def session_range_lookup(value)
-    case value
-    when '2024-25'
-      '[2024-05-25T00:00:00Z TO *]'
-    when '2023-24'
-      '[2023-10-27T00:00:00Z TO 2024-05-24T23:59:00Z]'
-    when '2022-23'
-      '[2022-04-29T00:00:00Z TO 2023-10-26T23:59:59Z]'
-    when '2021-22'
-      '[2021-05-11T00:00:00Z TO 2022-04-28T23:59:59Z]'
-    when '2019-21'
-      '[2019-12-17T00:00:00Z TO 2021-05-10T23:59:59Z]'
-    when '2019-19'
-      '[2019-10-14T01:00:00Z TO 2019-11-06T00:01:00Z]'
-    when '2017-19'
-      '[2017-05-03T00:00:00Z TO 2019-10-13T23:59:59Z]'
-    when '2016-17'
-      '[2016-05-13T00:00:00Z TO 2017-05-02T23:59:59Z]'
-    when '2015-16'
-      '[2015-04-01T00:00:00Z TO 2016-05-12T23:59:59Z]'
-    when '2014-15'
-      '[2014-05-14T23:00:00Z TO 2015-03-30T23:59:59Z]'
-    when '2013-14'
-      '[2013-04-25T23:00:00Z TO 2014-06-03T22:59:59Z]'
-    when '2012-13'
-      '[2012-05-08T23:00:00Z TO 2013-04-25T22:59:59Z]'
-    when '2010-12'
-      '[2010-05-17T23:00:00Z TO 2012-05-08T22:59:59Z]'
-    when '2009-10'
-      '[2009-11-18T00:00:00Z TO 2010-05-17T22:59:59Z]'
-    when '2008-09'
-      '[2008-12-03T00:00:00Z TO 2009-11-17T23:59:59Z]'
-    when '2007-08'
-      '[2007-11-06T00:00:00Z TO 2008-12-02T23:59:59Z]'
-    when '2006-07'
-      '[2006-11-15T00:00:00Z TO 2007-11-05T23:59:59Z]'
-    when '2005-06'
-      '[2005-05-10T23:00:00Z TO 2006-11-14T23:59:59Z]'
-    when '2004-05'
-      '[2004-11-23T00:00:00Z TO 2005-05-10T22:59:59Z]'
-    when '2003-04'
-      '[2003-11-26T00:00:00Z TO 2004-11-22T23:59:59Z]'
-    when '2002-03'
-      '[2002-11-10T00:00:00Z TO 2003-11-25T23:59:59Z]'
-    when '2001-02'
-      '[2001-06-12T23:00:00Z TO 2002-11-09T23:59:59Z]'
-    when '2000-01'
-      '[2000-12-06T00:00:00Z TO 2001-06-12T22:59:59Z]'
-    when '1999-00'
-      '[1999-11-17T00:00:00Z TO 2000-12-05T23:59:59Z]'
-    when '1998-99'
-      '[1998-11-24T00:00:00Z TO 1999-11-16T23:59:59Z]'
-    when '1997-98'
-      '[1997-05-06T23:00:00Z TO 1998-11-23T23:59:59Z]'
-    when '1996-97'
-      '[1996-10-22T23:00:00Z TO 1997-05-06T22:59:59Z]'
-    when '1995-96'
-      '[1995-11-15T00:00:00Z TO 1996-10-22T22:59:59Z]'
-    when '1994-95'
-      '[1994-11-16T00:00:00Z TO 1995-11-14T23:59:59Z]'
-    when '1993-94'
-      '[1993-11-18T00:00:00Z TO 1994-11-15T23:59:59Z]'
-    when '1992-93'
-      '[1992-04-26T23:00:00Z TO 1993-11-17T23:59:59Z]'
-    when '1991-92'
-      '[1991-10-31T00:00:00Z TO 1992-04-26T22:59:59Z]'
-    when '1990-91'
-      '[1990-11-07T00:00:00Z TO 1991-10-30T23:59:59Z]'
-    when '1989-90'
-      '[1989-11-21T00:00:00Z TO 1990-11-06T23:59:59Z]'
-    when '1988-89'
-      '[1988-11-22T00:00:00Z TO 1989-11-20T23:59:59Z]'
-    when '1987-88'
-      '[1987-06-16T23:00:00Z TO 1988-11-21T23:59:59Z]'
-    when '1986-87'
-      '[1986-11-12T00:00:00Z TO 1987-06-16T22:59:59Z]'
-    when '1985-86'
-      '[1985-11-05T00:00:00Z TO 1986-11-11T23:59:59Z]'
-    when '1984-85'
-      '[1984-11-06T00:00:00Z TO 1985-11-04T23:59:59Z]'
-    when '1983-84'
-      '[1983-06-14T23:00:00Z TO 1984-11-05T23:59:59Z]'
-    when '1982-83'
-      '[1982-11-03T00:00:00Z TO 1983-06-14T22:59:59Z]'
-    when '1981-82'
-      '[1981-11-04T00:00:00Z TO 1982-11-02T23:59:59Z]'
-    when '1980-81'
-      '[1980-11-20T00:00:00Z TO 1981-11-03T23:59:59Z]'
-    when '1979-80'
-      '[1979-05-08T23:00:00Z TO 1980-11-19T23:59:59Z]'
-    else
-      ''
     end
   end
 
@@ -255,14 +152,6 @@ class SolrSearch < ApiCall
         "gap": "+1MONTH",
         "mincount": 0,
         "domain": { excludeTags: 'month' }
-      }
-    end
-
-    SolrSearch.sessions.each do |session|
-      ret["session_#{session}"] = {
-        "type": "query",
-        "q": "(session_t:#{session} OR date_dt:#{session_range_lookup(session)})",
-        "domain": { excludeTags: 'session_t' }
       }
     end
 

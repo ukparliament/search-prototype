@@ -69,7 +69,7 @@ class SearchData
   end
 
   def object_data
-    return { items: [] } if object_uris.blank?
+    return [] if object_uris.blank?
 
     solr_fields = []
     empty_objects.each do |object|
@@ -260,32 +260,7 @@ class SearchData
 
   def ordered_facet_fields
     # used to extract Solr returned facet data in the correct order for display
-    %w[type_sesrollup legislature_ses date_dt department_ses member_ses primaryMember_ses answeringMember_ses legislativeStage_ses legislationTitle_ses subject_ses publisher_ses]
-  end
-
-  def session_facets
-    return [] unless search
-
-    facet_field_data = search.dig(:data, 'facets')
-    return [] if facet_field_data.blank?
-
-    facet_field_data.select { |field| field.split('_').first == "session" }
-  end
-
-  def primary_member_facets
-    return [] unless search
-
-    facet_field_data = search.dig(:data, 'facets')
-    return [] if facet_field_data.blank?
-
-    ret = []
-    facet_field_data.dig("primaryMember_ses", "buckets").each do |bucket|
-      bucket.dig("unique_combined", "buckets").each do |sub_bucket|
-        ret << sub_bucket
-      end
-    end
-
-    ret
+    %w[type_sesrollup legislature_ses session_t date_dt department_ses member_ses primaryMember_ses answeringMember_ses legislativeStage_ses legislationTitle_ses subject_ses publisher_ses]
   end
 
   def sort_facets(facet_field)
