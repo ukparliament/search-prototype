@@ -582,7 +582,7 @@ table {
 
     /*nav bar*/
     .nav-container {
-        max-width: 1020px;
+        max-width: 80%;
 
         .nav-bar {
             padding: 24px 32px;
@@ -613,7 +613,7 @@ table {
     }
 
     main, footer {
-        max-width: 1020px;
+        max-width: 80%;
     }
 
     section {
