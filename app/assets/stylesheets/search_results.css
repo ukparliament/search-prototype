@@ -51,7 +51,7 @@
         row-gap: 12px;
 
         span {
-            align-content: center;
+            align-content: space-around;
             word-wrap: anywhere;
         }
     }

@@ -37,9 +37,9 @@
   <%= render 'content_type_objects/fragments/reported_by_joint_committee', reported: object.is_reported_by_joint_committee %>
   <%= render 'content_type_objects/fragments/related_items', related_item_ids: object.related_item_ids %>
   <%= render 'content_type_objects/fragments/ec_documents', ec_documents: object.ec_documents %>
-  <%= render 'content_type_objects/fragments/notes', notes: object.notes %>
   <%= render 'content_type_objects/fragments/contains_explanatory_memorandum', contains_em: object.contains_explanatory_memo %>
   <%= render 'content_type_objects/fragments/contains_impact_assessment', contains_ia: object.contains_impact_assessment %>
+  <%= render 'content_type_objects/fragments/notes', notes: object.notes %>
   <%= render 'content_type_objects/fragments/pills', pills_heading: 'Subjects', pills: object.subjects %>
   <%= render 'content_type_objects/fragments/legislation', legislation: object.legislation %>
   <%= render 'content_type_objects/fragments/library_location', commons: object.commons_library_location, lords: object.lords_library_location %>

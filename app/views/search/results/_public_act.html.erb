@@ -22,10 +22,13 @@
 
   <div <%= 'hidden' unless params[:show_detailed] == "true" %> class="row" id="detailed-view" data-detailed-results-target="toggleHidden">
     <%= render 'search/results/item_details/legislation', legislation: object.legislation unless object.legislation.blank? %>
-    <%= render 'search/results/item_details/subjects', subjects: object.subjects unless object.subjects.blank? %>
   </div>
 
   <%= render 'search/results/item_details/notes', notes: object.notes unless object.notes.blank? %>
+
+  <div <%= 'hidden' unless params[:show_detailed] == "true" %> class="row" id="detailed-view" data-detailed-results-target="toggleHidden">
+    <%= render 'search/results/item_details/subjects', subjects: object.subjects unless object.subjects.blank? %>
+  </div>
 
   <div <%= 'hidden' unless params[:show_detailed] == "true" %> class="row" id="detailed-view" data-detailed-results-target="toggleHidden">
     <% unless object.commons_library_location.blank? && object.lords_library_location.blank? %>
