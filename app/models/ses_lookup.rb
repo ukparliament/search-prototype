@@ -86,8 +86,6 @@ class SesLookup < ApiCall
     # If SES returns an error, we'll get an error key returned from evaluated_response
     return responses.first if responses.first&.has_key?(:error)
 
-    # TODO: reduce data retrieved from SES if possible (API limitations - vendor input needed)
-
     unless responses.compact.blank?
       responses.each do |response|
         ret[response['term']['id'].to_i] = response['term']['name']
@@ -129,11 +127,9 @@ class SesLookup < ApiCall
   end
 
   def ses_term_service_uri(id_group_string)
-
     base_url = ses_base_url
     base_url = 'https://api.parliament.uk/ses/' if Rails.env.test?
-    # using 'termlite' is faster for basic info required, but this is noted as being deprecated and due for
-    # removal, at which point 'term' will have to be used instead
+
     build_uri("#{base_url}select.exe?TBDB=disp_taxonomy&TEMPLATE=service.json&expand_hierarchy=0&SERVICE=termlite&ID=#{id_group_string}")
   end
 

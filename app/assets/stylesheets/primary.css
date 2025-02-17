@@ -578,11 +578,11 @@ table {
 }
 
 /* 'Large' desktop, from 1020px */
-@media only screen and (min-width: 1020px) {
+@media only screen and (min-width: 1020px) and (max-width: 1280px) {
 
     /*nav bar*/
     .nav-container {
-        max-width: 80%;
+        max-width: 100%;
 
         .nav-bar {
             padding: 24px 32px;
@@ -613,7 +613,61 @@ table {
     }
 
     main, footer {
-        max-width: 80%;
+        max-width: 100%;
+    }
+
+    section {
+        margin: 16px 0;
+    }
+
+    .search-control-panel-row {
+        flex-direction: row;
+    }
+
+    /* for full-size displays we switch to a grid system, as it gives us alignment between multiple rows */
+    .result-panel {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 6px;
+    }
+}
+
+/* 'Very large' desktop, from 1280px */
+@media only screen and (min-width: 1280px) {
+    /*nav bar*/
+    .nav-container {
+        max-width: 1440px;
+
+        .nav-bar {
+            padding: 24px 32px;
+
+            .nav-item-container {
+                display: flex;
+            }
+        }
+    }
+
+    #facet-container-large {
+        display: block;
+    }
+
+    #facet-container-small {
+        display: none;
+    }
+
+    #search-button-large {
+        display: inline-block;
+    }
+
+    #search-button-small {
+        display: none;
+    }
+
+    #search-input {
+    }
+
+    main, footer {
+        max-width: 1440px;
     }
 
     section {

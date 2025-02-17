@@ -45,7 +45,10 @@ class SesData
     # get cached data for ids left in initial_ids
     puts "#{ids_in_cache.count} SES terms found in cache" if Rails.env.development?
     unless ids_in_cache.blank?
-      ids_in_cache.each { |ses_id| cached_data[ses_id] = cache_store.read(cache_key(ses_id)) }
+      ids_in_cache.each do |ses_id|
+        cached_data[ses_id] = cache_store.read(cache_key(ses_id))
+        cached_data["#{ses_id}_scope_note"] = cache_store.read(cache_key("#{ses_id}_scope_note"))
+      end
     end
 
     # combine cached and fetched data
