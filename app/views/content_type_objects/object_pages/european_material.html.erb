@@ -24,9 +24,9 @@
   <%= render 'content_type_objects/fragments/eu_parliament_committee', eu_parliament_committee: object.eu_parliament_committee %>
   <%= render 'content_type_objects/fragments/related_items', related_item_ids: object.related_item_ids %>
   <%= render 'content_type_objects/fragments/ec_documents', ec_documents: object.ec_documents %>
+  <%= render 'content_type_objects/fragments/notes', notes: object.notes %>
   <%= render 'content_type_objects/fragments/pills', pills_heading: 'Subjects', pills: object.subjects %>
   <%= render 'content_type_objects/fragments/legislation', legislation: object.legislation %>
-  <%= render 'content_type_objects/fragments/notes', notes: object.notes %>
   <%= render 'content_type_objects/fragments/library_location', commons: object.commons_library_location, lords: object.lords_library_location %>
   <%= render 'content_type_objects/fragments/contains_statistics', contains_statistics: object.contains_statistics %>
   <%= render 'content_type_objects/fragments/publisher', publisher: object.publisher %>

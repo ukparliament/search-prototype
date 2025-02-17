@@ -39,11 +39,11 @@
 <section id="about" class="content-section grey">
   <%= render 'content_type_objects/fragments/type', type: object.type %>
   <%= render 'content_type_objects/fragments/reference', reference: object.reference %>
-  <%= render 'content_type_objects/fragments/notes', notes: object.notes %>
   <%= render 'content_type_objects/fragments/date', title: 'Originated on', date: object.date_originated %>
   <%= render 'content_type_objects/fragments/corporate_author', label: 'Author', author: object.authors %>
   <%= render 'content_type_objects/fragments/paper_type', paper_type: object.paper_type %>
   <%= render 'content_type_objects/fragments/related_items', related_item_ids: object.related_item_ids %>
+  <%= render 'content_type_objects/fragments/notes', notes: object.notes %>
   <%= render 'content_type_objects/fragments/pills', pills_heading: 'Subjects', pills: object.subjects %>
   <%= render 'content_type_objects/fragments/legislation', legislation: object.legislation %>
   <%= render 'content_type_objects/fragments/library_location', commons: object.commons_library_location, lords: object.lords_library_location %>

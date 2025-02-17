@@ -31,7 +31,6 @@
   <%= render 'content_type_objects/fragments/attachment', attachments: object.attachment %>
   <%= render 'content_type_objects/fragments/related_items', related_item_ids: object.related_item_ids %>
   <%= render 'content_type_objects/fragments/ec_documents', ec_documents: object.ec_documents %>
-  <%= render 'content_type_objects/fragments/notes', notes: object.notes %>
   <%= render 'content_type_objects/fragments/registered_interest_declared', registered_interest: object.registered_interest_declared %>
   <% unless object.tabled? || object.withdrawn? %>
     <%= render 'content_type_objects/fragments/grouped_for_answer', grouped: object.is_grouped_for_answer %>
@@ -39,6 +38,7 @@
   <% end %>
   <%= render 'content_type_objects/fragments/failed_oral', failed_oral: object.has_failed_oral %>
   <%= render 'content_type_objects/fragments/unstarred', unstarred: object.is_unstarred_question %>
+  <%= render 'content_type_objects/fragments/notes', notes: object.notes %>
   <%= render 'content_type_objects/fragments/pills', pills_heading: 'Subjects', pills: object.subjects %>
   <%= render 'content_type_objects/fragments/legislation', legislation: object.legislation %>
   <%= render 'content_type_objects/fragments/contains_statistics', contains_statistics: object.contains_statistics %>
