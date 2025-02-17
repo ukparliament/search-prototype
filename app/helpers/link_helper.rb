@@ -14,18 +14,44 @@ module LinkHelper
 
     return if data.blank? || data[:value].blank?
 
-    field_name = substitute_field_name(data[:field_name])
+    search_link_field_names = %w[
+    answeringDept_ses
+    answeringMember_ses
+    askingMember_ses
+    department_ses
+    department_t
+    leadMember_ses
+    legislationTitle_ses
+    legislationTitle_t
+    legislativeStage_ses
+    legislature_ses
+    member_ses
+    primarySponsor_ses
+    publisher_ses
+    subject_ses
+    subject_t
+    subtype_ses
+    tablingMember_ses
+    type_ses]
+
+    formatted_name = formatted_name(data, ses_data, singular)
+    return formatted_name unless search_link_field_names.include?(data[:field_name])
+
+    searchable_field_name = substitute_field_name(data[:field_name])
     value = data[:value]
 
-    link_to(formatted_name(data, ses_data, singular), search_path(filter: { field_name => [value] }))
+    link_to(formatted_name(data, ses_data, singular), search_path(filter: { searchable_field_name => [value] }))
   end
 
   def substitute_field_name(field_name)
-    if ['subtype_ses', 'type_ses'].include?(field_name)
-      'type_sesrollup'
-    else
-      field_name
-    end
+    # Click-through search links (from object page to a new filtered search) will submit the same
+    # field as that used on the object page. We can override this here, but because most facets are
+    # shown as independent counts grouped under common headings, it isn't necessary.
+    # Type is a special case: we use type_sesrollup to build the hierarchy so we're swapping out to
+    # that field here.
+    return 'type_sesrollup' if ['subtype_ses', 'type_ses'].include?(field_name)
+
+    field_name
   end
 
   def scope_note(ses_id_string)
