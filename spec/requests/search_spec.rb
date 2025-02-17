@@ -6,7 +6,7 @@ RSpec.describe 'Search', type: :request do
     let!(:item1_initial) { { 'type_ses' => [90996], 'uri' => 'QZH4EFc_uri' } }
     let!(:item2_initial) { { 'type_ses' => [90996], 'uri' => 'SL9RT6y_uri' } }
     let!(:item3_initial) { { 'type_ses' => [90996], 'uri' => 'BZ34eDD_uri' } }
-    let!(:initial_search_data) { { search_parameters: { "query" => 'item 2' }, data: { 'response' => { 'start' => 0, 'docs' => [item1_initial, item2_initial, item3_initial] }, 'facets' => { "count" => 5, 'type_sesrollup' => { "buckets" => [{ "val" => 90996, "count" => 123 }, { "val" => 90995, "count" => 234 }] } } } } }
+    let!(:initial_search_data) { { search_parameters: { "query" => 'item 2' }, data: { 'response' => { 'start' => 0, 'numFound' => 3, 'docs' => [item1_initial, item2_initial, item3_initial] }, 'facets' => { "count" => 5, 'type_sesrollup' => { "buckets" => [{ "val" => 90996, "count" => 123 }, { "val" => 90995, "count" => 234 }] } } } } }
     let!(:item1) { { 'type_ses' => [90996], 'title_t' => 'QZH4EFc', 'uri' => 'QZH4EFc_uri', 'all_ses' => [90996, 12345] } }
     let!(:item2) { { 'type_ses' => [90996], 'title_t' => 'SL9RT6y', 'uri' => 'SL9RT6y_uri', 'all_ses' => [90996, 56789] } }
     let!(:item3) { { 'type_ses' => [90996], 'title_t' => 'BZ34eDD', 'uri' => 'BZ34eDD_uri', 'all_ses' => [90996, 34567] } }
