@@ -87,16 +87,8 @@
           <%= render '/content_type_objects/fragments/about_these_results' %>
 
           <% unless @search_data.current_page.blank? || @search_data.total_pages.blank? %>
-
             <p>
-              Showing results
-              <strong><%= @search_data.start %>
-                - <%= [@search_data.end, @search_data.number_of_results].min %></strong>
-              of
-              <strong><%= number_to_delimited(@search_data.number_of_results, separator: ",") %></strong> in
-              <strong>
-                <%= "#{(Time.now - @start_time).round(2)} seconds" %>.
-              </strong>
+              <%= render 'showing_results' %>
             </p>
 
             <% if @search_data.total_pages > 1 %>
