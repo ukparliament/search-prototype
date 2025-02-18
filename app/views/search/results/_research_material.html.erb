@@ -1,15 +1,15 @@
 <div class="result-item">
-  <div class="row" id="title">
+  <div class="row title">
     <%= format_object_title(object.object_title, @ses_data) %>
   </div>
 
   <div class="row">
     <div class="result-panel">
-      <div id="type">
+      <div class="type">
         <%= render 'search/results/item_details/type', type: object.object_name %>
       </div>
-      <div id="status"></div>
-      <div id="secondary-group"></div>
+      <div class="status"></div>
+      <div class="secondary-group"></div>
     </div>
   </div>
 
@@ -17,13 +17,13 @@
 
   <div class="row">
     <div class="result-panel">
-      <div id="significant-date">
+      <div class="significant-date">
         <%= render 'search/results/item_details/date', date: object.standard_date %>
       </div>
-      <div id="reference">
+      <div class="reference">
         <%= render 'search/results/item_details/reference', reference: object.standard_reference %>
       </div>
-      <div id="house">
+      <div class="house">
         <%= render 'search/results/item_details/legislature', legislature: object.legislature %>
       </div>
     </div>
