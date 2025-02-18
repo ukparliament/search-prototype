@@ -3,7 +3,7 @@
     <nav class="nav-bar">
       <div class="nav-logo-wrapper">
         <div class="nav-logo">
-          <%= link_to(image_tag('Portcullis.svg'), root_path) %>
+          <%= link_to(image_tag('Portcullis.svg', alt: 'Navigate to the Parliamentary Search home page'), root_path, aria: { label: 'UK Parliament' }) %>
         </div>
       </div>
       <div class="nav-item-container">
