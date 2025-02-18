@@ -87,8 +87,9 @@
           <%= render '/content_type_objects/fragments/about_these_results' %>
 
           <% unless @search_data.current_page.blank? || @search_data.total_pages.blank? %>
+
             <p>
-              <%= render 'showing_results' %>
+              <%= render 'showing_results', include_time: true %>
             </p>
 
             <% if @search_data.total_pages > 1 %>
