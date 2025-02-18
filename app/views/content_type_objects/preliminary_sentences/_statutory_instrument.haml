@@ -10,21 +10,21 @@
         %span= " by "
         %span>= search_link(object.member_name)
       - unless object.department.blank?
-        &nbspon behalf of the&nbsp
+        &nbsp;on behalf of the&nbsp;
         %span>= search_link(object.department)
       \.
       - unless object.date_approved.blank?
-        It was approved by the House of Commons on&nbsp
+        It was approved by the House of Commons on&nbsp;
         %span>= format_date(object.date_approved)
         \.
       - unless object.date_made.blank?
-        It was made on&nbsp
+        It was made on&nbsp;
         %span>= format_date(object.date_made)
         \.
       - if object.date_withdrawn.blank?
         - if object.is_withdrawn && object.is_withdrawn[:value]
           It was subsequently withdrawn.
       - else
-        It was withdrawn on&nbsp
+        It was withdrawn on&nbsp;
         %span>= format_date(object.date_withdrawn)
         \.
