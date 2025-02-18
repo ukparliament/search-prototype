@@ -1,11 +1,11 @@
 <section hidden id="about-this-result" class="object-claw claw">
   <div class="content-heading-small">Librarians' tools</div>
   <div class="claw-grid-container">
-    <b class="grid-item" id="about-timestamp">Search time</b>
+    <b class="grid-item about-timestamp">Search time</b>
     <span class="grid-item"><%= "#{(Time.now - @start_time).round(3)} seconds" %></span>
-    <b class="grid-item" id="about-timestamp">Solr query time</b>
+    <b class="grid-item about-timestamp">Solr query time</b>
     <span class="grid-item"><%= "#{@search_data.query_time} seconds" %></span>
-    <b class="grid-item" id="about-timestamp">Search query</b>
+    <b class="grid-item about-timestamp">Search query</b>
     <span class="grid-item"><%= @search_data.query %></span>
   </div>
 </section>
