@@ -151,7 +151,7 @@ RSpec.describe LinkHelper, type: :helper do
       let!(:input_data_type_ses) { { value: 123, field_name: 'department_ses' } }
 
       it 'returns the name as-is' do
-        expect(helper.send(:format_name, input_data_type_ses, mock_ses_data)).to eq("Department of One, Two and Three")
+        expect(helper.send(:format_name, input_data_type_ses, mock_ses_data, true)).to eq("Department of One, Two and Three")
       end
     end
 
@@ -160,7 +160,13 @@ RSpec.describe LinkHelper, type: :helper do
       let!(:input_data_type_ses) { { value: 123, field_name: 'answeringMember_ses' } }
 
       it 'returns the name correctly formatted' do
-        expect(helper.send(:format_name, input_data_type_ses, mock_ses_data)).to eq("First Last")
+        expect(helper.send(:format_name, input_data_type_ses, mock_ses_data, true)).to eq("First Last")
+      end
+
+      context 'when reading order is disabled' do
+        it 'returns the name in its original order' do
+          expect(helper.send(:format_name, input_data_type_ses, mock_ses_data, false)).to eq("Last, First")
+        end
       end
 
       context 'where there are disambiguation brackets' do
@@ -168,7 +174,7 @@ RSpec.describe LinkHelper, type: :helper do
         let!(:input_data_type_ses) { { value: 123, field_name: 'answeringMember_ses' } }
 
         it 'returns first name then last name with brackets afterwards' do
-          expect(helper.send(:format_name, input_data_type_ses, mock_ses_data)).to eq("First Last (Constituency)")
+          expect(helper.send(:format_name, input_data_type_ses, mock_ses_data, true)).to eq("First Last (Constituency)")
         end
       end
     end
@@ -180,7 +186,7 @@ RSpec.describe LinkHelper, type: :helper do
 
       it 'performs a new SES lookup and returns the name correctly formatted' do
         allow_any_instance_of(SesLookup).to receive(:data).and_return(fallback_ses_data)
-        expect(helper.send(:format_name, input_data_type_ses, mock_ses_data)).to eq("Another Name")
+        expect(helper.send(:format_name, input_data_type_ses, mock_ses_data, true)).to eq("Another Name")
       end
     end
 
@@ -191,7 +197,7 @@ RSpec.describe LinkHelper, type: :helper do
 
       it 'returns "Unknown"' do
         allow_any_instance_of(SesLookup).to receive(:data).and_return(fallback_ses_data)
-        expect(helper.send(:format_name, input_data_type_ses, mock_ses_data)).to eq("Unknown")
+        expect(helper.send(:format_name, input_data_type_ses, mock_ses_data, true)).to eq("Unknown")
       end
     end
   end
