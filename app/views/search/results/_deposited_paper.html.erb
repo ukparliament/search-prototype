@@ -1,20 +1,20 @@
 <div class="result-item">
-  <div class="row" id="title">
+  <div class="row title">
     <%= link_to(format_object_title(object.object_title, @ses_data), object_show_url(object: object.object_uri[:value])) %>
   </div>
 
-  <div <%= 'hidden' unless params[:show_detailed] == "true" %> class="row" id="content" data-detailed-results-target="toggleHidden">
+  <div <%= 'hidden' unless params[:show_detailed] == "true" %> class="row content">
     <%= render 'search/results/item_details/description', description: object.abstract_text, full_text: true %>
   </div>
-  <div <%= 'hidden' if params[:show_detailed] == "true" %> class="row" id="content" data-detailed-results-target="toggleHidden">
+  <div <%= 'hidden' if params[:show_detailed] == "true" %> class="row content">
     <%= render 'search/results/item_details/description', description: object.abstract_text, full_text: false %>
   </div>
 
   <div class="row">
     <div class="result-panel">
-      <div id="primary-person"></div>
-      <div id="secondary-person"></div>
-      <div id="primary-group">
+      <div class="primary-person"></div>
+      <div class="secondary-person"></div>
+      <div class="primary-group">
         <%= render 'search/results/item_details/departments', departments: object.departments, label: 'Deposited by' %>
       </div>
     </div>
@@ -22,32 +22,32 @@
 
   <div class="row">
     <div class="result-panel">
-      <div id="type">
+      <div class="type">
         <%= render 'search/results/item_details/subtype_and_type', subtype: object.subtypes, type: object.type %>
       </div>
-      <div id="status"></div>
-      <div id="secondary-group">
-        <div <%= 'hidden' unless params[:show_detailed] == "true" %> class="item-details" data-detailed-results-target="toggleHidden">
+      <div class="status"></div>
+      <div class="secondary-group">
+        <div <%= 'hidden' unless params[:show_detailed] == "true" %> class="item-details">
           <%= render 'search/results/item_details/corporate_author', corporate_author: object.authors, label: 'Author' %>
         </div>
       </div>
     </div>
   </div>
 
-  <div <%= 'hidden' unless params[:show_detailed] == "true" %> class="row" id="detailed-view" data-detailed-results-target="toggleHidden">
+  <div <%= 'hidden' unless params[:show_detailed] == "true" %> class="row">
 
     <div class="row">
       <div class="result-panel">
-        <div id="specific-date-1">
+        <div class="specific-date-1">
           <%= render 'search/results/item_details/commitment_to_deposit_date', commitment_to_deposit_date: object.commitment_to_deposit_date %>
         </div>
-        <div id="specific-date-2">
+        <div class="specific-date-2">
           <%= render 'search/results/item_details/date_originated', date_originated: object.date_originated, label: 'Originated on' %>
         </div>
-        <div id="specific-date-3">
+        <div class="specific-date-3">
           <%= render 'search/results/item_details/date_deposited', date_deposited: object.deposited_date, label: 'Received on' %>
         </div>
-        <div id="specific-date-4"></div>
+        <div class="specific-date-4"></div>
       </div>
     </div>
 
@@ -56,16 +56,16 @@
 
   <%= render 'search/results/item_details/notes', notes: object.notes unless object.notes.blank? %>
 
-  <div <%= 'hidden' unless params[:show_detailed] == "true" %> class="row" id="detailed-view" data-detailed-results-target="toggleHidden">
+  <div <%= 'hidden' unless params[:show_detailed] == "true" %> class="row">
     <%= render 'search/results/item_details/subjects', subjects: object.subjects unless object.subjects.blank? %>
 
     <% unless object.commons_library_location.blank? && object.lords_library_location.blank? %>
       <div class="row">
         <div class="result-panel">
-          <div id="commons-library-location">
+          <div class="commons-library-location">
             <%= render 'search/results/item_details/commons_library_location', location: object.commons_library_location unless object.commons_library_location.blank? %>
           </div>
-          <div id="lords-library-location">
+          <div class="lords-library-location">
             <%= render 'search/results/item_details/lords_library_location', location: object.lords_library_location unless object.lords_library_location.blank? %>
           </div>
         </div>
@@ -75,13 +75,13 @@
 
   <div class="row">
     <div class="result-panel">
-      <div id="significant-date">
+      <div class="significant-date">
         <%= render 'search/results/item_details/date', date: object.standard_date %>
       </div>
-      <div id="reference">
+      <div class="reference">
         <%= render 'search/results/item_details/reference', reference: object.standard_reference %>
       </div>
-      <div id="house">
+      <div class="house">
         <%= render 'search/results/item_details/legislature', legislature: object.legislature %>
       </div>
     </div>

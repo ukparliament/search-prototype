@@ -1,29 +1,29 @@
 <div class="result-item">
-  <div class="row" id="title">
+  <div class="row title">
     <%= link_to(format_object_title(object.object_title, @ses_data), object_show_url(object: object.object_uri[:value])) %>
   </div>
 
   <div class="row">
     <div class="result-panel">
-      <div id="type">
+      <div class="type">
         <%= render 'search/results/item_details/type', type: object.object_name %>
       </div>
-      <div id="status"></div>
-      <div id="secondary-group"></div>
+      <div class="status"></div>
+      <div class="secondary-group"></div>
     </div>
   </div>
 
-  <div <%= 'hidden' unless params[:show_detailed] == "true" %> class="row" id="detailed-view" data-detailed-results-target="toggleHidden">
+  <div <%= 'hidden' unless params[:show_detailed] == "true" %> class="row">
     <div class="row">
       <div class="result-panel">
-        <div id="specific-date-1">
+        <div class="specific-date-1">
           <%= render 'search/results/item_details/date_reported', date_reported: object.date_reported %>
         </div>
-        <div id="specific-date-2">
+        <div class="specific-date-2">
           <%= render 'search/results/item_details/date_debated', date_debated: object.date_debated %>
         </div>
-        <div id="specific-date-3"></div>
-        <div id="specific-date-4"></div>
+        <div class="specific-date-3"></div>
+        <div class="specific-date-4"></div>
       </div>
     </div>
   </div>
@@ -32,13 +32,13 @@
 
   <div class="row">
     <div class="result-panel">
-      <div id="significant-date">
+      <div class="significant-date">
         <%= render 'search/results/item_details/date', date: object.standard_date %>
       </div>
-      <div id="reference">
+      <div class="reference">
         <%= render 'search/results/item_details/reference', reference: object.standard_reference %>
       </div>
-      <div id="house"></div>
+      <div class="house"></div>
     </div>
   </div>
 </div>

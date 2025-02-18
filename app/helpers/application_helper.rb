@@ -85,6 +85,7 @@ module ApplicationHelper
       subtype_ses: 'Subtype',
       legislature_ses: 'House',
       date_dt: 'Date',
+      session_t: 'Session',
       department_ses: 'Department',
       department_t: 'Department',
       answeringDepartment_ses: 'Department',

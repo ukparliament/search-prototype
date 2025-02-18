@@ -1,45 +1,45 @@
 <div class="result-item">
-  <div class="row" id="title">
+  <div class="row title">
     <%= link_to(format_object_title(object.object_title, @ses_data), object_show_url(object: object.object_uri[:value])) %>
   </div>
 
-  <div <%= 'hidden' unless params[:show_detailed] == "true" %> class="row" id="content" data-detailed-results-target="toggleHidden">
+  <div <%= 'hidden' unless params[:show_detailed] == "true" %> class="row content">
     <%= render 'search/results/item_details/description', description: object.motion_text, full_text: true %>
   </div>
-  <div <%= 'hidden' if params[:show_detailed] == "true" %> class="row" id="content" data-detailed-results-target="toggleHidden">
+  <div <%= 'hidden' if params[:show_detailed] == "true" %> class="row content">
     <%= render 'search/results/item_details/description', description: object.motion_text, full_text: false %>
   </div>
 
   <div class="row">
     <div class="result-panel">
-      <div id="primary-person">
+      <div class="primary-person">
         <%= render 'search/results/item_details/primary_sponsor', primary_sponsor: object.primary_sponsor, primary_sponsor_party: object.primary_sponsor_party %>
       </div>
-      <div id="secondary-person"></div>
-      <div id="primary-group"></div>
+      <div class="secondary-person"></div>
+      <div class="primary-group"></div>
     </div>
   </div>
 
   <div class="row">
     <div class="result-panel">
-      <div id="type">
+      <div class="type">
         <%= render 'search/results/item_details/subtype_or_type', subtype: object.subtype, type: object.type %>
       </div>
-      <div id="status"></div>
-      <div id="secondary-group"></div>
+      <div class="status"></div>
+      <div class="secondary-group"></div>
     </div>
   </div>
 
-  <div <%= 'hidden' unless params[:show_detailed] == "true" %> class="row" id="detailed-view" data-detailed-results-target="toggleHidden">
+  <div <%= 'hidden' unless params[:show_detailed] == "true" %> class="row">
 
     <% unless object.amendments.blank? %>
       <% object.amendments.each do |amendment| %>
         <div class="row">
           <div class="result-panel">
-            <div id="amending-member">
+            <div class="amending-member">
               <%= render 'search/results/item_details/amended_by', primary_sponsor: amendment.dig(:primary_sponsor) unless amendment.dig(:primary_sponsor, :value).blank? %>
             </div>
-            <div id="amendment-date">
+            <div class="amendment-date">
               <%= render 'search/results/item_details/amended_on', date_tabled: amendment.dig(:date_tabled) unless amendment.dig(:date_tabled, :value).blank? %>
             </div>
           </div>
@@ -52,19 +52,19 @@
 
   <%= render 'search/results/item_details/notes', notes: object.notes unless object.notes.blank? %>
 
-  <div <%= 'hidden' unless params[:show_detailed] == "true" %> class="row" id="detailed-view" data-detailed-results-target="toggleHidden">
+  <div <%= 'hidden' unless params[:show_detailed] == "true" %> class="row">
     <%= render 'search/results/item_details/subjects', subjects: object.subjects unless object.subjects.blank? %>
   </div>
 
   <div class="row">
     <div class="result-panel">
-      <div id="significant-date">
+      <div class="significant-date">
         <%= render 'search/results/item_details/date', date: object.standard_date %>
       </div>
-      <div id="reference">
+      <div class="reference">
         <%= render 'search/results/item_details/reference', reference: object.standard_reference %>
       </div>
-      <div id="house">
+      <div class="house">
         <%= render 'search/results/item_details/legislature', legislature: object.legislature %>
       </div>
     </div>

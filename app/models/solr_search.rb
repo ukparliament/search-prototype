@@ -17,6 +17,7 @@ class SolrSearch < ApiCall
       'type_sesrollup',
       'legislature_ses',
       'date_dt',
+      'session_t',
       'department_ses',
       'member_ses',
       'primaryMember_ses',
