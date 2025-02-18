@@ -11,7 +11,7 @@
     %span= object_display_name(items.first, singular: singular)
     %span>= "; "
     - items[1...-2].each do |item|
-      %span>= object_display_name(item)
+      %span>= object_display_name(item, singular: singular)
       %span>= "; "
     %span= object_display_name(items.last(2).first, singular: singular)
     %span>= "; "
