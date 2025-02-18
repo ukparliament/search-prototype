@@ -24,7 +24,8 @@ class ContentTypeObject
   end
 
   def self.search_result_solr_fields
-    %w[timestamp]
+    # TODO: consider moving location fields to be per-object
+    %w[timestamp location_uri externalLocation_uri location_t externalLocation_t]
   end
 
   def self.search_result_ses_fields
@@ -222,6 +223,14 @@ class ContentTypeObject
 
   def internal_location_uri
     get_first_from('internalLocation_uri')
+  end
+
+  def combined_location_uri
+    # potential solution to claw location link, avoiding content type specific code
+    uri = fallback(get_first_from('externalLocation_uri'), get_first_from('location_uri'))
+    text = fallback(get_first_from('externalLocation_t'), get_first_from('location_t'))
+
+    fallback(uri, text)
   end
 
   def timestamp

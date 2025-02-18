@@ -80,23 +80,17 @@
 
         <div data-controller="claw" data-action="keydown@document->claw#handleKeyDown">
           <% @objects.each do |object| %>
-            <%= render object.search_result_partial, object: object unless object.class == NotSupported %>
-            <%= render 'content_type_objects/fragments/search_claw', object: object %>
-            <hr>
+            <div class="search-result-container">
+              <%= render object.search_result_partial, object: object unless object.class == NotSupported %>
+              <%= render 'content_type_objects/fragments/search_claw', object: object %>
+            </div>
           <% end %>
           <%= render '/content_type_objects/fragments/about_these_results' %>
 
           <% unless @search_data.current_page.blank? || @search_data.total_pages.blank? %>
 
             <p>
-              Showing results
-              <strong><%= @search_data.start %>
-                - <%= [@search_data.end, @search_data.number_of_results].min %></strong>
-              of
-              <strong><%= number_to_delimited(@search_data.number_of_results, separator: ",") %></strong> in
-              <strong>
-                <%= "#{(Time.now - @start_time).round(2)} seconds" %>.
-              </strong>
+              <%= render 'showing_results', include_time: true %>
             </p>
 
             <% if @search_data.total_pages > 1 %>

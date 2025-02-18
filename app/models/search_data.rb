@@ -170,6 +170,8 @@ class SearchData
   end
 
   def end
+    return unless search
+
     # start + results per page would be the start of the following page
     # so subtract 1 to get the end of the current page
     start + results_per_page - 1

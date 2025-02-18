@@ -1,0 +1,9 @@
+<span>
+  <strong><%= @search_data.start %>-<%= [@search_data.end, @search_data.number_of_results].min %></strong>
+    of
+  <strong><%= number_to_delimited(@search_data.number_of_results, separator: ",") %></strong>
+  results
+  <% if include_time %>
+    <span>(<%= "#{(Time.now - @start_time).round(2)} seconds" %>)</span>
+  <% end %>
+</span>

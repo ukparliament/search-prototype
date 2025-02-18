@@ -8,7 +8,7 @@ module LinkHelper
     link_to(string, object_show_url(object: uri[:value]))
   end
 
-  def search_link(data, singular: false)
+  def search_link(data, singular: false, reading_order: true)
     # Accepts either a string or a SES ID, which it resolves into a string
     # Either option requires a field reference (standard data hash)
 
@@ -34,13 +34,13 @@ module LinkHelper
     tablingMember_ses
     type_ses]
 
-    formatted_name = formatted_name(data, ses_data, singular)
+    formatted_name = formatted_name(data, ses_data, singular, reading_order)
     return formatted_name unless search_link_field_names.include?(data[:field_name])
 
     searchable_field_name = substitute_field_name(data[:field_name])
     value = data[:value]
 
-    link_to(formatted_name(data, ses_data, singular), search_path(filter: { searchable_field_name => [value] }))
+    link_to(formatted_name(data, ses_data, singular, reading_order), search_path(filter: { searchable_field_name => [value] }))
   end
 
   def substitute_field_name(field_name)
@@ -63,7 +63,7 @@ module LinkHelper
     @ses_data.dig(ses_id_string)
   end
 
-  def object_display_name(data, singular: true, case_formatting: false)
+  def object_display_name(data, singular: true, case_formatting: false, reading_order: true)
     # can used where the object type is dynamic by passing a SES ID
     # alternatively works with string names
     # e.g. secondary information title
@@ -71,7 +71,7 @@ module LinkHelper
 
     return if data.blank? || data[:value].blank?
 
-    formatted = formatted_name(data, ses_data, singular)
+    formatted = formatted_name(data, ses_data, singular, reading_order)
 
     if case_formatting
       conditional_downcase(formatted)
@@ -80,10 +80,10 @@ module LinkHelper
     end
   end
 
-  def object_display_name_link(data, singular: true, case_formatting: false)
+  def object_display_name_link(data, singular: true, case_formatting: false, reading_order: true)
     return if data.blank? || data[:value].blank?
 
-    formatted = formatted_name(data, ses_data, singular)
+    formatted = formatted_name(data, ses_data, singular, reading_order)
     field_name = substitute_field_name(data[:field_name])
     value = data[:value]
 
@@ -94,13 +94,13 @@ module LinkHelper
     end
   end
 
-  def formatted_name(data, ses_data, singular)
-    singular ? format_name(data, ses_data)&.singularize : format_name(data, ses_data)
+  def formatted_name(data, ses_data, singular, reading_order)
+    singular ? format_name(data, ses_data, reading_order)&.singularize : format_name(data, ses_data, reading_order)
   end
 
   private
 
-  def format_name(data, ses_data)
+  def format_name(data, ses_data, reading_order)
     # This method processes names, handling commas and disambiguation
     # It accepts a standard data hash with a SES ID or string
 
@@ -122,10 +122,10 @@ module LinkHelper
 
     return if name_string.blank?
 
-    return name_string unless human_name_fields.include?(data[:field_name]) && name_string.include?(',')
+    return name_string unless human_name_fields.include?(data[:field_name]) && name_string.include?(',') && reading_order
 
-    # handle disambiguation brackets
     if name_string.include?('(')
+      # handle disambiguation brackets
       disambiguation_components = name_string.split(' (')
       # 'Sharpe of Epsom, Lord (Disambiguation)' => ['Sharpe of Epsom, Lord', 'Disambiguation)']
 

@@ -1,4 +1,4 @@
-<div id="pagination">
+<span id="pagination">
   <% if user_requested_page > 3 %>
     <div>
       <%= link_to "1", search_url(query: query, filter: filter, sort_by: sort_by, results_per_page: results_per_page, page: 1, expanded_types: expanded_types, show_detailed: show_detailed), class: 'modifiable-link' %>
@@ -44,4 +44,4 @@
       <%= link_to last_page, search_url(query: query, filter: filter, sort_by: sort_by, results_per_page: results_per_page, page: last_page, expanded_types: expanded_types, show_detailed: show_detailed), class: 'modifiable-link' %>
     </div>
   <% end %>
-</div>
+</span>

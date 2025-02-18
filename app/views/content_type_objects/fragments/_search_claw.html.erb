@@ -28,6 +28,12 @@
           <%= link_to 'Solr', object.solr_deep_link, target: :_blank, class: 'page-button' %>
         </span>
       <% end %>
+
+      <% unless object.combined_location_uri.blank? %>
+        <span>
+          <%= link_to 'Source', object.combined_location_uri, target: :_blank, class: 'page-button' %>
+        </span>
+      <% end %>
     </span>
   </div>
 </div>

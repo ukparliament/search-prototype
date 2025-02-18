@@ -400,19 +400,18 @@ table {
 
 /* Back to top & any other on-page buttons */
 .mini-button-container {
-
     display: flex;
     gap: 2px;
 
     .page-button {
-        border: 2px #2B57AB solid;
+        border: 1px #2B57AB solid;
         background: white;
-        border-radius: 4px;
+        border-radius: 2px;
         color: #2B57AB;
         text-decoration: none;
-        padding: 4px 8px;
+        padding: 2px 4px;
         cursor: pointer;
-        font-size: small;
+        font-size: x-small;
 
         &:hover {
             background: #f1f1f1;

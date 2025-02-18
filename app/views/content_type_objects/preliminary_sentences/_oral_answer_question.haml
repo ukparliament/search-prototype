@@ -1,7 +1,7 @@
 %section.content-section.grey
   .about-item
     %span= "This is an answer to the "
-    %span>= object_show_link(formatted_name(question.subtype_or_type, @ses_data, true), object.question_url)
+    %span>= object_show_link(formatted_name(question.subtype_or_type, @ses_data, true, true), object.question_url)
     - unless object.date_of_question.blank?
       %span= " asked on "
       %span>= format_date(object.date_of_question)

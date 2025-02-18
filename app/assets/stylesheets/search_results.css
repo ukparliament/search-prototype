@@ -39,7 +39,16 @@
 }
 
 .results-claw {
-    font-size: smaller;
+    font-size: x-small;
+
+    .claw-uri, .claw-timestamp {
+        line-height: 1;
+        align-content: center;
+    }
+
+    .claw-uri {
+        text-align: center;
+    }
 
     div.grid-container {
         display: grid;
@@ -48,12 +57,19 @@
         padding: 0;
         margin-top: 4px;
         column-gap: 12px;
-        row-gap: 12px;
+        justify-content: space-between;
 
         span {
-            align-content: space-around;
             word-wrap: anywhere;
         }
+    }
+}
+
+div.search-result-container {
+    padding: 8px 0;
+
+    &:not(:last-of-type) {
+        border-bottom: 1px solid grey;
     }
 }
 
@@ -192,7 +208,7 @@
 }
 
 .result-item {
-    padding: 4px 0;
+    padding: 0;
 
     .row {
         .item-details {
