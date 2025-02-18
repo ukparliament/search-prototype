@@ -11,9 +11,9 @@
         <span data-controller="clipboard">
           <span hidden data-clipboard-target="source" data-clipboard-text="<%= object.object_uri.dig(:value) %>">
           </span>
-          <a target="_blank" data-action="clipboard#copy" title="Copy" class="page-button">
+          <span data-action="clipboard#copy" title="Copy" class="page-button">
             Copy
-          </a>
+          </span>
         </span>
       <% end %>
 
