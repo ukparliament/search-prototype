@@ -80,9 +80,10 @@
 
         <div data-controller="claw" data-action="keydown@document->claw#handleKeyDown">
           <% @objects.each do |object| %>
-            <%= render object.search_result_partial, object: object unless object.class == NotSupported %>
-            <%= render 'content_type_objects/fragments/search_claw', object: object %>
-            <hr>
+            <div class="search-result-container">
+              <%= render object.search_result_partial, object: object unless object.class == NotSupported %>
+              <%= render 'content_type_objects/fragments/search_claw', object: object %>
+            </div>
           <% end %>
           <%= render '/content_type_objects/fragments/about_these_results' %>
 
