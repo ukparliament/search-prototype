@@ -31,7 +31,7 @@
 
       <% unless object.combined_location_uri.blank? %>
         <span>
-          <%= link_to 'Source', object.combined_location_uri, target: :_blank, class: 'page-button' %>
+          <%= link_to 'Source', object.combined_location_uri[:value], target: :_blank, class: 'page-button' %>
         </span>
       <% end %>
     </span>
