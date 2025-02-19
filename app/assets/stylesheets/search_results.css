@@ -85,7 +85,7 @@ div.search-result-container {
         display: none;
     }
 
-    section.applied-filters {
+    div.applied-filters {
         .applied-filter-container {
             display: flex;
             flex-direction: row;
