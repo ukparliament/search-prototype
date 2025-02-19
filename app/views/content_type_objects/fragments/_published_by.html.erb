@@ -3,10 +3,12 @@
     <div class="about-item">
       <div class="content-heading-small" id="published-by">Published by</div>
       <% unless object.section.blank? %>
-        <%= search_link(object.section) %>
+        <% object.sections.each do |section| %>
+          <%= search_link(section) %><br/>
+        <% end %>
       <% end %>
       <% unless object.published_by.blank? %>
-        <% unless object.section && object.section.dig(:value) == object.published_by.dig(:value) %>
+        <% unless object.sections && object.sections.pluck(:value).include?(object.published_by.dig(:value)) %>
           <%= search_link(object.published_by) %>
         <% end %>
       <% end %>

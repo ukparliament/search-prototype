@@ -77,6 +77,10 @@ class ResearchBriefing < ContentTypeObject
     get_first_from('section_ses')
   end
 
+  def sections
+    get_all_from('section_ses')
+  end
+
   def last_updated
     get_first_as_date_from('modified_dt')
   end
