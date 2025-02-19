@@ -433,6 +433,51 @@ RSpec.describe ContentTypeObject, type: :model do
     end
   end
 
+  describe 'combined_location_uri' do
+    context 'where there is no data' do
+      it 'returns nil' do
+        expect(content_type_object.combined_location_uri).to be_nil
+      end
+    end
+
+    context 'where there is an empty array' do
+      let!(:content_type_object) { ContentTypeObject.new({ 'location_t' => [] }) }
+      it 'returns nil' do
+        expect(content_type_object.combined_location_uri).to be_nil
+      end
+    end
+
+    context 'where data exists' do
+      context 'where all fields are populated' do
+        let!(:content_type_object) { ContentTypeObject.new({ 'location_t' => ['text uri'], 'location_uri' => ['uri'], 'externalLocation_t' => ['external text uri'], 'externalLocation_uri' => ['external uri'] }) }
+        it 'returns externalLocation_uri' do
+          expect(content_type_object.combined_location_uri).to eq({ :field_name => "externalLocation_uri", :value => "external uri" })
+        end
+      end
+
+      context 'where externalLocation_uri is not populated' do
+        let!(:content_type_object) { ContentTypeObject.new({ 'location_t' => ['text uri'], 'location_uri' => ['uri'], 'externalLocation_t' => ['external text uri'], 'externalLocation_uri' => [] }) }
+        it 'returns location_uri if populated' do
+          expect(content_type_object.combined_location_uri).to eq({ :field_name => "location_uri", :value => "uri" })
+        end
+      end
+
+      context 'where neither externalLocation_uri or location_uri are populated' do
+        let!(:content_type_object) { ContentTypeObject.new({ 'location_t' => ['text uri'], 'location_uri' => [], 'externalLocation_t' => ['external text uri'], 'externalLocation_uri' => [] }) }
+        it 'returns externalLocation_t if populated' do
+          expect(content_type_object.combined_location_uri).to eq({ :field_name => "externalLocation_t", :value => "external text uri" })
+        end
+      end
+
+      context 'where only location_t is populated' do
+        let!(:content_type_object) { ContentTypeObject.new({ 'location_t' => ['text uri'], 'location_uri' => [], 'externalLocation_t' => [], 'externalLocation_uri' => [] }) }
+        it 'returns location_t' do
+          expect(content_type_object.combined_location_uri).to eq({ :field_name => "location_t", :value => "text uri" })
+        end
+      end
+    end
+  end
+
   describe 'commons_library_location' do
     # example test - get first
     context 'where there is no data' do
@@ -683,11 +728,11 @@ RSpec.describe ContentTypeObject, type: :model do
 
       it 'returns all items from both SES and text fields' do
         expect(content_type_object.corporate_author).to match_array([
-                                                                 { field_name: 'corporateAuthor_ses', value: 12345 },
-                                                                 { field_name: 'corporateAuthor_ses', value: 67890 },
-                                                                 { field_name: 'corporateAuthor_t', value: 'Author 1' },
-                                                                 { field_name: 'corporateAuthor_t', value: 'Author 2' }
-                                                               ])
+                                                                      { field_name: 'corporateAuthor_ses', value: 12345 },
+                                                                      { field_name: 'corporateAuthor_ses', value: 67890 },
+                                                                      { field_name: 'corporateAuthor_t', value: 'Author 1' },
+                                                                      { field_name: 'corporateAuthor_t', value: 'Author 2' }
+                                                                    ])
       end
     end
   end
@@ -712,9 +757,9 @@ RSpec.describe ContentTypeObject, type: :model do
 
       it 'returns all items' do
         expect(content_type_object.witnesses).to eq([
-                                                 { field_name: 'witness_ses', value: 12345 },
-                                                 { field_name: 'witness_ses', value: 67890 }
-                                               ])
+                                                      { field_name: 'witness_ses', value: 12345 },
+                                                      { field_name: 'witness_ses', value: 67890 }
+                                                    ])
       end
     end
   end
@@ -761,9 +806,9 @@ RSpec.describe ContentTypeObject, type: :model do
 
       it 'returns all items' do
         expect(content_type_object.certified_categories).to eq([
-                                                            { field_name: 'certifiedCategory_ses', value: 12345 },
-                                                            { field_name: 'certifiedCategory_ses', value: 67890 }
-                                                          ])
+                                                                 { field_name: 'certifiedCategory_ses', value: 12345 },
+                                                                 { field_name: 'certifiedCategory_ses', value: 67890 }
+                                                               ])
       end
     end
   end
@@ -787,9 +832,9 @@ RSpec.describe ContentTypeObject, type: :model do
 
       it 'returns all items' do
         expect(content_type_object.departments).to eq([
-                                                   { field_name: 'department_ses', value: 12345 },
-                                                   { field_name: 'department_ses', value: 67890 }
-                                                 ])
+                                                        { field_name: 'department_ses', value: 12345 },
+                                                        { field_name: 'department_ses', value: 67890 }
+                                                      ])
       end
     end
   end
@@ -813,11 +858,11 @@ RSpec.describe ContentTypeObject, type: :model do
 
       it 'returns all items' do
         expect(content_type_object.legislation).to match_array([
-                                                            { field_name: 'legislationTitle_ses', value: 12345 },
-                                                            { field_name: 'legislationTitle_ses', value: 67890 },
-                                                            { field_name: 'legislationTitle_t', value: 'title 1' },
-                                                            { field_name: 'legislationTitle_t', value: 'title 2' }
-                                                          ])
+                                                                 { field_name: 'legislationTitle_ses', value: 12345 },
+                                                                 { field_name: 'legislationTitle_ses', value: 67890 },
+                                                                 { field_name: 'legislationTitle_t', value: 'title 1' },
+                                                                 { field_name: 'legislationTitle_t', value: 'title 2' }
+                                                               ])
       end
     end
 
@@ -826,9 +871,9 @@ RSpec.describe ContentTypeObject, type: :model do
 
       it 'returns all items' do
         expect(content_type_object.legislation).to match_array([
-                                                            { field_name: 'legislationTitle_t', value: 'title 1' },
-                                                            { field_name: 'legislationTitle_t', value: 'title 2' }
-                                                          ])
+                                                                 { field_name: 'legislationTitle_t', value: 'title 1' },
+                                                                 { field_name: 'legislationTitle_t', value: 'title 2' }
+                                                               ])
       end
     end
 
@@ -837,9 +882,9 @@ RSpec.describe ContentTypeObject, type: :model do
 
       it 'returns all items' do
         expect(content_type_object.legislation).to match_array([
-                                                            { field_name: 'legislationTitle_ses', value: 12345 },
-                                                            { field_name: 'legislationTitle_ses', value: 67890 }
-                                                          ])
+                                                                 { field_name: 'legislationTitle_ses', value: 12345 },
+                                                                 { field_name: 'legislationTitle_ses', value: 67890 }
+                                                               ])
       end
     end
   end
