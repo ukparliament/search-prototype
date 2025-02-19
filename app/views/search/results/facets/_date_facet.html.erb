@@ -1,9 +1,9 @@
 <% if year_filter.present? %>
   <% year_filter.each do |year| %>
     <section class="facet">
+      <h4 class="facet-heading">Date</h4>
       <div>
         <div>
-          <strong>Date</strong>
         </div>
         <div class="facets">
           <% @search_data.months(year).each_with_index do |month, index| %>
@@ -18,9 +18,9 @@
 <% elsif @search_data.single_data_year? %>
   <% @search_data.data_years.each do |year| %>
     <section class="facet">
+      <h4 class="facet-heading">Date</h4>
       <div>
         <div>
-          <strong>Date</strong>
         </div>
         <div class="facets">
           <% @search_data.months(year).each_with_index do |month, index| %>
@@ -35,9 +35,9 @@
 <% else %>
   <% unless @search_data.years.blank? %>
     <section class="facet">
+      <h4 class="facet-heading">Date</h4>
       <div>
         <div>
-          <strong>Date</strong>
         </div>
         <div class="facets">
           <% @search_data.years[0..4].each do |year_data| %>

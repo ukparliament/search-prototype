@@ -19,7 +19,7 @@
 <% end %>
 
 <%= form_with url: search_url, method: :get, remote: true, id: 'search-form' do |f| %>
-  <section id="search" class="content-section white-slim">
+  <div id="search" class="content-section white-slim">
     <div class="search-grid-container">
       <%= f.text_field :query, id: 'search-input', value: @search_data.query %>
       <%= f.hidden_field :show_detailed, value: @search_data.show_detailed %>
@@ -32,20 +32,20 @@
         New search
       </button>
     </div>
-  </section>
+  </div>
 <% end %>
 
 <% if @objects.blank? %>
-  <section class="content-section white centered">
+  <div class="content-section white centered">
     <p>
       No results found for <strong><%= @search_data.query %></strong>. Please adjust your search query and try
       again.<br/>
       If you think this search should return results, please
       email <%= mail_to "parliamentarysearch@parliament.co.uk" %>.
     </p>
-  </section>
+  </div>
 <% else %>
-  <section id="search-results">
+  <div id="search-results">
     <div class="results-grid-container">
       <div class="filter-container" data-controller="expand-facet">
         <%= render 'applied_filters' %>
@@ -100,5 +100,5 @@
       </div>
     </div>
 
-  </section>
+  </div>
 <% end %>
