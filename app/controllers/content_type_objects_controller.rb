@@ -1,5 +1,7 @@
 class ContentTypeObjectsController < ApplicationController
 
+  layout 'narrow'
+
   def index
     # used as landing page during development
     @page_title = 'Examples'
