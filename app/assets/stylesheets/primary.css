@@ -407,9 +407,18 @@ table {
 /* Back to top & any other on-page buttons */
 .mini-button-container {
     display: flex;
+    flex-direction: row;
     gap: 2px;
+    align-items: center;
+
+    button {
+        all: unset;
+    }
 
     .page-button {
+        display: flex;
+        align-items: center;
+        height: 1.25em;
         border: 1px #2B57AB solid;
         background: white;
         border-radius: 2px;
