@@ -13,6 +13,7 @@ export default class extends Controller {
 
     copy(event) {
         event.preventDefault()
-        navigator.clipboard.writeText(this.sourceTarget.dataset.clipboardText);
+        const source = this.sourceTarget;
+        navigator.clipboard.writeText(source.dataset.clipboardText);
     }
 }

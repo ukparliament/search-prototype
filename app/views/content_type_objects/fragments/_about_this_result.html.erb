@@ -11,7 +11,7 @@
       <div class="grid-item"><%= object.object_uri[:value] %>
         <div data-controller="clipboard" class="mini-button-container">
           <div hidden data-clipboard-target="source" data-clipboard-text="<%= object.object_uri[:value] %>"></div>
-          <button data-action="clipboard#copy" title="Copy text to clipboard" class="page-button">
+          <button data-action="click->clipboard#copy" title="Copy text to clipboard" class="page-button">
             Copy URI to clipboard
           </button>
         </div>

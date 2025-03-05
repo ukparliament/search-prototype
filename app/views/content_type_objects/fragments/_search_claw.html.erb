@@ -6,34 +6,26 @@
     <% unless object.object_uri.blank? %>
       <span class="claw-uri"><%= object.object_uri[:value] %></span>
     <% end %>
-    <span class="mini-button-container">
+    <div class="mini-button-container" data-controller="clipboard">
       <% unless object.object_uri.blank? %>
-        <span data-controller="clipboard">
+        <button data-action="clipboard#copy" title="Copy" class="page-button">
           <span hidden data-clipboard-target="source" data-clipboard-text="<%= object.object_uri.dig(:value) %>">
           </span>
-          <span data-action="clipboard#copy" title="Copy" class="page-button">
-            Copy
-          </span>
-        </span>
+          Copy
+        </button>
       <% end %>
 
       <% unless object.indexing_link.blank? %>
-        <span>
-          <%= link_to 'Indexing', object.indexing_link, target: :_blank, class: 'page-button' %>
-        </span>
+        <%= link_to 'Indexing', object.indexing_link, target: :_blank, class: 'page-button' %>
       <% end %>
 
       <% unless object.solr_deep_link.blank? %>
-        <span>
-          <%= link_to 'Solr', object.solr_deep_link, target: :_blank, class: 'page-button' %>
-        </span>
+        <%= link_to 'Solr', object.solr_deep_link, target: :_blank, class: 'page-button' %>
       <% end %>
 
       <% unless object.combined_location_uri.blank? %>
-        <span>
-          <%= link_to 'Source', object.combined_location_uri[:value], target: :_blank, class: 'page-button' %>
-        </span>
+        <%= link_to 'Source', object.combined_location_uri[:value], target: :_blank, class: 'page-button' %>
       <% end %>
-    </span>
+    </div>
   </div>
 </div>
