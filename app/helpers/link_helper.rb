@@ -64,7 +64,7 @@ module LinkHelper
   end
 
   def object_display_name(data, singular: true, case_formatting: false, reading_order: true)
-    # can used where the object type is dynamic by passing a SES ID
+    # can be used where the object type is dynamic by passing a SES ID
     # alternatively works with string names
     # e.g. secondary information title
     # does not return a link
@@ -115,6 +115,9 @@ module LinkHelper
         puts "Missing SES name for ID #{data[:value]}" if Rails.env.development?
         name_string = fallback_ses_lookup(data)
       end
+    elsif data[:field_name] && data[:field_name] == 'date_month'
+      # month numbers need to be converted to names
+      name_string = Date::MONTHNAMES[data[:value].to_i]
     else
       # we already have a string
       name_string = data[:value].to_s

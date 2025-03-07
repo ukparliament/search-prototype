@@ -16,7 +16,8 @@ class SolrSearch < ApiCall
     [
       'type_sesrollup',
       'legislature_ses',
-      'date_dt',
+      'date_year',
+      'date_month',
       'session_t',
       'department_ses',
       'member_ses',
@@ -81,25 +82,7 @@ class SolrSearch < ApiCall
     # &fq={!tag=COLOR}color:(Blue Black)
 
     filter.to_h.flat_map do |field_name, values|
-      # TODO: remove these by implementing new Solr fields (more performant option)
-      if field_name == "year"
-        # value will be "YYYY"
-        selected_year = values.first
-        "date_dt:([#{selected_year}-01-01T00:00:00Z TO #{selected_year}-12-31T23:59:59Z])"
-      elsif field_name == "month"
-        ranges = []
-        values.each do |value|
-          # value will be "YYYY-MM"
-          year = value.split("-").first.to_i
-          month = value.split("-").last.to_i
-          first_day = Date.new(year, month, 1)
-          last_day = Date.new(year, month, -1)
-          ranges << "[#{first_day}T00:00:00Z TO #{last_day}T23:59:59Z]"
-        end
-        "{!tag=month}date_dt:(#{ranges.join(" OR ")})"
-      else
-        "{!tag=#{field_name}}#{field_name}:(#{values.join(" ")})"
-      end
+      "{!tag=#{field_name}}#{field_name}:(#{values.join(" ")})"
     end
   end
 
@@ -121,38 +104,6 @@ class SolrSearch < ApiCall
         "limit" => facet_limit(field_name),
         "mincount" => facet_mincount(field_name),
         "domain" => { excludeTags: field_name }
-      }
-    end
-
-    if filter&.dig(:year).present?
-      year = filter.dig(:year).first
-      ret['month'] = {
-        "type": "range",
-        "field": "date_dt",
-        "start": "#{year}-01-01T00:00:00Z",
-        "end": "#{year}-12-31T23:59:59Z",
-        "gap": "+1MONTH",
-        "mincount": 0,
-        "domain": { excludeTags: 'month' }
-      }
-    else
-      ret['year'] = {
-        "type": "range",
-        "field": "date_dt",
-        "start": "1500-01-01T00:00:00Z",
-        "end": "#{Date.today.strftime("%Y-%m-%d")}T23:59:59Z",
-        "gap": "+1YEAR",
-        "mincount": 1,
-        "limit": 100
-      }
-      ret['month'] = {
-        "type": "range",
-        "field": "date_dt",
-        "start": "1500-01-01T00:00:00Z",
-        "end": "#{Date.today.strftime("%Y-%m-%d")}T23:59:59Z",
-        "gap": "+1MONTH",
-        "mincount": 0,
-        "domain": { excludeTags: 'month' }
       }
     end
 

@@ -21,7 +21,7 @@
 <%= form_with url: search_url, method: :get, remote: true, id: 'search-form' do |f| %>
   <div id="search" class="content-section white-slim">
     <div class="search-grid-container">
-      <%= f.text_field :query, id: 'search-input', value: @search_data.query %>
+      <%= f.text_field :query, id: 'search-input', spellcheck: true, value: @search_data.query %>
       <%= f.hidden_field :show_detailed, value: @search_data.show_detailed %>
       <%= f.hidden_field :sort_by, value: @search_data.sort %>
       <%= f.hidden_field :results_per_page, value: @search_data.results_per_page %>
@@ -54,8 +54,7 @@
           <% @search_data.facets.select { |h| ["legislature_ses", "session_t"].include?(h.dig(:field_name)) }.each do |facet_field| %>
             <%= render 'filter_section', facet_field: format_facets(facet_field) %>
           <% end %>
-          <%= render 'search/results/facets/date_facet' %>
-          <% @search_data.facets.select { |h| ["department_ses", "member_ses", "primaryMember_ses", "answeringMember_ses", "legislativeStage_ses", "legislationTitle_ses", "subject_ses", "publisher_ses"].include?(h.dig(:field_name)) }.each do |facet_field| %>
+          <% @search_data.facets.select { |h| ["date_year", "date_month", "department_ses", "member_ses", "primaryMember_ses", "answeringMember_ses", "legislativeStage_ses", "legislationTitle_ses", "subject_ses", "publisher_ses"].include?(h.dig(:field_name)) }.each do |facet_field| %>
             <%= render 'filter_section', facet_field: format_facets(facet_field) %>
           <% end %>
         </div>
@@ -67,8 +66,7 @@
           <% @search_data.facets.select { |h| ["legislature_ses", "session_t"].include?(h.dig(:field_name)) }.each do |facet_field| %>
             <%= render 'filter_section', facet_field: format_facets(facet_field) %>
           <% end %>
-          <%= render 'search/results/facets/date_facet' %>
-          <% @search_data.facets.select { |h| ["department_ses", "member_ses", "primaryMember_ses", "answeringMember_ses", "legislativeStage_ses", "legislationTitle_ses", "subject_ses", "publisher_ses"].include?(h.dig(:field_name)) }.each do |facet_field| %>
+          <% @search_data.facets.select { |h| ["date_year", "date_month", "department_ses", "member_ses", "primaryMember_ses", "answeringMember_ses", "legislativeStage_ses", "legislationTitle_ses", "subject_ses", "publisher_ses"].include?(h.dig(:field_name)) }.each do |facet_field| %>
             <%= render 'filter_section', facet_field: format_facets(facet_field) %>
           <% end %>
         </details>

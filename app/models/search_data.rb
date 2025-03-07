@@ -138,20 +138,6 @@ class SearchData
     expanded_types.join(',')
   end
 
-  def toggled_facets
-    return unless search
-
-    toggled_facet_param = search.dig(:search_parameters, :toggled_facets)
-
-    ret = []
-
-    unless toggled_facet_param.blank?
-      ret = toggled_facet_param.split(',').compact_blank.uniq
-    end
-
-    ret
-  end
-
   def sort
     return unless search
 
@@ -262,7 +248,7 @@ class SearchData
 
   def ordered_facet_fields
     # used to extract Solr returned facet data in the correct order for display
-    %w[type_sesrollup legislature_ses session_t date_dt department_ses member_ses primaryMember_ses answeringMember_ses legislativeStage_ses legislationTitle_ses subject_ses publisher_ses]
+    %w[type_sesrollup legislature_ses date_year date_month session_t department_ses member_ses primaryMember_ses answeringMember_ses legislativeStage_ses legislationTitle_ses subject_ses publisher_ses]
   end
 
   def sort_facets(facet_field)

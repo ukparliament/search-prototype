@@ -101,7 +101,9 @@ module ApplicationHelper
       legislationTitle_t: 'Legislation',
       subject_ses: 'Subject',
       subject_t: 'Subject',
-      publisher_ses: 'Publisher'
+      publisher_ses: 'Publisher',
+      date_year: 'Year',
+      date_month: 'Month'
     }
 
     raise "Unknown field name '#{field}'" if Rails.env.development? && !field_names.keys.include?(field.to_sym)
