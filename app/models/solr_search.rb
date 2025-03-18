@@ -61,6 +61,169 @@ class SolrSearch < ApiCall
     query
   end
 
+  def processed_query
+    # performs term recognition via regex
+    terms = extract_terms(search_query)
+
+    returned_terms = []
+
+    terms.each do |term|
+      # terms can then have field_name:string, field_name:"string", field_name:"string string", field_name:number,
+      # number, string or "string string" and we need to handle both aliases and query expansion for all of them
+
+      if term.match(/\b(?:AND|OR|NOT)\b/i)
+        # Solr query operators
+        returned_terms << term
+      elsif term.match(/(\w+:"(?:[^"]+)")/)
+        # field:"phrase in double quotes"
+        field_name = term.split(":").first
+        search_term = term.split(":").last
+        returned_terms << apply_aliases(field_name, search_term)
+      elsif term.match(/(\w+:'(?:[^']+)')/)
+        # field:'single quoted phrase'
+        field_name = term.split(":").first
+        search_term = term.split(":").last
+        returned_terms << apply_aliases(field_name, search_term)
+      elsif term.match(/(\w+:\S+)/)
+        # field:string
+        field_name = term.split(":").first
+        search_term = term.split(":").last
+        returned_terms << apply_aliases(field_name, search_term)
+      elsif term.match(/"([^"]+)"/)
+        # "phrase in double quotes"
+        # TODO: expansion of phrases
+        returned_terms << "\"#{term}\""
+      elsif term.match(/'([^']+)'/)
+        # TODO: expansion of phrases
+        # 'phrase in single quotes'
+        returned_terms << "\'#{term}\'"
+      elsif term.match(/(\S+)/)
+        # string
+        # returned_terms << "\"#{term}\""
+        search_term = term
+        field_name = "none"
+        returned_terms << apply_aliases(field_name, search_term)
+      else
+        raise 'not matched'
+      end
+
+    end
+
+    # combine all separately entered terms with a space;
+    # these will be combined using AND, as configured by SolrSearch params (q.op)
+    returned_terms.join(' ')
+  end
+
+  def extract_terms(input)
+    # test input: subject:housing subject:"old houses" subject:"houses" houses "old houses" "houses"
+    # which presents as "subject:housing subject:\"old houses\" subject:\"houses\" houses \"old houses\" \"houses\""
+    # and is converted into: ["subject:housing", "subject:\"old houses\"", "subject:\"houses\"", "houses", "old houses", "houses"]
+
+    input.scan(/(\w+:"(?:[^"]+)")|(\w+:'(?:[^']+)')|(\w+:\S+)|"([^"]+)"|'([^']+)'|(\S+)/).flat_map(&:compact)
+  end
+
+  def apply_aliases(field_name = "none", search_term)
+    expanded_terms = []
+    text_fields = []
+    ses_fields = []
+    boolean_fields = []
+    date_fields = []
+
+    # TODO: this logic can be transferred to a database-backed model for admin interface interaction
+    if field_name == "title"
+      text_fields << 'title_t'
+      ses_data = SesQuery.new({ value: search_term }).data
+    elsif field_name == "subject"
+      text_fields << 'subject_t'
+      ses_fields << 'subject_ses'
+      ses_data = SesQuery.new({ value: search_term }).data
+    elsif field_name == "author"
+      # extra: correspondingMinister_t, epCommittee_t, department_t etc are all only the submitted term (dwp) in example, whereas we're searching all equivalents too
+      # this seems to be unintentional behaviour in the original search code; for the time being we're leaving this alone
+      text_fields << %w[creator_t contributor_t corporateAuthor_t epCommittee_t department_t correspondingMinister_t]
+      ses_fields << %w[creator_ses contributor_ses corporateAuthor_ses mep_ses section_ses tablingMember_ses askingMember_ses answeringMember_ses department_ses member_ses leadMember_ses correspondingMinister_ses]
+      ses_data = SesQuery.new({ value: search_term }).data
+    elsif field_name == "explanatorymemorandum"
+      # might need to introduce boolean fields as a concept for this to work correctly?
+      boolean_fields << %w[containsEM_b]
+    elsif field_name == "datecertified"
+      date_fields << %w[dateCertified_dt certifiedDate_dt]
+    elsif field_name == "date"
+      date_fields << %w[date_dt]
+    elsif field_name.match(/\w+_dt/)
+      # if searching a _dt field specifically, treat it as a date field so that 'lastweek' etc. all work
+      date_fields << field_name
+    elsif field_name == "none"
+      # catches searches for strings or phrases with no specific field
+      ses_data = SesQuery.new({ value: search_term }).data
+    else
+      text_fields << field_name
+      ses_data = SesQuery.new({ value: search_term }).data
+    end
+
+    # in every field we've determined should be searched for text, look for the original term & all equivalents
+    unless text_fields.blank?
+      text_fields.flatten.each do |tf|
+        expanded_terms << "#{tf}:#{search_term}"
+        expanded_terms << "#{tf}:\"#{ses_data[:primary_term]}\""
+        ses_data[:equivalent_terms].flatten.each do |et|
+          expanded_terms << "#{tf}:\"#{et}\""
+        end
+      end
+    end
+
+    # add every SES field we've determined should be searched for the 'primary' SES ID
+    unless ses_fields.blank?
+      ses_fields.flatten.each do |sf|
+        expanded_terms << "#{sf}:#{ses_data[:primary_id]}" if ses_data[:primary_id]
+      end
+    end
+
+    # apply boolean value against all boolean fields
+    unless boolean_fields.blank?
+      boolean_fields.flatten.each do |bf|
+        if %w[true yes y 1].include?(search_term)
+          expanded_terms << "#{bf}:1"
+        elsif %w[false no n 0].include?(search_term)
+          expanded_terms << "#{bf}:0"
+        end
+      end
+    end
+
+    unless date_fields.blank?
+      # questions here:
+      # - does it matter if some of the date ranges go into the future? I would assume not - results will be the same
+      # - isn't it a bit odd if thisweek and lastweek exclude weekends, when other ranges (like thismonth) don't?
+
+      date_lookup = {
+        'today': "NOW/DAY",
+        'yesterday': "NOW/DAY-1DAY",
+        'thisweek': "[NOW/WEEK TO NOW/WEEK+6DAYS]",
+        'lastweek': "[NOW/WEEK-1WEEK TO NOW/WEEK-1DAY]",
+        'thismonth': "[NOW/MONTH TO NOW/MONTH+1MONTH-1MILLISECOND]",
+        'lastmonth': "[NOW/MONTH-1MONTH TO NOW/MONTH-1MILLISECOND]",
+        'thisyear': "[NOW/YEAR TO NOW/YEAR+1YEAR-1MILLISECOND]",
+        'lastyear': "[NOW/YEAR-1YEAR TO NOW/YEAR-1MILLISECOND]"
+      }
+
+      parsed_date = date_lookup[search_term.to_sym].nil? ? search_term : date_lookup[search_term.to_sym]
+      date_fields.flatten.each do |df|
+        expanded_terms << "#{df}:#{parsed_date}"
+      end
+    end
+
+    if field_name == "none"
+      expanded_terms << "#{search_term}"
+      expanded_terms << "\"#{ses_data[:primary_term]}\""
+      ses_data[:equivalent_terms].flatten.each do |et|
+        expanded_terms << "\"#{et}\""
+      end
+    end
+
+    # combine all new search terms with OR
+    expanded_terms.join(' OR ')
+  end
+
   def rows
     # number of results per page; default is 10 in SOLR
     return 20 if results_per_page.blank? || results_per_page.zero?
@@ -141,7 +304,7 @@ class SolrSearch < ApiCall
 
   def search_params
     {
-      q: search_query,
+      q: processed_query,
       'q.op': 'AND',
       fq: search_filter,
       fl: field_list,
