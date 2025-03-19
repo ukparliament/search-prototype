@@ -62,6 +62,7 @@ class SolrSearch < ApiCall
   end
 
   def processed_query
+    # TODO: refactor
     # performs term recognition via regex
     terms = extract_terms(search_query)
 
@@ -109,9 +110,41 @@ class SolrSearch < ApiCall
 
     end
 
-    # combine all separately entered terms with a space;
-    # these will be combined using AND, as configured by SolrSearch params (q.op)
-    returned_terms.join(' ')
+    add_parentheses = returned_terms.map do |term|
+      if %w[AND OR NOT].include?(term.upcase)
+        term
+      else
+        "(#{term})"
+      end
+    end
+
+    # basis of string is first search term
+    output_string = add_parentheses.first
+
+    # track current end of string as it determines what we do with the next term
+    previous_term_is_operator = false
+
+    add_parentheses.drop(1).each do |term|
+      if %w[AND OR NOT].include?(term.upcase)
+        # term is actually an operator, so just add it to the string without doing anything else to it
+        # this outcome can stack, e.g. 'term AND NOT term'
+        output_string += " #{term}"
+        previous_term_is_operator = true
+      else
+        # term is a genuine term, not an operator
+        if previous_term_is_operator
+          # previous term was an operator already, so just append the term
+          output_string += " #{term}"
+          previous_term_is_operator = false
+        else
+          # previous term was also a genuine term, not an operator, so append with AND
+          output_string += " AND #{term}"
+          previous_term_is_operator = false
+        end
+      end
+    end
+
+    output_string
   end
 
   def extract_terms(input)
@@ -123,6 +156,7 @@ class SolrSearch < ApiCall
   end
 
   def apply_aliases(field_name = "none", search_term)
+    # TODO: refactor
     expanded_terms = []
     text_fields = []
     ses_fields = []
@@ -136,6 +170,7 @@ class SolrSearch < ApiCall
     elsif field_name == "subject"
       text_fields << 'subject_t'
       ses_fields << 'subject_ses'
+      # topic_ses has been removed, so behaviour here differs from old search by design
       ses_data = SesQuery.new({ value: search_term }).data
     elsif field_name == "author"
       # extra: correspondingMinister_t, epCommittee_t, department_t etc are all only the submitted term (dwp) in example, whereas we're searching all equivalents too
@@ -155,27 +190,22 @@ class SolrSearch < ApiCall
       date_fields << field_name
     elsif field_name == "none"
       # catches searches for strings or phrases with no specific field
+      ses_fields << "all_ses"
       ses_data = SesQuery.new({ value: search_term }).data
     else
       text_fields << field_name
       ses_data = SesQuery.new({ value: search_term }).data
     end
 
-    # in every field we've determined should be searched for text, look for the original term & all equivalents
+    # in every field we've determined should be searched for text, look for synonyms
     unless text_fields.blank?
       text_fields.flatten.each do |tf|
         expanded_terms << "#{tf}:#{search_term}"
-        expanded_terms << "#{tf}:\"#{ses_data[:primary_term]}\""
+        # Disabled inclusion of primary term, as this matches user input
+        # expanded_terms << "#{tf}:\"#{ses_data[:primary_term]}\""
         ses_data[:equivalent_terms].flatten.each do |et|
           expanded_terms << "#{tf}:\"#{et}\""
         end
-      end
-    end
-
-    # add every SES field we've determined should be searched for the 'primary' SES ID
-    unless ses_fields.blank?
-      ses_fields.flatten.each do |sf|
-        expanded_terms << "#{sf}:#{ses_data[:primary_id]}" if ses_data[:primary_id]
       end
     end
 
@@ -214,9 +244,17 @@ class SolrSearch < ApiCall
 
     if field_name == "none"
       expanded_terms << "#{search_term}"
-      expanded_terms << "\"#{ses_data[:primary_term]}\""
+      # primary term disabled as matches user input
+      # expanded_terms << "\"#{ses_data[:primary_term]}\""
       ses_data[:equivalent_terms].flatten.each do |et|
         expanded_terms << "\"#{et}\""
+      end
+    end
+
+    # add every SES field we've determined should be searched for the 'primary' SES ID
+    unless ses_fields.blank?
+      ses_fields.flatten.each do |sf|
+        expanded_terms << "#{sf}:#{ses_data[:primary_id]}" if ses_data[:primary_id]
       end
     end
 
