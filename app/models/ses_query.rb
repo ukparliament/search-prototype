@@ -33,8 +33,8 @@ class SesQuery < SesLookup
           # retrive all 'equivalent' (synonym) terms
           equivalent_terms << term.dig('term', 'equivalence')&.first&.dig('fields')&.map { |f| f.dig('field', 'name') }
           # retrive the SES ID of the base term
-          ret[:primary_id] = term['term']['id']
-          ret[:primary_term] = term['term']['name']
+          ret[:preferred_term_id] = term['term']['id']
+          ret[:preferred_term] = term['term']['name']
         end
       end
       ret[:equivalent_terms] = equivalent_terms

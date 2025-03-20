@@ -200,9 +200,9 @@ class SolrSearch < ApiCall
     # in every field we've determined should be searched for text, look for synonyms
     unless text_fields.blank?
       text_fields.flatten.each do |tf|
-        expanded_terms << "#{tf}:#{search_term}"
-        # Disabled inclusion of primary term, as this matches user input
-        # expanded_terms << "#{tf}:\"#{ses_data[:primary_term]}\""
+        # Include preferred term if present, else include search term
+        expanded_terms << (ses_data[:preferred_term].present? ? "#{tf}:\"#{ses_data[:preferred_term]}\"" : "#{tf}:#{search_term}")
+        # Include all equivalent terms, if there are any
         ses_data[:equivalent_terms].flatten.each do |et|
           expanded_terms << "#{tf}:\"#{et}\""
         end
@@ -243,18 +243,18 @@ class SolrSearch < ApiCall
     end
 
     if field_name == "none"
-      expanded_terms << "#{search_term}"
-      # primary term disabled as matches user input
-      # expanded_terms << "\"#{ses_data[:primary_term]}\""
+      # preferred term disabled as matches user input
+      # Include preferred term if present, else include search term
+      expanded_terms << (ses_data[:preferred_term].present? ? "\"#{ses_data[:preferred_term]}\"" : "#{search_term}")
       ses_data[:equivalent_terms].flatten.each do |et|
         expanded_terms << "\"#{et}\""
       end
     end
 
-    # add every SES field we've determined should be searched for the 'primary' SES ID
+    # add every SES field we've determined should be searched for the preferred term SES ID
     unless ses_fields.blank?
       ses_fields.flatten.each do |sf|
-        expanded_terms << "#{sf}:#{ses_data[:primary_id]}" if ses_data[:primary_id]
+        expanded_terms << "#{sf}:#{ses_data[:preferred_term_id]}" if ses_data[:preferred_term_id]
       end
     end
 
