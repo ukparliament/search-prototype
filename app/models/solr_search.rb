@@ -158,7 +158,11 @@ class SolrSearch < ApiCall
     # TODO: refactor
     expanded_terms = []
     text_fields = []
-    ses_fields = []
+    ses_fields = [] # used when a term in the search is used with an alias that requires we search some SES fields for
+    # the preferred version of that term, e.g. searching subject:'ponies' will result in a subject_ses search for the
+    # SES ID of the preferred term, 'Horses'
+    ses_id_fields = [] # used ses fields specified in the search, e.g. type_ses:90996, so that we don't attempt to
+    # populate them from SES as we already have the ID provided by the user
     boolean_fields = []
     date_fields = []
 
@@ -187,6 +191,8 @@ class SolrSearch < ApiCall
     elsif field_name.match(/\w+_dt/)
       # if searching a _dt field specifically, treat it as a date field so that 'lastweek' etc. all work
       date_fields << field_name
+    elsif field_name.match(/\w+_ses/)
+      ses_id_fields << field_name
     elsif field_name == "none"
       # catches searches for strings or phrases with no specific field
       ses_fields << "all_ses"
@@ -205,6 +211,12 @@ class SolrSearch < ApiCall
         ses_data[:equivalent_terms].flatten.each do |et|
           expanded_terms << "#{tf}:\"#{et}\""
         end
+      end
+    end
+
+    unless ses_id_fields.blank?
+      ses_id_fields.flatten.each do |sif|
+        expanded_terms << "#{sif}:\"#{search_term}\""
       end
     end
 
