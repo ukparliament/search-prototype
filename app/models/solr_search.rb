@@ -92,15 +92,14 @@ class SolrSearch < ApiCall
         returned_terms << apply_aliases(field_name, search_term)
       elsif term.match(/"([^"]+)"/)
         # "phrase in double quotes"
-        # TODO: expansion of phrases
+        # phrases are not expanded
         returned_terms << "\"#{term}\""
       elsif term.match(/'([^']+)'/)
-        # TODO: expansion of phrases
         # 'phrase in single quotes'
+        # phrases are not expanded
         returned_terms << "\'#{term}\'"
       elsif term.match(/(\S+)/)
         # string
-        # returned_terms << "\"#{term}\""
         search_term = term
         field_name = "none"
         returned_terms << apply_aliases(field_name, search_term)
