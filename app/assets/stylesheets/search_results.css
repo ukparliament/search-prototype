@@ -180,6 +180,10 @@ div.search-result-container {
         font-weight: bold;
     }
 
+    a.hierarchy-toggle {
+        cursor: pointer;
+    }
+
     div.results-grid-container {
         display: grid;
         grid-template-columns: 5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5%;
