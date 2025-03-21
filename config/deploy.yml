@@ -1,0 +1,51 @@
+# Name of your application. Used to uniquely configure containers.
+service: search-prototype-azure
+
+# Name of the container image.
+image: jamesatshedcode/search-prototype-azure
+
+ssh:
+  user: james
+  port: 2222
+  keys: [ "~/.ssh/octopussy_key.pem"]
+
+# Deploy to these servers.
+servers:
+  - localhost:2222
+
+# Enable SSL auto certification via Let's Encrypt and allow for multiple apps on a single web server.
+# Remove this section when using multiple web servers and ensure you terminate SSL at your load balancer.
+#
+# Note: If using Cloudflare, set encryption mode in SSL/TLS setting to "Full" to enable CF-to-app encryption.
+proxy:
+  ssl: true
+  host: azure-search.shedcode.co.uk
+  # Proxy connects to your container on port 80 by default.
+  app_port: 3000
+  healthcheck:
+      interval: 10
+      path: /welcome
+      timeout: 10
+
+# Credentials for your image host.
+registry:
+  # Specify the registry server, if you're not using Docker Hub
+  # server: registry.digitalocean.com /h$a ghcr.io / ...
+
+  #server: jamesatshedcode/search-prototype
+  username: jamesatshedcode
+
+  # Always use an access token rather than real password (pulled from .kamal/secrets).
+  password:
+    - KAMAL_REGISTRY_PASSWORD
+
+env:
+  secret:
+    - RAILS_MASTER_KEY
+
+# Configure builder setup.
+builder:
+  arch: amd64
+  # Pass in additional build args needed for your Dockerfile.
+  # args:
+  #   RUBY_VERSION: <%= ENV["RBENV_VERSION"] || ENV["rvm_ruby_string"] || "#{RUBY_ENGINE}-#{RUBY_ENGINE_VERSION}" %>

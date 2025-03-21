@@ -1,9 +1,9 @@
 
 # Use the official Ruby image as a base
-FROM ruby:3.3.1
+FROM ruby:3.3.6
 
 # Set environment variables
-ENV RAILS_ENV development
+ENV RAILS_ENV=production
 
 # Install dependencies
 RUN apt-get update -qq
@@ -22,7 +22,11 @@ RUN bundle install
 COPY . /app
 
 # Precompile assets (if you have any)
-RUN bundle exec rails assets:precompile
+# This complains if we con't give it a secret key base at all
+# Doesn't work if we try ENV SECRET_KEY_BASE=$SECRET_KEY_BASE
+# Nor if we add that after the RUN
+
+RUN SECRET_KEY_BASE=12345 bundle exec rails assets:precompile
 
 # Expose port 3000 to the outside world
 EXPOSE 3000
