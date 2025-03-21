@@ -108,6 +108,12 @@ class SearchData
     search.dig(:search_parameters, :query)
   end
 
+  def query_as_submitted
+    return unless search
+
+    search.dig(:data, "responseHeader", "params", "q")
+  end
+
   def show_detailed
     return unless search
 
