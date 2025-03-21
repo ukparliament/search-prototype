@@ -6,10 +6,11 @@
 
 # Ignore bundler config.
 /.bundle
+/.kamal
 
 .DS_Store
 
-
+coverage
 
 # Ignore the default SQLite database.
 /db/*.sqlite3
@@ -46,3 +47,5 @@
 /coverage/.last_run.json
 /coverage/.resultset.json
 /coverage/index.html
+
+/config/credentials/production.key
