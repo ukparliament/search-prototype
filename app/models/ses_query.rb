@@ -21,7 +21,7 @@ class SesQuery < SesLookup
 
     # we can get multiple terms back from a single string (different SES IDs for the same string)
     terms = responses.dig('terms')
-    unless terms.compact.blank?
+    unless terms&.compact.blank?
       # first attempt at some logic to extract correct equivalent terms & IDs
       equivalent_terms = []
       terms.each do |term|
