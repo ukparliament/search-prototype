@@ -11,28 +11,42 @@ class SesQuery < SesLookup
     api_response(ses_term_lookup_uri, false)
   end
 
+  ##
+  # Returns hash of query expansion data assembled from SES query response.
+  #
+  # A single term can return no, one or many terms from SES:
+  # Where no terms are found, this method returns { equivalent_terms: [] }
+  #
+  # Where terms are found, the hash will be in the form:
+  # {
+  #   equivalent_terms: ['equivalent_term_1', 'equivalent_term_2', '...'],
+  #   topic_id: '12345',
+  #   preferred_term_id: '23456',
+  #   preferred_term: 'preferred_term'
+  # }
+  #
+  # Terms with the 'TPG' (topic) class are not included in equivalent terms, but a separate :topic_id is
+  # included in the returned hash.
+  #
+  # For terms which do not have the 'TPG' class, all name values under 'equivalence' are extracted into
+  # the equivalent_terms array. The preferred term name and SES ID are assigned :preferred_term_id and
+  # :preferred_term respectively.
   def data
-    # for returning all data in a structured format for further querying
     return if input_data.blank?
 
     ret = { equivalent_terms: [] }
     responses = evaluated_response
+
     return responses if responses.has_key?("error")
 
-    # we can get multiple terms back from a single string (different SES IDs for the same string)
     terms = responses.dig('terms')
     unless terms&.compact.blank?
-      # first attempt at some logic to extract correct equivalent terms & IDs
       equivalent_terms = []
       terms.each do |term|
         if term.dig('term', 'class') == 'TPG'
-          # don't fetch equivalent terms for TPG (topic)
-          # fetching topic ID for now even though it's not being used?
           ret[:topic_id] = term['term']['id']
         else
-          # retrive all 'equivalent' (synonym) terms
           equivalent_terms << term.dig('term', 'equivalence')&.first&.dig('fields')&.map { |f| f.dig('field', 'name') }
-          # retrive the SES ID of the base term
           ret[:preferred_term_id] = term['term']['id']
           ret[:preferred_term] = term['term']['name']
         end
