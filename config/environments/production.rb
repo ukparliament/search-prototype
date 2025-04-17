@@ -96,9 +96,11 @@ Rails.application.configure do
 
 
   # Asset handling
-  config.require_master_key = false
-  config.assets.css_compressor = nil
-  config.assets.compile = false
+  # config.require_master_key = false
+
+
+  # config.assets.css_compressor = nil
+  # config.assets.compile = false
   config.public_file_server.enabled = true
   config.asset_host = "https://beta-search.shedcode.co.uk"
   config.assets.enabled = true
