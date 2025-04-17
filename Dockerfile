@@ -26,7 +26,7 @@ COPY . /app
 # Doesn't work if we try ENV SECRET_KEY_BASE=$SECRET_KEY_BASE
 # Nor if we add that after the RUN
 
-RUN SECRET_KEY_BASE=12345 bundle exec rails assets:precompile
+RUN bundle exec rails assets:precompile
 
 # Expose port 3000 to the outside world
 EXPOSE 3000

@@ -105,11 +105,11 @@ Rails.application.configure do
   config.assets.version = "1.0"
 
   # SSL and security
-  # config.ssl_options = {
-  #   redirect: {
-  #     exclude: ->(request) { request.path == "/welcome" }
-  #   }
-  # }
+  config.ssl_options = {
+    redirect: {
+      exclude: ->(request) { request.path == "/welcome" }
+    }
+  }
 
   # Health checks
   config.silence_healthcheck_path = "/welcome"
@@ -120,9 +120,9 @@ Rails.application.configure do
     /.*\.beta-search\.shedcode\.co\.uk/
   ]
 
-  # config.host_authorization = {
-  #   exclude: ->(request) { request.path == "/welcome" }
-  # }
+  config.host_authorization = {
+    exclude: ->(request) { request.path == "/welcome" }
+  }
 
   routes.default_url_options = {
     host: "beta-search.shedcode.co.uk",
