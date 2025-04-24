@@ -38,11 +38,10 @@
 # Ignore master key for decrypting credentials and more.
 /config/master.key
 
-# Ignore ASDF config
-/.tool-versions
 /.idea/
 
 # Ignore rspec coverage artefacts
 /coverage/.last_run.json
 /coverage/.resultset.json
 /coverage/index.html
+/coverage
