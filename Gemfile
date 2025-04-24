@@ -18,6 +18,12 @@ gem "bootsnap", require: false
 # gem "puma"
 gem "passenger", ">= 6", require: "phusion_passenger/rack_handler"
 
+# Temporarily required until Rails update with Ruby 3.4
+gem 'logger'
+gem 'benchmark'
+gem 'ostruct'
+gem 'observer'
+
 group :development, :test do
   gem 'rspec-rails'
   gem 'factory_bot_rails'
