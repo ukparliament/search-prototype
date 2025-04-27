@@ -118,6 +118,7 @@ Rails.application.configure do
 
   # Domain configuration
   config.hosts = [
+    "0.0.0.0",
     "azure-search.shedcode.co.uk",
     /.*\.azure-search\.shedcode\.co\.uk/
   ]
