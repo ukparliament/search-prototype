@@ -102,7 +102,7 @@ Rails.application.configure do
   # config.assets.css_compressor = nil
   # config.assets.compile = false
   config.public_file_server.enabled = true
-  config.asset_host = "https://azure-search.shedcode.co.uk"
+  config.asset_host = "https://proper-search.shedcode.co.uk"
   config.assets.enabled = true
   config.assets.version = "1.0"
 
@@ -119,7 +119,7 @@ Rails.application.configure do
   # Domain configuration
   config.hosts = [
     "0.0.0.0",
-    "azure-search.shedcode.co.uk",
+    "proper-search.shedcode.co.uk",
     /.*\.azure-search\.shedcode\.co\.uk/
   ]
 
@@ -128,7 +128,7 @@ Rails.application.configure do
   }
 
   routes.default_url_options = {
-    host: "azure-search.shedcode.co.uk",
+    host: "proper-search.shedcode.co.uk",
     protocol: "https"
   }
 end
