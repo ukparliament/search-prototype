@@ -1,9 +1,9 @@
 source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby "3.3.6"
+ruby file: '.ruby-version'
 
-gem "rails", ">= 7.1.3.2"
+gem "rails", "7.1.3.2"
 gem 'bundler-audit'
 gem "sqlite3", "~> 1.4"
 gem "sprockets-rails"
@@ -16,7 +16,13 @@ gem "jbuilder"
 gem "tzinfo-data", platforms: %i[ mingw mswin x64_mingw jruby ]
 gem "bootsnap", require: false
 # gem "puma"
-gem "passenger", ">= 5.3.2", require: "phusion_passenger/rack_handler"
+gem "passenger", ">= 6", require: "phusion_passenger/rack_handler"
+
+# Temporarily required until Rails update with Ruby 3.4
+gem 'logger'
+gem 'benchmark'
+gem 'ostruct'
+gem 'observer'
 
 group :development, :test do
   gem 'rspec-rails'
@@ -33,7 +39,6 @@ end
 group :test do
   gem "capybara"
   gem "selenium-webdriver"
-  gem "webdrivers"
   gem 'simplecov'
   gem 'rails-controller-testing'
 end
