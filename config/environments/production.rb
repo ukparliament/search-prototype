@@ -93,4 +93,42 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+
+
+  # Asset handling
+  # config.require_master_key = false
+
+
+  # config.assets.css_compressor = nil
+  # config.assets.compile = false
+  config.public_file_server.enabled = true
+  config.asset_host = "https://proper-search.shedcode.co.uk"
+  config.assets.enabled = true
+  config.assets.version = "1.0"
+
+  # SSL and security
+  config.ssl_options = {
+    redirect: {
+      exclude: ->(request) { request.path == "/welcome" }
+    }
+  }
+
+  # Health checks
+  config.silence_healthcheck_path = "/welcome"
+
+  # Domain configuration
+  config.hosts = [
+    "0.0.0.0",
+    "proper-search.shedcode.co.uk",
+    /.*\.azure-search\.shedcode\.co\.uk/
+  ]
+
+  config.host_authorization = {
+    exclude: ->(request) { request.path == "/welcome" }
+  }
+
+  routes.default_url_options = {
+    host: "proper-search.shedcode.co.uk",
+    protocol: "https"
+  }
 end
