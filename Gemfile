@@ -7,7 +7,7 @@ gem "rails", "7.1.3.2"
 gem 'bundler-audit'
 gem "sqlite3", "~> 1.4"
 
-gem "propshaft"
+gem "sprockets-rails"
 gem "library_design", github: "ukparliament/design-assets", glob: 'library_design/*.gemspec', tag: "0.1.6"
 
 
