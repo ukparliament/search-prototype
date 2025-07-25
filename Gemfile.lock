@@ -180,6 +180,8 @@ GEM
       racc (~> 1.4)
     nokogiri (1.18.8-arm64-darwin)
       racc (~> 1.4)
+    nokogiri (1.18.8-x86_64-linux-gnu)
+      racc (~> 1.4)
     observer (0.1.2)
     ostruct (0.6.1)
     passenger (6.0.27)
@@ -314,6 +316,7 @@ GEM
 
 PLATFORMS
   arm64-darwin-24
+  x86_64-linux
 
 DEPENDENCIES
   benchmark
