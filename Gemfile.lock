@@ -1,10 +1,10 @@
 GIT
   remote: https://github.com/ukparliament/design-assets.git
-  revision: 5febf3b782f1316bb9a7f82f7a6ffbd4565877f8
-  tag: 0.1.6
+  revision: 0fab4e134685fb1f45e31a9f88393faa3292662a
+  tag: 0.1.8
   glob: library_design/*.gemspec
   specs:
-    library_design (0.1.6)
+    library_design (0.1.8)
       rack-cors (~> 3.0.0)
 
 GEM
@@ -194,7 +194,7 @@ GEM
       stringio
     public_suffix (6.0.1)
     racc (1.8.1)
-    rack (3.1.13)
+    rack (3.1.16)
     rack-cors (3.0.0)
       logger
       rack (>= 3.0.14)
@@ -314,7 +314,6 @@ GEM
 
 PLATFORMS
   arm64-darwin-24
-  ruby
 
 DEPENDENCIES
   benchmark
