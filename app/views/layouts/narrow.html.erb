@@ -1,22 +1,17 @@
 <!DOCTYPE html>
 <html lang="en-GB">
-  <%= render '/layouts/head' %>
-  <body>
-    <%= render 'library_design/header/header' do %>
-    <% end %>
-    <main class="narrow container block block-page" id="main-content">
-      <div>
-        <header>
-          <%= yield :before_title if content_for?(:before_title) %>
-          <% if content_for?(:title) %>
-            <h1>
-              <%= yield :title %>
-            </h1>
-          <% end %>
-        </header>
-        <%= yield %>
-      </div>
-    </main>
-    <%= render 'library_design/footer' %>
-  </body>
+	<head>
+		<%= render :partial => 'library_design/head/head' %>
+	</head>
+	<body class="brand-bicameral">
+		<%= render 'layouts/header/header' %>
+		<main class="container block block-page" id="main-content">
+			<div class="inner-content container">
+				<div class="reading-width">
+					<%= yield %>
+				</div>
+			</div>
+		</main>
+		<%= render 'library_design/footer' %>
+	</body>
 </html>
