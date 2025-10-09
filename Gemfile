@@ -8,9 +8,7 @@ gem 'bundler-audit'
 gem "sqlite3", "~> 1.4"
 
 gem "sprockets-rails"
-
-# Add library designs
-gem "library_design", github: "ukparliament/design-assets", glob: 'library_design/*.gemspec', tag: "0.1.8"
+gem "library_design", github: "ukparliament/design-assets", glob: 'library_design/*.gemspec', tag: "0.3.11"
 
 gem "importmap-rails"
 gem "font-awesome-rails"
