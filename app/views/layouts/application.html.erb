@@ -5,13 +5,13 @@
 	</head>
 	<body class="brand-bicameral">
 		<%= render 'layouts/header/header' %>
-		<main class="container block block-page" id="main-content">
+		<main class="block block-page" id="main-content">
 			<div class="inner-content container">
-				<div class="reading-width">
-					<%= yield %>
-				</div>
+				<%= render 'library_design/debug/debug' -%>
+				<h1><%= @multiline_page_title || @page_title || $PRODUCT_TITLE %></h1>
+				<%= yield %>
 			</div>
 		</main>
-		<%= render 'library_design/footer' %>
+		<%= render 'layouts/footer/footer' %>
 	</body>
 </html>
