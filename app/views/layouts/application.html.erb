@@ -2,13 +2,16 @@
 <html lang="en-GB">
 	<head>
 		<%= render :partial => 'library_design/head/head' %>
+		<%= javascript_importmap_tags %>
 	</head>
 	<body class="brand-bicameral">
 		<%= render 'layouts/header/header' %>
 		<main class="block block-page" id="main-content">
 			<div class="inner-content container">
 				<%= render 'library_design/debug/debug' -%>
-				<h1><%= @multiline_page_title || @page_title || $PRODUCT_TITLE %></h1>
+				<h1>
+					<%= yield :title %>
+				</h1>
 				<%= yield %>
 			</div>
 		</main>
