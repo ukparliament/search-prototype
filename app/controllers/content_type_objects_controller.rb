@@ -44,6 +44,7 @@ class ContentTypeObjectsController < ApplicationController
         @ses_data = SesData.new(all_ses_ids).combined_ses_data
 
         @page_title = @object.object_title
+        @crumb << { label: @page_title, url: nil }
 
         if @ses_data&.has_key?(:error)
           render template: 'layouts/shared/error/500', locals: { status: 500, message: 'There was an error resolving names using the SES service' }
