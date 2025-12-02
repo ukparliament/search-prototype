@@ -34,7 +34,7 @@ Rails.application.configure do
   config.serve_static_assets = true
 
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.
-  config.asset_host = "https://parliamentary-search-265cced0397e.herokuapp.com/"
+  config.asset_host = "https://search-design-system-06413479f8dc.herokuapp.com"
 
   # Specifies the header that your server uses for sending files.
   # config.action_dispatch.x_sendfile_header = "X-Sendfile" # for Apache
