@@ -8,7 +8,7 @@ gem 'bundler-audit'
 gem "sqlite3", "~> 1.4"
 
 gem "propshaft"
-gem "library_design", github: "ukparliament/design-assets", glob: 'library_design/*.gemspec', tag: "0.6.2"
+gem "library_design", github: "ukparliament/design-assets", glob: 'library_design/*.gemspec', tag: "0.6.4"
 
 gem "importmap-rails"
 gem "font-awesome-rails"
