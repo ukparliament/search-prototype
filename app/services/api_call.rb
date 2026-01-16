@@ -43,23 +43,43 @@ class ApiCall
     api_endpoint = Rails.application.credentials.dig(Rails.env.to_sym, :solr_api, :endpoint)
 
     _uri = URI(api_endpoint).dup
-    data = URI.encode_www_form(params)
-    puts "POST request from #{self.class.name}: #{_uri} with data: #{params} encoded as: #{data}" if Rails.env.development?
+    puts "POST request from #{self.class.name}: #{_uri} with data: #{params}" if Rails.env.development?
 
-    response = Net::HTTP.post(_uri, data, request_headers_gzip)
-    response['content-encoding'] == 'gzip' ? decompress_response(response.body) : response.body
+    http = Net::HTTP.new(_uri.host, _uri.port)
+    http.use_ssl = _uri.scheme == 'https'
+
+    # set up the request object
+    request = Net::HTTP::Post.new(_uri)
+    request.set_form_data(params)
+    request_headers_gzip.each { |k, v| request[k] = v }
+
+    # make the request
+    response = http.request(request)
+
+    # return the response body
+    response.body
   end
 
   def api_cached_post_request(params)
     api_endpoint = Rails.application.credentials.dig(Rails.env.to_sym, :solr_api, :endpoint)
 
     _uri = URI(api_endpoint).dup
-    data = URI.encode_www_form(params)
-    puts "POST request from #{self.class.name}: #{_uri} with data: #{params} encoded as: #{data}" if Rails.env.development?
+    puts "POST request from #{self.class.name}: #{_uri} with data: #{params}" if Rails.env.development?
 
-    Rails.cache.fetch(uri, expires_in: 2.hours) do
-      response = Net::HTTP.post(_uri, data, request_headers_gzip)
-      response['content-encoding'] == 'gzip' ? decompress_response(response.body) : response.body
+    http = Net::HTTP.new(_uri.host, _uri.port)
+    http.use_ssl = _uri.scheme == 'https'
+
+    # set up the request object
+    request = Net::HTTP::Post.new(_uri)
+    request.set_form_data(params)
+    request_headers_gzip.each { |k, v| request[k] = v }
+
+    Rails.cache.fetch(_uri, expires_in: 2.hours) do
+      # make the request
+      response = http.request(request)
+
+      # return the response body
+      response.body
     end
   end
 
@@ -84,7 +104,7 @@ class ApiCall
   end
 
   def request_headers_gzip
-    { 'Ocp-Apim-Subscription-Key' => api_subscription_key, 'Accept-Encoding' => 'gzip, deflate' }
+    { 'Ocp-Apim-Subscription-Key' => api_subscription_key, 'Accept-Encoding' => 'gzip-deflate' }
   end
 
   def decompress_response(gzip_body)

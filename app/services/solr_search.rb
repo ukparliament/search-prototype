@@ -138,6 +138,8 @@ class SolrSearch < ApiCall
   end
 
   def query_processor
+    return unless search_query.present?
+
     ExpandQuery.new(search_query).processed_query
   end
 
