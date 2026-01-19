@@ -61,6 +61,7 @@ class ApiCall
   end
 
   def api_cached_post_request(params)
+    # TODO: refactor so that we don't have duplicate methods with/without caching
     api_endpoint = Rails.application.credentials.dig(Rails.env.to_sym, :solr_api, :endpoint)
 
     _uri = URI(api_endpoint).dup
@@ -84,14 +85,34 @@ class ApiCall
   end
 
   def api_get_request(uri)
-    response = Net::HTTP.get_response(uri, request_headers_gzip)
-    response['content-encoding'] == 'gzip' ? decompress_response(response.body) : response.body
+    http = Net::HTTP.new(uri.host, uri.port)
+    http.use_ssl = uri.scheme == 'https'
+
+    # set up the request object
+    request = Net::HTTP::Get.new(uri)
+    request_headers_gzip.each { |k, v| request[k] = v }
+
+    # make the request
+    response = http.request(request)
+
+    # return the response body
+    response.body
   end
 
   def api_cached_get_request(uri)
+    http = Net::HTTP.new(uri.host, uri.port)
+    http.use_ssl = uri.scheme == 'https'
+
+    # set up the request object
+    request = Net::HTTP::Get.new(uri)
+    request_headers_gzip.each { |k, v| request[k] = v }
+
     Rails.cache.fetch(uri, expires_in: 2.hours) do
-      response = Net::HTTP.get_response(uri, request_headers_gzip)
-      response['content-encoding'] == 'gzip' ? decompress_response(response.body) : response.body
+      # make the request
+      response = http.request(request)
+
+      # return the response body
+      response.body
     end
   end
 
