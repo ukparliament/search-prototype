@@ -138,9 +138,10 @@ class SolrSearch < ApiCall
   end
 
   def query_processor
-    return unless search_query.present?
+    return "" unless search_query.present?
 
-    ExpandQuery.new(search_query).processed_query
+    processed_query_terms = ExpandQuery.new(search_query, SesQuery).process_query
+    TermCombiner.new(processed_query_terms).combine
   end
 
   private

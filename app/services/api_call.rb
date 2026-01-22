@@ -36,6 +36,7 @@ class ApiCall
   end
 
   def build_uri(url)
+    # TODO: replace with URI::HTTPS.build(host,path,query (encoded))
     URI.parse(url)
   end
 
