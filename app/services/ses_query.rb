@@ -58,6 +58,8 @@ class SesQuery < SesLookup
   end
 
   def ses_term_lookup_uri
+    # TODO: test encoding
+
     base_url = ses_base_url
     build_uri("#{base_url}ses?TBDB=disp_taxonomy&TEMPLATE=service.json&expand_hierarchy=0&SERVICE=search&QUERY=#{term}")
   end

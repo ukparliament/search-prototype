@@ -1,8 +1,26 @@
 name: Run RSpec tests
-on: [push]
+on: [ push ]
 jobs:
   run-rspec-tests:
     runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: test
+        ports:
+          - 5432:5432
+        options: >-
+          --mount type=tmpfs,destination=/var/lib/postgresql/data
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    env:
+      DATABASE_URL: postgres://postgres:postgres@localhost:5432/test
+      RAILS_ENV: test
     steps:
       - uses: actions/checkout@v2
       - name: Set up Ruby

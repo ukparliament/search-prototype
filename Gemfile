@@ -3,9 +3,10 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby file: '.ruby-version'
 
-gem "rails", "7.1.3.2"
+gem "rails", "8.1.2"
 gem 'bundler-audit'
-gem "sqlite3", "~> 1.4"
+gem 'cgi'
+gem "pg"
 gem "sprockets-rails"
 gem "importmap-rails"
 gem "font-awesome-rails"
@@ -15,7 +16,6 @@ gem "stimulus-rails"
 gem "jbuilder"
 gem "tzinfo-data", platforms: %i[ mingw mswin x64_mingw jruby ]
 gem "bootsnap", require: false
-# gem "puma"
 gem "passenger", ">= 6", require: "phusion_passenger/rack_handler"
 
 # Temporarily required until Rails update with Ruby 3.4
@@ -32,8 +32,6 @@ end
 
 group :development do
   gem "web-console"
-  gem "better_errors"
-  gem "binding_of_caller"
 end
 
 group :test do

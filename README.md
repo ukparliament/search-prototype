@@ -2,7 +2,7 @@
 
 ## General notes
 
-- Ruby 3.3, Rails 7.1
+- Ruby 4.1, Rails 8.1
 - We have intentionally kept dependencies to a minimum.
 - This app currrently does not use a database, however future development may necessitate this.
 - Unit test suite uses RSpec

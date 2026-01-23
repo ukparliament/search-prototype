@@ -213,12 +213,48 @@ RSpec.describe SolrSearch, type: :model do
         expect(solr_search.search_query).to eq(nil)
       end
     end
+    context 'with a filter' do
+      let!(:solr_search) { SolrSearch.new({ filter: { 'field_name' => ['test'] } }) }
+
+      it 'returns nil' do
+        allow(solr_search).to receive(:evaluated_response).and_return(mock_response)
+        expect(solr_search.search_query).to eq(nil)
+      end
+    end
     context 'with a query' do
       let!(:solr_search) { SolrSearch.new({ query: 'horse' }) }
 
-      it 'returns ' do
+      it 'returns the query' do
         allow(solr_search).to receive(:evaluated_response).and_return(mock_response)
         expect(solr_search.search_query).to eq('horse')
+      end
+    end
+  end
+
+  describe 'query_processor' do
+    context 'with no query' do
+      # for example, when clicking on a SES link, we're just applying a filter
+      let!(:solr_search) { SolrSearch.new({ filter: { "answeringMember_ses" => ["304301"] } }) }
+
+      it 'returns an empty string' do
+        expect(solr_search.query_processor).to eq("")
+      end
+    end
+
+    context 'with a query' do
+      let!(:solr_search) { SolrSearch.new({ query: 'horse' }) }
+      let(:expand_query_instance) { instance_double(ExpandQuery) }
+      let(:term_combiner_instance) { instance_double(TermCombiner) }
+
+      it 'returns a processed query object' do
+        allow(ExpandQuery).to receive(:new).and_return(expand_query_instance)
+        allow(expand_query_instance).to receive(:process_query).and_return(['term1', 'term2'])
+        allow(TermCombiner).to receive(:new).and_return(term_combiner_instance)
+        allow(term_combiner_instance).to receive(:combine).and_return('term1 AND term2')
+
+        expect(solr_search.query_processor).to eq('term1 AND term2')
+        expect(ExpandQuery).to have_received(:new).with('horse', SesQuery).once
+        expect(TermCombiner).to have_received(:new).with(['term1', 'term2']).once
       end
     end
   end
