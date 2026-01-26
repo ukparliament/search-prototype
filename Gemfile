@@ -7,7 +7,7 @@ gem "rails", "8.1.2"
 gem 'bundler-audit'
 gem 'cgi'
 gem "pg"
-gem "sprockets-rails"
+gem "propshaft"
 gem "importmap-rails"
 gem "font-awesome-rails"
 gem "haml"

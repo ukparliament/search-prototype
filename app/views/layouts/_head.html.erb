@@ -3,8 +3,9 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="turbo-refresh-scroll" content="preserve">
   <meta name="format-detection" content="telephone=no">
-  <meta name="view-transition" content="same-origin" />
-  <%= favicon_link_tag 'favicon.png' %>
-  <%= stylesheet_link_tag "application.css" %>
+  <meta name="view-transition" content="same-origin"/>
+  <%= favicon_link_tag '/images/favicon.png' %>
+  <%= stylesheet_link_tag "application.css", "data-turbo-track": "reload" %>
+  <%= yield :page_styles %>
   <%= javascript_importmap_tags %>
 </head>
