@@ -103,7 +103,7 @@ div.search-result-container {
                 align-items: center;
                 display: flex;
 
-                .filter {
+                .search-filter {
                     .top-row {
                         padding-top: 5px;
                         display: flex;

@@ -4,7 +4,7 @@
       <% request.params.dig(:filter).sort.uniq.each do |filter| %>
         <% filter.last.sort.each do |filter_value| %>
           <div class="filter-wrapper">
-            <div class="filter">
+            <div class="search-filter">
               <div class="top-row">
                         <span class="filter-name-label">
                           <%= filter_field_name(filter.first) %>

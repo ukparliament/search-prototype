@@ -2,7 +2,7 @@ class SearchController < ApplicationController
   before_action :begin_timer
 
   def index
-    @page_title = "Search results"
+    @page_title = "Search Results - Parliamentary Search"
     @search_data = SearchData.new(SolrSearch.new(search_params).data)
 
     if @search_data.solr_error?
@@ -23,6 +23,8 @@ class SearchController < ApplicationController
         query_ses = @objects.map { |o| o.content_type_object_data.select { |k| o.class.search_result_ses_fields.include?(k) }.values }
         ses_ids = [@search_data.facet_ses_ids + @associated_object_results.dig(:ses_ids) + query_ses].flatten.uniq
         @ses_data = SesData.new(ses_ids, @search_data.hierarchy_ses_data).combined_ses_data
+
+        @crumb << { label: 'Search results', url: nil }
       end
     end
   end

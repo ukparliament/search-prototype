@@ -4,7 +4,7 @@ class ContentTypeObjectsController < ApplicationController
 
   def index
     # used as landing page during development
-    @page_title = 'Examples'
+    @page_title = 'Examples - Parliamentary Search'
   end
 
   def show
@@ -43,7 +43,8 @@ class ContentTypeObjectsController < ApplicationController
         # Use SesData class to handle SES retrival from cache / API
         @ses_data = SesData.new(all_ses_ids).combined_ses_data
 
-        @page_title = @object.object_title
+        @page_title = "#{@object.object_title} - Parliamentary Search"
+        @crumb << { label: @page_title, url: nil }
 
         if @ses_data&.has_key?(:error)
           render template: 'layouts/shared/error/500', locals: { status: 500, message: 'There was an error resolving names using the SES service' }

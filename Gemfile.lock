@@ -1,3 +1,12 @@
+GIT
+  remote: https://github.com/ukparliament/design-assets.git
+  revision: 88687369f401dc8f5c666712d37eda3da567ee15
+  tag: 0.6.4
+  glob: library_design/*.gemspec
+  specs:
+    library_design (0.6.4)
+      rack-cors (~> 3.0.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -188,6 +197,9 @@ GEM
     public_suffix (6.0.1)
     racc (1.8.1)
     rack (3.2.4)
+    rack-cors (3.0.0)
+      logger
+      rack (>= 3.0.14)
     rack-session (2.1.1)
       base64 (>= 0.1.0)
       rack (>= 3.0.0)
@@ -314,6 +326,7 @@ DEPENDENCIES
   haml
   importmap-rails
   jbuilder
+  library_design!
   logger
   observer
   ostruct

@@ -51,7 +51,7 @@ RSpec.describe 'Search', type: :request do
       it 'returns items found by search' do
         get '/search', params: { "filter" => { "type_ses" => ["90996"] } }
         expect(response).to have_http_status(:ok)
-        expect(response.parsed_body.inner_html).to include("Parliamentary search - Search results")
+        expect(response.parsed_body.inner_html).to include("Search Results - Parliamentary Search")
         expect(response.parsed_body.inner_html).to include('QZH4EFc')
         expect(response.parsed_body.inner_html).to include('http://www.example.com/objects?object=QZH4EFc_uri')
         expect(response.parsed_body.inner_html).to include('SL9RT6y')
@@ -72,7 +72,7 @@ RSpec.describe 'Search', type: :request do
       it 'returns items found by search' do
         get '/search', params: { "query" => 'Test search string' }
         expect(response).to have_http_status(:ok)
-        expect(response.parsed_body.inner_html).to include("Parliamentary search - Search results")
+        expect(response.parsed_body.inner_html).to include("Search Results - Parliamentary Search")
         expect(response.parsed_body.inner_html).to include('QZH4EFc')
         expect(response.parsed_body.inner_html).to include('http://www.example.com/objects?object=QZH4EFc_uri')
         expect(response.parsed_body.inner_html).to include('SL9RT6y')

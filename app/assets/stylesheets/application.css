@@ -1,153 +1,17 @@
-/*
- * This is a manifest file that'll be compiled into application.css, which will include all the files
- * listed below.
- *
- * Any CSS (and SCSS, if configured) file within this directory, lib/assets/stylesheets, or any plugin's
- * vendor/assets/stylesheets directory can be referenced here using a relative path.
- *
- * You're free to add application-wide styles to this file and they'll appear at the bottom of the
- * compiled file so the styles you add here take precedence over styles defined in any other CSS
- * files in this directory. Styles in this file should be added after the last require_* statement.
- * It is generally better to create a new file per style scope.
- *
- */
-
-html {
-    scroll-behavior: smooth;
-    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, Liberation Sans, system-ui, sans-serif
-}
+/* PRIMARY */
 
 body {
-    margin: 0;
-    background: white;
-    min-height: 100vh;
     display: flex;
     flex-direction: column;
 }
 
 main {
-    background: white;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    margin: 0 auto;
-    width: 100%;
-    height: 100%;
     box-sizing: border-box;
-    padding: 1.5rem;
-    font-size: 16px;
-    font-weight: 400;
-    color: #4d4d4d;
-    word-wrap: break-word;
-    line-height: 1.5em;
     flex-grow: 1;
 }
 
-main.narrow {
-    max-width: 1020px;
-}
-
-.footer-container {
-    background: black;
-}
-
-footer {
-    display: block;
-    margin: 0 auto;
-    background: black;
-    border: none;
-    color: white;
-
-    .col {
-        padding: 24px 24px 0 24px;
-    }
-
-    hr {
-        margin: 32px 0 24px 0;
-    }
-
-    a {
-        color: white;
-    }
-
-    .footer-list {
-        flex-direction: column;
-        justify-content: flex-start;
-        align-items: flex-start;
-        gap: 20px;
-        display: flex;
-        box-sizing: border-box;
-    }
-
-    #footer-links {
-        padding-bottom: 24px;
-    }
-}
-
-/* Main nav bar */
-.nav-width-container {
-    max-width: 100%;
-    background: black;
-
-    .nav-container {
-        display: block;
-        margin: 0 auto;
-
-        .nav-bar {
-            width: 100%;
-            height: 100%;
-            background: black;
-            padding: 24px 24px;
-            justify-content: space-between;
-            align-items: center;
-            display: inline-flex;
-            box-sizing: border-box;
-
-            .nav-logo-wrapper {
-                width: 185.92px;
-                height: 46px;
-                position: relative;
-                display: flex;
-                justify-content: flex-start;
-                align-items: flex-start;
-
-                .div.nav-logo {
-                    width: 185.92px;
-                    height: 46px;
-                    left: 0;
-                    top: 0;
-                    background: white
-                }
-            }
-
-            .nav-item-container {
-                justify-content: flex-end;
-                align-items: flex-end;
-                gap: 16px;
-            }
-
-            .nav-item {
-                justify-content: flex-start;
-                align-items: flex-start;
-                display: flex;
-            }
-
-            .nav-label {
-                color: white;
-                font-size: 20px;
-                font-weight: 700;
-                line-height: 28px;
-                word-wrap: break-word;
-            }
-
-            .nav-button-wrapper {
-                width: 24px;
-                height: 30px;
-                position: relative;
-            }
-        }
-    }
-}
 
 /* Object views */
 /* Object view preliminary text */
@@ -348,36 +212,6 @@ div.callout {
     }
 }
 
-/* Link formatting */
-a {
-    color: #2B57AB;
-    font-weight: 350;
-    text-decoration: underline;
-}
-
-/* Headings */
-h1, h2, h3, h4, h5, h6 {
-    color: #373151;
-    font-weight: 700;
-}
-
-h1 {
-    line-height: 1.2em;
-}
-
-h2.content-heading {
-    font-size: 27px;
-    line-height: 1.2em;
-    margin-top: 0;
-    margin-bottom: 0;
-}
-
-h3.content-heading {
-    font-size: 16px;
-    line-height: 1.2em;
-    margin-top: 0;
-    margin-bottom: 0;
-}
 
 /* Unformatted lists */
 ul.unformatted {
@@ -496,19 +330,6 @@ table {
 /* Mobile, below 640px */
 @media only screen and (max-width: 640px) {
 
-    /*nav bar*/
-    .nav-container {
-        min-width: 250px;
-        max-width: 640px;
-
-        .nav-bar {
-            padding: 24px 16px;
-
-            .nav-item-container {
-                display: none;
-            }
-        }
-    }
 
     #facet-container-large {
         display: none;
@@ -531,11 +352,6 @@ table {
         /*border-radius: 4px;*/
     }
 
-    main {
-        max-width: 640px;
-        min-width: 250px;
-    }
-
     section {
         margin: 16px 0;
     }
@@ -555,19 +371,6 @@ table {
 /* Tablet, 640-900px */
 @media only screen and (min-width: 640px) and (max-width: 1020px) {
 
-    /*nav bar*/
-    .nav-container {
-        max-width: 1020px;
-
-        .nav-bar {
-            padding: 24px 16px;
-
-            .nav-item-container {
-                display: none;
-            }
-        }
-    }
-
     #facet-container-large {
         display: block;
     }
@@ -585,10 +388,6 @@ table {
     }
 
     #search-input {
-    }
-
-    main {
-        max-width: 1020px;
     }
 
     section {
@@ -610,19 +409,6 @@ table {
 /* 'Large' desktop, from 1020px */
 @media only screen and (min-width: 1020px) and (max-width: 1280px) {
 
-    /*nav bar*/
-    .nav-container {
-        max-width: 100%;
-
-        .nav-bar {
-            padding: 24px 32px;
-
-            .nav-item-container {
-                display: flex;
-            }
-        }
-    }
-
     #facet-container-large {
         display: block;
     }
@@ -640,10 +426,6 @@ table {
     }
 
     #search-input {
-    }
-
-    main, footer {
-        max-width: 100%;
     }
 
     section {
@@ -664,18 +446,7 @@ table {
 
 /* 'Very large' desktop, from 1280px */
 @media only screen and (min-width: 1280px) {
-    /*nav bar*/
-    .nav-container {
-        max-width: 1580px;
 
-        .nav-bar {
-            padding: 24px 32px;
-
-            .nav-item-container {
-                display: flex;
-            }
-        }
-    }
 
     #facet-container-large {
         display: block;
@@ -696,10 +467,6 @@ table {
     #search-input {
     }
 
-    main, footer {
-        max-width: 1580px;
-    }
-
     section {
         margin: 16px 0;
     }
@@ -715,6 +482,9 @@ table {
         gap: 6px;
     }
 }
+
+
+/* SEARCH_RESULTS */
 
 #search-form {
     width: 100%;

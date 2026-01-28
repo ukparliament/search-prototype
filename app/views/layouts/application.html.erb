@@ -1,21 +1,21 @@
 <!DOCTYPE html>
 <html lang="en-GB">
-<%= render '/layouts/head' %>
-<body>
-<%= render '/layouts/nav' %>
-<main>
-  <div>
-    <header>
-      <%= yield :before_title if content_for?(:before_title) %>
-      <% if content_for?(:title) %>
-        <h1>
-          <%= yield :title %>
-        </h1>
-      <% end %>
-    </header>
+<head>
+  <%= render 'library_design/head/head' %>
+  <%= yield :page_styles %>
+  <%= javascript_importmap_tags %>
+</head>
+<body class="brand-bicameral">
+<%= render 'layouts/header/header' %>
+<main class="block block-page" id="main-content">
+  <div class="inner-content container">
+    <%= render 'library_design/debug/debug' -%>
+    <h1>
+      <%= yield :title %>
+    </h1>
     <%= yield %>
   </div>
 </main>
-<%= render '/layouts/footer' %>
+<%= render 'layouts/footer/footer' %>
 </body>
 </html>
