@@ -7,14 +7,16 @@
 </head>
 <body class="brand-bicameral">
 <%= render 'layouts/header/header' %>
-<main class="block block-page" id="main-content">
-  <div class="inner-content container">
-    <%= render 'library_design/debug/debug' -%>
-    <div class="reading-width">
-      <h1>
-        <%= yield :title %>
-      </h1>
-      <%= yield %>
+<main id="main-content">
+  <div class="block block-page">
+    <div class="inner-content container">
+      <%#= render 'library_design/debug/debug' %>
+      <div class="reading-width">
+        <h1>
+          <%= yield :title %>
+        </h1>
+        <%= yield %>
+      </div>
     </div>
   </div>
 </main>
