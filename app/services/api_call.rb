@@ -13,108 +13,67 @@ class ApiCall
   end
 
   def all_data
+    # get Solr response as JSON
     response = evaluated_response
+
+    # check for errors from Solr
     return response['error'] if response.has_key?('error')
 
+    # otherwise return response JSON
     response
   end
 
   private
 
-  def api_response(cached = false)
+  ##
+  # Processes response from API
+  # - Gets response from POST method
+  # - Force UTF-8 encoding on response body
+  # - Parse body as JSON
+  def evaluated_response
+    # start timer
+    start_time = Time.now
+
+    # call request method, passing in search parameters
+    response = api_post_request(search_params)
+
+    # stop timer & report time taken
+    puts "Received Solr response in #{Time.now - start_time} seconds" if Rails.env.development?
+
+    JSON.parse(response.force_encoding('UTF-8'))
+  end
+
+  ##
+  # Establish HTTP & request objects, then make the request (Net::HTTP)
+  # Stub response from this method when testing, will error to avoid any test environment requests
+  def api_post_request(query)
     raise 'Please stub this method to avoid HTTP requests in test environment' if Rails.env.test?
 
-    start_time = Time.now
-    response = cached ? api_post_request(search_params) : api_cached_post_request(search_params)
+    uri = api_endpoint_uri
+    headers = request_headers
 
-    puts "Received Solr response in #{Time.now - start_time} seconds" if Rails.env.development?
-    response
-  end
+    puts "POST request from #{self.class.name}: #{uri} with data: #{query} and headers: #{headers}" if Rails.env.development?
 
-  def evaluated_response
-    JSON.parse(api_response(true))
-  end
-
-  def build_uri(url)
-    # TODO: replace with URI::HTTPS.build(host,path,query (encoded))
-    URI.parse(url)
-  end
-
-  def api_post_request(params)
-    api_endpoint = Rails.application.credentials.dig(Rails.env.to_sym, :solr_api, :endpoint)
-
-    _uri = URI(api_endpoint).dup
-    puts "POST request from #{self.class.name}: #{_uri} with data: #{params}" if Rails.env.development?
-
-    http = Net::HTTP.new(_uri.host, _uri.port)
-    http.use_ssl = _uri.scheme == 'https'
-
-    # set up the request object
-    request = Net::HTTP::Post.new(_uri)
-    request.set_form_data(params)
-    request_headers_gzip.each { |k, v| request[k] = v }
-
-    # make the request
-    response = http.request(request)
-
-    # return the response body
-    response.body
-  end
-
-  def api_cached_post_request(params)
-    # TODO: refactor so that we don't have duplicate methods with/without caching
-    api_endpoint = Rails.application.credentials.dig(Rails.env.to_sym, :solr_api, :endpoint)
-
-    _uri = URI(api_endpoint).dup
-    puts "POST request from #{self.class.name}: #{_uri} with data: #{params}" if Rails.env.development?
-
-    http = Net::HTTP.new(_uri.host, _uri.port)
-    http.use_ssl = _uri.scheme == 'https'
-
-    # set up the request object
-    request = Net::HTTP::Post.new(_uri)
-    request.set_form_data(params)
-    request_headers_gzip.each { |k, v| request[k] = v }
-
-    Rails.cache.fetch(_uri, expires_in: 2.hours) do
-      # make the request
-      response = http.request(request)
-
-      # return the response body
-      response.body
-    end
-  end
-
-  def api_get_request(uri)
+    # set up HTTP instance
     http = Net::HTTP.new(uri.host, uri.port)
     http.use_ssl = uri.scheme == 'https'
 
     # set up the request object
-    request = Net::HTTP::Get.new(uri)
-    request_headers_gzip.each { |k, v| request[k] = v }
+    request = Net::HTTP::Post.new(uri)
+    request.set_form_data(query)
+    headers.each { |k, v| request[k] = v }
 
     # make the request
     response = http.request(request)
 
-    # return the response body
     response.body
   end
 
-  def api_cached_get_request(uri)
-    http = Net::HTTP.new(uri.host, uri.port)
-    http.use_ssl = uri.scheme == 'https'
-
-    # set up the request object
-    request = Net::HTTP::Get.new(uri)
-    request_headers_gzip.each { |k, v| request[k] = v }
-
-    Rails.cache.fetch(uri, expires_in: 2.hours) do
-      # make the request
-      response = http.request(request)
-
-      # return the response body
-      response.body
-    end
+  def api_endpoint_uri
+    # fetch the Solr url string from credentials
+    api_endpoint = Rails.application.credentials.dig(Rails.env.to_sym, :solr_api, :endpoint)
+    # create a uri object from the string
+    URI(api_endpoint).dup
   end
 
   def api_subscription_key
@@ -123,13 +82,5 @@ class ApiCall
 
   def request_headers
     { 'Ocp-Apim-Subscription-Key' => api_subscription_key }
-  end
-
-  def request_headers_gzip
-    { 'Ocp-Apim-Subscription-Key' => api_subscription_key, 'Accept-Encoding' => 'gzip-deflate' }
-  end
-
-  def decompress_response(gzip_body)
-    Zlib::GzipReader.new(StringIO.new(gzip_body)).read
   end
 end

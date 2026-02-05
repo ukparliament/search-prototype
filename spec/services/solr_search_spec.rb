@@ -19,6 +19,18 @@ RSpec.describe SolrSearch, type: :model do
     },
     "highlighting" => { "test_url" => {} }
   } }
+  let!(:formatted_query) { { fl: "uri type_ses subtype_ses",
+                             fq: ["{!tag=field_name}field_name:(test)"],
+                             "json.facet": "{\"type_sesrollup\":{\"type\":\"terms\",\"field\":\"type_sesrollup\",\"limit\":-1,\"mincount\":1,\"domain\":{\"excludeTags\":\"type_sesrollup\"}},\"legislature_ses\":{\"type\":\"terms\",\"field\":\"legislature_ses\",\"limit\":100,\"mincount\":1,\"domain\":{\"excludeTags\":\"legislature_ses\"}},\"date_year\":{\"type\":\"terms\",\"field\":\"date_year\",\"limit\":100,\"mincount\":1,\"domain\":{\"excludeTags\":\"date_year\"}},\"date_month\":{\"type\":\"terms\",\"field\":\"date_month\",\"limit\":100,\"mincount\":1,\"domain\":{\"excludeTags\":\"date_month\"}},\"session_t\":{\"type\":\"terms\",\"field\":\"session_t\",\"limit\":100,\"mincount\":1,\"domain\":{\"excludeTags\":\"session_t\"}},\"department_ses\":{\"type\":\"terms\",\"field\":\"department_ses\",\"limit\":100,\"mincount\":1,\"domain\":{\"excludeTags\":\"department_ses\"}},\"member_ses\":{\"type\":\"terms\",\"field\":\"member_ses\",\"limit\":100,\"mincount\":1,\"domain\":{\"excludeTags\":\"member_ses\"}},\"primaryMember_ses\":{\"type\":\"terms\",\"field\":\"primaryMember_ses\",\"limit\":100,\"mincount\":1,\"domain\":{\"excludeTags\":\"primaryMember_ses\"}},\"answeringMember_ses\":{\"type\":\"terms\",\"field\":\"answeringMember_ses\",\"limit\":100,\"mincount\":1,\"domain\":{\"excludeTags\":\"answeringMember_ses\"}},\"legislativeStage_ses\":{\"type\":\"terms\",\"field\":\"legislativeStage_ses\",\"limit\":100,\"mincount\":1,\"domain\":{\"excludeTags\":\"legislativeStage_ses\"}},\"legislationTitle_ses\":{\"type\":\"terms\",\"field\":\"legislationTitle_ses\",\"limit\":100,\"mincount\":1,\"domain\":{\"excludeTags\":\"legislationTitle_ses\"}},\"publisher_ses\":{\"type\":\"terms\",\"field\":\"publisher_ses\",\"limit\":100,\"mincount\":1,\"domain\":{\"excludeTags\":\"publisher_ses\"}},\"subject_ses\":{\"type\":\"terms\",\"field\":\"subject_ses\",\"limit\":100,\"mincount\":1,\"domain\":{\"excludeTags\":\"subject_ses\"}}}",
+                             q: "",
+                             "q.op": "AND",
+                             rows: 20,
+                             sort: "date_dt desc",
+                             start: 0 } }
+
+  before do
+    allow(solr_search).to receive(:api_post_request).with(formatted_query).and_return(mock_response.to_json)
+  end
 
   describe 'facet_fields' do
     it 'returns an array of strings' do
@@ -30,7 +42,6 @@ RSpec.describe SolrSearch, type: :model do
   describe 'data' do
     let!(:solr_search) { SolrSearch.new({ filter: { 'field_name' => ['test'] } }) }
     it 'returns a hash containing the search parameters and response' do
-      allow(solr_search).to receive(:evaluated_response).and_return(mock_response)
       expect(solr_search.data).to eq({ search_parameters: { :filter => { "field_name" => ["test"] } }, data: mock_response })
     end
   end
@@ -184,7 +195,6 @@ RSpec.describe SolrSearch, type: :model do
       let!(:solr_search) { SolrSearch.new({ filter: { 'field_name' => ['test'] } }) }
 
       it 'returns an array containing the tagged filter string' do
-        allow(solr_search).to receive(:evaluated_response).and_return(mock_response)
         expect(solr_search.search_filter).to eq(["{!tag=field_name}field_name:(test)"])
       end
     end
@@ -192,7 +202,6 @@ RSpec.describe SolrSearch, type: :model do
       let!(:solr_search) { SolrSearch.new({ filter: { "type_ses" => ["347163"], "subtype_ses" => ["363905"] } }) }
 
       it 'returns an array of tagged filter strings' do
-        allow(solr_search).to receive(:evaluated_response).and_return(mock_response)
         expect(solr_search.search_filter).to eq(["{!tag=type_ses}type_ses:(347163)", "{!tag=subtype_ses}subtype_ses:(363905)"])
       end
     end
@@ -200,7 +209,6 @@ RSpec.describe SolrSearch, type: :model do
       let!(:solr_search) { SolrSearch.new({ filter: { "type_sesrollup" => ["347163", "363905"] } }) }
 
       it 'returns an array containing the tagged filter string, with multiple values' do
-        allow(solr_search).to receive(:evaluated_response).and_return(mock_response)
         expect(solr_search.search_filter).to eq(["{!tag=type_sesrollup}type_sesrollup:(347163 363905)"])
       end
     end
@@ -209,7 +217,6 @@ RSpec.describe SolrSearch, type: :model do
   describe 'search_query' do
     context 'with no query' do
       it 'returns nil' do
-        allow(solr_search).to receive(:evaluated_response).and_return(mock_response)
         expect(solr_search.search_query).to eq(nil)
       end
     end
@@ -217,7 +224,6 @@ RSpec.describe SolrSearch, type: :model do
       let!(:solr_search) { SolrSearch.new({ filter: { 'field_name' => ['test'] } }) }
 
       it 'returns nil' do
-        allow(solr_search).to receive(:evaluated_response).and_return(mock_response)
         expect(solr_search.search_query).to eq(nil)
       end
     end
@@ -225,7 +231,6 @@ RSpec.describe SolrSearch, type: :model do
       let!(:solr_search) { SolrSearch.new({ query: 'horse' }) }
 
       it 'returns the query' do
-        allow(solr_search).to receive(:evaluated_response).and_return(mock_response)
         expect(solr_search.search_query).to eq('horse')
       end
     end
