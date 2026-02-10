@@ -1,75 +1,68 @@
-<div class="result-item">
+<div class="result-item py-2">
   <div class="row title">
-    <%= link_to(format_object_title(object.object_title, @ses_data), object_show_url(object: object.object_uri[:value])) %>
+    <div class="col">
+      <%= link_to(format_object_title(object.object_title, @ses_data), object_show_url(object: object.object_uri[:value])) %>
+    </div>
   </div>
 
-  <div <%= 'hidden' unless params[:show_detailed] == "true" %> class="row content">
+  <div <%= 'hidden' unless params[:show_detailed] == "true" %>>
     <%= render 'search/results/item_details/question_text', question_text: object.question_text, full_text: true %>
   </div>
-  <div <%= 'hidden' if params[:show_detailed] == "true" %> class="row content">
+  <div <%= 'hidden' if params[:show_detailed] == "true" %>>
     <%= render 'search/results/item_details/question_text', question_text: object.question_text, full_text: false %>
   </div>
 
   <div class="row">
-    <div class="result-panel">
-      <div class="primary-person">
-        <%= render 'search/results/item_details/asking_or_tabling_member', asking_member: object.asking_member, tabling_member: object.tabling_member, asking_member_party: object.asking_member_parties, tabling_member_party: object.tabling_member_parties, label: 'Asked by' %>
+    <div class="col primary-person">
+      <%= render 'search/results/item_details/asking_or_tabling_member', asking_member: object.asking_member, tabling_member: object.tabling_member, asking_member_party: object.asking_member_parties, tabling_member_party: object.tabling_member_parties, label: 'Asked by' %>
+    </div>
+    <div <%= 'hidden' unless params[:show_detailed] == "true" %> class="item-details">
+      <div class="col secondary-person">
+        <%= render 'search/results/item_details/answering_member', answering_member: object.answering_member, answering_member_party: object.answering_member_parties, label: 'Answered by' %>
       </div>
-      <div class="secondary-person">
-        <div <%= 'hidden' unless params[:show_detailed] == "true" %> class="item-details">
-          <%= render 'search/results/item_details/answering_member', answering_member: object.answering_member, answering_member_party: object.answering_member_parties, label: 'Answered by' %>
-        </div>
-      </div>
-      <div class="primary-group">
-        <%= render 'search/results/item_details/answering_department', answering_department: object.answering_department, label: 'Answering body' %>
-      </div>
+    </div>
+    <div class="col primary-group">
+      <%= render 'search/results/item_details/answering_department', answering_department: object.answering_department, label: 'Answering body' %>
     </div>
   </div>
 
   <div class="row">
-    <div class="result-panel">
-      <div class="type">
-        <%= render 'search/results/item_details/contribution_type', object: object %>
-      </div>
-      <div class="status">
-        <%= render 'search/results/item_details/state', state: object.state, label: 'Status' %>
-      </div>
-      <div class="secondary-group"></div>
+    <div class="col type">
+      <%= render 'search/results/item_details/contribution_type', object: object %>
     </div>
+    <div class="col status">
+      <%= render 'search/results/item_details/state', state: object.state, label: 'Status' %>
+    </div>
+    <div class="col secondary-group"></div>
   </div>
 
-  <div <%= 'hidden' unless params[:show_detailed] == "true" %> class="row">
-
+  <div <%= 'hidden' unless params[:show_detailed] == "true" %>>
     <div class="row">
-      <div class="result-panel">
-        <div class="legislative-stage"></div>
-        <div class="procedure">
-          <%= render 'search/results/item_details/procedure', procedure: object.procedure %>
-        </div>
+      <div class="col legislative-stage"></div>
+      <div class="col procedure">
+        <%= render 'search/results/item_details/procedure', procedure: object.procedure %>
       </div>
     </div>
 
     <div class="row">
-      <div class="result-panel">
-        <div class="specific-date-1">
-          <%= render 'search/results/item_details/date_tabled', date_tabled: object.date_tabled, label: 'Tabled on' %>
-        </div>
-        <div class="specific-date-2">
-          <%= render 'search/results/item_details/date_for_answer', date_for_answer: object.date_for_answer, label: 'For answer on' %>
-        </div>
-        <div class="specific-date-3">
-          <%= render 'search/results/item_details/date_of_answer', date_of_answer: object.date_of_answer, label: 'Answered on' %>
-        </div>
-        <div class="specific-date-4"></div>
+      <div class="col specific-date-1">
+        <%= render 'search/results/item_details/date_tabled', date_tabled: object.date_tabled, label: 'Tabled on' %>
       </div>
+      <div class="col specific-date-2">
+        <%= render 'search/results/item_details/date_for_answer', date_for_answer: object.date_for_answer, label: 'For answer on' %>
+      </div>
+      <div class="col specific-date-3">
+        <%= render 'search/results/item_details/date_of_answer', date_of_answer: object.date_of_answer, label: 'Answered on' %>
+      </div>
+      <div class="col specific-date-4"></div>
     </div>
 
     <div class="row">
-      <div class="supplementary-content">
-        <% unless object.answer_item_link.blank? %>
+      <% unless object.answer_item_link.blank? %>
+        <div class="col supplementary-content">
           <%= render 'search/results/item_details/answer_text', object: @associated_object_data[object.answer_item_link] %>
-        <% end %>
-      </div>
+        </div>
+      <% end %>
     </div>
 
     <%= render 'search/results/item_details/legislation', legislation: object.legislation unless object.legislation.blank? %>
@@ -77,24 +70,24 @@
 
   <%= render 'search/results/item_details/notes', notes: object.notes unless object.notes.blank? %>
 
-  <div <%= 'hidden' unless params[:show_detailed] == "true" %> class="row">
+  <div <%= 'hidden' unless params[:show_detailed] == "true" %>>
     <%= render 'search/results/item_details/subjects', subjects: object.subjects unless object.subjects.blank? %>
   </div>
 
   <div class="row">
-    <div class="result-panel">
-      <div class="significant-date">
-        <%= render 'search/results/item_details/date', date: object.standard_date %>
-      </div>
-      <div class="reference">
-        <%= render 'search/results/item_details/reference', reference: object.standard_reference %>
-      </div>
-      <div class="place" <%= 'hidden' unless params[:show_detailed] == "true" %>>
+    <div class="col significant-date">
+      <%= render 'search/results/item_details/date', date: object.standard_date %>
+    </div>
+    <div class="col reference">
+      <%= render 'search/results/item_details/reference', reference: object.standard_reference %>
+    </div>
+    <div <%= 'hidden' unless params[:show_detailed] == "true" %>>
+      <div class="col place">
         <%= render 'search/results/item_details/place', place: object.place %>
       </div>
-      <div class="house">
-        <%= render 'search/results/item_details/legislature', legislature: object.legislature %>
-      </div>
+    </div>
+    <div class="col house">
+      <%= render 'search/results/item_details/legislature', legislature: object.legislature %>
     </div>
   </div>
 </div>

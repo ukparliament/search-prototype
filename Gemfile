@@ -6,6 +6,7 @@ ruby file: '.ruby-version'
 gem "rails", "8.1.2"
 gem 'bundler-audit'
 gem 'cgi'
+gem 'fiddle'
 gem "pg"
 gem "propshaft"
 gem "library_design", github: "ukparliament/design-assets", glob: 'library_design/*.gemspec', tag: "0.6.4"
@@ -18,12 +19,6 @@ gem "jbuilder"
 gem "tzinfo-data", platforms: %i[ mingw mswin x64_mingw jruby ]
 gem "bootsnap", require: false
 gem "passenger", ">= 6", require: "phusion_passenger/rack_handler"
-
-# Temporarily required until Rails update with Ruby 3.4
-gem 'logger'
-gem 'benchmark'
-gem 'ostruct'
-gem 'observer'
 
 group :development, :test do
   gem 'rspec-rails'

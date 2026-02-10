@@ -87,7 +87,6 @@ GEM
     addressable (2.8.7)
       public_suffix (>= 2.0.2, < 7.0)
     base64 (0.3.0)
-    benchmark (0.5.0)
     bigdecimal (4.0.1)
     bindex (0.8.1)
     bootsnap (1.18.4)
@@ -122,6 +121,7 @@ GEM
       railties (>= 5.0.0)
     faker (3.5.1)
       i18n (>= 1.8.11, < 2)
+    fiddle (1.1.8)
     font-awesome-rails (4.7.0.9)
       railties (>= 3.2, < 9.0)
     globalid (1.3.0)
@@ -175,8 +175,6 @@ GEM
       racc (~> 1.4)
     nokogiri (1.19.0-x86_64-linux-gnu)
       racc (~> 1.4)
-    observer (0.1.2)
-    ostruct (0.6.3)
     passenger (6.0.27)
       rack (>= 1.6.13)
       rackup (>= 1.0.1)
@@ -315,21 +313,18 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
-  benchmark
   bootsnap
   bundler-audit
   capybara
   cgi
   factory_bot_rails
   faker
+  fiddle
   font-awesome-rails
   haml
   importmap-rails
   jbuilder
   library_design!
-  logger
-  observer
-  ostruct
   passenger (>= 6)
   pg
   propshaft
