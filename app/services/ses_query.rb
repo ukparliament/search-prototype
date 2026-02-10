@@ -1,16 +1,5 @@
 class SesQuery < SesLookup
 
-  def term
-    # format term to lookup
-    return if input_data.blank?
-
-    input_data[:value]
-  end
-
-  def evaluated_response
-    api_response(ses_term_lookup_uri, false)
-  end
-
   ##
   # Returns hash of query expansion data assembled from SES query response.
   #
@@ -57,10 +46,23 @@ class SesQuery < SesLookup
     ret
   end
 
-  def ses_term_lookup_uri
-    # TODO: test encoding
+  private
 
+  def evaluated_response
+    api_response(ses_term_lookup_uri, false)
+  end
+
+  def ses_term_lookup_uri
     base_url = ses_base_url
+    base_url = 'https://api.parliament.uk/ses/' if Rails.env.test?
+
     build_uri("#{base_url}ses?TBDB=disp_taxonomy&TEMPLATE=service.json&expand_hierarchy=0&SERVICE=search&QUERY=#{term}")
+  end
+
+  def term
+    # format term to lookup
+    return if input_data.blank?
+
+    input_data[:value]
   end
 end

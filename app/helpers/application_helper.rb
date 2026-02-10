@@ -88,7 +88,7 @@ module ApplicationHelper
       session_t: 'Session',
       department_ses: 'Department',
       department_t: 'Department',
-      answeringDepartment_ses: 'Department',
+      answeringDept_ses: 'Department',
       member_ses: 'Member',
       primaryMember_ses: 'Primary member',
       askingMember_ses: 'Primary member',
