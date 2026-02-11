@@ -1,26 +1,26 @@
-<div class="result-item py-2">
-  <div class="row title">
+<div class="result-item py-3">
+  <div class="row py-1 title">
     <div class="col">
       <%= link_to(format_object_title(object.object_title, @ses_data), object_show_url(object: object.object_uri[:value])) %>
     </div>
   </div>
 
   <div <%= 'hidden' unless params[:show_detailed] == "true" %>>
-    <div class="row">
+    <div class="row py-1">
       <div class="col">
         <%= render 'search/results/item_details/description', description: object.motion_text, full_text: true %>
       </div>
     </div>
   </div>
   <div <%= 'hidden' if params[:show_detailed] == "true" %>>
-    <div class="row">
+    <div class="row py-1">
       <div class="col">
         <%= render 'search/results/item_details/description', description: object.motion_text, full_text: false %>
       </div>
     </div>
   </div>
 
-  <div class="row">
+  <div class="row py-1">
     <div class="col primary-person">
       <%= render 'search/results/item_details/primary_sponsor', primary_sponsor: object.primary_sponsor, primary_sponsor_party: object.primary_sponsor_party %>
     </div>
@@ -28,7 +28,7 @@
     <div class="col primary-group"></div>
   </div>
 
-  <div class="row">
+  <div class="row py-1">
     <div class="col type">
       <%= render 'search/results/item_details/subtype_or_type', subtype: object.subtype, type: object.type %>
     </div>
@@ -40,7 +40,7 @@
 
     <% unless object.amendments.blank? %>
       <% object.amendments.each do |amendment| %>
-        <div class="row">
+        <div class="row py-1">
           <div class="col amending-member">
             <%= render 'search/results/item_details/amended_by', primary_sponsor: amendment.dig(:primary_sponsor) unless amendment.dig(:primary_sponsor, :value).blank? %>
           </div>
@@ -60,7 +60,7 @@
     <%= render 'search/results/item_details/subjects', subjects: object.subjects unless object.subjects.blank? %>
   </div>
 
-  <div class="row">
+  <div class="row py-1">
     <div class="col significant-date">
       <%= render 'search/results/item_details/date', date: object.standard_date %>
     </div>

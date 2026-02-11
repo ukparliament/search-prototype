@@ -18,7 +18,7 @@ class SolrSearch < ApiCall
       'legislature_ses',
       'date_year',
       'date_month',
-      'session_t',
+      'session_s',
       'department_ses',
       'member_ses',
       'primaryMember_ses',

@@ -254,7 +254,7 @@ class SearchData
 
   def ordered_facet_fields
     # used to extract Solr returned facet data in the correct order for display
-    %w[type_sesrollup legislature_ses date_year date_month session_t department_ses member_ses primaryMember_ses answeringMember_ses legislativeStage_ses legislationTitle_ses subject_ses publisher_ses]
+    %w[type_sesrollup legislature_ses date_year date_month session_s department_ses member_ses primaryMember_ses answeringMember_ses legislativeStage_ses legislationTitle_ses subject_ses publisher_ses]
   end
 
   def sort_facets(facet_field)

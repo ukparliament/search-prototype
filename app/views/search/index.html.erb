@@ -53,7 +53,7 @@
         <div class="col-3" data-controller="expand-facet">
           <%= render 'applied_filters' %>
           <%= render 'search/results/facets/type_facet' %>
-          <% @search_data.facets.select { |h| ["legislature_ses", "session_t"].include?(h.dig(:field_name)) }.each do |facet_field| %>
+          <% @search_data.facets.select { |h| ["legislature_ses", "session_s"].include?(h.dig(:field_name)) }.each do |facet_field| %>
             <%= render 'filter_section', facet_field: format_facets(facet_field) %>
           <% end %>
           <% @search_data.facets.select { |h| ["date_year", "date_month", "department_ses", "member_ses", "primaryMember_ses", "answeringMember_ses", "legislativeStage_ses", "legislationTitle_ses", "subject_ses", "publisher_ses"].include?(h.dig(:field_name)) }.each do |facet_field| %>

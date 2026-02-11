@@ -1,5 +1,5 @@
-<div class="result-item py-2">
-  <div class="row title">
+<div class="result-item py-3">
+  <div class="row py-1 title">
     <div class="col">
       <%= link_to(format_object_title(object.object_title, @ses_data), object_show_url(object: object.object_uri[:value])) %>
     </div>
@@ -12,7 +12,7 @@
     <%= render 'search/results/item_details/petition_text', petition_text: object.content, full_text: false %>
   </div>
 
-  <div class="row">
+  <div class="row py-1">
     <div class="col primary-person">
       <%= render 'search/results/item_details/lead_members', lead_members: object.lead_members, label: 'Lead member' %>
     </div>
@@ -20,7 +20,7 @@
     <div class="col primary-group"></div>
   </div>
 
-  <div class="row">
+  <div class="row py-1">
     <div class="col type">
       <%= render 'search/results/item_details/type', type: object.object_name %>
     </div>
@@ -38,7 +38,7 @@
     <%= render 'search/results/item_details/subjects', subjects: object.subjects unless object.subjects.blank? %>
   </div>
 
-  <div class="row">
+  <div class="row py-1">
     <div class="col significant-date">
       <%= render 'search/results/item_details/date', date: object.standard_date %>
     </div>

@@ -1,11 +1,11 @@
-<div class="result-item py-2">
-  <div class="row">
+<div class="result-item py-3">
+  <div class="row py-1">
     <div class="col">
       <%= link_to(format_object_title(object.object_title, @ses_data), object_show_url(object: object.object_uri[:value])) %>
     </div>
   </div>
 
-  <div class="row">
+  <div class="row py-1">
     <div class="col primary-person">
       <%= render 'search/results/item_details/member', member: object.member, member_party: object.member_parties %>
     </div>
@@ -16,7 +16,7 @@
     </div>
   </div>
 
-  <div class="row">
+  <div class="row py-1">
     <div class="col type">
       <%= render 'search/results/item_details/type', type: object.object_name %>
     </div>
@@ -40,7 +40,7 @@
 </div>
 
 <div <%= 'hidden' unless params[:show_detailed] == "true" %>>
-  <div class="row">
+  <div class="row py-1">
     <div class="col commons-library-location">
       <%= render 'search/results/item_details/commons_library_location', location: object.commons_library_location unless object.commons_library_location.blank? %>
     </div>
@@ -50,7 +50,7 @@
   </div>
 </div>
 
-<div class="row">
+<div class="row py-1">
   <div class="col significant-date">
     <%= render 'search/results/item_details/date', date: object.standard_date %>
   </div>
