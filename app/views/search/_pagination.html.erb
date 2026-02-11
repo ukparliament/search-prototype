@@ -1,47 +1,49 @@
-<span id="pagination">
-  <% if user_requested_page > 3 %>
-    <span>
-      <%= link_to "1", search_url(query: query, filter: filter, sort_by: sort_by, results_per_page: results_per_page, page: 1, expanded_types: expanded_types, show_detailed: show_detailed), class: 'modifiable-link' %>
-    </span>
-    <% if user_requested_page > 4 %>
-      <span>
-        ...
-      </span>
+<nav aria-label="Page navigation">
+  <ul class="pagination justify-content-center">
+    <% if user_requested_page > 3 %>
+      <li class="page-item">
+        <%= link_to "1", search_url(query: query, filter: filter, sort_by: sort_by, results_per_page: results_per_page, page: 1, expanded_types: expanded_types, show_detailed: show_detailed), class: 'page-link modifiable-link' %>
+      </li>
+      <% if user_requested_page > 4 %>
+        <li class="page-item disabled">
+          <div class="page-link">...</div>
+        </li>
+      <% end %>
     <% end %>
-  <% end %>
-  <% if user_requested_page > 2 %>
-    <span>
-      <%= link_to user_requested_page - 2, search_url(query: query, filter: filter, sort_by: sort_by, results_per_page: results_per_page, page: user_requested_page - 2, expanded_types: expanded_types, show_detailed: show_detailed), class: 'modifiable-link' %>
-    </span>
-  <% end %>
-  <% if user_requested_page > 1 %>
-    <span>
-      <%= link_to user_requested_page -1, search_url(query: query, filter: filter, sort_by: sort_by, results_per_page: results_per_page, page: user_requested_page -1, expanded_types: expanded_types, show_detailed: show_detailed), class: 'modifiable-link' %>
-    </span>
-  <% end %>
-
-  <span>
-    <%= link_to user_requested_page, search_url(query: query, filter: filter, sort_by: sort_by, results_per_page: results_per_page, page: user_requested_page, expanded_types: expanded_types, show_detailed: show_detailed), class: 'selected modifiable-link' %>
-  </span>
-
-  <% if user_requested_page < last_page %>
-    <span>
-      <%= link_to user_requested_page + 1, search_url(query: query, filter: filter, sort_by: sort_by, results_per_page: results_per_page, page: user_requested_page + 1, expanded_types: expanded_types, show_detailed: show_detailed), class: 'modifiable-link' %>
-    </span>
-  <% end %>
-  <% if user_requested_page < last_page - 1 %>
-    <span>
-      <%= link_to user_requested_page + 2, search_url(query: query, filter: filter, sort_by: sort_by, results_per_page: results_per_page, page: user_requested_page + 2, expanded_types: expanded_types, show_detailed: show_detailed), class: 'modifiable-link' %>
-    </span>
-  <% end %>
-  <% if user_requested_page < last_page - 2 %>
-    <% if user_requested_page < last_page - 3 %>
-      <span>
-        ...
-      </span>
+    <% if user_requested_page > 2 %>
+      <li class="page-item">
+        <%= link_to user_requested_page - 2, search_url(query: query, filter: filter, sort_by: sort_by, results_per_page: results_per_page, page: user_requested_page - 2, expanded_types: expanded_types, show_detailed: show_detailed), class: 'page-link modifiable-link' %>
+      </li>
     <% end %>
-    <span>
-      <%= link_to last_page, search_url(query: query, filter: filter, sort_by: sort_by, results_per_page: results_per_page, page: last_page, expanded_types: expanded_types, show_detailed: show_detailed), class: 'modifiable-link' %>
-    </span>
-  <% end %>
-</span>
+    <% if user_requested_page > 1 %>
+      <li class="page-item">
+        <%= link_to user_requested_page -1, search_url(query: query, filter: filter, sort_by: sort_by, results_per_page: results_per_page, page: user_requested_page -1, expanded_types: expanded_types, show_detailed: show_detailed), class: 'page-link modifiable-link' %>
+      </li>
+    <% end %>
+
+    <li class="page-item active">
+      <%= link_to user_requested_page, search_url(query: query, filter: filter, sort_by: sort_by, results_per_page: results_per_page, page: user_requested_page, expanded_types: expanded_types, show_detailed: show_detailed), class: 'page-link modifiable-link' %>
+    </li>
+
+    <% if user_requested_page < last_page %>
+      <li class="page-item">
+        <%= link_to user_requested_page + 1, search_url(query: query, filter: filter, sort_by: sort_by, results_per_page: results_per_page, page: user_requested_page + 1, expanded_types: expanded_types, show_detailed: show_detailed), class: 'page-link modifiable-link' %>
+      </li>
+    <% end %>
+    <% if user_requested_page < last_page - 1 %>
+      <li class="page-item">
+        <%= link_to user_requested_page + 2, search_url(query: query, filter: filter, sort_by: sort_by, results_per_page: results_per_page, page: user_requested_page + 2, expanded_types: expanded_types, show_detailed: show_detailed), class: 'page-link modifiable-link' %>
+      </li>
+    <% end %>
+    <% if user_requested_page < last_page - 2 %>
+      <% if user_requested_page < last_page - 3 %>
+        <li class="page-item disabled">
+          <div class="page-link">...</div>
+        </li>
+      <% end %>
+      <li class="page-item">
+        <%= link_to last_page, search_url(query: query, filter: filter, sort_by: sort_by, results_per_page: results_per_page, page: last_page, expanded_types: expanded_types, show_detailed: show_detailed), class: 'page-link modifiable-link' %>
+      </li>
+    <% end %>
+  </ul>
+</nav>

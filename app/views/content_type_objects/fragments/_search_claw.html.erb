@@ -1,31 +1,38 @@
-<div hidden class="results-claw claw">
-  <div class="grid-container">
-    <% unless object.timestamp.blank? %>
-      <span class="claw-timestamp"><%= object.timestamp[:value] %></span>
-    <% end %>
-    <% unless object.object_uri.blank? %>
-      <span class="claw-uri"><%= object.object_uri[:value] %></span>
-    <% end %>
-    <div class="mini-button-container" data-controller="clipboard">
-      <% unless object.object_uri.blank? %>
-        <button data-action="clipboard#copy" title="Copy" class="page-button">
-          <span hidden data-clipboard-target="source" data-clipboard-text="<%= object.object_uri.dig(:value) %>">
-          </span>
-          Copy
-        </button>
-      <% end %>
+<div hidden class="claw font-size-milli">
+  <div class="row justify-content-start">
+    <div class="col-12">
+      <div class="row justify-content-between">
+        <div class="col-auto align-self-center">
+          <% unless object.timestamp.blank? %>
+            <%= object.timestamp[:value] %>
+          <% end %>
+        </div>
+        <div class="col-auto" data-controller="clipboard">
+          <% unless object.indexing_link.blank? %>
+            <%= link_to 'Indexing', object.indexing_link, target: :_blank, class: 'btn-sm' %>
+          <% end %>
 
-      <% unless object.indexing_link.blank? %>
-        <%= link_to 'Indexing', object.indexing_link, target: :_blank, class: 'page-button' %>
-      <% end %>
+          <% unless object.solr_deep_link.blank? %>
+            <%= link_to 'Solr', object.solr_deep_link, target: :_blank, class: 'btn-sm' %>
+          <% end %>
 
-      <% unless object.solr_deep_link.blank? %>
-        <%= link_to 'Solr', object.solr_deep_link, target: :_blank, class: 'page-button' %>
-      <% end %>
+          <% unless object.combined_location_uri.blank? %>
+            <%= link_to 'Source', object.combined_location_uri[:value], target: :_blank, class: 'btn-sm' %>
+          <% end %>
 
-      <% unless object.combined_location_uri.blank? %>
-        <%= link_to 'Source', object.combined_location_uri[:value], target: :_blank, class: 'page-button' %>
-      <% end %>
+          <% unless object.object_uri.blank? %>
+            <div hidden data-clipboard-target="source" data-clipboard-text="<%= object.object_uri.dig(:value) %>"></div>
+            <button data-action="clipboard#copy" title="Copy" class="btn btn-outline-primary p-1">Copy</button>
+          <% end %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <% unless object.object_uri.blank? %>
+            <%= object.object_uri[:value] %>
+          <% end %>
+        </div>
+      </div>
     </div>
   </div>
 </div>
