@@ -1,13 +1,34 @@
-<section hidden id="about-this-result" class="object-claw claw">
-  <h3 class="content-heading-small">Librarians' tools</h3>
-  <div class="claw-grid-container">
-    <b class="grid-item about-search-time">Search time</b>
-    <span class="grid-item"><%= "#{(Time.now - @start_time).round(3)} seconds" %></span>
-    <b class="grid-item about-query-time">Solr query time</b>
-    <span class="grid-item"><%= "#{@search_data.query_time} seconds" %></span>
-    <b class="grid-item about-query">Search query</b>
-    <span class="grid-item"><%= @search_data.query %></span>
-    <b class="grid-item about-searched-on">We actually searched for</b>
-    <span class="grid-item"><%= @search_data.query_as_submitted %></span>
+<section hidden id="about-this-result" class="row my-4 py-3 border border-dark claw">
+  <div class="col">
+    <h3>Librarians' tools</h3>
+    <dl>
+      <dt>
+        Search time
+      </dt>
+      <dd>
+        <%= "#{(Time.now - @start_time).round(3)} seconds" %>
+      </dd>
+
+      <dt>
+        Solr query time
+      </dt>
+      <dd>
+        <%= "#{@search_data.query_time} seconds" %>
+      </dd>
+
+      <dt>
+        Search query
+      </dt>
+      <dd>
+        <%= @search_data.query %>
+      </dd>
+
+      <dt>
+        We actually searched for
+      </dt>
+      <dd>
+        <%= @search_data.query_as_submitted %>
+      </dd>
+    </dl>
   </div>
 </section>

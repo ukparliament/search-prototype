@@ -1,6 +1,8 @@
 <% if contains_note && contains_note[:value] %>
-  <div class="about-item">
-    <div class="content-heading-small" id="contains-explanatory-note">Contains explanatory note</div>
+  <dt>
+    Contains explanatory note
+  </dt>
+  <dd>
     <%= boolean_yes_no(contains_note) %>
-  </div>
+  </dd>
 <% end %>

@@ -1,6 +1,8 @@
 <% if contains_statistics && contains_statistics[:value] %>
-  <div class="about-item">
-    <div class="content-heading-small" id="contains-statistics">Contains statistics</div>
+  <dt>
+    Contains statistics
+  </dt>
+  <dd>
     <%= boolean_yes_no(contains_statistics) %>
-  </div>
+  </dd>
 <% end %>

@@ -1,5 +1,5 @@
 <% unless request.params.dig(:filter).blank? %>
-  <div class="applied-filters mb-2">
+  <div class="applied-filters mb-3">
     <div class="applied-filter-container">
       <% request.params.dig(:filter).sort.uniq.each do |filter| %>
         <% filter.last.sort.each do |filter_value| %>
@@ -10,8 +10,8 @@
                   <%= filter_field_name(filter.first) %>
                 </span>
                 <span class="flex-spacer"></span>
-                <a href="<%= url_for(remove_filter_url(request.params, filter.first, filter_value)) %>" class="modifiable-link">
-                X
+                <a href="<%= url_for(remove_filter_url(request.params, filter.first, filter_value)) %>" aria-label="Remove filter" class="modifiable-link">
+                  X
                 </a>
               </div>
               <div class="bottom-row">

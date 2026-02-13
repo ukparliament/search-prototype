@@ -3,27 +3,20 @@
   <%#= render 'content_type_objects/fragments/data', data: @ses_data, title: 'SES Data' %>
 <% end %>
 
-<% content_for(:before_title) do %>
-  <%= link_to('UK Parliament', root_path) %> / <%= link_to('Open data', root_path) %><br/>
-  <div id="top"></div>
-<% end %>
-
-<% content_for(:title) do %>
+<h1>
   <%= format_object_title(object.object_title, @ses_data) %>
-<% end %>
+</h1>
 
-<section id="prelim">
-  <%= render object.prelim_partial, object: object %>
-</section>
+<%= render object.prelim_partial, object: object %>
 
-<section id="main-content" class="content-section white-padded">
+<dl class="pb-0">
   <%= render 'content_type_objects/fragments/question', object: object %>
   <%= render 'content_type_objects/fragments/answer', object: object if object.answered? || object.answered_was_holding? %>
   <%= render 'content_type_objects/fragments/corrected_written_question_follow_up', correcting_object: @associated_object_data[object.correcting_item_link] if object.corrected? %>
   <%= render 'content_type_objects/fragments/corrected_answer', object: object if object.corrected? %>
-</section>
+</dl>
 
-<section id="about" class="content-section grey">
+<dl>
   <%= render 'content_type_objects/fragments/type', type: object.type %>
   <%= render 'content_type_objects/fragments/uin', uins: object.uin %>
   <%= render 'content_type_objects/fragments/session', session: object.parliamentary_session %>
@@ -43,7 +36,6 @@
   <%= render 'content_type_objects/fragments/legislation', legislation: object.legislation %>
   <%= render 'content_type_objects/fragments/contains_statistics', contains_statistics: object.contains_statistics %>
   <%= render 'content_type_objects/fragments/link', object: object %>
-</section>
+</dl>
 
 <%= render '/content_type_objects/fragments/about_this_result', object: object %>
-<%= render '/content_type_objects/fragments/back_to_top_button' %>

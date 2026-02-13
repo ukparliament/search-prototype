@@ -1,17 +1,21 @@
 <% if object.is_published && object.is_published[:value] %>
   <% unless object.section.blank? && object.published_by.blank? %>
-    <div class="about-item">
-      <div class="content-heading-small" id="published-by">Published by</div>
-      <% unless object.section.blank? %>
-        <% object.sections.each do |section| %>
-          <%= search_link(section) %><br/>
-        <% end %>
+    <dt>
+      Published by
+    </dt>
+    <% unless object.section.blank? %>
+      <% object.sections.each do |section| %>
+        <dd>
+          <%= search_link(section) %>
+        </dd>
       <% end %>
-      <% unless object.published_by.blank? %>
-        <% unless object.sections && object.sections.pluck(:value).include?(object.published_by.dig(:value)) %>
+    <% end %>
+    <% unless object.published_by.blank? %>
+      <% unless object.sections && object.sections.pluck(:value).include?(object.published_by.dig(:value)) %>
+        <dd>
           <%= search_link(object.published_by) %>
-        <% end %>
+        </dd>
       <% end %>
-    </div>
+    <% end %>
   <% end %>
 <% end %>

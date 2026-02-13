@@ -3,28 +3,19 @@
   <%#= render 'content_type_objects/fragments/data', data: @ses_data, title: 'SES Data' %>
 <% end %>
 
-<% content_for(:before_title) do %>
-  <%= link_to('UK Parliament', root_path) %> / <%= link_to('Open data', root_path) %><br/>
-  <div id="top"></div>
-<% end %>
+<h1>
+  <%= format_object_title(object.object_title, @ses_data) %>
+</h1>
 
-  <% content_for(:title) do %>
-    <%= format_object_title(object.object_title, @ses_data) %>
-  <% end %>
-
-<section id="prelim">
-  <%= render 'content_type_objects/preliminary_sentences/statutory_instrument', object: object %>
-</section>
+<%= render 'content_type_objects/preliminary_sentences/statutory_instrument', object: object %>
 
 <% unless object.abstract_text.blank? %>
-  <section id="main-content" class="content-section white-padded">
-    <div class="content-text">
-      <%= object.abstract_text[:value] %>
-    </div>
-  </section>
+  <p>
+    <%= object.abstract_text[:value] %>
+  </p>
 <% end %>
 
-<section id="about" class="content-section grey">
+<dl>
   <%= render 'content_type_objects/fragments/type', type: object.type %>
   <%= render 'content_type_objects/fragments/reference', reference: object.reference %>
   <%= render 'content_type_objects/fragments/session', session: object.parliamentary_session %>
@@ -46,7 +37,6 @@
   <%= render 'content_type_objects/fragments/contains_statistics', contains_statistics: object.contains_statistics %>
   <%= render 'content_type_objects/fragments/isbn', isbn: object.isbn %>
   <%= render 'content_type_objects/fragments/link', object: object %>
-</section>
+</dl>
 
 <%= render '/content_type_objects/fragments/about_this_result', object: object %>
-<%= render '/content_type_objects/fragments/back_to_top_button' %>

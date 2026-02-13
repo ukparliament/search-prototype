@@ -1,6 +1,8 @@
 <% if failed_oral && failed_oral[:value] %>
-  <div class="about-item">
-    <div class="content-heading-small" id="failed-oral">Question not reached</div>
+  <dt>
+    Question not reached
+  </dt>
+  <dd>
     <%= boolean_yes_no(failed_oral) %>
-  </div>
+  </dd>
 <% end %>

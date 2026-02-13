@@ -1,18 +1,20 @@
-<div class="content-prelim-box">
-  <div class="content-prelim-inner">
-    <div class="content-prelim-text" id="prelim-text">
-      <% if correcting_object.blank? || !correcting_object.ministerial_correction? %>
-        It has since been corrected.
-      <% else %>
-        The answer was corrected by <%= search_link(correcting_object.correcting_member) %>
-        (<%= search_link(correcting_object.correcting_member_party) %>)
-        <% if correcting_object.department.blank? %>
-          on <strong><%= format_date(correcting_object.correction_date) %></strong>.
-        <% else %>
-          on <strong><%= format_date(correcting_object.correction_date) %></strong>
-          on behalf of the <%= search_link(correcting_object.department) %>.
-        <% end %>
-      <% end %>
-    </div>
-  </div>
-</div>
+<dd>
+  <% if correcting_object.blank? || !correcting_object.ministerial_correction? %>
+    <p>It has since been corrected.</p>
+  <% else %>
+    <p>
+      The answer was corrected by <%= search_link(correcting_object.correcting_member) %>
+      (<%= search_link(correcting_object.correcting_member_party) %>)
+    </p>
+    <% if correcting_object.department.blank? %>
+      <p>
+        on <strong><%= format_date(correcting_object.correction_date) %></strong>.
+      </p>
+    <% else %>
+      <p>
+        on <strong><%= format_date(correcting_object.correction_date) %></strong>
+        on behalf of the <%= search_link(correcting_object.department) %>.
+      </p>
+    <% end %>
+  <% end %>
+</dd>

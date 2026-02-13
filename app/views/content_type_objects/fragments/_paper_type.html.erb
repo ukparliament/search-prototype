@@ -1,8 +1,8 @@
 <% unless paper_type.blank? %>
-  <div class="about-item">
-    <div class="content-heading-small" id="paper-type">Paper type</div>
-    <% paper_type.each do |type| %>
-      <%= search_link(type) %><br/>
-    <% end %>
-  </div>
+  <dt>Paper type</dt>
+  <% paper_type.each do |type| %>
+    <dd>
+      <%= search_link(type) %>
+    </dd>
+  <% end %>
 <% end %>

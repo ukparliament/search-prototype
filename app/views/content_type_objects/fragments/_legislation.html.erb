@@ -1,8 +1,10 @@
 <% unless legislation.blank? %>
-  <div class="about-item">
-    <div class="content-heading-small" id="legislation">Legislation</div>
-    <% legislation.each do |legislation| %>
-      <%= search_link(legislation) %><br/>
-    <% end %>
-  </div>
+  <dt>
+    Legislation
+  </dt>
+  <% legislation.each do |legislation| %>
+    <dd>
+      <%= search_link(legislation) %>
+    </dd>
+  <% end %>
 <% end %>

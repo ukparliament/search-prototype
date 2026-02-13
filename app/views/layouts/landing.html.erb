@@ -5,18 +5,13 @@
   <%= yield :page_styles %>
   <%= javascript_importmap_tags %>
 </head>
-<body class="brand-bicameral">
+<body class="brand-bicameral min-vh-100">
 <%= render 'layouts/header/header' %>
 <main id="main-content">
   <div class="block block-page">
-    <div class="inner-content container">
+    <div class="container-sm">
       <%#= render 'library_design/debug/debug' %>
-      <div class="reading-width">
-        <h1>
-          <%= yield :title %>
-        </h1>
-        <%= yield %>
-      </div>
+      <%= yield %>
     </div>
   </div>
 </main>

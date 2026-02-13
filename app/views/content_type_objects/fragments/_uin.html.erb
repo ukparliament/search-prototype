@@ -1,6 +1,6 @@
 <% unless uins.blank? %>
-  <div class="about-item">
-    <div class="content-heading-small" id="reference">Reference</div>
-    <%= uins.map{|h| h[:value]}.join('; ') %>
-  </div>
+  <dt>Reference</dt>
+  <dd>
+    <%= uins.map { |h| h[:value] }.join('; ') %>
+  </dd>
 <% end %>

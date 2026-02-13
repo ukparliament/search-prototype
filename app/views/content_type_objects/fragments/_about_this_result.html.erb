@@ -1,36 +1,39 @@
-<section hidden data-controller="claw" data-action="keydown@document->claw#handleKeyDown" id="about-this-result" class="object-claw claw">
-  <h3 class="content-heading-small">Librarians' tools</h3>
-  <div class="claw-grid-container">
-    <% unless object.date.blank? %>
-      <b class="grid-item about-timestamp">Timestamp</b>
-      <span class="grid-item"><%= object.timestamp[:value] %></span>
-    <% end %>
+<section hidden data-controller="claw" data-action="keydown@document->claw#handleKeyDown" id="about-this-result" class="row my-4 py-3 border border-dark claw">
+  <div class="col">
+    <h3>Librarians' tools</h3>
+    <dl>
+      <% unless object.date.blank? %>
+        <dt>Timestamp</dt>
+        <dd><%= object.timestamp[:value] %></dd>
+      <% end %>
 
-    <% unless object.object_uri.blank? %>
-      <b class="grid-item" id="about-uri">URI</b>
-      <div class="grid-item"><%= object.object_uri[:value] %>
-        <div data-controller="clipboard" class="mini-button-container">
-          <div hidden data-clipboard-target="source" data-clipboard-text="<%= object.object_uri[:value] %>"></div>
-          <button data-action="click->clipboard#copy" title="Copy text to clipboard" class="page-button">
-            Copy URI to clipboard
-          </button>
-        </div>
-      </div>
-    <% end %>
+      <% unless object.object_uri.blank? %>
+        <dt>URI</dt>
+        <dd>
+          <%= object.object_uri[:value] %>
+          <span data-controller="clipboard" class="font-size-milli">
+            <span hidden data-clipboard-target="source" data-clipboard-text="<%= object.object_uri[:value] %>"></span>
+              <button data-action="click->clipboard#copy" title="Copy text to clipboard" class="btn btn-secondary">
+                Copy URI to clipboard
+              </button>
+          </span>
+        </dd>
+      <% end %>
 
-    <% unless object.indexing_link.blank? %>
-      <b class="grid-item" id="about-uri">In Indexing</b>
-      <span class="grid-item"><%= link_to object.indexing_link, object.indexing_link, target: :_blank %></span>
-    <% end %>
+      <% unless object.indexing_link.blank? %>
+        <dt>In Indexing</dt>
+        <dd><%= link_to object.indexing_link, object.indexing_link, target: :_blank %></dd>
+      <% end %>
 
-    <% unless object.solr_deep_link.blank? %>
-      <b class="grid-item" id="about-uri">In Solr</b>
-      <span class="grid-item"><%= link_to object.solr_deep_link, object.solr_deep_link, target: :_blank %></span>
-    <% end %>
+      <% unless object.solr_deep_link.blank? %>
+        <dt>In Solr</dt>
+        <dd><%= link_to object.solr_deep_link, object.solr_deep_link, target: :_blank %></dd>
+      <% end %>
 
-    <% unless object.internal_location_uri.blank? %>
-      <b class="grid-item" id="about-internal-uri">Internal location</b>
-      <span class="grid-item"><%= link_to object.internal_location_uri[:value], object.internal_location_uri[:value], target: :_blank %></span>
-    <% end %>
+      <% unless object.internal_location_uri.blank? %>
+        <dt>Internal location</dt>
+        <dd><%= link_to object.internal_location_uri[:value], object.internal_location_uri[:value], target: :_blank %></dd>
+      <% end %>
+    </dl>
   </div>
 </section>

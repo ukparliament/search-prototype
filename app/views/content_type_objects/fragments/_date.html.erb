@@ -1,8 +1,6 @@
 <% unless date.blank? %>
-  <div class="about-item">
-    <div class="content-heading-small" id="<%= title %>"><%= title %></div>
-    <div>
-      <%= format_date(date) %>
-    </div>
-  </div>
+  <dt><%= title %></dt>
+  <dd>
+    <%= format_date(date) %>
+  </dd>
 <% end %>

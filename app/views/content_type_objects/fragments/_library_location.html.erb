@@ -1,11 +1,15 @@
 <% unless commons.blank? && lords.blank? %>
-  <div class="about-item">
-    <div class="content-heading-small" id="library-location">Library location</div>
-    <% unless commons.blank? %>
-      Commons Library: <%= commons[:value] %><br/>
-    <% end %>
-    <% unless lords.blank? %>
+  <dt>
+    Library location
+  </dt>
+  <% unless commons.blank? %>
+    <dd>
+      Commons Library: <%= commons[:value] %>
+    </dd>
+  <% end %>
+  <% unless lords.blank? %>
+    <dd>
       Lords Library: <%= lords[:value] %>
-    <% end %>
-  </div>
+    </dd>
+  <% end %>
 <% end %>

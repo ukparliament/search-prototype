@@ -6,32 +6,23 @@
   <%#= render 'content_type_objects/fragments/data', data: @associated_object_data, title: 'Associated object data' %>
 <% end %>
 
-<% content_for(:before_title) do %>
-  <%= link_to('UK Parliament', root_path) %> / <%= link_to('Open data', root_path) %><br/>
-  <div id="top"></div>
-<% end %>
-
-<% content_for(:title) do %>
+<h1>
   <%= format_object_title(object.object_title, @ses_data) %>
-<% end %>
+</h1>
 
-<section id="prelim">
-  <%= render 'content_type_objects/preliminary_sentences/bill', object: object %>
-</section>
+<%= render 'content_type_objects/preliminary_sentences/bill', object: object %>
 
 <% unless object.motion_text.blank? %>
-  <section id="main-content" class="content-section white-padded">
-    <div class="content-text">
-      <%= object.motion_text[:value] %>
-    </div>
-  </section>
+  <p>
+    <%= object.motion_text[:value] %>
+  </p>
 <% end %>
 
-<section id="about" class="content-section grey">
+<dl>
   <%= render 'content_type_objects/fragments/type', type: object.type %>
   <%= render 'content_type_objects/fragments/reference', reference: object.reference %>
   <%= render 'content_type_objects/fragments/session', session: object.parliamentary_session %>
-  <%= render 'content_type_objects/fragments/corporate_author', label: 'Promoter / Parliamentary agent', author: object.corporate_author %>
+  <%= render 'content_type_objects/fragments/corporate_author', author_label: 'Promoter / Parliamentary agent', author: object.corporate_author %>
   <%= render 'content_type_objects/fragments/certified_categories', certified_categories: object.certified_categories, certified_date: object.certified_date %>
   <%= render 'content_type_objects/fragments/previous_version', previous_version: @associated_object_data[object.previous_version_id] %>
   <%= render 'content_type_objects/fragments/related_items', related_item_ids: object.related_item_ids %>
@@ -44,7 +35,6 @@
   <%= render 'content_type_objects/fragments/contains_statistics', contains_statistics: object.contains_statistics %>
   <%= render 'content_type_objects/fragments/isbn', isbn: object.isbn %>
   <%= render 'content_type_objects/fragments/link', object: object %>
-</section>
+</dl>
 
 <%= render '/content_type_objects/fragments/about_this_result', object: object %>
-<%= render '/content_type_objects/fragments/back_to_top_button' %>

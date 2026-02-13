@@ -22,7 +22,7 @@
   <%#= render 'content_type_objects/fragments/data', data: request.params, title: 'All params' %>
 <% end %>
 
-<div id="search" class="row mb-3">
+<div id="search" class="row mt-4 mb-5">
   <div class="col">
     <%= form_with url: search_url, method: :get, remote: true, id: 'search-form', class: 'p-form' do |f| %>
       <div class="p-form__form-group">

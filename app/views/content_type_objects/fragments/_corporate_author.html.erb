@@ -1,12 +1,12 @@
 <% unless author.blank? %>
-  <div class="about-item">
-    <% unless label.blank? %>
-      <div class="content-heading-small" id="corporate-author">
-        <%= label %>
-      </div>
+  <dt>
+    <% unless author_label.blank? %>
+      <%= author_label %>
     <% end %>
-    <% author.each do |item| %>
-      <%= search_link(item) %><br/>
-    <% end %>
-  </div>
+  </dt>
+  <% author.each do |item| %>
+    <dd>
+      <%= search_link(item) %>
+    </dd>
+  <% end %>
 <% end %>

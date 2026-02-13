@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   root 'welcome#index'
   get 'welcome' => 'welcome#index', as: :home
-  get 'examples' => 'content_type_objects#index'
+  get 'examples' => 'examples#index', as: :examples
   get 'search' => 'search#index'
   get 'objects' => 'content_type_objects#show', as: 'object_show'
   get 'errors/500' => 'errors#internal_server_error'

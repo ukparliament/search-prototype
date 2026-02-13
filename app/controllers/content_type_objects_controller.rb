@@ -1,12 +1,5 @@
 class ContentTypeObjectsController < ApplicationController
 
-  layout 'narrow'
-
-  def index
-    # used as landing page during development
-    @page_title = 'Examples - Parliamentary Search'
-  end
-
   def show
     @response = SolrQuery.new(object_uri: params[:object]).all_data['response']
 

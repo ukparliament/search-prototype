@@ -1,4 +1,4 @@
-class WelcomeController < ApplicationController
+class ExamplesController < ApplicationController
 
   def index
     @page_title = 'Parliamentary Search'
