@@ -1,34 +1,39 @@
 <% if Rails.env.development? %>
-  <%#= render 'content_type_objects/fragments/data', data: object.content_type_object_data, title: 'SOLR Data' %>
-  <%#= render 'content_type_objects/fragments/data', data: @ses_data, title: 'SES Data' %>
+  <div class="debug-panel" aria-hidden="true">
+    <%#= render 'content_type_objects/fragments/data', data: object.content_type_object_data, title: 'SOLR Data' %>
+    <%#= render 'content_type_objects/fragments/data', data: @ses_data, title: 'SES Data' %>
+  </div>
 <% end %>
 
-<h1>
+<h1 class="reading-width">
   <%= format_object_title(object.object_title, @ses_data) %>
 </h1>
 
 <%= render 'content_type_objects/preliminary_sentences/paper_petition', object: object %>
 
 <% unless object.content.blank? %>
-  <p>
+  <div class="reading-width">
     <%= raw format_html(object.content[:value], false) %>
-  </p>
+  </div>
 <% end %>
 
-<dl>
-  <%= render 'content_type_objects/fragments/type', type: object.subtype %>
-  <%= render 'content_type_objects/fragments/reference', reference: object.reference %>
-  <%= render 'content_type_objects/fragments/session', session: object.parliamentary_session %>
-  <%= render 'content_type_objects/fragments/procedure', procedure: object.procedure %>
-  <%= render 'content_type_objects/fragments/place', place: object.place %>
-  <%= render 'content_type_objects/fragments/related_items', related_item_ids: object.related_item_ids %>
-  <%= render 'content_type_objects/fragments/ec_documents', ec_documents: object.ec_documents %>
-  <%= render 'content_type_objects/fragments/notes', notes: object.notes %>
-  <%= render 'content_type_objects/fragments/pills', pills_heading: 'Subjects', pills: object.subjects %>
-  <%= render 'content_type_objects/fragments/legislation', legislation: object.legislation %>
-  <%= render 'content_type_objects/fragments/library_location', commons: object.commons_library_location, lords: object.lords_library_location %>
-  <%= render 'content_type_objects/fragments/contains_statistics', contains_statistics: object.contains_statistics %>
-  <%= render 'content_type_objects/fragments/subtype_link', object: object %>
-</dl>
+<section class="reading-width">
+  <h2>Secondary information</h2>
+  <dl>
+    <%= render 'content_type_objects/fragments/type', type: object.subtype %>
+    <%= render 'content_type_objects/fragments/reference', reference: object.reference %>
+    <%= render 'content_type_objects/fragments/session', session: object.parliamentary_session %>
+    <%= render 'content_type_objects/fragments/procedure', procedure: object.procedure %>
+    <%= render 'content_type_objects/fragments/place', place: object.place %>
+    <%= render 'content_type_objects/fragments/related_items', related_item_ids: object.related_item_ids %>
+    <%= render 'content_type_objects/fragments/ec_documents', ec_documents: object.ec_documents %>
+    <%= render 'content_type_objects/fragments/notes', notes: object.notes %>
+    <%= render 'content_type_objects/fragments/pills', pills_heading: 'Subjects', pills: object.subjects %>
+    <%= render 'content_type_objects/fragments/legislation', legislation: object.legislation %>
+    <%= render 'content_type_objects/fragments/library_location', commons: object.commons_library_location, lords: object.lords_library_location %>
+    <%= render 'content_type_objects/fragments/contains_statistics', contains_statistics: object.contains_statistics %>
+    <%= render 'content_type_objects/fragments/subtype_link', object: object %>
+  </dl>
+</section>
 
 <%= render '/content_type_objects/fragments/about_this_result', object: object %>
