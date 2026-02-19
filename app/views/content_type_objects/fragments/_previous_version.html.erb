@@ -11,6 +11,8 @@
     </dd>
   <% end %>
   <% unless previous_version.reference.blank? || previous_version.reference.pluck(:value) == ["."] %>
-    <%= previous_version.reference.pluck(:value).join(' ') %>
+    <dd>
+      <%= previous_version.reference.pluck(:value).join(' ') %>
+    </dd>
   <% end %>
 <% end %>

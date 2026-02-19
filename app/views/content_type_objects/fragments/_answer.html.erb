@@ -1,6 +1,6 @@
 <% unless object.answer_text.blank? %>
   <dt><%= object.corrected? ? 'Original answer' : 'Answer' %></dt>
   <dd>
-    <%= raw(object.answer_text[:value]) %>
+    <%= raw format_html(object.answer_text[:value], false) %>
   </dd>
 <% end %>

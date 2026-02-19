@@ -1,45 +1,227 @@
-<section id="examples">
-  <h2>Example Objects</h2>
-  <%= link_to('An EDM', object_show_url(object: 'http://data.parliament.uk/edms/22468')) %> <br/>
-  <%= link_to('An amended EDM', object_show_url(object: 'http://data.parliament.uk/edms/47841')) %> <br/>
-  <%= link_to('A research briefing', object_show_url(object: 'http://data.parliament.uk/resources/342599')) %> <br/>
-  <%= link_to('A written question (Answered)', object_show_url(object: 'http://hansard.intranet.data.parliament.uk/Lords/2012-12-10/1212106000156')) %> <br/>
-  <%= link_to('A written question (Holding)', object_show_url(object: 'http://data.parliament.uk/writtenparliamentaryquestion/commons/2021-22/78384')) %> <br/>
-  <%= link_to('A written question (Tabled)', object_show_url(object: 'http://tabledpq.indexing.parliament.uk/commons/2015-16/21659')) %> <br/>
-  <%= link_to('A written question (Withdrawn)', object_show_url(object: 'http://tabledpq.indexing.parliament.uk/commons/2022-23/11562')) %> <br/>
-  <%= link_to('A written question (Answered, was Holding)', object_show_url(object: 'http://data.parliament.uk/writtenparliamentaryquestion/commons/2015-16/28407')) %> <br/>
-  <%= link_to('A written question (Corrected)', object_show_url(object: 'http://data.parliament.uk/pimsdata/Hansard/PARLIAMENTARY_QUESTION_1395367')) %> <br/>
-  <%= link_to('A written statement', object_show_url(object: 'http://hansard.intranet.data.parliament.uk/Commons/2012-12-18/12121863000016')) %> <br/>
-  <%= link_to('A public act', object_show_url(object: 'http://data.parliament.uk/publicgeneralact/2023/19')) %> <br/>
-  <%= link_to('A private act', object_show_url(object: 'http://data.parliament.uk/localgeneralact/2016/2')) %> <br/>
-  <%= link_to('A Church of England measure', object_show_url(object: 'http://data.parliament.uk/churchmeasure/2021/3')) %> <br/>
-  <%= link_to('A ministerial correction - Example 1', object_show_url(object: 'http://data.parliament.uk/pimsdata/hansard/PROCEEDING_67029')) %> <br/>
-  <%= link_to('A ministerial correction - Example 2', object_show_url(object: 'http://hansard.intranet.data.parliament.uk/Commons/2013-12-19/13121970000003')) %> <br/>
-  <%= link_to('A ministerial correction - Example 3', object_show_url(object: 'http://hansard.intranet.data.parliament.uk/Commons/2022-12-20/22122049000024')) %> <br/>
-  <%= link_to('An impact assessment', object_show_url(object: 'http://data.parliament.uk/impactassessments/43918')) %> <br/>
-  <%= link_to('A deposited paper', object_show_url(object: 'http://data.parliament.uk/depositedpapers/2285506')) %> <br/>
-  <%= link_to('A transport and works act order application', object_show_url(object: 'http://data.parliament.uk/twas/59276')) %> <br/>
-  <%= link_to('A bill', object_show_url(object: 'http://data.parliament.uk/bills/58255')) %> <br/>
-  <%= link_to('A paper petition', object_show_url(object: 'http://hansard.intranet.data.parliament.uk/Commons/2022-12-07/22120755000101')) %> <br/>
-  <%= link_to('A paper petition (multi-member)', object_show_url(object: 'http://hansard.intranet.data.parliament.uk/Commons/2022-07-13/220713107000568')) %> <br/>
-  <%= link_to('Observations on a petition', object_show_url(object: 'http://hansard.intranet.data.parliament.uk/Commons/2022-12-19/2212199000020')) %> <br/>
-  <%= link_to('A formal proceeding', object_show_url(object: 'http://data.parliament.uk/formalProceedings/7084')) %> <br/>
-  <%= link_to('A parliamentary paper (laid)', object_show_url(object: 'http://services.paperslaid.parliament.uk/papers/paper/37057')) %> <br/>
-  <%= link_to('A parliamentary paper (reported)', object_show_url(object: 'http://data.parliament.uk/selectcommittees/54929')) %> <br/>
-  <%= link_to('A paper ordered to be printed', object_show_url(object: 'http://data.parliament.uk/papers/64712')) %> <br/>
-  <%= link_to('A paper submitted', object_show_url(object: 'http://data.parliament.uk/papers/57365')) %> <br/>
-  <%= link_to('A proceeding contribution', object_show_url(object: 'http://hansard.intranet.data.parliament.uk/Lords/2022-12-21/2212217000041')) %> <br/>
-  <%= link_to('A parliamentary proceeding', object_show_url(object: 'http://hansard.intranet.data.parliament.uk/Lords/2022-12-21/2212217000100')) %> <br/>
-  <%= link_to('A statutory instrument', object_show_url(object: 'http://paperslaidpoller.parliament.uk/2015-16/2016-05-11/64828')) %> <br/>
-  <%= link_to('An oral question (Tabled)', object_show_url(object: 'http://tabledpq.indexing.parliament.uk/commons/2015-16/903692')) %> <br/>
-  <%= link_to('An oral question (Answered)', object_show_url(object: 'http://data.parliament.uk/pimsdata/Hansard/PARLIAMENTARY_QUESTION_366351/-question')) %> <br/>
-  <%= link_to('An oral question (Withdrawn)', object_show_url(object: 'http://tabledpq.indexing.parliament.uk/commons/2022-23/900744')) %> <br/>
-  <%= link_to('An oral question (Corrected)', object_show_url(object: 'http://hansard.intranet.data.parliament.uk/Lords/2021-05-19/21051926000130')) %> <br/>
-  <%= link_to('An oral answer', object_show_url(object: 'http://hansard.intranet.data.parliament.uk/Lords/2022-12-21/2212217000022')) %> <br/>
-  <%= link_to('An oral question time intervention', object_show_url(object: 'http://data.parliament.uk/pimsdata/hansard/CONTRIBUTION_241033')) %> <br/>
-  <%= link_to('A European deposited document', object_show_url(object: 'http://esid.parliament.uk/EUDocument/EUProposalDocument/37832/')) %> <br/>
-  <%= link_to('A European scrutiny explanatory memorandum', object_show_url(object: 'http://esid.parliament.uk/EUDocument/EMDocument/19263/')) %> <br/>
-  <%= link_to('European scrutiny ministerial correspondence', object_show_url(object: 'http://esid.parliament.uk/EUDocument/MinCorHoCDocument/7596/')) %> <br/>
-  <%= link_to('European scrutiny recommendation', object_show_url(object: 'http://esid.parliament.uk/EUDocument/RecommendationHoCPimsDocument/7092/')) %> <br/>
-  <%= link_to('European material', object_show_url(object: 'http://esid.parliament.uk/EUDocument/EUMaterialDocument/95376/')) %> <br/>
-</section>
+<h1 class="reading-width">Example object pages</h1>
+
+<h2 class='reading-width'>
+  Acts
+</h2>
+<dl class='reading-width'>
+  <dt>Public</dt>
+  <dd>
+    <%= link_to('http://data.parliament.uk/publicgeneralact/2023/19', object_show_url(object: 'http://data.parliament.uk/publicgeneralact/2023/19')) %>
+  </dd>
+  <dt>Private</dt>
+  <dd>
+    <%= link_to('http://data.parliament.uk/localgeneralact/2016/2', object_show_url(object: 'http://data.parliament.uk/localgeneralact/2016/2')) %>
+  </dd>
+</dl>
+
+<h2 class='reading-width'>
+  Bills
+</h2>
+<p class='reading-width'>
+  <%= link_to('http://data.parliament.uk/bills/58255', object_show_url(object: 'http://data.parliament.uk/bills/58255')) %>
+</p>
+
+<h2 class='reading-width'>
+  Church measures
+</h2>
+<p class='reading-width'>
+  <%= link_to('http://data.parliament.uk/churchmeasure/2021/3', object_show_url(object: 'http://data.parliament.uk/churchmeasure/2021/3')) %>
+</p>
+
+<h2 class='reading-width'>
+  Deposited papers
+</h2>
+<p class='reading-width'>
+  <%= link_to('http://data.parliament.uk/depositedpapers/2285506', object_show_url(object: 'http://data.parliament.uk/depositedpapers/2285506')) %>
+</p>
+
+<h2 class='reading-width'>
+  Early day motions
+</h2>
+<dl class='reading-width'>
+  <dd>
+    <%= link_to('http://data.parliament.uk/edms/22468', object_show_url(object: 'http://data.parliament.uk/edms/22468')) %>
+  </dd>
+  <dd>
+    <%= link_to('http://data.parliament.uk/edms/47841', object_show_url(object: 'http://data.parliament.uk/edms/47841')) %>
+  </dd>
+</dl>
+
+<h2 class='reading-width'>
+  Impact assessments
+</h2>
+<p class='reading-width'>
+  <%= link_to('http://data.parliament.uk/pimsdata/ImpactAssessment/13131', object_show_url(object: 'http://data.parliament.uk/pimsdata/ImpactAssessment/13131')) %>
+</p>
+
+<h2 class='reading-width'>
+  Ministerial corrections
+</h2>
+<dl class='reading-width'>
+  <dd>
+    <%= link_to('http://data.parliament.uk/pimsdata/hansard/PROCEEDING_67029', object_show_url(object: 'http://data.parliament.uk/pimsdata/hansard/PROCEEDING_67029')) %>
+  </dd>
+  <dd>
+    <%= link_to('http://hansard.intranet.data.parliament.uk/Commons/2013-12-19/13121970000003', object_show_url(object: 'http://hansard.intranet.data.parliament.uk/Commons/2013-12-19/13121970000003')) %>
+  </dd>
+  <dd>
+    <%= link_to('http://hansard.intranet.data.parliament.uk/Commons/2022-12-20/22122049000024', object_show_url(object: 'http://hansard.intranet.data.parliament.uk/Commons/2022-12-20/22122049000024')) %>
+  </dd>
+</dl>
+
+<h2 class='reading-width'>
+  Observations on petitions
+</h2>
+<p class='reading-width'>
+  <%= link_to('http://hansard.intranet.data.parliament.uk/Commons/2022-12-19/2212199000020', object_show_url(object: 'http://hansard.intranet.data.parliament.uk/Commons/2022-12-19/2212199000020')) %>
+</p>
+
+<h2 class='reading-width'>
+  Oral answers
+</h2>
+<p class='reading-width'>
+  <%= link_to('http://hansard.intranet.data.parliament.uk/Lords/2022-12-21/2212217000022', object_show_url(object: 'http://hansard.intranet.data.parliament.uk/Lords/2022-12-21/2212217000022')) %>
+</p>
+
+<h2 class='reading-width'>
+  Oral questions
+</h2>
+<dl class='reading-width'>
+  <dt>Answered</dt>
+  <dd>
+    <%= link_to('http://data.parliament.uk/pimsdata/Hansard/PARLIAMENTARY_QUESTION_366351/-question', object_show_url(object: 'http://data.parliament.uk/pimsdata/Hansard/PARLIAMENTARY_QUESTION_366351/-question')) %>
+  </dd>
+  <dt>Corrected</dt>
+  <dd>
+    <%= link_to('http://hansard.intranet.data.parliament.uk/Lords/2021-05-19/21051926000130', object_show_url(object: 'http://hansard.intranet.data.parliament.uk/Lords/2021-05-19/21051926000130')) %>
+  </dd>
+  <dt>Tabled</dt>
+  <dd>
+    <%= link_to('http://tabledpq.indexing.parliament.uk/commons/2015-16/903692', object_show_url(object: 'http://tabledpq.indexing.parliament.uk/commons/2015-16/903692')) %>
+  </dd>
+  <dt>Withdrawn</dt>
+  <dd>
+    <%= link_to('http://tabledpq.indexing.parliament.uk/commons/2022-23/900744', object_show_url(object: 'http://tabledpq.indexing.parliament.uk/commons/2022-23/900744')) %>
+  </dd>
+</dl>
+
+<h2 class='reading-width'>
+  Oral question time interventions
+</h2>
+<p class='reading-width'>
+  <%= link_to('http://data.parliament.uk/pimsdata/hansard/CONTRIBUTION_241033', object_show_url(object: 'http://data.parliament.uk/pimsdata/hansard/CONTRIBUTION_241033')) %>
+</p>
+
+<h2 class='reading-width'>
+  Research briefings
+</h2>
+<p class='reading-width'>
+  <%= link_to('http://data.parliament.uk/resources/1786714', object_show_url(object: 'http://data.parliament.uk/resources/1786714')) %>
+</p>
+
+<h2 class='reading-width'>
+  Papers ordered to be printed
+</h2>
+<p class='reading-width'>
+  <%= link_to('http://data.parliament.uk/papers/64712', object_show_url(object: 'http://data.parliament.uk/papers/64712')) %>
+</p>
+
+<h2 class='reading-width'>
+  Paper petitions
+</h2>
+<dl class="reading-width">
+  <dt>Single member</dt>
+  <dd>
+    <%= link_to('http://hansard.intranet.data.parliament.uk/Commons/2022-12-07/22120755000101', object_show_url(object: 'http://hansard.intranet.data.parliament.uk/Commons/2022-12-07/22120755000101')) %>
+  </dd>
+  <dt>Multiple members</dt>
+  <dd>
+    <%= link_to('http://hansard.intranet.data.parliament.uk/Commons/2022-07-13/220713107000568', object_show_url(object: 'http://hansard.intranet.data.parliament.uk/Commons/2022-07-13/220713107000568')) %>
+  </dd>
+</dl>
+
+<h2 class='reading-width'>
+  Papers submitted
+</h2>
+<p class='reading-width'>
+  <%= link_to('http://data.parliament.uk/papers/57365', object_show_url(object: 'http://data.parliament.uk/papers/57365')) %>
+</p>
+
+<h2 class='reading-width'>
+  Parliamentary papers
+</h2>
+<dl class='reading-width'>
+  <dt>Laid</dt>
+  <dd>
+    <%= link_to('http://services.paperslaid.parliament.uk/papers/paper/37057', object_show_url(object: 'http://services.paperslaid.parliament.uk/papers/paper/37057')) %>
+  </dd>
+  <dt>Reported</dt>
+  <dd>
+    <%= link_to('http://data.parliament.uk/selectcommittees/54929', object_show_url(object: 'http://data.parliament.uk/selectcommittees/54929')) %>
+  </dd>
+</dl>
+
+<h2 class='reading-width'>
+  Parliamentary proceedings
+</h2>
+<p class='reading-width'>
+  <%= link_to('http://hansard.intranet.data.parliament.uk/Lords/2022-12-21/2212217000100', object_show_url(object: 'http://hansard.intranet.data.parliament.uk/Lords/2022-12-21/2212217000100')) %>
+</p>
+
+<h2 class='reading-width'>
+  Proceeding contributions
+</h2>
+<p class='reading-width'>
+  <%= link_to('http://hansard.intranet.data.parliament.uk/Lords/2022-12-21/2212217000041', object_show_url(object: 'http://hansard.intranet.data.parliament.uk/Lords/2022-12-21/2212217000041')) %>
+</p>
+
+<h2 class='reading-width'>
+  Statutory instruments
+</h2>
+<p class='reading-width'>
+  <%= link_to('http://paperslaidpoller.parliament.uk/2015-16/2016-05-11/64828', object_show_url(object: 'http://paperslaidpoller.parliament.uk/2015-16/2016-05-11/64828')) %>
+</p>
+
+<h2 class='reading-width'>
+  Transport and works act order applications
+</h2>
+<p class='reading-width'>
+  <%= link_to('http://data.parliament.uk/twas/59276', object_show_url(object: 'http://data.parliament.uk/twas/59276')) %>
+</p>
+
+<h2 class='reading-width'>
+  Written questions
+</h2>
+<dl class='reading-width'>
+  <dt>Answered</dt>
+  <dd>
+    <%= link_to('http://hansard.intranet.data.parliament.uk/Lords/2012-12-10/1212106000156', object_show_url(object: 'http://hansard.intranet.data.parliament.uk/Lords/2012-12-10/1212106000156')) %>
+  </dd>
+  <dt>Answered, was holding</dt>
+  <dd>
+    <%= link_to('http://data.parliament.uk/writtenparliamentaryquestion/commons/2015-16/28407', object_show_url(object: 'http://data.parliament.uk/writtenparliamentaryquestion/commons/2015-16/28407')) %>
+  </dd>
+  <dt>Corrected</dt>
+  <dd>
+    <%= link_to('http://data.parliament.uk/pimsdata/Hansard/PARLIAMENTARY_QUESTION_1395367', object_show_url(object: 'http://data.parliament.uk/pimsdata/Hansard/PARLIAMENTARY_QUESTION_1395367')) %>
+  </dd>
+  <dt>Holding</dt>
+  <dd>
+    <%= link_to('http://data.parliament.uk/writtenparliamentaryquestion/commons/2021-22/78384', object_show_url(object: 'http://data.parliament.uk/writtenparliamentaryquestion/commons/2021-22/78384')) %>
+  </dd>
+  <dt>Tabled</dt>
+  <dd>
+    <%= link_to('http://tabledpq.indexing.parliament.uk/commons/2015-16/21659', object_show_url(object: 'http://tabledpq.indexing.parliament.uk/commons/2015-16/21659')) %>
+  </dd>
+  <dt>Withdrawn</dt>
+  <dd>
+    <%= link_to('http://tabledpq.indexing.parliament.uk/commons/2022-23/11562', object_show_url(object: 'http://tabledpq.indexing.parliament.uk/commons/2022-23/11562')) %>
+  </dd>
+</dl>
+
+<h2 class='reading-width'>
+  Written statements
+</h2>
+<p class='reading-width'>
+  <%= link_to('http://hansard.intranet.data.parliament.uk/Commons/2012-12-18/12121863000016', object_show_url(object: 'http://hansard.intranet.data.parliament.uk/Commons/2012-12-18/12121863000016')) %>
+</p>

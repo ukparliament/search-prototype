@@ -1,0 +1,10 @@
+/*override margins set by design system*/
+/* reset bottom margin for last child paragraph */
+p:last-child {
+    margin-bottom: 18px;
+}
+
+/* only remove bottom margin for last direct child of a container */
+.container-sm > p:last-child {
+    margin-bottom: 0;
+}
