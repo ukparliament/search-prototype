@@ -39,7 +39,7 @@ class ContentTypeObjectsController < ApplicationController
         @page_title = "#{@object.object_title} - Parliamentary Search"
         @crumb << { label: @object.object_title, url: nil }
 
-        if @ses_data&.has_key?(:error)
+        if @ses_data&.has_key?('error')
           render template: 'layouts/shared/error/500', locals: { status: 500, message: 'There was an error resolving names using the SES service' }
         else
           render template: @object.template, :locals => { :object => @object }
