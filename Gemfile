@@ -8,7 +8,8 @@ gem 'bundler-audit'
 gem 'cgi'
 gem 'fiddle'
 gem "pg"
-gem "sprockets-rails"
+gem "propshaft"
+gem "library_design", github: "ukparliament/design-assets", glob: 'library_design/*.gemspec', tag: "0.6.4"
 gem "importmap-rails"
 gem "font-awesome-rails"
 gem "haml"

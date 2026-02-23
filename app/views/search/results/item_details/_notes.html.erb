@@ -1,12 +1,14 @@
 <% unless notes.blank? %>
   <div class="row">
-    <div class="item-details notes">
-      <div class="item-details-label">
-        Notes
+    <div class="col">
+      <div class="item-details notes">
+        <div class="item-details-label">
+          Notes
+        </div>
+        <span>
+          <%= notes[:value] %>
+        </span>
       </div>
-      <span>
-      <%= notes[:value] %>
-    </span>
     </div>
   </div>
 <% end %>

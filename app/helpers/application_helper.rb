@@ -8,11 +8,43 @@ module ApplicationHelper
   DATE_FORMAT_WITHOUT_DAY = '%e %B %Y'
 
   def format_html(html, truncate_words)
-    if truncate_words == false
-      Nokogiri::HTML::DocumentFragment.parse(html).to_html
+    fragment = if truncate_words == false
+                 Nokogiri::HTML::DocumentFragment.parse(html.to_s)
+               else
+                 Nokogiri::HTML::DocumentFragment.parse(html.to_s.truncate_words(truncate_words))
+               end
+
+    if fragment.children.all? { |node| node.text? }
+      # content isn't HTML; wrap entirely in <p> tags
+      output = Nokogiri::HTML::DocumentFragment.parse("<p>#{fragment}</p>")
     else
-      Nokogiri::HTML::DocumentFragment.parse(html.truncate_words(truncate_words)).to_html
+      # content is HTML; check child nodes
+      fragment.children.each_with_index do |node, index|
+        # remove NBSPs
+        node_text = node.text.gsub("\u00A0", " ").strip
+
+        if node.text?
+          if node_text.empty?
+            node.remove
+          else
+            # Create a <p> node within the document fragment to replace the text node
+            p_node = Nokogiri::XML::Node.new("p", fragment)
+            p_node.content = node_text
+            node.replace(p_node)
+          end
+
+        elsif node.element? && node.name == 'p'
+          if node_text.empty? && node.element_children.empty?
+            node.remove
+          else
+            next
+          end
+        end
+      end
+      output = fragment
     end
+
+    output.to_html
   end
 
   def boolean_yes_no(boolean)
@@ -85,7 +117,7 @@ module ApplicationHelper
       subtype_ses: 'Subtype',
       legislature_ses: 'House',
       date_dt: 'Date',
-      session_t: 'Session',
+      session_s: 'Session',
       department_ses: 'Department',
       department_t: 'Department',
       answeringDept_ses: 'Department',

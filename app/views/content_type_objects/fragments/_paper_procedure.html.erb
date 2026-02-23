@@ -1,9 +1,13 @@
 <% unless procedure.blank? %>
-  <div class="about-item">
-    <div class="content-heading-small" id="procedure">Procedure</div>
+  <dt>
+    Procedure
+  </dt>
+  <dd>
     <%= search_link(procedure) %>
-    <% unless approval_days.blank? || approval_days[:value]&.to_i.zero? %>
-      <br/><%= approval_days[:value] %> days scrutiny period
-    <% end %>
-  </div>
+  </dd>
+  <% unless approval_days.blank? || approval_days[:value]&.to_i.zero? %>
+    <dd>
+      <%= approval_days[:value] %> days scrutiny period
+    </dd>
+  <% end %>
 <% end %>

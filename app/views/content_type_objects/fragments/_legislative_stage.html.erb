@@ -1,6 +1,8 @@
 <% unless legislative_stage.blank? %>
-  <div class="about-item">
-    <div class="content-heading-small" id="legislative-stage">Legislative stage</div>
+  <dt>
+    Legislative stage
+  </dt>
+  <dd>
     <%= render 'content_type_objects/fragments/list', items: legislative_stage, terminator: "", singular: false %>
-  </div>
+  </dd>
 <% end %>

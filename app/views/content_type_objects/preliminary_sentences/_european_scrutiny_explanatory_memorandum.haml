@@ -1,8 +1,0 @@
-.content-prelim-box
-  .content-prelim-inner
-    .content-prelim-text#prelim-text
-      %span>= object_display_name_link(object.object_name)
-      - unless object.date_received.blank?
-        %span= " deposited on  "
-        %span>= format_date(object.date_received)
-      %span= "."

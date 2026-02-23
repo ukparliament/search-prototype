@@ -1,6 +1,8 @@
 <% if laid_in_draft && laid_in_draft[:value] %>
-  <div class="about-item">
-    <div class="content-heading-small" id="laid-in-draft">Laid in draft</div>
+  <dt>
+    Laid in draft
+  </dt>
+  <dd>
     <%= boolean_yes_no(laid_in_draft) %>
-  </div>
+  </dd>
 <% end %>

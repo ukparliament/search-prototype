@@ -1,8 +1,6 @@
 <% unless object.question_text.blank? %>
-  <div class="about-item">
-    <h3 class="content-heading" id="question">Question</h3>
-    <p class="html-content">
-      <%= raw(object.question_text[:value]) %>
-    </p>
-  </div>
+  <dt>Question</dt>
+  <dd>
+    <%= raw(object.question_text[:value]) %>
+  </dd>
 <% end %>

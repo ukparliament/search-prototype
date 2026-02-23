@@ -1,6 +1,8 @@
 <% unless session.blank? %>
-  <div class="about-item">
-    <div class="content-heading-small" id="session">Session</div>
+  <dt>
+    Session
+  </dt>
+  <dd>
     <%= session[:value] %>
-  </div>
+  </dd>
 <% end %>

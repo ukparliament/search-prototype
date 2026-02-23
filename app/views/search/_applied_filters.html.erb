@@ -1,18 +1,18 @@
 <% unless request.params.dig(:filter).blank? %>
-  <div class="applied-filters">
+  <div class="applied-filters mb-3">
     <div class="applied-filter-container">
       <% request.params.dig(:filter).sort.uniq.each do |filter| %>
         <% filter.last.sort.each do |filter_value| %>
           <div class="filter-wrapper">
-            <div class="filter">
+            <div class="search-filter">
               <div class="top-row">
-                        <span class="filter-name-label">
-                          <%= filter_field_name(filter.first) %>
-                        </span>
-                <span class="flex-spacer"></span>
-                <span class="filter-link">
-                  <%= link_to sanitize("&#x2717;"), url_for(remove_filter_url(request.params, filter.first, filter_value)), class: 'modifiable-link' %>
+                <span class="filter-name-label">
+                  <%= filter_field_name(filter.first) %>
                 </span>
+                <span class="flex-spacer"></span>
+                <a href="<%= url_for(remove_filter_url(request.params, filter.first, filter_value)) %>" aria-label="Remove filter" class="modifiable-link">
+                  X
+                </a>
               </div>
               <div class="bottom-row">
                 <div class="filter-name">

@@ -8,7 +8,7 @@ module LinkHelper
     link_to(string, object_show_url(object: uri[:value]))
   end
 
-  def search_link(data, singular: false, reading_order: true)
+  def search_link(data, singular: false, reading_order: true, html_class: nil)
     # Accepts either a string or a SES ID, which it resolves into a string
     # Either option requires a field reference (standard data hash)
 
@@ -40,7 +40,11 @@ module LinkHelper
     searchable_field_name = substitute_field_name(data[:field_name])
     value = data[:value]
 
-    link_to(formatted_name(data, ses_data, singular, reading_order), search_path(filter: { searchable_field_name => [value] }))
+    if html_class
+      link_to(formatted_name(data, ses_data, singular, reading_order), search_path(filter: { searchable_field_name => [value] }), class: html_class)
+    else
+      link_to(formatted_name(data, ses_data, singular, reading_order), search_path(filter: { searchable_field_name => [value] }))
+    end
   end
 
   def substitute_field_name(field_name)

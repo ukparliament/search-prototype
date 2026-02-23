@@ -1,6 +1,6 @@
 <% if registered_interest && registered_interest[:value] %>
-  <div class="about-item">
-    <div class="content-heading-small" id="registered-interest-declared">Registered interest declared</div>
+  <dt>Registered interest declared</dt>
+  <dd>
     <%= boolean_yes_no(registered_interest) %>
-  </div>
+  </dd>
 <% end %>

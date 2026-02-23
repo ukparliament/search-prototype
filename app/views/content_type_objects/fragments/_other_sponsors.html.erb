@@ -1,10 +1,10 @@
 <% unless sponsors.blank? %>
-  <div class="about-item">
-    <div class="content-heading-small" id="other-sponsors">Other sponsors</div>
-    <ul class="unformatted">
-      <% sponsors.each do |sponsor| %>
-        <li>- <%= search_link(sponsor) %></li>
-      <% end %>
-    </ul>
-  </div>
+  <dt>
+    Other sponsors
+  </dt>
+  <% sponsors.each do |sponsor| %>
+    <dd>
+      <%= search_link(sponsor) %>
+    </dd>
+  <% end %>
 <% end %>

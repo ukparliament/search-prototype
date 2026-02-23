@@ -1,95 +1,79 @@
-<meta name="robots" content="noindex">
-
-<% content_for(:before_title) do %>
-  <%= link_to('UK Parliament', root_path) %> / <%= link_to('Open data', root_path) %><br/>
-  <div id="top"></div>
+<% content_for :page_styles do %>
+  <%= stylesheet_link_tag "search_results.css" %>
 <% end %>
 
 <% if Rails.env.development? %>
-  <%#= render 'content_type_objects/fragments/data', data: @objects, title: 'Secondary search objects' %>
-  <%#= render 'content_type_objects/fragments/data', data: @associated_object_data, title: 'Associated object data' %>
-  <%#= render 'content_type_objects/fragments/data', data: @search_data.search, title: 'Search response' %>
-  <%#= render 'content_type_objects/fragments/data', data: @ses_data, title: 'SES results' %>
-  <%#= render 'content_type_objects/fragments/data', data: @search_data.facets, title: 'Facets' %>
-  <%#= render 'content_type_objects/fragments/data', data: @search_data.primary_member_facets, title: 'Primary Member Facets' %>
-  <%#= render 'content_type_objects/fragments/data', data: @search_data.type_facets, title: 'Type facets' %>
-  <%#= render 'content_type_objects/fragments/data', data: @search_data.hierarchy_data, title: 'Hierarchy data' %>
-  <%#= render 'content_type_objects/fragments/data', data: @top_level, title: 'Hierarchy top level types' %>
-  <%#= render 'content_type_objects/fragments/data', data: request.params, title: 'All params' %>
+  <div class="debug-panel" aria-hidden="true">
+    <%#= render 'content_type_objects/fragments/data', data: @objects, title: 'Secondary search objects' %>
+    <%#= render 'content_type_objects/fragments/data', data: @associated_object_data, title: 'Associated object data' %>
+    <%#= render 'content_type_objects/fragments/data', data: @search_data.search, title: 'Search response' %>
+    <%#= render 'content_type_objects/fragments/data', data: @ses_data, title: 'SES results' %>
+    <%#= render 'content_type_objects/fragments/data', data: @search_data.facets, title: 'Facets' %>
+    <%#= render 'content_type_objects/fragments/data', data: @search_data.primary_member_facets, title: 'Primary Member Facets' %>
+    <%#= render 'content_type_objects/fragments/data', data: @search_data.type_facets, title: 'Type facets' %>
+    <%#= render 'content_type_objects/fragments/data', data: @search_data.hierarchy_data, title: 'Hierarchy data' %>
+    <%#= render 'content_type_objects/fragments/data', data: @top_level, title: 'Hierarchy top level types' %>
+    <%#= render 'content_type_objects/fragments/data', data: request.params, title: 'All params' %>
+  </div>
 <% end %>
 
-<%= form_with url: search_url, method: :get, remote: true, id: 'search-form' do |f| %>
-  <div id="search" class="content-section white-slim">
-    <div class="search-grid-container">
-      <%= f.text_field :query, id: 'search-input', spellcheck: true, value: @search_data.query %>
-      <%= f.hidden_field :show_detailed, value: @search_data.show_detailed %>
-      <%= f.hidden_field :sort_by, value: @search_data.sort %>
-      <%= f.hidden_field :results_per_page, value: @search_data.results_per_page %>
-      <button id="search-button-large">
-        New search
-      </button>
-      <button id="search-button-small">
-        New search
-      </button>
+<section id="search-field" class="mt-4 mb-5">
+  <div class="row">
+    <div class="col">
+      <%= form_with url: search_url, method: :get, remote: true, id: 'search-form', class: 'p-form' do |f| %>
+        <div class="p-form__form-group">
+          <label class="p-form__label sr-only" for="search-input">Label</label>
+          <div class="p-form__input--with-button">
+            <%= f.text_field :query, id: 'search-input', name: 'search-input', class: 'p-form__input', spellcheck: true, value: @search_data.query %>
+            <%= f.hidden_field :show_detailed, value: @search_data.show_detailed %>
+            <%= f.hidden_field :sort_by, value: @search_data.sort %>
+            <%= f.hidden_field :results_per_page, value: @search_data.results_per_page %>
+            <button type="submit" class="btn btn-primary">Search</button>
+          </div>
+        </div>
+      <% end %>
     </div>
   </div>
-<% end %>
+</section>
 
 <% if @objects.blank? %>
-  <div class="content-section white centered">
-    <p>
-      No results found for <strong><%= @search_data.query %></strong>. Please adjust your search query and try
-      again.<br/>
-      If you think this search should return results, please
-      email <%= mail_to "parliamentarysearch@parliament.co.uk" %>.
-    </p>
-  </div>
+  <h1 class="reading-width">
+    No results found
+  </h1>
+  <p class="reading-width">
+    No results found for <strong>"<%= @search_data.query %>"</strong>.
+  </p>
+  <p class="reading-width">
+    Please adjust your search query and try again. If you think this search should return results, please
+    email <%= mail_to "parliamentarysearch@parliament.co.uk" %>.
+  </p>
 <% else %>
-  <div id="search-results">
-    <div class="results-grid-container">
-      <div class="filter-container" data-controller="expand-facet">
+  <section id="search-results">
+    <div class="row" id="filters">
+      <div class="col-3" data-controller="expand-facet">
         <%= render 'applied_filters' %>
-        <div id="facet-container-large">
-          <%= render 'search/results/facets/type_facet' %>
-          <% @search_data.facets.select { |h| ["legislature_ses", "session_t"].include?(h.dig(:field_name)) }.each do |facet_field| %>
-            <%= render 'filter_section', facet_field: format_facets(facet_field) %>
-          <% end %>
-          <% @search_data.facets.select { |h| ["date_year", "date_month", "department_ses", "member_ses", "primaryMember_ses", "answeringMember_ses", "legislativeStage_ses", "legislationTitle_ses", "subject_ses", "publisher_ses"].include?(h.dig(:field_name)) }.each do |facet_field| %>
-            <%= render 'filter_section', facet_field: format_facets(facet_field) %>
-          <% end %>
-        </div>
-        <details id="facet-container-small">
-          <summary>
-            Filter results
-          </summary>
-          <%= render 'search/results/facets/type_facet' %>
-          <% @search_data.facets.select { |h| ["legislature_ses", "session_t"].include?(h.dig(:field_name)) }.each do |facet_field| %>
-            <%= render 'filter_section', facet_field: format_facets(facet_field) %>
-          <% end %>
-          <% @search_data.facets.select { |h| ["date_year", "date_month", "department_ses", "member_ses", "primaryMember_ses", "answeringMember_ses", "legislativeStage_ses", "legislationTitle_ses", "subject_ses", "publisher_ses"].include?(h.dig(:field_name)) }.each do |facet_field| %>
-            <%= render 'filter_section', facet_field: format_facets(facet_field) %>
-          <% end %>
-        </details>
+        <%= render 'search/results/facets/type_facet' %>
+        <% @search_data.facets.select { |h| ["legislature_ses", "session_s"].include?(h.dig(:field_name)) }.each do |facet_field| %>
+          <%= render 'filter_section', facet_field: format_facets(facet_field) %>
+        <% end %>
+        <% @search_data.facets.select { |h| ["date_year", "date_month", "department_ses", "member_ses", "primaryMember_ses", "answeringMember_ses", "legislativeStage_ses", "legislationTitle_ses", "subject_ses", "publisher_ses"].include?(h.dig(:field_name)) }.each do |facet_field| %>
+          <%= render 'filter_section', facet_field: format_facets(facet_field) %>
+        <% end %>
       </div>
-
-      <div class="results-container">
+      <div class="col" id="results-container">
         <%= render 'search_control_panel' %>
-
         <div data-controller="claw" data-action="keydown@document->claw#handleKeyDown">
           <% @objects.each do |object| %>
-            <div class="search-result-container">
-              <%= render object.search_result_partial, object: object unless object.class == NotSupported %>
-              <%= render 'content_type_objects/fragments/search_claw', object: object %>
+            <div class="row">
+              <div class="col">
+                <%= render object.search_result_partial, object: object unless object.class == NotSupported %>
+                <%= render 'content_type_objects/fragments/search_claw', object: object %>
+              </div>
             </div>
           <% end %>
           <%= render '/content_type_objects/fragments/about_these_results' %>
-
           <% unless @search_data.current_page.blank? || @search_data.total_pages.blank? %>
-
-            <p>
-              <%= render 'showing_results', include_time: true %>
-            </p>
-
+            <p><%= render 'showing_results', include_time: true %></p>
             <% if @search_data.total_pages > 1 %>
               <%= render 'pagination', user_requested_page: @search_data.current_page, last_page: @search_data.total_pages, query: @search_data.query, filter: @search_data.filter, sort_by: @search_data.sort, results_per_page: @search_data.results_per_page, expanded_types: @search_data.expanded_types_string, show_detailed: @search_data.show_detailed %>
             <% end %>
@@ -97,6 +81,5 @@
         </div>
       </div>
     </div>
-
-  </div>
+  </section>
 <% end %>

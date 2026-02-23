@@ -1,14 +1,10 @@
 <% unless pills.blank? %>
-  <div class="about-item">
-    <div class="content-heading-small" id="<%= pills_heading.downcase %>"><%= pills_heading %></div>
-    <div class="pill-section">
-      <% pills.each do |pill| %>
-        <div class="pill-wrapper">
-          <div class="pill">
-            <%= search_link(pill) %>
-          </div>
-        </div>
-      <% end %>
-    </div>
-  </div>
+  <dt>
+    <%= pills_heading %>
+  </dt>
+  <dd>
+    <% pills.each do |pill| %>
+        <%= search_link(pill, html_class: 'badge badge-secondary') %>
+    <% end %>
+  </dd>
 <% end %>

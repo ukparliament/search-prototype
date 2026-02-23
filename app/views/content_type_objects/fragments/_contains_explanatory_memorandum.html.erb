@@ -1,6 +1,8 @@
 <% if contains_em && contains_em[:value] %>
-  <div class="about-item">
-    <div class="content-heading-small" id="contains-explanatory-memorandum">Contains explanatory memorandum</div>
+  <dt>
+    Contains explanatory memorandum
+  </dt>
+  <dd>
     <%= boolean_yes_no(contains_em) %>
-  </div>
+  </dd>
 <% end %>

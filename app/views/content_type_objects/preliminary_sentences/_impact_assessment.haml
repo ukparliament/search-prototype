@@ -1,10 +1,8 @@
-.content-prelim-box
-  .content-prelim-inner
-    .content-prelim-text#prelim-text
-      %span>= object_display_name_link(object.object_name)
-      - unless object.department.blank?
-        %span= " published by the "
-        %span= search_link(object.department)
-      %span= " was received by Parliament on "
-      %span= format_date(object.date)
-      %span>="."
+%p.font-size-epsilon.reading-width
+  %span>= object_display_name_link(object.object_name)
+  - unless object.department.blank?
+    %span= " published by the "
+    %span= search_link(object.department)
+  %span= " was received by Parliament on "
+  %span= format_date(object.date)
+  %span>="."

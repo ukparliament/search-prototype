@@ -1,8 +1,10 @@
 <% unless departments.blank? %>
-  <div class="about-item">
-    <div class="content-heading-small" id="department">Department</div>
-    <% departments.each do |department| %>
-      <%= search_link(department) %><br/>
-    <% end %>
-  </div>
+  <dt>
+    Department
+  </dt>
+  <% departments.each do |department| %>
+    <dd>
+      <%= search_link(department) %>
+    </dd>
+  <% end %>
 <% end %>

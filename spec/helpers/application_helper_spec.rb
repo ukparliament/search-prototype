@@ -3,10 +3,30 @@ require 'rails_helper'
 RSpec.describe ApplicationHelper, type: :helper do
 
   describe 'format_html' do
+    context 'with a mix of html and text' do
+      let!(:content) { "a test sentence<p><strong>Hello world!</strong></p>" }
+      it 'wraps the untagged text without affecting the formatted html' do
+        expect(helper.format_html(content, false)).to eq("<p>a test sentence</p><p><strong>Hello world!</strong></p>")
+      end
+    end
+    context 'where there are some empty tags' do
+      let!(:content) { "some text<h2>A heading</h2><p></p><p> </p>"}
+      it 'removes the empty nodes' do
+        expect(helper.format_html(content, false)).to eq("<p>some text</p><h2>A heading</h2>")
+      end
+    end
     context 'when not truncating html' do
-      let!(:content) { "<div><strong>Hello world!</strong></div>" }
-      it 'returns valid html' do
-        expect(helper.format_html(content, 50)).to eq(content)
+      context 'with html content' do
+        let!(:content) { "<div><strong>Hello world!</strong></div>" }
+        it 'returns valid html with the same tags' do
+          expect(helper.format_html(content, 50)).to eq(content)
+        end
+      end
+      context 'with plain text content' do
+        let!(:content) { "This is unformatted, plain text content" }
+        it 'returns valid html' do
+          expect(helper.format_html(content, 50)).to eq("<p>This is unformatted, plain text content</p>")
+        end
       end
     end
     context 'when truncating html' do
