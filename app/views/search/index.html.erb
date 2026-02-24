@@ -17,18 +17,34 @@
   </div>
 <% end %>
 
-<section id="search-field" class="mt-4 mb-5">
+<section id="search-field" class="mb-3">
   <div class="row">
     <div class="col">
       <%= form_with url: search_url, method: :get, remote: true, id: 'search-form', class: 'p-form' do |f| %>
         <div class="p-form__form-group">
           <label class="p-form__label sr-only" for="search-input">Label</label>
           <div class="p-form__input--with-button">
-            <%= f.text_field :query, id: 'search-input', name: 'search-input', class: 'p-form__input', spellcheck: true, value: @search_data.query %>
+            <%= f.text_field :query, id: 'search-input', class: 'p-form__input', spellcheck: true, value: @search_data.query %>
             <%= f.hidden_field :show_detailed, value: @search_data.show_detailed %>
             <%= f.hidden_field :sort_by, value: @search_data.sort %>
             <%= f.hidden_field :results_per_page, value: @search_data.results_per_page %>
-            <button type="submit" class="btn btn-primary">Search</button>
+            <button type="submit" class="btn btn-primary flex-column">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                width="20"
+                height="20"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <circle cx="11" cy="11" r="7"></circle>
+                <line x1="16.65" y1="16.65" x2="21" y2="21"></line>
+              </svg>
+            </button>
           </div>
         </div>
       <% end %>
@@ -48,9 +64,20 @@
     email <%= mail_to "parliamentarysearch@parliament.co.uk" %>.
   </p>
 <% else %>
-  <section id="search-results">
-    <div class="row" id="filters">
-      <div class="col-3" data-controller="expand-facet">
+  <section id="search-results" data-controller="filters expand-facet">
+    <%= render 'showing_results' %>
+
+    <button class="d-md-none btn btn-outline-primary btn-sm mb-3" data-action="click->filters#toggle">
+      <span>Filters</span>
+      <% if @search_data.filter_count > 0 %>
+            <span>
+              <%= "(#{@search_data.filter_count} applied)" %>
+            </span>
+      <% end %>
+    </button>
+
+    <div class="row">
+      <div id="filtersPanel" data-filters-target="filtersPanel" class="d-none d-md-block col-md-3">
         <%= render 'applied_filters' %>
         <%= render 'search/results/facets/type_facet' %>
         <% @search_data.facets.select { |h| ["legislature_ses", "session_s"].include?(h.dig(:field_name)) }.each do |facet_field| %>
@@ -59,8 +86,9 @@
         <% @search_data.facets.select { |h| ["date_year", "date_month", "department_ses", "member_ses", "primaryMember_ses", "answeringMember_ses", "legislativeStage_ses", "legislationTitle_ses", "subject_ses", "publisher_ses"].include?(h.dig(:field_name)) }.each do |facet_field| %>
           <%= render 'filter_section', facet_field: format_facets(facet_field) %>
         <% end %>
+        <hr class="d-md-none"/>
       </div>
-      <div class="col" id="results-container">
+      <div id="resultsPanel" class="col-md-9">
         <%= render 'search_control_panel' %>
         <div data-controller="claw" data-action="keydown@document->claw#handleKeyDown">
           <% @objects.each do |object| %>
@@ -73,7 +101,6 @@
           <% end %>
           <%= render '/content_type_objects/fragments/about_these_results' %>
           <% unless @search_data.current_page.blank? || @search_data.total_pages.blank? %>
-            <p><%= render 'showing_results', include_time: true %></p>
             <% if @search_data.total_pages > 1 %>
               <%= render 'pagination', user_requested_page: @search_data.current_page, last_page: @search_data.total_pages, query: @search_data.query, filter: @search_data.filter, sort_by: @search_data.sort, results_per_page: @search_data.results_per_page, expanded_types: @search_data.expanded_types_string, show_detailed: @search_data.show_detailed %>
             <% end %>
@@ -81,5 +108,6 @@
         </div>
       </div>
     </div>
+
   </section>
 <% end %>

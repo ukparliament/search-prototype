@@ -1,10 +1,25 @@
-<div id="search" class="row my-3">
+<div id="search" class="row mb-3">
   <div class="col">
     <%= form_with url: search_url, method: :get, remote: true, id: 'search-form', class: 'p-form' do |f| %>
       <div class="p-form__form-group">
         <div class="p-form__input--with-button">
           <%= f.text_field :query, id: 'search-input', class: 'p-form__input', spellcheck: true %>
-          <button class="btn btn-primary">Search</button>
+          <button class="btn btn-primary flex-column">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              width="20"
+              height="20"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <circle cx="11" cy="11" r="7"></circle>
+              <line x1="16.65" y1="16.65" x2="21" y2="21"></line>
+            </svg>
+          </button>
         </div>
       </div>
     <% end %>
