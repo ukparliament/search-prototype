@@ -196,6 +196,27 @@ RSpec.describe SearchData, type: :model do
     end
   end
 
+  describe 'filter_count' do
+    before do
+      permitted = params.permit({ filter: {} })
+      filter_params = permitted[:filter]
+      allow(search_data).to receive(:filter).and_return(filter_params)
+    end
+    context 'where no filter is present' do
+      let(:params) { ActionController::Parameters.new(filter: {}) }
+      it 'returns 0' do
+        expect(search_data.filter_count).to eq(0)
+      end
+    end
+    context 'where a filter is present' do
+      let(:params) { ActionController::Parameters.new(filter: { "primaryMember_ses" => ["299767", "415470"], "publisher_ses" => ["25259"] }) }
+
+      it 'returns the number of filter values' do
+        expect(search_data.filter_count).to eq(3)
+      end
+    end
+  end
+
   describe 'start' do
     context 'where no data is present' do
       it 'returns the number of results +1' do

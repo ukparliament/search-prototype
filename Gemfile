@@ -9,9 +9,8 @@ gem 'cgi'
 gem 'fiddle'
 gem "pg"
 gem "propshaft"
-gem "library_design", github: "ukparliament/design-assets", glob: 'library_design/*.gemspec', tag: "0.6.4"
+gem "library_design", github: "ukparliament/design-assets", glob: 'library_design/*.gemspec', tag: "0.6.10"
 gem "importmap-rails"
-gem "font-awesome-rails"
 gem "haml"
 gem "turbo-rails"
 gem "stimulus-rails"

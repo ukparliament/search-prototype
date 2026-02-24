@@ -8,3 +8,8 @@ p:last-child {
 .container-sm > p:last-child {
     margin-bottom: 0;
 }
+
+/* override showing nav placeholder in header as search isn't using a header nav at all */
+nav#header-nav {
+    display: none;
+}

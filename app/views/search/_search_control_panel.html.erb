@@ -1,11 +1,5 @@
-<div class="row">
-  <div class="col-12">
-    <%= render 'showing_results', include_time: false %>
-  </div>
-</div>
-
-<div class="row mb-2">
-  <div class="col-lg">
+<div class="row mb-3 justify-content-end">
+  <div class="col-md-4 align-self-center">
     <span>Show detailed:</span>
     <% if @search_data.show_detailed? %>
       <%= render 'control_panel_current', value: 'On' %>
@@ -16,7 +10,7 @@
     <% end %>
   </div>
 
-  <div class="col-lg">
+  <div class="col-md-4 align-self-center">
     <span>Results:</span>
     <% [10, 20, 50, 100].each do |per_page_option| %>
       <% if @search_data.results_per_page == per_page_option %>
@@ -27,7 +21,7 @@
     <% end %>
   </div>
 
-  <div class="col-lg">
+  <div class="col-md-4 align-self-center">
     <span>Sort by:</span>
     <% if @search_data.sort == "date_desc" %>
       <%= render 'control_panel_current', value: 'Newest first' %>
@@ -37,5 +31,5 @@
       <%= render 'control_panel_current', value: 'Oldest first' %>
     <% end %>
   </div>
-
 </div>
+<hr/>

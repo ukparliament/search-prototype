@@ -1,6 +1,6 @@
 
 # Use the official Ruby image as a base
-FROM ruby:3.3.1
+FROM ruby:4.0.1
 
 # Set environment variables
 ENV RAILS_ENV development

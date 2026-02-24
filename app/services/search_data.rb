@@ -237,6 +237,11 @@ class SearchData
     search.dig(:search_parameters, :filter)
   end
 
+  def filter_count
+    return 0 unless filter
+    filter.to_h.values.flatten.count
+  end
+
   def facets
     return [] unless search
 
