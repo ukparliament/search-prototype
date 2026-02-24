@@ -9,12 +9,6 @@ p:last-child {
     margin-bottom: 0;
 }
 
-/* override footer margins */
-footer.p-footer > div.container > div.row {
-    margin-left: 0;
-    margin-right: 0;
-}
-
 /* override showing nav placeholder in header as search isn't using a header nav at all */
 nav#header-nav {
     display: none;
