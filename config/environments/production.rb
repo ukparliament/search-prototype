@@ -3,9 +3,6 @@ require "active_support/core_ext/integer/time"
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
-  # Ensure Rails trusts Cloudflare headers
-  config.action_dispatch.trusted_proxies = Rack::Attack::CLOUDFLARE_IPS
-
   # Code is not reloaded between requests.
   config.enable_reloading = false
 

@@ -111,3 +111,6 @@ class Rack::Attack
   #    ['']] # body
   # end
 end
+
+# Due to load order, configure Rails to trust Cloudflare headers here instead of production.rb
+Rails.application.config.action_dispatch.trusted_proxies = Rack::Attack::CLOUDFLARE_IPS
