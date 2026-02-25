@@ -193,6 +193,8 @@ GEM
     public_suffix (6.0.1)
     racc (1.8.1)
     rack (3.2.5)
+    rack-attack (6.8.0)
+      rack (>= 1.0, < 4)
     rack-cors (3.0.0)
       logger
       rack (>= 3.0.14)
@@ -325,6 +327,7 @@ DEPENDENCIES
   passenger (>= 6)
   pg
   propshaft
+  rack-attack
   rails (= 8.1.2)
   rails-controller-testing
   rspec-rails
