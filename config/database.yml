@@ -17,3 +17,7 @@ test:
 production:
   <<: *default
   database: db/search_production
+
+staging:
+  <<: *default
+  database: db/search_production
