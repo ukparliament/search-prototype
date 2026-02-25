@@ -14,9 +14,9 @@ Rails.application.routes.draw do
   get 'errors/404' => 'errors#not_found'
   get 'errors/401' => 'errors#not_authorized'
 
-  get 'examples' => 'meta#examples', as: :examples
+  get 'examples' => 'meta#examples', as: :meta_examples
   get 'meta' => 'meta#index', as: :meta_list
   get 'cookies' => 'meta#cookies', as: :meta_cookies
-  get 'coverage' => 'meta#coverage', as: :coverage
-  get 'backlog' => 'meta#backlog', as: :backlog
+  get 'coverage' => 'meta#coverage', as: :meta_coverage
+  get 'backlog' => 'meta#backlog', as: :meta_backlog
 end
