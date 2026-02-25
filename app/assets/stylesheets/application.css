@@ -1,8 +1,3 @@
-/* set grey background colour */
-body {
-    background-color: #EBE9E8;
-}
-
 /*override margins set by design system*/
 /* reset bottom margin for last child paragraph */
 p:last-child {
