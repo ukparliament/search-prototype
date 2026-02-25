@@ -12,6 +12,7 @@ gem "propshaft"
 gem "library_design", github: "ukparliament/design-assets", glob: 'library_design/*.gemspec', tag: "0.6.10"
 gem "importmap-rails"
 gem "haml"
+gem 'rack-attack'
 gem "turbo-rails"
 gem "stimulus-rails"
 gem "jbuilder"
