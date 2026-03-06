@@ -1,34 +1,32 @@
-<section hidden id="about-this-result" class="row my-4 py-3 border border-dark claw">
-  <div class="col">
-    <h3>Librarians' tools</h3>
-    <dl>
-      <dt>
-        Search time
-      </dt>
-      <dd>
-        <%= "#{(Time.now - @start_time).round(3)} seconds" %>
-      </dd>
+<section hidden id="about-these-results" class="claw highlight highlight-neutral">
+  <h3>Librarians' tools</h3>
+  <dl>
+    <dt>
+      Search time
+    </dt>
+    <dd>
+      <%= "#{(Time.now - @start_time).round(3)} seconds" %>
+    </dd>
 
-      <dt>
-        Solr query time
-      </dt>
-      <dd>
-        <%= "#{@search_data.query_time} seconds" %>
-      </dd>
+    <dt>
+      Solr query time
+    </dt>
+    <dd>
+      <%= "#{@search_data.query_time} seconds" %>
+    </dd>
 
-      <dt>
-        Search query
-      </dt>
-      <dd>
-        <%= @search_data.query %>
-      </dd>
+    <dt>
+      Search query
+    </dt>
+    <dd>
+      <%= @search_data.query %>
+    </dd>
 
-      <dt>
-        We actually searched for
-      </dt>
-      <dd>
-        <%= @search_data.query_as_submitted %>
-      </dd>
-    </dl>
-  </div>
+    <dt>
+      We actually searched for
+    </dt>
+    <dd>
+      <%= @search_data.query_as_submitted %>
+    </dd>
+  </dl>
 </section>

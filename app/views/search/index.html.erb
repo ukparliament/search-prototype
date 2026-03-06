@@ -56,6 +56,9 @@
   <h1 class="reading-width">
     No results found
   </h1>
+  <div data-controller="claw" class="mb-3" data-action="keydown@document->claw#handleKeyDown">
+    <%= render '/content_type_objects/fragments/about_these_results' %>
+  </div>
   <p class="reading-width">
     No results found for <strong>"<%= @search_data.query %>"</strong>.
   </p>
@@ -64,8 +67,9 @@
     email <%= mail_to "parliamentarysearch@parliament.co.uk" %>.
   </p>
 <% else %>
-  <section id="search-results" data-controller="filters expand-facet">
+  <section id="search-results" data-controller="filters expand-facet claw" data-action="keydown@document->claw#handleKeyDown">
     <%= render 'showing_results' %>
+    <%= render '/content_type_objects/fragments/about_these_results' %>
 
     <button class="d-md-none btn btn-outline-primary btn-sm mb-3" data-action="click->filters#toggle">
       <span>Filters</span>
@@ -90,7 +94,7 @@
       </div>
       <div id="resultsPanel" class="col-md-9">
         <%= render 'search_control_panel' %>
-        <div data-controller="claw" data-action="keydown@document->claw#handleKeyDown">
+        <div>
           <% @objects.each do |object| %>
             <div class="row">
               <div class="col">
@@ -99,7 +103,6 @@
               </div>
             </div>
           <% end %>
-          <%= render '/content_type_objects/fragments/about_these_results' %>
           <% unless @search_data.current_page.blank? || @search_data.total_pages.blank? %>
             <% if @search_data.total_pages > 1 %>
               <%= render 'pagination', user_requested_page: @search_data.current_page, last_page: @search_data.total_pages, query: @search_data.query, filter: @search_data.filter, sort_by: @search_data.sort, results_per_page: @search_data.results_per_page, expanded_types: @search_data.expanded_types_string, show_detailed: @search_data.show_detailed %>

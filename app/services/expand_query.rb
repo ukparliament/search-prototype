@@ -17,73 +17,99 @@ class ExpandQuery
   # - Call expand_terms to add additional terms that should be searched for
   # - Fetch a SES API response (via SesQuery class) for the search term, where required by expand_terms
   def process_query
-    returned_terms = []
+    tokens = []
 
-    # TODO: refactor
     extract_terms.each do |term|
       if term.match(/\b(?:AND|OR|NOT)\b/i)
-        # Solr query operators
-        returned_terms << term
+        tokens << [:operator, term]
       elsif term.match(/(\w+:"(?:[^"]+)")/)
-        # field:"phrase in double quotes"
-        field_name = term.split(":").first
-        search_term = term.split(":").last
-        ses_data = ses_search_class.new({ value: search_term }).data
-        expanded_fields = expand_fields(field_name)
-        returned_terms << expand_terms(expanded_fields, ses_data, search_term)
+        tokens << [:specified_field_with_quoted_phrase, term]
       elsif term.match(/(\w+:'(?:[^']+)')/)
-        # field:'single quoted phrase'
-        field_name = term.split(":").first
-        search_term = term.split(":").last
-        ses_data = ses_search_class.new({ value: search_term }).data
-        expanded_fields = expand_fields(field_name)
-        returned_terms << expand_terms(expanded_fields, ses_data, search_term)
+        tokens << [:specified_field_with_quoted_phrase, term]
+      elsif term.match(/(\w+:\[(?:[^\]]+)\])/)
+        tokens << [:specified_field_no_expansion, term]
       elsif term.match(/(\w+:\S+)/)
-        # field:string
-        field_name = term.split(":").first
-        search_term = term.split(":").last
-        expanded_fields = expand_fields(field_name)
-        ses_data = ses_search_class.new({ value: search_term }).data
-        returned_terms << expand_terms(expanded_fields, ses_data, search_term)
+        tokens << [:specified_field, term]
       elsif term.match(/"([^"]+)"/)
-        # "phrase in double quotes"
-        returned_terms << term
+        tokens << [:quoted_phrase, term]
       elsif term.match(/'([^']+)'/)
-        # 'phrase in single quotes'
-        returned_terms << term
-      elsif term.match(/(\S+)/)
-        # string
-        search_term = term
-        field_name = "none"
-        expanded_fields = expand_fields(field_name)
-        ses_data = ses_search_class.new({ value: search_term }).data
-        returned_terms << expand_terms(expanded_fields, ses_data, search_term)
+        tokens << [:quoted_phrase, term]
+      elsif term.match(/\[(?:[^\]]+)\]/)
+        tokens << [:no_expansion, term]
       else
-        raise 'not matched'
+        tokens << [:unquoted_word, term]
       end
-
     end
 
-    returned_terms
+    grouped_tokens = group_unquoted_words_as_phrases(tokens)
+    processed_tokens = []
+
+    grouped_tokens.each do |label, value|
+      if label == :operator
+        # do nothing, pass directly to Solr
+        search_term = value
+        processed_tokens << search_term
+      elsif label == :specified_field_with_quoted_phrase
+        search_term = value.split(":").last
+        field_name = value.split(":").first
+        ses_data = ses_search_class.new({ value: search_term }).data
+        expanded_fields = expand_fields(field_name)
+        processed_tokens << expand_terms(expanded_fields, ses_data, search_term)
+      elsif label == :specified_field_no_expansion
+        # delete unwanted []; expand fields using blank SES data
+        search_term = value.split(":").last.delete_prefix("[").delete_suffix("]")
+        field_name = value.split(":").first
+        expanded_fields = expand_fields(field_name)
+        processed_tokens << expand_terms(expanded_fields, {}, search_term)
+      elsif label == :specified_field
+        search_term = value.split(":").last
+        field_name = value.split(":").first
+        expanded_fields = expand_fields(field_name)
+        ses_data = ses_search_class.new({ value: search_term }).data
+        processed_tokens << expand_terms(expanded_fields, ses_data, search_term)
+      elsif label == :quoted_phrase
+        search_term = value
+        expanded_fields = expand_fields("none")
+        ses_data = ses_search_class.new({ value: search_term }).data
+        processed_tokens << expand_terms(expanded_fields, ses_data, search_term)
+      elsif label == :no_expansion
+        search_term = value.delete_prefix("[").delete_suffix("]")
+        processed_tokens << search_term
+      elsif label == :unquoted_phrase
+        search_term = value
+        ses_data = ses_search_class.new({ value: search_term }).data
+        if ses_data.present?
+          # expand token using SES data
+          expanded_fields = expand_fields("none")
+          processed_tokens << expand_terms(expanded_fields, ses_data, search_term)
+        else
+          # return the token without expansion
+          processed_tokens << value
+        end
+      else
+        puts "Unmatched token type #{label} for #{value}" if Rails.env.development?
+        next
+      end
+    end
+
+    processed_tokens
   end
 
   ##
-  # Performs term recognition via regex, chunking entered string into component parts:
-  #
-  # - Returns nil if search_query is not present
-  # - Converts search_query to a string
-  # - Recognises field_name:term or field_name:'term' or field_name:"term" or field_name:"a phrase" or
-  # field_name:'a phrase' as a single term
-  # - Phrases in isolation are also considered a single term, e.g. "any phrase wrapped in quotes" (both types)
-  # - Unquoted words are treated as multiple terms, split on spaces
+  # Performs tokenisation via regex, chunking entered string into component parts:
+  # - Returns nil if search_query is not present.
+  # - Converts search_query to a string.
+  # - Recognises specified fields, e.g. field_name:term or field_name:'term' or field_name:"term" or
+  #   field_name:"a phrase" or field_name:'a phrase' as a single token.
+  # - Phrases in isolation are also considered a single token, e.g. "any phrase wrapped in quotes" (both types)
+  # - Unquoted words are treated as multiple tokens, split on spaces (these are combined later on).
   # - Returns an array of just the matched terms; flat_map(&:compact) converts the output of .scan into this form
   def extract_terms
     # test input: subject:housing subject:"old houses" subject:"houses" houses "old houses" "houses"
     # which presents as "subject:housing subject:\"old houses\" subject:\"houses\" houses \"old houses\" \"houses\""
     # and is converted into: ["subject:housing", "subject:\"old houses\"", "subject:\"houses\"", "houses", "old houses", "houses"]
     return if search_query.blank?
-
-    search_query.to_s.scan(/(\w+:"(?:[^"]+)")|(\w+:'(?:[^']+)')|(\w+:\S+)|"([^"]+)"|'([^']+)'|(\S+)/).flat_map(&:compact)
+    search_query.to_s.scan(/(\w+:"(?:[^"]+)")|(\w+:'(?:[^']+)')|(\w+:\[(?:[^\]]+)\])|(\w+:\S+)|(\[(?:[^\]]+)\])|"([^"]+)"|'([^']+)'|(\S+)/).flat_map(&:compact)
   end
 
   ##
@@ -168,15 +194,18 @@ class ExpandQuery
 
   ##
   # Retrieve the preferred term and synonyms from SES data and apply them across all text fields
+  # This is done iteratively as SES may return multiple terms with multiple equivalent terms each
   # Where preferred term is not present, apply the search term instead
   def populate_text_fields(text_fields, ses_data, search_term)
     expanded_terms = []
 
     unless text_fields.blank?
       text_fields.flatten.each do |tf|
-        expanded_terms << (ses_data[:preferred_term].present? ? "#{tf}:\"#{ses_data[:preferred_term]}\"" : "#{tf}:\"#{search_term}\"")
-        ses_data[:equivalent_terms].flatten.each do |et|
-          expanded_terms << "#{tf}:\"#{et}\""
+        ses_data.each do |ses_result|
+          expanded_terms << (ses_result[:preferred_term].present? ? "#{tf}:\"#{ses_result[:preferred_term]}\"" : "#{tf}:\"#{search_term}\"")
+          ses_result[:equivalent_terms].flatten.each do |et|
+            expanded_terms << "#{tf}:\"#{et}\""
+          end
         end
       end
     end
@@ -246,13 +275,15 @@ class ExpandQuery
   ##
   # Where no alias was given, the search term is replaced with the preferred term if present, and expanded
   # further with equivalent terms, if present.
+  # This is done iteratively as SES may return multiple terms with multiple equivalent terms each.
   def handle_non_aliased_terms(non_aliased_fields, ses_data, search_term)
     expanded_terms = []
-
     unless non_aliased_fields.blank?
-      expanded_terms << (ses_data[:preferred_term].present? ? "\"#{ses_data[:preferred_term]}\"" : "\"#{search_term}\"")
-      ses_data[:equivalent_terms].flatten.each do |et|
-        expanded_terms << "\"#{et}\""
+      ses_data.each do |ses_result|
+        expanded_terms << (ses_result[:preferred_term].present? ? "\"#{ses_result[:preferred_term]}\"" : "\"#{search_term}\"")
+        ses_result[:equivalent_terms].flatten.each do |et|
+          expanded_terms << "\"#{et}\""
+        end
       end
     end
 
@@ -261,16 +292,44 @@ class ExpandQuery
 
   ##
   # Search all SES fields with the preferred term ID, if present.
+  # SES data may return multiple terms, so this is done iteratively.
   def populate_ses_fields(ses_fields, ses_data)
     expanded_terms = []
 
     # add every SES field we've determined should be searched for the preferred term SES ID
-    unless ses_fields.blank? || ses_data.blank? || ses_data[:preferred_term_id].blank?
-      ses_fields.flatten.each do |sf|
-        expanded_terms << "#{sf}:#{ses_data[:preferred_term_id]}" if ses_data[:preferred_term_id]
+    unless ses_fields.blank? || ses_data.blank?
+      ses_data.each do |ses_result|
+        unless ses_result[:preferred_term_id].blank?
+          ses_fields.flatten.each do |sf|
+            expanded_terms << "#{sf}:#{ses_result[:preferred_term_id]}" if ses_result[:preferred_term_id]
+          end
+        end
       end
     end
 
     expanded_terms
+  end
+
+  def group_unquoted_words_as_phrases(tokens)
+    # iterates through tokens and groups all :unquoted_word tokens as :unquoted_phrases
+    # while respecting the structure of the query relative to other terms
+    ret = []
+    unquoted_words = []
+
+    tokens.each do |label, value|
+      if label == :unquoted_word
+        unquoted_words << value
+      else
+        # if the current token is not an unquoted word, merge all unquoted words in the buffer (if any) & label
+        ret << [:unquoted_phrase, unquoted_words.join(" ")] unless unquoted_words.empty?
+        unquoted_words = []
+        # no operation necessary on other token types
+        ret << [label, value]
+      end
+    end
+
+    # finally, if there are any unquoted words left, combine them as a phrase
+    ret << [:unquoted_phrase, unquoted_words.join(" ")] unless unquoted_words.empty?
+    ret
   end
 end

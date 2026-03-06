@@ -1,17 +1,12 @@
 class SesQuery < SesLookup
 
   ##
-  # Returns hash of query expansion data assembled from SES query response.
-  #
-  # A single term can return no, one or many terms from SES:
-  # Where no terms are found, this method returns { equivalent_terms: [] }
-  #
-  # Where terms are found, the hash will be in the form:
+  # Returns query expansion data from SES as an array, which may contain one or more terms in the form of a hash:
   # {
-  #   equivalent_terms: ['equivalent_term_1', 'equivalent_term_2', '...'],
+  #   equivalent_terms: ['equivalent term 1', 'equivalent term 2', '...'],
   #   topic_id: '12345',
   #   preferred_term_id: '23456',
-  #   preferred_term: 'preferred_term'
+  #   preferred_term: 'preferred term'
   # }
   #
   # Terms with the 'TPG' (topic) class are not included in equivalent terms, but a separate :topic_id is
@@ -23,40 +18,61 @@ class SesQuery < SesLookup
   def data
     return if input_data.blank?
 
-    ret = { equivalent_terms: [] }
+    # create an array to collect terms
+    returned_terms = []
+
+    # get parsed response
     responses = evaluated_response
 
+    # if the API returns an error, it will have an "error" key at the top level
     return responses if responses.has_key?("error")
 
-    terms = responses.dig('terms')
-    unless terms&.compact.blank?
-      equivalent_terms = []
-      terms.each do |term|
-        if term.dig('term', 'class') == 'TPG'
-          ret[:topic_id] = term['term']['id']
-        else
-          equivalent_terms << term.dig('term', 'equivalence')&.first&.dig('fields')&.map { |f| f.dig('field', 'name') }
-          ret[:preferred_term_id] = term['term']['id']
-          ret[:preferred_term] = term['term']['name']
+    # if no match found, we won't get a key for terms at all
+    if responses.has_key?("terms")
+      # iterate through returned terms
+      responses.dig("terms").each do |term|
+        # create hash for the term data
+        term_hash = { equivalent_terms: [] }
+
+        # terms sourced "1" are exact matches, "2" include stemming, "3" are other matches
+        # filter to type 1 for now, optionally can configure this in
+        # the future to controllable by power users at query time?
+        next unless term.dig("term", "src") == "1"
+
+        # where the class is a topic, return the topic ID
+        term_hash[:topic_id] = term.dig("term", "id") if term.dig("term", "class") == "TPG"
+
+        # fetch preferred term name and ID
+        # SES responds with the preferred term regardless of whether the search matched preferred or non-preferred term
+        term_hash[:preferred_term] = term.dig("term", "name")
+        term_hash[:preferred_term_id] = term.dig("term", "id")
+
+        # equivalent terms might not be present
+        if term.dig("term").has_key?("equivalence")
+          term_hash[:equivalent_terms] = term.dig("term", "equivalence").select { |ec| ec["typeId"] == "3" }.dig(0, "fields").map { |f| f.dig("field", "name") }
         end
+
+        # add term hash to array
+        returned_terms << term_hash
       end
-      ret[:equivalent_terms] = equivalent_terms
+    else
+      puts "No SES terms found for: #{responses.dig("parameters", "query")}" if Rails.env.development?
     end
 
-    ret
+    # return the collated data of all terms matching the query
+    returned_terms
   end
 
   private
 
   def evaluated_response
-    api_response(ses_term_lookup_uri, false)
+    api_response(ses_search_uri, false)
   end
 
-  def ses_term_lookup_uri
+  def ses_search_uri
     base_url = ses_base_url
     base_url = 'https://api.parliament.uk/ses/' if Rails.env.test?
-
-    build_uri("#{base_url}ses?TBDB=disp_taxonomy&TEMPLATE=service.json&expand_hierarchy=0&SERVICE=search&QUERY=#{term}")
+    build_uri("#{base_url}ses?TBDB=disp_taxonomy&TEMPLATE=service.json&SERVICE=conceptmap&QUERY=#{term}")
   end
 
   def term

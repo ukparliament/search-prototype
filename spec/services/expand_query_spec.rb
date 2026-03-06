@@ -31,6 +31,11 @@ RSpec.describe 'ExpandQuery' do
         # stub process term so that we just get 'result' back
         allow(expand_query).to receive(:expand_terms).with(["expanded_fields"], "ses_data", "\"housing crisis\"").and_return("result")
 
+        # check that SES class receives a call to create a new instance
+        expect(ses_test_class).to receive(:new).with(({ value: "\"housing crisis\"" }))
+        # check that SES instance receives a call to data method
+        expect(ses_test_instance).to receive(:data)
+
         # expect to see the (mock) result added to an array
         expect(expand_query.process_query).to eq(["result"])
       end
@@ -42,6 +47,8 @@ RSpec.describe 'ExpandQuery' do
         allow(expand_query).to receive(:extract_terms).and_return(terms)
         allow(expand_query).to receive(:expand_fields).with("subject_ses").and_return(['expanded_fields'])
         allow(expand_query).to receive(:expand_terms).with(['expanded_fields'], "ses_data", "'housing crisis'").and_return("result")
+        expect(ses_test_class).to receive(:new).with(({ value: "'housing crisis'" }))
+        expect(ses_test_instance).to receive(:data)
         expect(expand_query.process_query).to eq(["result"])
       end
     end
@@ -52,26 +59,33 @@ RSpec.describe 'ExpandQuery' do
         allow(expand_query).to receive(:extract_terms).and_return(terms)
         allow(expand_query).to receive(:expand_fields).with("subject_ses").and_return(['expanded_fields'])
         allow(expand_query).to receive(:expand_terms).with(['expanded_fields'], "ses_data", "housing").and_return("result")
+        expect(ses_test_class).to receive(:new).with(({ value: "housing" }))
+        expect(ses_test_instance).to receive(:data)
         expect(expand_query.process_query).to eq(["result"])
       end
     end
 
     context 'where the term is a double-quoted phrase without a specified field' do
       let(:terms) { ["\"housing crisis\""] }
-      it 'adds the term to returned terms as-is' do
+      it 'calls SES for expanded terms; expands fields with "none" only' do
         allow(expand_query).to receive(:extract_terms).and_return(terms)
-        expect(expand_query).not_to receive(:expand_fields)
-        expect(expand_query.process_query).to eq(["\"housing crisis\""])
+        allow(expand_query).to receive(:expand_fields).with("none").and_return(['expanded_fields'])
+        allow(expand_query).to receive(:expand_terms).with(['expanded_fields'], "ses_data", "\"housing crisis\"").and_return("result")
+        expect(ses_test_class).to receive(:new).with(({ value: "\"housing crisis\"" }))
+        expect(ses_test_instance).to receive(:data)
+        expect(expand_query.process_query).to eq(["result"])
       end
     end
 
     context 'where the term is a single-quoted phrase without a specified field' do
       let(:terms) { ["'housing crisis'"] }
-      it 'adds the term to returned terms as-is' do
+      it 'calls SES for expanded terms; expands fields with "none" only' do
         allow(expand_query).to receive(:extract_terms).and_return(terms)
-        expect(expand_query).not_to receive(:expand_fields)
-        expect(expand_query).not_to receive(:expand_terms)
-        expect(expand_query.process_query).to eq(["\'housing crisis\'"])
+        allow(expand_query).to receive(:expand_fields).with("none").and_return(['expanded_fields'])
+        expect(ses_test_class).to receive(:new).with(({ value: "'housing crisis'" }))
+        expect(ses_test_instance).to receive(:data)
+        allow(expand_query).to receive(:expand_terms).with(['expanded_fields'], "ses_data", "'housing crisis'").and_return("result")
+        expect(expand_query.process_query).to eq(["result"])
       end
     end
 
@@ -81,7 +95,15 @@ RSpec.describe 'ExpandQuery' do
         allow(expand_query).to receive(:extract_terms).and_return(terms)
         allow(expand_query).to receive(:expand_fields).with("none").and_return(['expanded_fields'])
         allow(expand_query).to receive(:expand_terms).with(['expanded_fields'], "ses_data", "housing").and_return("result")
+        expect(ses_test_class).to receive(:new).with(({ value: "housing" }))
+        expect(ses_test_instance).to receive(:data)
         expect(expand_query.process_query).to eq(["result"])
+      end
+    end
+
+    pending 'where the term is wrapped in square brackets' do
+      it 'does not expand the terms using SES' do
+
       end
     end
   end
@@ -101,12 +123,12 @@ RSpec.describe 'ExpandQuery' do
     context 'field name is subject' do
       it 'populates text_fields and ses_fields' do
         expect(expand_query.expand_fields('subject')).to eq(
-                                                         { "boolean_fields" => [],
-                                                           "date_fields" => [],
-                                                           "non_aliased_fields" => [],
-                                                           "ses_fields" => ["subject_ses"],
-                                                           "ses_id_fields" => [],
-                                                           "text_fields" => ["subject_t"] })
+                                                           { "boolean_fields" => [],
+                                                             "date_fields" => [],
+                                                             "non_aliased_fields" => [],
+                                                             "ses_fields" => ["subject_ses"],
+                                                             "ses_id_fields" => [],
+                                                             "text_fields" => ["subject_t"] })
       end
     end
     context 'field name is author' do
@@ -178,29 +200,29 @@ RSpec.describe 'ExpandQuery' do
     context 'field name is none' do
       it 'populates non-aliased fields and ses_fields with all_ses' do
         expect(expand_query.expand_fields('none')).to eq(
-                                                                     { "boolean_fields" => [],
-                                                                       "date_fields" => [],
-                                                                       "non_aliased_fields" => ["none"],
-                                                                       "ses_fields" => ['all_ses'],
-                                                                       "ses_id_fields" => [],
-                                                                       "text_fields" => [] })
+                                                        { "boolean_fields" => [],
+                                                          "date_fields" => [],
+                                                          "non_aliased_fields" => ["none"],
+                                                          "ses_fields" => ['all_ses'],
+                                                          "ses_id_fields" => [],
+                                                          "text_fields" => [] })
       end
     end
     context 'field name is other text' do
       it 'populates text fields' do
         expect(expand_query.expand_fields('unrecognised_field_name')).to eq(
-                                                                     { "boolean_fields" => [],
-                                                                       "date_fields" => [],
-                                                                       "non_aliased_fields" => [],
-                                                                       "ses_fields" => [],
-                                                                       "ses_id_fields" => [],
-                                                                       "text_fields" => ["unrecognised_field_name"] })
+                                                                           { "boolean_fields" => [],
+                                                                             "date_fields" => [],
+                                                                             "non_aliased_fields" => [],
+                                                                             "ses_fields" => [],
+                                                                             "ses_id_fields" => [],
+                                                                             "text_fields" => ["unrecognised_field_name"] })
       end
     end
   end
 
   describe 'expand_terms' do
-    let!(:ses_data) { { equivalent_terms: [["Accommodation", "Houses"]], preferred_term_id: "91569", preferred_term: "Housing", topic_id: "95629" } }
+    let!(:ses_data) { [{ equivalent_terms: [["Accommodation", "Houses"]], preferred_term_id: "91569", preferred_term: "Housing", topic_id: "95629" }] }
     let!(:search_term) { 'housing' }
 
     context 'there are non-aliased fields' do
@@ -304,14 +326,14 @@ RSpec.describe 'ExpandQuery' do
     let!(:text_fields) { ['department_t'] }
 
     context 'where there is a preferred term' do
-      let!(:ses_data) { { equivalent_terms: [["Accommodation", "Houses"]], preferred_term_id: "91569", preferred_term: "Housing", topic_id: "95629" } }
+      let!(:ses_data) { [{ equivalent_terms: [["Accommodation", "Houses"]], preferred_term_id: "91569", preferred_term: "Housing", topic_id: "95629" }] }
 
       it 'returns a search for preferred term and any equivalent terms' do
         expect(expand_query.populate_text_fields(text_fields, ses_data, 'house')).to eq(["department_t:\"Housing\"", "department_t:\"Accommodation\"", "department_t:\"Houses\""])
       end
     end
     context 'where there is no preferred term' do
-      let!(:ses_data) { { equivalent_terms: [["Accommodation", "Houses"]], preferred_term_id: "91569", topic_id: "95629" } }
+      let!(:ses_data) { [{ equivalent_terms: [["Accommodation", "Houses"]], preferred_term_id: "91569", topic_id: "95629" }] }
 
       it 'returns a search for the search term and any equivalent terms' do
         expect(expand_query.populate_text_fields(text_fields, ses_data, 'house')).to eq(["department_t:\"house\"", "department_t:\"Accommodation\"", "department_t:\"Houses\""])
@@ -387,7 +409,7 @@ RSpec.describe 'ExpandQuery' do
 
     context 'where there is a preferred term' do
       # ses_data is generated by the .data method of SesQuery
-      let!(:ses_data) { { equivalent_terms: [["Accommodation", "Houses"]], preferred_term_id: "91569", preferred_term: "Housing", topic_id: "95629" } }
+      let!(:ses_data) { [{ equivalent_terms: [["Accommodation", "Houses"]], preferred_term_id: "91569", preferred_term: "Housing", topic_id: "95629" }] }
 
       it 'returns the preferred term and equivalent terms' do
         expect(expand_query.handle_non_aliased_terms(non_aliased_fields, ses_data, search_term)).to eq(["\"Housing\"", "\"Accommodation\"", "\"Houses\""])
@@ -395,7 +417,7 @@ RSpec.describe 'ExpandQuery' do
     end
 
     context 'where there is no preferred term' do
-      let!(:ses_data) { { equivalent_terms: [["Accommodation", "Houses"]], preferred_term_id: "91569", topic_id: "95629" } }
+      let!(:ses_data) { [{ equivalent_terms: [["Accommodation", "Houses"]], preferred_term_id: "91569", topic_id: "95629" }] }
 
       it 'returns equivalent terms and the original search term' do
         expect(expand_query.handle_non_aliased_terms(non_aliased_fields, ses_data, search_term)).to eq(["\"house\"", "\"Accommodation\"", "\"Houses\""])
@@ -408,7 +430,7 @@ RSpec.describe 'ExpandQuery' do
 
     context 'where there is a preferred term ID' do
       # ses_data is generated by the .data method of SesQuery
-      let!(:ses_data) { { equivalent_terms: [["Accommodation", "Houses"]], preferred_term_id: "91569", preferred_term: "Housing", topic_id: "95629" } }
+      let!(:ses_data) { [{ equivalent_terms: ["Accommodation", "Houses"], preferred_term_id: "91569", preferred_term: "Housing", topic_id: "95629" }] }
 
       it 'assembles a search for ses fields using preferred term ID' do
         expect(expand_query.populate_ses_fields(ses_fields, ses_data)).to eq(["subject_ses:91569"])

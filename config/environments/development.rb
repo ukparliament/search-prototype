@@ -55,6 +55,9 @@ Rails.application.configure do
   # Highlight code that triggered redirect in logs.
   config.action_dispatch.verbose_redirect_logs = true
 
+  # Disable logging of views - feel free to remove this it's just to make reading the console easier on the eyes
+  config.action_view.logger = nil
+
   # Raises error for missing translations.
   # config.i18n.raise_on_missing_translations = true
 
