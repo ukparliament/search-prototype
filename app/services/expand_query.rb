@@ -1,6 +1,6 @@
 class ExpandQuery
 
-  EXPAND_UNQUOTED_PHRASES = ENV["expand_unquoted_phrases"] || Rails.application.credentials.dig(:expand_unquoted_phrases)
+  EXPAND_UNQUOTED_PHRASES = ENV["EXPAND_UNQUOTED_PHRASES"] || Rails.application.credentials.dig(:expand_unquoted_phrases)
   attr_reader :search_query, :ses_search_class
 
   def initialize(search_query, ses_search_class)

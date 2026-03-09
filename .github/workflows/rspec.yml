@@ -20,6 +20,7 @@ jobs:
           --health-retries 5
     env:
       DATABASE_URL: postgres://postgres:postgres@localhost:5432/test
+      EXPAND_UNQUOTED_PHRASES: true
       RAILS_ENV: test
     steps:
       - uses: actions/checkout@v2
