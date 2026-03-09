@@ -3,6 +3,10 @@ class SearchController < ApplicationController
 
   def index
     @page_title = "Search Results - Parliamentary Search"
+
+    # prevent searching without a query
+    return redirect_back(fallback_location: home_path) if search_params[:query]&.strip.to_s.blank?
+
     @search_data = SearchData.new(SolrSearch.new(search_params).data)
 
     if @search_data.solr_error?

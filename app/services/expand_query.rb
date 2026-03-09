@@ -1,5 +1,6 @@
 class ExpandQuery
 
+  EXPAND_UNQUOTED_PHRASES = ENV["expand_unquoted_phrases"] || Rails.application.credentials.dig(:expand_unquoted_phrases)
   attr_reader :search_query, :ses_search_class
 
   def initialize(search_query, ses_search_class)
@@ -12,10 +13,13 @@ class ExpandQuery
   #
   # Iterates through the array and processes based on first regex match, returning terms into an array.
   # Depending on the field, it may:
-  # - Return a term largely unaltered (e.g. Solr operators)
+  # - Return a term unaltered (e.g. Solr boolean operators such as AND)
   # - Call expand_fields to add additional fields that should be searched
   # - Call expand_terms to add additional terms that should be searched for
   # - Fetch a SES API response (via SesQuery class) for the search term, where required by expand_terms
+  #
+  # Stopwords (lowercase and, or etc.) are not removed from phrases; Solr handles these as part of its own tokenisation
+  # process
   def process_query
     tokens = []
 
@@ -77,10 +81,9 @@ class ExpandQuery
         processed_tokens << search_term
       elsif label == :unquoted_phrase
         search_term = value
-        ses_data = ses_search_class.new({ value: search_term }).data
+        expanded_fields = expand_fields("none")
+        ses_data = ses_search_class.new({ value: search_term }).data if ExpandQuery::EXPAND_UNQUOTED_PHRASES
         if ses_data.present?
-          # expand token using SES data
-          expanded_fields = expand_fields("none")
           processed_tokens << expand_terms(expanded_fields, ses_data, search_term)
         else
           # return the token without expansion
