@@ -147,7 +147,7 @@ class SearchData
   def sort
     return unless search
 
-    from_params = search.dig(:search_parameters, 'sort_by')
+    from_params = search.dig(:search_parameters, :sort_by)
 
     from_params.blank? ? 'date_desc' : from_params
   end
@@ -172,7 +172,7 @@ class SearchData
   def results_per_page
     return unless search
 
-    per_page = search.dig(:search_parameters, 'results_per_page')
+    per_page = search.dig(:search_parameters, :results_per_page)
     per_page.blank? ? 20 : per_page.to_i
   end
 
