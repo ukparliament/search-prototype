@@ -166,7 +166,7 @@ RSpec.describe SearchData, type: :model do
 
   describe 'sort' do
     context 'where data is present' do
-      let!(:search_output) { { search_parameters: { 'sort_by' => 'date_asc' } } }
+      let!(:search_output) { { search_parameters: { sort_by: 'date_asc' } } }
       it 'returns the number of results' do
         expect(search_data.sort).to eq('date_asc')
       end
