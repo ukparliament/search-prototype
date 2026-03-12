@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe SolrSearch, type: :model do
-  let!(:solr_search) { SolrSearch.new({}) }
+  let!(:solr_search) { SolrSearch.new }
   let!(:mock_response) { {
     "responseHeader" => {
       "status" => 0,
@@ -40,7 +40,7 @@ RSpec.describe SolrSearch, type: :model do
   end
 
   describe 'data' do
-    let!(:solr_search) { SolrSearch.new({ filter: { 'field_name' => ['test'] } }) }
+    let!(:solr_search) { SolrSearch.new(filter: { 'field_name' => ['test'] }) }
     it 'returns a hash containing the search parameters and response' do
       expect(solr_search.data).to eq({ search_parameters: { :filter => { "field_name" => ["test"] } }, data: mock_response })
     end
@@ -48,7 +48,7 @@ RSpec.describe SolrSearch, type: :model do
 
   describe 'user_requested_page' do
     context 'for 0' do
-      let!(:solr_search) { SolrSearch.new({ page: 0 }) }
+      let!(:solr_search) { SolrSearch.new(page: 0) }
 
       it 'returns 1' do
         expect(solr_search.user_requested_page).to eq(1)
@@ -56,7 +56,7 @@ RSpec.describe SolrSearch, type: :model do
     end
 
     context 'for 1' do
-      let!(:solr_search) { SolrSearch.new({ page: 1 }) }
+      let!(:solr_search) { SolrSearch.new(page: 1) }
 
       it 'returns 1' do
         expect(solr_search.user_requested_page).to eq(1)
@@ -64,7 +64,7 @@ RSpec.describe SolrSearch, type: :model do
     end
 
     context 'for any other value' do
-      let!(:solr_search) { SolrSearch.new({ page: 9999 }) }
+      let!(:solr_search) { SolrSearch.new(page: 9999) }
 
       it 'returns that value' do
         expect(solr_search.user_requested_page).to eq(9999)
@@ -74,7 +74,7 @@ RSpec.describe SolrSearch, type: :model do
 
   describe 'current_page' do
     context 'for 0' do
-      let!(:solr_search) { SolrSearch.new({ page: 0 }) }
+      let!(:solr_search) { SolrSearch.new(page: 0) }
 
       it 'returns 0' do
         expect(solr_search.current_page).to eq(0)
@@ -82,7 +82,7 @@ RSpec.describe SolrSearch, type: :model do
     end
 
     context 'for 1' do
-      let!(:solr_search) { SolrSearch.new({ page: 1 }) }
+      let!(:solr_search) { SolrSearch.new(page: 1) }
 
       it 'returns 0' do
         expect(solr_search.current_page).to eq(0)
@@ -90,7 +90,7 @@ RSpec.describe SolrSearch, type: :model do
     end
 
     context 'for any other value' do
-      let!(:solr_search) { SolrSearch.new({ page: 9999 }) }
+      let!(:solr_search) { SolrSearch.new(page: 9999) }
 
       it 'returns one below that value' do
         expect(solr_search.current_page).to eq(9998)
@@ -105,13 +105,13 @@ RSpec.describe SolrSearch, type: :model do
       end
     end
     context 'sort is date desc' do
-      let!(:solr_search) { SolrSearch.new({ sort_by: 'date_desc' }) }
+      let!(:solr_search) { SolrSearch.new(sort_by: 'date_desc') }
       it 'returns date desc' do
         expect(solr_search.sort).to eq('date_dt desc')
       end
     end
     context 'sort is date asc' do
-      let!(:solr_search) { SolrSearch.new({ sort_by: 'date_asc' }) }
+      let!(:solr_search) { SolrSearch.new(sort_by: 'date_asc') }
       it 'returns date asc' do
         expect(solr_search.sort).to eq('date_dt asc')
       end
@@ -127,7 +127,7 @@ RSpec.describe SolrSearch, type: :model do
 
     context 'page parameter is present' do
       context 'first page requested' do
-        let!(:solr_search) { SolrSearch.new({ page: 1, results_per_page: 20 }) }
+        let!(:solr_search) { SolrSearch.new(page: 1, results_per_page: 20) }
 
         it 'returns 0' do
           # first page is results 0-19 if rows is set to 10
@@ -136,7 +136,7 @@ RSpec.describe SolrSearch, type: :model do
       end
       context 'second page requested' do
         # second page is results 10-19 if rows is set to 10
-        let!(:solr_search) { SolrSearch.new({ page: 2, results_per_page: 20 }) }
+        let!(:solr_search) { SolrSearch.new(page: 2, results_per_page: 20) }
 
         it 'returns number of rows per page times the page number' do
           expect(solr_search.start).to eq(20)
@@ -144,7 +144,7 @@ RSpec.describe SolrSearch, type: :model do
       end
       context 'third page requested' do
         # thid page is results 20-29 if rows is set to 10
-        let!(:solr_search) { SolrSearch.new({ page: 3, results_per_page: 20 }) }
+        let!(:solr_search) { SolrSearch.new(page: 3, results_per_page: 20) }
 
         it 'returns number of rows per page times the page number' do
           expect(solr_search.start).to eq(40)
@@ -155,35 +155,35 @@ RSpec.describe SolrSearch, type: :model do
 
   describe 'rows' do
     context 'where per page parameter is blank' do
-      let!(:solr_search) { SolrSearch.new({ results_per_page: nil }) }
+      let!(:solr_search) { SolrSearch.new(results_per_page: nil) }
       it 'returns 20' do
         expect(solr_search.rows).to eq(20)
       end
     end
 
     context 'where per page parameter is not an integer' do
-      let!(:solr_search) { SolrSearch.new({ results_per_page: 'test' }) }
+      let!(:solr_search) { SolrSearch.new(results_per_page: 'test') }
       it 'returns 20' do
         expect(solr_search.rows).to eq(20)
       end
     end
 
     context 'where per page parameter is 10' do
-      let!(:solr_search) { SolrSearch.new({ results_per_page: 10 }) }
+      let!(:solr_search) { SolrSearch.new(results_per_page: 10) }
       it 'returns 10' do
         expect(solr_search.rows).to eq(10)
       end
     end
 
     context 'where per page parameter is 20' do
-      let!(:solr_search) { SolrSearch.new({ results_per_page: 20 }) }
+      let!(:solr_search) { SolrSearch.new(results_per_page: 20) }
       it 'returns 20' do
         expect(solr_search.rows).to eq(20)
       end
     end
 
     context 'where per page parameter is 100' do
-      let!(:solr_search) { SolrSearch.new({ results_per_page: 100 }) }
+      let!(:solr_search) { SolrSearch.new(results_per_page: 100) }
       it 'returns 100' do
         expect(solr_search.rows).to eq(100)
       end
@@ -192,21 +192,21 @@ RSpec.describe SolrSearch, type: :model do
 
   describe 'search_filter' do
     context 'with a single filter' do
-      let!(:solr_search) { SolrSearch.new({ filter: { 'field_name' => ['test'] } }) }
+      let!(:solr_search) { SolrSearch.new(filter: { 'field_name' => ['test'] }) }
 
       it 'returns an array containing the tagged filter string' do
         expect(solr_search.search_filter).to eq(["{!tag=field_name}field_name:(test)"])
       end
     end
     context 'with multiple filters' do
-      let!(:solr_search) { SolrSearch.new({ filter: { "type_ses" => ["347163"], "subtype_ses" => ["363905"] } }) }
+      let!(:solr_search) { SolrSearch.new(filter: { "type_ses" => ["347163"], "subtype_ses" => ["363905"] }) }
 
       it 'returns an array of tagged filter strings' do
         expect(solr_search.search_filter).to eq(["{!tag=type_ses}type_ses:(347163)", "{!tag=subtype_ses}subtype_ses:(363905)"])
       end
     end
     context 'with multiple values for the same filter' do
-      let!(:solr_search) { SolrSearch.new({ filter: { "type_sesrollup" => ["347163", "363905"] } }) }
+      let!(:solr_search) { SolrSearch.new(filter: { "type_sesrollup" => ["347163", "363905"] }) }
 
       it 'returns an array containing the tagged filter string, with multiple values' do
         expect(solr_search.search_filter).to eq(["{!tag=type_sesrollup}type_sesrollup:(347163 363905)"])
@@ -221,14 +221,14 @@ RSpec.describe SolrSearch, type: :model do
       end
     end
     context 'with a filter' do
-      let!(:solr_search) { SolrSearch.new({ filter: { 'field_name' => ['test'] } }) }
+      let!(:solr_search) { SolrSearch.new(filter: { 'field_name' => ['test'] }) }
 
       it 'returns nil' do
         expect(solr_search.search_query).to eq(nil)
       end
     end
     context 'with a query' do
-      let!(:solr_search) { SolrSearch.new({ query: 'horse' }) }
+      let!(:solr_search) { SolrSearch.new(query: 'horse') }
 
       it 'returns the query' do
         expect(solr_search.search_query).to eq('horse')
@@ -236,30 +236,32 @@ RSpec.describe SolrSearch, type: :model do
     end
   end
 
-  describe 'query_processor' do
+  describe 'expanded_query' do
     context 'with no query' do
       # for example, when clicking on a SES link, we're just applying a filter
-      let!(:solr_search) { SolrSearch.new({ filter: { "answeringMember_ses" => ["304301"] } }) }
+      let!(:solr_search) { SolrSearch.new(query: '', filter: { "answeringMember_ses" => ["304301"] }, query_expander: expand_query_class) }
+      let(:expand_query_class) { class_double(QueryExpander, new: expand_query_instance) }
+      let(:expand_query_instance) { instance_double(QueryExpander) }
 
       it 'returns an empty string' do
-        expect(solr_search.query_processor).to eq("")
+        expect(solr_search.expanded_query).to eq("")
       end
     end
 
     context 'with a query' do
-      let!(:solr_search) { SolrSearch.new({ query: 'horse' }) }
-      let(:expand_query_instance) { instance_double(ExpandQuery) }
-      let(:term_combiner_instance) { instance_double(TermCombiner) }
+      let(:solr_search) { SolrSearch.new(query: 'horse', query_expander: expand_query_test_class) }
+      let(:expand_query_test_class) { class_double(QueryExpander, new: expand_query_test_instance) }
+      let(:expand_query_test_instance) { instance_double(QueryExpander, expand_query: 'test') }
 
-      it 'returns a processed query object' do
-        allow(ExpandQuery).to receive(:new).and_return(expand_query_instance)
-        allow(expand_query_instance).to receive(:process_query).and_return(['term1', 'term2'])
-        allow(TermCombiner).to receive(:new).and_return(term_combiner_instance)
-        allow(term_combiner_instance).to receive(:combine).and_return('term1 AND term2')
+      it 'returns an expanded query' do
+        # initialises QueryExpander with the search query
+        expect(expand_query_test_class).to receive(:new).with('horse')
 
-        expect(solr_search.query_processor).to eq('term1 AND term2')
-        expect(ExpandQuery).to have_received(:new).with('horse', SesQuery).once
-        expect(TermCombiner).to have_received(:new).with(['term1', 'term2']).once
+        # calls expand query on the instance of QueryExpander
+        expect(expand_query_test_instance).to receive(:expand_query).and_return('expanded query string')
+
+        # result is the response from expand query method
+        expect(solr_search.expanded_query).to eq('expanded query string')
       end
     end
   end

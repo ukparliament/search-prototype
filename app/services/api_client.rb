@@ -1,10 +1,10 @@
-class ApiCall
+class ApiClient
   require 'open-uri'
   require 'net/http'
 
   attr_reader :object_uri
 
-  def initialize(params)
+  def initialize(params, query_expander = nil)
     @object_uri = params[:object_uri]
   end
 

@@ -6,7 +6,8 @@ class TermCombiner
     @terms = terms
   end
 
-  def combine
+  def combine_terms
+    # TODO: refactor to operate on tokens & convert to strings rather than re-detect operators here
     # basis of string is first search term
     output_string = "#{terms.first}"
 
@@ -23,12 +24,10 @@ class TermCombiner
         # term is a genuine term, not an operator
         if previous_term_is_operator
           # previous term was an operator already, so just append the term
-          # add parentheses around the term
           output_string += " #{term}"
           previous_term_is_operator = false
         else
           # previous term was also a genuine term, not an operator, so append with AND
-          # add parentheses around the term
           output_string += " AND #{term}"
           previous_term_is_operator = false
         end

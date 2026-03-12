@@ -1,15 +1,18 @@
-class SolrSearch < ApiCall
+class SolrSearch < ApiClient
+  # TODO: consider refactor to include ApiClient via composition rather than inheritance
 
-  attr_reader :query, :page, :filter, :results_per_page, :sort_by, :search_parameters
+  attr_reader :query, :page, :results_per_page, :filter, :sort_by, :expanded_types, :show_detailed, :query_expander
 
-  def initialize(search_parameters)
-    super
-    @search_parameters = search_parameters
-    @query = search_parameters[:query]
-    @page = search_parameters[:page]
-    @results_per_page = search_parameters[:results_per_page]&.to_i
-    @filter = search_parameters[:filter]
-    @sort_by = search_parameters[:sort_by]
+  def initialize(query: nil, page: nil, results_per_page: nil, filter: {}, sort_by: nil,
+                 expanded_types: nil, show_detailed: nil, query_expander: QueryExpander)
+    @query = query
+    @page = page
+    @results_per_page = results_per_page&.to_i
+    @filter = filter
+    @sort_by = sort_by
+    @expanded_types = expanded_types
+    @show_detailed = show_detailed
+    @query_expander = query_expander
   end
 
   def self.facet_fields
@@ -32,7 +35,16 @@ class SolrSearch < ApiCall
 
   def data
     ret = {}
-    ret[:search_parameters] = search_parameters unless search_parameters.blank?
+    search_params = {}
+    search_params[:query] = query unless query.nil?
+    search_params[:page] = page unless page.nil?
+    search_params[:results_per_page] = results_per_page unless results_per_page.nil?
+    search_params[:filter] = filter unless filter.nil?
+    search_params[:sort_by] = sort_by unless sort_by.nil?
+    search_params[:show_detailed] = show_detailed unless show_detailed.nil?
+    search_params[:expanded_types] = expanded_types unless expanded_types.nil?
+
+    ret[:search_parameters] = search_params
     ret[:data] = all_data
     ret
   end
@@ -137,18 +149,17 @@ class SolrSearch < ApiCall
     'uri type_ses subtype_ses'
   end
 
-  def query_processor
+  def expanded_query
     return "" unless search_query.present?
 
-    processed_query_terms = ExpandQuery.new(search_query, SesQuery).process_query
-    TermCombiner.new(processed_query_terms).combine
+    query_expander.new(search_query).expand_query
   end
 
   private
 
   def search_params
     {
-      q: query_processor,
+      q: expanded_query,
       'q.op': 'AND',
       fq: search_filter,
       fl: field_list,

@@ -44,7 +44,7 @@ object types.
 The search bar on the main search page makes a request to Solr via an interstitial controller action (search#index) that
 does some basic formatting of the query before assembling a Solr query and making a GET request.
 
-The app forms the search query using the SolrSearch class, which is a subclass of ApiCall, which holds generic API
+The app forms the search query using the SolrSearch class, which is a subclass of ApiClient, which holds generic API
 request methods. Solr returns results as JSON (as configured) which can then be parsed by the app. This process is
 identical to that described above for the item pages, but a collection of objects is returned instead.
 
@@ -126,9 +126,9 @@ the framework for formatting session facets has been implemented, but no busines
 
 ## External APIs
 
-### ApiCall and its subclasses
+### ApiClient and its subclasses
 
-ApiCall is a class containing common methods for making requests to an external API, handling errors and interpreting
+ApiClient is a class containing common methods for making requests to an external API, handling errors and interpreting
 results. It has several subclasses. For each, the object_data method returns the objects as JSON.
 
 - SolrSearch: Performs a Solr search (POST request) and returns all results. Includes all facets supported by the app

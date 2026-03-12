@@ -5,9 +5,10 @@ class SearchController < ApplicationController
     @page_title = "Search Results - Parliamentary Search"
 
     # prevent searching without a query
-    return redirect_back(fallback_location: home_path) if search_params[:query]&.strip.to_s.blank?
+    return redirect_back(fallback_location: home_path) if search_params[:query].blank?
 
-    @search_data = SearchData.new(SolrSearch.new(search_params).data)
+    search = SolrSearch.new(**search_params.to_h.symbolize_keys)
+    @search_data = SearchData.new(search.data)
 
     if @search_data.solr_error?
       render template: @search_data.error_partial_path, locals: { status: @search_data.error_code, message: @search_data.error_message }
@@ -40,8 +41,13 @@ class SearchController < ApplicationController
   end
 
   def search_params
-    params.permit(:commit, :query, :page, :results_per_page, :sort_by,
-                  :show_detailed, :expanded_types, filter: {})
+    params.permit(:query,
+                  :page,
+                  :results_per_page,
+                  :sort_by,
+                  :show_detailed,
+                  :expanded_types,
+                  filter: {})
   end
 
   def permitted_filters

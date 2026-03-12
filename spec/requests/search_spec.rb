@@ -29,7 +29,7 @@ RSpec.describe 'Search', type: :request do
     end
 
     context 'solr returns an error' do
-      let!(:solr_search_instance) { SolrSearch.new(query: { "filter" => { "type_ses" => ["90996"] } }) }
+      let!(:solr_search_instance) { SolrSearch.new(query: '', filter: { "type_ses" => ["90996"] }) }
 
       it 'renders an error page' do
         allow_any_instance_of(SearchData).to receive(:solr_error?).and_return(true)
