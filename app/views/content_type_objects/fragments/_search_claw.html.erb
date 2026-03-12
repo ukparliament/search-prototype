@@ -1,4 +1,4 @@
-<div hidden class="claw font-size-milli mb-3">
+<div hidden class="claw font-size-milli mb-3 highlight highlight-neutral">
   <div class="row justify-content-start">
     <div class="col-12">
       <div class="row justify-content-between">
@@ -33,7 +33,7 @@
 
           <% unless object.object_uri.blank? %>
             <div hidden data-clipboard-target="source" data-clipboard-text="<%= object.object_uri.dig(:value) %>"></div>
-            <button data-action="clipboard#copy" title="Copy" class="btn btn-outline-primary p-1">Copy</button>
+            <button data-action="clipboard#copy" title="Copy" class="btn btn-outline-secondary p-1">Copy</button>
           <% end %>
         </div>
       </div>

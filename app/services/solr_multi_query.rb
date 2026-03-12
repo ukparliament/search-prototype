@@ -1,4 +1,4 @@
-class SolrMultiQuery < ApiCall
+class SolrMultiQuery < ApiClient
 
   require 'open-uri'
   require 'net/http'

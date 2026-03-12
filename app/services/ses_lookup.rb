@@ -1,4 +1,4 @@
-class SesLookup < ApiCall
+class SesLookup < ApiClient
   attr_reader :input_data
 
   def initialize(input_data)
@@ -150,11 +150,8 @@ class SesLookup < ApiCall
     begin
       JSON.parse(raw_response)
     rescue JSON::ParserError
-      # contrary to SES API documentation, errors seem to be returned as XML regardless of specified TEMPLATE
       begin
-        evaluated_as_xml = Hash.from_xml(raw_response)
-        puts "Error: #{evaluated_as_xml}" if Rails.env.development? || Rails.env.test?
-        evaluated_as_xml
+        Hash.from_xml(raw_response)
       rescue REXML::ParseException
         raise "API response could could not be parsed as JSON or XML"
       end

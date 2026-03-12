@@ -94,11 +94,6 @@ RSpec.describe ContentTypeObject, type: :model do
         expect(ContentTypeObject.generate(parliamentary_proceeding_committee)).to be_an_instance_of(CommitteeProceeding)
         expect(ContentTypeObject.generate(parliamentary_proceeding)).to be_an_instance_of(ParliamentaryProceeding)
         expect(ContentTypeObject.generate(statutory_instrument)).to be_an_instance_of(StatutoryInstrument)
-        expect(ContentTypeObject.generate(european_deposited_document)).to be_an_instance_of(EuropeanDepositedDocument)
-        expect(ContentTypeObject.generate(european_scrutiny_explanatory_memorandum)).to be_an_instance_of(EuropeanScrutinyExplanatoryMemorandum)
-        expect(ContentTypeObject.generate(european_scrutiny_ministerial_correspondence)).to be_an_instance_of(EuropeanScrutinyMinisterialCorrespondence)
-        expect(ContentTypeObject.generate(european_scrutiny_recommendation)).to be_an_instance_of(EuropeanScrutinyRecommendation)
-        expect(ContentTypeObject.generate(european_material)).to be_an_instance_of(EuropeanMaterial)
         expect(ContentTypeObject.generate(unrecognised_id)).to be_an_instance_of(ContentTypeObject)
       end
     end

@@ -1,4 +1,4 @@
-class SolrQuery < ApiCall
+class SolrQuery < ApiClient
 
   # Used to return the first result for item with given URI
 

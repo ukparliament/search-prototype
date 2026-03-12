@@ -29,12 +29,12 @@ RSpec.describe 'Search', type: :request do
     end
 
     context 'solr returns an error' do
-      let!(:solr_search_instance) { SolrSearch.new(query: { "filter" => { "type_ses" => ["90996"] } }) }
+      let!(:solr_search_instance) { SolrSearch.new(query: '', filter: { "type_ses" => ["90996"] }) }
 
       it 'renders an error page' do
         allow_any_instance_of(SearchData).to receive(:solr_error?).and_return(true)
 
-        get '/search', params: { "filter" => { "type_ses" => ["90996"] } }
+        get '/search', params: { "query" => 'test', "filter" => { "type_ses" => ["90996"] } }
         expect(response).to have_http_status(:ok)
         expect(CGI::unescapeHTML(response.body)).to include('Something has gone wrong')
       end
@@ -44,12 +44,12 @@ RSpec.describe 'Search', type: :request do
       let!(:solr_search_instance) { SolrSearch.new(query: { "filter" => { "type_ses" => ["90996"] } }) }
 
       it 'returns http success' do
-        get '/search', params: { "filter" => { "type_ses" => ["90996"] } }
+        get '/search', params: { "query" => "test", "filter" => { "type_ses" => ["90996"] } }
         expect(response).to have_http_status(:ok)
       end
 
       it 'returns items found by search' do
-        get '/search', params: { "filter" => { "type_ses" => ["90996"] } }
+        get '/search', params: { "query" => "test", "filter" => { "type_ses" => ["90996"] } }
         expect(response).to have_http_status(:ok)
         expect(response.parsed_body.inner_html).to include("Search Results - Parliamentary Search")
         expect(response.parsed_body.inner_html).to include('QZH4EFc')
@@ -58,6 +58,17 @@ RSpec.describe 'Search', type: :request do
         expect(response.parsed_body.inner_html).to include('http://www.example.com/objects?object=SL9RT6y_uri')
         expect(response.parsed_body.inner_html).to include('BZ34eDD')
         expect(response.parsed_body.inner_html).to include('http://www.example.com/objects?object=BZ34eDD_uri')
+      end
+    end
+
+    context 'a search for an empty string' do
+      let!(:solr_search_instance) { SolrSearch.new(query: { "query" => '' }) }
+
+      it 'redirects to home' do
+        # note that this is only seen in practice where someone submits an empty query via the url, as the search
+        # fields have the 'required' attribute preventing form submission through the UI
+        get '/search', params: { "query" => '' }
+        expect(response).to redirect_to(home_path)
       end
     end
 
