@@ -2,6 +2,8 @@ require 'rails_helper'
 
 RSpec.describe SesLookup, type: :model do
   before do
+    allow(Rails.application.credentials).to receive(:dig).with(:test, :api_host).and_return("api.test.url")
+    allow(Rails.application.credentials).to receive(:dig).with(:test, :ses_api, :path).and_return("/ses")
     allow(ses_lookup).to receive(:api_get_request).with(formatted_query, false).and_return(mock_response.to_json)
   end
 

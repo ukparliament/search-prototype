@@ -9,6 +9,8 @@ RSpec.describe 'SesQuery' do
     let!(:mock_response) { File.read('spec/fixtures/ses_search_service_example.json') }
 
     before do
+      allow(Rails.application.credentials).to receive(:dig).with(:test, :api_host).and_return("api.test.url")
+      allow(Rails.application.credentials).to receive(:dig).with(:test, :ses_api, :path).and_return("/ses")
       allow(ses_query).to receive(:api_get_request).with(formatted_query, false).and_return(mock_response)
     end
 
