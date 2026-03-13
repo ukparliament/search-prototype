@@ -22,7 +22,7 @@ RSpec.describe 'SesQuery' do
 
     context 'where a term is submitted' do
       let!(:input_data) { { value: 'housing' } }
-      let!(:formatted_query) { URI("https://api.parliament.uk/ses/ses?TBDB=disp_taxonomy&TEMPLATE=service.json&SERVICE=conceptmap&QUERY=housing") }
+      let!(:formatted_query) { URI("https://api.test.url/ses?TBDB=disp_taxonomy&TEMPLATE=service.json&SERVICE=conceptmap&QUERY=housing") }
 
       it 'returns a hash containing equivalent terms, perferred term, preferred term ID and topic ID' do
         expect(ses_query.data.map(&:keys)).to eq([[:equivalent_terms, :preferred_term, :preferred_term_id], [:equivalent_terms, :topic_id, :preferred_term, :preferred_term_id]])

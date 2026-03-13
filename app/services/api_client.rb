@@ -70,14 +70,14 @@ class ApiClient
   end
 
   def api_endpoint_uri
-    # fetch the Solr url string from credentials
-    api_endpoint = Rails.application.credentials.dig(Rails.env.to_sym, :solr_api, :endpoint)
-    # create a uri object from the string
-    URI(api_endpoint).dup
+    URI::HTTPS.build(
+      host: Rails.application.credentials.dig(Rails.env.to_sym, :api_host),
+      path: Rails.application.credentials.dig(Rails.env.to_sym, :solr_api, :path)
+    )
   end
 
   def api_subscription_key
-    Rails.application.credentials.dig(Rails.env.to_sym, :solr_api, :subscription_key)
+    Rails.application.credentials.dig(Rails.env.to_sym, :api_subscription_key)
   end
 
   def request_headers

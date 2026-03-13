@@ -1,20 +1,5 @@
 module LinkHelper
-  def object_show_link(string, uri)
-    # used where we have the title of an object and the link to that object in a source system
-    # returns a titled link to the object show page for that url
-
-    return if string.blank? || uri.blank?
-
-    link_to(string, object_show_url(object: uri[:value]))
-  end
-
-  def search_link(data, singular: false, reading_order: true, html_class: nil)
-    # Accepts either a string or a SES ID, which it resolves into a string
-    # Either option requires a field reference (standard data hash)
-
-    return if data.blank? || data[:value].blank?
-
-    search_link_field_names = %w[
+  SEARCH_LINK_FIELD_NAMES = %w[
     answeringDept_ses
     answeringMember_ses
     askingMember_ses
@@ -34,17 +19,32 @@ module LinkHelper
     tablingMember_ses
     type_ses]
 
-    formatted_name = formatted_name(data, ses_data, singular, reading_order)
-    return formatted_name unless search_link_field_names.include?(data[:field_name])
+  def object_show_link(string, uri)
+    # used where we have the title of an object and the link to that object in a source system
+    # returns a titled link to the object show page for that url
 
-    searchable_field_name = substitute_field_name(data[:field_name])
+    return if string.blank? || uri.blank?
+
+    link_to(string, object_show_url(object: uri[:value]))
+  end
+
+  def search_link(data, singular: false, reading_order: true, html_class: nil)
+    # Accepts either a string or a SES ID, which it resolves into a string
+    # Either option requires a field reference (standard data hash)
+
+    return if data.blank? || data[:value].blank?
+
+    formatted_name = formatted_name(data, ses_data, singular, reading_order)
+    return formatted_name unless SEARCH_LINK_FIELD_NAMES.include?(data[:field_name])
+
+    field = substitute_field_name(data[:field_name])
     value = data[:value]
 
-    if html_class
-      link_to(formatted_name(data, ses_data, singular, reading_order), search_path(filter: { searchable_field_name => [value] }), class: html_class)
-    else
-      link_to(formatted_name(data, ses_data, singular, reading_order), search_path(filter: { searchable_field_name => [value] }))
-    end
+    # format a search query for the link
+    # if _ses field, don't use quotes
+    query = field.last(4) == "_ses" ? "#{field}:#{value}" : "#{field}:\"#{value}\""
+
+    link_to(formatted_name(data, ses_data, singular, reading_order), search_path(query: query), class: html_class || nil)
   end
 
   def substitute_field_name(field_name)
@@ -218,6 +218,9 @@ module LinkHelper
   def fallback_ses_lookup(ses_data_hash)
     # an inefficient method that a SES name for a single ID, used as a last resort if names are still missing when
     # links / names are being formatted.
+
+    # raise an error in development instead
+    raise 'fallback SES lookup attempted' if Rails.env.development?
 
     custom_ses_lookup = SesLookup.new([ses_data_hash]).data
     name_string = custom_ses_lookup[ses_data_hash[:value].to_i]

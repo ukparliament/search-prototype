@@ -16,15 +16,15 @@ RSpec.describe LinkHelper, type: :helper do
         end
       end
       context 'when given a SES ID & field name' do
-        it 'returns a link to a new search using the SES ID as a filter for the given field' do
+        it 'returns a link to a new search using the SES ID (unquoted) and given field' do
           # requires SES data to have been preloaded on the page - this is done for performance reasons
           allow(helper).to receive(:ses_data).and_return(mock_ses_data)
-          expect(helper.search_link(input_data_type_ses)).to eq("<a href=\"/search?filter%5Bmember_ses%5D%5B%5D=123\">John Smith</a>")
+          expect(helper.search_link(input_data_type_ses)).to eq("<a href=\"/search?query=member_ses%3A123\">John Smith</a>")
         end
       end
       context 'when given a string value and a field name' do
-        it 'returns a link to a new search using the string as a filter for the given field' do
-          expect(helper.search_link(input_data_string)).to eq("<a href=\"/search?filter%5Bsubject_t%5D%5B%5D=John+Smith\">John Smith</a>")
+        it 'returns a link to a new search for the string (quoted) in the given field' do
+          expect(helper.search_link(input_data_string)).to eq("<a href=\"/search?query=subject_t%3A%22John+Smith%22\">John Smith</a>")
         end
       end
       context 'for non-searchable fields' do
