@@ -70,13 +70,14 @@ class SesQuery < SesLookup
   end
 
   def ses_search_uri
-    base_url = ses_base_url
-    base_url = 'https://api.parliament.uk/ses/' if Rails.env.test?
-    build_uri("#{base_url}ses?TBDB=disp_taxonomy&TEMPLATE=service.json&SERVICE=conceptmap&QUERY=#{term}")
+    URI::HTTPS.build(
+      host: Rails.application.credentials.dig(Rails.env.to_sym, :api_host),
+      path: Rails.application.credentials.dig(Rails.env.to_sym, :ses_api, :path),
+      query: URI.encode_www_form(TBDB: 'disp_taxonomy', TEMPLATE: 'service.json', SERVICE: 'conceptmap', QUERY: term)
+    )
   end
 
   def term
-    # format term to lookup
     return if input_data.blank?
 
     input_data[:value]

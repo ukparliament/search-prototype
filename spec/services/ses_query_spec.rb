@@ -9,6 +9,8 @@ RSpec.describe 'SesQuery' do
     let!(:mock_response) { File.read('spec/fixtures/ses_search_service_example.json') }
 
     before do
+      allow(Rails.application.credentials).to receive(:dig).with(:test, :api_host).and_return("api.test.url")
+      allow(Rails.application.credentials).to receive(:dig).with(:test, :ses_api, :path).and_return("/ses")
       allow(ses_query).to receive(:api_get_request).with(formatted_query, false).and_return(mock_response)
     end
 
@@ -22,7 +24,7 @@ RSpec.describe 'SesQuery' do
 
     context 'where a term is submitted' do
       let!(:input_data) { { value: 'housing' } }
-      let!(:formatted_query) { URI("https://api.parliament.uk/ses/ses?TBDB=disp_taxonomy&TEMPLATE=service.json&SERVICE=conceptmap&QUERY=housing") }
+      let!(:formatted_query) { URI("https://api.test.url/ses?TBDB=disp_taxonomy&TEMPLATE=service.json&SERVICE=conceptmap&QUERY=housing") }
 
       it 'returns a hash containing equivalent terms, perferred term, preferred term ID and topic ID' do
         expect(ses_query.data.map(&:keys)).to eq([[:equivalent_terms, :preferred_term, :preferred_term_id], [:equivalent_terms, :topic_id, :preferred_term, :preferred_term_id]])

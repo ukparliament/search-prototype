@@ -119,24 +119,25 @@ class SesLookup < ApiClient
   end
 
   def evaluated_hierarchy_response
-    api_response(ses_browse_service_uri, true)
+    caching_enabled = Rails.env.development? ? false : true
+    api_response(ses_browse_service_uri, caching_enabled)
   end
 
   def ses_term_service_uri(id_group_string)
-    base_url = ses_base_url
-    base_url = 'https://api.parliament.uk/ses/' if Rails.env.test?
-
-    build_uri("#{base_url}select.exe?TBDB=disp_taxonomy&TEMPLATE=service.json&expand_hierarchy=0&SERVICE=termlite&ID=#{id_group_string}")
-  end
-
-  def ses_base_url
-    Rails.application.credentials.dig(Rails.env.to_sym, :ses_api, :endpoint)
+    # Due to limitations of the SES API we can't encode the query string here - it doesn't like the commas
+    uri = URI::HTTPS.build(
+      host: Rails.application.credentials.dig(Rails.env.to_sym, :api_host),
+      path: Rails.application.credentials.dig(Rails.env.to_sym, :ses_api, :path),
+      query: "TBDB=disp_taxonomy&TEMPLATE=service.json&expand_hierarchy=0&SERVICE=termlite&ID=#{id_group_string}"
+    )
   end
 
   def ses_browse_service_uri
-    base_url = ses_base_url
-    base_url = 'https://api.parliament.uk/ses/' if Rails.env.test?
-    build_uri("#{base_url}select.exe?TBDB=disp_taxonomy&TEMPLATE=service.json&expand_hierarchy=1&SERVICE=allterms&CLASS=CTP")
+    URI::HTTPS.build(
+      host: Rails.application.credentials.dig(Rails.env.to_sym, :api_host),
+      path: Rails.application.credentials.dig(Rails.env.to_sym, :ses_api, :path),
+      query: URI.encode_www_form(TBDB: 'disp_taxonomy', TEMPLATE: 'service.json', SERVICE: 'allterms', expand_hierarchy: '1', CLASS: 'CTP')
+    )
   end
 
   def group_size
@@ -153,14 +154,10 @@ class SesLookup < ApiClient
       begin
         Hash.from_xml(raw_response)
       rescue REXML::ParseException
-        raise "API response could could not be parsed as JSON or XML"
+        puts "API response could could not be parsed as JSON or XML"
+        { "error" => "Error parsing response from API" }
       end
     end
-  end
-
-  def build_uri(url)
-    # TODO: replace with URI::HTTPS.build(host,path,query (encoded))
-    URI.parse(url)
   end
 
   def api_get_request(uri, cached = false)
