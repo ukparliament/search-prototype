@@ -30,7 +30,7 @@ module LinkHelper
 
   def search_link(data, singular: false, reading_order: true, html_class: nil)
     # Accepts either a string or a SES ID, which it resolves into a string
-    # Either option requires a field reference (standard data hash)
+    # Either option requires a field reference
 
     return if data.blank? || data[:value].blank?
 
@@ -41,8 +41,7 @@ module LinkHelper
     value = data[:value]
 
     # format a search query for the link
-    # if _ses field, don't use quotes
-    query = field.last(4) == "_ses" ? "#{field}:#{value}" : "#{field}:\"#{value}\""
+    query = format_field_specific_search_query(field, value)
 
     link_to(formatted_name(data, ses_data, singular, reading_order), search_path(query: query), class: html_class || nil)
   end
@@ -53,7 +52,9 @@ module LinkHelper
     # shown as independent counts grouped under common headings, it isn't necessary.
     # Type is a special case: we use type_sesrollup to build the hierarchy so we're swapping out to
     # that field here.
-    return 'type_sesrollup' if ['subtype_ses', 'type_ses'].include?(field_name)
+
+    # Disabled - we're no longer using filter for click-through searches, so we can query the exact field instead
+    # return 'type_sesrollup' if ['subtype_ses', 'type_ses'].include?(field_name)
 
     field_name
   end
@@ -68,10 +69,12 @@ module LinkHelper
   end
 
   def object_display_name(data, singular: true, case_formatting: false, reading_order: true)
-    # can be used where the object type is dynamic by passing a SES ID
-    # alternatively works with string names
-    # e.g. secondary information title
-    # does not return a link
+    # Formats the name of an object for display; does not return a link. Works with string names or SES
+    # IDs (for dynamic objects).
+    #
+    # Singular: If true, result is singularised
+    # Case formatting: If true, result is lowercase, except for some whitelisted phrases e.g. "House of Commons"
+    # Reading order: If true, result is flipped on internal comma, e.g. "Sharpe of Epsom, Lord" -> "Lord Sharpe of Epsom"
 
     return if data.blank? || data[:value].blank?
 
@@ -84,18 +87,32 @@ module LinkHelper
     end
   end
 
+  def format_field_specific_search_query(field, value)
+    # given a Solr field name & a value, returns a formatted search string suitable for building search links
+
+    # SES ID fields end one of two ways
+    ses_field_endings = ['ses', "sesrollup"]
+
+    # Check if the field is a SES field
+    is_ses_field = ses_field_endings.include?(field.split('_').second)
+
+    # Return field:string for a SES field, otherwise use quotes (field:"string" or field:"a phrase")
+    is_ses_field ? "#{field}:#{value}" : "#{field}:\"#{value}\""
+  end
+
   def object_display_name_link(data, singular: true, case_formatting: false, reading_order: true)
+    # Formats the name of an object for display; returns as a link to search for that object.
+    # Singular: If true, result is singularised
+    # Case formatting: If true, result is lowercase, except for some whitelisted phrases e.g. "House of Commons"
+    # Reading order: If true, result is flipped on internal comma, e.g. "Sharpe of Epsom, Lord" -> "Lord Sharpe of Epsom"
     return if data.blank? || data[:value].blank?
 
     formatted = formatted_name(data, ses_data, singular, reading_order)
-    field_name = substitute_field_name(data[:field_name])
+    field = substitute_field_name(data[:field_name])
     value = data[:value]
+    query = format_field_specific_search_query(field, value)
 
-    if case_formatting
-      link_to(conditional_downcase(formatted), search_path(filter: { field_name => [value] }))
-    else
-      link_to(formatted, search_path(filter: { field_name => [value] }))
-    end
+    link_to(case_formatting ? conditional_downcase(formatted) : formatted, search_path(query: query))
   end
 
   def formatted_name(data, ses_data, singular, reading_order)
@@ -155,9 +172,8 @@ module LinkHelper
     @ses_data
   end
 
-  private
-
   def conditional_downcase(name)
+    # converts name to lowercase, then iterates through exceptions list to capitalise certain words/phrases
     downcased = name.downcase
     downcase_exceptions.each do |lower_case, upper_case|
       downcased.gsub!(lower_case, upper_case)

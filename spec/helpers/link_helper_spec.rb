@@ -123,24 +123,24 @@ RSpec.describe LinkHelper, type: :helper do
       it 'returns a link to search that SES field with the given ID' do
         # requires SES data to have been preloaded on the page - this is done for performance reasons
         allow(helper).to receive(:ses_data).and_return(mock_ses_data)
-        expect(helper.object_display_name_link(input_data_member_ses)).to eq("<a href=\"/search?filter%5Bmember_ses%5D%5B%5D=123\">Early day motion</a>")
+        expect(helper.object_display_name_link(input_data_member_ses)).to eq("<a href=\"/search?query=member_ses%3A123\">Early day motion</a>")
       end
     end
     context 'when given a type SES ID and field name' do
       it 'returns a link to search that SES field with the given ID' do
         # requires SES data to have been preloaded on the page - this is done for performance reasons
         allow(helper).to receive(:ses_data).and_return(mock_ses_data)
-        expect(helper.object_display_name_link(input_data_type_ses)).to eq("<a href=\"/search?filter%5Btype_sesrollup%5D%5B%5D=123\">Early day motion</a>")
+        expect(helper.object_display_name_link(input_data_type_ses)).to eq("<a href=\"/search?query=type_ses%3A123\">Early day motion</a>")
       end
     end
     context 'when given string and field name' do
       it 'returns a link to search using the string as a query' do
-        expect(helper.object_display_name_link(input_data_string)).to eq("<a href=\"/search?filter%5Btype_t%5D%5B%5D=Early+day+motions\">Early day motion</a>")
+        expect(helper.object_display_name_link(input_data_string)).to eq("<a href=\"/search?query=type_t%3A%22Early+day+motions%22\">Early day motion</a>")
       end
     end
     context 'when called with singularisation disabled' do
       it 'returns a link to search using the string as a query, and a plural item name' do
-        expect(helper.object_display_name_link(input_data_string, singular: false)).to eq("<a href=\"/search?filter%5Btype_t%5D%5B%5D=Early+day+motions\">Early day motions</a>")
+        expect(helper.object_display_name_link(input_data_string, singular: false)).to eq("<a href=\"/search?query=type_t%3A%22Early+day+motions%22\">Early day motions</a>")
       end
     end
   end
