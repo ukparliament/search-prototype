@@ -13,6 +13,7 @@ gem "library_design", github: "ukparliament/design-assets", glob: 'library_desig
 gem "importmap-rails"
 gem "haml"
 gem 'rack-attack'
+gem 'cloudflare-rails'
 gem "turbo-rails"
 gem "stimulus-rails"
 gem "jbuilder"
