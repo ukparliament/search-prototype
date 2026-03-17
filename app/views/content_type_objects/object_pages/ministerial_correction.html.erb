@@ -5,11 +5,11 @@
   </div>
 <% end %>
 
+<%= render 'content_type_objects/preliminary_sentences/ministerial_correction', object: object %>
 <h1 class="reading-width">
+  <hr/>
   <%= format_object_title(object.object_title, @ses_data) %>
 </h1>
-
-<%= render 'content_type_objects/preliminary_sentences/ministerial_correction', object: object %>
 
 <% unless object.correction_text.blank? %>
   <div class="reading-width">
@@ -31,6 +31,7 @@
 <% end %>
 
 <section class="reading-width">
+  <hr/>
   <h2>Secondary information</h2>
   <dl>
     <%= render 'content_type_objects/fragments/type', type: object.type %>
