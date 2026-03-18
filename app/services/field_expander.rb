@@ -17,7 +17,8 @@ class FieldExpander
   # retrieved from SES), ses_id_fields (fields to search with a user-provided SES ID), boolean_fields and date_fields
   # arrays based on initial field name. Returns as a hash keyed to category name.
   def expand_fields
-    text_fields, ses_fields, ses_id_fields, boolean_fields, date_fields, non_aliased_fields = [], [], [], [], [], []
+    text_fields, ses_fields, ses_id_fields, boolean_fields, date_fields = [], [], [], [], []
+    process_without_field = false
 
     if field_name == "title"
       text_fields = ['title_t']
@@ -42,20 +43,21 @@ class FieldExpander
     elsif field_name.match(/\w+_ses/)
       ses_id_fields = [field_name]
     elsif field_name == "none"
-      non_aliased_fields = [field_name]
-      # catches searches for strings or phrases with no specific field
+      # include terms with no field specified
+      process_without_field = true
+      # any SES IDs related to terms will be applied to all_ses
       ses_fields = ["all_ses"]
     else
       text_fields = [field_name]
     end
 
     {
-      'text_fields' => text_fields,
-      'ses_fields' => ses_fields,
-      'ses_id_fields' => ses_id_fields,
-      'boolean_fields' => boolean_fields,
-      'date_fields' => date_fields,
-      'non_aliased_fields' => non_aliased_fields
+      text_fields: text_fields,
+      ses_fields: ses_fields,
+      ses_id_fields: ses_id_fields,
+      boolean_fields: boolean_fields,
+      date_fields: date_fields,
+      process_without_field: process_without_field
     }
   end
 end
