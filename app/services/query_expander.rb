@@ -79,15 +79,9 @@ class QueryExpander
         search_term = value
         expanded_fields = field_expander.new("none").expand_fields
         ses_data = ses_query.new({ value: search_term }).data if TermExpander::EXPAND_UNQUOTED_PHRASES
-        if ses_data.present?
-          processed_tokens << term_expander.new(expanded_fields: expanded_fields,
-                                                ses_data: ses_data,
-                                                search_term: search_term).expand_terms
-
-        else
-          # return the token without expansion
-          processed_tokens << value
-        end
+        processed_tokens << term_expander.new(expanded_fields: expanded_fields,
+                                              ses_data: ses_data,
+                                              search_term: search_term).expand_terms
       else
         puts "Unmatched token type #{label} for #{value}" if Rails.env.development?
         next

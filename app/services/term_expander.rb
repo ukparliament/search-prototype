@@ -21,33 +21,30 @@ class TermExpander
   # substitution into a Solr query in place of the :search_term provided to this class.
   def expand_terms
     expanded_terms = []
+    expanded_terms << handle_non_aliased_terms if expanded_fields[:process_without_field] == true
+    expanded_terms << populate_text_fields unless expanded_fields[:text_fields].empty?
+    expanded_terms << populate_ses_id_fields unless expanded_fields[:ses_id_fields].empty?
+    expanded_terms << populate_boolean_fields unless expanded_fields[:boolean_fields].empty?
+    expanded_terms << populate_date_fields unless expanded_fields[:date_fields].empty?
+    expanded_terms << populate_ses_fields unless expanded_fields[:ses_fields].empty?
 
-    if expanded_fields[:process_without_field] == true
-      expanded_terms << handle_non_aliased_terms
-    end
+    process_expanded_terms(expanded_terms)
+  end
 
-    unless expanded_fields[:text_fields].empty?
-      expanded_terms << populate_text_fields
-    end
+  def process_expanded_terms(expanded_terms)
+    return if expanded_terms.empty?
 
-    unless expanded_fields[:ses_id_fields].empty?
-      expanded_terms << populate_ses_id_fields
-    end
+    # group terms based on matching SES term or other ID
+    grouped_terms_array = expanded_terms.flatten(1).group_by { |t| t.first.itself }.values
 
-    unless expanded_fields[:boolean_fields].empty?
-      expanded_terms << populate_boolean_fields
-    end
+    # combine groups of terms as strings using 'OR'
+    group_strings = grouped_terms_array.map { |gr| gr.map(&:last).flatten(1).join(' OR ') }
 
-    unless expanded_fields[:date_fields].empty?
-      expanded_terms << populate_date_fields
-    end
+    # If only one string, return it
+    return group_strings.first unless group_strings.size > 1
 
-    unless expanded_fields[:ses_fields].empty?
-      expanded_terms << populate_ses_fields
-    end
-
-    # combine all new search terms with OR
-    expanded_terms.flatten.join(' OR ')
+    # Otherwise, wrap strings in brackets and combine with 'AND'
+    group_strings.map { |str| "(#{str})" }.join(' AND ')
   end
 
   ##
@@ -60,12 +57,16 @@ class TermExpander
     unless expanded_fields[:text_fields].blank?
       expanded_fields[:text_fields].flatten.each do |tf|
         ses_data.each do |ses_result|
-          expanded_terms << (ses_result[:preferred_term].present? ? "#{tf}:\"#{ses_result[:preferred_term]}\"" : "#{tf}:\"#{search_term}\"")
+
+          result = [ses_result[:preferred_term].present? ? "#{tf}:\"#{ses_result[:preferred_term]}\"" : "#{tf}:\"#{search_term}\""]
+
           if ses_result[:equivalent_terms] && ses_result[:equivalent_terms].any?
             ses_result[:equivalent_terms].flatten.each do |et|
-              expanded_terms << "#{tf}:\"#{et}\""
+              result << "#{tf}:\"#{et}\""
             end
           end
+
+          expanded_terms << [ses_result[:preferred_term_id], result]
         end
       end
     end
@@ -80,7 +81,7 @@ class TermExpander
 
     unless expanded_fields[:ses_id_fields].blank?
       expanded_fields[:ses_id_fields].flatten.each do |sif|
-        expanded_terms << "#{sif}:#{search_term}"
+        expanded_terms << [:ses_id, "#{sif}:#{search_term}"]
       end
     end
 
@@ -95,9 +96,9 @@ class TermExpander
     unless expanded_fields[:boolean_fields].blank?
       expanded_fields[:boolean_fields].flatten.each do |bf|
         if %w[true yes y 1].include?(search_term)
-          expanded_terms << "#{bf}:1"
+          expanded_terms << [:boolean, "#{bf}:1"]
         elsif %w[false no n 0].include?(search_term)
-          expanded_terms << "#{bf}:0"
+          expanded_terms << [:boolean, "#{bf}:0"]
         end
       end
     end
@@ -124,7 +125,7 @@ class TermExpander
 
       parsed_date = date_lookup[search_term&.to_sym].nil? ? search_term : date_lookup[search_term&.to_sym]
       expanded_fields[:date_fields].flatten.each do |df|
-        expanded_terms << "#{df}:#{parsed_date}"
+        expanded_terms << [:date, "#{df}:#{parsed_date}"]
       end
 
     end
@@ -138,11 +139,14 @@ class TermExpander
   # This is done iteratively as SES may return multiple terms with multiple equivalent terms each.
   def handle_non_aliased_terms
     expanded_terms = []
-    ses_data.each do |ses_result|
-      expanded_terms << (ses_result[:preferred_term].present? ? "\"#{ses_result[:preferred_term]}\"" : "\"#{search_term}\"")
+    ses_data.each_with_index do |ses_result, index|
+      result = [ses_result[:preferred_term].present? ? "\"#{ses_result[:preferred_term]}\"" : "\"#{search_term}\""]
+
       ses_result[:equivalent_terms].flatten.each do |et|
-        expanded_terms << "\"#{et}\""
+        result << "\"#{et}\""
       end
+
+      expanded_terms << [ses_result[:preferred_term_id], result]
     end
 
     expanded_terms
@@ -156,12 +160,16 @@ class TermExpander
 
     # add every SES field we've determined should be searched for the preferred term SES ID
     unless expanded_fields[:ses_fields].blank? || ses_data.blank?
-      ses_data.each do |ses_result|
-        unless ses_result[:preferred_term_id].blank?
-          expanded_fields[:ses_fields].flatten.each do |sf|
-            expanded_terms << "#{sf}:#{ses_result[:preferred_term_id]}" if ses_result[:preferred_term_id]
-          end
+      ses_data.each_with_index do |ses_result, index|
+        # If there's no preferred term ID, don't return anything for this result
+        next if ses_result[:preferred_term_id].blank?
+
+        result = []
+        expanded_fields[:ses_fields].flatten.each do |sf|
+          result << "#{sf}:#{ses_result[:preferred_term_id]}" if ses_result[:preferred_term_id]
         end
+
+        expanded_terms << [ses_result[:preferred_term_id], result]
       end
     end
 

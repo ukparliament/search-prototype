@@ -23,4 +23,10 @@ RSpec.describe TermCombiner, type: :model do
       expect(term_combiner.combine_terms).to eq("fish AND chips")
     end
   end
-end
+  context 'where a term contains a space' do
+    let(:terms) { ['fish OR chips', 'food'] }
+    it 'wraps a query chunk in brackets before combining' do
+      expect(term_combiner.combine_terms).to eq("(fish OR chips) AND food")
+    end
+  end
+ end

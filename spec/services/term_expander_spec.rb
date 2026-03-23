@@ -17,11 +17,16 @@ RSpec.describe 'TermExpander' do
   let(:process_without_field) { false }
 
   describe 'expand_terms' do
+
+    before do
+      allow(term_expander).to receive(:process_expanded_terms).and_return('processed terms')
+    end
+
     context 'process_without_field is true' do
       let(:process_without_field) { true }
       it 'calls handle_non_aliased_terms' do
         allow(term_expander).to receive(:handle_non_aliased_terms)
-        term_expander.expand_terms
+        expect(term_expander.expand_terms).to eq('processed terms')
         expect(term_expander).to have_received(:handle_non_aliased_terms).once
       end
     end
@@ -31,7 +36,7 @@ RSpec.describe 'TermExpander' do
 
       it 'calls populate_text_fields' do
         allow(term_expander).to receive(:populate_text_fields)
-        term_expander.expand_terms
+        expect(term_expander.expand_terms).to eq('processed terms')
         expect(term_expander).to have_received(:populate_text_fields).once
       end
     end
@@ -40,7 +45,7 @@ RSpec.describe 'TermExpander' do
       let(:ses_id_fields) { ["field1", "field2"] }
       it 'calls populate_ses_id_fields' do
         allow(term_expander).to receive(:populate_ses_id_fields)
-        term_expander.expand_terms
+        expect(term_expander.expand_terms).to eq('processed terms')
         expect(term_expander).to have_received(:populate_ses_id_fields).once
       end
     end
@@ -50,7 +55,7 @@ RSpec.describe 'TermExpander' do
 
       it 'calls populate_boolean_fields' do
         allow(term_expander).to receive(:populate_boolean_fields)
-        term_expander.expand_terms
+        expect(term_expander.expand_terms).to eq('processed terms')
         expect(term_expander).to have_received(:populate_boolean_fields).once
       end
     end
@@ -60,7 +65,7 @@ RSpec.describe 'TermExpander' do
 
       it 'calls populate_date_fields' do
         allow(term_expander).to receive(:populate_date_fields)
-        term_expander.expand_terms
+        expect(term_expander.expand_terms).to eq('processed terms')
         expect(term_expander).to have_received(:populate_date_fields).once
       end
     end
@@ -69,15 +74,38 @@ RSpec.describe 'TermExpander' do
       let(:ses_fields) { ["field1", "field2"] }
       it 'calls populate_ses_fields' do
         allow(term_expander).to receive(:populate_ses_fields)
-        term_expander.expand_terms
+        expect(term_expander.expand_terms).to eq('processed terms')
         expect(term_expander).to have_received(:populate_ses_fields).once
       end
     end
+  end
 
-    context 'multiple terms are combined' do
-      let(:ses_fields) { ["field1", "field2"] }
-      it 'flattens and joins terms with OR' do
-        expect(term_expander.expand_terms).to eq("field1:91569 OR field2:91569")
+  describe 'process_expanded_terms' do
+    context 'where expanded terms is empty' do
+      let(:expanded_terms_array) { [] }
+      it 'returns nil' do
+        expect(term_expander.process_expanded_terms(expanded_terms_array)).to be_nil
+      end
+    end
+
+    context 'where expanded terms contains matched data' do
+      let(:populate_text_fields_data) { [["91569", ["subject_t:\"Housing\"", "subject_t:\"Accommodation\"", "subject_t:\"Houses\""]]] }
+      let(:populate_ses_fields_data) { [["91569", "subject_ses:91569"]] }
+      let(:expanded_terms_array) { [populate_text_fields_data, populate_ses_fields_data] }
+
+      it 'returns a structured query string that combines searches across the matched fields with "OR"' do
+        expect(term_expander.process_expanded_terms(expanded_terms_array)).to eq("subject_t:\"Housing\" OR subject_t:\"Accommodation\" OR subject_t:\"Houses\" OR subject_ses:91569")
+      end
+    end
+
+    context 'where expanded terms contains unmatched data' do
+      let(:populate_text_fields_data) { [["91569", ["subject_t:\"Housing\"", "subject_t:\"Accommodation\"", "subject_t:\"Houses\""]]] }
+      let(:populate_ses_fields_data) { [["12345", "subject_ses:12345"]] }
+      let(:arbitrary_unmatched_data) { [[:a_unique_key, "a_field:a_term"]] }
+      let(:expanded_terms_array) { [populate_text_fields_data, populate_ses_fields_data, arbitrary_unmatched_data] }
+
+      it 'returns a structured query string that combines searches across the unmatched fields with "AND"' do
+        expect(term_expander.process_expanded_terms(expanded_terms_array)).to eq("(subject_t:\"Housing\" OR subject_t:\"Accommodation\" OR subject_t:\"Houses\") AND (subject_ses:12345) AND (a_field:a_term)")
       end
     end
   end
@@ -90,7 +118,7 @@ RSpec.describe 'TermExpander' do
       let(:ses_data) { [{ equivalent_terms: [["Accommodation", "Houses"]], preferred_term_id: "91569", preferred_term: "Housing", topic_id: "95629" }] }
 
       it 'returns a search for preferred term and any equivalent terms' do
-        expect(term_expander.populate_text_fields).to eq(["department_t:\"Housing\"", "department_t:\"Accommodation\"", "department_t:\"Houses\""])
+        expect(term_expander.populate_text_fields).to eq([["91569", ["department_t:\"Housing\"", "department_t:\"Accommodation\"", "department_t:\"Houses\""]]])
       end
     end
 
@@ -98,7 +126,7 @@ RSpec.describe 'TermExpander' do
       let(:ses_data) { [{ equivalent_terms: [["Accommodation", "Houses"]], preferred_term_id: "91569", topic_id: "95629" }] }
 
       it 'returns a search for the search term and any equivalent terms' do
-        expect(term_expander.populate_text_fields).to eq(["department_t:\"house\"", "department_t:\"Accommodation\"", "department_t:\"Houses\""])
+        expect(term_expander.populate_text_fields).to eq([["91569", ["department_t:\"house\"", "department_t:\"Accommodation\"", "department_t:\"Houses\""]]])
       end
     end
   end
@@ -107,7 +135,7 @@ RSpec.describe 'TermExpander' do
     let(:ses_id_fields) { ['subject_ses'] }
     let(:search_term) { '91569' }
     it 'returns a search across those fields for the search term' do
-      expect(term_expander.populate_ses_id_fields).to eq(["subject_ses:91569"])
+      expect(term_expander.populate_ses_id_fields).to eq([[:ses_id, "subject_ses:91569"]])
     end
   end
 
@@ -118,7 +146,7 @@ RSpec.describe 'TermExpander' do
       let(:search_term) { 'true' }
 
       it 'returns a search string for 1' do
-        expect(term_expander.populate_boolean_fields).to eq(["containsEM_b:1"])
+        expect(term_expander.populate_boolean_fields).to eq([[:boolean, "containsEM_b:1"]])
       end
     end
 
@@ -126,7 +154,7 @@ RSpec.describe 'TermExpander' do
       let(:search_term) { 'yes' }
 
       it 'returns a search string for 1' do
-        expect(term_expander.populate_boolean_fields).to eq(["containsEM_b:1"])
+        expect(term_expander.populate_boolean_fields).to eq([[:boolean, "containsEM_b:1"]])
       end
     end
 
@@ -134,7 +162,7 @@ RSpec.describe 'TermExpander' do
       let(:search_term) { 'y' }
 
       it 'returns a search string for 1' do
-        expect(term_expander.populate_boolean_fields).to eq(["containsEM_b:1"])
+        expect(term_expander.populate_boolean_fields).to eq([[:boolean, "containsEM_b:1"]])
       end
     end
 
@@ -142,7 +170,7 @@ RSpec.describe 'TermExpander' do
       let(:search_term) { '1' }
 
       it 'returns a search string for 1' do
-        expect(term_expander.populate_boolean_fields).to eq(["containsEM_b:1"])
+        expect(term_expander.populate_boolean_fields).to eq([[:boolean, "containsEM_b:1"]])
       end
     end
 
@@ -150,7 +178,7 @@ RSpec.describe 'TermExpander' do
       let(:search_term) { 'false' }
 
       it 'returns a search string for 0' do
-        expect(term_expander.populate_boolean_fields).to eq(["containsEM_b:0"])
+        expect(term_expander.populate_boolean_fields).to eq([[:boolean, "containsEM_b:0"]])
       end
     end
 
@@ -158,7 +186,7 @@ RSpec.describe 'TermExpander' do
       let(:search_term) { 'no' }
 
       it 'returns a search string for 0' do
-        expect(term_expander.populate_boolean_fields).to eq(["containsEM_b:0"])
+        expect(term_expander.populate_boolean_fields).to eq([[:boolean, "containsEM_b:0"]])
       end
     end
 
@@ -166,7 +194,7 @@ RSpec.describe 'TermExpander' do
       let(:search_term) { 'n' }
 
       it 'returns a search string for 0' do
-        expect(term_expander.populate_boolean_fields).to eq(["containsEM_b:0"])
+        expect(term_expander.populate_boolean_fields).to eq([[:boolean, "containsEM_b:0"]])
       end
     end
 
@@ -174,7 +202,7 @@ RSpec.describe 'TermExpander' do
       let(:search_term) { '0' }
 
       it 'returns a search string for 0' do
-        expect(term_expander.populate_boolean_fields).to eq(["containsEM_b:0"])
+        expect(term_expander.populate_boolean_fields).to eq([[:boolean, "containsEM_b:0"]])
       end
     end
   end
@@ -187,7 +215,7 @@ RSpec.describe 'TermExpander' do
         let(:search_term) { "today" }
 
         it "searches the provided date field for the relevant date range" do
-          expect(term_expander.populate_date_fields).to eq ["date_dt:NOW/DAY"]
+          expect(term_expander.populate_date_fields).to eq [[:date, "date_dt:NOW/DAY"]]
         end
       end
 
@@ -195,7 +223,7 @@ RSpec.describe 'TermExpander' do
         let(:search_term) { "yesterday" }
 
         it "searches the provided date field for the relevant date range" do
-          expect(term_expander.populate_date_fields).to eq ["date_dt:NOW/DAY-1DAY"]
+          expect(term_expander.populate_date_fields).to eq [[:date, "date_dt:NOW/DAY-1DAY"]]
         end
       end
 
@@ -203,7 +231,7 @@ RSpec.describe 'TermExpander' do
         let(:search_term) { "thisweek" }
 
         it "searches the provided date field for the relevant date range" do
-          expect(term_expander.populate_date_fields).to eq ["date_dt:[NOW/WEEK TO NOW/WEEK+6DAYS]"]
+          expect(term_expander.populate_date_fields).to eq [[:date, "date_dt:[NOW/WEEK TO NOW/WEEK+6DAYS]"]]
         end
       end
 
@@ -211,7 +239,7 @@ RSpec.describe 'TermExpander' do
         let(:search_term) { "lastweek" }
 
         it "searches the provided date field for the relevant date range" do
-          expect(term_expander.populate_date_fields).to eq ["date_dt:[NOW/WEEK-1WEEK TO NOW/WEEK-1DAY]"]
+          expect(term_expander.populate_date_fields).to eq [[:date, "date_dt:[NOW/WEEK-1WEEK TO NOW/WEEK-1DAY]"]]
         end
       end
 
@@ -219,7 +247,7 @@ RSpec.describe 'TermExpander' do
         let(:search_term) { "thismonth" }
 
         it "searches the provided date field for the relevant date range" do
-          expect(term_expander.populate_date_fields).to eq ["date_dt:[NOW/MONTH TO NOW/MONTH+1MONTH-1MILLISECOND]"]
+          expect(term_expander.populate_date_fields).to eq [[:date, "date_dt:[NOW/MONTH TO NOW/MONTH+1MONTH-1MILLISECOND]"]]
         end
       end
 
@@ -227,7 +255,7 @@ RSpec.describe 'TermExpander' do
         let(:search_term) { "lastmonth" }
 
         it "searches the provided date field for the relevant date range" do
-          expect(term_expander.populate_date_fields).to eq ["date_dt:[NOW/MONTH-1MONTH TO NOW/MONTH-1MILLISECOND]"]
+          expect(term_expander.populate_date_fields).to eq [[:date, "date_dt:[NOW/MONTH-1MONTH TO NOW/MONTH-1MILLISECOND]"]]
         end
       end
 
@@ -235,7 +263,7 @@ RSpec.describe 'TermExpander' do
         let(:search_term) { "thisyear" }
 
         it "searches the provided date field for the relevant date range" do
-          expect(term_expander.populate_date_fields).to eq ["date_dt:[NOW/YEAR TO NOW/YEAR+1YEAR-1MILLISECOND]"]
+          expect(term_expander.populate_date_fields).to eq [[:date, "date_dt:[NOW/YEAR TO NOW/YEAR+1YEAR-1MILLISECOND]"]]
         end
       end
 
@@ -243,7 +271,7 @@ RSpec.describe 'TermExpander' do
         let(:search_term) { "lastyear" }
 
         it "searches the provided date field for the relevant date range" do
-          expect(term_expander.populate_date_fields).to eq ["date_dt:[NOW/YEAR-1YEAR TO NOW/YEAR-1MILLISECOND]"]
+          expect(term_expander.populate_date_fields).to eq [[:date, "date_dt:[NOW/YEAR-1YEAR TO NOW/YEAR-1MILLISECOND]"]]
         end
       end
     end
@@ -253,7 +281,7 @@ RSpec.describe 'TermExpander' do
       let(:search_term) { "today" }
 
       it "applies the search across all provided date fields" do
-        expect(term_expander.populate_date_fields).to eq ["dateCertified_dt:NOW/DAY", "certifiedDate_dt:NOW/DAY"]
+        expect(term_expander.populate_date_fields).to eq [[:date, "dateCertified_dt:NOW/DAY"], [:date, "certifiedDate_dt:NOW/DAY"]]
       end
     end
   end
@@ -267,7 +295,7 @@ RSpec.describe 'TermExpander' do
       let(:ses_data) { [{ equivalent_terms: [["Accommodation", "Houses"]], preferred_term_id: "91569", preferred_term: "Housing", topic_id: "95629" }] }
 
       it 'returns the preferred term and equivalent terms' do
-        expect(term_expander.handle_non_aliased_terms).to eq(["\"Housing\"", "\"Accommodation\"", "\"Houses\""])
+        expect(term_expander.handle_non_aliased_terms).to eq([["91569", ["\"Housing\"", "\"Accommodation\"", "\"Houses\""]]])
       end
     end
 
@@ -275,7 +303,7 @@ RSpec.describe 'TermExpander' do
       let(:ses_data) { [{ equivalent_terms: [["Accommodation", "Houses"]], preferred_term_id: "91569", topic_id: "95629" }] }
 
       it 'returns equivalent terms and the original search term' do
-        expect(term_expander.handle_non_aliased_terms).to eq(["\"house\"", "\"Accommodation\"", "\"Houses\""])
+        expect(term_expander.handle_non_aliased_terms).to eq([["91569", ["\"house\"", "\"Accommodation\"", "\"Houses\""]]])
       end
     end
   end
@@ -288,7 +316,7 @@ RSpec.describe 'TermExpander' do
       let(:ses_data) { [{ equivalent_terms: ["Accommodation", "Houses"], preferred_term_id: "91569", preferred_term: "Housing", topic_id: "95629" }] }
 
       it 'assembles a search for ses fields using preferred term ID' do
-        expect(term_expander.populate_ses_fields).to eq(["subject_ses:91569"])
+        expect(term_expander.populate_ses_fields).to eq([["91569", ["subject_ses:91569"]]])
       end
     end
 
