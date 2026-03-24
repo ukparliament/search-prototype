@@ -4,7 +4,6 @@ module LinkHelper
     answeringMember_ses
     askingMember_ses
     department_ses
-    department_t
     leadMember_ses
     legislationTitle_ses
     legislationTitle_t
@@ -38,23 +37,32 @@ module LinkHelper
     return formatted_name unless SEARCH_LINK_FIELD_NAMES.include?(data[:field_name])
 
     field = substitute_field_name(data[:field_name])
-    value = data[:value]
 
     # format a search query for the link
-    query = format_field_specific_search_query(field, value)
+    query = format_field_specific_search_query(field, formatted_name)
 
     link_to(formatted_name(data, ses_data, singular, reading_order), search_path(query: query), class: html_class || nil)
   end
 
   def substitute_field_name(field_name)
-    # Click-through search links (from object page to a new filtered search) will submit the same
-    # field as that used on the object page. We can override this here, but because most facets are
-    # shown as independent counts grouped under common headings, it isn't necessary.
-    # Type is a special case: we use type_sesrollup to build the hierarchy so we're swapping out to
-    # that field here.
-
-    # Disabled - we're no longer using filter for click-through searches, so we can query the exact field instead
+    # Click-through search links (from object page to a new search query) will submit the same field as that used
+    # on the object page. We can override this here to instead use appropriate search aliases.
+    # example format:
     # return 'type_sesrollup' if ['subtype_ses', 'type_ses'].include?(field_name)
+
+    return 'answeredby' if ['answeringDept_ses', 'answeringMember_ses'].include?(field_name)
+    return 'askedby' if ['askingMember_ses'].include?(field_name)
+    return 'dept' if ['department_ses'].include?(field_name)
+    return 'primarymember' if ['leadMember_ses'].include?(field_name)
+    return 'legtitle' if ['legislationTitle_ses', 'legislationTitle_t'].include?(field_name)
+    return 'legstage' if ['legislativeStage_ses'].include?(field_name)
+    return 'house' if ['legislature_ses'].include?(field_name)
+    return 'member' if ['member_ses'].include?(field_name)
+    return 'primarysponsor' if ['primarySponsor_ses'].include?(field_name)
+    return 'publisher' if ['publisher_ses'].include?(field_name)
+    return 'subject' if ['subject_ses', 'subject_t'].include?(field_name)
+    return 'type' if ['subtype_ses', 'type_ses'].include?(field_name)
+    return 'tabledby' if ['tablingMember_ses'].include?(field_name)
 
     field_name
   end
@@ -89,15 +97,10 @@ module LinkHelper
 
   def format_field_specific_search_query(field, value)
     # given a Solr field name & a value, returns a formatted search string suitable for building search links
+    raise 'Value is not a string' unless value.is_a?(String)
 
-    # SES ID fields end one of two ways
-    ses_field_endings = ['ses', "sesrollup"]
-
-    # Check if the field is a SES field
-    is_ses_field = ses_field_endings.include?(field.split('_').second)
-
-    # Return field:string for a SES field, otherwise use quotes (field:"string" or field:"a phrase")
-    is_ses_field ? "#{field}:#{value}" : "#{field}:\"#{value}\""
+    # Return field:string or field:"a phrase"
+    value.to_s.include?(" ") ? "#{field}:\"#{value}\"" : "#{field}:#{value}"
   end
 
   def object_display_name_link(data, singular: true, case_formatting: false, reading_order: true)
@@ -107,10 +110,9 @@ module LinkHelper
     # Reading order: If true, result is flipped on internal comma, e.g. "Sharpe of Epsom, Lord" -> "Lord Sharpe of Epsom"
     return if data.blank? || data[:value].blank?
 
-    formatted = formatted_name(data, ses_data, singular, reading_order)
     field = substitute_field_name(data[:field_name])
-    value = data[:value]
-    query = format_field_specific_search_query(field, value)
+    formatted = formatted_name(data, ses_data, singular, reading_order)
+    query = format_field_specific_search_query(field, formatted)
 
     link_to(case_formatting ? conditional_downcase(formatted) : formatted, search_path(query: query))
   end
@@ -130,7 +132,8 @@ module LinkHelper
     if data[:field_name] && ["ses", "sesrollup"].include?(data[:field_name]&.split('_')&.last)
       # if data[:field_name]&.last(3) == 'ses'
       # we need to get the string from the page SES data
-      name_string = ses_data[data[:value].to_i]
+      raise "No SES data available to dereference SES ID" unless ses_data
+      name_string = ses_data.dig(data[:value].to_i)
 
       if name_string.nil?
         puts "Missing SES name for ID #{data[:value]}" if Rails.env.development?
