@@ -29,7 +29,6 @@ class QueryExpander
   end
 
   # TODO: refactor out basic string processing to private methods
-  # TODO: refactor TermExpander to default to empty SES data so we don't have to pass an empty {}
   def expand_query
     tokens = tokeniser.new(search_query).tokenise
     processed_tokens = []
@@ -44,37 +43,45 @@ class QueryExpander
         field_name = value.split(":").first
         ses_data = ses_query.new({ value: search_term }).data
         expanded_fields = field_expander.new(field_name).expand_fields
-        processed_tokens << term_expander.new(expanded_fields, ses_data, search_term).expand_terms
+        processed_tokens << term_expander.new(expanded_fields: expanded_fields,
+                                              ses_data: ses_data,
+                                              search_term: search_term).expand_terms
+
       elsif label == :specified_field_no_expansion
         # delete unwanted []; expand fields using blank SES data
         search_term = value.split(":").last.delete_prefix("[").delete_suffix("]")
         field_name = value.split(":").first
         expanded_fields = field_expander.new(field_name).expand_fields
-        processed_tokens << term_expander.new(expanded_fields, {}, search_term).expand_terms
+        processed_tokens << term_expander.new(expanded_fields: expanded_fields, search_term: search_term).expand_terms
+
       elsif label == :specified_field
         search_term = value.split(":").last
         field_name = value.split(":").first
         expanded_fields = field_expander.new(field_name).expand_fields
         ses_data = ses_query.new({ value: search_term }).data
-        processed_tokens << term_expander.new(expanded_fields, ses_data, search_term).expand_terms
+        processed_tokens << term_expander.new(expanded_fields: expanded_fields,
+                                              ses_data: ses_data,
+                                              search_term: search_term).expand_terms
+
       elsif label == :quoted_phrase
         search_term = value
         expanded_fields = field_expander.new("none").expand_fields
         ses_data = ses_query.new({ value: search_term }).data
-        processed_tokens << term_expander.new(expanded_fields, ses_data, search_term).expand_terms
+        processed_tokens << term_expander.new(expanded_fields: expanded_fields,
+                                              ses_data: ses_data,
+                                              search_term: search_term).expand_terms
+
       elsif label == :no_expansion
         search_term = value.delete_prefix("[").delete_suffix("]")
         processed_tokens << search_term
+
       elsif label == :unquoted_phrase
         search_term = value
         expanded_fields = field_expander.new("none").expand_fields
         ses_data = ses_query.new({ value: search_term }).data if TermExpander::EXPAND_UNQUOTED_PHRASES
-        if ses_data.present?
-          processed_tokens << term_expander.new(expanded_fields, ses_data, search_term).expand_terms
-        else
-          # return the token without expansion
-          processed_tokens << value
-        end
+        processed_tokens << term_expander.new(expanded_fields: expanded_fields,
+                                              ses_data: ses_data,
+                                              search_term: search_term).expand_terms
       else
         puts "Unmatched token type #{label} for #{value}" if Rails.env.development?
         next

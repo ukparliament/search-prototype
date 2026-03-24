@@ -77,7 +77,7 @@ RSpec.describe 'QueryExpander' do
 
         # the term expander is initialised with the result of the field expansion & ses data, as well as the search
         # term
-        expect(term_expander_test_class).to receive(:new).with(expanded_fields, ses_response, "\"housing crisis\"")
+        expect(term_expander_test_class).to receive(:new).with(expanded_fields: expanded_fields, ses_data: ses_response, search_term: "\"housing crisis\"")
 
         # term expander receives call to expand terms
         expect(term_expander_test_instance).to receive(:expand_terms).and_return('processed tokens')
@@ -116,7 +116,7 @@ RSpec.describe 'QueryExpander' do
 
         # the term expander is initialised with the result of the field expansion & ses data, as well as the search
         # term
-        expect(term_expander_test_class).to receive(:new).with(expanded_fields, ses_response, "'housing crisis'")
+        expect(term_expander_test_class).to receive(:new).with(expanded_fields: expanded_fields, ses_data: ses_response, search_term: "'housing crisis'")
 
         # term expander receives call to expand terms
         expect(term_expander_test_instance).to receive(:expand_terms).and_return('processed tokens')
@@ -155,7 +155,7 @@ RSpec.describe 'QueryExpander' do
 
         # the term expander is initialised with the result of the field expansion & blank ses data, as well as the search
         # term
-        expect(term_expander_test_class).to receive(:new).with(expanded_fields, { }, "housing crisis")
+        expect(term_expander_test_class).to receive(:new).with(expanded_fields: expanded_fields, search_term: "housing crisis")
 
         # term expander receives call to expand terms
         expect(term_expander_test_instance).to receive(:expand_terms).and_return('processed tokens')
@@ -194,7 +194,7 @@ RSpec.describe 'QueryExpander' do
 
         # the term expander is initialised with the result of the field expansion & ses data, as well as the search
         # term
-        expect(term_expander_test_class).to receive(:new).with(expanded_fields, ses_response, "housing")
+        expect(term_expander_test_class).to receive(:new).with(expanded_fields: expanded_fields, ses_data: ses_response, search_term: "housing")
 
         # term expander receives call to expand terms
         expect(term_expander_test_instance).to receive(:expand_terms).and_return('processed tokens')
@@ -233,7 +233,7 @@ RSpec.describe 'QueryExpander' do
 
         # the term expander is initialised with the result of the field expansion & ses data, as well as the search
         # term
-        expect(term_expander_test_class).to receive(:new).with(expanded_fields, ses_response, "\"housing crisis\"")
+        expect(term_expander_test_class).to receive(:new).with(expanded_fields: expanded_fields, ses_data: ses_response, search_term: "\"housing crisis\"")
 
         # term expander receives call to expand terms
         expect(term_expander_test_instance).to receive(:expand_terms).and_return('processed tokens')
@@ -272,7 +272,7 @@ RSpec.describe 'QueryExpander' do
 
         # the term expander is initialised with the result of the field expansion & ses data, as well as the search
         # term
-        expect(term_expander_test_class).to receive(:new).with(expanded_fields, ses_response, "'housing crisis'")
+        expect(term_expander_test_class).to receive(:new).with(expanded_fields: expanded_fields, ses_data: ses_response, search_term: "'housing crisis'")
 
         # term expander receives call to expand terms
         expect(term_expander_test_instance).to receive(:expand_terms).and_return('processed tokens')
@@ -311,7 +311,7 @@ RSpec.describe 'QueryExpander' do
 
         # the term expander is initialised with the result of the field expansion & ses data, as well as the search
         # term
-        expect(term_expander_test_class).to receive(:new).with(expanded_fields, ses_response, "housing crisis")
+        expect(term_expander_test_class).to receive(:new).with(expanded_fields: expanded_fields, ses_data: ses_response, search_term: "housing crisis")
 
         # term expander receives call to expand terms
         expect(term_expander_test_instance).to receive(:expand_terms).and_return('processed tokens')
