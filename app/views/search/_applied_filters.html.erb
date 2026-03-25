@@ -1,7 +1,7 @@
-<% unless request.params.dig(:filter).blank? %>
+<% unless applied_filters.blank? %>
   <div class="applied-filters mb-3">
     <div class="applied-filter-container">
-      <% request.params.dig(:filter).sort.uniq.each do |filter| %>
+      <% visible_filters.each do |filter| %>
         <% filter.last.sort.each do |filter_value| %>
           <div class="filter-wrapper">
             <div class="search-filter">
@@ -16,7 +16,10 @@
               </div>
               <div class="bottom-row">
                 <div class="filter-name">
-                  <%= object_display_name({ value: filter_field_value(filter, filter_value), field_name: filter.first }, singular: false) %>
+                  <%= object_display_name({ value: filter_value, field_name: filter.first }, singular: false) %>
+                  <% if filter.first == "date_month" %>
+                    <%= applied_filters.dig('date_year')&.first %>
+                  <% end %>
                 </div>
               </div>
             </div>
