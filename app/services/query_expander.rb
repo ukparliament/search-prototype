@@ -33,6 +33,8 @@ class QueryExpander
     tokens = tokeniser.new(search_query).tokenise
     processed_tokens = []
 
+    puts "Tokens: #{tokens}" if Rails.env.development?
+
     tokens.each do |label, value|
       if label == :operator
         # do nothing, pass directly to Solr

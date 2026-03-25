@@ -21,10 +21,11 @@ class FieldExpander
     process_without_field = false
 
     if field_name == "title"
-      text_fields = ['title_t']
+      text_fields = %w[title_t]
     elsif field_name == "subject"
-      text_fields = ['subject_t']
-      ses_fields = ['subject_ses']
+      # TODO: exclude TPG
+      text_fields = %w[subject_t]
+      ses_fields = %w[subject_ses]
       # topic_ses has been removed, so behaviour here differs from old search by design
     elsif field_name == "author"
       # extra: correspondingMinister_t, epCommittee_t, department_t etc are all only the submitted term (dwp) in example, whereas we're searching all equivalents too
@@ -37,6 +38,34 @@ class FieldExpander
       date_fields = %w[dateCertified_dt certifiedDate_dt]
     elsif field_name == "date"
       date_fields = %w[date_dt]
+    elsif field_name == "answeredby"
+      ses_fields = %w[answeringMember_ses answeringDept_ses askedToReplyAuthor_ses]
+    elsif field_name == "askedby"
+      ses_fields = %w[tablingMember_ses askingMember_ses]
+    elsif field_name == "dept"
+      ses_fields = %w[department_ses answeringDept_ses]
+      text_fields = %w[department_t]
+    elsif field_name == "primarymember"
+      ses_fields = %w[primaryMember_ses]
+    elsif field_name == "legtitle"
+      # TODO: this alias needs to exclude SES class TPG; will have to be implemented elsewhere?
+      ses_fields = %w[legislationTitle_ses]
+      text_fields = %w[legislationTitle_t]
+    elsif field_name == "legstage"
+      ses_fields = %w[legislativeStage_ses]
+    elsif field_name == "house"
+      ses_fields = %w[legislature_ses]
+    elsif field_name == "member"
+      ses_fields = %w[member_ses]
+    elsif field_name == "primarysponsor"
+      ses_fields = %w[primarySponsor_ses amendment_primarySponsor_ses]
+    elsif field_name == "publisher"
+      ses_fields = %w[publisher_ses]
+      text_fields = %w[publisher_t]
+    elsif field_name == "type"
+      ses_fields = %w[type_sesrollup]
+    elsif field_name == "tabledby"
+      ses_fields = %w[tablingMember_ses]
     elsif field_name.match(/\w+_dt/)
       # if searching a _dt field specifically, treat it as a date field so that 'lastweek' etc. all work
       date_fields = [field_name]

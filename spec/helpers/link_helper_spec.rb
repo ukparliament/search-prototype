@@ -16,15 +16,15 @@ RSpec.describe LinkHelper, type: :helper do
         end
       end
       context 'when given a SES ID & field name' do
-        it 'returns a link to a new search using the SES ID (unquoted) and given field' do
+        it 'returns a link to a new search using the dereferenced ID in quotes and appropriate alias for the field' do
           # requires SES data to have been preloaded on the page - this is done for performance reasons
           allow(helper).to receive(:ses_data).and_return(mock_ses_data)
-          expect(helper.search_link(input_data_type_ses)).to eq("<a href=\"/search?query=member_ses%3A123\">John Smith</a>")
+          expect(helper.search_link(input_data_type_ses)).to eq("<a href=\"/search?query=member%3A%22John+Smith%22\">John Smith</a>")
         end
       end
       context 'when given a string value and a field name' do
-        it 'returns a link to a new search for the string (quoted) in the given field' do
-          expect(helper.search_link(input_data_string)).to eq("<a href=\"/search?query=subject_t%3A%22John+Smith%22\">John Smith</a>")
+        it 'returns a link to a new search for the string (quoted) and the appropriate alias for the given field' do
+          expect(helper.search_link(input_data_string)).to eq("<a href=\"/search?query=subject%3A%22John+Smith%22\">John Smith</a>")
         end
       end
       context 'for non-searchable fields' do
@@ -109,8 +109,7 @@ RSpec.describe LinkHelper, type: :helper do
   describe 'object_display_name_link' do
     let!(:mock_ses_data) { { 123 => 'Early day motions' } }
     let!(:input_data_type_ses) { { value: 123, field_name: 'type_ses' } }
-    let!(:input_data_member_ses) { { value: 123, field_name: 'member_ses' } }
-    let!(:input_data_string) { { value: 'Early day motions', field_name: 'type_t' } }
+    let!(:input_data_subtype_ses) { { value: 123, field_name: 'subtype_ses' } }
 
     # used in preliminary sentences; defaults to singular
     context 'when given nil' do
@@ -119,28 +118,17 @@ RSpec.describe LinkHelper, type: :helper do
         expect(helper.object_display_name_link(nil)).to eq(nil)
       end
     end
-    context 'when given a non-type SES ID and field name' do
-      it 'returns a link to search that SES field with the given ID' do
+    context 'when given a SES ID and field name' do
+      it 'returns a link to search the appropriate alias for that SES field with the dereferenced string for the given ID' do
         # requires SES data to have been preloaded on the page - this is done for performance reasons
         allow(helper).to receive(:ses_data).and_return(mock_ses_data)
-        expect(helper.object_display_name_link(input_data_member_ses)).to eq("<a href=\"/search?query=member_ses%3A123\">Early day motion</a>")
-      end
-    end
-    context 'when given a type SES ID and field name' do
-      it 'returns a link to search that SES field with the given ID' do
-        # requires SES data to have been preloaded on the page - this is done for performance reasons
-        allow(helper).to receive(:ses_data).and_return(mock_ses_data)
-        expect(helper.object_display_name_link(input_data_type_ses)).to eq("<a href=\"/search?query=type_ses%3A123\">Early day motion</a>")
-      end
-    end
-    context 'when given string and field name' do
-      it 'returns a link to search using the string as a query' do
-        expect(helper.object_display_name_link(input_data_string)).to eq("<a href=\"/search?query=type_t%3A%22Early+day+motions%22\">Early day motion</a>")
+        expect(helper.object_display_name_link(input_data_type_ses)).to eq("<a href=\"/search?query=type%3A%22Early+day+motion%22\">Early day motion</a>")
       end
     end
     context 'when called with singularisation disabled' do
       it 'returns a link to search using the string as a query, and a plural item name' do
-        expect(helper.object_display_name_link(input_data_string, singular: false)).to eq("<a href=\"/search?query=type_t%3A%22Early+day+motions%22\">Early day motions</a>")
+        allow(helper).to receive(:ses_data).and_return(mock_ses_data)
+        expect(helper.object_display_name_link(input_data_type_ses, singular: false)).to eq("<a href=\"/search?query=type%3A%22Early+day+motions%22\">Early day motions</a>")
       end
     end
   end
