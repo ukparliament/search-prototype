@@ -39,5 +39,5 @@
     %span>= search_link(object.department)
   %span= "."
   - unless object.asked_to_reply_author.blank?
-    %span>= search_link(object.asked_to_reply_author)
+    %span= search_link(object.asked_to_reply_author)
     %span= " was asked to reply."

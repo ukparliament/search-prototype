@@ -13,3 +13,8 @@ p:last-child {
 nav#header-nav {
     display: none;
 }
+
+/* limit size of images in rendered HTML content */
+img {
+    max-width: 100%;
+}
