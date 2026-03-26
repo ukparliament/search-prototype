@@ -2,13 +2,13 @@
   <h4 class="facet-heading <%= 'inactive' if facet_field[:facets].size == 0 %>"><%= filter_field_name(facet_field[:field_name]) %></h4>
   <% if current_month_filter_value %>
     <% facet_field[:facets].select { |facet| facet.dig('val')&.to_s == current_month_filter_value }.each do |facet| %>
-      <%= link_to_if(!request.params.dig(:filter, facet_field[:field_name])&.include?(facet["val"].to_s), "#{object_display_name({ value: facet["val"], field_name: facet_field[:field_name] }, singular: false, reading_order: false)} #{suffix || ''} (#{number_to_delimited(facet["count"], separator: ",")})", url_for(apply_filter_url(request.params, facet_field[:field_name], facet["val"])), class: "menu-link modifiable-link", title: scope_note("#{facet["val"]}_scope_note")) %>
+      <%= link_to_if(!request.params.dig(:filter, facet_field[:field_name])&.include?(facet["val"].to_s), "#{object_display_name({ value: facet["val"], field_name: facet_field[:field_name] }, singular: false, reading_order: false)} #{suffix || ''} (#{number_to_delimited(facet["count"], separator: ",")})", apply_filter_url(request.params, facet_field[:field_name], facet["val"]), class: "menu-link modifiable-link", title: scope_note("#{facet["val"]}_scope_note")) %>
     <% end %>
   <% else %>
     <div>
       <% facet_field[:facets][0..4].each do |facet| %>
         <div>
-          <%= link_to_if(!request.params.dig(:filter, facet_field[:field_name])&.include?(facet["val"].to_s), "#{object_display_name({ value: facet["val"], field_name: facet_field[:field_name] }, singular: false, reading_order: false)} #{suffix || ''} (#{number_to_delimited(facet["count"], separator: ",")})", url_for(apply_filter_url(request.params, facet_field[:field_name], facet["val"])), class: "menu-link modifiable-link", title: scope_note("#{facet["val"]}_scope_note")) %>
+          <%= link_to_if(!request.params.dig(:filter, facet_field[:field_name])&.include?(facet["val"].to_s), "#{object_display_name({ value: facet["val"], field_name: facet_field[:field_name] }, singular: false, reading_order: false)} #{suffix || ''} (#{number_to_delimited(facet["count"], separator: ",")})", apply_filter_url(request.params, facet_field[:field_name], facet["val"]), class: "menu-link modifiable-link", title: scope_note("#{facet["val"]}_scope_note")) %>
         </div>
       <% end %>
       <% unless facet_field[:facets][5..].blank? %>
@@ -16,7 +16,7 @@
           <summary>More</summary>
           <% facet_field[:facets][5...].each do |facet| %>
             <div>
-              <%= link_to_if(!request.params.dig(:filter, facet_field[:field_name])&.include?(facet["val"].to_s), "#{object_display_name({ value: facet["val"], field_name: facet_field[:field_name] }, singular: false, reading_order: false)} #{suffix || ''} (#{number_to_delimited(facet["count"], separator: ",")})", url_for(apply_filter_url(request.params, facet_field[:field_name], facet["val"])), class: "menu-link modifiable-link", title: scope_note("#{facet[:val]}_scope_note")) %>
+              <%= link_to_if(!request.params.dig(:filter, facet_field[:field_name])&.include?(facet["val"].to_s), "#{object_display_name({ value: facet["val"], field_name: facet_field[:field_name] }, singular: false, reading_order: false)} #{suffix || ''} (#{number_to_delimited(facet["count"], separator: ",")})", apply_filter_url(request.params, facet_field[:field_name], facet["val"]), class: "menu-link modifiable-link", title: scope_note("#{facet[:val]}_scope_note")) %>
             </div>
           <% end %>
         </details>

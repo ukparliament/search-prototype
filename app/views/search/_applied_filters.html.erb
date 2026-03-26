@@ -10,7 +10,7 @@
                   <%= filter_field_name(filter.first) %>
                 </span>
                 <span class="flex-spacer"></span>
-                <a href="<%= url_for(remove_filter_url(request.params, filter.first, filter_value)) %>" aria-label="Remove filter" class="modifiable-link">
+                <a href="<%= remove_filter_url(request.params, filter.first, filter_value) %>" aria-label="Remove filter" class="modifiable-link">
                   X
                 </a>
               </div>

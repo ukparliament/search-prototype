@@ -13,7 +13,7 @@
     </span>
 
     <span class="facet-link toggle-<%= parent_id %> <%= collapse(tier, @expanded_types, parent_id) %>">
-      <%= link_to_if(filter_applicable?(request.params, id), name_and_count(@hierarchy_data, id, @type_facets), url_for(apply_filter_url(request.params, 'type_sesrollup', id)), class: 'modifiable-link', title: scope_note("#{id}_scope_note")) %>
+      <%= link_to_if(filter_applicable?(request.params, id), name_and_count(@hierarchy_data, id, @type_facets), apply_filter_url(request.params, 'type_sesrollup', id), class: 'modifiable-link', title: scope_note("#{id}_scope_note")) %>
       <% if @hierarchy_data.dig(id) %>
         <% @hierarchy_data.dig(id, :children).each do |child| %>
           <%= render 'hierarchy_layer', id: child.dig(:id), tier: tier + 1, parent_id: id %>
