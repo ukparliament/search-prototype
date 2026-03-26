@@ -87,12 +87,14 @@
         <% @search_data.facets.select { |h| ["legislature_ses", "session_s"].include?(h.dig(:field_name)) }.each do |facet_field| %>
           <%= render 'filter_section', facet_field: format_facets(facet_field) %>
         <% end %>
-        <% @search_data.facets.select { |h| ["date_year"].include?(h.dig(:field_name)) }.each do |facet_field| %>
-          <%= render 'filter_section', facet_field: format_facets(facet_field) %>
+        <% unless request.params.dig(:filter, "date_year").present? %>
+          <% @search_data.facets.select { |h| ["date_year"].include?(h.dig(:field_name)) }.each do |facet_field| %>
+            <%= render 'filter_section', facet_field: format_facets(facet_field) %>
+          <% end %>
         <% end %>
         <% if request.params.dig(:filter, "date_year").present? %>
           <% @search_data.facets.select { |h| ["date_month"].include?(h.dig(:field_name)) }.each do |facet_field| %>
-            <%= render 'filter_section', facet_field: format_facets(facet_field) %>
+            <%= render 'month_filter_section', facet_field: format_facets(facet_field), suffix: request.params.dig(:filter, "date_year")&.first %>
           <% end %>
         <% end %>
         <% @search_data.facets.select { |h| ["department_ses", "member_ses", "primaryMember_ses", "answeringMember_ses", "legislativeStage_ses", "legislationTitle_ses", "subject_ses", "publisher_ses"].include?(h.dig(:field_name)) }.each do |facet_field| %>

@@ -143,17 +143,6 @@ module ApplicationHelper
     field_names[field.to_sym]
   end
 
-  def filter_field_value(filter, filter_value)
-    return filter_value unless filter.first == "month"
-
-    split = filter_value.split("-")
-    year = split.first
-    month = split.last
-
-    month_string = Date::MONTHNAMES[month.to_i]
-    "#{month_string} #{year}"
-  end
-
   def checked_field(filter_params, facet_field_name, text_field_name)
     return false if filter_params.blank?
 
