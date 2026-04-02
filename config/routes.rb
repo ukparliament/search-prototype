@@ -18,5 +18,5 @@ Rails.application.routes.draw do
   get 'meta' => 'meta#index', as: :meta_list
   get 'meta/cookies' => 'meta#cookies', as: :meta_cookies
   get 'meta/coverage' => 'meta#coverage', as: :meta_coverage
-  get 'meta/backlog' => 'meta#backlog', as: :meta_backlog
+  get 'meta/roadmap' => 'meta#roadmap', as: :meta_roadmap
 end
