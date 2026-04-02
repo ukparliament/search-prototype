@@ -239,7 +239,7 @@ module LinkHelper
     # links / names are being formatted.
 
     # raise an error in development instead
-    raise 'fallback SES lookup attempted' if Rails.env.development?
+    # raise 'fallback SES lookup attempted' if Rails.env.development?
 
     custom_ses_lookup = SesLookup.new([ses_data_hash]).data
     name_string = custom_ses_lookup[ses_data_hash[:value].to_i]

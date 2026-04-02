@@ -1,0 +1,163 @@
+{
+  "parameters": {
+    "tbdb": "disp_taxonomy",
+    "match": "exact",
+    "query": "Observers",
+    "service": "conceptmap",
+    "template": "service.json"
+  },
+  "terms": [
+    {
+      "term": {
+        "name": "The Observer",
+        "id": "13892",
+        "zid": "OMIIN1452517002IIN1336689690i1hS1gOkkiUE3v7DmmH7",
+        "class": "ORG",
+        "freq": "0",
+        "facets": [
+          {
+            "id": "1",
+            "name": "Organisations"
+          }
+        ],
+        "attributes": {
+          "ORG": "1"
+        },
+        "metadata": {
+          "Scope note": "Weekly newspaper.",
+          "Wikidata ID": "Q336197"
+        },
+        "src": "2",
+        "rank": "1",
+        "percentage": "42",
+        "weight": "9.08752",
+        "index": "disp_taxonomy",
+        "displayName": "The Observer",
+        "foundByNPT": "0",
+        "lastUpdatedDate": "20250625104058",
+        "createdDate": "20100514063925",
+        "creator": "admin",
+        "updator": "morrelln",
+        "status": "Approved",
+        "documents": "0",
+        "hierarchy": [
+          {
+            "typeId": "1",
+            "qty": "1",
+            "name": "Broader Term",
+            "abbr": "BT",
+            "fields": [
+              {
+                "field": {
+                  "name": "Guardian Media Group",
+                  "id": "37192",
+                  "zid": "OMIIN1161007318II1667765856pY3g2vwwrGaJ5Z9j77CN",
+                  "class": "ORG",
+                  "freq": "0",
+                  "facets": [
+                    {
+                      "id": "1",
+                      "name": "Organisations"
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ],
+        "equivalence": [
+          {
+            "typeId": "3",
+            "qty": "2",
+            "name": "Use For",
+            "abbr": "UF",
+            "fields": [
+              {
+                "field": {
+                  "name": "OBS",
+                  "id": "52953",
+                  "zid": "OMIIN1452517001II1985707357YcPeNSCvxd3rj90EypoH",
+                  "freq": "0"
+                }
+              },
+              {
+                "field": {
+                  "name": "Observer",
+                  "id": "53383",
+                  "zid": "OMIIN1020052318IIN1543772451Dv4N7rGYVn9AxctjQveL",
+                  "freq": "0"
+                }
+              }
+            ]
+          }
+        ],
+        "paths": [
+          {
+            "path": [
+              {
+                "field": {
+                  "name": "Organisations",
+                  "id": "1",
+                  "zid": "OMII0II1738968428",
+                  "class": "ORG",
+                  "freq": "0",
+                  "facets": [
+                    {
+                      "id": "1",
+                      "name": "Organisations"
+                    }
+                  ]
+                }
+              },
+              {
+                "field": {
+                  "name": "Scott Trust",
+                  "id": "438319",
+                  "zid": "67654311239030324978721",
+                  "class": "ORG",
+                  "freq": "0",
+                  "facets": [
+                    {
+                      "id": "1",
+                      "name": "Organisations"
+                    }
+                  ]
+                }
+              },
+              {
+                "field": {
+                  "name": "Guardian Media Group",
+                  "id": "37192",
+                  "zid": "OMIIN1161007318II1667765856pY3g2vwwrGaJ5Z9j77CN",
+                  "class": "ORG",
+                  "freq": "0",
+                  "facets": [
+                    {
+                      "id": "1",
+                      "name": "Organisations"
+                    }
+                  ]
+                }
+              },
+              {
+                "field": {
+                  "name": "The Observer",
+                  "id": "13892",
+                  "zid": "OMIIN1452517002IIN1336689690i1hS1gOkkiUE3v7DmmH7",
+                  "class": "ORG",
+                  "freq": "0",
+                  "facets": [
+                    {
+                      "id": "1",
+                      "name": "Organisations"
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

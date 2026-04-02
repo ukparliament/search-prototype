@@ -6,15 +6,15 @@ RSpec.describe ContentTypeObject, type: :model do
   describe 'self.generate' do
     context 'when passed invalid data' do
       let!(:test_data) { { "some_data" => [12345] } }
-      it 'returns an instance of the ContentTypeObject class' do
-        expect(ContentTypeObject.generate(test_data)).to be_an_instance_of(ContentTypeObject)
+      it 'returns an instance of the NotSupported class' do
+        expect(ContentTypeObject.generate(test_data)).to be_an_instance_of(NotSupported)
       end
     end
     context 'when passed an unknown object type' do
       let!(:test_data) { { "type_ses" => [12345] } }
 
-      it 'returns an instance of the ContentTypeObject class' do
-        expect(ContentTypeObject.generate(test_data)).to be_an_instance_of(ContentTypeObject)
+      it 'returns an instance of the NotSupported class' do
+        expect(ContentTypeObject.generate(test_data)).to be_an_instance_of(NotSupported)
       end
     end
     context 'when passed a known object type' do
@@ -74,7 +74,7 @@ RSpec.describe ContentTypeObject, type: :model do
         expect(ContentTypeObject.generate(bill)).to be_an_instance_of(Bill)
         expect(ContentTypeObject.generate(paper_petition)).to be_an_instance_of(PaperPetition)
         expect(ContentTypeObject.generate(observations_on_a_petition)).to be_an_instance_of(ObservationsOnPetitions)
-        expect(ContentTypeObject.generate(petition_with_unrecognised_subtype_id)).to be_an_instance_of(ContentTypeObject)
+        expect(ContentTypeObject.generate(petition_with_unrecognised_subtype_id)).to be_an_instance_of(NotSupported)
         expect(ContentTypeObject.generate(formal_proceeding)).to be_an_instance_of(FormalProceeding)
         expect(ContentTypeObject.generate(parliamentary_paper_reported)).to be_an_instance_of(ParliamentaryCommittee)
         expect(ContentTypeObject.generate(parliamentary_paper_laid)).to be_an_instance_of(UnprintedPaper)
@@ -94,7 +94,7 @@ RSpec.describe ContentTypeObject, type: :model do
         expect(ContentTypeObject.generate(parliamentary_proceeding_committee)).to be_an_instance_of(CommitteeProceeding)
         expect(ContentTypeObject.generate(parliamentary_proceeding)).to be_an_instance_of(ParliamentaryProceeding)
         expect(ContentTypeObject.generate(statutory_instrument)).to be_an_instance_of(StatutoryInstrument)
-        expect(ContentTypeObject.generate(unrecognised_id)).to be_an_instance_of(ContentTypeObject)
+        expect(ContentTypeObject.generate(unrecognised_id)).to be_an_instance_of(NotSupported)
       end
     end
   end

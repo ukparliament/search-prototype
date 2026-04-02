@@ -139,7 +139,10 @@ class TermExpander
   # This is done iteratively as SES may return multiple terms with multiple equivalent terms each.
   def handle_non_aliased_terms
     expanded_terms = []
-    ses_data.each_with_index do |ses_result, index|
+
+    # Where we do have SES data, iterate through the SES results and use them (via SES ID) to create tagged sets
+    # of expanded terms (pulling in equivalent term data).
+    ses_data.each do |ses_result|
       result = [ses_result[:preferred_term].present? ? "\"#{ses_result[:preferred_term]}\"" : "\"#{search_term}\""]
 
       ses_result[:equivalent_terms].flatten.each do |et|
@@ -147,6 +150,22 @@ class TermExpander
       end
 
       expanded_terms << [ses_result[:preferred_term_id], result]
+    end
+
+    # TODO: this logic might also be required for quoted phrases & aliased quoted phrases?
+    # Move to method "add unrepresented words"?
+    # build an array of the individual component words from the query, so that we can check they're all represented
+    individual_search_words = search_term.downcase.split(" ")
+
+    # create a string of all the expanded terms so far
+    # TODO: exhaustively test that this approach works
+    all_expanded_terms = expanded_terms.to_h.values.flatten.join(" ").downcase
+
+    # check each word is represented by something we got back from SES
+    individual_search_words.each do |search_word|
+      unless all_expanded_terms.include?(search_word)
+        expanded_terms << [search_word.to_sym, ["\"#{search_word}\""]]
+      end
     end
 
     expanded_terms
