@@ -1,14 +1,14 @@
 class MetaController < ApplicationController
 
   def index
-    @page_title = 'Meta'
-    @description = 'Meta'
-    @crumb << { label: 'Meta', url: nil }
+    @page_title = 'About this website'
+    @description = 'About this website.'
+    @crumb << { label: 'About this website', url: nil }
   end
 
   def cookies
     @page_title = 'Cookies'
-    @description = 'Cookie policy.'
+    @description = 'Cookie Policy.'
     @crumb << { label: 'Meta', url: meta_list_url }
     @crumb << { label: 'Cookies', url: nil }
 
@@ -19,8 +19,8 @@ class MetaController < ApplicationController
     @page_title = 'Examples'
   end
 
-  def backlog
-    @page_title = 'Backlog'
+  def roadmap
+    @page_title = 'Roadmap'
   end
 
   def coverage
