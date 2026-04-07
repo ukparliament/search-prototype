@@ -8,7 +8,7 @@ class MetaController < ApplicationController
   end
 
   def cookies
-    @page_title = 'Cookies'
+    @page_title = 'Cookie Policy'
     @description = 'Cookie Policy.'
     @crumb << { label: 'About this website', url: meta_list_url }
     @crumb << { label: @page_title, url: nil }
