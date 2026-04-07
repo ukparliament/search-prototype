@@ -10,6 +10,7 @@
 <main id="main-content" class="block block-page">
   <div class="inner-content container">
     <%#= render 'library_design/debug/debug' %>
+	<%= content_tag( 'h1', @heading_one, :class => 'reading-width' ) if @heading_one %>
     <%= yield %>
   </div>
 </main>
