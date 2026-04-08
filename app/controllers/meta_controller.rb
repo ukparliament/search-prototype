@@ -11,8 +11,6 @@ class MetaController < ApplicationController
     @description = 'Cookie Policy.'
     @crumb << { label: 'About this website', url: meta_list_url }
     @crumb << { label: @page_title, url: nil }
-
-    render 'library_design/meta/cookies'
   end
   
   def coverage
