@@ -490,7 +490,7 @@ class ContentTypeObject
       elsif subtype_ids&.include?(347214)
         'ObservationsOnPetitions'
       else
-        'ContentTypeObject'
+        'NotSupported'
       end
     when 347207
       'FormalProceeding'
@@ -558,7 +558,7 @@ class ContentTypeObject
     when 347010
       'EuropeanMaterial'
     else
-      'ContentTypeObject'
+      'NotSupported'
     end
   end
 

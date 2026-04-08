@@ -53,21 +53,40 @@ class TermExpander
   # Where preferred term is not present, apply the search term instead
   def populate_text_fields
     expanded_terms = []
+    represented_terms = []
 
     unless expanded_fields[:text_fields].blank?
       expanded_fields[:text_fields].flatten.each do |tf|
         ses_data.each do |ses_result|
 
-          result = [ses_result[:preferred_term].present? ? "#{tf}:\"#{ses_result[:preferred_term]}\"" : "#{tf}:\"#{search_term}\""]
+          if ses_result[:preferred_term].present?
+            result = ["#{tf}:\"#{ses_result[:preferred_term]}\""]
+            represented_terms << ses_result[:preferred_term]
+          else
+            result = ["#{tf}:\"#{search_term}\""]
+            represented_terms << search_term
+          end
 
           if ses_result[:equivalent_terms] && ses_result[:equivalent_terms].any?
             ses_result[:equivalent_terms].flatten.each do |et|
               result << "#{tf}:\"#{et}\""
+              represented_terms << et
             end
           end
 
           expanded_terms << [ses_result[:preferred_term_id], result]
+
         end
+
+        # Add search terms not represented by SES responses to the query with their specified field
+        search_term.downcase.split(" ").each do |search_word|
+          unless represented_terms.join(" ").downcase.include?(search_word)
+            expanded_terms << [search_word.to_sym, ["#{tf}:\"#{search_word}\""]]
+          end
+        end
+
+        expanded_terms
+
       end
     end
 
@@ -139,7 +158,10 @@ class TermExpander
   # This is done iteratively as SES may return multiple terms with multiple equivalent terms each.
   def handle_non_aliased_terms
     expanded_terms = []
-    ses_data.each_with_index do |ses_result, index|
+
+    # Where we do have SES data, iterate through the SES results and use them (via SES ID) to create tagged sets
+    # of expanded terms (pulling in equivalent term data).
+    ses_data.each do |ses_result|
       result = [ses_result[:preferred_term].present? ? "\"#{ses_result[:preferred_term]}\"" : "\"#{search_term}\""]
 
       ses_result[:equivalent_terms].flatten.each do |et|
@@ -147,6 +169,19 @@ class TermExpander
       end
 
       expanded_terms << [ses_result[:preferred_term_id], result]
+    end
+
+    # TODO: this logic might also be required for quoted phrases & aliased quoted phrases?
+    # TODO: exhaustively test that this approach works
+
+    # create a string of all the expanded terms so far
+    all_expanded_terms = expanded_terms.to_h.values.flatten.join(" ").downcase
+
+    # check each word is represented by something we got back from SES
+    search_term.downcase.split(" ").each do |search_word|
+      unless all_expanded_terms.include?(search_word)
+        expanded_terms << [search_word.to_sym, ["\"#{search_word}\""]]
+      end
     end
 
     expanded_terms

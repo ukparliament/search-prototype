@@ -1,0 +1,136 @@
+{
+  "parameters": {
+    "tbdb": "disp_taxonomy",
+    "match": "exact",
+    "query": "Election observers",
+    "service": "conceptmap",
+    "template": "service.json"
+  },
+  "terms": [
+    {
+      "term": {
+        "name": "Election observers",
+        "id": "91070",
+        "zid": "OMII968IIN444388634pwXx5X8Fwad9rmQOVhSL",
+        "class": "SIT",
+        "freq": "0",
+        "facets": [
+          {
+            "id": "90102",
+            "name": "Concept"
+          }
+        ],
+        "attributes": {
+          "SIT": "1"
+        },
+        "metadata": {
+          "Wikidata ID": "Q933054"
+        },
+        "src": "1",
+        "rank": "1",
+        "percentage": "47",
+        "weight": "10.7503",
+        "index": "disp_taxonomy",
+        "displayName": "Election observers",
+        "foundByNPT": "0",
+        "lastUpdatedDate": "20201129181324",
+        "createdDate": "20100514065405",
+        "creator": "admin",
+        "updator": "somervillea",
+        "status": "Approved",
+        "documents": "0",
+        "hierarchy": [
+          {
+            "typeId": "1",
+            "qty": "1",
+            "name": "Broader Term",
+            "abbr": "BT",
+            "fields": [
+              {
+                "field": {
+                  "name": "Elections",
+                  "id": "91071",
+                  "zid": "OMII969II6763410692XZ5keIx4ohxDLhz4hNH",
+                  "class": "SIT",
+                  "freq": "0",
+                  "facets": [
+                    {
+                      "id": "90102",
+                      "name": "Concept"
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ],
+        "paths": [
+          {
+            "path": [
+              {
+                "field": {
+                  "name": "Concept",
+                  "id": "90102",
+                  "zid": "OMII0II1963192093",
+                  "class": "SIT",
+                  "freq": "0",
+                  "facets": [
+                    {
+                      "id": "90102",
+                      "name": "Concept"
+                    }
+                  ]
+                }
+              },
+              {
+                "field": {
+                  "name": "Politics and government",
+                  "id": "92501",
+                  "zid": "OMII2399II1068130464ZQd4WG6Bn7u32IO3qqKZ",
+                  "class": "SIT",
+                  "freq": "0",
+                  "facets": [
+                    {
+                      "id": "90102",
+                      "name": "Concept"
+                    }
+                  ]
+                }
+              },
+              {
+                "field": {
+                  "name": "Elections",
+                  "id": "91071",
+                  "zid": "OMII969II6763410692XZ5keIx4ohxDLhz4hNH",
+                  "class": "SIT",
+                  "freq": "0",
+                  "facets": [
+                    {
+                      "id": "90102",
+                      "name": "Concept"
+                    }
+                  ]
+                }
+              },
+              {
+                "field": {
+                  "name": "Election observers",
+                  "id": "91070",
+                  "zid": "OMII968IIN444388634pwXx5X8Fwad9rmQOVhSL",
+                  "class": "SIT",
+                  "freq": "0",
+                  "facets": [
+                    {
+                      "id": "90102",
+                      "name": "Concept"
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

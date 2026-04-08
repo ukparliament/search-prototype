@@ -65,7 +65,8 @@ class SearchData
 
       objects << ContentTypeObject.generate(object_data)
     end
-    objects
+
+    objects.reject { |o| o.is_a?(NotSupported) }
   end
 
   def object_data
