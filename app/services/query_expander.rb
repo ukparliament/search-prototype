@@ -41,10 +41,15 @@ class QueryExpander
         search_term = value
         processed_tokens << search_term
       elsif label == :specified_field_with_quoted_phrase
-        search_term = value.split(":").last
+        # For quoted phrases, the user expectation is that the phrase is passed to Solr as-is
+        # However, if the complete phrase is matched by SES, we search for that instead
+        # strip one layer of quotes before continuing
+        search_term = value.split(":").last.delete_prefix('"').delete_suffix('"')
         field_name = value.split(":").first
         ses_data = ses_query.new({ value: search_term }).data
         expanded_fields = field_expander.new(field_name).expand_fields
+
+        # TODO: needs to only match on full phrase? To confirm
         processed_tokens << term_expander.new(expanded_fields: expanded_fields,
                                               ses_data: ses_data,
                                               search_term: search_term).expand_terms
