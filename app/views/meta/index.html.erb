@@ -1,0 +1,13 @@
+<% content_for(:heading) do %>
+	<%= @page_title %>
+<% end %>
+
+<div class="reading-width">
+	<ol class="unnumbered link-list">
+		<%= content_tag( 'li', link_to( 'Cookies', meta_cookies_url ) ) %>
+		<%= content_tag( 'li', link_to( 'Coverage', meta_coverage_url ) ) %>
+		<%= content_tag( 'li', link_to( 'Example object pages', meta_examples_url ) ) %>
+		<%= content_tag( 'li', link_to( 'Librarian tools', meta_librarian_tools_url ) ) %>
+		<%= content_tag( 'li', link_to( 'Roadmap', meta_roadmap_url ) ) %>
+	</ol>
+</div>

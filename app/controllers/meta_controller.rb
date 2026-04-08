@@ -3,28 +3,44 @@ class MetaController < ApplicationController
   def index
     @page_title = 'About this website'
     @description = 'About this website.'
-    @crumb << { label: 'About this website', url: nil }
+    @crumb << { label: @page_title, url: nil }
   end
 
   def cookies
-    @page_title = 'Cookies'
+    @page_title = 'Cookie Policy'
     @description = 'Cookie Policy.'
-    @crumb << { label: 'Meta', url: meta_list_url }
-    @crumb << { label: 'Cookies', url: nil }
+    @crumb << { label: 'About this website', url: meta_list_url }
+    @crumb << { label: @page_title, url: nil }
 
     render 'library_design/meta/cookies'
   end
-
+  
+  def coverage
+    @page_title = 'Coverage'
+    @description = 'Coverage.'
+    @crumb << { label: 'About this website', url: meta_list_url }
+    @crumb << { label: @page_title, url: nil }
+  end
+  
   def examples
-    @page_title = 'Examples'
+    @page_title = 'Example object pages'
+    @description = 'Example object pages.'
+    @crumb << { label: 'About this website', url: meta_list_url }
+    @crumb << { label: @page_title, url: nil }
+  end
+  
+  def librarian_tools
+    @page_title = 'Librarian tools'
+    @description = 'Librarian tools.'
+    @crumb << { label: 'About this website', url: meta_list_url }
+    @crumb << { label: @page_title, url: nil }
   end
 
   def roadmap
     @page_title = 'Roadmap'
-  end
-
-  def coverage
-    @page_title = 'Coverage'
+    @description = 'Roadmap.'
+    @crumb << { label: 'About this website', url: meta_list_url }
+    @crumb << { label: @page_title, url: nil }
   end
 
 end

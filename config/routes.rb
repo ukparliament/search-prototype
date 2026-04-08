@@ -14,9 +14,10 @@ Rails.application.routes.draw do
   get 'errors/404' => 'errors#not_found'
   get 'errors/401' => 'errors#not_authorized'
 
-  get 'meta/examples' => 'meta#examples', as: :meta_examples
   get 'meta' => 'meta#index', as: :meta_list
   get 'meta/cookies' => 'meta#cookies', as: :meta_cookies
   get 'meta/coverage' => 'meta#coverage', as: :meta_coverage
+  get 'meta/examples' => 'meta#examples', as: :meta_examples
+  get 'meta/librarian-tools' => 'meta#librarian_tools', as: :meta_librarian_tools
   get 'meta/roadmap' => 'meta#roadmap', as: :meta_roadmap
 end
