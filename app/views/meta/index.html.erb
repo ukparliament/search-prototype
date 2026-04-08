@@ -1,3 +1,7 @@
+<% content_for(:heading) do %>
+	<%= @page_title %>
+<% end %>
+
 <div class="reading-width">
 	<ol class="unnumbered link-list">
 		<%= content_tag( 'li', link_to( 'Cookies', meta_cookies_url ) ) %>
