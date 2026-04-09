@@ -54,6 +54,27 @@ RSpec.describe 'QueryExpander' do
       end
     end
 
+    context 'where the term is a url' do
+      let(:search_query) { "http://example.com" }
+
+      it 'adds the term to returned_terms as-is' do
+        # tokeniser is initialised with the query string
+        expect(tokeniser_test_class).to receive(:new).with("http://example.com")
+
+        # tokeniser instance receives call to tokenise
+        expect(tokeniser_test_instance).to receive(:tokenise).and_return([[:url, 'http://example.com']])
+
+        # the term combiner is initialised with the unmodified operators returned from the tokeniser
+        expect(term_combiner_test_class).to receive(:new).with(['http://example.com'])
+
+        # the term combiner recieves call to combine the terms
+        expect(term_combiner_test_instance).to receive(:combine_terms).and_return("combined terms")
+
+        # the method returns the result from the term combiner
+        expect(query_expander.expand_query).to eq("combined terms")
+      end
+    end
+
     context 'where the term is a double-quoted phrase with a specified field' do
       let(:search_query) { ['subject:"housing crisis"'] }
       it 'expands on fields and terms' do
