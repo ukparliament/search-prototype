@@ -28,6 +28,7 @@ module LinkHelper
   end
 
   def search_link(data, singular: false, reading_order: true, html_class: nil)
+    # TODO: not singularising correctly?
     # Accepts either a string or a SES ID, which it resolves into a string
     # Either option requires a field reference
 

@@ -54,12 +54,22 @@ class SesData
     # combine cached and fetched data
     combined_data = cached_data.merge(fetched_data)
 
-    if existing_ses_data.blank?
-      combined_data
-    else
-      return existing_ses_data if combined_data.blank?
+    # TODO: consider moving all error handling further up the chain for SES
+    returned_data = if existing_ses_data.blank?
+                      # where no existing data was provided, return cached + new data
+                      combined_data
+                    else
+                      # where existing data was provided, merge it with cached + new data
+                      # otherwise return the existing data as is
+                      combined_data.blank? ? existing_ses_data : existing_ses_data.merge(combined_data)
+                    end
 
-      existing_ses_data.merge(combined_data)
+    if returned_data.has_key?('error')
+      # where the resulting data has an error key, escalate the issue
+      raise ExternalServiceError
+    else
+      # otherwise, return the data
+      returned_data
     end
   end
 

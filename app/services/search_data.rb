@@ -12,39 +12,6 @@ class SearchData
     HierarchyBuilder.new
   end
 
-  def solr_error?
-    # boolean returns true if an error code was returned from Solr
-    search[:data].has_key?('code')
-  end
-
-  def error_code
-    return unless solr_error?
-
-    search.dig(:data, 'code')
-  end
-
-  def error_message
-    return unless solr_error?
-
-    search.dig(:data, 'msg')
-  end
-
-  def error_query
-    return unless solr_error?
-
-    search.dig(:search_parameters, 'query')
-  end
-
-  def error_partial_path
-    return unless solr_error?
-
-    if [401, 404].include?(error_code)
-      "layouts/shared/error/#{error_code}"
-    else
-      "layouts/shared/error/500"
-    end
-  end
-
   def initial_query_data
     # The first search returns only a URI & type_ses (see field list of SolrSearch)
     return unless search

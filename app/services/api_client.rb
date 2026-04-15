@@ -16,11 +16,22 @@ class ApiClient
     # get Solr response as JSON
     response = evaluated_response
 
-    # check for errors from Solr
-    return response['error'] if response.has_key?('error')
-
-    # otherwise return response JSON
-    response
+    # check for errors from Solr & raise appropriate errors
+    if response.has_key?('error')
+      case response.dig('error', 'code')
+      when 401
+        raise ExternalServiceUnauthorized
+      when 403
+        raise ExternalServiceUnauthorized
+      when 404
+        raise ExternalServiceNotFound
+      else
+        raise ExternalServiceError
+      end
+    else
+      # otherwise return response JSON
+      response
+    end
   end
 
   private
