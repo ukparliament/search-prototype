@@ -12,16 +12,12 @@ class SesLookup < ApiClient
     ret = {}
     responses = evaluated_responses
 
-    # responses is an array of hashes
-    # each hash is the parsed response from individual lookups (one per [group_size] IDs)
-    # the hashes contain a nested 'term' hash containing 'id' and 'name'
-
-    # If SES returns an error, we'll instead get a hash with the 'error' key from each response
-    # return the first error only in this case:
-    return responses.first if responses.first&.has_key?('error')
-
-    unless responses.compact.blank?
+    if responses.compact.blank?
+      raise ExternalServiceNotFound
+    else
       responses.each do |response|
+        raise_external_service_error(response)
+
         ret[response['term']['id'].to_i] = response['term']['name']
         ret["#{response['term']['id'].to_i}_scope_note"] = response['term']['metadata']['Scope note'] unless response['term']['metadata']['Scope note'].blank?
       end
@@ -30,6 +26,7 @@ class SesLookup < ApiClient
   end
 
   def extract_hierarchy_data
+    # TODO: extract to its own class?
     # for returning all data in a structured format for further querying
     return if input_data.blank?
 
@@ -41,7 +38,7 @@ class SesLookup < ApiClient
     # the hashes contain a nested 'term' hash containing 'id' and 'name'
 
     # If SES returns an error, we'll get an error key returned from evaluated_response
-    return responses if responses.has_key?('error')
+    raise_external_service_error(responses)
 
     terms = responses.dig('terms')
     unless terms.compact.blank?
@@ -146,17 +143,12 @@ class SesLookup < ApiClient
 
   def api_response(uri, cached = false)
     raw_response = api_get_request(uri, cached)
-    raise "Nil response from API" if raw_response.nil?
+    raise ExternalServiceNotFound if raw_response.nil?
 
     begin
       JSON.parse(raw_response)
     rescue JSON::ParserError
-      begin
-        Hash.from_xml(raw_response)
-      rescue REXML::ParseException
-        puts "API response could could not be parsed as JSON or XML"
-        { "error" => "Error parsing response from API" }
-      end
+      Hash.from_xml(raw_response)
     end
   end
 

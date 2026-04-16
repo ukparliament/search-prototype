@@ -40,9 +40,41 @@ RSpec.describe SolrSearch, type: :model do
   end
 
   describe 'data' do
-    let!(:solr_search) { SolrSearch.new(filter: { 'field_name' => ['test'] }) }
-    it 'returns a hash containing the search parameters and response' do
-      expect(solr_search.data).to eq({ search_parameters: { :filter => { "field_name" => ["test"] } }, data: mock_response })
+    context 'where there are no errors' do
+      let!(:solr_search) { SolrSearch.new(filter: { 'field_name' => ['test'] }) }
+      it 'returns a hash containing the search parameters and response' do
+        expect(solr_search.data).to eq({ search_parameters: { :filter => { "field_name" => ["test"] } }, data: mock_response })
+      end
+      context 'where solr returned an error' do
+        context 'with a 500 error' do
+          let!(:mock_response) { { 'error' => { 'msg' => 'an error', 'code' => 500 } } }
+
+          it 'raises an ExternalServiceError' do
+            expect { solr_search.data }.to raise_exception ExternalServiceError
+          end
+        end
+        context 'with a 401 error' do
+          let!(:mock_response) { { 'error' => { 'msg' => 'an error', 'code' => 401 } } }
+
+          it 'raises an ExternalServiceError' do
+            expect { solr_search.data }.to raise_exception ExternalServiceUnauthorized
+          end
+        end
+        context 'with a 403 error' do
+          let!(:mock_response) { { 'error' => { 'msg' => 'an error', 'code' => 403 } } }
+
+          it 'raises an ExternalServiceError' do
+            expect { solr_search.data }.to raise_exception ExternalServiceUnauthorized
+          end
+        end
+        context 'with a 404 error' do
+          let!(:mock_response) { { 'error' => { 'msg' => 'an error', 'code' => 404 } } }
+
+          it 'raises an ExternalServiceError' do
+            expect { solr_search.data }.to raise_exception ExternalServiceNotFound
+          end
+        end
+      end
     end
   end
 

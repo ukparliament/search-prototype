@@ -28,18 +28,6 @@ RSpec.describe 'Search', type: :request do
       allow(ses_lookup_instance).to receive(:extract_hierarchy_data).and_return({ [92424, "Personal statements"] => [{ "typeId" => "1", "qty" => "1", "name" => "Broader Term", "abbr" => "BT", "fields" => [{ "field" => { "name" => "Oral statements", "id" => "350073", "zid" => "52566919", "class" => "CTP", "freq" => "0", "facets" => [{ "id" => "346696", "name" => "Content type" }] } }] }] })
     end
 
-    context 'solr returns an error' do
-      let!(:solr_search_instance) { SolrSearch.new(query: '', filter: { "type_ses" => ["90996"] }) }
-
-      it 'renders an error page' do
-        allow_any_instance_of(SearchData).to receive(:solr_error?).and_return(true)
-
-        get '/search', params: { "query" => 'test', "filter" => { "type_ses" => ["90996"] } }
-        expect(response).to have_http_status(:ok)
-        expect(CGI::unescapeHTML(response.body)).to include('Something has gone wrong')
-      end
-    end
-
     context 'a search using filters' do
       let!(:solr_search_instance) { SolrSearch.new(query: { "filter" => { "type_ses" => ["90996"] } }) }
 

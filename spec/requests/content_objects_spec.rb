@@ -24,17 +24,5 @@ RSpec.describe 'ContentTypeObjects', type: :request do
         expect(response.body).to include('Parliamentary Search')
       end
     end
-
-    context '404 error' do
-      # TODO: decide where we raise a 404 here
-      context 'when receiving valid data from SolrQuery but type_ses is missing' do
-        it 'renders the error page' do
-          allow_any_instance_of(SolrQuery).to receive(:all_data).and_return({ 'response' => { "docs" => [{ 'not_type_ses' => [12345] }] } })
-          allow(ContentTypeObject).to receive(:generate).and_return(edm_instance)
-          get '/objects', params: { :object => 'test_string' }
-          expect(response.body).to include("We can't find what you are looking for")
-        end
-      end
-    end
   end
 end
