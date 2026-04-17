@@ -148,4 +148,10 @@ module ApplicationHelper
 
     filter_params[facet_field_name]&.include?(text_field_name)
   end
+
+  ##
+  # Performs singularization word by word to avoid issues with (brackets)
+  def singularize_phrase(phrase)
+    phrase.gsub(/\b\w+\b/) { |word| word.singularize }
+  end
 end

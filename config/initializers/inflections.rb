@@ -13,6 +13,7 @@ ActiveSupport::Inflector.inflections(:en) do |inflect|
   inflect.uncountable ["European material produced by EU institutions"]
   inflect.uncountable ["Observations on petitions"]
   inflect.uncountable ["ObservationsOnPetitions"]
+  inflect.uncountable ["Lords in Focus"]
 end
 
 # These inflection rules are supported but not enabled by default:
