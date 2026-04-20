@@ -26,7 +26,6 @@ class FieldExpander
       # TODO: exclude TPG
       text_fields = %w[subject_t]
       ses_fields = %w[subject_ses]
-      # topic_ses has been removed, so behaviour here differs from old search by design
     elsif field_name == "author"
       # extra: correspondingMinister_t, epCommittee_t, department_t etc are all only the submitted term (dwp) in example, whereas we're searching all equivalents too
       # this seems to be unintentional behaviour in the original search code; for the time being we're leaving this alone

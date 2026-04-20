@@ -131,10 +131,6 @@ class ContentTypeObject
     combine_fields(from_ses, as_text)
   end
 
-  def topics
-    get_all_from('topic_ses')
-  end
-
   def certified_categories
     get_all_from('certifiedCategory_ses')
   end
