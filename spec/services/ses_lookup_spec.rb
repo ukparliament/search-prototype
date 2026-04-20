@@ -13,9 +13,9 @@ RSpec.describe SesLookup, type: :model do
       let!(:formatted_query) { URI('https://api.test.url/ses?TBDB=disp_taxonomy&TEMPLATE=service.json&expand_hierarchy=0&SERVICE=termlite&ID=92347').dup }
       let!(:mock_response) { File.read("spec/fixtures/xml_error_example.xml") }
 
-      it 'returns the error' do
+      it 'raises an ExternalServiceError' do
         allow(ses_lookup).to receive(:api_get_request).with(formatted_query, false).and_return(mock_response)
-        expect(ses_lookup.data).to eq({ "error" => { "code" => "401", "message" => "Invalid API key" } })
+        expect { ses_lookup.data }.to raise_error(ExternalServiceUnauthorized)
       end
     end
 
@@ -24,9 +24,9 @@ RSpec.describe SesLookup, type: :model do
       let!(:formatted_query) { URI('https://api.test.url/ses?TBDB=disp_taxonomy&TEMPLATE=service.json&expand_hierarchy=0&SERVICE=termlite&ID=92347').dup }
       let!(:mock_response) { nil }
 
-      it 'raises an exception' do
+      it 'raises an ExternalServiceNotFound' do
         allow(ses_lookup).to receive(:api_get_request).with(formatted_query, false).and_return(mock_response)
-        expect { ses_lookup.data }.to raise_exception("Nil response from API")
+        expect { ses_lookup.data }.to raise_exception(ExternalServiceNotFound)
       end
     end
 
@@ -69,9 +69,9 @@ RSpec.describe SesLookup, type: :model do
       let!(:formatted_query) { URI('https://api.test.url/ses?TBDB=disp_taxonomy&TEMPLATE=service.json&SERVICE=allterms&expand_hierarchy=1&CLASS=CTP').dup }
       let!(:mock_response) { File.read("spec/fixtures/xml_error_example.xml") }
 
-      it 'returns the error' do
+      it 'returns the appropriate error' do
         allow(ses_lookup).to receive(:api_get_request).with(formatted_query, true).and_return(mock_response)
-        expect(ses_lookup.extract_hierarchy_data).to eq({ "error" => { "code" => "401", "message" => "Invalid API key" } })
+        expect { ses_lookup.extract_hierarchy_data }.to raise_error(ExternalServiceUnauthorized)
       end
     end
 
@@ -82,7 +82,7 @@ RSpec.describe SesLookup, type: :model do
 
       it 'returns nil' do
         allow(ses_lookup).to receive(:api_get_request).with(formatted_query, true).and_return(mock_response)
-        expect { ses_lookup.extract_hierarchy_data }.to raise_exception("Nil response from API")
+        expect { ses_lookup.extract_hierarchy_data }.to raise_exception(ExternalServiceNotFound)
       end
     end
 

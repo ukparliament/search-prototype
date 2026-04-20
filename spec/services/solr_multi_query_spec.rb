@@ -15,7 +15,6 @@ RSpec.describe SolrMultiQuery, type: :model do
                        { 'test_string' => 'test2', 'uri' => 'test_uri2', 'all_ses' => [456, 789], 'type_ses' => [23456] },
                        { 'test_string' => 'test3', 'uri' => 'test_uri3', 'all_ses' => [234, 567], 'type_ses' => [34567] },
   ] }
-  let!(:error_response) { { 'error' => { 'msg' => 'an error', 'code' => 500 } } }
   let!(:formatted_query) { { fl: nil, q: "uri:test_uri1 || uri:test_uri2 || uri:test_uri3", "q.op": "OR", rows: 500 } }
 
   before do
@@ -42,9 +41,36 @@ RSpec.describe SolrMultiQuery, type: :model do
     end
 
     context 'where response is an error' do
-      it 'returns the error from the result of evaluated_response' do
-        allow(solr_multi_query).to receive(:api_post_request).with(formatted_query).and_return(error_response.to_json)
-        expect(solr_multi_query.all_data).to eq({ 'msg' => 'an error', 'code' => 500 })
+      context 'where the error is a 500 error' do
+        let!(:mock_response) { { 'error' => { 'msg' => 'an error', 'code' => 500 } } }
+
+        it 'raises an ExternalServiceError' do
+          expect { solr_multi_query.all_data }.to raise_error(ExternalServiceError)
+        end
+      end
+
+      context 'where the error is a 401 error' do
+        let!(:mock_response) { { 'error' => { 'msg' => 'an error', 'code' => 401 } } }
+
+        it 'raises an ExternalServiceError' do
+          expect { solr_multi_query.all_data }.to raise_error(ExternalServiceUnauthorized)
+        end
+      end
+
+      context 'where the error is a 403 error' do
+        let!(:mock_response) { { 'error' => { 'msg' => 'an error', 'code' => 403 } } }
+
+        it 'raises an ExternalServiceError' do
+          expect { solr_multi_query.all_data }.to raise_error(ExternalServiceUnauthorized)
+        end
+      end
+
+      context 'where the error is a 404 error' do
+        let!(:mock_response) { { 'error' => { 'msg' => 'an error', 'code' => 404 } } }
+
+        it 'raises an ExternalServiceError' do
+          expect { solr_multi_query.all_data }.to raise_error(ExternalServiceNotFound)
+        end
       end
     end
   end

@@ -36,7 +36,7 @@ class QueryExpander
     puts "Tokens: #{tokens}" if Rails.env.development?
 
     tokens.each do |label, value|
-      if label == :operator
+      if [:operator, :url].include?(label)
         # do nothing, pass directly to Solr
         search_term = value
         processed_tokens << search_term
@@ -44,8 +44,8 @@ class QueryExpander
         # For quoted phrases, the user expectation is that the phrase is passed to Solr as-is
         # However, if the complete phrase is matched by SES, we search for that instead
         # strip one layer of quotes before continuing
-        search_term = value.split(":").last.delete_prefix('"').delete_suffix('"')
-        field_name = value.split(":").first
+        search_term = value.partition(":").last.delete_prefix('"').delete_suffix('"')
+        field_name = value.partition(":").first
         ses_data = ses_query.new({ value: search_term }).data
         expanded_fields = field_expander.new(field_name).expand_fields
 
@@ -56,14 +56,14 @@ class QueryExpander
 
       elsif label == :specified_field_no_expansion
         # delete unwanted []; expand fields using blank SES data
-        search_term = value.split(":").last.delete_prefix("[").delete_suffix("]")
-        field_name = value.split(":").first
+        search_term = value.partition(":").last.delete_prefix("[").delete_suffix("]")
+        field_name = value.partition(":").first
         expanded_fields = field_expander.new(field_name).expand_fields
         processed_tokens << term_expander.new(expanded_fields: expanded_fields, search_term: search_term).expand_terms
 
       elsif label == :specified_field
-        search_term = value.split(":").last
-        field_name = value.split(":").first
+        search_term = value.partition(":").last
+        field_name = value.partition(":").first
         expanded_fields = field_expander.new(field_name).expand_fields
         ses_data = ses_query.new({ value: search_term }).data
         processed_tokens << term_expander.new(expanded_fields: expanded_fields,

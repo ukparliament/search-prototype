@@ -16,10 +16,10 @@ class ApiClient
     # get Solr response as JSON
     response = evaluated_response
 
-    # check for errors from Solr
-    return response['error'] if response.has_key?('error')
+    # check for / raise errors
+    raise_external_service_error(response)
 
-    # otherwise return response JSON
+    # return response
     response
   end
 
@@ -82,5 +82,20 @@ class ApiClient
 
   def request_headers
     { 'Ocp-Apim-Subscription-Key' => api_subscription_key }
+  end
+
+  def raise_external_service_error(response)
+    return unless response.has_key?('error')
+
+    case response.dig('error', 'code')&.to_i
+    when 401
+      raise ExternalServiceUnauthorized
+    when 403
+      raise ExternalServiceUnauthorized
+    when 404
+      raise ExternalServiceNotFound
+    else
+      raise ExternalServiceError
+    end
   end
 end

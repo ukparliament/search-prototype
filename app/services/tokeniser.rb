@@ -39,6 +39,8 @@ class Tokeniser
     terms.each do |term|
       if term.match(/^(?:AND|OR|NOT)$/)
         tokens << [:operator, term]
+      elsif term.match?(/\A[a-z]+:\/\//)
+        tokens << [:url, term]
       elsif term.match(/(\w+:"(?:[^"]+)")/)
         tokens << [:specified_field_with_quoted_phrase, term]
       elsif term.match(/(\w+:'(?:[^']+)')/)

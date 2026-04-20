@@ -1,0 +1,1 @@
+class ExternalServiceNotFound < StandardError; end

@@ -28,6 +28,7 @@ module LinkHelper
   end
 
   def search_link(data, singular: false, reading_order: true, html_class: nil)
+    # TODO: not singularising correctly?
     # Accepts either a string or a SES ID, which it resolves into a string
     # Either option requires a field reference
 
@@ -118,7 +119,9 @@ module LinkHelper
   end
 
   def formatted_name(data, ses_data, singular, reading_order)
-    singular ? format_name(data, ses_data, reading_order)&.singularize : format_name(data, ses_data, reading_order)
+    formatted = format_name(data, ses_data, reading_order)
+
+    singular ? singularize_phrase(formatted) : formatted
   end
 
   private

@@ -10,7 +10,7 @@ RSpec.describe ApplicationHelper, type: :helper do
       end
     end
     context 'where there are some empty tags' do
-      let!(:content) { "some text<h2>A heading</h2><p></p><p> </p>"}
+      let!(:content) { "some text<h2>A heading</h2><p></p><p> </p>" }
       it 'removes the empty nodes' do
         expect(helper.format_html(content, false)).to eq("<p>some text</p><h2>A heading</h2>")
       end
@@ -112,6 +112,26 @@ RSpec.describe ApplicationHelper, type: :helper do
     context 'when given another number' do
       it 'returns a numeric ordinal string (zero indexed)' do
         expect(helper.ordinal_text(9)).to eq('10th')
+      end
+    end
+  end
+
+  describe 'singularize phrase' do
+    context 'with a single word' do
+      it 'singularizes the word' do
+        expect(helper.singularize_phrase('words')).to eq('word')
+      end
+    end
+
+    context 'with multiple words' do
+      it 'singularizes the words' do
+        expect(helper.singularize_phrase('more words with several of them plurals')).to eq('more word with several of them plural')
+      end
+    end
+
+    context 'with brackets in the phrase' do
+      it 'singularizes the words' do
+        expect(helper.singularize_phrase('words and (some more words in brackets)')).to eq('word and (some more word in bracket)')
       end
     end
   end

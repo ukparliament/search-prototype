@@ -1,0 +1,1 @@
+class ExternalServiceError < StandardError; end

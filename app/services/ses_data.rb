@@ -55,11 +55,12 @@ class SesData
     combined_data = cached_data.merge(fetched_data)
 
     if existing_ses_data.blank?
+      # where no existing data was provided, return cached + new data
       combined_data
     else
-      return existing_ses_data if combined_data.blank?
-
-      existing_ses_data.merge(combined_data)
+      # where existing data was provided, merge it with cached + new data
+      # otherwise return the existing data as is
+      combined_data.blank? ? existing_ses_data : existing_ses_data.merge(combined_data)
     end
   end
 
