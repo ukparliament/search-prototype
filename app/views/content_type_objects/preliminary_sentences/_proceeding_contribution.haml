@@ -1,5 +1,5 @@
 %p.font-size-epsilon.reading-width
-  %span>= object_display_name_link(object.object_name)
+  %span>= search_link(object.object_name, singular: true)
   - unless object.member.blank?
     %span= " from "
     %span= search_link(object.member)

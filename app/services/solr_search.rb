@@ -150,9 +150,13 @@ class SolrSearch < ApiClient
   end
 
   def expanded_query
-    return "" unless search_query.present?
+    raise QueryExpansionError unless search_query.present?
 
-    query_expander.new(search_query).expand_query
+    expanded_query = query_expander.new(search_query).expand_query
+
+    raise QueryExpansionError if expanded_query.blank?
+
+    expanded_query
   end
 
   private

@@ -106,33 +106,6 @@ RSpec.describe LinkHelper, type: :helper do
     end
   end
 
-  describe 'object_display_name_link' do
-    let!(:mock_ses_data) { { 123 => 'Early day motions' } }
-    let!(:input_data_type_ses) { { value: 123, field_name: 'type_ses' } }
-    let!(:input_data_subtype_ses) { { value: 123, field_name: 'subtype_ses' } }
-
-    # used in preliminary sentences; defaults to singular
-    context 'when given nil' do
-      it 'returns nil' do
-        allow(helper).to receive(:ses_data).and_return(mock_ses_data)
-        expect(helper.object_display_name_link(nil)).to eq(nil)
-      end
-    end
-    context 'when given a SES ID and field name' do
-      it 'returns a link to search the appropriate alias for that SES field with the dereferenced string for the given ID' do
-        # requires SES data to have been preloaded on the page - this is done for performance reasons
-        allow(helper).to receive(:ses_data).and_return(mock_ses_data)
-        expect(helper.object_display_name_link(input_data_type_ses)).to eq("<a href=\"/search?query=type%3A%22Early+day+motion%22\">Early day motion</a>")
-      end
-    end
-    context 'when called with singularisation disabled' do
-      it 'returns a link to search using the string as a query, and a plural item name' do
-        allow(helper).to receive(:ses_data).and_return(mock_ses_data)
-        expect(helper.object_display_name_link(input_data_type_ses, singular: false)).to eq("<a href=\"/search?query=type%3A%22Early+day+motions%22\">Early day motions</a>")
-      end
-    end
-  end
-
   describe 'format_name' do
     context 'with a SES name that is not a member name' do
       let!(:mock_ses_data) { { 123 => 'Department of One, Two and Three' } }

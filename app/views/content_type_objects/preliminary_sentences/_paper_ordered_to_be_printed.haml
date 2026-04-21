@@ -1,5 +1,5 @@
 %p.font-size-epsilon.reading-width
-  %span>= object_display_name_link(object.object_name)
+  %span>= search_link(object.object_name, singular: true)
   %span= " ordered to be printed "
   - unless object.legislature.blank?
     %span= " by the "

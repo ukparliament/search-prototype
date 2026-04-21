@@ -1,5 +1,5 @@
 %p.font-size-epsilon.reading-width
-  %span>= object_display_name_link(object.object_name)
+  %span>= search_link(object.object_name, singular: true)
   - unless object.legislature.blank? && object.department.blank? && object.deposited_date.blank?
     %span= " deposited "
   - unless object.legislature.blank?

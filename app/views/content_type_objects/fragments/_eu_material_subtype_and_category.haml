@@ -1,7 +1,7 @@
 - unless category.blank? && subtype.blank?
   - unless category.blank?
-    %span>= object_display_name_link(category)
+    %span>= search_link(category, singular: true)
     - unless subtype.blank?
       %span= ", "
   - unless subtype.blank?
-    %span>= object_display_name_link(subtype)
+    %span>= search_link(subtype, singular: true)

@@ -28,7 +28,6 @@ module LinkHelper
   end
 
   def search_link(data, singular: false, reading_order: true, html_class: nil)
-    # TODO: not singularising correctly?
     # Accepts either a string or a SES ID, which it resolves into a string
     # Either option requires a field reference
 
@@ -42,7 +41,7 @@ module LinkHelper
     # format a search query for the link
     query = format_field_specific_search_query(field, formatted_name)
 
-    link_to(formatted_name(data, ses_data, singular, reading_order), search_path(query: query), class: html_class || nil)
+    link_to(formatted_name, search_path(query: query), class: html_class || nil)
   end
 
   def substitute_field_name(field_name)
@@ -102,20 +101,6 @@ module LinkHelper
 
     # Return field:string or field:"a phrase"
     value.to_s.include?(" ") ? "#{field}:\"#{value}\"" : "#{field}:#{value}"
-  end
-
-  def object_display_name_link(data, singular: true, case_formatting: false, reading_order: true)
-    # Formats the name of an object for display; returns as a link to search for that object.
-    # Singular: If true, result is singularised
-    # Case formatting: If true, result is lowercase, except for some whitelisted phrases e.g. "House of Commons"
-    # Reading order: If true, result is flipped on internal comma, e.g. "Sharpe of Epsom, Lord" -> "Lord Sharpe of Epsom"
-    return if data.blank? || data[:value].blank?
-
-    field = substitute_field_name(data[:field_name])
-    formatted = formatted_name(data, ses_data, singular, reading_order)
-    query = format_field_specific_search_query(field, formatted)
-
-    link_to(case_formatting ? conditional_downcase(formatted) : formatted, search_path(query: query))
   end
 
   def formatted_name(data, ses_data, singular, reading_order)
