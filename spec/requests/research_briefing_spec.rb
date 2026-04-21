@@ -28,12 +28,6 @@ RSpec.describe 'Research Briefing', type: :request do
           # SES response mocking requires the correct IDs so we're populating it during the test
           test_ses_data = {}
 
-          unless research_briefing_instance.topics.blank?
-            research_briefing_instance.topics.each do |topic|
-              test_ses_data[topic[:value]] = "SES response for #{topic[:value]}"
-            end
-          end
-
           unless research_briefing_instance.subjects.blank?
 
             research_briefing_instance.subjects.each do |subject|
@@ -80,12 +74,6 @@ RSpec.describe 'Research Briefing', type: :request do
               elsif subject[:field_name] == 'subject_t'
                 expect(CGI::unescapeHTML(response.body)).to include(subject[:value].to_s)
               end
-            end
-          end
-
-          unless research_briefing_instance.topics.blank?
-            research_briefing_instance.topics.each do |topic|
-              expect(CGI::unescapeHTML(response.body)).to include(topic[:value].to_s)
             end
           end
 
