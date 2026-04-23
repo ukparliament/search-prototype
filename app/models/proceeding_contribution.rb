@@ -24,7 +24,6 @@ class ProceedingContribution < ContentTypeObject
     title_t uri
     contributionText_t
     member_ses memberParty_ses
-    type_ses subtype_ses
     procedural_ses
     legislationTitle_ses legislationTitle_t
     subject_ses subject_t

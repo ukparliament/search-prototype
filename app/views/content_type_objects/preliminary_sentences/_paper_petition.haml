@@ -1,5 +1,5 @@
 %p.font-size-epsilon.reading-width
-  %span>= object_display_name_link(object.object_name)
+  %span>= search_link(object.object_name, singular: true)
   - unless object.legislature.blank?
     %span= " presented in the "
     %span>= render 'content_type_objects/fragments/list', items: object.legislature, terminator: ',', singular: false

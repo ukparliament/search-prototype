@@ -28,21 +28,26 @@ module LinkHelper
   end
 
   def search_link(data, singular: false, reading_order: true, html_class: nil)
-    # TODO: not singularising correctly?
     # Accepts either a string or a SES ID, which it resolves into a string
     # Either option requires a field reference
 
     return if data.blank? || data[:value].blank?
 
-    formatted_name = formatted_name(data, ses_data, singular, reading_order)
-    return formatted_name unless SEARCH_LINK_FIELD_NAMES.include?(data[:field_name])
+    # format_name (bypassing singularisation steps) used to build lookup_name for the query
+    lookup_name = format_name(data, ses_data, reading_order)
 
+    # formatted_name is used to build the display_name for the link text or returned string
+    display_name = formatted_name(data, ses_data, singular, reading_order)
+    return display_name unless SEARCH_LINK_FIELD_NAMES.include?(data[:field_name])
+
+    # swap field names for aliases where appropriate
     field = substitute_field_name(data[:field_name])
 
     # format a search query for the link
-    query = format_field_specific_search_query(field, formatted_name)
+    query = format_field_specific_search_query(field, lookup_name)
 
-    link_to(formatted_name(data, ses_data, singular, reading_order), search_path(query: query), class: html_class || nil)
+    # return the link
+    link_to(display_name, search_path(query: query), class: html_class || nil)
   end
 
   def substitute_field_name(field_name)
@@ -102,20 +107,6 @@ module LinkHelper
 
     # Return field:string or field:"a phrase"
     value.to_s.include?(" ") ? "#{field}:\"#{value}\"" : "#{field}:#{value}"
-  end
-
-  def object_display_name_link(data, singular: true, case_formatting: false, reading_order: true)
-    # Formats the name of an object for display; returns as a link to search for that object.
-    # Singular: If true, result is singularised
-    # Case formatting: If true, result is lowercase, except for some whitelisted phrases e.g. "House of Commons"
-    # Reading order: If true, result is flipped on internal comma, e.g. "Sharpe of Epsom, Lord" -> "Lord Sharpe of Epsom"
-    return if data.blank? || data[:value].blank?
-
-    field = substitute_field_name(data[:field_name])
-    formatted = formatted_name(data, ses_data, singular, reading_order)
-    query = format_field_specific_search_query(field, formatted)
-
-    link_to(case_formatting ? conditional_downcase(formatted) : formatted, search_path(query: query))
   end
 
   def formatted_name(data, ses_data, singular, reading_order)

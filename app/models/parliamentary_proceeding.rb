@@ -26,7 +26,6 @@ class ParliamentaryProceeding < Proceeding
     leadMember_ses
     answeringMember_ses
     department_ses department_t
-    type_ses subtype_ses
     legislativeStage_ses
     procedural_ses
     legislationTitle_ses legislationTitle_t

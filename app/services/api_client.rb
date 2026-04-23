@@ -9,7 +9,7 @@ class ApiClient
   end
 
   def object_data
-    all_data['response']['docs']&.reject { |h| h.dig('type_ses').blank? }
+    all_data.dig('response', 'docs')
   end
 
   def all_data

@@ -20,7 +20,6 @@ class ResearchBriefing < ContentTypeObject
     description_t
     creator_ses creator_t
     category_ses
-    type_ses subtype_ses
     legislationTitle_ses legislationTitle_t
     subject_ses subject_t
     searcherNote_t

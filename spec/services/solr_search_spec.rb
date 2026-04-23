@@ -1,7 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe SolrSearch, type: :model do
-  let!(:solr_search) { SolrSearch.new }
+  let!(:solr_search) { SolrSearch.new(query_expander: expand_query_class) }
+  let(:expand_query_class) { class_double(QueryExpander, new: expand_query_instance) }
+  let(:expand_query_instance) { instance_double(QueryExpander) }
   let!(:mock_response) { {
     "responseHeader" => {
       "status" => 0,
@@ -22,7 +24,7 @@ RSpec.describe SolrSearch, type: :model do
   let!(:formatted_query) { { fl: "uri type_ses subtype_ses",
                              fq: ["{!tag=field_name}field_name:(test)"],
                              "json.facet": "{\"type_sesrollup\":{\"type\":\"terms\",\"field\":\"type_sesrollup\",\"limit\":-1,\"mincount\":1,\"domain\":{\"excludeTags\":\"type_sesrollup\"}},\"legislature_ses\":{\"type\":\"terms\",\"field\":\"legislature_ses\",\"limit\":100,\"mincount\":1,\"domain\":{\"excludeTags\":\"legislature_ses\"}},\"date_year\":{\"type\":\"terms\",\"field\":\"date_year\",\"limit\":100,\"mincount\":1,\"domain\":{\"excludeTags\":\"date_year\"}},\"date_month\":{\"type\":\"terms\",\"field\":\"date_month\",\"limit\":100,\"mincount\":1,\"domain\":{\"excludeTags\":\"date_month\"}},\"session_s\":{\"type\":\"terms\",\"field\":\"session_s\",\"limit\":100,\"mincount\":1,\"domain\":{\"excludeTags\":\"session_s\"}},\"department_ses\":{\"type\":\"terms\",\"field\":\"department_ses\",\"limit\":100,\"mincount\":1,\"domain\":{\"excludeTags\":\"department_ses\"}},\"member_ses\":{\"type\":\"terms\",\"field\":\"member_ses\",\"limit\":100,\"mincount\":1,\"domain\":{\"excludeTags\":\"member_ses\"}},\"primaryMember_ses\":{\"type\":\"terms\",\"field\":\"primaryMember_ses\",\"limit\":100,\"mincount\":1,\"domain\":{\"excludeTags\":\"primaryMember_ses\"}},\"answeringMember_ses\":{\"type\":\"terms\",\"field\":\"answeringMember_ses\",\"limit\":100,\"mincount\":1,\"domain\":{\"excludeTags\":\"answeringMember_ses\"}},\"legislativeStage_ses\":{\"type\":\"terms\",\"field\":\"legislativeStage_ses\",\"limit\":100,\"mincount\":1,\"domain\":{\"excludeTags\":\"legislativeStage_ses\"}},\"legislationTitle_ses\":{\"type\":\"terms\",\"field\":\"legislationTitle_ses\",\"limit\":100,\"mincount\":1,\"domain\":{\"excludeTags\":\"legislationTitle_ses\"}},\"publisher_ses\":{\"type\":\"terms\",\"field\":\"publisher_ses\",\"limit\":100,\"mincount\":1,\"domain\":{\"excludeTags\":\"publisher_ses\"}},\"subject_ses\":{\"type\":\"terms\",\"field\":\"subject_ses\",\"limit\":100,\"mincount\":1,\"domain\":{\"excludeTags\":\"subject_ses\"}}}",
-                             q: "",
+                             q: "test",
                              "q.op": "AND",
                              rows: 20,
                              sort: "date_dt desc",
@@ -41,9 +43,10 @@ RSpec.describe SolrSearch, type: :model do
 
   describe 'data' do
     context 'where there are no errors' do
-      let!(:solr_search) { SolrSearch.new(filter: { 'field_name' => ['test'] }) }
+      # note: using [] to avoid query expansion in this test
+      let!(:solr_search) { SolrSearch.new(query: "[test]", filter: { 'field_name' => ['test'] }) }
       it 'returns a hash containing the search parameters and response' do
-        expect(solr_search.data).to eq({ search_parameters: { :filter => { "field_name" => ["test"] } }, data: mock_response })
+        expect(solr_search.data).to eq({ search_parameters: { :query => "[test]", :filter => { "field_name" => ["test"] } }, data: mock_response })
       end
       context 'where solr returned an error' do
         context 'with a 500 error' do
@@ -270,27 +273,34 @@ RSpec.describe SolrSearch, type: :model do
 
   describe 'expanded_query' do
     context 'with no query' do
-      # for example, when clicking on a SES link, we're just applying a filter
       let!(:solr_search) { SolrSearch.new(query: '', filter: { "answeringMember_ses" => ["304301"] }, query_expander: expand_query_class) }
       let(:expand_query_class) { class_double(QueryExpander, new: expand_query_instance) }
       let(:expand_query_instance) { instance_double(QueryExpander) }
 
-      it 'returns an empty string' do
-        expect(solr_search.expanded_query).to eq("")
+      it 'raises a QueryExpansionError' do
+        expect { solr_search.expanded_query }.to raise_error(QueryExpansionError)
+      end
+    end
+
+    context 'where query expansion fails' do
+      let!(:solr_search) { SolrSearch.new(query: 'horse', filter: { "answeringMember_ses" => ["304301"] }, query_expander: expand_query_class) }
+
+      it 'raises a QueryExpansionError' do
+        expect(expand_query_instance).to receive(:expand_query).and_return('')
+        expect { solr_search.expanded_query }.to raise_error(QueryExpansionError)
       end
     end
 
     context 'with a query' do
-      let(:solr_search) { SolrSearch.new(query: 'horse', query_expander: expand_query_test_class) }
-      let(:expand_query_test_class) { class_double(QueryExpander, new: expand_query_test_instance) }
-      let(:expand_query_test_instance) { instance_double(QueryExpander, expand_query: 'test') }
+      let(:solr_search) { SolrSearch.new(query: 'horse', query_expander: expand_query_class) }
+      let(:expand_query_instance) { instance_double(QueryExpander, expand_query: 'test') }
 
       it 'returns an expanded query' do
         # initialises QueryExpander with the search query
-        expect(expand_query_test_class).to receive(:new).with('horse')
+        expect(expand_query_class).to receive(:new).with('horse')
 
         # calls expand query on the instance of QueryExpander
-        expect(expand_query_test_instance).to receive(:expand_query).and_return('expanded query string')
+        expect(expand_query_instance).to receive(:expand_query).and_return('expanded query string')
 
         # result is the response from expand query method
         expect(solr_search.expanded_query).to eq('expanded query string')

@@ -20,7 +20,6 @@ class WrittenQuestion < Question
     askingMember_ses tablingMember_ses askingMemberParty_ses tablingMemberParty_ses
     answeringMember_ses answeringMemberParty_ses
     departmentPrinted_t
-    type_ses subtype_ses
     pqStatus_t
     askedToReplyAuthor_ses
     procedural_ses

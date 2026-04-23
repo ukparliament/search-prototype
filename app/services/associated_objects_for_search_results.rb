@@ -5,6 +5,6 @@ class AssociatedObjectsForSearchResults < AssociatedObjects
   end
 
   def solr_fields
-    %w[uri type_ses questionText_t answerText_t askingMember_ses askingMemberParty_ses]
+    %w[uri type_ses subtype_ses questionText_t answerText_t askingMember_ses askingMemberParty_ses]
   end
 end

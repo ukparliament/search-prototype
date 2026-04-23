@@ -9,8 +9,8 @@ class ContentTypeObject
   def self.generate(content_type_object_data)
     # takes object data as an argument and returns an instance of the correct object subclass
 
-    type_id = content_type_object_data['type_ses']&.first
-    subtype_ids = content_type_object_data['subtype_ses']
+    type_id = content_type_object_data.dig('type_ses', 0)
+    subtype_ids = content_type_object_data.dig('subtype_ses')
 
     content_type_object_class(type_id, subtype_ids).classify.constantize.new(content_type_object_data)
   end
@@ -24,8 +24,8 @@ class ContentTypeObject
   end
 
   def self.search_result_solr_fields
-    # TODO: consider moving location fields to be per-object
-    %w[timestamp location_uri externalLocation_uri location_t externalLocation_t]
+    # Type & Subtype are always required for assigning a content type
+    %w[timestamp type_ses subtype_ses location_uri externalLocation_uri location_t externalLocation_t]
   end
 
   def self.search_result_ses_fields

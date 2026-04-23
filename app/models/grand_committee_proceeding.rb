@@ -16,7 +16,6 @@ class GrandCommitteeProceeding < ParliamentaryProceeding
     leadMember_ses
     answeringMember_ses
     department_ses department_t
-    type_ses subtype_ses
     corporateAuthor_ses corporateAuthor_t
     procedural_ses
     legislationTitle_ses legislationTitle_t

@@ -19,7 +19,6 @@ class PaperPetition < Petition
     petitionText_t
     abstract_t
     leadMember_ses
-    type_ses subtype_ses
     legislationTitle_ses legislationTitle_t
     subject_ses subject_t
     searcherNote_t

@@ -1,0 +1,1 @@
+class QueryExpansionError < StandardError; end

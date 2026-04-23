@@ -12,7 +12,6 @@ class ParliamentaryCommittee < ParliamentaryPaperReported
     # fields requested in Solr search for search results page
     super << %w[
     title_t uri
-    type_ses subtype_ses
     corporateAuthor_ses corporateAuthor_t
     legislationTitle_ses legislationTitle_t
     witness_ses witness_t
