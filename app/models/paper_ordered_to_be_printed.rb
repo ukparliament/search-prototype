@@ -18,7 +18,6 @@ class PaperOrderedToBePrinted < Paper
     title_t uri
     member_ses
     department_ses department_t
-    type_ses subtype_ses
     corporateAuthor_ses corporateAuthor_t
     procedural_ses
     dateLaid_dt dateOfOrderToPrint_dt dateWithdrawn_dt

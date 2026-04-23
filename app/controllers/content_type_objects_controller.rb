@@ -7,6 +7,9 @@ class ContentTypeObjectsController < ApplicationController
     # construct the object
     @object = ContentTypeObject.generate(object_data)
 
+    # check the object is supported
+    raise ObjectNotSupported if @object.is_a?(NotSupported)
+
     # fetch associated object data
     associated_object_results = AssociatedObjectsForObjectView.new(@object).data
     @associated_object_data = associated_object_results.dig(:object_data)

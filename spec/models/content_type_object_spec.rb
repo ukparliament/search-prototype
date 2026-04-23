@@ -10,6 +10,13 @@ RSpec.describe ContentTypeObject, type: :model do
         expect(ContentTypeObject.generate(test_data)).to be_an_instance_of(NotSupported)
       end
     end
+    context 'when passed a missing type_ses' do
+      let!(:test_data) { { "type_ses" => [] } }
+
+      it 'returns an instance of the NotSupported class' do
+        expect(ContentTypeObject.generate(test_data)).to be_an_instance_of(NotSupported)
+      end
+    end
     context 'when passed an unknown object type' do
       let!(:test_data) { { "type_ses" => [12345] } }
 

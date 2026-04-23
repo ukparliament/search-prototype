@@ -42,6 +42,7 @@ module Search
     config.generators.system_tests = nil
 
     # Assign error codes to custom errors
+    config.action_dispatch.rescue_responses["ObjectNotSupported"] = :not_found
     config.action_dispatch.rescue_responses["ExternalServiceNotFound"] = :not_found
     config.action_dispatch.rescue_responses["ExternalServiceUnauthorized"] = :forbidden
   end

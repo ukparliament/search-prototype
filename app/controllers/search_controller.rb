@@ -10,7 +10,9 @@ class SearchController < ApplicationController
     search = SolrSearch.new(**search_params.to_h.symbolize_keys)
     @search_data = SearchData.new(search.data)
 
-    @objects = @search_data.object_data
+    # filter out unsupported objects - may move this elsewhere
+    @objects = @search_data.object_data.reject { |o| o.is_a?(NotSupported) }
+
     unless @objects.blank?
       # Type facet hierarchy
       @type_facets = @search_data.type_facets

@@ -7,15 +7,7 @@ class SolrQuery < ApiClient
   end
 
   def object_data
-    # differs from superclass in that we want the first result regardless of type_ses presence
-    object = all_data['response']['docs'].first
-
-    if object.dig('type_ses').blank?
-      # raise the appropriate error if type_ses is missing
-      raise ExternalServiceNotFound
-    else
-      object
-    end
+    super.first
   end
 
   private

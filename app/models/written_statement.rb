@@ -19,7 +19,6 @@ class WrittenStatement < ContentTypeObject
     statementText_t
     member_ses memberParty_ses
     department_ses department_t
-    type_ses subtype_ses
     legislationTitle_ses legislationTitle_t
     subject_ses subject_t
     searcherNote_t

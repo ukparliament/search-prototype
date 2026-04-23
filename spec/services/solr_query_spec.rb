@@ -27,24 +27,6 @@ RSpec.describe SolrQuery, type: :model do
         expect(solr_query.object_data).to eq({ 'type_ses' => [12345] })
       end
     end
-    context 'where type_ses is NOT present for the first result' do
-      let!(:mock_response) { {
-        "responseHeader" => {
-          "status" => 0,
-          "QTime" => 4,
-          "params" => { "q" => "externalLocation_uri:\"test_external_location_uri\"", "wt" => "json" }
-        },
-        "response" => {
-          "numFound" => 1,
-          "start" => 0,
-          "docs" => [{ 'type_ses' => [] }]
-        },
-        "highlighting" => { "test_url" => {} }
-      } }
-      it 'raises an ExternalServiceNotFound error' do
-        expect { solr_query.object_data }.to raise_error ExternalServiceNotFound
-      end
-    end
   end
 
   describe 'all_data' do

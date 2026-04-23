@@ -16,7 +16,7 @@ class SearchData
     # The first search returns only a URI & type_ses (see field list of SolrSearch)
     return unless search
 
-    search.dig(:data, 'response', 'docs')&.reject { |h| h.dig('type_ses').blank? }
+    search.dig(:data, 'response', 'docs')
   end
 
   def object_uris
@@ -28,8 +28,6 @@ class SearchData
   def empty_objects
     objects = []
     initial_query_data&.each do |object_data|
-      next if object_data['type_ses'].blank?
-
       objects << ContentTypeObject.generate(object_data)
     end
 
@@ -57,7 +55,8 @@ class SearchData
 
     # iterate through sorted uris and grab object from hash into array to return
     ret = []
-    initial_query_data.pluck('uri').each do |sorted_uri|
+
+    object_uris&.each do |sorted_uri|
       ret << unsorted_items_hash.dig(sorted_uri)
     end
 

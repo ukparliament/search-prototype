@@ -33,15 +33,21 @@ module LinkHelper
 
     return if data.blank? || data[:value].blank?
 
-    formatted_name = formatted_name(data, ses_data, singular, reading_order)
-    return formatted_name unless SEARCH_LINK_FIELD_NAMES.include?(data[:field_name])
+    # format_name (bypassing singularisation steps) used to build lookup_name for the query
+    lookup_name = format_name(data, ses_data, reading_order)
 
+    # formatted_name is used to build the display_name for the link text or returned string
+    display_name = formatted_name(data, ses_data, singular, reading_order)
+    return display_name unless SEARCH_LINK_FIELD_NAMES.include?(data[:field_name])
+
+    # swap field names for aliases where appropriate
     field = substitute_field_name(data[:field_name])
 
     # format a search query for the link
-    query = format_field_specific_search_query(field, formatted_name)
+    query = format_field_specific_search_query(field, lookup_name)
 
-    link_to(formatted_name, search_path(query: query), class: html_class || nil)
+    # return the link
+    link_to(display_name, search_path(query: query), class: html_class || nil)
   end
 
   def substitute_field_name(field_name)

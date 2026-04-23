@@ -19,7 +19,6 @@ class UnprintedPaper < ParliamentaryPaperLaid
     abstract_t
     memberPrinted_t
     department_ses department_t
-    type_ses subtype_ses
     corporateAuthor_ses corporateAuthor_t
     procedure_t
     dateLaid_dt dateWithdrawn_dt dateMade_dt dateApproved_dt
