@@ -19,6 +19,12 @@ class QueryStringProcessor
     results.sort_by { |phrase| -phrase.split.length }
   end
 
+  def normalise_quotes
+    raise "#{query} is not a String" unless query.is_a? String
+
+    query.tr("’‘", "'").tr("“”", '"')
+  end
+
   private
 
   def split_words(query_string)
@@ -26,5 +32,4 @@ class QueryStringProcessor
 
     query_string.split(" ")
   end
-
 end
