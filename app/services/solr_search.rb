@@ -70,7 +70,7 @@ class SolrSearch < ApiClient
   def search_query
     return if query.blank?
 
-    query
+    QueryStringProcessor.new(query).normalise_quotes
   end
 
   def rows
