@@ -150,8 +150,16 @@ module ApplicationHelper
   end
 
   ##
-  # Performs singularization word by word to avoid issues with (brackets)
+  # Handles awkward cases that confuse Rails' built in approach
   def singularize_phrase(phrase)
-    phrase.gsub(/\b\w+\b/) { |word| word.singularize }
+    special_cases = {
+      "Select Committee reports (Government responses)" => "Select Committee report (Government response)"
+    }
+
+    if phrase.in?(special_cases.keys)
+      special_cases[phrase]
+    else
+      phrase.singularize
+    end
   end
 end
