@@ -117,23 +117,18 @@ RSpec.describe ApplicationHelper, type: :helper do
   end
 
   describe 'singularize phrase' do
-    context 'with a single word' do
-      it 'singularizes the word' do
-        expect(helper.singularize_phrase('words')).to eq('word')
+    context 'with a known phrase' do
+      it 'swaps in the replacement phrase' do
+        expect(helper.singularize_phrase("Select Committee reports (Government responses)")).to eq("Select Committee report (Government response)")
       end
     end
 
-    context 'with multiple words' do
-      it 'singularizes the words' do
-        expect(helper.singularize_phrase('more words with several of them plurals')).to eq('more word with several of them plural')
-      end
-    end
-
-    context 'with brackets in the phrase' do
-      it 'singularizes the words' do
-        expect(helper.singularize_phrase('words and (some more words in brackets)')).to eq('word and (some more word in bracket)')
+    context 'with unknown phrases' do
+      let(:input_string) { 'any other phrases' }
+      it 'delegates to the standard Rails singularizer' do
+        expect(input_string).to receive(:singularize).and_call_original
+        expect(helper.singularize_phrase(input_string)).to eq('any other phrase')
       end
     end
   end
-
 end
