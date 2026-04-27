@@ -26,7 +26,7 @@ RSpec.describe 'SesQuery' do
       let!(:input_data) { { value: 'housing' } }
       let!(:formatted_query) { URI("https://api.test.url/ses?TBDB=disp_taxonomy&TEMPLATE=service.json&SERVICE=conceptmap&MATCH=exact&QUERY=housing") }
 
-      it 'returns a hash containing equivalent terms, perferred term, preferred term ID and topic ID' do
+      it 'returns a hash containing equivalent terms, perferred term, preferred term ID' do
         expect(ses_query.data.map(&:keys)).to eq([[:equivalent_terms, :preferred_term, :preferred_term_id]])
         expect(ses_query.data[0][:equivalent_terms]).to eq(["Accommodation", "Houses"])
         expect(ses_query.data[0][:preferred_term]).to eq("Housing")
@@ -76,6 +76,16 @@ RSpec.describe 'SesQuery' do
         expect(ses_query.data.map { |r| r[:preferred_term] }).to eq(["Army Training Estate"])
         expect(ses_query.data.map { |r| r[:preferred_term] }).not_to include("Army")
         expect(ses_query.data.map { |r| r[:preferred_term] }).not_to include("Training")
+      end
+    end
+
+    context 'where SES returns a topic result' do
+      let!(:mock_response) { File.read('spec/fixtures/ses_search_service_example_tpg.json') }
+      let!(:input_data) { { value: 'housing' } }
+      let!(:formatted_query) { URI("https://api.test.url/ses?TBDB=disp_taxonomy&TEMPLATE=service.json&SERVICE=conceptmap&MATCH=exact&QUERY=housing") }
+
+      it 'does not return the topic' do
+        expect(ses_query.data).to eq([])
       end
     end
   end

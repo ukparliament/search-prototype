@@ -23,7 +23,6 @@ class FieldExpander
     if field_name == "title"
       text_fields = %w[title_t]
     elsif field_name == "subject"
-      # TODO: exclude TPG
       text_fields = %w[subject_t]
       ses_fields = %w[subject_ses]
     elsif field_name == "author"
@@ -47,7 +46,6 @@ class FieldExpander
     elsif field_name == "primarymember"
       ses_fields = %w[primaryMember_ses]
     elsif field_name == "legtitle"
-      # TODO: this alias needs to exclude SES class TPG; will have to be implemented elsewhere?
       ses_fields = %w[legislationTitle_ses]
       text_fields = %w[legislationTitle_t]
     elsif field_name == "legstage"
