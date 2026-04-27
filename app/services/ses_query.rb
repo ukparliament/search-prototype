@@ -4,17 +4,14 @@ class SesQuery < SesLookup
   # Returns query expansion data from SES as an array, which may contain one or more terms in the form of a hash:
   # {
   #   equivalent_terms: ['equivalent term 1', 'equivalent term 2', '...'],
-  #   topic_id: '12345',
   #   preferred_term_id: '23456',
   #   preferred_term: 'preferred term'
   # }
   #
-  # Terms with the 'TPG' (topic) class are not included in equivalent terms, but a separate :topic_id is
-  # included in the returned hash.
+  # Name values under 'equivalence' are extracted into the equivalent_terms array. The preferred term name and
+  # SES ID are assigned :preferred_term_id and :preferred_term respectively.
   #
-  # For terms which do not have the 'TPG' class, all name values under 'equivalence' are extracted into
-  # the equivalent_terms array. The preferred term name and SES ID are assigned :preferred_term_id and
-  # :preferred_term respectively.
+  # Terms with the 'TPG' (topic) class are excluded.
   def data
     return if input_data.blank?
 
@@ -51,8 +48,8 @@ class SesQuery < SesLookup
         # the future to controllable by power users at query time?
         # next unless term.dig("term", "src") == "1"
 
-        # where the class is a topic, return the topic ID
-        term_hash[:topic_id] = term.dig("term", "id") if term.dig("term", "class") == "TPG"
+        # where class is topic, disregard this result
+        next if term.dig("term", "class") == "TPG"
 
         # fetch preferred term name and ID
         # SES responds with the preferred term regardless of whether the search matched preferred or non-preferred term
