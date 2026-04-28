@@ -153,7 +153,8 @@ module ApplicationHelper
   # Handles awkward cases that confuse Rails' built in approach
   def singularize_phrase(phrase)
     special_cases = {
-      "Select Committee reports (Government responses)" => "Select Committee report (Government response)"
+      "Select Committee reports (Government responses)" => "Select Committee report (Government response)",
+      "Legislative Grand Committee proceedings (HC)" => "Legislative Grand Committee proceeding (HC)"
     }
 
     if phrase.in?(special_cases.keys)
