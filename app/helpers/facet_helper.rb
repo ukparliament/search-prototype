@@ -11,8 +11,8 @@ module FacetHelper
       # replace original facet data with processed data & return the updated hash
       facet_data[:facets] = sorted
       facet_data
-    when 'date_year'
-      # sort by year descending
+    when 'date_year', 'session_s'
+      # sort by value descending
       sorted = facet_data[:facets].sort_by { |h| h["val"] }.reverse
 
       # replace original facet data with processed data & return the updated hash
