@@ -15,23 +15,29 @@
   <%= render 'content_type_objects/fragments/question', object: object %>
 </dl>
 
-<section class="reading-width">
-  <dl>
-    <%= render 'content_type_objects/fragments/answer', object: object if object.answered? || object.answered_was_holding? %>
-  </dl>
-</section>
+<% if object.answered? || object.answered_was_holding? || object.holding? %>
+  <section class="reading-width">
+    <dl>
+      <%= render 'content_type_objects/fragments/answer', object: object %>
+    </dl>
+  </section>
+<% end %>
 
-<section class="reading-width">
-  <dl>
-    <%= render 'content_type_objects/fragments/corrected_written_question_follow_up', correcting_object: @associated_object_data[object.correcting_item_link] if object.corrected? %>
-  </dl>
-</section>
+<% if object.corrected? %>
+  <section class="reading-width">
+    <dl>
+      <%= render 'content_type_objects/fragments/corrected_written_question_follow_up', correcting_object: @associated_object_data.dig(object.correcting_item_link) %>
+    </dl>
+  </section>
+<% end %>
 
-<section class="reading-width">
-  <dl>
-    <%= render 'content_type_objects/fragments/corrected_answer', object: object if object.corrected? %>
-  </dl>
-</section>
+<% if object.corrected? %>
+  <section class="reading-width">
+    <dl>
+      <%= render 'content_type_objects/fragments/corrected_answer', object: object %>
+    </dl>
+  </section>
+<% end %>
 
 <section class="reading-width">
   <hr/>

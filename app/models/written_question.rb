@@ -73,6 +73,14 @@ class WrittenQuestion < Question
     get_all_from('identifier_t')
   end
 
+  def answer_title
+    return 'Original answer' if corrected?
+
+    return 'Holding answer' if holding?
+
+    'Answer'
+  end
+
   def has_holding_answer
     get_first_as_boolean_from('holdingAnswer_b')
   end
