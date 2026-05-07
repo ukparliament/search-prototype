@@ -159,7 +159,7 @@ class SesLookup < ApiClient
       code = raw_response.code
       return { 'error' => { 'code' => code, 'message' => response_hash.dig('SEMAPHORE', 'ERROR', 'MESSAGE') } }
     when 'text/html'
-      doc = Nokogiri::HTML(body)
+      doc = Nokogiri::HTML(raw_response.body)
       title = doc.at('title')&.text&.strip
       headline = doc.at('h1')&.text&.strip
       code = raw_response.code
