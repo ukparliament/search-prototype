@@ -156,7 +156,15 @@ class SesLookup < ApiClient
     when 'text/xml'
       # SES returns errors as XML
       response_hash = Hash.from_xml(raw_response.body)
-      return { 'error' => { 'message' => response_hash.dig('SEMAPHORE', 'ERROR', 'MESSAGE') } }
+      code = raw_response.code
+      return { 'error' => { 'code' => code, 'message' => response_hash.dig('SEMAPHORE', 'ERROR', 'MESSAGE') } }
+    when 'text/html'
+      doc = Nokogiri::HTML(body)
+      title = doc.at('title')&.text&.strip
+      headline = doc.at('h1')&.text&.strip
+      code = raw_response.code
+      message = title || headline || "Unknown HTML response"
+      return { 'error' => { 'code' => code, 'message' => message } }
     else
       return { 'error' => { 'message' => "Could not parse response from API (#{content_type})" } }
     end
