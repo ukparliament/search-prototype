@@ -158,7 +158,7 @@ class SesLookup < ApiClient
       response_hash = Hash.from_xml(raw_response.body)
       return { 'error' => { 'message' => response_hash.dig('SEMAPHORE', 'ERROR', 'MESSAGE') } }
     else
-      return { 'error' => { 'message' => 'Could not parse response from API' } }
+      return { 'error' => { 'message' => "Could not parse response from API (#{content_type})" } }
     end
   end
 
