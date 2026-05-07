@@ -87,17 +87,15 @@ class ApiClient
   def raise_external_service_error(response)
     return unless response.has_key?('error')
 
-    # TODO: add messages here too
-
     case response.dig('error', 'code')&.to_i
     when 401
-      raise ExternalServiceUnauthorized
+      raise(ExternalServiceUnauthorized, response.dig('error', 'message'))
     when 403
-      raise ExternalServiceUnauthorized
+      raise(ExternalServiceUnauthorized, response.dig('error', 'message'))
     when 404
-      raise ExternalServiceNotFound
+      raise(ExternalServiceNotFound, response.dig('error', 'message'))
     else
-      raise ExternalServiceError
+      raise(ExternalServiceError, response.dig('error', 'message'))
     end
   end
 end
