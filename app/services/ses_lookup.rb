@@ -13,7 +13,8 @@ class SesLookup < ApiClient
     responses = evaluated_responses
 
     if responses.compact.blank?
-      raise ExternalServiceNotFound
+      # Disabled explicit error - in some cases SES IDs will be missing and we just want to render the ID instead
+      puts "SES returned no results for: #{input_data.inspect}" if Rails.env.development?
     else
       responses.each do |response|
         raise_external_service_error(response)
@@ -116,7 +117,7 @@ class SesLookup < ApiClient
   end
 
   def evaluated_hierarchy_response
-    caching_enabled = Rails.env.development? ? false : true
+    caching_enabled = Rails.env.development? || Rails.env.test? ? false : true
     api_response(ses_browse_service_uri, caching_enabled)
   end
 
@@ -143,12 +144,21 @@ class SesLookup < ApiClient
 
   def api_response(uri, cached = false)
     raw_response = api_get_request(uri, cached)
-    raise ExternalServiceNotFound if raw_response.nil?
 
-    begin
-      JSON.parse(raw_response)
-    rescue JSON::ParserError
-      Hash.from_xml(raw_response)
+    # this method does not raise errors as it is called within a thread
+    # instead, we return a hash with the error details
+    return { 'error' => { 'message' => 'No response from API' } } if raw_response.nil?
+
+    content_type = raw_response.content_type
+    case content_type
+    when 'application/json'
+      JSON.parse(raw_response.body)
+    when 'text/xml'
+      # SES returns errors as XML
+      response_hash = Hash.from_xml(raw_response.body)
+      return { 'error' => { 'message' => response_hash.dig('SEMAPHORE', 'ERROR', 'MESSAGE') } }
+    else
+      return { 'error' => { 'message' => 'Could not parse response from API' } }
     end
   end
 
@@ -165,10 +175,10 @@ class SesLookup < ApiClient
     # make the request with or without caching
     if cached
       Rails.cache.fetch(uri, expires_in: 2.hours) do
-        http.request(request).body
+        http.request(request)
       end
     else
-      http.request(request).body
+      http.request(request)
     end
   end
 

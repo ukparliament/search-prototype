@@ -235,13 +235,23 @@ module LinkHelper
     # raise an error in development instead
     # raise 'fallback SES lookup attempted' if Rails.env.development?
 
+    # WIP
+
     custom_ses_lookup = SesLookup.new([ses_data_hash]).data
+
+    # cache the returned SES data
+    ses_cache = SesCache.new(Rails.cache)
+    custom_ses_lookup.each { |k, v| ses_cache.write_cached_value(k, v) } unless custom_ses_lookup.empty?
+
     name_string = custom_ses_lookup[ses_data_hash[:value].to_i]
 
     # where we still don't have a string (e.g. if SES is missing an entry for this ID) then
     # present the SES ID itself as a string (in development), or "Unknown" in other environments.
 
+    puts "Fallback SES looked assigned name #{name_string} to SES ID #{ses_data_hash[:value]}" if Rails.env.development? && name_string.present?
     return name_string unless name_string.blank?
+
+    puts "Fallback SES lookup could not resolve name for #{ses_data_hash[:value]}" if Rails.env.development?
 
     Rails.env.development? ? ses_data_hash[:value].to_s : "Unknown"
   end

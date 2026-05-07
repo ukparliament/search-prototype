@@ -87,6 +87,8 @@ class ApiClient
   def raise_external_service_error(response)
     return unless response.has_key?('error')
 
+    # TODO: add messages here too
+
     case response.dig('error', 'code')&.to_i
     when 401
       raise ExternalServiceUnauthorized

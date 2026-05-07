@@ -4,29 +4,20 @@ RSpec.describe SesLookup, type: :model do
   before do
     allow(Rails.application.credentials).to receive(:dig).with(:test, :api_host).and_return("api.test.url")
     allow(Rails.application.credentials).to receive(:dig).with(:test, :ses_api, :path).and_return("/ses")
-    allow(ses_lookup).to receive(:api_get_request).with(formatted_query, false).and_return(mock_response.to_json)
+    allow(ses_lookup).to receive(:api_response).with(formatted_query).and_return(mock_response)
   end
 
   describe 'data' do
+    before do
+      allow(ses_lookup).to receive(:api_response).with(formatted_query).and_return(mock_response)
+    end
+
     context 'if an error is returned' do
       let!(:ses_lookup) { SesLookup.new([{ value: 92347, field_name: 'type_ses' }]) }
       let!(:formatted_query) { URI('https://api.test.url/ses?TBDB=disp_taxonomy&TEMPLATE=service.json&expand_hierarchy=0&SERVICE=termlite&ID=92347').dup }
-      let!(:mock_response) { File.read("spec/fixtures/xml_error_example.xml") }
-
+      let!(:mock_response) { { 'error' => { 'code' => 500, 'message' => 'Could not parse response from API' } } }
       it 'raises an ExternalServiceError' do
-        allow(ses_lookup).to receive(:api_get_request).with(formatted_query, false).and_return(mock_response)
-        expect { ses_lookup.data }.to raise_error(ExternalServiceUnauthorized)
-      end
-    end
-
-    context 'if the response is nil' do
-      let!(:ses_lookup) { SesLookup.new([{ value: 92347, field_name: 'type_ses' }]) }
-      let!(:formatted_query) { URI('https://api.test.url/ses?TBDB=disp_taxonomy&TEMPLATE=service.json&expand_hierarchy=0&SERVICE=termlite&ID=92347').dup }
-      let!(:mock_response) { nil }
-
-      it 'raises an ExternalServiceNotFound' do
-        allow(ses_lookup).to receive(:api_get_request).with(formatted_query, false).and_return(mock_response)
-        expect { ses_lookup.data }.to raise_exception(ExternalServiceNotFound)
+        expect { ses_lookup.data }.to raise_error(ExternalServiceError)
       end
     end
 
@@ -64,25 +55,17 @@ RSpec.describe SesLookup, type: :model do
   end
 
   describe 'extract_hierarchy_data' do
+    before do
+      allow(ses_lookup).to receive(:api_response).with(formatted_query, false).and_return(mock_response)
+    end
+
     context 'if an error is returned' do
       let!(:ses_lookup) { SesLookup.new([{ value: 346696 }]) }
       let!(:formatted_query) { URI('https://api.test.url/ses?TBDB=disp_taxonomy&TEMPLATE=service.json&SERVICE=allterms&expand_hierarchy=1&CLASS=CTP').dup }
-      let!(:mock_response) { File.read("spec/fixtures/xml_error_example.xml") }
+      let!(:mock_response) { { 'error' => { 'code' => 401, 'message' => 'Not authorized' } } }
 
       it 'returns the appropriate error' do
-        allow(ses_lookup).to receive(:api_get_request).with(formatted_query, true).and_return(mock_response)
         expect { ses_lookup.extract_hierarchy_data }.to raise_error(ExternalServiceUnauthorized)
-      end
-    end
-
-    context 'if the response is nil' do
-      let!(:ses_lookup) { SesLookup.new([{}]) }
-      let!(:formatted_query) { URI('https://api.test.url/ses?TBDB=disp_taxonomy&TEMPLATE=service.json&SERVICE=allterms&expand_hierarchy=1&CLASS=CTP').dup }
-      let!(:mock_response) { nil }
-
-      it 'returns nil' do
-        allow(ses_lookup).to receive(:api_get_request).with(formatted_query, true).and_return(mock_response)
-        expect { ses_lookup.extract_hierarchy_data }.to raise_exception(ExternalServiceNotFound)
       end
     end
 
@@ -100,11 +83,10 @@ RSpec.describe SesLookup, type: :model do
     context 'where data is returned' do
       let!(:ses_lookup) { SesLookup.new([{ value: 346696 }]) }
       let!(:formatted_query) { URI('https://api.test.url/ses?TBDB=disp_taxonomy&TEMPLATE=service.json&SERVICE=allterms&expand_hierarchy=1&CLASS=CTP').dup }
-      let!(:mock_response) { File.read("spec/fixtures/ses_hierarchy_example.json") }
+      let!(:mock_response) { JSON.parse(File.read("spec/fixtures/ses_hierarchy_example.json")) }
       let!(:processed_response) { eval(File.read("spec/fixtures/ses_hierarchy_processed_example.rb")) }
 
       it 'returns a hash of with arrays of ids & names as keys and hierarchy arrays as values' do
-        allow(ses_lookup).to receive(:api_get_request).with(formatted_query, true).and_return(mock_response)
         expect(ses_lookup.extract_hierarchy_data).to eq(processed_response)
       end
     end

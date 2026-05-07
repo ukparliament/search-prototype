@@ -1,9 +1,9 @@
 class SesData
 
-  attr_reader :ses_ids, :existing_ses_data, :cache_store
+  attr_reader :ses_ids, :existing_ses_data, :ses_cache
 
   def initialize(ses_ids, existing_ses_data = [])
-    @cache_store = Rails.cache
+    @ses_cache = SesCache.new(Rails.cache)
     @existing_ses_data = existing_ses_data
     @ses_ids = ses_ids
   end
@@ -22,7 +22,7 @@ class SesData
       ids_to_fetch = ses_ids.uniq.sort
     else
       ses_ids.uniq.sort.each do |ses_id|
-        if cache_store.exist?(cache_key(ses_id))
+        if ses_cache.exists_in_cache?(ses_id)
           ids_in_cache << ses_id
         else
           ids_to_fetch << ses_id
@@ -40,14 +40,14 @@ class SesData
     end
 
     # if we fetched new data, write it to the cache
-    fetched_data.each { |k, v| cache_store.write(cache_key(k), v) } unless fetched_data.empty?
+    fetched_data.each { |k, v| ses_cache.write_cached_value(k, v) } unless fetched_data.empty?
 
     # get cached data for ids left in initial_ids
     puts "#{ids_in_cache.count} SES terms found in cache" if Rails.env.development?
     unless ids_in_cache.blank?
       ids_in_cache.each do |ses_id|
-        cached_data[ses_id] = cache_store.read(cache_key(ses_id))
-        cached_data["#{ses_id}_scope_note"] = cache_store.read(cache_key("#{ses_id}_scope_note"))
+        cached_data[ses_id] = ses_cache.read_cached_value(ses_id)
+        cached_data["#{ses_id}_scope_note"] = ses_cache.read_cached_value("#{ses_id}_scope_note")
       end
     end
 
@@ -62,9 +62,5 @@ class SesData
       # otherwise return the existing data as is
       combined_data.blank? ? existing_ses_data : existing_ses_data.merge(combined_data)
     end
-  end
-
-  def cache_key(id)
-    "ses_data_#{id}"
   end
 end

@@ -6,12 +6,12 @@ RSpec.describe 'SesQuery' do
   let!(:ses_query) { SesQuery.new(input_data) }
 
   describe 'data' do
-    let!(:mock_response) { File.read('spec/fixtures/ses_search_service_example.json') }
+    let!(:mock_response) { JSON.parse(File.read('spec/fixtures/ses_search_service_example.json')) }
 
     before do
       allow(Rails.application.credentials).to receive(:dig).with(:test, :api_host).and_return("api.test.url")
       allow(Rails.application.credentials).to receive(:dig).with(:test, :ses_api, :path).and_return("/ses")
-      allow(ses_query).to receive(:api_get_request).with(formatted_query, false).and_return(mock_response)
+      allow(ses_query).to receive(:api_response).with(formatted_query, false).and_return(mock_response)
     end
 
     context 'where input data is nil' do
@@ -35,7 +35,7 @@ RSpec.describe 'SesQuery' do
     end
 
     context 'where SES returns an exact match as an equivalent term' do
-      let!(:mock_response) { File.read('spec/fixtures/securities.json') }
+      let!(:mock_response) { JSON.parse(File.read('spec/fixtures/securities.json')) }
       let!(:input_data) { { value: 'Securities' } }
       let!(:formatted_query) { URI("https://api.test.url/ses?TBDB=disp_taxonomy&TEMPLATE=service.json&SERVICE=conceptmap&MATCH=exact&QUERY=Securities") }
 
@@ -46,7 +46,7 @@ RSpec.describe 'SesQuery' do
     end
 
     context 'where SES returns an exact match as the preferred term' do
-      let!(:mock_response) { File.read('spec/fixtures/election_observers.json') }
+      let!(:mock_response) { JSON.parse(File.read('spec/fixtures/election_observers.json')) }
       let!(:input_data) { { value: 'Election observers' } }
       let!(:formatted_query) { URI("https://api.test.url/ses?TBDB=disp_taxonomy&TEMPLATE=service.json&SERVICE=conceptmap&MATCH=exact&QUERY=Election+observers") }
 
@@ -56,7 +56,7 @@ RSpec.describe 'SesQuery' do
     end
 
     context 'where SES returns no result that matches' do
-      let!(:mock_response) { File.read('spec/fixtures/observers.json') }
+      let!(:mock_response) { JSON.parse(File.read('spec/fixtures/observers.json')) }
       let!(:input_data) { { value: 'Observers' } }
       let!(:formatted_query) { URI("https://api.test.url/ses?TBDB=disp_taxonomy&TEMPLATE=service.json&SERVICE=conceptmap&MATCH=exact&QUERY=Observers") }
 
@@ -68,7 +68,7 @@ RSpec.describe 'SesQuery' do
     end
 
     context 'where SES returns multiple matching results' do
-      let!(:mock_response) { File.read('spec/fixtures/army_training_estate.json') }
+      let!(:mock_response) { JSON.parse(File.read('spec/fixtures/army_training_estate.json')) }
       let!(:input_data) { { value: 'Army' } }
       let!(:formatted_query) { URI("https://api.test.url/ses?TBDB=disp_taxonomy&TEMPLATE=service.json&SERVICE=conceptmap&MATCH=exact&QUERY=Army") }
 
@@ -80,7 +80,7 @@ RSpec.describe 'SesQuery' do
     end
 
     context 'where SES returns a topic result' do
-      let!(:mock_response) { File.read('spec/fixtures/ses_search_service_example_tpg.json') }
+      let!(:mock_response) { JSON.parse(File.read('spec/fixtures/ses_search_service_example_tpg.json')) }
       let!(:input_data) { { value: 'housing' } }
       let!(:formatted_query) { URI("https://api.test.url/ses?TBDB=disp_taxonomy&TEMPLATE=service.json&SERVICE=conceptmap&MATCH=exact&QUERY=housing") }
 

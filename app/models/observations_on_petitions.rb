@@ -27,6 +27,16 @@ class ObservationsOnPetitions < Petition
     ]
   end
 
+  def self.search_result_solr_fields
+    # fields requested in Solr search for search results page
+    super << %w[
+    title_t
+    uri
+    leadMember_ses
+    subject_ses
+    ]
+  end
+
   def display_link
     external_link = fallback(external_location_uri, external_location_text)
     fallback(external_link, get_first_from('location_uri'))

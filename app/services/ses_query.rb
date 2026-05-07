@@ -19,26 +19,26 @@ class SesQuery < SesLookup
     returned_terms = []
 
     # get parsed response
-    responses = evaluated_response
+    response = evaluated_response
 
-    # if the API returns an error, it will have an "error" key at the top level
-    return responses if responses.has_key?("error")
+    # If the response is an error, raise it
+    raise_external_service_error(response)
 
-    # Get initial SES query string for comparison against responses
-    query_string = responses.dig("parameters", "query").downcase
+    # Get initial SES query string for comparison against response
+    query_string = response.dig("parameters", "query").downcase
     puts "Query for for SES response comparison: #{query_string}" if Rails.env.development?
     processed_query_array = QueryStringProcessor.new(query_string.downcase).sequential_combinations
 
     # For writing SES output from a search to a test fixture - leave this commented out unless you want
     # to add a new test fixture!
     # output_file = File.new("spec/fixtures/#{query_string.parameterize.underscore}.json", 'w')
-    # output_file.write(responses.to_json)
+    # output_file.write(response.to_json)
     # output_file.close
 
     # if no match found, we won't get a key for terms at all
-    if responses.has_key?("terms")
+    if response.has_key?("terms")
       # iterate through returned terms
-      responses.dig("terms").each do |term|
+      response.dig("terms").each do |term|
         # create hash for the term data
         term_hash = { equivalent_terms: [] }
 
@@ -119,7 +119,7 @@ class SesQuery < SesLookup
         puts "Processed query array is now: #{processed_query_array}" if Rails.env.development?
       end
     else
-      puts "No SES terms found for: #{responses.dig("parameters", "query")}" if Rails.env.development?
+      puts "No SES terms found for: #{response.dig("parameters", "query")}" if Rails.env.development?
     end
 
     # return the collated data of all terms matching the query
