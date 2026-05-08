@@ -47,6 +47,8 @@ class Tokeniser
         tokens << [:specified_field_with_quoted_phrase, term]
       elsif term.match(/(\w+:\[(?:[^\]]+)\])/)
         tokens << [:specified_field_no_expansion, term]
+      elsif term.match(/(\w+:\*)/)
+        tokens << [:specified_field_wildcard, term]
       elsif term.match(/(\w+:\S+)/)
         tokens << [:specified_field, term]
       elsif term.match(/"([^"]+)"/)

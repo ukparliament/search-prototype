@@ -33,6 +33,13 @@ RSpec.describe 'Tokeniser' do
       end
     end
 
+    context 'with a specified field and a wildcard operator' do
+      let(:terms) { ["subject:*"] }
+      it 'tags as a specified field' do
+        expect(tokeniser.tokenise).to eq([[:specified_field_wildcard, "subject:*"]])
+      end
+    end
+
     context 'with a specified field with quotes' do
       let(:terms) { ["subject:\"cats protection\""] }
       it 'tags as a specified field with quoted phrase' do

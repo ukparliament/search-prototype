@@ -129,6 +129,33 @@ RSpec.describe 'TermExpander' do
         expect(term_expander.populate_text_fields).to eq([["91569", ["department_t:\"house\"", "department_t:\"Accommodation\"", "department_t:\"Houses\""]]])
       end
     end
+
+    context 'where the SES data does not match all terms' do
+      let(:search_term) { 'Large houses' }
+      let(:ses_data) { [{ equivalent_terms: [["Accommodation", "Houses"]], preferred_term_id: "91569", preferred_term: "Housing", topic_id: "95629" }] }
+
+      it 'includes terms not represented by any found via SES separately' do
+        expect(term_expander.populate_text_fields).to eq([["91569", ["department_t:\"Housing\"", "department_t:\"Accommodation\"", "department_t:\"Houses\""]], [:large, ["department_t:large"]]])
+      end
+    end
+
+    context 'where there is no SES data at all' do
+      let(:ses_data) { [] }
+
+      it 'returns a search for the unexpanded term against the provided fields' do
+        expect(term_expander.populate_text_fields).to eq([[:house, ["department_t:house"]]])
+      end
+
+    end
+
+    context 'for a wildcard operator' do
+      let!(:search_term) { '*' }
+      let(:ses_data) { [] }
+
+      it 'returns a search for the unexpanded term against the provided fields' do
+        expect(term_expander.populate_text_fields).to eq([[:*, ["department_t:*"]]])
+      end
+    end
   end
 
   describe 'populate_ses_id_fields' do

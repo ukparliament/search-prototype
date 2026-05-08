@@ -170,7 +170,9 @@ class SolrSearch < ApiClient
       start: start,
       rows: rows,
       sort: sort,
-      'json.facet': facet_hash
+      'json.facet': facet_hash,
+      defType: 'edismax',
+      debug: 'query'
     }
   end
 end

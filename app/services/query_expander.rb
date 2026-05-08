@@ -61,6 +61,16 @@ class QueryExpander
         expanded_fields = field_expander.new(field_name).expand_fields
         processed_tokens << term_expander.new(expanded_fields: expanded_fields, search_term: search_term).expand_terms
 
+      elsif label == :specified_field_wildcard
+        # where the user has specified a wildcard with a field or alias we:
+        # - perform field expansion
+        # - don't perform term expansion
+        search_term = value.partition(":").last
+        field_name = value.partition(":").first
+        expanded_fields = field_expander.new(field_name).expand_fields
+        processed_tokens << term_expander.new(expanded_fields: expanded_fields,
+                                              search_term: search_term).expand_terms
+
       elsif label == :specified_field
         search_term = value.partition(":").last
         field_name = value.partition(":").first

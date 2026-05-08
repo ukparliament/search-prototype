@@ -2,6 +2,7 @@
 
 ##
 # Requires an array field categories, processed SES data and a search term.
+# An instance of this class is initialised for each processed token that requires expansion.
 # Returns a string that can substitute for the provided search term in a Solr query, returning expanded results.
 class TermExpander
   attr_reader :expanded_fields, :ses_data, :search_term
@@ -9,7 +10,7 @@ class TermExpander
   # Optional toggle; when true, unquoted phrases will be expanded via SES.
   EXPAND_UNQUOTED_PHRASES = ENV["EXPAND_UNQUOTED_PHRASES"] || Rails.application.credentials.dig(:expand_unquoted_phrases)
 
-  def initialize(expanded_fields: {}, ses_data: [{}], search_term: nil)
+  def initialize(expanded_fields: {}, ses_data: [], search_term: nil)
     @expanded_fields = expanded_fields
     @ses_data = ses_data
     @search_term = search_term
@@ -58,7 +59,6 @@ class TermExpander
     unless expanded_fields[:text_fields].blank?
       expanded_fields[:text_fields].flatten.each do |tf|
         ses_data.each do |ses_result|
-
           if ses_result[:preferred_term].present?
             result = ["#{tf}:\"#{ses_result[:preferred_term]}\""]
             represented_terms << ses_result[:preferred_term]
@@ -75,13 +75,12 @@ class TermExpander
           end
 
           expanded_terms << [ses_result[:preferred_term_id], result]
-
         end
 
         # Add search terms not represented by SES responses to the query with their specified field
         search_term.downcase.split(" ").each do |search_word|
           unless represented_terms.join(" ").downcase.include?(search_word)
-            expanded_terms << [search_word.to_sym, ["#{tf}:\"#{search_word}\""]]
+            expanded_terms << [search_word.to_sym, ["#{tf}:#{search_word}"]]
           end
         end
 
