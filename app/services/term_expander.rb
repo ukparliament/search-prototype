@@ -2,6 +2,7 @@
 
 ##
 # Requires an array field categories, processed SES data and a search term.
+# An instance of this class is initialised for each processed token that requires expansion.
 # Returns a string that can substitute for the provided search term in a Solr query, returning expanded results.
 class TermExpander
   attr_reader :expanded_fields, :ses_data, :search_term
@@ -9,7 +10,7 @@ class TermExpander
   # Optional toggle; when true, unquoted phrases will be expanded via SES.
   EXPAND_UNQUOTED_PHRASES = ENV["EXPAND_UNQUOTED_PHRASES"] || Rails.application.credentials.dig(:expand_unquoted_phrases)
 
-  def initialize(expanded_fields: {}, ses_data: [{}], search_term: nil)
+  def initialize(expanded_fields: {}, ses_data: [], search_term: nil)
     @expanded_fields = expanded_fields
     @ses_data = ses_data
     @search_term = search_term
@@ -58,7 +59,6 @@ class TermExpander
     unless expanded_fields[:text_fields].blank?
       expanded_fields[:text_fields].flatten.each do |tf|
         ses_data.each do |ses_result|
-
           if ses_result[:preferred_term].present?
             result = ["#{tf}:\"#{ses_result[:preferred_term]}\""]
             represented_terms << ses_result[:preferred_term]
@@ -75,13 +75,12 @@ class TermExpander
           end
 
           expanded_terms << [ses_result[:preferred_term_id], result]
-
         end
 
         # Add search terms not represented by SES responses to the query with their specified field
         search_term.downcase.split(" ").each do |search_word|
           unless represented_terms.join(" ").downcase.include?(search_word)
-            expanded_terms << [search_word.to_sym, ["#{tf}:\"#{search_word}\""]]
+            expanded_terms << [search_word.to_sym, ["#{tf}:#{search_word}"]]
           end
         end
 
@@ -118,6 +117,8 @@ class TermExpander
           expanded_terms << [:boolean, "#{bf}:1"]
         elsif %w[false no n 0].include?(search_term)
           expanded_terms << [:boolean, "#{bf}:0"]
+        elsif search_term == "*"
+          expanded_terms << [:boolean, "#{bf}:*"]
         end
       end
     end
@@ -127,6 +128,7 @@ class TermExpander
 
   ##
   # Search across date fields based on the supplied alias
+  # Supports field-exists queries using *
   def populate_date_fields
     expanded_terms = []
 
@@ -146,7 +148,6 @@ class TermExpander
       expanded_fields[:date_fields].flatten.each do |df|
         expanded_terms << [:date, "#{df}:#{parsed_date}"]
       end
-
     end
 
     expanded_terms
@@ -171,9 +172,6 @@ class TermExpander
       expanded_terms << [ses_result[:preferred_term_id], result]
     end
 
-    # TODO: this logic might also be required for quoted phrases & aliased quoted phrases?
-    # TODO: exhaustively test that this approach works
-
     # create a string of all the expanded terms so far
     all_expanded_terms = expanded_terms.to_h.values.flatten.join(" ").downcase
 
@@ -190,21 +188,37 @@ class TermExpander
   ##
   # Search all SES fields with the preferred term ID, if present.
   # SES data may return multiple terms, so this is done iteratively.
+  #
+  # Note that this differs from 'populate_ses_id_fields' because here the user hasn't provided a SES ID; we've gone
+  # to SES with a user provided term and fetched SES IDs, which we're now using to search one or more SES fields.
   def populate_ses_fields
     expanded_terms = []
 
-    # add every SES field we've determined should be searched for the preferred term SES ID
-    unless expanded_fields[:ses_fields].blank? || ses_data.blank?
-      ses_data.each_with_index do |ses_result, index|
-        # If there's no preferred term ID, don't return anything for this result
-        next if ses_result[:preferred_term_id].blank?
-
+    unless expanded_fields[:ses_fields].blank?
+      # check for & process field-exists operator
+      if search_term.present? && search_term == "*"
         result = []
+
         expanded_fields[:ses_fields].flatten.each do |sf|
-          result << "#{sf}:#{ses_result[:preferred_term_id]}" if ses_result[:preferred_term_id]
+          result << "#{sf}:*"
         end
 
-        expanded_terms << [ses_result[:preferred_term_id], result]
+        expanded_terms << [search_term.to_sym, result]
+      end
+
+      # add every SES field we've determined should be searched for the preferred term SES ID
+      unless ses_data.blank?
+        ses_data.each_with_index do |ses_result, index|
+          # If there's no preferred term ID, don't return anything for this result
+          next if ses_result[:preferred_term_id].blank?
+
+          result = []
+          expanded_fields[:ses_fields].flatten.each do |sf|
+            result << "#{sf}:#{ses_result[:preferred_term_id]}" if ses_result[:preferred_term_id]
+          end
+
+          expanded_terms << [ses_result[:preferred_term_id], result]
+        end
       end
     end
 

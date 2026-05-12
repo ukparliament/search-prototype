@@ -7,12 +7,12 @@ class SesCache
   end
 
   def exists_in_cache?(ses_id)
-    puts "Looking for #{cache_key(ses_id)} in cache..." if Rails.env.development?
+    # puts "Looking for #{cache_key(ses_id)} in cache..." if Rails.env.development?
     if cache_store.exist?(cache_key(ses_id))
-      puts "...found"
+      # puts "...found"
       true
     else
-      puts "... not found"
+      # puts "... not found"
       false
     end
   end
@@ -22,7 +22,7 @@ class SesCache
   end
 
   def write_cached_value(ses_id, value)
-    puts "Writing #{cache_key(ses_id)} to cache" if Rails.env.development?
+    # puts "Writing #{cache_key(ses_id)} to cache" if Rails.env.development?
     cache_store.write(cache_key(ses_id), value)
   end
 

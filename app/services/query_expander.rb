@@ -18,6 +18,9 @@
 class QueryExpander
   attr_reader :search_query, :ses_query, :tokeniser, :field_expander, :term_expander, :term_combiner
 
+  # matches Lucene query characters, captured as group 1
+  SPECIAL_CHARS = /([+\-!(){}\[\]^"~:\\\/]|&&|\|\|)/
+
   def initialize(search_query, ses_query = SesQuery, tokeniser = Tokeniser,
                  field_expander = FieldExpander, term_expander = TermExpander, term_combiner = TermCombiner)
     @search_query = search_query
@@ -36,10 +39,20 @@ class QueryExpander
     puts "Tokens: #{tokens}" if Rails.env.development?
 
     tokens.each do |label, value|
-      if [:operator, :url].include?(label)
+      if label == :operator
         # do nothing, pass directly to Solr
         search_term = value
         processed_tokens << search_term
+      elsif label == :url
+        # If Solr receives a bunch of special characters it will indiscriminately escape them all itself, which
+        # has the unfortunate side effect of wildcard (* and ?) characters being parsed as text only. We need to
+        # escape special characters (except wildcards) before submitting the search.
+        search_term = value.gsub(SPECIAL_CHARS, '\\\\\1')
+        processed_tokens << search_term
+      elsif label == :uri_field
+        search_term = value.partition(":").last.gsub(SPECIAL_CHARS, '\\\\\1')
+        field_name = value.partition(":").first
+        processed_tokens << "#{field_name}:#{search_term}"
       elsif label == :specified_field_with_quoted_phrase
         # For quoted phrases, the user expectation is that the phrase is passed to Solr as-is
         # However, if the complete phrase is matched by SES, we search for that instead
@@ -60,6 +73,16 @@ class QueryExpander
         field_name = value.partition(":").first
         expanded_fields = field_expander.new(field_name).expand_fields
         processed_tokens << term_expander.new(expanded_fields: expanded_fields, search_term: search_term).expand_terms
+
+      elsif label == :specified_field_wildcard
+        # where the user has specified a wildcard with a field or alias we:
+        # - perform field expansion
+        # - don't perform term expansion
+        search_term = value.partition(":").last
+        field_name = value.partition(":").first
+        expanded_fields = field_expander.new(field_name).expand_fields
+        processed_tokens << term_expander.new(expanded_fields: expanded_fields,
+                                              search_term: search_term).expand_terms
 
       elsif label == :specified_field
         search_term = value.partition(":").last

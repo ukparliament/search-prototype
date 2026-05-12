@@ -129,6 +129,33 @@ RSpec.describe 'TermExpander' do
         expect(term_expander.populate_text_fields).to eq([["91569", ["department_t:\"house\"", "department_t:\"Accommodation\"", "department_t:\"Houses\""]]])
       end
     end
+
+    context 'where the SES data does not match all terms' do
+      let(:search_term) { 'Large houses' }
+      let(:ses_data) { [{ equivalent_terms: [["Accommodation", "Houses"]], preferred_term_id: "91569", preferred_term: "Housing", topic_id: "95629" }] }
+
+      it 'includes terms not represented by any found via SES separately' do
+        expect(term_expander.populate_text_fields).to eq([["91569", ["department_t:\"Housing\"", "department_t:\"Accommodation\"", "department_t:\"Houses\""]], [:large, ["department_t:large"]]])
+      end
+    end
+
+    context 'where there is no SES data at all' do
+      let(:ses_data) { [] }
+
+      it 'returns a search for the unexpanded term against the provided fields' do
+        expect(term_expander.populate_text_fields).to eq([[:house, ["department_t:house"]]])
+      end
+
+    end
+
+    context 'for a field-exists search' do
+      let!(:search_term) { '*' }
+      let(:ses_data) { [] }
+
+      it 'returns a search for the wildcard operator against the provided field' do
+        expect(term_expander.populate_text_fields).to eq([[:*, ["department_t:*"]]])
+      end
+    end
   end
 
   describe 'populate_ses_id_fields' do
@@ -205,6 +232,14 @@ RSpec.describe 'TermExpander' do
         expect(term_expander.populate_boolean_fields).to eq([[:boolean, "containsEM_b:0"]])
       end
     end
+
+    context 'for a field-exists search' do
+      let!(:search_term) { '*' }
+
+      it 'returns a search for the wildcard operator against the provided field' do
+        expect(term_expander.populate_boolean_fields).to eq([[:boolean, "containsEM_b:*"]])
+      end
+    end
   end
 
   describe 'populate_date_fields' do
@@ -274,6 +309,14 @@ RSpec.describe 'TermExpander' do
           expect(term_expander.populate_date_fields).to eq [[:date, "date_dt:[NOW/YEAR-1YEAR TO NOW/YEAR-1MILLISECOND]"]]
         end
       end
+
+      context 'for field-exists search' do
+        let!(:search_term) { '*' }
+
+        it 'returns a search for the wildcard operator against the provided field' do
+          expect(term_expander.populate_date_fields).to eq([[:date, "date_dt:*"]])
+        end
+      end
     end
 
     context 'with multiple date fields' do
@@ -325,6 +368,15 @@ RSpec.describe 'TermExpander' do
 
       it 'returns an empty array' do
         expect(term_expander.populate_ses_fields).to eq([])
+      end
+    end
+
+    context 'for a field-exists search' do
+      let!(:search_term) { '*' }
+      let(:ses_data) {}
+
+      it 'returns a field-exists search against the provided field' do
+        expect(term_expander.populate_ses_fields).to eq([[:*, ["subject_ses:*"]]])
       end
     end
   end

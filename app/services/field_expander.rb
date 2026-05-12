@@ -67,6 +67,7 @@ class FieldExpander
       # if searching a _dt field specifically, treat it as a date field so that 'lastweek' etc. all work
       date_fields = [field_name]
     elsif field_name.match(/\w+_ses/)
+      # SES ID fields are minimally processed (the user is expected to provide a SES ID)
       ses_id_fields = [field_name]
     elsif field_name == "none"
       # include terms with no field specified
