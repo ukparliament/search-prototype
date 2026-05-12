@@ -178,7 +178,7 @@ class TermExpander
     # check each word is represented by something we got back from SES
     search_term.downcase.split(" ").each do |search_word|
       unless all_expanded_terms.include?(search_word)
-        expanded_terms << [search_word.to_sym, ["\"#{search_word}\""]]
+        expanded_terms << [search_word.to_sym, ["#{search_word}"]]
       end
     end
 
