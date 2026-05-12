@@ -64,6 +64,10 @@ class Question < ContentTypeObject
     get_first_as_date_from('dateForAnswer_dt')
   end
 
+  def answer_title
+    'Answer'
+  end
+
   def tabling_member
     get_first_from('tablingMember_ses')
   end

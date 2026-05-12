@@ -26,7 +26,7 @@ class SesQuery < SesLookup
 
     # Get initial SES query string for comparison against response
     query_string = response.dig("parameters", "query").downcase
-    puts "Query for for SES response comparison: #{query_string}" if Rails.env.development?
+    # puts "Query for SES response comparison: #{query_string}" if Rails.env.development?
     processed_query_array = QueryStringProcessor.new(query_string.downcase).sequential_combinations
 
     # For writing SES output from a search to a test fixture - leave this commented out unless you want
@@ -85,7 +85,7 @@ class SesQuery < SesLookup
             processed_query_array.delete(sub_term.downcase)
           end
         else
-          puts "#{term_hash[:preferred_term].downcase} is not a match" if Rails.env.development?
+          # puts "#{term_hash[:preferred_term].downcase} is not a match" if Rails.env.development?
         end
 
         # iterate through all equivalent terms for the result, and check if any are in the array
@@ -102,24 +102,24 @@ class SesQuery < SesLookup
               processed_query_array.delete(sub_term.downcase)
             end
           else
-            puts "#{equivalent_term.downcase} is not a match" if Rails.env.development?
+            # puts "#{equivalent_term.downcase} is not a match" if Rails.env.development?
           end
         end
 
         # Don't include this SES result for use expanding the query if there are no matches
         unless matches_preferred_term || matches_equivalent_term
-          puts "Excluding #{term_hash} from returned terms" if Rails.env.development?
+          # puts "Excluding #{term_hash} from returned terms" if Rails.env.development?
           next
         end
 
-        puts "Adding #{term_hash} to returned terms" if Rails.env.development?
+        # puts "Adding #{term_hash} to returned terms" if Rails.env.development?
         # add term hash to array
         returned_terms << term_hash
 
-        puts "Processed query array is now: #{processed_query_array}" if Rails.env.development?
+        # puts "Processed query array is now: #{processed_query_array}" if Rails.env.development?
       end
     else
-      puts "No SES terms found for: #{response.dig("parameters", "query")}" if Rails.env.development?
+      # puts "No SES terms found for: #{response.dig("parameters", "query")}" if Rails.env.development?
     end
 
     # return the collated data of all terms matching the query

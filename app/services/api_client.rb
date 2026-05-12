@@ -19,7 +19,7 @@ class ApiClient
     # check for / raise errors
     raise_external_service_error(response)
 
-    puts response.dig('debug', 'parsedquery') if Rails.env.development?
+    puts "Query as parsed by Solr: #{response.dig('debug', 'parsedquery')}" if Rails.env.development?
 
     # return response
     response
@@ -54,7 +54,7 @@ class ApiClient
     uri = api_endpoint_uri
     headers = request_headers
 
-    puts "POST request from #{self.class.name}: #{uri} with data: #{query} and headers: #{headers}" if Rails.env.development?
+    # puts "POST request from #{self.class.name}: #{uri} with data: #{query} and headers: #{headers}" if Rails.env.development?
 
     # set up HTTP instance
     http = Net::HTTP.new(uri.host, uri.port)

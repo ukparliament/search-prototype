@@ -41,6 +41,8 @@ class Tokeniser
         tokens << [:operator, term]
       elsif term.match?(/\A[a-z]+:\/\//)
         tokens << [:url, term]
+      elsif term.match?(/\Auri:[a-z]+:\/\//)
+        tokens << [:uri_field, term]
       elsif term.match(/(\w+:"(?:[^"]+)")/)
         tokens << [:specified_field_with_quoted_phrase, term]
       elsif term.match(/(\w+:'(?:[^']+)')/)

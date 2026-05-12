@@ -148,11 +148,11 @@ RSpec.describe 'TermExpander' do
 
     end
 
-    context 'for a wildcard operator' do
+    context 'for a field-exists search' do
       let!(:search_term) { '*' }
       let(:ses_data) { [] }
 
-      it 'returns a search for the unexpanded term against the provided fields' do
+      it 'returns a search for the wildcard operator against the provided field' do
         expect(term_expander.populate_text_fields).to eq([[:*, ["department_t:*"]]])
       end
     end
@@ -232,6 +232,14 @@ RSpec.describe 'TermExpander' do
         expect(term_expander.populate_boolean_fields).to eq([[:boolean, "containsEM_b:0"]])
       end
     end
+
+    context 'for a field-exists search' do
+      let!(:search_term) { '*' }
+
+      it 'returns a search for the wildcard operator against the provided field' do
+        expect(term_expander.populate_boolean_fields).to eq([[:boolean, "containsEM_b:*"]])
+      end
+    end
   end
 
   describe 'populate_date_fields' do
@@ -301,6 +309,14 @@ RSpec.describe 'TermExpander' do
           expect(term_expander.populate_date_fields).to eq [[:date, "date_dt:[NOW/YEAR-1YEAR TO NOW/YEAR-1MILLISECOND]"]]
         end
       end
+
+      context 'for field-exists search' do
+        let!(:search_term) { '*' }
+
+        it 'returns a search for the wildcard operator against the provided field' do
+          expect(term_expander.populate_date_fields).to eq([[:date, "date_dt:*"]])
+        end
+      end
     end
 
     context 'with multiple date fields' do
@@ -352,6 +368,15 @@ RSpec.describe 'TermExpander' do
 
       it 'returns an empty array' do
         expect(term_expander.populate_ses_fields).to eq([])
+      end
+    end
+
+    context 'for a field-exists search' do
+      let!(:search_term) { '*' }
+      let(:ses_data) {}
+
+      it 'returns a field-exists search against the provided field' do
+        expect(term_expander.populate_ses_fields).to eq([[:*, ["subject_ses:*"]]])
       end
     end
   end

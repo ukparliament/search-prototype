@@ -57,7 +57,7 @@ RSpec.describe 'QueryExpander' do
     context 'where the term is a url' do
       let(:search_query) { "http://example.com" }
 
-      it 'adds the term to returned_terms as-is' do
+      it 'adds the term to returned_terms having escaped special characters in the url' do
         # tokeniser is initialised with the query string
         expect(tokeniser_test_class).to receive(:new).with("http://example.com")
 
@@ -65,7 +65,7 @@ RSpec.describe 'QueryExpander' do
         expect(tokeniser_test_instance).to receive(:tokenise).and_return([[:url, 'http://example.com']])
 
         # the term combiner is initialised with the unmodified operators returned from the tokeniser
-        expect(term_combiner_test_class).to receive(:new).with(['http://example.com'])
+        expect(term_combiner_test_class).to receive(:new).with(["http\\:\\/\\/example.com"])
 
         # the term combiner recieves call to combine the terms
         expect(term_combiner_test_instance).to receive(:combine_terms).and_return("combined terms")
