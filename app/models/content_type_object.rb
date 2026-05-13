@@ -486,7 +486,7 @@ class ContentTypeObject
       elsif subtype_ids&.include?(347214)
         'ObservationsOnPetitions'
       else
-        'NotSupported'
+        'Petition'
       end
     when 347207
       'FormalProceeding'
