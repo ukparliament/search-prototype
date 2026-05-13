@@ -37,13 +37,15 @@ class SearchData
   def object_data
     return [] if object_uris.blank?
 
+    # construct a string listing all Solr fields required for the objects being loaded on this results page
     solr_fields = []
     empty_objects.each do |object|
       solr_fields << object.class.search_result_solr_fields
     end
-
     solr_fields_string = solr_fields.flatten.uniq.join(' ')
 
+    # perform a second Solr query, requesting the exact objects being loaded on this results page via their URIs
+    # request only the fields we need using the solr_fields_string previously constructed
     unsorted_items = SolrQueryWrapper.new(object_uris: object_uris, solr_fields: solr_fields_string).get_objects.dig(:items)
 
     # build unsorted items into a uri-keyed hash
@@ -53,13 +55,11 @@ class SearchData
       unsorted_items_hash[key] = unsorted_item
     end
 
-    # iterate through sorted uris and grab object from hash into array to return
+    # ensure the returned objects are sorted in the order of the initial set of object_uris
     ret = []
-
     object_uris&.each do |sorted_uri|
       ret << unsorted_items_hash.dig(sorted_uri)
     end
-
     ret
   end
 

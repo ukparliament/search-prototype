@@ -81,7 +81,7 @@ RSpec.describe ContentTypeObject, type: :model do
         expect(ContentTypeObject.generate(bill)).to be_an_instance_of(Bill)
         expect(ContentTypeObject.generate(paper_petition)).to be_an_instance_of(PaperPetition)
         expect(ContentTypeObject.generate(observations_on_a_petition)).to be_an_instance_of(ObservationsOnPetitions)
-        expect(ContentTypeObject.generate(petition_with_unrecognised_subtype_id)).to be_an_instance_of(NotSupported)
+        expect(ContentTypeObject.generate(petition_with_unrecognised_subtype_id)).to be_an_instance_of(Petition)
         expect(ContentTypeObject.generate(formal_proceeding)).to be_an_instance_of(FormalProceeding)
         expect(ContentTypeObject.generate(parliamentary_paper_reported)).to be_an_instance_of(ParliamentaryCommittee)
         expect(ContentTypeObject.generate(parliamentary_paper_laid)).to be_an_instance_of(UnprintedPaper)
