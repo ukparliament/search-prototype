@@ -270,59 +270,99 @@ RSpec.describe 'QueryExpander' do
 
   context 'two thesaurus terms separated with an OR operator' do
     let(:search_query) { 'Crime OR Fraud' }
-    let(:crime_response) { instance_double(SesQuery, data: [{ equivalent_terms: ["Law breaking", "Offences", "Street crime"], preferred_term: "Crime", preferred_term_id: "90768" }]) }
-    let(:fraud_response) { instance_double(SesQuery, data: [{ equivalent_terms: ["Embezzlement"], preferred_term: "Fraud", preferred_term_id: "91352" }]) }
+    let(:crime_ses_response) { instance_double(SesQuery, data: [{ equivalent_terms: ["Law breaking", "Offences", "Street crime"], preferred_term: "Crime", preferred_term_id: "90768" }]) }
+    let(:fraud_ses_response) { instance_double(SesQuery, data: [{ equivalent_terms: ["Embezzlement"], preferred_term: "Fraud", preferred_term_id: "91352" }]) }
 
     it 'makes the expected SES queries' do
-      expect(ses_test_class).to receive(:new).with(({ value: "Crime" })).and_return(crime_response)
-      expect(ses_test_class).to receive(:new).with(({ value: "Fraud" })).and_return(fraud_response)
+      expect(ses_test_class).to receive(:new).with(({ value: "Crime" })).and_return(crime_ses_response)
+      expect(ses_test_class).to receive(:new).with(({ value: "Fraud" })).and_return(fraud_ses_response)
       query_expander.expand_query
     end
 
     it 'returns the expected result' do
-      expect(ses_test_class).to receive(:new).with(({ value: "Crime" })).and_return(crime_response)
-      expect(ses_test_class).to receive(:new).with(({ value: "Fraud" })).and_return(fraud_response)
+      expect(ses_test_class).to receive(:new).with(({ value: "Crime" })).and_return(crime_ses_response)
+      expect(ses_test_class).to receive(:new).with(({ value: "Fraud" })).and_return(fraud_ses_response)
       expect(query_expander.expand_query).to eq("(\"Crime\" OR \"Law breaking\" OR \"Offences\" OR \"Street crime\" OR all_ses:90768) OR (\"Fraud\" OR \"Embezzlement\" OR all_ses:91352)")
     end
   end
 
   context 'two thesaurus terms separated with an OR operator separated by an AND operator from a quoted phrase that is a thesaurus term' do
     let(:search_query) { "(Labour OR conservative) AND \"small businesses\"" }
-    let(:labour_response) { instance_double(SesQuery, data: [{ equivalent_terms: ["LAB", "Labour Party"], preferred_term: "Labour", preferred_term_id: "42226" }]) }
-    let(:conservative_response) { instance_double(SesQuery, data: [{ equivalent_terms: ["LAB", "Labour Party"], preferred_term: "Labour", preferred_term_id: "42226" }]) }
-    let(:small_businesses_response) { instance_double(SesQuery, data: [{ equivalent_terms: ["Medium sized businesses", "Medium sized enterprises", "MSEs", "Small and medium sized enterprises", "Small firms", "SMEs"], preferred_term: "Small businesses", preferred_term_id: "93034" }]) }
+    let(:labour_ses_response) { instance_double(SesQuery, data: [{ equivalent_terms: ["LAB", "Labour Party"], preferred_term: "Labour", preferred_term_id: "42226" }]) }
+    let(:conservative_ses_response) { instance_double(SesQuery, data: [{ equivalent_terms: ["LAB", "Labour Party"], preferred_term: "Labour", preferred_term_id: "42226" }]) }
+    let(:small_businesses_ses_response) { instance_double(SesQuery, data: [{ equivalent_terms: ["Medium sized businesses", "Medium sized enterprises", "MSEs", "Small and medium sized enterprises", "Small firms", "SMEs"], preferred_term: "Small businesses", preferred_term_id: "93034" }]) }
+
+    it 'makes the expected SES queries' do
+      expect(ses_test_class).to receive(:new).with(({ value: "Labour" })).and_return(labour_ses_response)
+      expect(ses_test_class).to receive(:new).with(({ value: "conservative" })).and_return(conservative_ses_response)
+      expect(ses_test_class).to receive(:new).with(({ value: "small businesses" })).and_return(small_businesses_ses_response)
+      query_expander.expand_query
+    end
 
     it 'returns the expected result' do
-      expect(ses_test_class).to receive(:new).with(({ value: "Labour" })).and_return(labour_response)
-      expect(ses_test_class).to receive(:new).with(({ value: "conservative" })).and_return(conservative_response)
-      expect(ses_test_class).to receive(:new).with(({ value: "small businesses" })).and_return(small_businesses_response)
+      expect(ses_test_class).to receive(:new).with(({ value: "Labour" })).and_return(labour_ses_response)
+      expect(ses_test_class).to receive(:new).with(({ value: "conservative" })).and_return(conservative_ses_response)
+      expect(ses_test_class).to receive(:new).with(({ value: "small businesses" })).and_return(small_businesses_ses_response)
       expect(query_expander.expand_query).to eq("(\"Labour\" OR \"LAB\" OR \"Labour Party\" OR all_ses:42226) OR (\"Conservative\" OR \"CON\" OR \"Conservative Party\" OR \"Conservatives\" OR \"National Union of Conservative and Unionist Associations\" OR all_ses:21137) AND (\"Small businesses\" OR \"Medium sized businesses\" OR \"Medium sized enterprises\" OR \"MSEs\" OR \"Small and medium sized enterprises\" OR \"Small firms\" OR \"SMEs\" OR all_ses:93034)")
     end
   end
 
   context 'a thesaurus term and a non-thesaurus term separated by an OR operator' do
-    let(:ses_response) { [{ equivalent_terms: ["Law breaking", "Offences", "Street crime"], preferred_term: "Crime", preferred_term_id: "90768" }] }
     let(:search_query) { "Crime OR malfeasance" }
+    let(:crime_ses_response) { instance_double(SesQuery, data: [{ equivalent_terms: ["Law breaking", "Offences", "Street crime"], preferred_term: "Crime", preferred_term_id: "90768" }]) }
+    let(:malfeasance_ses_response) { instance_double(SesQuery, data: [{ equivalent_terms: ["Law breaking", "Offences", "Street crime"], preferred_term: "Crime", preferred_term_id: "90768" }]) }
+
+    it 'makes the expected SES queries' do
+      expect(ses_test_class).to receive(:new).with(({ value: "Crime" })).and_return(crime_ses_response)
+      expect(ses_test_class).to receive(:new).with(({ value: "malfeasance" })).and_return(malfeasance_ses_response)
+      query_expander.expand_query
+    end
 
     it 'returns the expected result' do
+      expect(ses_test_class).to receive(:new).with(({ value: "Crime" })).and_return(crime_ses_response)
+      expect(ses_test_class).to receive(:new).with(({ value: "malfeasance" })).and_return(malfeasance_ses_response)
       expect(query_expander.expand_query).to eq("(\"Crime\" OR \"Law breaking\" OR \"Offences\" OR \"Street crime\" OR all_ses:90768) OR malfeasance")
     end
   end
 
   context 'two thesaurus terms separated by an AND operator, OR another thesaurus term' do
-    let(:ses_response) { [{ equivalent_terms: [], preferred_term: "Courts", preferred_term_id: "90757" }, { equivalent_terms: ["Law lords"], preferred_term: "Judges", preferred_term_id: "91760" }, { equivalent_terms: ["Jury service", "Trial by jury"], preferred_term: "Juries", preferred_term_id: "91765" }] }
     let(:search_query) { "(Judges AND juries) OR Courts" }
+    let(:courts_ses_response) { [{ equivalent_terms: [], preferred_term: "Courts", preferred_term_id: "90757" }] }
+    let(:judges_ses_response) { [{ equivalent_terms: ["Law lords"], preferred_term: "Judges", preferred_term_id: "91760" }] }
+    let(:juries_ses_response) { [{ equivalent_terms: ["Jury service", "Trial by jury"], preferred_term: "Juries", preferred_term_id: "91765" }] }
+
+    it 'makes the expected SES queries' do
+      expect(ses_test_class).to receive(:new).with(({ value: "Courts" })).and_return(courts_ses_response)
+      expect(ses_test_class).to receive(:new).with(({ value: "Judges" })).and_return(juries_ses_response)
+      expect(ses_test_class).to receive(:new).with(({ value: "juries" })).and_return(juries_ses_response)
+      query_expander.expand_query
+    end
 
     it 'returns the expected result' do
+      expect(ses_test_class).to receive(:new).with(({ value: "Courts" })).and_return(courts_ses_response)
+      expect(ses_test_class).to receive(:new).with(({ value: "Judges" })).and_return(juries_ses_response)
+      expect(ses_test_class).to receive(:new).with(({ value: "juries" })).and_return(juries_ses_response)
       expect(query_expander.expand_query).to eq("(\"Judges\" OR \"Law lords\" OR all_ses:91760) AND (\"Juries\" OR \"Jury service\" OR \"Trial by jury\" OR all_ses:91765) OR (\"Courts\" OR all_ses:90757)")
     end
   end
 
   context 'two non-preferred terms separated by AND, followed by a preferred term' do
-    let(:ses_response) { [{ equivalent_terms: ["DEFRA", "Dept for Environment Food and Rural Affairs", "Dept for Environment, Food and Rural Affairs", "Dept of Environment Food and Rural Affairs"], preferred_term: "Department for Environment, Food and Rural Affairs", preferred_term_id: "28661" }] }
     let(:search_query) { "(Ponies AND bird flu) Defra" }
+    let(:ponies_ses_response) { [{ equivalent_terms: ["Equines", "Ponies"], preferred_term: "Horses", preferred_term_id: "10766" }] }
+    let(:bird_flu_ses_response) { [{ equivalent_terms: ["Avian flu", "Bird flu", "Fowl plague"], preferred_term: "Avian influenza", preferred_term_id: "8483" }] }
+    let(:defra_ses_response) { [{ equivalent_terms: ["DEFRA", "Dept for Environment Food and Rural Affairs", "Dept for Environment, Food and Rural Affairs", "Dept of Environment Food and Rural Affairs"], preferred_term: "Department for Environment, Food and Rural Affairs", preferred_term_id: "28661" }] }
+
+    it 'makes the expected SES queries' do
+      expect(ses_test_class).to receive(:new).with(({ value: "Ponies" })).and_return(ponies_ses_response)
+      expect(ses_test_class).to receive(:new).with(({ value: "bird flu" })).and_return(bird_flu_ses_response)
+      expect(ses_test_class).to receive(:new).with(({ value: "DEFRA" })).and_return(defra_ses_response)
+      query_expander.expand_query
+    end
 
     it 'returns the expected result' do
+      expect(ses_test_class).to receive(:new).with(({ value: "Ponies" })).and_return(ponies_ses_response)
+      expect(ses_test_class).to receive(:new).with(({ value: "bird flu" })).and_return(bird_flu_ses_response)
+      expect(ses_test_class).to receive(:new).with(({ value: "DEFRA" })).and_return(defra_ses_response)
       expect(query_expander.expand_query).to eq("(\"Judges\" OR \"Law lords\" OR all_ses:91760) AND (\"Juries\" OR \"Jury service\" OR \"Trial by jury\" OR all_ses:91765) OR (\"Courts\" OR all_ses:90757)")
     end
   end
