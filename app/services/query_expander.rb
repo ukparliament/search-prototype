@@ -39,6 +39,8 @@ class QueryExpander
     puts "Tokens: #{tokens}" if Rails.env.development?
 
     tokens.each do |label, value|
+      puts "Processing token: #{label}: #{value}" if Rails.env.development?
+
       if label == :operator
         # do nothing, pass directly to Solr
         search_term = value
