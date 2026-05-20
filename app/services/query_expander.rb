@@ -36,90 +36,131 @@ class QueryExpander
     tokens = tokeniser.new(search_query).tokenise
     processed_tokens = []
 
-    puts "Tokens: #{tokens}" if Rails.env.development?
+    puts "Tokens: #{tokens}" if Rails.env.development? || Rails.env.test?
 
     tokens.each do |label, value|
-      puts "Processing token: #{label}: #{value}" if Rails.env.development?
+      puts "Processing token: #{label}: #{value}" if Rails.env.development? || Rails.env.test?
 
       if label == :operator
-        # do nothing, pass directly to Solr
-        search_term = value
-        processed_tokens << search_term
+        processed_tokens << process_operator_token(value)
       elsif label == :url
-        # If Solr receives a bunch of special characters it will indiscriminately escape them all itself, which
-        # has the unfortunate side effect of wildcard (* and ?) characters being parsed as text only. We need to
-        # escape special characters (except wildcards) before submitting the search.
-        search_term = value.gsub(SPECIAL_CHARS, '\\\\\1')
-        processed_tokens << search_term
+        processed_tokens << process_url_token(value)
       elsif label == :uri_field
-        search_term = value.partition(":").last.gsub(SPECIAL_CHARS, '\\\\\1')
-        field_name = value.partition(":").first
-        processed_tokens << "#{field_name}:#{search_term}"
+        processed_tokens << process_uri_field_token(value)
       elsif label == :specified_field_with_quoted_phrase
-        # For quoted phrases, the user expectation is that the phrase is passed to Solr as-is
-        # However, if the complete phrase is matched by SES, we search for that instead
-        # strip one layer of quotes before continuing
-        search_term = value.partition(":").last.delete_prefix('"').delete_suffix('"')
-        field_name = value.partition(":").first
-        ses_data = ses_query.new({ value: search_term }).data
-        expanded_fields = field_expander.new(field_name).expand_fields
-
-        # TODO: needs to only match on full phrase? To confirm
-        processed_tokens << term_expander.new(expanded_fields: expanded_fields,
-                                              ses_data: ses_data,
-                                              search_term: search_term).expand_terms
-
+        processed_tokens << process_specified_field_with_quoted_phrase_token(value)
       elsif label == :specified_field_no_expansion
-        # delete unwanted []; expand fields using blank SES data
-        search_term = value.partition(":").last.delete_prefix("[").delete_suffix("]")
-        field_name = value.partition(":").first
-        expanded_fields = field_expander.new(field_name).expand_fields
-        processed_tokens << term_expander.new(expanded_fields: expanded_fields, search_term: search_term).expand_terms
-
+        processed_tokens << process_specified_field_no_expansion_token(value)
       elsif label == :specified_field_wildcard
-        # where the user has specified a wildcard with a field or alias we:
-        # - perform field expansion
-        # - don't perform term expansion
-        search_term = value.partition(":").last
-        field_name = value.partition(":").first
-        expanded_fields = field_expander.new(field_name).expand_fields
-        processed_tokens << term_expander.new(expanded_fields: expanded_fields,
-                                              search_term: search_term).expand_terms
-
+        processed_tokens << process_specified_field_wildcard_token(value)
       elsif label == :specified_field
-        search_term = value.partition(":").last
-        field_name = value.partition(":").first
-        expanded_fields = field_expander.new(field_name).expand_fields
-        ses_data = ses_query.new({ value: search_term }).data
-        processed_tokens << term_expander.new(expanded_fields: expanded_fields,
-                                              ses_data: ses_data,
-                                              search_term: search_term).expand_terms
-
+        processed_tokens << process_specified_field_token(value)
       elsif label == :quoted_phrase
-        search_term = value
-        expanded_fields = field_expander.new("none").expand_fields
-        ses_data = ses_query.new({ value: search_term }).data
-        processed_tokens << term_expander.new(expanded_fields: expanded_fields,
-                                              ses_data: ses_data,
-                                              search_term: search_term).expand_terms
-
+        processed_tokens << process_quoted_phrase_token(value)
       elsif label == :no_expansion
-        search_term = value.delete_prefix("[").delete_suffix("]")
-        processed_tokens << search_term
-
+        processed_tokens << process_no_expansion_token(value)
       elsif label == :unquoted_phrase
-        search_term = value
-        expanded_fields = field_expander.new("none").expand_fields
-        ses_data = ses_query.new({ value: search_term }).data if TermExpander::EXPAND_UNQUOTED_PHRASES
-        processed_tokens << term_expander.new(expanded_fields: expanded_fields,
-                                              ses_data: ses_data,
-                                              search_term: search_term).expand_terms
+        processed_tokens << process_unquoted_phrase_token(value)
       else
-        puts "Unmatched token type #{label} for #{value}" if Rails.env.development?
+        puts "Unmatched token type #{label} for #{value}" if Rails.env.development? || Rails.env.test?
         next
       end
+      puts "Processed tokens: #{processed_tokens}" if Rails.env.development? || Rails.env.test?
     end
 
+    puts "Final Processed tokens: #{processed_tokens}" if Rails.env.development? || Rails.env.test?
     term_combiner.new(processed_tokens).combine_terms
+  end
+
+  private
+
+  def process_unquoted_phrase_token(value)
+    search_term = value
+    expanded_fields = field_expander.new("none").expand_fields
+    ses_data = ses_query.new({ value: search_term }).data if TermExpander::EXPAND_UNQUOTED_PHRASES
+    term_expander.new(expanded_fields: expanded_fields, ses_data: ses_data, search_term: search_term).expand_terms
+  end
+
+  def process_no_expansion_token(value)
+    value.delete_prefix("[").delete_suffix("]")
+  end
+
+  def process_quoted_phrase_token(value)
+    puts "Processing quoted phrase token: #{value}" if Rails.env.development? || Rails.env.test?
+
+    # TODO: use a different pipeline for processing this; the current pipeline assumes quoted / unquoted should be
+    #   treated the same
+    #   The simplest solution for now: pass token type e.g. :quoted_phrase through to term_expander
+    #   Modify TermExpander to check for token type where necessary (which for now is just one place)
+
+    expanded_fields = field_expander.new("none").expand_fields
+    ses_data = ses_query.new({ value: value }).data
+
+    # the value will have been stripped of its quotes, so we need to reintroduce those
+    search_term = "\"#{value}\""
+
+    term_expander.new(expanded_fields: expanded_fields, ses_data: ses_data, search_term: search_term, token_type: :quoted_phrase).expand_terms
+  end
+
+  def process_specified_field_token(value)
+    search_term = value.partition(":").last
+    field_name = value.partition(":").first
+    expanded_fields = field_expander.new(field_name).expand_fields
+    ses_data = ses_query.new({ value: search_term }).data
+    term_expander.new(expanded_fields: expanded_fields, ses_data: ses_data, search_term: search_term).expand_terms
+  end
+
+  def process_specified_field_wildcard_token(value)
+    # where the user has specified a wildcard with a field or alias we:
+    # - perform field expansion
+    # - don't perform term expansion
+    # 
+    search_term = value.partition(":").last
+    field_name = value.partition(":").first
+    expanded_fields = field_expander.new(field_name).expand_fields
+    term_expander.new(expanded_fields: expanded_fields, search_term: search_term).expand_terms
+  end
+
+  def process_specified_field_no_expansion_token(value)
+    # delete unwanted []; expand fields using blank SES data
+    search_term = value.partition(":").last.delete_prefix("[").delete_suffix("]")
+    field_name = value.partition(":").first
+    expanded_fields = field_expander.new(field_name).expand_fields
+
+    term_expander.new(expanded_fields: expanded_fields, search_term: search_term).expand_terms
+  end
+
+  def process_specified_field_with_quoted_phrase_token(value)
+    # For quoted phrases, the user expectation is that the phrase is passed to Solr as-is
+    # However, if the complete phrase is matched by SES, we search for that instead
+    # strip one layer of quotes before continuing
+
+    search_term = value.partition(":").last.delete_prefix('"').delete_suffix('"')
+    field_name = value.partition(":").first
+
+    ses_data = ses_query.new({ value: search_term }).data
+    expanded_fields = field_expander.new(field_name).expand_fields
+
+    # TODO: needs to only match on full phrase? To confirm
+    term_expander.new(expanded_fields: expanded_fields, ses_data: ses_data, search_term: search_term).expand_terms
+  end
+
+  def process_uri_field_token(value)
+    search_term = value.partition(":").last.gsub(SPECIAL_CHARS, '\\\\\1')
+    field_name = value.partition(":").first
+
+    "#{field_name}:#{search_term}"
+  end
+
+  def process_url_token(value)
+    # If Solr receives a bunch of special characters it will indiscriminately escape them all itself, which
+    # has the unfortunate side effect of wildcard (* and ?) characters being parsed as text only. We need to
+    # escape special characters (except wildcards) before submitting the search.
+    value.gsub(SPECIAL_CHARS, '\\\\\1')
+  end
+
+  def process_operator_token(value)
+    # No processing required for operators
+    value
   end
 end

@@ -12,84 +12,61 @@ RSpec.describe 'Tokeniser' do
       allow(tokeniser).to receive(:terms).and_return(terms)
     end
 
-    context 'with a Solr operator' do
-      let(:terms) { ["OR"] }
-      it 'tags as an operator token' do
-        expect(tokeniser.tokenise).to eq([[:operator, "OR"]])
+    context 'with a single scan array' do
+      let(:terms) { [["term one", "term two", "term three", "term four", "term five", "term six", "term seven", "term eight", "term nine", "term ten", "term eleven", "term twelve"]] }
+
+      it 'returns the tag associated with each term position, along with that term' do
+        expect(tokeniser.tokenise).to eq([[:operator, "term one"],
+                                          [:url, "term two"],
+                                          [:uri_field, "term three"],
+                                          [:specified_field_with_quoted_phrase, "term four"],
+                                          [:specified_field_with_quoted_phrase, "term five"],
+                                          [:specified_field_no_expansion, "term six"],
+                                          [:specified_field_wildcard, "term seven"],
+                                          [:specified_field, "term eight"],
+                                          [:quoted_phrase, "term nine"],
+                                          [:quoted_phrase, "term ten"],
+                                          [:no_expansion, "term eleven"],
+                                          [:unquoted_phrase, "term twelve"]])
       end
     end
 
-    context 'with an http url' do
-      let(:terms) { ["http://example.com"] }
-      it 'tags as a url' do
-        expect(tokeniser.tokenise).to eq([[:url, "http://example.com"]])
+    context 'where the scan array includes nil values' do
+      let(:terms) { [["term one", nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil]] }
+
+      it 'returns the tag associated with each term position, but omits nils' do
+        expect(tokeniser.tokenise).to eq([[:operator, "term one"]])
       end
     end
 
-    context 'with a specified field' do
-      let(:terms) { ["subject:cats"] }
-      it 'tags as a specified field' do
-        expect(tokeniser.tokenise).to eq([[:specified_field, "subject:cats"]])
-      end
-    end
+    context 'with multiple scan arrays' do
+      let(:terms) { [["term one", "term two", "term three", "term four", "term five", "term six", "term seven", "term eight", "term nine", "term ten", "term eleven", "term twelve"], ["term one", "term two", "term three", "term four", "term five", "term six", "term seven", "term eight", "term nine", "term ten", "term eleven", "term twelve"]] }
 
-    context 'with a specified field and a wildcard operator' do
-      let(:terms) { ["subject:*"] }
-      it 'tags as a specified field' do
-        expect(tokeniser.tokenise).to eq([[:specified_field_wildcard, "subject:*"]])
-      end
-    end
-
-    context 'with a specified field with quotes' do
-      let(:terms) { ["subject:\"cats protection\""] }
-      it 'tags as a specified field with quoted phrase' do
-        expect(tokeniser.tokenise).to eq([[:specified_field_with_quoted_phrase, "subject:\"cats protection\""]])
-      end
-    end
-
-    context 'with a quoted phrase' do
-      let(:terms) { ["\"cats protection\""] }
-      it 'tags as a quoted phrase' do
-        expect(tokeniser.tokenise).to eq([[:quoted_phrase, "\"cats protection\""]])
-      end
-    end
-
-    context 'with an unquoted term' do
-      let(:terms) { ['cat'] }
-
-      it 'tags it as an unquoted phrase' do
-        expect(tokeniser.tokenise).to eq([[:unquoted_phrase, "cat"]])
-      end
-    end
-
-    context 'with multiple sequential unquoted terms' do
-      let(:terms) { ['cat', 'dog'] }
-
-      it 'tags it as an unquoted phrase, with the terms returned in a single string' do
-        expect(tokeniser.tokenise).to eq([[:unquoted_phrase, "cat dog"]])
-      end
-    end
-
-    context 'with non-sequential unquoted terms' do
-      let(:terms) { ['cat', 'subject:welfare', 'dog', 'chicken'] }
-
-      it 'tags it as an unquoted phrase, non-sequential terms returned as separate tokens' do
-        expect(tokeniser.tokenise).to eq([[:unquoted_phrase, "cat"], [:specified_field, "subject:welfare"], [:unquoted_phrase, "dog chicken"]])
-      end
-    end
-
-    context 'with square brackets' do
-      let(:terms) { ['[cat]'] }
-
-      it 'tags it as no expansion' do
-        expect(tokeniser.tokenise).to eq([[:no_expansion, "[cat]"]])
-      end
-    end
-
-    context 'with a field name and square brackets' do
-      let(:terms) { ['subject:[cats]'] }
-      it 'tags it as specified field no expansion' do
-        expect(tokeniser.tokenise).to eq([[:specified_field_no_expansion, "subject:[cats]"]])
+      it 'returns the tag associated with each term position, along with that term, across all scan arrays' do
+        expect(tokeniser.tokenise).to eq([[:operator, "term one"],
+                                          [:url, "term two"],
+                                          [:uri_field, "term three"],
+                                          [:specified_field_with_quoted_phrase, "term four"],
+                                          [:specified_field_with_quoted_phrase, "term five"],
+                                          [:specified_field_no_expansion, "term six"],
+                                          [:specified_field_wildcard, "term seven"],
+                                          [:specified_field, "term eight"],
+                                          [:quoted_phrase, "term nine"],
+                                          [:quoted_phrase, "term ten"],
+                                          [:no_expansion, "term eleven"],
+                                          [:unquoted_phrase, "term twelve"],
+                                          [:operator, "term one"],
+                                          [:url, "term two"],
+                                          [:uri_field, "term three"],
+                                          [:specified_field_with_quoted_phrase, "term four"],
+                                          [:specified_field_with_quoted_phrase, "term five"],
+                                          [:specified_field_no_expansion, "term six"],
+                                          [:specified_field_wildcard, "term seven"],
+                                          [:specified_field, "term eight"],
+                                          [:quoted_phrase, "term nine"],
+                                          [:quoted_phrase, "term ten"],
+                                          [:no_expansion, "term eleven"],
+                                          [:unquoted_phrase, "term twelve"]])
       end
     end
   end
@@ -112,15 +89,20 @@ RSpec.describe 'Tokeniser' do
       context 'with a single term' do
         let!(:query) { "housing" }
 
-        it 'returns the term in an array' do
-          expect(tokeniser.terms).to eq(["housing"])
+        it 'returns the term in a scan result array' do
+          expect(tokeniser.terms).to eq([[nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, "housing"]])
         end
       end
       context 'with multiple field scoped terms and unscoped terms' do
         let!(:query) { "subject:housing subject:\"old houses\" subject:\"houses\" houses \"old houses\" \"houses\"" }
 
-        it 'extracts the individual terms into an array of strings' do
-          expect(tokeniser.terms).to eq(["subject:housing", "subject:\"old houses\"", "subject:\"houses\"", "houses", "old houses", "houses"])
+        it 'extracts the individual terms into an array of scan result arrays' do
+          expect(tokeniser.terms).to eq([[nil, nil, nil, nil, nil, nil, nil, "subject:housing", nil, nil, nil, nil],
+                                         [nil, nil, nil, "subject:\"old houses\"", nil, nil, nil, nil, nil, nil, nil, nil],
+                                         [nil, nil, nil, "subject:\"houses\"", nil, nil, nil, nil, nil, nil, nil, nil],
+                                         [nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, "houses"],
+                                         [nil, nil, nil, nil, nil, nil, nil, nil, nil, "old houses", nil, nil],
+                                         [nil, nil, nil, nil, nil, nil, nil, nil, nil, "houses", nil, nil]])
         end
       end
     end

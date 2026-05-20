@@ -9,58 +9,59 @@ class Tokeniser
     @query = query
   end
 
+  TOKEN_REGEX = /(^AND|OR|NOT)|(\A[a-z]+:\/\/)|(\Auri:[a-z]+:\/\/)|(\w+:"(?:[^"]+)")|(\w+:'(?:[^']+)')|(\w+:\[(?:[^\]]+)\])|(\w+:\*)|(\w+:\S+)|(\[(?:[^\]]+)\])|"([^"]+)"|'([^']+)'|(\S+)/
+
   ##
   # Terms operates on the provided query string, returning an array of separate string 'terms' for tokenisation:
   # - Returns nil if no query is provided
-  # - Otherwise returns an array of terms matching the following formats:
-  #   - Specified fields, e.g. field_name:term or field_name:'term' or field_name:"term" or
-  #     field_name:"a phrase" or field_name:'a phrase'.
-  #   - Quoted phrases without a specified field, e.g. "any phrase wrapped in quotes", or 'like this'.
-  #   - Unquoted words
   def terms
     return if query.blank?
-    query.to_s.scan(/(\w+:"(?:[^"]+)")|(\w+:'(?:[^']+)')|(\w+:\[(?:[^\]]+)\])|(\w+:\S+)|(\[(?:[^\]]+)\])|"([^"]+)"|'([^']+)'|(\S+)/).flat_map(&:compact)
+
+    puts "query: #{query}" if Rails.env.development? || Rails.env.test?
+    ret = query.to_s.scan(TOKEN_REGEX)
+    puts "scan results: #{ret}" if Rails.env.development? || Rails.env.test?
+    ret
   end
 
   ##
-  # Tokenise operates on the terms array, returning an array of tokens. Categories are:
-  # - Solr operators (AND, OR etc.)
-  # - specified_field:'with a word or phrase in quotes' (either "" or '')
-  # - specified_field:[with a word or phrase not to be expanded] (signified by square brackets)
-  # - specified_field:term (single word with no quotes)
-  # - quoted phrases ("" or '')
-  # - phrases not to be expanded (signified by square brackets)
-  # - unquoted words
+  # Tokenise operates on the result of the term extraction process and assigns a token label based on the position
+  # of the matcher in the regex used for term extraction.
   #
   # The final step groups any adjacent unquoted words in the array into phrases before being returned.
   def tokenise
     tokens = []
 
     terms.each do |term|
-      if term.match(/^(?:AND|OR|NOT)$/)
-        tokens << [:operator, term]
-      elsif term.match?(/\A[a-z]+:\/\//)
-        tokens << [:url, term]
-      elsif term.match?(/\Auri:[a-z]+:\/\//)
-        tokens << [:uri_field, term]
-      elsif term.match(/(\w+:"(?:[^"]+)")/)
-        tokens << [:specified_field_with_quoted_phrase, term]
-      elsif term.match(/(\w+:'(?:[^']+)')/)
-        tokens << [:specified_field_with_quoted_phrase, term]
-      elsif term.match(/(\w+:\[(?:[^\]]+)\])/)
-        tokens << [:specified_field_no_expansion, term]
-      elsif term.match(/(\w+:\*)/)
-        tokens << [:specified_field_wildcard, term]
-      elsif term.match(/(\w+:\S+)/)
-        tokens << [:specified_field, term]
-      elsif term.match(/"([^"]+)"/)
-        tokens << [:quoted_phrase, term]
-      elsif term.match(/'([^']+)'/)
-        tokens << [:quoted_phrase, term]
-      elsif term.match(/\[(?:[^\]]+)\]/)
-        tokens << [:no_expansion, term]
-      else
-        tokens << [:unquoted_word, term]
+      puts "Processing scan fragment: #{term}"
+
+      term.each_with_index do |matched_term, i|
+        next if matched_term.nil?
+
+        case i
+        when 0
+          tokens << [:operator, matched_term]
+        when 1
+          tokens << [:url, matched_term]
+        when 2
+          tokens << [:uri_field, matched_term]
+        when 3, 4
+          tokens << [:specified_field_with_quoted_phrase, matched_term]
+        when 5
+          tokens << [:specified_field_no_expansion, matched_term]
+        when 6
+          tokens << [:specified_field_wildcard, matched_term]
+        when 7
+          tokens << [:specified_field, matched_term]
+        when 8, 9
+          tokens << [:quoted_phrase, matched_term]
+        when 10
+          tokens << [:no_expansion, matched_term]
+        when 11
+          tokens << [:unquoted_word, matched_term]
+        else
+          puts "Term not matched by tokeniser: #{matched_term}"
+          next
+        end
       end
     end
 

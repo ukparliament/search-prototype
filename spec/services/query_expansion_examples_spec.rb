@@ -8,8 +8,13 @@ RSpec.describe 'QueryExpander' do
   let(:ses_test_instance) { instance_double(SesQuery, data: []) }
 
   context 'one word which is a thesaurus term' do
-    let(:search_query) { 'Horses' }
+    let(:search_query) { "Horses" }
     let(:horses_ses_response) { instance_double(SesQuery, data: [{ equivalent_terms: ["Equines", "Ponies"], preferred_term: "Horses", preferred_term_id: "10766" }]) }
+
+    it 'processes the tokens correctly' do
+      expect(query_expander).to receive(:process_unquoted_phrase_token).with(search_query)
+      query_expander.expand_query
+    end
 
     it 'makes the expected SES queries' do
       expect(ses_test_class).to receive(:new).with(({ value: "Horses" })).and_return(horses_ses_response)
@@ -24,8 +29,13 @@ RSpec.describe 'QueryExpander' do
 
   context 'two words which are not thesaurus terms' do
     # TODO: fix unnecessary brackets added around single words
-    let(:search_query) { 'Femur chronic' }
+    let(:search_query) { "Femur chronic" }
     let(:femur_chronic_ses_response) { instance_double(SesQuery, data: []) }
+
+    it 'processes the tokens correctly' do
+      expect(query_expander).to receive(:process_unquoted_phrase_token).with(search_query)
+      query_expander.expand_query
+    end
 
     it 'makes the expected SES queries' do
       expect(ses_test_class).to receive(:new).with(({ value: "Femur chronic" })).and_return(femur_chronic_ses_response)
@@ -39,8 +49,13 @@ RSpec.describe 'QueryExpander' do
   end
 
   context 'two words which are separate thesaurus terms' do
-    let(:search_query) { 'Crime Fraud' }
+    let(:search_query) { "Crime Fraud" }
     let(:crime_fraud_ses_response) { instance_double(SesQuery, data: [{ equivalent_terms: ["Law breaking", "Offences", "Street crime"], preferred_term: "Crime", preferred_term_id: "90768" }, { equivalent_terms: ["Embezzlement"], preferred_term: "Fraud", preferred_term_id: "91352" }]) }
+
+    it 'processes the tokens correctly' do
+      expect(query_expander).to receive(:process_unquoted_phrase_token).with(search_query)
+      query_expander.expand_query
+    end
 
     it 'makes the expected SES queries' do
       expect(ses_test_class).to receive(:new).with(({ value: "Crime Fraud" })).and_return(crime_fraud_ses_response)
@@ -54,8 +69,13 @@ RSpec.describe 'QueryExpander' do
   end
 
   context 'two words which make one thesaurus term' do
-    let(:search_query) { 'Election observers' }
+    let(:search_query) { "Election observers" }
     let(:election_observers_ses_response) { instance_double(SesQuery, data: [{ equivalent_terms: [], preferred_term: "Election observers", preferred_term_id: "91070" }]) }
+
+    it 'processes the tokens correctly' do
+      expect(query_expander).to receive(:process_unquoted_phrase_token).with(search_query)
+      query_expander.expand_query
+    end
 
     it 'makes the expected SES queries' do
       expect(ses_test_class).to receive(:new).with(({ value: "Election observers" })).and_return(election_observers_ses_response)
@@ -69,8 +89,13 @@ RSpec.describe 'QueryExpander' do
   end
 
   context 'one non-thesaurus term and one thesaurus term' do
-    let(:search_query) { 'Security apparatus' }
+    let(:search_query) { "Security apparatus" }
     let(:security_apparatus_ses_response) { instance_double(SesQuery, data: [{ equivalent_terms: [], preferred_term: "Security", preferred_term_id: "92947" }]) }
+
+    it 'processes the tokens correctly' do
+      expect(query_expander).to receive(:process_unquoted_phrase_token).with(search_query)
+      query_expander.expand_query
+    end
 
     it 'makes the expected SES queries' do
       expect(ses_test_class).to receive(:new).with(({ value: "Security apparatus" })).and_return(security_apparatus_ses_response)
@@ -84,8 +109,13 @@ RSpec.describe 'QueryExpander' do
   end
 
   context 'two separate thesaurus terms which in combination form another thesaurus term' do
-    let(:search_query) { 'Health professions' }
+    let(:search_query) { "Health professions" }
     let(:health_professions_ses_response) { instance_double(SesQuery, data: [{ equivalent_terms: ["Health professionals"], preferred_term: "Health professions", preferred_term_id: "91491" }]) }
+
+    it 'processes the tokens correctly' do
+      expect(query_expander).to receive(:process_unquoted_phrase_token).with(search_query)
+      query_expander.expand_query
+    end
 
     it 'makes the expected SES queries' do
       expect(ses_test_class).to receive(:new).with(({ value: "Health professions" })).and_return(health_professions_ses_response)
@@ -100,8 +130,13 @@ RSpec.describe 'QueryExpander' do
 
   context 'three words where the first two form a term and the last two also form a term' do
     # TODO: check whether the expectation is accurate here: do we really want to return results just for the first combination?
-    let(:search_query) { 'Buckingham Palace Barracks' }
+    let(:search_query) { "Buckingham Palace Barracks" }
     let(:buckingham_palace_barracks_ses_response) { instance_double(SesQuery, data: [{ equivalent_terms: [], preferred_term: "Buckingham Palace", preferred_term_id: "16673" }, { equivalent_terms: [], preferred_term: "Palace Barracks", preferred_term_id: "513229" }]) }
+
+    it 'processes the tokens correctly' do
+      expect(query_expander).to receive(:process_unquoted_phrase_token).with(search_query)
+      query_expander.expand_query
+    end
 
     it 'makes the expected SES queries' do
       expect(ses_test_class).to receive(:new).with(({ value: "Buckingham Palace Barracks" })).and_return(buckingham_palace_barracks_ses_response)
@@ -115,8 +150,13 @@ RSpec.describe 'QueryExpander' do
   end
 
   context 'non-preferred form of a term is a substring of another word in the search' do
-    let(:search_query) { 'Balancing British Airways' }
+    let(:search_query) { "Balancing British Airways" }
     let(:balancing_british_airways_ses_response) { instance_double(SesQuery, data: [{ equivalent_terms: ["BA"], preferred_term: "British Airways", preferred_term_id: "4493" }]) }
+
+    it 'processes the tokens correctly' do
+      expect(query_expander).to receive(:process_unquoted_phrase_token).with(search_query)
+      query_expander.expand_query
+    end
 
     it 'makes the expected SES queries' do
       expect(ses_test_class).to receive(:new).with(({ value: "Balancing British Airways" })).and_return(balancing_british_airways_ses_response)
@@ -132,8 +172,13 @@ RSpec.describe 'QueryExpander' do
   context 'a phrase in quotes that is a thesaurus term' do
     # TODO: quoted phrase is being interpreted as an unquoted phrase
     #   Also have some strange escaping behaviour
-    let(:search_query) { '\"Digital mapping\"' }
+    let(:search_query) { "\"Digital mapping\"" }
     let(:digital_mapping_ses_response) { instance_double(SesQuery, data: [{ equivalent_terms: [], preferred_term: "Digital mapping", preferred_term_id: "90904" }]) }
+
+    it 'processes the tokens correctly' do
+      expect(query_expander).to receive(:process_quoted_phrase_token).with("Digital mapping")
+      query_expander.expand_query
+    end
 
     it 'makes the expected SES queries' do
       expect(ses_test_class).to receive(:new).with(({ value: "Digital mapping" })).and_return(digital_mapping_ses_response)
@@ -147,8 +192,13 @@ RSpec.describe 'QueryExpander' do
   end
 
   context 'a phrase in quotes that is a thesaurus term, with a substring of that phrase also being a thesaurus term' do
-    let(:search_query) { '\"Army training estate\"' }
+    let(:search_query) { "\"Army training estate\"" }
     let(:army_training_estate_ses_response) { instance_double(SesQuery, data: [{ equivalent_terms: [], preferred_term: "Army Training Estate", preferred_term_id: "1832" }]) }
+
+    it 'processes the tokens correctly' do
+      expect(query_expander).to receive(:process_quoted_phrase_token).with("Army training estate")
+      query_expander.expand_query
+    end
 
     it 'makes the expected SES queries' do
       expect(ses_test_class).to receive(:new).with(({ value: "Army training estate" })).and_return(army_training_estate_ses_response)
@@ -162,8 +212,13 @@ RSpec.describe 'QueryExpander' do
   end
 
   context 'a phrase in quotes' do
-    let(:search_query) { '\"News providers\"' }
-    let(:news_providers_ses_response) { [] }
+    let(:search_query) { "\"News providers\"" }
+    let(:news_providers_ses_response) { instance_double(SesQuery, data: []) }
+
+    it 'processes the tokens correctly' do
+      expect(query_expander).to receive(:process_quoted_phrase_token).with("News providers")
+      query_expander.expand_query
+    end
 
     it 'makes the expected SES queries' do
       expect(ses_test_class).to receive(:new).with(({ value: "News providers" })).and_return(news_providers_ses_response)
@@ -177,10 +232,15 @@ RSpec.describe 'QueryExpander' do
   end
 
   context 'a phrase in quotes and an unquoted word' do
-    # TODO: the tokeniser isn't correctly recognising this search query as two tokens, so we're not even sending two SES requests as intended yet
-    let(:search_query) { '\"News providers\" restrictions' }
-    let(:news_providers_ses_response) { [] }
-    let(:restrictions_ses_response) { [] }
+    let(:search_query) { "\"News providers\" restrictions" }
+    let(:news_providers_ses_response) { instance_double(SesQuery, data: []) }
+    let(:restrictions_ses_response) { instance_double(SesQuery, data: []) }
+
+    it 'processes the tokens correctly' do
+      expect(query_expander).to receive(:process_quoted_phrase_token).with("News providers").and_call_original
+      expect(query_expander).to receive(:process_unquoted_phrase_token).with("restrictions").and_call_original
+      query_expander.expand_query
+    end
 
     it 'makes the expected SES queries' do
       expect(ses_test_class).to receive(:new).with(({ value: "News providers" })).and_return(news_providers_ses_response)
@@ -191,18 +251,24 @@ RSpec.describe 'QueryExpander' do
     it 'returns the expected result' do
       expect(ses_test_class).to receive(:new).with(({ value: "News providers" })).and_return(news_providers_ses_response)
       expect(ses_test_class).to receive(:new).with(({ value: "restrictions" })).and_return(restrictions_ses_response)
-      expect(query_expander.expand_query).to eq("\"News providers\" AND (restrictions)")
+      expect(query_expander.expand_query).to eq("\"News providers\" AND restrictions")
     end
   end
 
   context 'a phrase in quotes that is a thesaurus term and an unquoted word' do
-    let(:search_query) { '\"Tax relief\" significant' }
-    let(:tax_relief_ses_response) { [{ equivalent_terms: ["Tax incentives", "Tax relief"], preferred_term: "Tax allowances", preferred_term_id: "93196" }] }
-    let(:significant_ses_response) { [] }
+    let(:search_query) { "\"Tax relief\" significant" }
+    let(:tax_relief_ses_response) { instance_double(SesQuery, data: [{ equivalent_terms: ["Tax incentives", "Tax relief"], preferred_term: "Tax allowances", preferred_term_id: "93196" }]) }
+    let(:significant_ses_response) { instance_double(SesQuery, data: []) }
+
+    it 'processes the tokens correctly' do
+      expect(query_expander).to receive(:process_quoted_phrase_token).with("Tax relief").and_call_original
+      expect(query_expander).to receive(:process_unquoted_phrase_token).with("significant").and_call_original
+      query_expander.expand_query
+    end
 
     it 'makes the expected SES queries' do
       expect(ses_test_class).to receive(:new).with(({ value: "Tax relief" })).and_return(tax_relief_ses_response)
-      expect(ses_test_class).to receive(:new).with(({ value: "Significant" })).and_return(significant_ses_response)
+      expect(ses_test_class).to receive(:new).with(({ value: "significant" })).and_return(significant_ses_response)
       query_expander.expand_query
     end
 
@@ -214,9 +280,15 @@ RSpec.describe 'QueryExpander' do
   end
 
   context 'a phrase in quotes that is a thesaurus term and an unquoted word that is also a thesaurus term' do
-    let(:search_query) { '\"Tax relief\" charities' }
+    let(:search_query) { "\"Tax relief\" charities" }
     let(:tax_relief_ses_response) { instance_double(SesQuery, data: [{ equivalent_terms: ["Tax incentives", "Tax relief"], preferred_term: "Tax allowances", preferred_term_id: "93196" }]) }
     let(:charities_ses_response) { instance_double(SesQuery, data: [{ equivalent_terms: [], preferred_term: "Charities", preferred_term_id: "90487" }]) }
+
+    it 'processes the tokens correctly' do
+      expect(query_expander).to receive(:process_quoted_phrase_token).with("Tax relief").and_call_original
+      expect(query_expander).to receive(:process_unquoted_phrase_token).with("charities").and_call_original
+      query_expander.expand_query
+    end
 
     it 'makes the expected SES queries' do
       expect(ses_test_class).to receive(:new).with(({ value: "Tax relief" })).and_return(tax_relief_ses_response)
@@ -232,10 +304,15 @@ RSpec.describe 'QueryExpander' do
   end
 
   context 'a phrase in quotes that is a thesaurus term and an unquoted phrase that is also a thesaurus term' do
-    # TODO: tokenising incorrectly?
-    let(:search_query) { '\"Tax relief\" small businesses' }
+    let(:search_query) { "\"Tax relief\" small businesses" }
     let(:tax_relief_ses_response) { instance_double(SesQuery, data: [{ equivalent_terms: ["Tax incentives", "Tax relief"], preferred_term: "Tax allowances", preferred_term_id: "93196" }]) }
     let(:small_businesses_ses_response) { instance_double(SesQuery, data: [{ equivalent_terms: ["Medium sized businesses", "Medium sized enterprises", "MSEs", "Small and medium sized enterprises", "Small firms", "SMEs"], preferred_term: "Small businesses", preferred_term_id: "93034" }]) }
+
+    it 'processes the tokens correctly' do
+      expect(query_expander).to receive(:process_quoted_phrase_token).with("Tax relief").and_call_original
+      expect(query_expander).to receive(:process_unquoted_phrase_token).with("small businesses").and_call_original
+      query_expander.expand_query
+    end
 
     it 'makes the expected SES queries' do
       expect(ses_test_class).to receive(:new).with(({ value: "Tax relief" })).and_return(tax_relief_ses_response)
@@ -251,9 +328,15 @@ RSpec.describe 'QueryExpander' do
   end
 
   context 'a phrase in quotes that is a thesaurus term and another phrase in quotes that is also a thesaurus term' do
-    let(:search_query) { '\"Tax relief\" \"Small businesses\"' }
+    let(:search_query) { "\"Tax relief\" \"Small businesses\"" }
     let(:small_businesses_ses_response) { instance_double(SesQuery, data: [{ equivalent_terms: ["Medium sized businesses", "Medium sized enterprises", "MSEs", "Small and medium sized enterprises", "Small firms", "SMEs"], preferred_term: "Small businesses", preferred_term_id: "93034" }]) }
     let(:tax_relief_ses_response) { instance_double(SesQuery, data: [{ equivalent_terms: ["Tax incentives", "Tax relief"], preferred_term: "Tax allowances", preferred_term_id: "93196" }]) }
+
+    it 'processes the tokens correctly' do
+      expect(query_expander).to receive(:process_quoted_phrase_token).with("Tax relief").and_call_original
+      expect(query_expander).to receive(:process_quoted_phrase_token).with("Small businesses").and_call_original
+      query_expander.expand_query
+    end
 
     it 'makes the expected SES queries' do
       expect(ses_test_class).to receive(:new).with(({ value: "Tax relief" })).and_return(tax_relief_ses_response)
@@ -269,9 +352,15 @@ RSpec.describe 'QueryExpander' do
   end
 
   context 'two thesaurus terms separated with an OR operator' do
-    let(:search_query) { 'Crime OR Fraud' }
+    let(:search_query) { "Crime OR Fraud" }
     let(:crime_ses_response) { instance_double(SesQuery, data: [{ equivalent_terms: ["Law breaking", "Offences", "Street crime"], preferred_term: "Crime", preferred_term_id: "90768" }]) }
     let(:fraud_ses_response) { instance_double(SesQuery, data: [{ equivalent_terms: ["Embezzlement"], preferred_term: "Fraud", preferred_term_id: "91352" }]) }
+
+    it 'processes the tokens correctly' do
+      expect(query_expander).to receive(:process_unquoted_phrase_token).with("Crime").and_call_original
+      expect(query_expander).to receive(:process_unquoted_phrase_token).with("Fraud").and_call_original
+      query_expander.expand_query
+    end
 
     it 'makes the expected SES queries' do
       expect(ses_test_class).to receive(:new).with(({ value: "Crime" })).and_return(crime_ses_response)
@@ -289,8 +378,15 @@ RSpec.describe 'QueryExpander' do
   context 'two thesaurus terms separated with an OR operator separated by an AND operator from a quoted phrase that is a thesaurus term' do
     let(:search_query) { "(Labour OR conservative) AND \"small businesses\"" }
     let(:labour_ses_response) { instance_double(SesQuery, data: [{ equivalent_terms: ["LAB", "Labour Party"], preferred_term: "Labour", preferred_term_id: "42226" }]) }
-    let(:conservative_ses_response) { instance_double(SesQuery, data: [{ equivalent_terms: ["LAB", "Labour Party"], preferred_term: "Labour", preferred_term_id: "42226" }]) }
+    let(:conservative_ses_response) { instance_double(SesQuery, data: [{ equivalent_terms: ["CON", "Conservative Party", "Conservatives", "National Union of Conservative and Unionist Associations"], preferred_term: "Conservative", preferred_term_id: "21137" }]) }
     let(:small_businesses_ses_response) { instance_double(SesQuery, data: [{ equivalent_terms: ["Medium sized businesses", "Medium sized enterprises", "MSEs", "Small and medium sized enterprises", "Small firms", "SMEs"], preferred_term: "Small businesses", preferred_term_id: "93034" }]) }
+
+    it 'processes the tokens correctly' do
+      expect(query_expander).to receive(:process_unquoted_phrase_token).with("Labour").and_call_original
+      expect(query_expander).to receive(:process_unquoted_phrase_token).with("Conservative").and_call_original
+      expect(query_expander).to receive(:process_quoted_phrase_token).with("small businesses").and_call_original
+      query_expander.expand_query
+    end
 
     it 'makes the expected SES queries' do
       expect(ses_test_class).to receive(:new).with(({ value: "Labour" })).and_return(labour_ses_response)
@@ -310,7 +406,13 @@ RSpec.describe 'QueryExpander' do
   context 'a thesaurus term and a non-thesaurus term separated by an OR operator' do
     let(:search_query) { "Crime OR malfeasance" }
     let(:crime_ses_response) { instance_double(SesQuery, data: [{ equivalent_terms: ["Law breaking", "Offences", "Street crime"], preferred_term: "Crime", preferred_term_id: "90768" }]) }
-    let(:malfeasance_ses_response) { instance_double(SesQuery, data: [{ equivalent_terms: ["Law breaking", "Offences", "Street crime"], preferred_term: "Crime", preferred_term_id: "90768" }]) }
+    let(:malfeasance_ses_response) { instance_double(SesQuery, data: []) }
+
+    it 'processes the tokens correctly' do
+      expect(query_expander).to receive(:process_unquoted_phrase_token).with("Crime").and_call_original
+      expect(query_expander).to receive(:process_unquoted_phrase_token).with("malfeasance").and_call_original
+      query_expander.expand_query
+    end
 
     it 'makes the expected SES queries' do
       expect(ses_test_class).to receive(:new).with(({ value: "Crime" })).and_return(crime_ses_response)
@@ -327,9 +429,16 @@ RSpec.describe 'QueryExpander' do
 
   context 'two thesaurus terms separated by an AND operator, OR another thesaurus term' do
     let(:search_query) { "(Judges AND juries) OR Courts" }
-    let(:courts_ses_response) { [{ equivalent_terms: [], preferred_term: "Courts", preferred_term_id: "90757" }] }
-    let(:judges_ses_response) { [{ equivalent_terms: ["Law lords"], preferred_term: "Judges", preferred_term_id: "91760" }] }
-    let(:juries_ses_response) { [{ equivalent_terms: ["Jury service", "Trial by jury"], preferred_term: "Juries", preferred_term_id: "91765" }] }
+    let(:courts_ses_response) { instance_double(SesQuery, data: [{ equivalent_terms: [], preferred_term: "Courts", preferred_term_id: "90757" }]) }
+    let(:judges_ses_response) { instance_double(SesQuery, data: [{ equivalent_terms: ["Law lords"], preferred_term: "Judges", preferred_term_id: "91760" }]) }
+    let(:juries_ses_response) { instance_double(SesQuery, data: [{ equivalent_terms: ["Jury service", "Trial by jury"], preferred_term: "Juries", preferred_term_id: "91765" }]) }
+
+    it 'processes the tokens correctly' do
+      expect(query_expander).to receive(:process_unquoted_phrase_token).with("Judges").and_call_original
+      expect(query_expander).to receive(:process_unquoted_phrase_token).with("juries").and_call_original
+      expect(query_expander).to receive(:process_unquoted_phrase_token).with("Courts").and_call_original
+      query_expander.expand_query
+    end
 
     it 'makes the expected SES queries' do
       expect(ses_test_class).to receive(:new).with(({ value: "Courts" })).and_return(courts_ses_response)
@@ -348,9 +457,16 @@ RSpec.describe 'QueryExpander' do
 
   context 'two non-preferred terms separated by AND, followed by a preferred term' do
     let(:search_query) { "(Ponies AND bird flu) Defra" }
-    let(:ponies_ses_response) { [{ equivalent_terms: ["Equines", "Ponies"], preferred_term: "Horses", preferred_term_id: "10766" }] }
-    let(:bird_flu_ses_response) { [{ equivalent_terms: ["Avian flu", "Bird flu", "Fowl plague"], preferred_term: "Avian influenza", preferred_term_id: "8483" }] }
-    let(:defra_ses_response) { [{ equivalent_terms: ["DEFRA", "Dept for Environment Food and Rural Affairs", "Dept for Environment, Food and Rural Affairs", "Dept of Environment Food and Rural Affairs"], preferred_term: "Department for Environment, Food and Rural Affairs", preferred_term_id: "28661" }] }
+    let(:ponies_ses_response) { instance_double(SesQuery, data: [{ equivalent_terms: ["Equines", "Ponies"], preferred_term: "Horses", preferred_term_id: "10766" }]) }
+    let(:bird_flu_ses_response) { instance_double(SesQuery, data: [{ equivalent_terms: ["Avian flu", "Bird flu", "Fowl plague"], preferred_term: "Avian influenza", preferred_term_id: "8483" }]) }
+    let(:defra_ses_response) { instance_double(SesQuery, data: [{ equivalent_terms: ["DEFRA", "Dept for Environment Food and Rural Affairs", "Dept for Environment, Food and Rural Affairs", "Dept of Environment Food and Rural Affairs"], preferred_term: "Department for Environment, Food and Rural Affairs", preferred_term_id: "28661" }]) }
+
+    it 'processes the tokens correctly' do
+      expect(query_expander).to receive(:process_unquoted_phrase_token).with("Ponies").and_call_original
+      expect(query_expander).to receive(:process_unquoted_phrase_token).with("bird flu").and_call_original
+      expect(query_expander).to receive(:process_unquoted_phrase_token).with("Defra").and_call_original
+      query_expander.expand_query
+    end
 
     it 'makes the expected SES queries' do
       expect(ses_test_class).to receive(:new).with(({ value: "Ponies" })).and_return(ponies_ses_response)
