@@ -165,13 +165,11 @@ RSpec.describe 'QueryExpander' do
 
     it 'returns the expected result' do
       expect(ses_test_class).to receive(:new).with(({ value: "Balancing British Airways" })).and_return(balancing_british_airways_ses_response)
-      expect(query_expander.expand_query).to eq("(\"British Airways\" OR \"BA\" OR all_ses:4493) AND (balancing)")
+      expect(query_expander.expand_query).to eq("(\"British Airways\" OR \"BA\" OR all_ses:4493) AND (Balancing)")
     end
   end
 
   context 'a phrase in quotes that is a thesaurus term' do
-    # TODO: quoted phrase is being interpreted as an unquoted phrase
-    #   Also have some strange escaping behaviour
     let(:search_query) { "\"Digital mapping\"" }
     let(:digital_mapping_ses_response) { instance_double(SesQuery, data: [{ equivalent_terms: [], preferred_term: "Digital mapping", preferred_term_id: "90904" }]) }
 
@@ -340,13 +338,13 @@ RSpec.describe 'QueryExpander' do
 
     it 'makes the expected SES queries' do
       expect(ses_test_class).to receive(:new).with(({ value: "Tax relief" })).and_return(tax_relief_ses_response)
-      expect(ses_test_class).to receive(:new).with(({ value: "small businesses" })).and_return(small_businesses_ses_response)
+      expect(ses_test_class).to receive(:new).with(({ value: "Small businesses" })).and_return(small_businesses_ses_response)
       query_expander.expand_query
     end
 
     it 'returns the expected result' do
       expect(ses_test_class).to receive(:new).with(({ value: "Tax relief" })).and_return(tax_relief_ses_response)
-      expect(ses_test_class).to receive(:new).with(({ value: "small businesses" })).and_return(small_businesses_ses_response)
+      expect(ses_test_class).to receive(:new).with(({ value: "Small businesses" })).and_return(small_businesses_ses_response)
       expect(query_expander.expand_query).to eq("(\"Small businesses\" OR \"Medium sized businesses\" OR \"Medium sized enterprises\" OR \"MSEs\" OR \"Small and medium sized enterprises\" OR \"Small firms\" OR \"SMEs\" OR all_ses:93034) AND (\"Tax allowances\" OR \"Tax incentives\" OR \"Tax relief\" OR all_ses:93196)")
     end
   end
@@ -383,7 +381,7 @@ RSpec.describe 'QueryExpander' do
 
     it 'processes the tokens correctly' do
       expect(query_expander).to receive(:process_unquoted_phrase_token).with("Labour").and_call_original
-      expect(query_expander).to receive(:process_unquoted_phrase_token).with("Conservative").and_call_original
+      expect(query_expander).to receive(:process_unquoted_phrase_token).with("conservative").and_call_original
       expect(query_expander).to receive(:process_quoted_phrase_token).with("small businesses").and_call_original
       query_expander.expand_query
     end
@@ -471,7 +469,7 @@ RSpec.describe 'QueryExpander' do
     it 'makes the expected SES queries' do
       expect(ses_test_class).to receive(:new).with(({ value: "Ponies" })).and_return(ponies_ses_response)
       expect(ses_test_class).to receive(:new).with(({ value: "bird flu" })).and_return(bird_flu_ses_response)
-      expect(ses_test_class).to receive(:new).with(({ value: "DEFRA" })).and_return(defra_ses_response)
+      expect(ses_test_class).to receive(:new).with(({ value: "Defra" })).and_return(defra_ses_response)
       query_expander.expand_query
     end
 

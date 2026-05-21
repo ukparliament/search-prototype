@@ -184,11 +184,15 @@ class TermExpander
     if token_type == :quoted_phrase
       terms_to_represent = [search_term]
     else
-      terms_to_represent = search_term.downcase.split(" ")
+      terms_to_represent = search_term.split(" ")
     end
 
+    puts "Terms to represent: #{terms_to_represent}"
+
     terms_to_represent.each do |search_word|
-      unless all_expanded_terms.include?(search_word)
+      puts "Checking that '#{search_word}' is represented in #{all_expanded_terms.inspect}"
+      unless all_expanded_terms.include?(search_word.downcase)
+        puts "Not represented! Adding."
         expanded_terms << [search_word.to_sym, ["#{search_word}"]]
       end
     end

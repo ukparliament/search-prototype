@@ -9,7 +9,7 @@ class Tokeniser
     @query = query
   end
 
-  TOKEN_REGEX = /(^AND|OR|NOT)|(\A[a-z]+:\/\/)|(\Auri:[a-z]+:\/\/)|(\w+:"(?:[^"]+)")|(\w+:'(?:[^']+)')|(\w+:\[(?:[^\]]+)\])|(\w+:\*)|(\w+:\S+)|(\[(?:[^\]]+)\])|"([^"]+)"|'([^']+)'|(\S+)/
+  TOKEN_REGEX = /([()])|(\bAND|OR|NOT\b)|([a-z]+:\/\/\S+)|(uri:[a-z]+:\/\/\S+)|(\w+:"(?:[^"]+)")|(\w+:'(?:[^']+)')|(\w+:\[(?:[^\]]+)\])|(\w+:\*)|(\w+:\S+)|(\[(?:[^\]]+)\])|"([^"]+)"|'([^']+)'|([^\s()\[\]{}:"^~!]+)/
 
   ##
   # Terms operates on the provided query string, returning an array of separate string 'terms' for tokenisation:
@@ -39,24 +39,26 @@ class Tokeniser
 
         case i
         when 0
-          tokens << [:operator, matched_term]
+          tokens << [:parenthesis, matched_term]
         when 1
-          tokens << [:url, matched_term]
+          tokens << [:operator, matched_term]
         when 2
+          tokens << [:url, matched_term]
+        when 3
           tokens << [:uri_field, matched_term]
-        when 3, 4
+        when 4, 5
           tokens << [:specified_field_with_quoted_phrase, matched_term]
-        when 5
-          tokens << [:specified_field_no_expansion, matched_term]
         when 6
-          tokens << [:specified_field_wildcard, matched_term]
+          tokens << [:specified_field_no_expansion, matched_term]
         when 7
+          tokens << [:specified_field_wildcard, matched_term]
+        when 8
           tokens << [:specified_field, matched_term]
-        when 8, 9
+        when 9, 10
           tokens << [:quoted_phrase, matched_term]
-        when 10
-          tokens << [:no_expansion, matched_term]
         when 11
+          tokens << [:no_expansion, matched_term]
+        when 12
           tokens << [:unquoted_word, matched_term]
         else
           puts "Term not matched by tokeniser: #{matched_term}"

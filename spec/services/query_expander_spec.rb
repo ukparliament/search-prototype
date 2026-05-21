@@ -233,16 +233,17 @@ RSpec.describe 'QueryExpander' do
     end
 
     context 'where the term is a double-quoted phrase without a specified field' do
-      let(:search_query) { ['"housing crisis"'] }
+      let(:search_query) { ["\"housing crisis\""] }
       it 'expands on fields and terms' do
         # tokeniser is initialised with the query string
         expect(tokeniser_test_class).to receive(:new).with(["\"housing crisis\""])
 
         # tokeniser instance receives call to tokenise
-        expect(tokeniser_test_instance).to receive(:tokenise).and_return([[:quoted_phrase, '"housing crisis"']])
+        # Note that the tokeniser strips the additional quotes, which will be added back in later
+        expect(tokeniser_test_instance).to receive(:tokenise).and_return([[:quoted_phrase, "housing crisis"]])
 
         # SES query class is initialised with the search term (only)
-        expect(ses_test_class).to receive(:new).with({ value: "\"housing crisis\"" })
+        expect(ses_test_class).to receive(:new).with({ value: "housing crisis" })
 
         # SES query instance receives call for data
         expect(ses_test_instance).to receive(:data).and_return(ses_response)
@@ -255,7 +256,7 @@ RSpec.describe 'QueryExpander' do
 
         # the term expander is initialised with the result of the field expansion & ses data, as well as the search
         # term
-        expect(term_expander_test_class).to receive(:new).with(expanded_fields: expanded_fields, ses_data: ses_response, search_term: "\"housing crisis\"")
+        expect(term_expander_test_class).to receive(:new).with(expanded_fields: expanded_fields, ses_data: ses_response, search_term: "\"housing crisis\"", token_type: :quoted_phrase)
 
         # term expander receives call to expand terms
         expect(term_expander_test_instance).to receive(:expand_terms).and_return('processed tokens')
@@ -278,10 +279,10 @@ RSpec.describe 'QueryExpander' do
         expect(tokeniser_test_class).to receive(:new).with(["'housing crisis'"])
 
         # tokeniser instance receives call to tokenise
-        expect(tokeniser_test_instance).to receive(:tokenise).and_return([[:quoted_phrase, "'housing crisis'"]])
+        expect(tokeniser_test_instance).to receive(:tokenise).and_return([[:quoted_phrase, "housing crisis"]])
 
         # SES query class is initialised with the search term (only)
-        expect(ses_test_class).to receive(:new).with({ value: "'housing crisis'" })
+        expect(ses_test_class).to receive(:new).with({ value: "housing crisis" })
 
         # SES query instance receives call for data
         expect(ses_test_instance).to receive(:data).and_return(ses_response)
@@ -294,7 +295,8 @@ RSpec.describe 'QueryExpander' do
 
         # the term expander is initialised with the result of the field expansion & ses data, as well as the search
         # term
-        expect(term_expander_test_class).to receive(:new).with(expanded_fields: expanded_fields, ses_data: ses_response, search_term: "'housing crisis'")
+        # Note that the single quotes have been standardised to double quotes here
+        expect(term_expander_test_class).to receive(:new).with(expanded_fields: expanded_fields, ses_data: ses_response, search_term: "\"housing crisis\"", token_type: :quoted_phrase)
 
         # term expander receives call to expand terms
         expect(term_expander_test_instance).to receive(:expand_terms).and_return('processed tokens')
