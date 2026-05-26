@@ -9,6 +9,7 @@ class TermCombiner
   def combine_terms
     # basis of string is first search term
     # apply wrapping (parentheses) to first term if required
+
     if terms.size > 1 && wrapping_required?(terms.first)
       output_string = "(#{terms.first})"
     else
@@ -50,7 +51,11 @@ class TermCombiner
     # where already wrapped in brackets, we might need to wrap again - so starting and ending with them
     # doesn't mean it's not required
 
-    # but in any case where it doesn't start & end with brackets we DO need to wrap it, so return true
+    # If quoted, there's no need to wrap in brackets
+    # TODO: consider a refactor where we check for internal quotes & balance as necessary, as with brackets below
+    return false if str.start_with?("\"") && str.end_with?("\"")
+
+    # but in any case where it doesn't start & end with brackets or quotes we DO need to wrap it, so return true
     return true unless str.start_with?('(') && str.end_with?(')')
 
     # for strings that are already wrapped in brackets, we need to check whether we have an odd or even number

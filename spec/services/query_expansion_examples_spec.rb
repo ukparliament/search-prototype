@@ -44,7 +44,7 @@ RSpec.describe 'QueryExpander' do
 
     it 'returns the expected result' do
       expect(ses_test_class).to receive(:new).with(({ value: "Femur chronic" })).and_return(femur_chronic_ses_response)
-      expect(query_expander.expand_query).to eq("femur AND chronic")
+      expect(query_expander.expand_query).to eq("Femur AND chronic")
     end
   end
 
@@ -104,7 +104,7 @@ RSpec.describe 'QueryExpander' do
 
     it 'returns the expected result' do
       expect(ses_test_class).to receive(:new).with(({ value: "Security apparatus" })).and_return(security_apparatus_ses_response)
-      expect(query_expander.expand_query).to eq("(\"Security\" OR all_ses:92947) AND (apparatus)")
+      expect(query_expander.expand_query).to eq("(\"Security\" OR all_ses:92947) AND apparatus")
     end
   end
 
@@ -165,7 +165,7 @@ RSpec.describe 'QueryExpander' do
 
     it 'returns the expected result' do
       expect(ses_test_class).to receive(:new).with(({ value: "Balancing British Airways" })).and_return(balancing_british_airways_ses_response)
-      expect(query_expander.expand_query).to eq("(\"British Airways\" OR \"BA\" OR all_ses:4493) AND (Balancing)")
+      expect(query_expander.expand_query).to eq("(\"British Airways\" OR \"BA\" OR all_ses:4493) AND Balancing")
     end
   end
 
@@ -185,7 +185,7 @@ RSpec.describe 'QueryExpander' do
 
     it 'returns the expected result' do
       expect(ses_test_class).to receive(:new).with(({ value: "Digital mapping" })).and_return(digital_mapping_ses_response)
-      expect(query_expander.expand_query).to eq("(\"Digital mapping\" OR all_ses:90904)")
+      expect(query_expander.expand_query).to eq("\"Digital mapping\" OR all_ses:90904")
     end
   end
 
@@ -205,7 +205,7 @@ RSpec.describe 'QueryExpander' do
 
     it 'returns the expected result' do
       expect(ses_test_class).to receive(:new).with(({ value: "Army training estate" })).and_return(army_training_estate_ses_response)
-      expect(query_expander.expand_query).to eq("(\"Army Training Estate\" OR all_ses:1832)")
+      expect(query_expander.expand_query).to eq("\"Army Training Estate\" OR all_ses:1832")
     end
   end
 
@@ -272,8 +272,8 @@ RSpec.describe 'QueryExpander' do
 
     it 'returns the expected result' do
       expect(ses_test_class).to receive(:new).with(({ value: "Tax relief" })).and_return(tax_relief_ses_response)
-      expect(ses_test_class).to receive(:new).with(({ value: "Significant" })).and_return(significant_ses_response)
-      expect(query_expander.expand_query).to eq("(\"Tax allowances\" OR \"Tax incentives\" OR \"Tax relief\" OR all_ses:93196) AND (significant)")
+      expect(ses_test_class).to receive(:new).with(({ value: "significant" })).and_return(significant_ses_response)
+      expect(query_expander.expand_query).to eq("(\"Tax allowances\" OR \"Tax incentives\" OR \"Tax relief\" OR all_ses:93196) AND significant")
     end
   end
 
@@ -321,7 +321,7 @@ RSpec.describe 'QueryExpander' do
     it 'returns the expected result' do
       expect(ses_test_class).to receive(:new).with(({ value: "Tax relief" })).and_return(tax_relief_ses_response)
       expect(ses_test_class).to receive(:new).with(({ value: "small businesses" })).and_return(small_businesses_ses_response)
-      expect(query_expander.expand_query).to eq("(\"Small businesses\" OR \"Medium sized businesses\" OR \"Medium sized enterprises\" OR \"MSEs\" OR \"Small and medium sized enterprises\" OR \"Small firms\" OR \"SMEs\" OR all_ses:93034) AND (\"Tax allowances\" OR \"Tax incentives\" OR \"Tax relief\" OR all_ses:93196)")
+      expect(query_expander.expand_query).to eq("(\"Tax allowances\" OR \"Tax incentives\" OR \"Tax relief\" OR all_ses:93196) AND (\"Small businesses\" OR \"Medium sized businesses\" OR \"Medium sized enterprises\" OR \"MSEs\" OR \"Small and medium sized enterprises\" OR \"Small firms\" OR \"SMEs\" OR all_ses:93034)")
     end
   end
 
@@ -345,7 +345,7 @@ RSpec.describe 'QueryExpander' do
     it 'returns the expected result' do
       expect(ses_test_class).to receive(:new).with(({ value: "Tax relief" })).and_return(tax_relief_ses_response)
       expect(ses_test_class).to receive(:new).with(({ value: "Small businesses" })).and_return(small_businesses_ses_response)
-      expect(query_expander.expand_query).to eq("(\"Small businesses\" OR \"Medium sized businesses\" OR \"Medium sized enterprises\" OR \"MSEs\" OR \"Small and medium sized enterprises\" OR \"Small firms\" OR \"SMEs\" OR all_ses:93034) AND (\"Tax allowances\" OR \"Tax incentives\" OR \"Tax relief\" OR all_ses:93196)")
+      expect(query_expander.expand_query).to eq("(\"Tax allowances\" OR \"Tax incentives\" OR \"Tax relief\" OR all_ses:93196) AND (\"Small businesses\" OR \"Medium sized businesses\" OR \"Medium sized enterprises\" OR \"MSEs\" OR \"Small and medium sized enterprises\" OR \"Small firms\" OR \"SMEs\" OR all_ses:93034)")
     end
   end
 
@@ -449,7 +449,7 @@ RSpec.describe 'QueryExpander' do
       expect(ses_test_class).to receive(:new).with(({ value: "Courts" })).and_return(courts_ses_response)
       expect(ses_test_class).to receive(:new).with(({ value: "Judges" })).and_return(juries_ses_response)
       expect(ses_test_class).to receive(:new).with(({ value: "juries" })).and_return(juries_ses_response)
-      expect(query_expander.expand_query).to eq("(\"Judges\" OR \"Law lords\" OR all_ses:91760) AND (\"Juries\" OR \"Jury service\" OR \"Trial by jury\" OR all_ses:91765) OR (\"Courts\" OR all_ses:90757)")
+      expect(query_expander.expand_query).to eq("((\"Judges\" OR \"Law lords\" OR all_ses:91760) AND (\"Juries\" OR \"Jury service\" OR \"Trial by jury\" OR all_ses:91765)) OR (\"Courts\" OR all_ses:90757)")
     end
   end
 
@@ -476,8 +476,8 @@ RSpec.describe 'QueryExpander' do
     it 'returns the expected result' do
       expect(ses_test_class).to receive(:new).with(({ value: "Ponies" })).and_return(ponies_ses_response)
       expect(ses_test_class).to receive(:new).with(({ value: "bird flu" })).and_return(bird_flu_ses_response)
-      expect(ses_test_class).to receive(:new).with(({ value: "DEFRA" })).and_return(defra_ses_response)
-      expect(query_expander.expand_query).to eq("(\"Judges\" OR \"Law lords\" OR all_ses:91760) AND (\"Juries\" OR \"Jury service\" OR \"Trial by jury\" OR all_ses:91765) OR (\"Courts\" OR all_ses:90757)")
+      expect(ses_test_class).to receive(:new).with(({ value: "Defra" })).and_return(defra_ses_response)
+      expect(query_expander.expand_query).to eq("(\"Horses\" OR \"Equines\" OR \"Ponies\" OR all_ses:10766) AND (\"Avian influenza\" OR \"Avian flu\" OR \"Bird flu\" OR \"Fowl plague\" OR all_ses:8483) AND (\"Department for Environment, Food and Rural Affairs\" OR \"DEFRA\" OR \"Dept for Environment Food and Rural Affairs\" OR \"Dept for Environment, Food and Rural Affairs\" OR \"Dept of Environment Food and Rural Affairs\" OR all_ses:28661)")
     end
   end
 end

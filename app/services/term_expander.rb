@@ -34,19 +34,31 @@ class TermExpander
   end
 
   def process_expanded_terms(expanded_terms)
+    puts "Expanded terms: #{expanded_terms}" if Rails.env.development? || Rails.env.test?
     return if expanded_terms.empty?
 
     # group terms based on matching SES term or other ID
     grouped_terms_array = expanded_terms.flatten(1).group_by { |t| t.first.itself }.values
 
-    # combine groups of terms as strings using 'OR'
-    group_strings = grouped_terms_array.map { |gr| gr.map(&:last).flatten(1).join(' OR ') }
+    group_strings = grouped_terms_array.map do |keyword_group|
+      if keyword_group.size == 1 || grouped_terms_array.size == 1
+        # no need for brackets if there's one keyword, or for multiple keywords with a single example
+        # e.g. 'this OR that', 'this AND these AND those'
+        keyword_group.map(&:last).flatten(1).join(' OR ')
+      else
+        # otherwise, wrap in brackets
+        # e.g. '(this OR that) AND these AND those'
+        "(#{keyword_group.map(&:last).flatten(1).join(' OR ')})"
+      end
+    end
+
+    puts "group strings: #{group_strings}" if Rails.env.development? || Rails.env.test?
 
     # If only one string, return it
     return group_strings.first unless group_strings.size > 1
 
     # Otherwise, wrap strings in brackets and combine with 'AND'
-    group_strings.map { |str| "(#{str})" }.join(' AND ')
+    group_strings.map { |str| "#{str}" }.join(' AND ')
   end
 
   ##
