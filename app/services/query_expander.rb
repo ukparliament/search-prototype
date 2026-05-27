@@ -43,6 +43,8 @@ class QueryExpander
 
       if label == :operator
         processed_tokens << process_operator_token(value)
+      elsif label == :parenthesis
+        processed_tokens << process_parenthesis_token(value)
       elsif label == :url
         processed_tokens << process_url_token(value)
       elsif label == :uri_field
@@ -163,4 +165,10 @@ class QueryExpander
     # No processing required for operators
     value
   end
+
+  def process_parenthesis_token(value)
+    # No processing required for brackets
+    value
+  end
+
 end

@@ -9,6 +9,22 @@ class Tokeniser
     @query = query
   end
 
+  ##
+  # TOKEN_REGEX is used to scan query strings and put matches into buckets we can add token labels to:
+  #
+  # Bucket 1: Brackets
+  # Bucket 2: Solr operators
+  # Bucket 3: http://.... or similar
+  # Bucket 4: uri:http://... or similar
+  # Bucket 5: field_name:"term"
+  # Bucket 6: field_name:'term'
+  # Bucket 7: field_name:[phrase in square brackets]
+  # Bucket 8: field_name:*
+  # Bucket 9: field_name:term
+  # Bucket 10: [phrase in square brackets]
+  # Bucket 11: "double-quoted phrase"
+  # Bucket 12: 'single-quoted phrase'
+  # Bucket 13: term
   TOKEN_REGEX = /([()])|(\bAND|OR|NOT\b)|([a-z]+:\/\/\S+)|(uri:[a-z]+:\/\/\S+)|(\w+:"(?:[^"]+)")|(\w+:'(?:[^']+)')|(\w+:\[(?:[^\]]+)\])|(\w+:\*)|(\w+:\S+)|(\[(?:[^\]]+)\])|"([^"]+)"|'([^']+)'|([^\s()\[\]{}:"^~!]+)/
 
   ##

@@ -157,10 +157,10 @@ RSpec.describe 'Tokeniser' do
       end
 
       context "with a specified field and a field-exists operator (*)" do
-        let!(:query) { "subject:cat*" }
+        let!(:query) { "subject:*" }
 
         it 'captures them in the expected bucket' do
-          expect(tokeniser.terms).to eq([[nil, nil, nil, nil, nil, nil, nil, "subject:cat*", nil, nil, nil, nil, nil]])
+          expect(tokeniser.terms).to eq([[nil, nil, nil, nil, nil, nil, nil, "subject:*", nil, nil, nil, nil, nil]])
         end
       end
 

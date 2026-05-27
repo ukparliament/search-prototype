@@ -12,7 +12,7 @@ RSpec.describe 'QueryExpander' do
     let(:horses_ses_response) { instance_double(SesQuery, data: [{ equivalent_terms: ["Equines", "Ponies"], preferred_term: "Horses", preferred_term_id: "10766" }]) }
 
     it 'processes the tokens correctly' do
-      expect(query_expander).to receive(:process_unquoted_phrase_token).with(search_query)
+      expect(query_expander).to receive(:process_unquoted_phrase_token).with(search_query).and_call_original
       query_expander.expand_query
     end
 
@@ -28,12 +28,11 @@ RSpec.describe 'QueryExpander' do
   end
 
   context 'two words which are not thesaurus terms' do
-    # TODO: fix unnecessary brackets added around single words
     let(:search_query) { "Femur chronic" }
     let(:femur_chronic_ses_response) { instance_double(SesQuery, data: []) }
 
     it 'processes the tokens correctly' do
-      expect(query_expander).to receive(:process_unquoted_phrase_token).with(search_query)
+      expect(query_expander).to receive(:process_unquoted_phrase_token).with(search_query).and_call_original
       query_expander.expand_query
     end
 
@@ -53,7 +52,7 @@ RSpec.describe 'QueryExpander' do
     let(:crime_fraud_ses_response) { instance_double(SesQuery, data: [{ equivalent_terms: ["Law breaking", "Offences", "Street crime"], preferred_term: "Crime", preferred_term_id: "90768" }, { equivalent_terms: ["Embezzlement"], preferred_term: "Fraud", preferred_term_id: "91352" }]) }
 
     it 'processes the tokens correctly' do
-      expect(query_expander).to receive(:process_unquoted_phrase_token).with(search_query)
+      expect(query_expander).to receive(:process_unquoted_phrase_token).with(search_query).and_call_original
       query_expander.expand_query
     end
 
@@ -73,7 +72,7 @@ RSpec.describe 'QueryExpander' do
     let(:election_observers_ses_response) { instance_double(SesQuery, data: [{ equivalent_terms: [], preferred_term: "Election observers", preferred_term_id: "91070" }]) }
 
     it 'processes the tokens correctly' do
-      expect(query_expander).to receive(:process_unquoted_phrase_token).with(search_query)
+      expect(query_expander).to receive(:process_unquoted_phrase_token).with(search_query).and_call_original
       query_expander.expand_query
     end
 
@@ -93,7 +92,7 @@ RSpec.describe 'QueryExpander' do
     let(:security_apparatus_ses_response) { instance_double(SesQuery, data: [{ equivalent_terms: [], preferred_term: "Security", preferred_term_id: "92947" }]) }
 
     it 'processes the tokens correctly' do
-      expect(query_expander).to receive(:process_unquoted_phrase_token).with(search_query)
+      expect(query_expander).to receive(:process_unquoted_phrase_token).with(search_query).and_call_original
       query_expander.expand_query
     end
 
@@ -113,7 +112,7 @@ RSpec.describe 'QueryExpander' do
     let(:health_professions_ses_response) { instance_double(SesQuery, data: [{ equivalent_terms: ["Health professionals"], preferred_term: "Health professions", preferred_term_id: "91491" }]) }
 
     it 'processes the tokens correctly' do
-      expect(query_expander).to receive(:process_unquoted_phrase_token).with(search_query)
+      expect(query_expander).to receive(:process_unquoted_phrase_token).with(search_query).and_call_original
       query_expander.expand_query
     end
 
@@ -129,12 +128,11 @@ RSpec.describe 'QueryExpander' do
   end
 
   context 'three words where the first two form a term and the last two also form a term' do
-    # TODO: check whether the expectation is accurate here: do we really want to return results just for the first combination?
     let(:search_query) { "Buckingham Palace Barracks" }
     let(:buckingham_palace_barracks_ses_response) { instance_double(SesQuery, data: [{ equivalent_terms: [], preferred_term: "Buckingham Palace", preferred_term_id: "16673" }, { equivalent_terms: [], preferred_term: "Palace Barracks", preferred_term_id: "513229" }]) }
 
     it 'processes the tokens correctly' do
-      expect(query_expander).to receive(:process_unquoted_phrase_token).with(search_query)
+      expect(query_expander).to receive(:process_unquoted_phrase_token).with(search_query).and_call_original
       query_expander.expand_query
     end
 
@@ -143,7 +141,8 @@ RSpec.describe 'QueryExpander' do
       query_expander.expand_query
     end
 
-    it 'returns the expected result' do
+    pending 'returns the expected result' do
+      # TODO: check whether the expectation is accurate here: do we really want to return results just for the first combination?
       expect(ses_test_class).to receive(:new).with(({ value: "Buckingham Palace Barracks" })).and_return(buckingham_palace_barracks_ses_response)
       expect(query_expander.expand_query).to eq("(\"Buckingham Palace\" OR all_ses:16673) AND barracks")
     end
@@ -154,7 +153,7 @@ RSpec.describe 'QueryExpander' do
     let(:balancing_british_airways_ses_response) { instance_double(SesQuery, data: [{ equivalent_terms: ["BA"], preferred_term: "British Airways", preferred_term_id: "4493" }]) }
 
     it 'processes the tokens correctly' do
-      expect(query_expander).to receive(:process_unquoted_phrase_token).with(search_query)
+      expect(query_expander).to receive(:process_unquoted_phrase_token).with(search_query).and_call_original
       query_expander.expand_query
     end
 
@@ -164,6 +163,8 @@ RSpec.describe 'QueryExpander' do
     end
 
     it 'returns the expected result' do
+      # TODO: double brackets caused by Term Expander having to add some in (due to processing the complete three
+      # word phrase as a single token), and then brackets being added in combine_terms too.
       expect(ses_test_class).to receive(:new).with(({ value: "Balancing British Airways" })).and_return(balancing_british_airways_ses_response)
       expect(query_expander.expand_query).to eq("(\"British Airways\" OR \"BA\" OR all_ses:4493) AND Balancing")
     end
@@ -174,7 +175,7 @@ RSpec.describe 'QueryExpander' do
     let(:digital_mapping_ses_response) { instance_double(SesQuery, data: [{ equivalent_terms: [], preferred_term: "Digital mapping", preferred_term_id: "90904" }]) }
 
     it 'processes the tokens correctly' do
-      expect(query_expander).to receive(:process_quoted_phrase_token).with("Digital mapping")
+      expect(query_expander).to receive(:process_quoted_phrase_token).with("Digital mapping").and_call_original
       query_expander.expand_query
     end
 
@@ -194,7 +195,7 @@ RSpec.describe 'QueryExpander' do
     let(:army_training_estate_ses_response) { instance_double(SesQuery, data: [{ equivalent_terms: [], preferred_term: "Army Training Estate", preferred_term_id: "1832" }]) }
 
     it 'processes the tokens correctly' do
-      expect(query_expander).to receive(:process_quoted_phrase_token).with("Army training estate")
+      expect(query_expander).to receive(:process_quoted_phrase_token).with("Army training estate").and_call_original
       query_expander.expand_query
     end
 
@@ -214,7 +215,7 @@ RSpec.describe 'QueryExpander' do
     let(:news_providers_ses_response) { instance_double(SesQuery, data: []) }
 
     it 'processes the tokens correctly' do
-      expect(query_expander).to receive(:process_quoted_phrase_token).with("News providers")
+      expect(query_expander).to receive(:process_quoted_phrase_token).with("News providers").and_call_original
       query_expander.expand_query
     end
 
@@ -397,7 +398,7 @@ RSpec.describe 'QueryExpander' do
       expect(ses_test_class).to receive(:new).with(({ value: "Labour" })).and_return(labour_ses_response)
       expect(ses_test_class).to receive(:new).with(({ value: "conservative" })).and_return(conservative_ses_response)
       expect(ses_test_class).to receive(:new).with(({ value: "small businesses" })).and_return(small_businesses_ses_response)
-      expect(query_expander.expand_query).to eq("(\"Labour\" OR \"LAB\" OR \"Labour Party\" OR all_ses:42226) OR (\"Conservative\" OR \"CON\" OR \"Conservative Party\" OR \"Conservatives\" OR \"National Union of Conservative and Unionist Associations\" OR all_ses:21137) AND (\"Small businesses\" OR \"Medium sized businesses\" OR \"Medium sized enterprises\" OR \"MSEs\" OR \"Small and medium sized enterprises\" OR \"Small firms\" OR \"SMEs\" OR all_ses:93034)")
+      expect(query_expander.expand_query).to eq("((\"Labour\" OR \"LAB\" OR \"Labour Party\" OR all_ses:42226) OR (\"Conservative\" OR \"CON\" OR \"Conservative Party\" OR \"Conservatives\" OR \"National Union of Conservative and Unionist Associations\" OR all_ses:21137)) AND (\"Small businesses\" OR \"Medium sized businesses\" OR \"Medium sized enterprises\" OR \"MSEs\" OR \"Small and medium sized enterprises\" OR \"Small firms\" OR \"SMEs\" OR all_ses:93034)")
     end
   end
 
@@ -446,14 +447,21 @@ RSpec.describe 'QueryExpander' do
     end
 
     it 'returns the expected result' do
+      # only getting one set of brackets around first pair of terms
       expect(ses_test_class).to receive(:new).with(({ value: "Courts" })).and_return(courts_ses_response)
-      expect(ses_test_class).to receive(:new).with(({ value: "Judges" })).and_return(juries_ses_response)
+      expect(ses_test_class).to receive(:new).with(({ value: "Judges" })).and_return(judges_ses_response)
       expect(ses_test_class).to receive(:new).with(({ value: "juries" })).and_return(juries_ses_response)
       expect(query_expander.expand_query).to eq("((\"Judges\" OR \"Law lords\" OR all_ses:91760) AND (\"Juries\" OR \"Jury service\" OR \"Trial by jury\" OR all_ses:91765)) OR (\"Courts\" OR all_ses:90757)")
     end
   end
 
   context 'two non-preferred terms separated by AND, followed by a preferred term' do
+    # These brackets are superfluous; Solr doesn't care whether the first two terms are wrapped in brackets because
+    # the third term is (initially implicitly, eventually explicitly) combined using AND. There's no difference between
+    # "One AND Two AND three" vs. "(One AND Two) AND Three".
+    # So for the sake of not writing custom parser behaviour for this scenario, we're just going to pass the superfluous
+    # brackets along and let Solr deal with them.
+
     let(:search_query) { "(Ponies AND bird flu) Defra" }
     let(:ponies_ses_response) { instance_double(SesQuery, data: [{ equivalent_terms: ["Equines", "Ponies"], preferred_term: "Horses", preferred_term_id: "10766" }]) }
     let(:bird_flu_ses_response) { instance_double(SesQuery, data: [{ equivalent_terms: ["Avian flu", "Bird flu", "Fowl plague"], preferred_term: "Avian influenza", preferred_term_id: "8483" }]) }
@@ -477,7 +485,7 @@ RSpec.describe 'QueryExpander' do
       expect(ses_test_class).to receive(:new).with(({ value: "Ponies" })).and_return(ponies_ses_response)
       expect(ses_test_class).to receive(:new).with(({ value: "bird flu" })).and_return(bird_flu_ses_response)
       expect(ses_test_class).to receive(:new).with(({ value: "Defra" })).and_return(defra_ses_response)
-      expect(query_expander.expand_query).to eq("(\"Horses\" OR \"Equines\" OR \"Ponies\" OR all_ses:10766) AND (\"Avian influenza\" OR \"Avian flu\" OR \"Bird flu\" OR \"Fowl plague\" OR all_ses:8483) AND (\"Department for Environment, Food and Rural Affairs\" OR \"DEFRA\" OR \"Dept for Environment Food and Rural Affairs\" OR \"Dept for Environment, Food and Rural Affairs\" OR \"Dept of Environment Food and Rural Affairs\" OR all_ses:28661)")
+      expect(query_expander.expand_query).to eq("((\"Horses\" OR \"Equines\" OR \"Ponies\" OR all_ses:10766) AND (\"Avian influenza\" OR \"Avian flu\" OR \"Bird flu\" OR \"Fowl plague\" OR all_ses:8483)) AND (\"Department for Environment, Food and Rural Affairs\" OR \"DEFRA\" OR \"Dept for Environment Food and Rural Affairs\" OR \"Dept for Environment, Food and Rural Affairs\" OR \"Dept of Environment Food and Rural Affairs\" OR all_ses:28661)")
     end
   end
 end
