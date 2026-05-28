@@ -22,8 +22,9 @@ class ContentTypeObjectsController < ApplicationController
     # Use SesData class to handle SES retrival from cache / API
     @ses_data = SesData.new(all_ses_ids).combined_ses_data
 
-    @page_title = "#{@object.object_title}"
-    @crumb << { label: @object.object_title, url: nil }
+    formatted_object_title = helpers.format_object_title(@object.object_title, @ses_data)
+    @page_title = formatted_object_title
+    @crumb << { label: formatted_object_title, url: nil }
 
     render template: @object.template, :locals => { :object => @object }
   end
