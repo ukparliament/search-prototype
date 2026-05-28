@@ -330,7 +330,7 @@ RSpec.describe WrittenQuestion, type: :model do
     end
 
     context 'where there is an empty array' do
-      let!(:written_question) { WrittenQuestion.new({ 'date_dt' => '' }) }
+      let!(:written_question) { WrittenQuestion.new({ 'dateTabled_dt' => [] }) }
       it 'returns nil' do
         expect(written_question.date_of_question).to be_nil
       end
@@ -338,13 +338,13 @@ RSpec.describe WrittenQuestion, type: :model do
 
     context 'where data exists' do
       context 'where data is a valid date' do
-        let!(:written_question) { WrittenQuestion.new({ 'date_dt' => Date.yesterday.to_s }) }
+        let!(:written_question) { WrittenQuestion.new({ 'dateTabled_dt' => [Date.yesterday.to_s] }) }
         it 'returns the first object as a date' do
-          expect(written_question.date_of_question).to eq({ :field_name => "date_dt", :value => Date.yesterday })
+          expect(written_question.date_of_question).to eq({ :field_name => "dateTabled_dt", :value => Date.yesterday })
         end
       end
       context 'where data is not a valid date' do
-        let!(:written_question) { WrittenQuestion.new({ 'date_dt' => 'date' }) }
+        let!(:written_question) { WrittenQuestion.new({ 'dateTabled_dt' => ['date'] }) }
         it 'returns nil' do
           expect(written_question.date_of_question).to be_nil
         end
