@@ -123,6 +123,8 @@ class SesQuery < SesLookup
     end
 
     # return the collated data of all terms matching the query
+    puts "Output from SesQuery: #{returned_terms.inspect}" if Rails.env.development?
+
     returned_terms
   end
 

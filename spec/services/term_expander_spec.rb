@@ -105,7 +105,7 @@ RSpec.describe 'TermExpander' do
       let(:expanded_terms_array) { [populate_text_fields_data, populate_ses_fields_data, arbitrary_unmatched_data] }
 
       it 'returns a structured query string that combines searches across the unmatched fields with "AND"' do
-        expect(term_expander.process_expanded_terms(expanded_terms_array)).to eq("(subject_t:\"Housing\" OR subject_t:\"Accommodation\" OR subject_t:\"Houses\") AND (subject_ses:12345) AND (a_field:a_term)")
+        expect(term_expander.process_expanded_terms(expanded_terms_array)).to eq("(subject_t:\"Housing\" OR subject_t:\"Accommodation\" OR subject_t:\"Houses\") AND subject_ses:12345 AND a_field:a_term")
       end
     end
   end
