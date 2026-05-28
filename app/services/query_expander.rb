@@ -90,11 +90,6 @@ class QueryExpander
   def process_quoted_phrase_token(value)
     puts "Processing quoted phrase token: #{value}" if Rails.env.development? || Rails.env.test?
 
-    # TODO: use a different pipeline for processing this; the current pipeline assumes quoted / unquoted should be
-    #   treated the same
-    #   The simplest solution for now: pass token type e.g. :quoted_phrase through to term_expander
-    #   Modify TermExpander to check for token type where necessary (which for now is just one place)
-
     expanded_fields = field_expander.new("none").expand_fields
     ses_data = ses_query.new({ value: value }).data
 
@@ -143,7 +138,6 @@ class QueryExpander
     ses_data = ses_query.new({ value: search_term }).data
     expanded_fields = field_expander.new(field_name).expand_fields
 
-    # TODO: needs to only match on full phrase? To confirm
     term_expander.new(expanded_fields: expanded_fields, ses_data: ses_data, search_term: search_term).expand_terms
   end
 

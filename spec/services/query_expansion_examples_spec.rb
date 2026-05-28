@@ -163,8 +163,6 @@ RSpec.describe 'QueryExpander' do
     end
 
     it 'returns the expected result' do
-      # TODO: double brackets caused by Term Expander having to add some in (due to processing the complete three
-      # word phrase as a single token), and then brackets being added in combine_terms too.
       expect(ses_test_class).to receive(:new).with(({ value: "Balancing British Airways" })).and_return(balancing_british_airways_ses_response)
       expect(query_expander.expand_query).to eq("(\"British Airways\" OR \"BA\" OR all_ses:4493) AND Balancing")
     end
