@@ -85,6 +85,10 @@ class WrittenQuestion < Question
     get_first_as_boolean_from('holdingAnswer_b')
   end
 
+  def date_of_question
+    get_first_as_date_from('dateTabled_dt')
+  end
+
   def date_of_holding_answer
     get_first_as_date_from('dateOfHoldingAnswer_dt')
   end
