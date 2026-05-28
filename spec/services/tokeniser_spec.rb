@@ -25,9 +25,9 @@ RSpec.describe 'Tokeniser' do
                                           [:specified_field_no_expansion, "term seven"],
                                           [:specified_field_wildcard, "term eight"],
                                           [:specified_field, "term nine"],
-                                          [:quoted_phrase, "term ten"],
+                                          [:no_expansion, "term ten"],
                                           [:quoted_phrase, "term eleven"],
-                                          [:no_expansion, "term twelve"],
+                                          [:quoted_phrase, "term twelve"],
                                           [:unquoted_phrase, "term thirteen"]])
       end
     end
@@ -53,9 +53,9 @@ RSpec.describe 'Tokeniser' do
                                           [:specified_field_no_expansion, "term seven"],
                                           [:specified_field_wildcard, "term eight"],
                                           [:specified_field, "term nine"],
-                                          [:quoted_phrase, "term ten"],
+                                          [:no_expansion, "term ten"],
                                           [:quoted_phrase, "term eleven"],
-                                          [:no_expansion, "term twelve"],
+                                          [:quoted_phrase, "term twelve"],
                                           [:unquoted_phrase, "term thirteen"],
                                           [:parenthesis, "term one"],
                                           [:operator, "term two"],
@@ -66,9 +66,9 @@ RSpec.describe 'Tokeniser' do
                                           [:specified_field_no_expansion, "term seven"],
                                           [:specified_field_wildcard, "term eight"],
                                           [:specified_field, "term nine"],
-                                          [:quoted_phrase, "term ten"],
+                                          [:no_expansion, "term ten"],
                                           [:quoted_phrase, "term eleven"],
-                                          [:no_expansion, "term twelve"],
+                                          [:quoted_phrase, "term twelve"],
                                           [:unquoted_phrase, "term thirteen"]])
       end
     end

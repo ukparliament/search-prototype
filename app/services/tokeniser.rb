@@ -70,10 +70,10 @@ class Tokeniser
           tokens << [:specified_field_wildcard, matched_term]
         when 8
           tokens << [:specified_field, matched_term]
-        when 9, 10
-          tokens << [:quoted_phrase, matched_term]
-        when 11
+        when 9
           tokens << [:no_expansion, matched_term]
+        when 10, 11
+          tokens << [:quoted_phrase, matched_term]
         when 12
           tokens << [:unquoted_word, matched_term]
         else
