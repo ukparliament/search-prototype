@@ -1,62 +1,40 @@
-<div class="result-item pb-3">
-  <div class="row py-1">
-    <div class="col">
-      <%= link_to(format_object_title(object.object_title, @ses_data), object_show_url(object: object.object_uri[:value])) %>
+<a href="<%= object_show_url(object: object.object_uri[:value]) %>" class="card">
+  <div class="card-inner">
+    <div class="content">
+      <div class="primary-info">
+        <%= format_object_title(object.object_title, @ses_data) %>
+      </div>
+      <div class="secondary-info">
+        <%= render 'search/results/item_details/member', member: object.member, member_party: object.member_parties %>
+        <%= render 'search/results/item_details/departments', departments: object.departments, label: 'Department' %>
+        <%= render 'search/results/item_details/corporate_author', corporate_author: object.corporate_author, label: 'Promoter / Parliamentary agent' %>
+        <%= render 'search/results/item_details/notes', notes: object.notes unless object.notes.blank? %>
+      </div>
+      <div class="tertiary-info">
+        <%= render 'search/results/item_details/type', type: object.object_name %>
+        <%= render 'search/results/item_details/reference', reference: object.standard_reference %>
+        <%= render 'search/results/item_details/legislature', legislature: object.legislature %>
+      </div>
+      <div class="text text-secondary">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam congue
+        cursus feugiat. Sed scelerisque, ipsum quis malesuada sodales, nisi
+        purus finibus mi, vel accumsan tortor sem sed mauris.
+      </div>
+    </div>
+
+    <div class="info">
+      <div class="info-inner">
+        <div class="indicators-left">
+          <!--          <div class="indicator indicator-label"><%#=  %></div>-->
+          <%= render 'search/results/item_details/date', date: object.standard_date %>
+        </div>
+        <div class="indicators-right">
+          <div class="indicator">
+            <span class="icon fas fa-user" aria-hidden="true"></span>
+            Icon indicator
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-
-  <div class="row py-1">
-    <div class="col primary-person">
-      <%= render 'search/results/item_details/member', member: object.member, member_party: object.member_parties %>
-    </div>
-    <div class="col secondary-person">
-    </div>
-    <div class="col primary-group">
-      <%= render 'search/results/item_details/departments', departments: object.departments, label: 'Department' %>
-    </div>
-  </div>
-
-  <div class="row py-1">
-    <div class="col type">
-      <%= render 'search/results/item_details/type', type: object.object_name %>
-    </div>
-    <div class="col status"></div>
-    <div class="col secondary-group">
-      <%= render 'search/results/item_details/corporate_author', corporate_author: object.corporate_author, label: 'Promoter / Parliamentary agent' %>
-    </div>
-  </div>
-</div>
-
-<div <%= 'hidden' unless params[:show_detailed] == "true" %>>
-  <%= render 'search/results/item_details/legislation', legislation: object.legislation unless object.legislation.blank? %>
-  <%= render 'search/results/item_details/witnesses', witnesses: object.witnesses unless object.witnesses.blank? %>
-</div>
-
-<%= render 'search/results/item_details/notes', notes: object.notes unless object.notes.blank? %>
-
-<div <%= 'hidden' unless params[:show_detailed] == "true" %>>
-  <%= render 'search/results/item_details/subjects', subjects: object.subjects unless object.subjects.blank? %>
-</div>
-
-<div <%= 'hidden' unless params[:show_detailed] == "true" %>>
-  <div class="row py-1">
-    <div class="col commons-library-location">
-      <%= render 'search/results/item_details/commons_library_location', location: object.commons_library_location unless object.commons_library_location.blank? %>
-    </div>
-    <div class="col lords-library-location">
-      <%= render 'search/results/item_details/lords_library_location', location: object.lords_library_location unless object.lords_library_location.blank? %>
-    </div>
-  </div>
-</div>
-
-<div class="row py-1">
-  <div class="col significant-date">
-    <%= render 'search/results/item_details/date', date: object.standard_date %>
-  </div>
-  <div class="col reference">
-    <%= render 'search/results/item_details/reference', reference: object.standard_reference %>
-  </div>
-  <div class="col house">
-    <%= render 'search/results/item_details/legislature', legislature: object.legislature %>
-  </div>
-</div>
+</a>

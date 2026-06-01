@@ -8,6 +8,9 @@
 </head>
 <body class="brand-bicameral">
 <%= render 'layouts/header/header' %>
+<div class="container top-panel pt-3">
+  <%= yield :top_panel %>
+</div>
 <main id="main-content" class="block block-page">
   <div class="inner-content container">
     <%#= render 'library_design/debug/debug' %>
