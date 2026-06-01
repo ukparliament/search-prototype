@@ -9,8 +9,11 @@ Rails.application.configure do
   # Do not eager load code on boot.
   config.eager_load = false
 
-  # Show full error reports.
+  # Show full error reports in development. Disable to test error pages.
   config.consider_all_requests_local = true
+
+  # Handle exceptions via router
+  config.exceptions_app = self.routes
 
   # Enable server timing.
   config.server_timing = true

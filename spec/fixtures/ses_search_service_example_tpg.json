@@ -1,0 +1,126 @@
+{
+  "parameters": {
+    "tbdb": "disp_taxonomy",
+    "expand_hierarchy": "0",
+    "query": "housing",
+    "service": "search",
+    "template": "service.json"
+  },
+  "terms": [
+    {
+      "term": {
+        "name": "Housing",
+        "id": "95629",
+        "zid": "OMIIN374695665II410059274qKWucoz5vHS4miNNDFbE",
+        "class": "TPG",
+        "freq": "0",
+        "facets": [
+          {
+            "id": "95475",
+            "name": "Taxonomy"
+          }
+        ],
+        "attributes": {
+          "Do not use for concept mapping": "1"
+        },
+        "metadata": {},
+        "src": "1",
+        "rank": "2",
+        "percentage": "49",
+        "weight": "10.6175",
+        "index": "disp_taxonomy",
+        "displayName": "Housing",
+        "foundByNPT": "0",
+        "lastUpdatedDate": "20250202164215",
+        "createdDate": "20100514065421",
+        "creator": "admin",
+        "updator": "morrelln",
+        "status": "Approved",
+        "documents": "0",
+        "hierarchy": [
+          {
+            "typeId": "1",
+            "qty": "1",
+            "name": "Broader Term",
+            "abbr": "BT"
+          },
+          {
+            "typeId": "1",
+            "qty": "10",
+            "name": "Narrower Term",
+            "abbr": "NT"
+          }
+        ],
+        "equivalence": [
+          {
+            "typeId": "3",
+            "qty": "1",
+            "name": "Use For",
+            "abbr": "UF",
+            "fields": [
+              {
+                "field": {
+                  "name": "Squatting",
+                  "id": "51631",
+                  "zid": "OMII1621104769IIN1531896557KKORKs3GuOrVUsXkFD6h",
+                  "freq": "0"
+                }
+              }
+            ]
+          }
+        ],
+        "paths": [
+          {
+            "path": [
+              {
+                "field": {
+                  "name": "Taxonomy",
+                  "id": "95475",
+                  "zid": "OMII0II1490289559",
+                  "class": "TPG",
+                  "freq": "0",
+                  "facets": [
+                    {
+                      "id": "95475",
+                      "name": "Taxonomy"
+                    }
+                  ]
+                }
+              },
+              {
+                "field": {
+                  "name": "Housing and planning",
+                  "id": "95631",
+                  "zid": "OMII627204670IIN97677081976hC980H0X00jODdRwxn",
+                  "class": "TPG",
+                  "freq": "0",
+                  "facets": [
+                    {
+                      "id": "95475",
+                      "name": "Taxonomy"
+                    }
+                  ]
+                }
+              },
+              {
+                "field": {
+                  "name": "Housing",
+                  "id": "95629",
+                  "zid": "OMIIN374695665II410059274qKWucoz5vHS4miNNDFbE",
+                  "class": "TPG",
+                  "freq": "0",
+                  "facets": [
+                    {
+                      "id": "95475",
+                      "name": "Taxonomy"
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,717 @@
+{
+  "parameters": {
+    "tbdb": "disp_taxonomy",
+    "match": "exact",
+    "query": "Army training estate",
+    "service": "conceptmap",
+    "template": "service.json"
+  },
+  "terms": [
+    {
+      "term": {
+        "name": "Army Training Estate",
+        "id": "1832",
+        "zid": "OMII755397586II1315662205Rg9FwfeeyETs8QMfnYAc",
+        "class": "ORG",
+        "freq": "0",
+        "facets": [
+          {
+            "id": "1",
+            "name": "Organisations"
+          }
+        ],
+        "attributes": {
+          "ORG": "1",
+          "Top Term": "1"
+        },
+        "metadata": {
+          "Decision/discussion history note": "UF ATE removed as breaking searches with \"-ate\" suffixes. 18 Aug 2017"
+        },
+        "src": "1",
+        "rank": "1",
+        "percentage": "54",
+        "weight": "12.3531",
+        "index": "disp_taxonomy",
+        "displayName": "Army Training Estate",
+        "foundByNPT": "0",
+        "lastUpdatedDate": "20240704190705",
+        "createdDate": "20100514063910",
+        "creator": "admin",
+        "updator": "morrelln",
+        "status": "Approved",
+        "documents": "0",
+        "hierarchy": [
+          {
+            "typeId": "1",
+            "qty": "1",
+            "name": "Broader Term",
+            "abbr": "BT",
+            "fields": [
+              {
+                "field": {
+                  "name": "Organisations",
+                  "id": "1",
+                  "zid": "OMII0II1738968428",
+                  "class": "ORG",
+                  "freq": "0",
+                  "facets": [
+                    {
+                      "id": "1",
+                      "name": "Organisations"
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ],
+        "paths": [
+          {
+            "path": [
+              {
+                "field": {
+                  "name": "Organisations",
+                  "id": "1",
+                  "zid": "OMII0II1738968428",
+                  "class": "ORG",
+                  "freq": "0",
+                  "facets": [
+                    {
+                      "id": "1",
+                      "name": "Organisations"
+                    }
+                  ]
+                }
+              },
+              {
+                "field": {
+                  "name": "Army Training Estate",
+                  "id": "1832",
+                  "zid": "OMII755397586II1315662205Rg9FwfeeyETs8QMfnYAc",
+                  "class": "ORG",
+                  "freq": "0",
+                  "facets": [
+                    {
+                      "id": "1",
+                      "name": "Organisations"
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "term": {
+        "name": "Army",
+        "id": "90253",
+        "zid": "OMII151II99151495fciWAUTXAO1eeNogz3dL",
+        "class": "SIT",
+        "freq": "0",
+        "facets": [
+          {
+            "id": "90102",
+            "name": "Concept"
+          }
+        ],
+        "attributes": {
+          "SIT": "1"
+        },
+        "metadata": {
+          "Wikidata ID": "Q37726"
+        },
+        "src": "2",
+        "rank": "2",
+        "percentage": "54",
+        "weight": "12.3879",
+        "index": "disp_taxonomy",
+        "displayName": "Army",
+        "foundByNPT": "0",
+        "lastUpdatedDate": "20260216103736",
+        "createdDate": "20100514065405",
+        "creator": "admin",
+        "updator": "morrelln",
+        "status": "Approved",
+        "documents": "0",
+        "hierarchy": [
+          {
+            "typeId": "1",
+            "qty": "1",
+            "name": "Broader Term",
+            "abbr": "BT",
+            "fields": [
+              {
+                "field": {
+                  "name": "Armed forces",
+                  "id": "90249",
+                  "zid": "OMII147IIN1012500545lBQsViFSEVTZJxKOYvFy",
+                  "class": "SIT",
+                  "freq": "0",
+                  "facets": [
+                    {
+                      "id": "90102",
+                      "name": "Concept"
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "typeId": "1",
+            "qty": "2",
+            "name": "Narrower Term",
+            "abbr": "NT",
+            "fields": [
+              {
+                "field": {
+                  "name": "King's guards",
+                  "id": "491416",
+                  "zid": "26101404442842044190094",
+                  "class": "ID",
+                  "freq": "0",
+                  "facets": [
+                    {
+                      "id": "90102",
+                      "name": "Concept"
+                    }
+                  ]
+                }
+              },
+              {
+                "field": {
+                  "name": "University officer training corps",
+                  "id": "351903",
+                  "zid": "1827666742",
+                  "class": "ID",
+                  "freq": "0",
+                  "facets": [
+                    {
+                      "id": "90102",
+                      "name": "Concept"
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ],
+        "associated": [
+          {
+            "typeId": "2",
+            "qty": "2",
+            "name": "Related To",
+            "abbr": "RT",
+            "fields": [
+              {
+                "field": {
+                  "name": "Names of army corps and regiments",
+                  "id": "351246",
+                  "zid": "734211299",
+                  "class": "ORG",
+                  "freq": "0",
+                  "facets": [
+                    {
+                      "id": "1",
+                      "name": "Organisations"
+                    }
+                  ]
+                }
+              },
+              {
+                "field": {
+                  "name": "Reserve forces",
+                  "id": "92829",
+                  "zid": "OMII2727IIN215279066qBZwHLgveXicxVJKh3Kb",
+                  "class": "SIT",
+                  "freq": "0",
+                  "facets": [
+                    {
+                      "id": "90102",
+                      "name": "Concept"
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ],
+        "equivalence": [
+          {
+            "typeId": "3",
+            "qty": "2",
+            "name": "Use For",
+            "abbr": "UF",
+            "fields": [
+              {
+                "field": {
+                  "name": "British Army",
+                  "id": "413407",
+                  "zid": "11843089247622759346453",
+                  "freq": "0"
+                }
+              },
+              {
+                "field": {
+                  "name": "Soldiers",
+                  "id": "51061",
+                  "zid": "OMII6009IIN413167495QFcnWyfZx9TCdlFp55ZH",
+                  "freq": "0"
+                }
+              }
+            ]
+          }
+        ],
+        "paths": [
+          {
+            "path": [
+              {
+                "field": {
+                  "name": "Concept",
+                  "id": "90102",
+                  "zid": "OMII0II1963192093",
+                  "class": "SIT",
+                  "freq": "0",
+                  "facets": [
+                    {
+                      "id": "90102",
+                      "name": "Concept"
+                    }
+                  ]
+                }
+              },
+              {
+                "field": {
+                  "name": "Defence",
+                  "id": "90842",
+                  "zid": "OMII740II327332739Mg6mUTzLALB6LQwYaUqF",
+                  "class": "SIT",
+                  "freq": "0",
+                  "facets": [
+                    {
+                      "id": "90102",
+                      "name": "Concept"
+                    }
+                  ]
+                }
+              },
+              {
+                "field": {
+                  "name": "Armed forces",
+                  "id": "90249",
+                  "zid": "OMII147IIN1012500545lBQsViFSEVTZJxKOYvFy",
+                  "class": "SIT",
+                  "freq": "0",
+                  "facets": [
+                    {
+                      "id": "90102",
+                      "name": "Concept"
+                    }
+                  ]
+                }
+              },
+              {
+                "field": {
+                  "name": "Army",
+                  "id": "90253",
+                  "zid": "OMII151II99151495fciWAUTXAO1eeNogz3dL",
+                  "class": "SIT",
+                  "freq": "0",
+                  "facets": [
+                    {
+                      "id": "90102",
+                      "name": "Concept"
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "term": {
+        "name": "Training",
+        "id": "93316",
+        "zid": "OMII3214II953307202cd7yjmkPalTdVx8Z4lhh",
+        "class": "SIT",
+        "freq": "0",
+        "facets": [
+          {
+            "id": "90102",
+            "name": "Concept"
+          }
+        ],
+        "attributes": {
+          "SIT": "1",
+          "TPG": "1"
+        },
+        "metadata": {
+          "Scope note": "Instruction and practice to gain proficiency in work. See Education for academic instruction."
+        },
+        "src": "2",
+        "rank": "3",
+        "percentage": "47",
+        "weight": "10.2814",
+        "index": "disp_taxonomy",
+        "displayName": "Training",
+        "foundByNPT": "0",
+        "lastUpdatedDate": "20260324083917",
+        "createdDate": "20100514065405",
+        "creator": "admin",
+        "updator": "morrelln",
+        "status": "Approved",
+        "documents": "0",
+        "hierarchy": [
+          {
+            "typeId": "1",
+            "qty": "1",
+            "name": "Broader Term",
+            "abbr": "BT",
+            "fields": [
+              {
+                "field": {
+                  "name": "Labour and employment",
+                  "id": "91774",
+                  "zid": "OMII1672IIN872778159BEAd53VjMj4FUfGBgDeO",
+                  "class": "SIT",
+                  "freq": "0",
+                  "facets": [
+                    {
+                      "id": "90102",
+                      "name": "Concept"
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "typeId": "1",
+            "qty": "10",
+            "name": "Narrower Term",
+            "abbr": "NT",
+            "fields": [
+              {
+                "field": {
+                  "name": "In-service training",
+                  "id": "91680",
+                  "zid": "OMII1578II124511776emaRYQyQK1nSYaZW91cx",
+                  "class": "SIT",
+                  "freq": "0",
+                  "facets": [
+                    {
+                      "id": "90102",
+                      "name": "Concept"
+                    }
+                  ]
+                }
+              },
+              {
+                "field": {
+                  "name": "Individual learning accounts",
+                  "id": "290767",
+                  "zid": "OMII0II1209211413",
+                  "class": "ID",
+                  "freq": "0",
+                  "facets": [
+                    {
+                      "id": "90102",
+                      "name": "Concept"
+                    }
+                  ]
+                }
+              },
+              {
+                "field": {
+                  "name": "Industrial training boards",
+                  "id": "91654",
+                  "zid": "OMII1552IIN814172226eyClyKq2VoqjNPYoajfk",
+                  "class": "SIT",
+                  "freq": "0",
+                  "facets": [
+                    {
+                      "id": "90102",
+                      "name": "Concept"
+                    }
+                  ]
+                }
+              },
+              {
+                "field": {
+                  "name": "Local skills improvement plans",
+                  "id": "485776",
+                  "zid": "171045667782433388863058",
+                  "class": "ID",
+                  "freq": "0",
+                  "facets": [
+                    {
+                      "id": "90102",
+                      "name": "Concept"
+                    }
+                  ]
+                }
+              },
+              {
+                "field": {
+                  "name": "National skills academies",
+                  "id": "11836",
+                  "zid": "OMIIN885976310II545438903iuNjgnNcrxwzxYrCl0pJ",
+                  "class": "ID",
+                  "freq": "0",
+                  "facets": [
+                    {
+                      "id": "90102",
+                      "name": "Concept"
+                    }
+                  ]
+                }
+              },
+              {
+                "field": {
+                  "name": "National training organisations",
+                  "id": "79205",
+                  "zid": "OMII2078830919IIN11164251884jiNjF9HLd2UOJiltTYp",
+                  "class": "ID",
+                  "freq": "0",
+                  "facets": [
+                    {
+                      "id": "90102",
+                      "name": "Concept"
+                    }
+                  ]
+                }
+              },
+              {
+                "field": {
+                  "name": "Sector skills councils",
+                  "id": "12717",
+                  "zid": "OMIIN148746217II102111298U60CKmAC0Qkne9E7vVpv",
+                  "class": "ID",
+                  "freq": "0",
+                  "facets": [
+                    {
+                      "id": "90102",
+                      "name": "Concept"
+                    }
+                  ]
+                }
+              },
+              {
+                "field": {
+                  "name": "Skillcentres",
+                  "id": "93025",
+                  "zid": "OMII2923IIN256360335zTXAB57CcUotTFDpH0iT",
+                  "class": "SIT",
+                  "freq": "0",
+                  "facets": [
+                    {
+                      "id": "90102",
+                      "name": "Concept"
+                    }
+                  ]
+                }
+              },
+              {
+                "field": {
+                  "name": "Vocational education",
+                  "id": "93437",
+                  "zid": "OMII3335IIN1806946782ssZq6nQJww2oeOw5TKid",
+                  "class": "SIT",
+                  "freq": "0",
+                  "facets": [
+                    {
+                      "id": "90102",
+                      "name": "Concept"
+                    }
+                  ]
+                }
+              },
+              {
+                "field": {
+                  "name": "Vocationally orientated language learning",
+                  "id": "13635",
+                  "zid": "OMII1779467228IIN1042560515KlV5j8bnqjxoNiNakRom",
+                  "class": "ID",
+                  "freq": "0",
+                  "facets": [
+                    {
+                      "id": "90102",
+                      "name": "Concept"
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ],
+        "associated": [
+          {
+            "typeId": "2",
+            "qty": "4",
+            "name": "Related To",
+            "abbr": "RT",
+            "fields": [
+              {
+                "field": {
+                  "name": "Career development",
+                  "id": "90453",
+                  "zid": "OMII351IIN499747617loZHHO88s1oqbU6CgI4X",
+                  "class": "SIT",
+                  "freq": "0",
+                  "facets": [
+                    {
+                      "id": "90102",
+                      "name": "Concept"
+                    }
+                  ]
+                }
+              },
+              {
+                "field": {
+                  "name": "Employment schemes",
+                  "id": "91119",
+                  "zid": "OMII1017II1555380445K6qsK56tSwa9N36GdkZ",
+                  "class": "SIT",
+                  "freq": "0",
+                  "facets": [
+                    {
+                      "id": "90102",
+                      "name": "Concept"
+                    }
+                  ]
+                }
+              },
+              {
+                "field": {
+                  "name": "Job creation",
+                  "id": "91746",
+                  "zid": "OMII1644II507045412WGE7dYvBHRAfty2GfUxi",
+                  "class": "SIT",
+                  "freq": "0",
+                  "facets": [
+                    {
+                      "id": "90102",
+                      "name": "Concept"
+                    }
+                  ]
+                }
+              },
+              {
+                "field": {
+                  "name": "Skilled workers",
+                  "id": "93026",
+                  "zid": "OMII2924IIN1403688146f8gicep8yB4uxwI6hwFy",
+                  "class": "SIT",
+                  "freq": "0",
+                  "facets": [
+                    {
+                      "id": "90102",
+                      "name": "Concept"
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ],
+        "equivalence": [
+          {
+            "typeId": "3",
+            "qty": "4",
+            "name": "Use For",
+            "abbr": "UF",
+            "fields": [
+              {
+                "field": {
+                  "name": "Industrial training",
+                  "id": "91653",
+                  "zid": "OMII1551II1934186002qMC3mVSY9qrkQyDtEt3F",
+                  "freq": "0"
+                }
+              },
+              {
+                "field": {
+                  "name": "Resettlement training",
+                  "id": "49658",
+                  "zid": "OMII4607II1650257844riabKQne1HEA0sFiWJbu",
+                  "freq": "0"
+                }
+              },
+              {
+                "field": {
+                  "name": "Skills training",
+                  "id": "51039",
+                  "zid": "OMII5987IIN582717507BrrnM9XnAXbNHHOybN7W",
+                  "freq": "0"
+                }
+              },
+              {
+                "field": {
+                  "name": "Vocational training",
+                  "id": "93439",
+                  "zid": "OMII3337IIN1352930832ayyuvIsPzZ8gE32Wi2e",
+                  "freq": "0"
+                }
+              }
+            ]
+          }
+        ],
+        "paths": [
+          {
+            "path": [
+              {
+                "field": {
+                  "name": "Concept",
+                  "id": "90102",
+                  "zid": "OMII0II1963192093",
+                  "class": "SIT",
+                  "freq": "0",
+                  "facets": [
+                    {
+                      "id": "90102",
+                      "name": "Concept"
+                    }
+                  ]
+                }
+              },
+              {
+                "field": {
+                  "name": "Labour and employment",
+                  "id": "91774",
+                  "zid": "OMII1672IIN872778159BEAd53VjMj4FUfGBgDeO",
+                  "class": "SIT",
+                  "freq": "0",
+                  "facets": [
+                    {
+                      "id": "90102",
+                      "name": "Concept"
+                    }
+                  ]
+                }
+              },
+              {
+                "field": {
+                  "name": "Training",
+                  "id": "93316",
+                  "zid": "OMII3214II953307202cd7yjmkPalTdVx8Z4lhh",
+                  "class": "SIT",
+                  "freq": "0",
+                  "facets": [
+                    {
+                      "id": "90102",
+                      "name": "Concept"
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

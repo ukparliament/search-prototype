@@ -1,0 +1,1 @@
+class ExternalServiceUnauthorized < StandardError; end

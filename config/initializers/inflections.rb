@@ -6,13 +6,19 @@
 ActiveSupport::Inflector.inflections(:en) do |inflect|
   #   inflect.plural /^(ox)$/i, "\\1en"
   #   inflect.singular /^(ox)en/i, "\\1"
-  inflect.irregular "debate on bills", "debates on bills"
+  inflect.irregular "debate on bill", "debates on bills"
+  inflect.irregular "debate on treaty", "debates on treaties"
+  inflect.irregular "debate on select committee report", "debates on select committee reports"
+  inflect.irregular "instrument coming into operation before being laid", "instruments coming into operation before being laid"
+  inflect.irregular "question for short debate", "questions for short debate"
   inflect.irregular "oral answer to question", "oral answers to questions"
   inflect.irregular "memorandum", "memoranda"
+  inflect.irregular "point of order", "points of order"
   inflect.irregular "observations on a petition", "observations on petitions"
   inflect.uncountable ["European material produced by EU institutions"]
   inflect.uncountable ["Observations on petitions"]
   inflect.uncountable ["ObservationsOnPetitions"]
+  inflect.uncountable ["Lords in Focus"]
 end
 
 # These inflection rules are supported but not enabled by default:

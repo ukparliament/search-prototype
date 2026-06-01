@@ -9,7 +9,7 @@
     <%= object_display_name(related_item.subtype, singular: false) %>
     and <%= object_display_name(related_item.type, singular: false) %><br/>
   <% else %>
-    <%= render 'content_type_objects/fragments/name_list', items: related_item.types, singular: false, terminator: '' %>
+    <%= render 'content_type_objects/fragments/list', items: related_item.types, singular: false, terminator: '' %>
     <br/>
   <% end %>
   <% unless related_item.legislature.blank? %>

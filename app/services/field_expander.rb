@@ -23,10 +23,8 @@ class FieldExpander
     if field_name == "title"
       text_fields = %w[title_t]
     elsif field_name == "subject"
-      # TODO: exclude TPG
       text_fields = %w[subject_t]
       ses_fields = %w[subject_ses]
-      # topic_ses has been removed, so behaviour here differs from old search by design
     elsif field_name == "author"
       # extra: correspondingMinister_t, epCommittee_t, department_t etc are all only the submitted term (dwp) in example, whereas we're searching all equivalents too
       # this seems to be unintentional behaviour in the original search code; for the time being we're leaving this alone
@@ -48,7 +46,6 @@ class FieldExpander
     elsif field_name == "primarymember"
       ses_fields = %w[primaryMember_ses]
     elsif field_name == "legtitle"
-      # TODO: this alias needs to exclude SES class TPG; will have to be implemented elsewhere?
       ses_fields = %w[legislationTitle_ses]
       text_fields = %w[legislationTitle_t]
     elsif field_name == "legstage"
@@ -70,6 +67,7 @@ class FieldExpander
       # if searching a _dt field specifically, treat it as a date field so that 'lastweek' etc. all work
       date_fields = [field_name]
     elsif field_name.match(/\w+_ses/)
+      # SES ID fields are minimally processed (the user is expected to provide a SES ID)
       ses_id_fields = [field_name]
     elsif field_name == "none"
       # include terms with no field specified

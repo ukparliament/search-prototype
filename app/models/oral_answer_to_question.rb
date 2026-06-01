@@ -25,7 +25,6 @@ class OralAnswerToQuestion < Question
     answerText_t
     answeringMember_ses answeringMemberParty_ses
     answeringDept_ses
-    type_ses subtype_ses
     procedural_ses
     legislationTitle_ses legislationTitle_t
     subject_ses subject_t

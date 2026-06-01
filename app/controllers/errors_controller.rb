@@ -1,18 +1,18 @@
 # # The one and only search controller.
 class ErrorsController < ApplicationController
 
-  def internal_server_error
-    @page_title = "Example 500 error"
-    render template: 'layouts/shared/error/500', locals: { status: 500, message: "Internal server error" }
+  def not_found
+    @page_title = "Page not found"
+    @crumb << { label: @page_title, url: nil }
   end
 
-  def not_found
-    @page_title = "Example 404 error"
-    render template: 'layouts/shared/error/404', locals: { status: 404, message: "Page not found" }
+  def internal_server_error
+    @page_title = "Internal Server Error"
+    @crumb << { label: @page_title, url: nil }
   end
 
   def not_authorized
-    @page_title = "Example 401 error"
-    render template: 'layouts/shared/error/401', locals: { status: 401, message: "Not authorized" }
+    @page_title = "Not Authorized"
+    @crumb << { label: @page_title, url: nil }
   end
 end

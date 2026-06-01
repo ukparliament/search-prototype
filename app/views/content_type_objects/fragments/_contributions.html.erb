@@ -1,6 +1,7 @@
 <% unless contribution_ids.blank? %>
   <dt>Proceeding contributions</dt>
   <% contribution_ids[..1].each do |contribution_id| %>
+    <% next unless @associated_object_data[contribution_id] %>
     <dd>
       <%= render 'content_type_objects/fragments/contribution', contribution: @associated_object_data[contribution_id] %>
     </dd>
@@ -11,6 +12,7 @@
         Show all contributions (<%= contribution_ids.size %>)
       </summary>
       <% contribution_ids[2..].each do |contribution_id| %>
+        <% next unless @associated_object_data[contribution_id] %>
         <dd>
           <%= render 'content_type_objects/fragments/contribution', contribution: @associated_object_data[contribution_id] %>
         </dd>

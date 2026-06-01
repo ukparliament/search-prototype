@@ -18,7 +18,6 @@ class TransportAndWorksActOrderApplication < ContentTypeObject
     title_t uri
     abstract_t
     applicant_ses applicant_t
-    type_ses subtype_ses
     legislationTitle_ses legislationTitle_t
     subject_ses subject_t
     commonsLibraryLocation_t lordsLibraryLocation_t

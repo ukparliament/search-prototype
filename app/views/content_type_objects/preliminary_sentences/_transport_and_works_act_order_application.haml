@@ -1,5 +1,5 @@
 %p.font-size-epsilon.reading-width
-  %span>= object_display_name_link(object.object_name)
+  %span>= search_link(object.object_name, singular: true)
   %span= " deposited in Parliament "
   - unless object.depositing_agent.blank?
     %span= " by "

@@ -20,10 +20,8 @@ class ResearchBriefing < ContentTypeObject
     description_t
     creator_ses creator_t
     category_ses
-    type_ses subtype_ses
     legislationTitle_ses legislationTitle_t
     subject_ses subject_t
-    topic_ses
     searcherNote_t
     date_dt identifier_t legislature_ses
     ]

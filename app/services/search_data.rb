@@ -12,44 +12,11 @@ class SearchData
     HierarchyBuilder.new
   end
 
-  def solr_error?
-    # boolean returns true if an error code was returned from Solr
-    search[:data].has_key?('code')
-  end
-
-  def error_code
-    return unless solr_error?
-
-    search.dig(:data, 'code')
-  end
-
-  def error_message
-    return unless solr_error?
-
-    search.dig(:data, 'msg')
-  end
-
-  def error_query
-    return unless solr_error?
-
-    search.dig(:search_parameters, 'query')
-  end
-
-  def error_partial_path
-    return unless solr_error?
-
-    if [401, 404].include?(error_code)
-      "layouts/shared/error/#{error_code}"
-    else
-      "layouts/shared/error/500"
-    end
-  end
-
   def initial_query_data
     # The first search returns only a URI & type_ses (see field list of SolrSearch)
     return unless search
 
-    search.dig(:data, 'response', 'docs')&.reject { |h| h.dig('type_ses').blank? }
+    search.dig(:data, 'response', 'docs')
   end
 
   def object_uris
@@ -61,23 +28,24 @@ class SearchData
   def empty_objects
     objects = []
     initial_query_data&.each do |object_data|
-      next if object_data['type_ses'].blank?
-
       objects << ContentTypeObject.generate(object_data)
     end
-    objects
+
+    objects.reject { |o| o.is_a?(NotSupported) }
   end
 
   def object_data
     return [] if object_uris.blank?
 
+    # construct a string listing all Solr fields required for the objects being loaded on this results page
     solr_fields = []
     empty_objects.each do |object|
       solr_fields << object.class.search_result_solr_fields
     end
-
     solr_fields_string = solr_fields.flatten.uniq.join(' ')
 
+    # perform a second Solr query, requesting the exact objects being loaded on this results page via their URIs
+    # request only the fields we need using the solr_fields_string previously constructed
     unsorted_items = SolrQueryWrapper.new(object_uris: object_uris, solr_fields: solr_fields_string).get_objects.dig(:items)
 
     # build unsorted items into a uri-keyed hash
@@ -87,12 +55,11 @@ class SearchData
       unsorted_items_hash[key] = unsorted_item
     end
 
-    # iterate through sorted uris and grab object from hash into array to return
+    # ensure the returned objects are sorted in the order of the initial set of object_uris
     ret = []
-    initial_query_data.pluck('uri').each do |sorted_uri|
+    object_uris&.each do |sorted_uri|
       ret << unsorted_items_hash.dig(sorted_uri)
     end
-
     ret
   end
 

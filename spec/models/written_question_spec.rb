@@ -219,6 +219,46 @@ RSpec.describe WrittenQuestion, type: :model do
     end
   end
 
+  describe 'answer_title' do
+    let!(:written_question) { WrittenQuestion.new({ 'pqStatus_t' => '' }) }
+    context 'where tabled' do
+      it 'returns the correct title' do
+        allow(written_question).to receive(:state).and_return({ value: 'Tabled', field_name: 'pqStatus_t' })
+        expect(written_question.answer_title).to eq('Answer')
+      end
+    end
+    context 'where answered' do
+      it 'returns the correct title' do
+        allow(written_question).to receive(:state).and_return({ value: 'Answered', field_name: 'pqStatus_t' })
+        expect(written_question.answer_title).to eq('Answer')
+      end
+    end
+    context 'where holding' do
+      it 'returns the correct title' do
+        allow(written_question).to receive(:state).and_return({ value: 'Holding', field_name: 'pqStatus_t' })
+        expect(written_question.answer_title).to eq('Holding answer')
+      end
+    end
+    context 'where answered_was_holding' do
+      it 'returns the correct title' do
+        allow(written_question).to receive(:answered_was_holding?).and_return(true)
+        expect(written_question.answer_title).to eq('Answer')
+      end
+    end
+    context 'where withdrawn' do
+      it 'returns the correct title' do
+        allow(written_question).to receive(:state).and_return({ value: 'Withdrawn', field_name: 'pqStatus_t' })
+        expect(written_question.answer_title).to eq('Answer')
+      end
+    end
+    context 'where corrected' do
+      it 'returns the correct title' do
+        allow(written_question).to receive(:corrected?).and_return(true)
+        expect(written_question.answer_title).to eq('Original answer')
+      end
+    end
+  end
+
   describe 'prelim_partial' do
     let!(:written_question) { WrittenQuestion.new({ 'pqStatus_t' => '' }) }
     context 'where tabled' do
@@ -290,7 +330,7 @@ RSpec.describe WrittenQuestion, type: :model do
     end
 
     context 'where there is an empty array' do
-      let!(:written_question) { WrittenQuestion.new({ 'date_dt' => '' }) }
+      let!(:written_question) { WrittenQuestion.new({ 'dateTabled_dt' => [] }) }
       it 'returns nil' do
         expect(written_question.date_of_question).to be_nil
       end
@@ -298,13 +338,13 @@ RSpec.describe WrittenQuestion, type: :model do
 
     context 'where data exists' do
       context 'where data is a valid date' do
-        let!(:written_question) { WrittenQuestion.new({ 'date_dt' => Date.yesterday.to_s }) }
+        let!(:written_question) { WrittenQuestion.new({ 'dateTabled_dt' => [Date.yesterday.to_s] }) }
         it 'returns the first object as a date' do
-          expect(written_question.date_of_question).to eq({ :field_name => "date_dt", :value => Date.yesterday })
+          expect(written_question.date_of_question).to eq({ :field_name => "dateTabled_dt", :value => Date.yesterday })
         end
       end
       context 'where data is not a valid date' do
-        let!(:written_question) { WrittenQuestion.new({ 'date_dt' => 'date' }) }
+        let!(:written_question) { WrittenQuestion.new({ 'dateTabled_dt' => ['date'] }) }
         it 'returns nil' do
           expect(written_question.date_of_question).to be_nil
         end

@@ -16,7 +16,6 @@ class ResearchMaterial < ContentTypeObject
     # fields requested in Solr search for search results page
     super << %w[
     title_t uri
-    type_ses subtype_ses
     searcherNote_t
     date_dt identifier_t legislature_ses
     ]

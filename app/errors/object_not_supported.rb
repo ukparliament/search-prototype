@@ -1,0 +1,1 @@
+class ObjectNotSupported < StandardError; end

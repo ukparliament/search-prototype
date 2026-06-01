@@ -20,7 +20,6 @@ class WrittenQuestion < Question
     askingMember_ses tablingMember_ses askingMemberParty_ses tablingMemberParty_ses
     answeringMember_ses answeringMemberParty_ses
     departmentPrinted_t
-    type_ses subtype_ses
     pqStatus_t
     askedToReplyAuthor_ses
     procedural_ses
@@ -74,8 +73,20 @@ class WrittenQuestion < Question
     get_all_from('identifier_t')
   end
 
+  def answer_title
+    return 'Original answer' if corrected?
+
+    return 'Holding answer' if holding?
+
+    'Answer'
+  end
+
   def has_holding_answer
     get_first_as_boolean_from('holdingAnswer_b')
+  end
+
+  def date_of_question
+    get_first_as_date_from('dateTabled_dt')
   end
 
   def date_of_holding_answer

@@ -1,3 +1,5 @@
+##
+# Orchestration class for making multi-threaded Solr queries
 class SolrQueryWrapper
   attr_reader :object_uris, :solr_fields
 

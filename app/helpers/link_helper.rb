@@ -33,15 +33,21 @@ module LinkHelper
 
     return if data.blank? || data[:value].blank?
 
-    formatted_name = formatted_name(data, ses_data, singular, reading_order)
-    return formatted_name unless SEARCH_LINK_FIELD_NAMES.include?(data[:field_name])
+    # format_name (bypassing singularisation steps) used to build lookup_name for the query
+    lookup_name = format_name(data, ses_data, reading_order)
 
+    # formatted_name is used to build the display_name for the link text or returned string
+    display_name = formatted_name(data, ses_data, singular, reading_order)
+    return display_name unless SEARCH_LINK_FIELD_NAMES.include?(data[:field_name])
+
+    # swap field names for aliases where appropriate
     field = substitute_field_name(data[:field_name])
 
     # format a search query for the link
-    query = format_field_specific_search_query(field, formatted_name)
+    query = format_field_specific_search_query(field, lookup_name)
 
-    link_to(formatted_name(data, ses_data, singular, reading_order), search_path(query: query), class: html_class || nil)
+    # return the link
+    link_to(display_name, search_path(query: query), class: html_class || nil)
   end
 
   def substitute_field_name(field_name)
@@ -103,22 +109,10 @@ module LinkHelper
     value.to_s.include?(" ") ? "#{field}:\"#{value}\"" : "#{field}:#{value}"
   end
 
-  def object_display_name_link(data, singular: true, case_formatting: false, reading_order: true)
-    # Formats the name of an object for display; returns as a link to search for that object.
-    # Singular: If true, result is singularised
-    # Case formatting: If true, result is lowercase, except for some whitelisted phrases e.g. "House of Commons"
-    # Reading order: If true, result is flipped on internal comma, e.g. "Sharpe of Epsom, Lord" -> "Lord Sharpe of Epsom"
-    return if data.blank? || data[:value].blank?
-
-    field = substitute_field_name(data[:field_name])
-    formatted = formatted_name(data, ses_data, singular, reading_order)
-    query = format_field_specific_search_query(field, formatted)
-
-    link_to(case_formatting ? conditional_downcase(formatted) : formatted, search_path(query: query))
-  end
-
   def formatted_name(data, ses_data, singular, reading_order)
-    singular ? format_name(data, ses_data, reading_order)&.singularize : format_name(data, ses_data, reading_order)
+    formatted = format_name(data, ses_data, reading_order)
+
+    singular ? singularize_phrase(formatted) : formatted
   end
 
   private
@@ -239,15 +233,25 @@ module LinkHelper
     # links / names are being formatted.
 
     # raise an error in development instead
-    raise 'fallback SES lookup attempted' if Rails.env.development?
+    # raise 'fallback SES lookup attempted' if Rails.env.development?
+
+    # WIP
 
     custom_ses_lookup = SesLookup.new([ses_data_hash]).data
+
+    # cache the returned SES data
+    ses_cache = SesCache.new(Rails.cache)
+    custom_ses_lookup.each { |k, v| ses_cache.write_cached_value(k, v) } unless custom_ses_lookup.empty?
+
     name_string = custom_ses_lookup[ses_data_hash[:value].to_i]
 
     # where we still don't have a string (e.g. if SES is missing an entry for this ID) then
     # present the SES ID itself as a string (in development), or "Unknown" in other environments.
 
+    puts "Fallback SES looked assigned name #{name_string} to SES ID #{ses_data_hash[:value]}" if Rails.env.development? && name_string.present?
     return name_string unless name_string.blank?
+
+    puts "Fallback SES lookup could not resolve name for #{ses_data_hash[:value]}" if Rails.env.development?
 
     Rails.env.development? ? ses_data_hash[:value].to_s : "Unknown"
   end

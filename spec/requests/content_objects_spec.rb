@@ -24,34 +24,5 @@ RSpec.describe 'ContentTypeObjects', type: :request do
         expect(response.body).to include('Parliamentary Search')
       end
     end
-
-    context '500 error' do
-      it 'renders the error page' do
-        allow_any_instance_of(SolrQuery).to receive(:all_data).and_return({ 'response' => { 'code' => 500 } })
-        allow(ContentTypeObject).to receive(:generate).and_return(edm_instance)
-        get '/objects', params: { :object => 'test_string' }
-        expect(response.body).to include("There is a technical issue.")
-      end
-    end
-
-    context '404 error' do
-      context 'when receiving a 404 error code from SolrQuery' do
-        it 'renders the error page' do
-          allow_any_instance_of(SolrQuery).to receive(:all_data).and_return({ 'response' => { 'code' => 404 } })
-          allow(ContentTypeObject).to receive(:generate).and_return(edm_instance)
-          get '/objects', params: { :object => 'test_string' }
-          expect(response.body).to include("We can't find what you are looking for")
-        end
-      end
-
-      context 'when receiving valid data from SolrQuery but type_ses is missing' do
-        it 'renders the error page' do
-          allow_any_instance_of(SolrQuery).to receive(:all_data).and_return({ 'response' => { "docs" => [{ 'not_type_ses' => [12345] }] } })
-          allow(ContentTypeObject).to receive(:generate).and_return(edm_instance)
-          get '/objects', params: { :object => 'test_string' }
-          expect(response.body).to include("We can't find what you are looking for")
-        end
-      end
-    end
   end
 end

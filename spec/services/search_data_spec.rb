@@ -40,62 +40,6 @@ RSpec.describe SearchData, type: :model do
     allow(solr_multi_query_instance).to receive(:object_data).and_return(secondary_query_response)
   end
 
-  describe 'solr_error?' do
-    context 'with a successful search' do
-      it 'returns false' do
-        expect(search_data.solr_error?).to be false
-      end
-    end
-    context 'when an error code is present' do
-      let!(:search_output) { { search_parameters: { filter: ['legislature_ses:12345'] }, data: { "code" => 500, "msg" => "error_message" } } }
-      it 'returns true' do
-        expect(search_data.solr_error?).to be true
-      end
-    end
-  end
-
-  describe 'error_message' do
-    context 'with a successful search' do
-      it 'returns nil' do
-        expect(search_data.error_message).to be nil
-      end
-    end
-    context 'when an error code is present' do
-      let!(:search_output) { { search_parameters: { filter: ['legislature_ses:12345'] }, data: { "code" => 500, "msg" => "error_message" } } }
-      it 'returns the message' do
-        expect(search_data.error_message).to eq('error_message')
-      end
-    end
-  end
-
-  describe 'error_code' do
-    context 'with a successful search' do
-      it 'returns nil' do
-        expect(search_data.error_code).to be nil
-      end
-    end
-    context 'when an error code is present' do
-      let!(:search_output) { { search_parameters: { filter: ['legislature_ses:12345'] }, data: { "code" => 500, "msg" => "error_message" } } }
-      it 'returns the code' do
-        expect(search_data.error_code).to eq(500)
-      end
-    end
-  end
-
-  describe 'error_partial_path' do
-    context 'with a successful search' do
-      it 'returns nil' do
-        expect(search_data.error_partial_path).to be nil
-      end
-    end
-    context 'when an error code is present' do
-      let!(:search_output) { { search_parameters: { filter: ['legislature_ses:12345'] }, data: { "code" => 500, "msg" => "error_message" } } }
-      it 'returns the partial path' do
-        expect(search_data.error_partial_path).to eq('layouts/shared/error/500')
-      end
-    end
-  end
-
   describe 'object_data' do
     context 'where data is present' do
       it 'returns the array of inflated objects' do

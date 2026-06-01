@@ -12,16 +12,13 @@ class SesLookup < ApiClient
     ret = {}
     responses = evaluated_responses
 
-    # responses is an array of hashes
-    # each hash is the parsed response from individual lookups (one per [group_size] IDs)
-    # the hashes contain a nested 'term' hash containing 'id' and 'name'
-
-    # If SES returns an error, we'll instead get a hash with the 'error' key from each response
-    # return the first error only in this case:
-    return responses.first if responses.first&.has_key?('error')
-
-    unless responses.compact.blank?
+    if responses.compact.blank?
+      # Disabled explicit error - in some cases SES IDs will be missing and we just want to render the ID instead
+      puts "SES returned no results for: #{input_data.inspect}" if Rails.env.development?
+    else
       responses.each do |response|
+        raise_external_service_error(response)
+
         ret[response['term']['id'].to_i] = response['term']['name']
         ret["#{response['term']['id'].to_i}_scope_note"] = response['term']['metadata']['Scope note'] unless response['term']['metadata']['Scope note'].blank?
       end
@@ -30,6 +27,7 @@ class SesLookup < ApiClient
   end
 
   def extract_hierarchy_data
+    # TODO: extract to its own class?
     # for returning all data in a structured format for further querying
     return if input_data.blank?
 
@@ -41,7 +39,7 @@ class SesLookup < ApiClient
     # the hashes contain a nested 'term' hash containing 'id' and 'name'
 
     # If SES returns an error, we'll get an error key returned from evaluated_response
-    return responses if responses.has_key?('error')
+    raise_external_service_error(responses)
 
     terms = responses.dig('terms')
     unless terms.compact.blank?
@@ -119,7 +117,7 @@ class SesLookup < ApiClient
   end
 
   def evaluated_hierarchy_response
-    caching_enabled = Rails.env.development? ? false : true
+    caching_enabled = Rails.env.development? || Rails.env.test? ? false : true
     api_response(ses_browse_service_uri, caching_enabled)
   end
 
@@ -146,17 +144,29 @@ class SesLookup < ApiClient
 
   def api_response(uri, cached = false)
     raw_response = api_get_request(uri, cached)
-    raise "Nil response from API" if raw_response.nil?
 
-    begin
-      JSON.parse(raw_response)
-    rescue JSON::ParserError
-      begin
-        Hash.from_xml(raw_response)
-      rescue REXML::ParseException
-        puts "API response could could not be parsed as JSON or XML"
-        { "error" => "Error parsing response from API" }
-      end
+    # this method does not raise errors as it is called within a thread
+    # instead, we return a hash with the error details
+    return { 'error' => { 'message' => 'No response from API' } } if raw_response.nil?
+
+    content_type = raw_response.content_type
+    case content_type
+    when 'application/json'
+      JSON.parse(raw_response.body)
+    when 'text/xml'
+      # SES returns errors as XML
+      response_hash = Hash.from_xml(raw_response.body)
+      code = raw_response.code
+      return { 'error' => { 'code' => code, 'message' => response_hash.dig('SEMAPHORE', 'ERROR', 'MESSAGE') } }
+    when 'text/html'
+      doc = Nokogiri::HTML(raw_response.body)
+      title = doc.at('title')&.text&.strip
+      headline = doc.at('h1')&.text&.strip
+      code = raw_response.code
+      message = title || headline || "Unknown HTML response"
+      return { 'error' => { 'code' => code, 'message' => message } }
+    else
+      return { 'error' => { 'message' => "Could not parse response from API (#{content_type})" } }
     end
   end
 
@@ -173,10 +183,10 @@ class SesLookup < ApiClient
     # make the request with or without caching
     if cached
       Rails.cache.fetch(uri, expires_in: 2.hours) do
-        http.request(request).body
+        http.request(request)
       end
     else
-      http.request(request).body
+      http.request(request)
     end
   end
 

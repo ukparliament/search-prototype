@@ -1,5 +1,5 @@
 <% unless object.answer_text.blank? %>
-  <dt><%= object.corrected? ? 'Original answer' : 'Answer' %></dt>
+  <dt><%= object.answer_title %></dt>
   <dd>
     <%= raw format_html(object.answer_text[:value], false) %>
   </dd>

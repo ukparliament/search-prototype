@@ -148,4 +148,19 @@ module ApplicationHelper
 
     filter_params[facet_field_name]&.include?(text_field_name)
   end
+
+  ##
+  # Handles awkward cases that confuse Rails' built in approach
+  def singularize_phrase(phrase)
+    special_cases = {
+      "Select Committee reports (Government responses)" => "Select Committee report (Government response)",
+      "Legislative Grand Committee proceedings (HC)" => "Legislative Grand Committee proceeding (HC)"
+    }
+
+    if phrase.in?(special_cases.keys)
+      special_cases[phrase]
+    else
+      phrase.singularize
+    end
+  end
 end

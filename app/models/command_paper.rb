@@ -10,7 +10,6 @@ class CommandPaper < ParliamentaryPaperLaid
     title_t uri
     member_ses
     department_ses department_t
-    type_ses subtype_ses
     corporateAuthor_ses corporateAuthor_t
     procedure_t
     dateLaid_dt dateWithdrawn_dt

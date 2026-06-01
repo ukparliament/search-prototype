@@ -1,18 +1,18 @@
-<%= render '/shared/search_bar' %>
+<div class="row">
+	<div class="col reading-width">
+		<%= render '/shared/search_bar' %>
+	</div>
+</div>
 
 <div class="row">
   <div class="col reading-width">
-    <h2>About this website</h2>
-    <p>This website is under development and may be unavailable at times.</p>
-    <p>We're working on a replacement
-      for <%= link_to 'Parliamentary Search', 'https://search.parliament.uk/search' %>
-      (available to users on the Parliamentary network)
-      and <%= link_to 'Search Parliamentary Material', 'https://search-material.parliament.uk/' %> (the
-      public-facing
-      version of Parliamentary Search).</p>
-    <p>Details of what we are working on can be found on
-      our <%= link_to 'Trello Board', 'https://trello.com/b/hP5FLFHA/search-frontend' %>.</p>
-    <p>You can reach the team
-      at <%= link_to 'parliamentarysearch@parliament.uk', 'mailto:parliamentarysearch@parliament.uk' %>.</p>
-  </div>
+    <%= content_tag( 'h1', 'Welcome to Parliamentary Search' ) %>
+	  <%= content_tag( 'p', "We're working on a replacement for #{link_to( 'Parliamentary Search', 'https://search.parliament.uk/search' )}, available to users on the Parliamentary network - and #{link_to( 'Search Parliamentary Material', 'https://search-material.parliament.uk/' )}, the public-facing version of Parliamentary Search.".html_safe ) %>
+	  
+	  <%= content_tag( 'h2', 'What you can find here' ) %>
+	  <%= content_tag( 'p', 'You can use Parliamentary Search to find records of parliamentary business and research briefings, from both Houses, in one place. Parliamentary Search has its own database, containing information dating back to the early 1990s and in some cases earlier. It is the only public service where this range of parliamentary data can be found in one place.' ) %>
+	  <%= content_tag( 'p', 'Material in Parliamentary Search is subject indexed, which means the search is more powerful than a simple keyword search. It is interlinked, which means you can get from the written question about a bill to the actual bill, or from a Minister’s commitment to deposit a letter in the Library, to that letter.' ) %>
+	  <%= content_tag( 'p', content_tag( 'em', 'This website is under development and may be unavailable at times.' ) ) %>
+	  <%= content_tag( 'p', "You can reach the team at #{link_to 'parliamentarysearch@parliament.uk', 'mailto:parliamentarysearch@parliament.uk'}.".html_safe ) %>
+	</div>
 </div>

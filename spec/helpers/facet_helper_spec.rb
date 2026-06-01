@@ -8,6 +8,8 @@ RSpec.describe FacetHelper, type: :helper do
     let!(:ordered_month_facet) { { :field_name => "date_month", :facets => [{ "val" => 1, "count" => 4 }, { "val" => 3, "count" => 1 }, { "val" => 6, "count" => 33 }, { "val" => 7, "count" => 14 }, { "val" => 12, "count" => 3 }] } }
     let!(:year_facet) { { :field_name => "date_year", :facets => [{ "val" => 2015, "count" => 51 }, { "val" => 2016, "count" => 4 }] } }
     let!(:ordered_year_facet) { { :field_name => "date_year", :facets => [{ "val" => 2016, "count" => 4 }, { "val" => 2015, "count" => 51 }] } }
+    let!(:session_facet) { { :field_name => "session_s", :facets => [{ "val" => "2024-26", "count" => 51 }, { "val" => "2022-23", "count" => 4 }, { "val" => "2023-24", "count" => 7 }] } }
+    let!(:ordered_session_facet) { { :field_name => "session_s", :facets => [{ "val" => "2024-26", "count" => 51 }, { "val" => "2023-24", "count" => 7 }, { "val" => "2022-23", "count" => 4 }] } }
 
     context 'where facet is of a type not requiring formatting' do
       it 'returns the input data without change' do
@@ -24,6 +26,12 @@ RSpec.describe FacetHelper, type: :helper do
     context 'for the year facet' do
       it 'returns the input data with the year ordered by recency' do
         expect(helper.format_facets(year_facet)).to eq(ordered_year_facet)
+      end
+    end
+
+    context 'for the session facet' do
+      it 'returns the input data with the sessions ordered by recency' do
+        expect(helper.format_facets(session_facet)).to eq(ordered_session_facet)
       end
     end
   end

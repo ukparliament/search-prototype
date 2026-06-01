@@ -30,7 +30,6 @@ class OralQuestion < Question
     pqStatus_t
     procedural_ses
     dateTabled_dt dateForAnswer_dt dateOfAnswer_dt
-    type_ses subtype_ses
     legislationTitle_ses legislationTitle_t
     subject_ses subject_t
     searcherNote_t

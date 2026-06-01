@@ -9,17 +9,19 @@ class ApiClient
   end
 
   def object_data
-    all_data['response']['docs']&.reject { |h| h.dig('type_ses').blank? }
+    all_data.dig('response', 'docs')
   end
 
   def all_data
     # get Solr response as JSON
     response = evaluated_response
 
-    # check for errors from Solr
-    return response['error'] if response.has_key?('error')
+    # check for / raise errors
+    raise_external_service_error(response)
 
-    # otherwise return response JSON
+    puts "Query as parsed by Solr: #{response.dig('debug', 'parsedquery')}" if Rails.env.development?
+
+    # return response
     response
   end
 
@@ -52,7 +54,7 @@ class ApiClient
     uri = api_endpoint_uri
     headers = request_headers
 
-    puts "POST request from #{self.class.name}: #{uri} with data: #{query} and headers: #{headers}" if Rails.env.development?
+    # puts "POST request from #{self.class.name}: #{uri} with data: #{query} and headers: #{headers}" if Rails.env.development?
 
     # set up HTTP instance
     http = Net::HTTP.new(uri.host, uri.port)
@@ -82,5 +84,24 @@ class ApiClient
 
   def request_headers
     { 'Ocp-Apim-Subscription-Key' => api_subscription_key }
+  end
+
+  def raise_external_service_error(response)
+    return unless response.has_key?('error')
+
+    error_message = response.dig('error', 'message') || response.dig('error', 'msg')
+
+    case response.dig('error', 'code')&.to_i
+    when 400
+      raise(ExternalServiceError, error_message)
+    when 401
+      raise(ExternalServiceUnauthorized, error_message)
+    when 403
+      raise(ExternalServiceUnauthorized, error_message)
+    when 404
+      raise(ExternalServiceNotFound, error_message)
+    else
+      raise(ExternalServiceError, error_message)
+    end
   end
 end

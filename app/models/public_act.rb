@@ -17,7 +17,6 @@ class PublicAct < Act
     super << %w[
     title_t uri
     longTitle_t
-    type_ses subtype_ses
     legislationTitle_ses legislationTitle_t
     subject_ses subject_t
     commonsLibraryLocation_t lordsLibraryLocation_t

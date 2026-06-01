@@ -18,7 +18,6 @@ class DepositedPaper < Paper
     title_t uri
     abstract_text
     department_ses department_t
-    type_ses subtype_ses
     corporateAuthor_ses corporateAuthor_t
     dateOfCommittmentToDeposit_dt
     dateOfOrigin_dt

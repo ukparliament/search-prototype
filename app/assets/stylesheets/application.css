@@ -18,3 +18,12 @@ nav#header-nav {
 img {
     max-width: 100%;
 }
+
+/* override narrow headings */
+h1, h2, h3, h4, h5, h6 {
+    max-width: 100%;
+}
+
+.wrap-anywhere {
+    overflow-wrap: anywhere;
+}

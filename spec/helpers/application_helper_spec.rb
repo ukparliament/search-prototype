@@ -10,7 +10,7 @@ RSpec.describe ApplicationHelper, type: :helper do
       end
     end
     context 'where there are some empty tags' do
-      let!(:content) { "some text<h2>A heading</h2><p></p><p> </p>"}
+      let!(:content) { "some text<h2>A heading</h2><p></p><p> </p>" }
       it 'removes the empty nodes' do
         expect(helper.format_html(content, false)).to eq("<p>some text</p><h2>A heading</h2>")
       end
@@ -116,4 +116,19 @@ RSpec.describe ApplicationHelper, type: :helper do
     end
   end
 
+  describe 'singularize phrase' do
+    context 'with a known phrase' do
+      it 'swaps in the replacement phrase' do
+        expect(helper.singularize_phrase("Select Committee reports (Government responses)")).to eq("Select Committee report (Government response)")
+      end
+    end
+
+    context 'with unknown phrases' do
+      let(:input_string) { 'any other phrases' }
+      it 'delegates to the standard Rails singularizer' do
+        expect(input_string).to receive(:singularize).and_call_original
+        expect(helper.singularize_phrase(input_string)).to eq('any other phrase')
+      end
+    end
+  end
 end
