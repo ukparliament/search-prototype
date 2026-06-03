@@ -142,7 +142,7 @@ RSpec.describe 'QueryExpander' do
     end
 
     pending 'returns the expected result' do
-      # TODO: check whether the expectation is accurate here: do we really want to return results just for the first combination?
+      # TODO: awaiting clarification on requirements
       expect(ses_test_class).to receive(:new).with(({ value: "Buckingham Palace Barracks" })).and_return(buckingham_palace_barracks_ses_response)
       expect(query_expander.expand_query).to eq("(\"Buckingham Palace\" OR all_ses:16673) AND barracks")
     end
@@ -178,12 +178,12 @@ RSpec.describe 'QueryExpander' do
     end
 
     it 'makes the expected SES queries' do
-      expect(ses_test_class).to receive(:new).with(({ value: "Digital mapping" })).and_return(digital_mapping_ses_response)
+      expect(ses_test_class).to receive(:new).with({ value: "Digital mapping" }, exact_match: true).and_return(digital_mapping_ses_response)
       query_expander.expand_query
     end
 
     it 'returns the expected result' do
-      expect(ses_test_class).to receive(:new).with(({ value: "Digital mapping" })).and_return(digital_mapping_ses_response)
+      expect(ses_test_class).to receive(:new).with({ value: "Digital mapping" }, exact_match: true).and_return(digital_mapping_ses_response)
       expect(query_expander.expand_query).to eq("\"Digital mapping\" OR all_ses:90904")
     end
   end
@@ -198,12 +198,12 @@ RSpec.describe 'QueryExpander' do
     end
 
     it 'makes the expected SES queries' do
-      expect(ses_test_class).to receive(:new).with(({ value: "Army training estate" })).and_return(army_training_estate_ses_response)
+      expect(ses_test_class).to receive(:new).with({ value: "Army training estate" }, exact_match: true).and_return(army_training_estate_ses_response)
       query_expander.expand_query
     end
 
     it 'returns the expected result' do
-      expect(ses_test_class).to receive(:new).with(({ value: "Army training estate" })).and_return(army_training_estate_ses_response)
+      expect(ses_test_class).to receive(:new).with({ value: "Army training estate" }, exact_match: true).and_return(army_training_estate_ses_response)
       expect(query_expander.expand_query).to eq("\"Army Training Estate\" OR all_ses:1832")
     end
   end
@@ -218,12 +218,12 @@ RSpec.describe 'QueryExpander' do
     end
 
     it 'makes the expected SES queries' do
-      expect(ses_test_class).to receive(:new).with(({ value: "News providers" })).and_return(news_providers_ses_response)
+      expect(ses_test_class).to receive(:new).with({ value: "News providers" }, exact_match: true).and_return(news_providers_ses_response)
       query_expander.expand_query
     end
 
     it 'returns the expected result' do
-      expect(ses_test_class).to receive(:new).with(({ value: "News providers" })).and_return(news_providers_ses_response)
+      expect(ses_test_class).to receive(:new).with({ value: "News providers" }, exact_match: true).and_return(news_providers_ses_response)
       expect(query_expander.expand_query).to eq("\"News providers\"")
     end
   end
@@ -240,14 +240,14 @@ RSpec.describe 'QueryExpander' do
     end
 
     it 'makes the expected SES queries' do
-      expect(ses_test_class).to receive(:new).with(({ value: "News providers" })).and_return(news_providers_ses_response)
-      expect(ses_test_class).to receive(:new).with(({ value: "restrictions" })).and_return(restrictions_ses_response)
+      expect(ses_test_class).to receive(:new).with({ value: "News providers" }, exact_match: true).and_return(news_providers_ses_response)
+      expect(ses_test_class).to receive(:new).with({ value: "restrictions" }).and_return(restrictions_ses_response)
       query_expander.expand_query
     end
 
     it 'returns the expected result' do
-      expect(ses_test_class).to receive(:new).with(({ value: "News providers" })).and_return(news_providers_ses_response)
-      expect(ses_test_class).to receive(:new).with(({ value: "restrictions" })).and_return(restrictions_ses_response)
+      expect(ses_test_class).to receive(:new).with({ value: "News providers" }, exact_match: true).and_return(news_providers_ses_response)
+      expect(ses_test_class).to receive(:new).with({ value: "restrictions" }).and_return(restrictions_ses_response)
       expect(query_expander.expand_query).to eq("\"News providers\" AND restrictions")
     end
   end
@@ -264,13 +264,13 @@ RSpec.describe 'QueryExpander' do
     end
 
     it 'makes the expected SES queries' do
-      expect(ses_test_class).to receive(:new).with(({ value: "Tax relief" })).and_return(tax_relief_ses_response)
+      expect(ses_test_class).to receive(:new).with({ value: "Tax relief" }, exact_match: true).and_return(tax_relief_ses_response)
       expect(ses_test_class).to receive(:new).with(({ value: "significant" })).and_return(significant_ses_response)
       query_expander.expand_query
     end
 
     it 'returns the expected result' do
-      expect(ses_test_class).to receive(:new).with(({ value: "Tax relief" })).and_return(tax_relief_ses_response)
+      expect(ses_test_class).to receive(:new).with({ value: "Tax relief" }, exact_match: true).and_return(tax_relief_ses_response)
       expect(ses_test_class).to receive(:new).with(({ value: "significant" })).and_return(significant_ses_response)
       expect(query_expander.expand_query).to eq("(\"Tax allowances\" OR \"Tax incentives\" OR \"Tax relief\" OR all_ses:93196) AND significant")
     end
@@ -288,13 +288,13 @@ RSpec.describe 'QueryExpander' do
     end
 
     it 'makes the expected SES queries' do
-      expect(ses_test_class).to receive(:new).with(({ value: "Tax relief" })).and_return(tax_relief_ses_response)
+      expect(ses_test_class).to receive(:new).with({ value: "Tax relief" }, exact_match: true).and_return(tax_relief_ses_response)
       expect(ses_test_class).to receive(:new).with(({ value: "charities" })).and_return(charities_ses_response)
       query_expander.expand_query
     end
 
     it 'returns the expected result' do
-      expect(ses_test_class).to receive(:new).with(({ value: "Tax relief" })).and_return(tax_relief_ses_response)
+      expect(ses_test_class).to receive(:new).with({ value: "Tax relief" }, exact_match: true).and_return(tax_relief_ses_response)
       expect(ses_test_class).to receive(:new).with(({ value: "charities" })).and_return(charities_ses_response)
       expect(query_expander.expand_query).to eq("(\"Tax allowances\" OR \"Tax incentives\" OR \"Tax relief\" OR all_ses:93196) AND (\"Charities\" OR all_ses:90487)")
     end
@@ -312,13 +312,13 @@ RSpec.describe 'QueryExpander' do
     end
 
     it 'makes the expected SES queries' do
-      expect(ses_test_class).to receive(:new).with(({ value: "Tax relief" })).and_return(tax_relief_ses_response)
+      expect(ses_test_class).to receive(:new).with({ value: "Tax relief" }, exact_match: true).and_return(tax_relief_ses_response)
       expect(ses_test_class).to receive(:new).with(({ value: "small businesses" })).and_return(small_businesses_ses_response)
       query_expander.expand_query
     end
 
     it 'returns the expected result' do
-      expect(ses_test_class).to receive(:new).with(({ value: "Tax relief" })).and_return(tax_relief_ses_response)
+      expect(ses_test_class).to receive(:new).with({ value: "Tax relief" }, exact_match: true).and_return(tax_relief_ses_response)
       expect(ses_test_class).to receive(:new).with(({ value: "small businesses" })).and_return(small_businesses_ses_response)
       expect(query_expander.expand_query).to eq("(\"Tax allowances\" OR \"Tax incentives\" OR \"Tax relief\" OR all_ses:93196) AND (\"Small businesses\" OR \"Medium sized businesses\" OR \"Medium sized enterprises\" OR \"MSEs\" OR \"Small and medium sized enterprises\" OR \"Small firms\" OR \"SMEs\" OR all_ses:93034)")
     end
@@ -336,14 +336,14 @@ RSpec.describe 'QueryExpander' do
     end
 
     it 'makes the expected SES queries' do
-      expect(ses_test_class).to receive(:new).with(({ value: "Tax relief" })).and_return(tax_relief_ses_response)
-      expect(ses_test_class).to receive(:new).with(({ value: "Small businesses" })).and_return(small_businesses_ses_response)
+      expect(ses_test_class).to receive(:new).with({ value: "Tax relief" }, exact_match: true).and_return(tax_relief_ses_response)
+      expect(ses_test_class).to receive(:new).with({ value: "Small businesses" }, exact_match: true).and_return(small_businesses_ses_response)
       query_expander.expand_query
     end
 
     it 'returns the expected result' do
-      expect(ses_test_class).to receive(:new).with(({ value: "Tax relief" })).and_return(tax_relief_ses_response)
-      expect(ses_test_class).to receive(:new).with(({ value: "Small businesses" })).and_return(small_businesses_ses_response)
+      expect(ses_test_class).to receive(:new).with({ value: "Tax relief" }, exact_match: true).and_return(tax_relief_ses_response)
+      expect(ses_test_class).to receive(:new).with({ value: "Small businesses" }, exact_match: true).and_return(small_businesses_ses_response)
       expect(query_expander.expand_query).to eq("(\"Tax allowances\" OR \"Tax incentives\" OR \"Tax relief\" OR all_ses:93196) AND (\"Small businesses\" OR \"Medium sized businesses\" OR \"Medium sized enterprises\" OR \"MSEs\" OR \"Small and medium sized enterprises\" OR \"Small firms\" OR \"SMEs\" OR all_ses:93034)")
     end
   end
@@ -388,14 +388,14 @@ RSpec.describe 'QueryExpander' do
     it 'makes the expected SES queries' do
       expect(ses_test_class).to receive(:new).with(({ value: "Labour" })).and_return(labour_ses_response)
       expect(ses_test_class).to receive(:new).with(({ value: "conservative" })).and_return(conservative_ses_response)
-      expect(ses_test_class).to receive(:new).with(({ value: "small businesses" })).and_return(small_businesses_ses_response)
+      expect(ses_test_class).to receive(:new).with({ value: "small businesses" }, exact_match: true).and_return(small_businesses_ses_response)
       query_expander.expand_query
     end
 
     it 'returns the expected result' do
       expect(ses_test_class).to receive(:new).with(({ value: "Labour" })).and_return(labour_ses_response)
       expect(ses_test_class).to receive(:new).with(({ value: "conservative" })).and_return(conservative_ses_response)
-      expect(ses_test_class).to receive(:new).with(({ value: "small businesses" })).and_return(small_businesses_ses_response)
+      expect(ses_test_class).to receive(:new).with({ value: "small businesses" }, exact_match: true).and_return(small_businesses_ses_response)
       expect(query_expander.expand_query).to eq("((\"Labour\" OR \"LAB\" OR \"Labour Party\" OR all_ses:42226) OR (\"Conservative\" OR \"CON\" OR \"Conservative Party\" OR \"Conservatives\" OR \"National Union of Conservative and Unionist Associations\" OR all_ses:21137)) AND (\"Small businesses\" OR \"Medium sized businesses\" OR \"Medium sized enterprises\" OR \"MSEs\" OR \"Small and medium sized enterprises\" OR \"Small firms\" OR \"SMEs\" OR all_ses:93034)")
     end
   end
