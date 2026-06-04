@@ -180,12 +180,24 @@ class TermExpander
     # Where we do have SES data, iterate through the SES results and use them (via SES ID) to create tagged sets
     # of expanded terms (pulling in equivalent term data).
     ses_data.each do |ses_result|
-      result = [ses_result[:preferred_term].present? ? "\"#{ses_result[:preferred_term]}\"" : "\"#{search_term}\""]
+      result = []
 
+      # determine whether we use the preferred term or original search term
+      preferred_or_search_term = if ses_result[:preferred_term].present?
+                                   ses_result[:preferred_term]
+                                 else
+                                   search_term
+                                 end
+
+      # conditionally wrap in quotes if the term is a phrase rather than a single word
+      result << (preferred_or_search_term.include?(" ") ? "\"#{preferred_or_search_term}\"" : preferred_or_search_term)
+
+      # wrap each equivalent term in quotes if needed
       ses_result[:equivalent_terms].flatten.each do |et|
-        result << "\"#{et}\""
+        result << (et.include?(" ") ? "\"#{et}\"" : et)
       end
 
+      # return the resulting array tagged with the preferred term ID
       expanded_terms << [ses_result[:preferred_term_id], result]
     end
 
