@@ -180,7 +180,7 @@ class TermExpander
 
     # Where we do have SES data, iterate through the SES results and use them (via SES ID) to create tagged sets
     # of expanded terms (pulling in equivalent term data).
-    ses_data.each do |ses_result|
+    ses_data&.each do |ses_result|
       result = []
 
       # determine whether we use the preferred term or original search term
