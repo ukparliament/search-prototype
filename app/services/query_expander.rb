@@ -131,13 +131,15 @@ class QueryExpander
   def process_specified_field_with_quoted_phrase_token(value)
     # For quoted phrases, the user expectation is that the phrase is passed to Solr as-is
     # However, if the complete phrase is matched by SES, we search for that instead
-    # strip one layer of quotes before continuing
 
     search_term = value.partition(":").last.delete_prefix('"').delete_suffix('"')
     field_name = value.partition(":").first
 
     ses_data = ses_query.new({ value: search_term }, exact_match: true).data
     expanded_fields = field_expander.new(field_name).expand_fields
+
+    # we stripped the quotes to facilitate querying SES, so we need to add them back in again here
+    quoted_search_term = "\"#{search_term}\""
 
     term_expander.new(expanded_fields: expanded_fields, ses_data: ses_data, search_term: search_term, exact_match: true).expand_terms
   end

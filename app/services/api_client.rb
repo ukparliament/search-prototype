@@ -54,7 +54,7 @@ class ApiClient
     uri = api_endpoint_uri
     headers = request_headers
 
-    # puts "POST request from #{self.class.name}: #{uri} with data: #{query} and headers: #{headers}" if Rails.env.development?
+    puts "POST request from #{self.class.name}: #{uri} with data: #{query} and headers: #{headers}" if Rails.env.development?
 
     # set up HTTP instance
     http = Net::HTTP.new(uri.host, uri.port)

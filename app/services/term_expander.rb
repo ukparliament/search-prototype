@@ -62,16 +62,16 @@ class TermExpander
       expanded_fields[:text_fields].flatten.each do |tf|
         ses_data.each do |ses_result|
           if ses_result[:preferred_term].present?
-            result = ["#{tf}:\"#{ses_result[:preferred_term]}\""]
+            result = ["#{tf}:#{conditionally_quoted(ses_result[:preferred_term])}"]
             represented_terms << ses_result[:preferred_term]
           else
-            result = ["#{tf}:\"#{search_term}\""]
+            result = ["#{tf}:#{conditionally_quoted(search_term)}"]
             represented_terms << search_term
           end
 
           if ses_result[:equivalent_terms] && ses_result[:equivalent_terms].any?
             ses_result[:equivalent_terms].flatten.each do |et|
-              result << "#{tf}:\"#{et}\""
+              result << "#{tf}:#{conditionally_quoted(et)}"
               represented_terms << et
             end
           end
@@ -93,7 +93,8 @@ class TermExpander
         # Add search terms not represented by SES responses to the query with their specified field
         terms_to_represent.each do |search_word|
           unless represented_terms.join(" ").downcase.include?(search_word.downcase)
-            expanded_terms << [search_word.to_sym, ["#{tf}:#{search_word}"]]
+            # search words don't have spaces (as we split on them) so we don't need to conditionally quote them
+            expanded_terms << [search_word.to_sym, ["#{tf}:#{conditionally_quoted(search_word)}"]]
           end
         end
 
@@ -183,18 +184,15 @@ class TermExpander
       result = []
 
       # determine whether we use the preferred term or original search term
-      preferred_or_search_term = if ses_result[:preferred_term].present?
-                                   ses_result[:preferred_term]
-                                 else
-                                   search_term
-                                 end
-
-      # conditionally wrap in quotes if the term is a phrase rather than a single word
-      result << (preferred_or_search_term.include?(" ") ? "\"#{preferred_or_search_term}\"" : preferred_or_search_term)
+      if ses_result[:preferred_term].present?
+        result << conditionally_quoted(ses_result[:preferred_term])
+      else
+        result << conditionally_quoted(search_term)
+      end
 
       # wrap each equivalent term in quotes if needed
       ses_result[:equivalent_terms].flatten.each do |et|
-        result << (et.include?(" ") ? "\"#{et}\"" : et)
+        result << conditionally_quoted(et)
       end
 
       # return the resulting array tagged with the preferred term ID
@@ -262,5 +260,11 @@ class TermExpander
     end
 
     expanded_terms
+  end
+
+  private
+
+  def conditionally_quoted(string)
+    string.include?(" ") ? "\"#{string}\"" : string
   end
 end
