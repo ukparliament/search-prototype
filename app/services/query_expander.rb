@@ -43,6 +43,8 @@ class QueryExpander
 
       if label == :operator
         processed_tokens << process_operator_token(value)
+      elsif label == :all_records
+        processed_tokens << process_all_records_token(value)
       elsif label == :parenthesis
         processed_tokens << process_parenthesis_token(value)
       elsif label == :url
@@ -165,6 +167,11 @@ class QueryExpander
 
   def process_parenthesis_token(value)
     # No processing required for brackets
+    value
+  end
+
+  def process_all_records_token(value)
+    # No processing required for *:*
     value
   end
 
