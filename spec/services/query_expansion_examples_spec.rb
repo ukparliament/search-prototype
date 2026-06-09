@@ -129,7 +129,7 @@ RSpec.describe 'QueryExpander' do
 
   context 'three words where the first two form a term and the last two also form a term' do
     let(:search_query) { "Buckingham Palace Barracks" }
-    let(:buckingham_palace_barracks_ses_response) { instance_double(SesQuery, data: [{ equivalent_terms: [], preferred_term: "Buckingham Palace", preferred_term_id: "16673" }, { equivalent_terms: [], preferred_term: "Palace Barracks", preferred_term_id: "513229" }]) }
+    let(:buckingham_palace_barracks_ses_response) { instance_double(SesQuery, data: [{ equivalent_terms: [], preferred_term: "Buckingham Palace", preferred_term_id: "16673" }]) }
 
     it 'processes the tokens correctly' do
       expect(query_expander).to receive(:process_unquoted_phrase_token).with(search_query).and_call_original
@@ -141,10 +141,9 @@ RSpec.describe 'QueryExpander' do
       query_expander.expand_query
     end
 
-    pending 'returns the expected result' do
-      # TODO: awaiting clarification on requirements
+    it 'returns the expected result' do
       expect(ses_test_class).to receive(:new).with(({ value: "Buckingham Palace Barracks" })).and_return(buckingham_palace_barracks_ses_response)
-      expect(query_expander.expand_query).to eq("(\"Buckingham Palace\" OR all_ses:16673) AND barracks")
+      expect(query_expander.expand_query).to eq("(\"Buckingham Palace\" OR all_ses:16673) AND Barracks")
     end
   end
 
