@@ -1,5 +1,5 @@
 <section class="facet">
-  <h4 class="facet-heading <%= 'inactive' if facet_field[:facets].size == 0 %>"><%= filter_field_name(facet_field[:field_name]) %></h4>
+  <h4 class="facet-heading <%= 'inactive' if facet_field[:facets].size == 0 %>" id="<%= filter_field_name(facet_field[:field_name]).parameterize %>"><%= filter_field_name(facet_field[:field_name]) %></h4>
   <div>
     <div>
     </div>
