@@ -43,6 +43,8 @@ class QueryExpander
 
       if label == :operator
         processed_tokens << process_operator_token(value)
+      elsif label == :all_records
+        processed_tokens << process_all_records_token(value)
       elsif label == :parenthesis
         processed_tokens << process_parenthesis_token(value)
       elsif label == :url
@@ -79,7 +81,7 @@ class QueryExpander
   def process_unquoted_phrase_token(value)
     search_term = value
     expanded_fields = field_expander.new("none").expand_fields
-    ses_data = ses_query.new({ value: search_term }).data if TermExpander::EXPAND_UNQUOTED_PHRASES
+    ses_data = ses_query.new({ value: search_term }).data
     term_expander.new(expanded_fields: expanded_fields, ses_data: ses_data, search_term: search_term).expand_terms
   end
 
@@ -91,12 +93,13 @@ class QueryExpander
     puts "Processing quoted phrase token: #{value}" if Rails.env.development? || Rails.env.test?
 
     expanded_fields = field_expander.new("none").expand_fields
-    ses_data = ses_query.new({ value: value }).data
+    ses_data = ses_query.new({ value: value }, exact_match: true).data
 
     # the value will have been stripped of its quotes, so we need to reintroduce those
     search_term = "\"#{value}\""
 
-    term_expander.new(expanded_fields: expanded_fields, ses_data: ses_data, search_term: search_term, token_type: :quoted_phrase).expand_terms
+    # Exact match should be true for quoted phrases
+    term_expander.new(expanded_fields: expanded_fields, ses_data: ses_data, search_term: search_term, exact_match: true).expand_terms
   end
 
   def process_specified_field_token(value)
@@ -130,15 +133,17 @@ class QueryExpander
   def process_specified_field_with_quoted_phrase_token(value)
     # For quoted phrases, the user expectation is that the phrase is passed to Solr as-is
     # However, if the complete phrase is matched by SES, we search for that instead
-    # strip one layer of quotes before continuing
 
     search_term = value.partition(":").last.delete_prefix('"').delete_suffix('"')
     field_name = value.partition(":").first
 
-    ses_data = ses_query.new({ value: search_term }).data
+    ses_data = ses_query.new({ value: search_term }, exact_match: true).data
     expanded_fields = field_expander.new(field_name).expand_fields
 
-    term_expander.new(expanded_fields: expanded_fields, ses_data: ses_data, search_term: search_term).expand_terms
+    # we stripped the quotes to facilitate querying SES, so we need to add them back in again here
+    quoted_search_term = "\"#{search_term}\""
+
+    term_expander.new(expanded_fields: expanded_fields, ses_data: ses_data, search_term: search_term, exact_match: true).expand_terms
   end
 
   def process_uri_field_token(value)
@@ -162,6 +167,11 @@ class QueryExpander
 
   def process_parenthesis_token(value)
     # No processing required for brackets
+    value
+  end
+
+  def process_all_records_token(value)
+    # No processing required for *:*
     value
   end
 

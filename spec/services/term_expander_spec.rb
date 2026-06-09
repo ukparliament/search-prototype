@@ -118,7 +118,7 @@ RSpec.describe 'TermExpander' do
       let(:ses_data) { [{ equivalent_terms: [["Accommodation", "Houses"]], preferred_term_id: "91569", preferred_term: "Housing", topic_id: "95629" }] }
 
       it 'returns a search for preferred term and any equivalent terms' do
-        expect(term_expander.populate_text_fields).to eq([["91569", ["department_t:\"Housing\"", "department_t:\"Accommodation\"", "department_t:\"Houses\""]]])
+        expect(term_expander.populate_text_fields).to eq([["91569", ["department_t:Housing", "department_t:Accommodation", "department_t:Houses"]]])
       end
     end
 
@@ -126,7 +126,7 @@ RSpec.describe 'TermExpander' do
       let(:ses_data) { [{ equivalent_terms: [["Accommodation", "Houses"]], preferred_term_id: "91569", topic_id: "95629" }] }
 
       it 'returns a search for the search term and any equivalent terms' do
-        expect(term_expander.populate_text_fields).to eq([["91569", ["department_t:\"house\"", "department_t:\"Accommodation\"", "department_t:\"Houses\""]]])
+        expect(term_expander.populate_text_fields).to eq([["91569", ["department_t:house", "department_t:Accommodation", "department_t:Houses"]]])
       end
     end
 
@@ -135,7 +135,7 @@ RSpec.describe 'TermExpander' do
       let(:ses_data) { [{ equivalent_terms: [["Accommodation", "Houses"]], preferred_term_id: "91569", preferred_term: "Housing", topic_id: "95629" }] }
 
       it 'includes terms not represented by any found via SES separately' do
-        expect(term_expander.populate_text_fields).to eq([["91569", ["department_t:\"Housing\"", "department_t:\"Accommodation\"", "department_t:\"Houses\""]], [:large, ["department_t:large"]]])
+        expect(term_expander.populate_text_fields).to eq([["91569", ["department_t:Housing", "department_t:Accommodation", "department_t:Houses"]], [:Large, ["department_t:Large"]]])
       end
     end
 
@@ -338,7 +338,7 @@ RSpec.describe 'TermExpander' do
       let(:ses_data) { [{ equivalent_terms: [["Accommodation", "Houses"]], preferred_term_id: "91569", preferred_term: "Housing", topic_id: "95629" }] }
 
       it 'returns the preferred term and equivalent terms' do
-        expect(term_expander.handle_non_aliased_terms).to eq([["91569", ["\"Housing\"", "\"Accommodation\"", "\"Houses\""]]])
+        expect(term_expander.handle_non_aliased_terms).to eq([["91569", ["Housing", "Accommodation", "Houses"]]])
       end
     end
 
@@ -346,7 +346,7 @@ RSpec.describe 'TermExpander' do
       let(:ses_data) { [{ equivalent_terms: [["Accommodation", "Houses"]], preferred_term_id: "91569", topic_id: "95629" }] }
 
       it 'returns equivalent terms and the original search term' do
-        expect(term_expander.handle_non_aliased_terms).to eq([["91569", ["\"house\"", "\"Accommodation\"", "\"Houses\""]]])
+        expect(term_expander.handle_non_aliased_terms).to eq([["91569", ["house", "Accommodation", "Houses"]]])
       end
     end
   end

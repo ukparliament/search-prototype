@@ -25,7 +25,7 @@ class Tokeniser
   # Bucket 11: "double-quoted phrase"
   # Bucket 12: 'single-quoted phrase'
   # Bucket 13: term
-  TOKEN_REGEX = /([()])|(\bAND|OR|NOT\b)|([a-z]+:\/\/\S+)|(uri:[a-z]+:\/\/\S+)|(\w+:"(?:[^"]+)")|(\w+:'(?:[^']+)')|(\w+:\[(?:[^\]]+)\])|(\w+:\*)|(\w+:\S+)|(\[(?:[^\]]+)\])|"([^"]+)"|'([^']+)'|([^\s()\[\]{}:"^~!]+)/
+  TOKEN_REGEX = /([()])|(\bAND|OR|NOT\b)|(\*:\*)|([a-z]+:\/\/\S+)|(uri:[a-z]+:\/\/\S+)|(\w+:"(?:[^"]+)")|(\w+:'(?:[^']+)')|(\w+:\[(?:[^\]]+)\])|(\w+:\*)|(\w+:\S+)|(\[(?:[^\]]+)\])|"([^"]+)"|'([^']+)'|([^\s()\[\]{}:"^~!]+)/
 
   ##
   # Terms operates on the provided query string, returning an array of separate string 'terms' for tokenisation:
@@ -59,22 +59,24 @@ class Tokeniser
         when 1
           tokens << [:operator, matched_term]
         when 2
-          tokens << [:url, matched_term]
+          tokens << [:all_records, matched_term]
         when 3
+          tokens << [:url, matched_term]
+        when 4
           tokens << [:uri_field, matched_term]
-        when 4, 5
+        when 5, 6
           tokens << [:specified_field_with_quoted_phrase, matched_term]
-        when 6
-          tokens << [:specified_field_no_expansion, matched_term]
         when 7
-          tokens << [:specified_field_wildcard, matched_term]
+          tokens << [:specified_field_no_expansion, matched_term]
         when 8
-          tokens << [:specified_field, matched_term]
+          tokens << [:specified_field_wildcard, matched_term]
         when 9
+          tokens << [:specified_field, matched_term]
+        when 10
           tokens << [:no_expansion, matched_term]
-        when 10, 11
+        when 11, 12
           tokens << [:quoted_phrase, matched_term]
-        when 12
+        when 13
           tokens << [:unquoted_word, matched_term]
         else
           puts "Term not matched by tokeniser: #{matched_term}"

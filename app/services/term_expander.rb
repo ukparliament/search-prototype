@@ -5,16 +5,13 @@
 # An instance of this class is initialised for each processed token that requires expansion.
 # Returns a string that can substitute for the provided search term in a Solr query, returning expanded results.
 class TermExpander
-  attr_reader :expanded_fields, :ses_data, :search_term, :token_type
+  attr_reader :expanded_fields, :ses_data, :search_term, :exact_match
 
-  # Optional toggle; when true, unquoted phrases will be expanded via SES.
-  EXPAND_UNQUOTED_PHRASES = ENV["EXPAND_UNQUOTED_PHRASES"] || Rails.application.credentials.dig(:expand_unquoted_phrases)
-
-  def initialize(expanded_fields: {}, ses_data: [], search_term: nil, token_type: nil)
+  def initialize(expanded_fields: {}, ses_data: [], search_term: nil, exact_match: false)
     @expanded_fields = expanded_fields
     @ses_data = ses_data
     @search_term = search_term
-    @token_type = token_type
+    @exact_match = exact_match
   end
 
   ##
@@ -35,6 +32,8 @@ class TermExpander
 
   def process_expanded_terms(expanded_terms)
     return if expanded_terms.empty?
+
+    puts "Expanded terms: #{expanded_terms}" if Rails.env.development? || Rails.env.test?
 
     # group terms based on matching SES term or other ID
     grouped_terms_array = expanded_terms.flatten(1).group_by { |t| t.first.itself }.values
@@ -63,16 +62,16 @@ class TermExpander
       expanded_fields[:text_fields].flatten.each do |tf|
         ses_data.each do |ses_result|
           if ses_result[:preferred_term].present?
-            result = ["#{tf}:\"#{ses_result[:preferred_term]}\""]
+            result = ["#{tf}:#{conditionally_quoted(ses_result[:preferred_term])}"]
             represented_terms << ses_result[:preferred_term]
           else
-            result = ["#{tf}:\"#{search_term}\""]
+            result = ["#{tf}:#{conditionally_quoted(search_term)}"]
             represented_terms << search_term
           end
 
           if ses_result[:equivalent_terms] && ses_result[:equivalent_terms].any?
             ses_result[:equivalent_terms].flatten.each do |et|
-              result << "#{tf}:\"#{et}\""
+              result << "#{tf}:#{conditionally_quoted(et)}"
               represented_terms << et
             end
           end
@@ -80,10 +79,22 @@ class TermExpander
           expanded_terms << [ses_result[:preferred_term_id], result]
         end
 
+        # build list of terms that should be represented in the final query somehow
+        # in exact_match mode, this is just the whole search term as one chunk
+        # otherwise, we split on spaces
+        if exact_match
+          terms_to_represent = [search_term]
+        else
+          terms_to_represent = search_term.split(" ")
+        end
+
+        puts "Terms to represent: #{terms_to_represent}"
+
         # Add search terms not represented by SES responses to the query with their specified field
-        search_term.downcase.split(" ").each do |search_word|
-          unless represented_terms.join(" ").downcase.include?(search_word)
-            expanded_terms << [search_word.to_sym, ["#{tf}:#{search_word}"]]
+        terms_to_represent.each do |search_word|
+          unless represented_terms.join(" ").downcase.include?(search_word.downcase)
+            # search words don't have spaces (as we split on them) so we don't need to conditionally quote them
+            expanded_terms << [search_word.to_sym, ["#{tf}:#{conditionally_quoted(search_word)}"]]
           end
         end
 
@@ -169,20 +180,29 @@ class TermExpander
 
     # Where we do have SES data, iterate through the SES results and use them (via SES ID) to create tagged sets
     # of expanded terms (pulling in equivalent term data).
-    ses_data.each do |ses_result|
-      result = [ses_result[:preferred_term].present? ? "\"#{ses_result[:preferred_term]}\"" : "\"#{search_term}\""]
+    ses_data&.each do |ses_result|
+      result = []
 
-      ses_result[:equivalent_terms].flatten.each do |et|
-        result << "\"#{et}\""
+      # determine whether we use the preferred term or original search term
+      if ses_result[:preferred_term].present?
+        result << conditionally_quoted(ses_result[:preferred_term])
+      else
+        result << conditionally_quoted(search_term)
       end
 
+      # wrap each equivalent term in quotes if needed
+      ses_result[:equivalent_terms].flatten.each do |et|
+        result << conditionally_quoted(et)
+      end
+
+      # return the resulting array tagged with the preferred term ID
       expanded_terms << [ses_result[:preferred_term_id], result]
     end
 
     # create a string of all the expanded terms so far
     all_expanded_terms = expanded_terms.to_h.values.flatten.join(" ").downcase
 
-    if token_type == :quoted_phrase
+    if exact_match
       terms_to_represent = [search_term]
     else
       terms_to_represent = search_term.split(" ")
@@ -240,5 +260,11 @@ class TermExpander
     end
 
     expanded_terms
+  end
+
+  private
+
+  def conditionally_quoted(string)
+    string.include?(" ") ? "\"#{string}\"" : string
   end
 end
