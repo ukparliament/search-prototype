@@ -89,7 +89,7 @@ GEM
     base64 (0.3.0)
     bigdecimal (4.1.2)
     bindex (0.8.1)
-    bootsnap (1.18.4)
+    bootsnap (1.24.6)
       msgpack (~> 1.2)
     builder (3.3.0)
     bundler-audit (0.9.3)
@@ -165,7 +165,7 @@ GEM
     minitest (6.0.6)
       drb (~> 2.0)
       prism (~> 1.5)
-    msgpack (1.8.0)
+    msgpack (1.8.3)
     net-imap (0.6.4.1)
       date
       net-protocol
@@ -317,6 +317,7 @@ GEM
 
 PLATFORMS
   arm64-darwin-24
+  arm64-darwin-25
   x86_64-linux
 
 DEPENDENCIES
@@ -347,7 +348,7 @@ DEPENDENCIES
   web-console
 
 RUBY VERSION
-   ruby 4.0.1p0
+   ruby 4.0.5p0
 
 BUNDLED WITH
    2.6.8
