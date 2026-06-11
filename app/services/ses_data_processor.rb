@@ -43,7 +43,7 @@ class SesDataProcessor
 
       # create a simple flat array version of the terms & iterate through them
       all_synonyms = [term_hash[:preferred_term], term_hash[:equivalent_terms]].flatten.compact
-      puts "all_synonyms: #{all_synonyms}" if Rails.env.development? || Rails.env.test?
+      # puts "all_synonyms: #{all_synonyms}" if Rails.env.development? || Rails.env.test?
       all_synonyms.each do |term_or_synonym|
         # skip unless the term is present in the query
         next unless processed_query_array.include?(term_or_synonym.downcase)
