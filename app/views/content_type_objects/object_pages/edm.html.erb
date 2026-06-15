@@ -20,7 +20,11 @@
 <% unless object.amendments.blank? %>
   <section class="reading-width">
     <h2>Amendments</h2>
-    <%= render 'content_type_objects/fragments/edm_amendments', title: format_object_title(object.object_title, @ses_data), amendments: object.amendments %>
+    <% if object.amendments.count == 1 %>
+      <%= render 'content_type_objects/fragments/edm_amendment', title: format_object_title(object.object_title, @ses_data), amendments: object.amendments %>
+    <% else %>
+      <%= render 'content_type_objects/fragments/edm_amendments', title: format_object_title(object.object_title, @ses_data), amendments: object.amendments %>
+    <% end %>
   </section>
 <% end %>
 

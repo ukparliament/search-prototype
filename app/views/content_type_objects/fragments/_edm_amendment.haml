@@ -1,0 +1,39 @@
+%p
+  %span= "The Early day motion has received an amendment."
+
+%dl
+  - amendments.each do |amendment|
+    %dt.mt-4
+      %span= title
+      %span= " ("
+      %span>= amendment[:reference][:value]
+      %span= ") "
+
+    %dd
+      %span= " The Early day motion has received an amendment"
+      - if amendment[:primary_sponsor][:value].blank?
+        - unless amendment[:date_tabled][:value].blank?
+          %span= "Tabled on "
+          %span>= format_date(amendment[:date_tabled])
+          %span= "."
+      - else
+        %span= " sponsored by "
+        %span= search_link(amendment[:primary_sponsor])
+        %span= " (primary, "
+        %span>= search_link(amendment[:primary_sponsor_party])
+        %span>= ")"
+        - unless amendment[:date_tabled][:value].blank?
+          %span= " and tabled on "
+          %span>= format_date(amendment[:date_tabled])
+          %span= "."
+        - unless amendment[:number_of_signatures][:value].blank?
+          %span= "It has been signed by "
+          %span= amendment[:number_of_signatures][:value]
+          - if amendment[:number_of_signatures][:value] == 1
+            %span>= " member in total"
+          - else
+            %span>= " members in total"
+          %span= "."
+
+      %dd.mb-4
+        %ins= amendment[:text][:value]
