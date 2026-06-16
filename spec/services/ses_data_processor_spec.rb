@@ -12,8 +12,18 @@ RSpec.describe 'SesDataProcessor' do
   ) }
 
   describe 'process_terms' do
+    context 'where ses returns nil' do
+      let!(:ses_terms) { nil }
+      let!(:exact_match) { false }
+      let!(:query_string) { 'something' }
+
+      it 'returns an empty array' do
+        expect(ses_data_processor.process_terms).to eq []
+      end
+    end
 
     context 'in non-exact mode' do
+      let!(:ses_terms) { mock_response.dig("terms") }
       let!(:exact_match) { false }
 
       context 'when the query is not present in the returned terms' do
@@ -74,6 +84,7 @@ RSpec.describe 'SesDataProcessor' do
     end
 
     context 'in exact mode' do
+      let!(:ses_terms) { mock_response.dig("terms") }
       let!(:exact_match) { true }
 
       context 'when the query is not present in the returned terms' do
