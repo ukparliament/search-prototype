@@ -9,35 +9,35 @@ class MetaController < ApplicationController
   def cookies
     @page_title = 'Cookie Policy'
     @description = 'Cookie Policy.'
-    @crumb << { label: 'About this website', url: meta_list_url }
+    @crumb << { label: 'About this website', url: meta_cookies_url }
     @crumb << { label: @page_title, url: nil }
   end
   
   def coverage
     @page_title = 'Coverage'
     @description = 'Coverage.'
-    @crumb << { label: 'About this website', url: meta_list_url }
+    @crumb << { label: 'About this website', url: meta_cookies_url }
     @crumb << { label: @page_title, url: nil }
   end
   
   def examples
     @page_title = 'Example object pages'
     @description = 'Example object pages.'
-    @crumb << { label: 'About this website', url: meta_list_url }
+    @crumb << { label: 'About this website', url: meta_cookies_url }
     @crumb << { label: @page_title, url: nil }
   end
   
   def librarian_tools
     @page_title = 'Librarian tools'
     @description = 'Librarian tools.'
-    @crumb << { label: 'About this website', url: meta_list_url }
+    @crumb << { label: 'About this website', url: meta_cookies_url }
     @crumb << { label: @page_title, url: nil }
   end
 
   def roadmap
     @page_title = 'Roadmap'
     @description = 'Roadmap.'
-    @crumb << { label: 'About this website', url: meta_list_url }
+    @crumb << { label: 'About this website', url: meta_cookies_url }
     @crumb << { label: @page_title, url: nil }
   end
 

@@ -1,0 +1,47 @@
+<% content_for :sidebar do %>
+  <nav id="sidebar" aria-labelledby="nav--meta">
+    <h2 class="doc-list-heading" id="nav--about">
+      About this website
+    </h2>
+
+    <ul class="doc-list">
+      <li>
+        <a href="<%= meta_cookies_url %>" class="doc-list__link" aria-current="<%= current_page?(meta_cookies_url) ? "page" : "false" %>">
+          Cookie Policy
+        </a>
+      </li>
+    </ul>
+
+    <ul class="doc-list">
+      <li>
+        <a href="<%= meta_coverage_url %>" class="doc-list__link" aria-current="<%= current_page?(meta_coverage_url) ? "page" : "false" %>">
+          Coverage
+        </a>
+      </li>
+    </ul>
+
+    <ul class="doc-list">
+      <li>
+        <a href="<%= meta_examples_url %>" class="doc-list__link" aria-current="<%= current_page?(meta_examples_url) ? "page" : "false" %>">
+          Example object pages
+        </a>
+      </li>
+    </ul>
+
+    <ul class="doc-list">
+      <li>
+        <a href="<%= meta_librarian_tools_url %>" class="doc-list__link" aria-current="<%= current_page?(meta_librarian_tools_url) ? "page" : "false" %>">
+          Librarian tools
+        </a>
+      </li>
+    </ul>
+
+    <ul class="doc-list">
+      <li>
+        <a href="<%= meta_roadmap_url %>" class="doc-list__link" aria-current="<%= current_page?(meta_roadmap_url) ? "page" : "false" %>">
+          Roadmap
+        </a>
+      </li>
+    </ul>
+  </nav>
+<% end %>
