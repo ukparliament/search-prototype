@@ -31,6 +31,8 @@ class SesDataProcessor
     puts "PCA: #{processed_query_array}" if Rails.env.development? || Rails.env.test?
     returned_terms = []
 
+    return returned_terms unless terms.present?
+
     terms.each do |term|
       # skip topic terms
       next if term_is_topic_term(term)
