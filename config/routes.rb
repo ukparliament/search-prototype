@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   get 'welcome' => 'welcome#index', as: :home
   get 'search' => 'search#index'
   get 'objects' => 'content_type_objects#show', as: 'object_show'
-  get 'meta' => 'meta#index', as: :meta_list
+  get 'meta' => 'meta#cookies'
   get 'meta/cookies' => 'meta#cookies', as: :meta_cookies
   get 'meta/coverage' => 'meta#coverage', as: :meta_coverage
   get 'meta/examples' => 'meta#examples', as: :meta_examples
