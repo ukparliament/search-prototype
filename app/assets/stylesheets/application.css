@@ -52,3 +52,27 @@ p {
 .wrap-anywhere {
     overflow-wrap: anywhere;
 }
+
+/* Styling for blockquotes */
+
+blockquote {
+    position: relative;
+    margin: 1rem;
+    padding-left: 2rem;
+    font-size: 1.25rem;
+}
+
+blockquote::before {
+    content: open-quote;
+    position: absolute;
+    left: 0.5rem;
+    top: -0.1rem;
+    font-size: 3rem;
+    line-height: 1;
+    color: #717171;
+}
+
+blockquote p:last-of-type:after {
+    content: close-quote;
+    color: #717171;
+}
