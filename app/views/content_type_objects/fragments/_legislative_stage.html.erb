@@ -2,7 +2,9 @@
   <dt>
     Legislative stage
   </dt>
-  <dd>
-    <%= render 'content_type_objects/fragments/list', items: legislative_stage, terminator: "", singular: false %>
-  </dd>
+  <% legislative_stage.each do |stage| %>
+    <dd>
+      <%= search_link(stage) %>
+    </dd>
+  <% end %>
 <% end %>
