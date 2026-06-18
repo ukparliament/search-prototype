@@ -82,4 +82,14 @@ class ResearchBriefing < ContentTypeObject
   def last_updated
     get_first_as_date_from('modified_dt')
   end
+
+  def file_location
+    uris = get_all_from('contentLocation_uri')
+    return if uris.blank?
+
+    uris.map do |uri|
+      full = URI.parse(uri[:value])
+      URI::HTTPS.build(host: full.host, path: full.path)
+    end
+  end
 end

@@ -17,6 +17,19 @@
   </div>
 <% end %>
 
+<% unless object.file_location.blank? %>
+  <section class="reading-width">
+    <dl class="reading-width">
+      <dt>Download full report</dt>
+      <% object.file_location.each do |uri| %>
+        <dd>
+          <%= link_to(uri, uri.to_s) %>
+        </dd>
+      <% end %>
+    </dl>
+  </section>
+<% end %>
+
 <section class="reading-width">
   <hr/>
   <h2>Secondary information</h2>
