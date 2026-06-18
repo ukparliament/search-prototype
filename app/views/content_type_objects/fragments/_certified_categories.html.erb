@@ -2,9 +2,11 @@
   <dt>
     Certified as
   </dt>
-  <dd>
-    <%= render 'content_type_objects/fragments/list', items: certified_categories, terminator: '', singular: false %>
-  </dd>
+  <% certified_categories.each do |certified_category| %>
+    <dd>
+      <%= search_link(certified_category) %>
+    </dd>
+  <% end %>
   <% unless certified_date.blank? %>
     <dd>
       <%= format_date(certified_date) %>
