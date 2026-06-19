@@ -51,10 +51,6 @@ class ResearchBriefing < ContentTypeObject
     combine_fields(creators, contributors)
   end
 
-  def series
-    get_first_from('category_ses')
-  end
-
   def category
     get_first_from('category_ses')
   end

@@ -1,7 +1,7 @@
 <% if Rails.env.development? %>
   <div class="debug-panel" aria-hidden="true">
-    <%#= render 'content_type_objects/fragments/data', data: object.content_type_object_data, title: 'SOLR Data' %>
-    <%#= render 'content_type_objects/fragments/data', data: @ses_data, title: 'SES Data' %>
+    <%= render 'content_type_objects/fragments/data', data: object.content_type_object_data, title: 'SOLR Data' %>
+    <%= render 'content_type_objects/fragments/data', data: @ses_data, title: 'SES Data' %>
   </div>
 <% end %>
 
@@ -23,7 +23,7 @@
   <dl>
     <%= render 'content_type_objects/fragments/type', type: object.type %>
     <%= render 'content_type_objects/fragments/reference', reference: object.reference %>
-    <%= render 'content_type_objects/fragments/series', series: object.series %>
+    <%= render 'content_type_objects/fragments/category', category: object.category %>
     <%= render 'content_type_objects/fragments/related_items', related_item_ids: object.related_item_ids %>
     <%= render 'content_type_objects/fragments/notes', notes: object.notes %>
     <%= render 'content_type_objects/fragments/pills', pills_heading: 'Subjects', pills: object.subjects %>
