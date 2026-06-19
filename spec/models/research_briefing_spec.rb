@@ -380,4 +380,27 @@ RSpec.describe ResearchBriefing, type: :model do
       end
     end
   end
+
+  describe 'file_location' do
+    context 'where there is no data' do
+      it 'returns nil' do
+        expect(research_briefing.file_location).to be_nil
+      end
+    end
+
+    context 'where there is an empty array' do
+      let!(:research_briefing) { ResearchBriefing.new({ 'contentLocation_uri' => [] }) }
+      it 'returns nil' do
+        expect(research_briefing.file_location).to be_nil
+      end
+    end
+
+    context 'where data exists' do
+      let!(:research_briefing) { ResearchBriefing.new({ 'contentLocation_uri' => ['http://www.test1.com', 'https://www.test2.com'] }) }
+
+      it 'returns an array of HTTPS URIs' do
+        expect(research_briefing.file_location.map(&:to_s)).to eq(['https://www.test1.com', 'https://www.test2.com'])
+      end
+    end
+  end
 end

@@ -17,6 +17,12 @@
   </div>
 <% end %>
 
+<% unless object.file_location.blank? %>
+  <p class="reading-width">
+    <%= link_to("Download full report", object.file_location.to_s) %>
+  </p>
+<% end %>
+
 <section class="reading-width">
   <hr/>
   <h2>Secondary information</h2>
