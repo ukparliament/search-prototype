@@ -18,16 +18,9 @@
 <% end %>
 
 <% unless object.file_location.blank? %>
-  <section class="reading-width">
-    <dl class="reading-width">
-      <dt>Download full report</dt>
-      <% object.file_location.each do |uri| %>
-        <dd>
-          <%= link_to(uri, uri.to_s) %>
-        </dd>
-      <% end %>
-    </dl>
-  </section>
+  <p class="reading-width">
+    <%= link_to("Download full report", object.file_location.to_s) %>
+  </p>
 <% end %>
 
 <section class="reading-width">
