@@ -3,6 +3,7 @@ module LinkHelper
     answeringDept_ses
     answeringMember_ses
     askingMember_ses
+    category_ses
     department_ses
     leadMember_ses
     legislationTitle_ses
@@ -67,7 +68,7 @@ module LinkHelper
     return 'primarysponsor' if ['primarySponsor_ses'].include?(field_name)
     return 'publisher' if ['publisher_ses'].include?(field_name)
     return 'subject' if ['subject_ses', 'subject_t'].include?(field_name)
-    return 'type' if ['subtype_ses', 'type_ses'].include?(field_name)
+    return 'type' if ['subtype_ses', 'type_ses', 'category_ses'].include?(field_name)
     return 'tabledby' if ['tablingMember_ses'].include?(field_name)
 
     field_name
