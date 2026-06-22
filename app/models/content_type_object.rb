@@ -167,7 +167,7 @@ class ContentTypeObject
   end
 
   def asked_to_reply_author
-    get_first_from('askedToReplyAuthor_ses')
+    get_all_from('askedToReplyAuthor_ses')
   end
 
   def place
