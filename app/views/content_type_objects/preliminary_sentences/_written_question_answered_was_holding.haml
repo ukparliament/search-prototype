@@ -44,5 +44,8 @@
       %span>= search_link(object.answering_department)
     %span= "."
     - unless object.asked_to_reply_author.blank?
-      %span= search_link(object.asked_to_reply_author)
+    %span= render 'content_type_objects/fragments/list', items: object.asked_to_reply_author, terminator: "", singular: false
+    - if object.asked_to_reply_author.size == 1
       %span= " was asked to reply."
+    - else
+      %span= " were asked to reply."

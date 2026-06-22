@@ -158,7 +158,7 @@ class ContentTypeObject
     if asked_to_reply_author.blank?
       get_first_from('department_ses')
     else
-      get_all_from('department_ses').reject { |h| h[:value] == asked_to_reply_author[:value] }.first
+      get_all_from('department_ses').reject { |h| asked_to_reply_author.pluck(:value).include?(h[:value]) }.first
     end
   end
 
@@ -167,7 +167,7 @@ class ContentTypeObject
   end
 
   def asked_to_reply_author
-    get_first_from('askedToReplyAuthor_ses')
+    get_all_from('askedToReplyAuthor_ses')
   end
 
   def place

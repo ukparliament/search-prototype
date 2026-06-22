@@ -19,7 +19,7 @@
 
 <% unless object.file_location.blank? %>
   <p class="reading-width">
-    <%= link_to("Download full report", object.file_location.to_s) %>
+    <%= link_to("Download full report", object.file_location.first.to_s) %>
   </p>
 <% end %>
 
