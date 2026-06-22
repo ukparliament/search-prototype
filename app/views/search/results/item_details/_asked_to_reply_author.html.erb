@@ -3,8 +3,6 @@
     <div class="item-details-label">
       Asked to reply
     </div>
-    <% asked_to_reply_author.each do |author| %>
-      <%= object_display_name(author, singular: false) %><br/>
-    <% end %>
+    <%= render 'content_type_objects/fragments/simple_list', items: asked_to_reply_author, terminator: "", singular: false %>
   </div>
 <% end %>
