@@ -17,9 +17,9 @@
     %span>= render 'content_type_objects/fragments/list', items: object.legislature, terminator: '', singular: false
   %span>= "."
   %span>= " The member has subsequently withdrawn this question"
-  - if object.department.blank?
+  - if object.answering_department.blank?
     %span>= " and it no longer needs to be answered"
   - else
     %span= ". An answer is no longer expected from the "
-    %span>= search_link(object.department)
+    %span>= search_link(object.answering_department)
   %span= "."
