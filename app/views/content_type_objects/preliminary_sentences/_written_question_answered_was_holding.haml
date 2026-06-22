@@ -39,9 +39,9 @@
         %span= ") "
     %span= " on "
     %span>= format_date(object.date_of_answer)
-    - unless object.department.blank?
+    - unless object.answering_department.blank?
       %span= " on behalf of the "
-      %span>= search_link(object.department)
+      %span>= search_link(object.answering_department)
     %span= "."
     - unless object.asked_to_reply_author.blank?
       %span= search_link(object.asked_to_reply_author)
