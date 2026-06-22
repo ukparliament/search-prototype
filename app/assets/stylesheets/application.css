@@ -49,7 +49,8 @@ p {
     margin-bottom: 1rem;
 }
 
-.wrap-anywhere {
+/* prevent long lines (usually urls) */
+.wrap-anywhere, .reading-width {
     overflow-wrap: anywhere;
 }
 
