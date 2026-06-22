@@ -3,6 +3,7 @@ module LinkHelper
     answeringDept_ses
     answeringMember_ses
     askingMember_ses
+    askedToReplyAuthor_ses
     category_ses
     department_ses
     leadMember_ses
@@ -57,7 +58,7 @@ module LinkHelper
     # example format:
     # return 'type_sesrollup' if ['subtype_ses', 'type_ses'].include?(field_name)
 
-    return 'answeredby' if ['answeringDept_ses', 'answeringMember_ses'].include?(field_name)
+    return 'answeredby' if ['answeringDept_ses', 'answeringMember_ses', 'askedToReplyAuthor_ses'].include?(field_name)
     return 'askedby' if ['askingMember_ses'].include?(field_name)
     return 'dept' if ['department_ses'].include?(field_name)
     return 'primarymember' if ['leadMember_ses'].include?(field_name)
