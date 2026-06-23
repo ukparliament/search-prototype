@@ -28,6 +28,28 @@ RSpec.describe 'Search', type: :request do
       allow(ses_lookup_instance).to receive(:extract_hierarchy_data).and_return({ [92424, "Personal statements"] => [{ "typeId" => "1", "qty" => "1", "name" => "Broader Term", "abbr" => "BT", "fields" => [{ "field" => { "name" => "Oral statements", "id" => "350073", "zid" => "52566919", "class" => "CTP", "freq" => "0", "facets" => [{ "id" => "346696", "name" => "Content type" }] } }] }] })
     end
 
+    context 'a search that returns an unsupported object type' do
+      let!(:solr_search_instance) { SolrSearch.new(query: "test") }
+      let!(:item1) { { 'type_ses' => [12345], 'title_t' => 'QZH4EFc', 'uri' => 'QZH4EFc_uri', 'all_ses' => [90996, 12345] } }
+
+      it 'still returns http success' do
+        get '/search', params: { "query" => "test" }
+        expect(response).to have_http_status(:ok)
+      end
+
+      it 'quietly removes unsupported objects' do
+        get '/search', params: { "query" => "test" }
+        expect(response).to have_http_status(:ok)
+        expect(response.parsed_body.inner_html).to include("Search Results - Parliamentary Search")
+        expect(response.parsed_body.inner_html).not_to include('QZH4EFc')
+        expect(response.parsed_body.inner_html).not_to include('http://www.example.com/objects?object=QZH4EFc_uri')
+        expect(response.parsed_body.inner_html).to include('SL9RT6y')
+        expect(response.parsed_body.inner_html).to include('http://www.example.com/objects?object=SL9RT6y_uri')
+        expect(response.parsed_body.inner_html).to include('BZ34eDD')
+        expect(response.parsed_body.inner_html).to include('http://www.example.com/objects?object=BZ34eDD_uri')
+      end
+    end
+
     context 'a search using filters' do
       let!(:solr_search_instance) { SolrSearch.new(query: { "filter" => { "type_ses" => ["90996"] } }) }
 
