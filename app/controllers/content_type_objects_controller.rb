@@ -7,6 +7,9 @@ class ContentTypeObjectsController < ApplicationController
     # construct the object
     @object = ContentTypeObject.generate(object_data)
 
+    # raise a 404 if we didn't successfully generate an object
+    raise ExternalServiceNotFound unless @object
+
     # check the object is supported
     raise ObjectNotSupported if @object.is_a?(NotSupported)
 

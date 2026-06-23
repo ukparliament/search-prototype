@@ -6,8 +6,11 @@ class ContentTypeObject
     @content_type_object_data = content_type_object_data
   end
 
+  ##
+  # takes object data as an argument and returns an instance of the correct object subclass
   def self.generate(content_type_object_data)
-    # takes object data as an argument and returns an instance of the correct object subclass
+    # return nil if there's no data
+    return unless content_type_object_data
 
     type_id = content_type_object_data.dig('type_ses', 0)
     subtype_ids = content_type_object_data.dig('subtype_ses')

@@ -43,6 +43,7 @@ module Search
 
     # Assign error codes to custom errors
     config.action_dispatch.rescue_responses["ObjectNotSupported"] = :not_found
+    config.action_dispatch.rescue_responses["ObjectNotFound"] = :not_found
     config.action_dispatch.rescue_responses["ExternalServiceNotFound"] = :not_found
     config.action_dispatch.rescue_responses["ExternalServiceUnauthorized"] = :forbidden
   end

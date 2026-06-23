@@ -1,0 +1,1 @@
+class ObjectNotFound < StandardError; end
