@@ -54,4 +54,9 @@ class Bill < ContentTypeObject
     # For everything else, where there is no externalLocation, no Link, internalLocation is not surfaced in new Search
     location_uri.blank? ? nil : location_uri
   end
+
+  def certified_date
+    # Certified categories uses a common partial, but for Bills we're no longer showing the associated date.
+    nil
+  end
 end

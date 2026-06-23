@@ -125,6 +125,12 @@ RSpec.describe Bill, type: :model do
     end
   end
 
+  describe 'certified_date' do
+    it 'returns nil' do
+      expect(bill.certified_date).to be_nil
+    end
+  end
+
   describe 'title' do
     context 'where there is no data' do
       it 'returns nil' do
