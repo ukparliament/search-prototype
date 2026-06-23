@@ -8,7 +8,7 @@ class AssociatedObjects
   end
 
   def associated_object_ids
-    @associated_object_ids ||= normalised_objects.map { |o| o.associated_objects }.compact.flatten.uniq
+    @associated_object_ids ||= normalised_objects.map { |o| o&.associated_objects }.compact.flatten.uniq
   end
 
   def get_associated_objects
