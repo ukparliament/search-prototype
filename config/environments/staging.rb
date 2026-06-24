@@ -21,14 +21,6 @@ Rails.application.configure do
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.
   # config.asset_host = "http://assets.example.com"
 
-  # HTTP basic auth config
-  Rails.application.configure do
-    config.middleware.use(Rack::Auth::Basic, "Staging") do |username, password|
-      ActiveSupport::SecurityUtils.secure_compare(username, ENV.fetch("STAGING_USERNAME")) &
-        ActiveSupport::SecurityUtils.secure_compare(password, ENV.fetch("STAGING_PASSWORD"))
-    end
-  end
-
   # Assume all access to the app is happening through a SSL-terminating reverse proxy.
   # config.assume_ssl = true
 
