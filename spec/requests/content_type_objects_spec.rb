@@ -3,7 +3,19 @@ require 'rails_helper'
 RSpec.describe 'ContentTypeObjects', type: :request do
   describe 'GET /show' do
 
-    context 'no data' do
+    context 'no object uri is provided' do
+      let!(:edm_instance) { Edm.new('test') }
+
+      it 'raises a 404 error' do
+        allow_any_instance_of(SolrQuery).to receive(:all_data).and_return({ 'response' => { "docs" => [{ 'type_ses' => [12345] }] } })
+        allow_any_instance_of(SesLookup).to receive(:data).and_return({})
+        allow(ContentTypeObject).to receive(:generate).and_return(edm_instance)
+        get '/objects', params: { }
+        expect(response).to have_http_status(:not_found)
+      end
+    end
+
+    context 'no data found for provided object uri' do
       let!(:no_data) { nil }
 
       it 'raises a 404 error' do

@@ -1,6 +1,9 @@
 class ContentTypeObjectsController < ApplicationController
 
   def show
+    # Raise a 404 if we didn't get an object URL
+    raise ExternalServiceNotFound if params[:object].blank?
+
     # fetch object data
     object_data = SolrQuery.new(object_uri: params[:object]).object_data
 
