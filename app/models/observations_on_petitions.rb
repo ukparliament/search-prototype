@@ -4,14 +4,6 @@ class ObservationsOnPetitions < Petition
     super
   end
 
-  def template
-    'content_type_objects/object_pages/observations_on_petitions'
-  end
-
-  def search_result_partial
-    'search/results/observation_on_a_petition'
-  end
-
   def self.associated_objects
     # fields requested in Solr search for search results page
     %w[

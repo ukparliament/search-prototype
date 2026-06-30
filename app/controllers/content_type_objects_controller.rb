@@ -28,10 +28,16 @@ class ContentTypeObjectsController < ApplicationController
     # Use SesData class to handle SES retrieval from cache / API
     @ses_data = SesData.new(all_ses_ids).combined_ses_data
 
+    ## EXPERIMENTAL
+    # for description meta tag, render out the preliminary sentence partial and convert to plain text
+    html_description = render_to_string(partial: @object.prelim_template, locals: { object: @object })
+    @description = helpers.strip_tags(html_description).squish
+
+    # Alternative approach:
     # set description based on the object type
-    unless @object.object_name.blank?
-      @description = "A #{helpers.object_display_name(@object.object_name)} record in Parliamentary Search."
-    end
+    # unless @object.object_name.blank?
+    #   @description = "A #{helpers.object_display_name(@object.object_name)} record in Parliamentary Search."
+    # end
 
     formatted_object_title = helpers.format_object_title(@object.object_title, @ses_data)
     @page_title = formatted_object_title

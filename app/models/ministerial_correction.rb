@@ -15,14 +15,6 @@ class MinisterialCorrection < ContentTypeObject
     subtype_or_type
   end
 
-  def template
-    'content_type_objects/object_pages/ministerial_correction'
-  end
-
-  def search_result_partial
-    'search/results/ministerial_correction'
-  end
-
   def self.search_result_solr_fields
     # fields requested in Solr search for search results page
     super << %w[

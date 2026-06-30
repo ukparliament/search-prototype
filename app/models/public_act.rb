@@ -4,14 +4,6 @@ class PublicAct < Act
     super
   end
 
-  def template
-    'content_type_objects/object_pages/public_act'
-  end
-
-  def search_result_partial
-    'search/results/public_act'
-  end
-
   def self.search_result_solr_fields
     # fields requested in Solr search for search results page
     super << %w[

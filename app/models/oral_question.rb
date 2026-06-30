@@ -10,14 +10,6 @@ class OralQuestion < Question
     ids.flatten.compact.uniq
   end
 
-  def template
-    'content_type_objects/object_pages/oral_question'
-  end
-
-  def search_result_partial
-    'search/results/oral_question'
-  end
-
   def self.search_result_solr_fields
     # fields requested in Solr search for search results page
     super << %w[
@@ -47,7 +39,7 @@ class OralQuestion < Question
     get_first_id_from('answerFor_uri')
   end
 
-  def prelim_partial
+  def prelim_template
     return '/content_type_objects/preliminary_sentences/oral_question_withdrawn' if withdrawn?
 
     return '/content_type_objects/preliminary_sentences/oral_question_tabled' if tabled?

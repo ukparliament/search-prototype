@@ -8,6 +8,10 @@ class Bill < ContentTypeObject
     'content_type_objects/object_pages/bill'
   end
 
+  def prelim_template
+    'content_type_objects/preliminary_sentences/bill'
+  end
+
   def search_result_partial
     'search/results/bill'
   end

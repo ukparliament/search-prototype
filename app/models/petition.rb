@@ -8,14 +8,6 @@ class Petition < ContentTypeObject
     subtype_or_type
   end
 
-  def template
-    'content_type_objects/object_pages/petition'
-  end
-
-  def search_result_partial
-    'search/results/petition'
-  end
-
   def multi_member?
     members.size > 1
   end
