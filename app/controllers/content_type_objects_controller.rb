@@ -1,8 +1,8 @@
 class ContentTypeObjectsController < ApplicationController
 
   def show
-    # Raise a 404 if we didn't get an object URL
-    raise ExternalServiceNotFound if params[:object].blank?
+    # Raise a 400 if we didn't get an object URL
+    raise MissingParameterError, :id if params[:object].blank?
 
     # fetch object data
     object_data = SolrQuery.new(object_uri: params[:object]).object_data
@@ -11,10 +11,10 @@ class ContentTypeObjectsController < ApplicationController
     @object = ContentTypeObject.generate(object_data)
 
     # raise a 404 if we didn't successfully generate an object
-    raise ExternalServiceNotFound unless @object
+    raise ObjectNotFoundError, params[:object] unless @object
 
     # check the object is supported
-    raise ObjectNotSupported if @object.is_a?(NotSupported)
+    raise ObjectNotSupportedError, params[:object] if @object.is_a?(NotSupported)
 
     # fetch associated object data
     associated_object_results = AssociatedObjectsForObjectView.new(@object).data

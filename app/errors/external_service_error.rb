@@ -1,1 +1,1 @@
-class ExternalServiceError < StandardError; end
+class ExternalServiceError < ApplicationError; end

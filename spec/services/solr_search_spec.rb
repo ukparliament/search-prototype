@@ -62,21 +62,21 @@ RSpec.describe SolrSearch, type: :model do
           let!(:mock_response) { { 'error' => { 'msg' => 'an error', 'code' => 401 } } }
 
           it 'raises an ExternalServiceError' do
-            expect { solr_search.data }.to raise_exception ExternalServiceUnauthorized
+            expect { solr_search.data }.to raise_exception UnauthorizedError
           end
         end
         context 'with a 403 error' do
           let!(:mock_response) { { 'error' => { 'msg' => 'an error', 'code' => 403 } } }
 
           it 'raises an ExternalServiceError' do
-            expect { solr_search.data }.to raise_exception ExternalServiceUnauthorized
+            expect { solr_search.data }.to raise_exception UnauthorizedError
           end
         end
         context 'with a 404 error' do
           let!(:mock_response) { { 'error' => { 'msg' => 'an error', 'code' => 404 } } }
 
           it 'raises an ExternalServiceError' do
-            expect { solr_search.data }.to raise_exception ExternalServiceNotFound
+            expect { solr_search.data }.to raise_exception ObjectNotFoundError
           end
         end
       end
@@ -279,8 +279,8 @@ RSpec.describe SolrSearch, type: :model do
       let(:expand_query_class) { class_double(QueryExpander, new: expand_query_instance) }
       let(:expand_query_instance) { instance_double(QueryExpander) }
 
-      it 'raises a QueryExpansionError' do
-        expect { solr_search.expanded_query }.to raise_error(QueryExpansionError)
+      it 'raises a MissingParameterError' do
+        expect { solr_search.expanded_query }.to raise_error(MissingParameterError)
       end
     end
 

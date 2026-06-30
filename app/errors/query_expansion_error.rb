@@ -1,1 +1,6 @@
-class QueryExpansionError < StandardError; end
+class QueryExpansionError < ApplicationError
+  def initialize(parameter)
+    super(": '#{parameter}'")
+  end
+
+end
