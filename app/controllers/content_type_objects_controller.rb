@@ -25,8 +25,13 @@ class ContentTypeObjectsController < ApplicationController
     object_ses_ids = @object.ses_lookup_ids&.pluck(:value)
     all_ses_ids = associated_ses_ids.blank? ? object_ses_ids : object_ses_ids + associated_ses_ids
 
-    # Use SesData class to handle SES retrival from cache / API
+    # Use SesData class to handle SES retrieval from cache / API
     @ses_data = SesData.new(all_ses_ids).combined_ses_data
+
+    # set description based on the object type
+    unless @object.object_name.blank?
+      @description = "A #{helpers.object_display_name(@object.object_name)} record in Parliamentary Search."
+    end
 
     formatted_object_title = helpers.format_object_title(@object.object_title, @ses_data)
     @page_title = formatted_object_title

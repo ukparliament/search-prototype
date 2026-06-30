@@ -3,6 +3,7 @@ class SearchController < ApplicationController
 
   def index
     @page_title = "Search Results"
+    @description = "Results in Parliamentary Search for the query #{search_params[:query]}." unless search_params[:query].blank?
 
     # prevent searching without a query
     return redirect_back(fallback_location: home_path) if search_params[:query].blank?
