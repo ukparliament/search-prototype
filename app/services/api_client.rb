@@ -95,11 +95,11 @@ class ApiClient
     when 400
       raise(ExternalServiceError, error_message)
     when 401
-      raise(ExternalServiceUnauthorized, error_message)
+      raise(UnauthorizedError, error_message)
     when 403
-      raise(ExternalServiceUnauthorized, error_message)
+      raise(UnauthorizedError, error_message)
     when 404
-      raise(ExternalServiceNotFound, error_message)
+      raise(ObjectNotFoundError, error_message)
     else
       raise(ExternalServiceError, error_message)
     end

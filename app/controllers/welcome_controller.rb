@@ -1,7 +1,7 @@
 class WelcomeController < ApplicationController
 
   def index
-    @page_title = 'Parliamentary Search'
+    @description = 'Search for records of parliamentary business and research briefings from both Houses of the UK parliament.'
   end
 
 end

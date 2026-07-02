@@ -65,7 +65,7 @@ RSpec.describe SesLookup, type: :model do
       let!(:mock_response) { { 'error' => { 'code' => 401, 'message' => 'Not authorized' } } }
 
       it 'returns the appropriate error' do
-        expect { ses_lookup.extract_hierarchy_data }.to raise_error(ExternalServiceUnauthorized)
+        expect { ses_lookup.extract_hierarchy_data }.to raise_error(UnauthorizedError)
       end
     end
 

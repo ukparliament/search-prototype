@@ -41,10 +41,14 @@ module Search
     # Don't generate system test files.
     config.generators.system_tests = nil
 
-    # Assign error codes to custom errors
-    config.action_dispatch.rescue_responses["ObjectNotSupported"] = :not_found
-    config.action_dispatch.rescue_responses["ObjectNotFound"] = :not_found
-    config.action_dispatch.rescue_responses["ExternalServiceNotFound"] = :not_found
-    config.action_dispatch.rescue_responses["ExternalServiceUnauthorized"] = :forbidden
+    ## Assign error codes to custom errors
+    # Error with a user's query
+    config.action_dispatch.rescue_responses["MissingParameterError"] = :bad_request # Tried to load an object page but no ID was provided
+
+    # Error during the process of instantiating a ContentTypeObject
+    config.action_dispatch.rescue_responses["ObjectNotFoundError"] = :not_found # Tried to load an object page but Solr found nothing
+    config.action_dispatch.rescue_responses["ObjectNotSupportedError"] = :not_found # Tried to load an object page but the object type is NotSupported
+    config.action_dispatch.rescue_responses["ExternalServiceUnauthorizedError"] = :forbidden # Authorization error with Solr or SES
+
   end
 end

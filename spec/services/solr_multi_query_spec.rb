@@ -53,7 +53,7 @@ RSpec.describe SolrMultiQuery, type: :model do
         let!(:mock_response) { { 'error' => { 'msg' => 'an error', 'code' => 401 } } }
 
         it 'raises an ExternalServiceError' do
-          expect { solr_multi_query.all_data }.to raise_error(ExternalServiceUnauthorized)
+          expect { solr_multi_query.all_data }.to raise_error(UnauthorizedError)
         end
       end
 
@@ -61,7 +61,7 @@ RSpec.describe SolrMultiQuery, type: :model do
         let!(:mock_response) { { 'error' => { 'msg' => 'an error', 'code' => 403 } } }
 
         it 'raises an ExternalServiceError' do
-          expect { solr_multi_query.all_data }.to raise_error(ExternalServiceUnauthorized)
+          expect { solr_multi_query.all_data }.to raise_error(UnauthorizedError)
         end
       end
 
@@ -69,7 +69,7 @@ RSpec.describe SolrMultiQuery, type: :model do
         let!(:mock_response) { { 'error' => { 'msg' => 'an error', 'code' => 404 } } }
 
         it 'raises an ExternalServiceError' do
-          expect { solr_multi_query.all_data }.to raise_error(ExternalServiceNotFound)
+          expect { solr_multi_query.all_data }.to raise_error(ObjectNotFoundError)
         end
       end
     end

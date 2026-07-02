@@ -22,8 +22,4 @@ class CommandPaper < ParliamentaryPaperLaid
     date_dt identifier_t legislature_ses
     ]
   end
-
-  def search_result_partial
-    'search/results/command_paper'
-  end
 end

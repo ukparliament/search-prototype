@@ -2,8 +2,8 @@
   %span>= search_link(object.object_name, singular: true)
   %span= " became law on "
   %span>= format_date(object.date)
-  - unless bill.blank?
+  - unless @associated_object_data[object.bill_id].blank?
     %span= " when the "
-    %span>= object_show_link(bill.object_title, bill.object_uri)
+    %span>= object_show_link(@associated_object_data[object.bill_id].object_title, @associated_object_data[object.bill_id].object_uri)
     %span>= " received Royal Assent"
   %span= "."

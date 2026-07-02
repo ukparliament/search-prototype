@@ -4,10 +4,6 @@ class ParliamentaryPaperReported < Paper
     super
   end
 
-  def template
-    'content_type_objects/object_pages/parliamentary_paper_reported'
-  end
-
   def object_name
     # subtype, but not if it's 91561, 81563, 51288
     # there will be multiple subtypes to look through, but we're using the first remaining one

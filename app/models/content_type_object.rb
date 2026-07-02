@@ -23,7 +23,15 @@ class ContentTypeObject
   end
 
   def search_result_partial
-    'search/results/content_type_object'
+    "search/results/#{self.class.name.underscore}"
+  end
+
+  def template
+    "content_type_objects/object_pages/#{self.class.name.underscore}"
+  end
+
+  def prelim_template
+    "content_type_objects/preliminary_sentences/#{self.class.name.underscore}"
   end
 
   def self.search_result_solr_fields

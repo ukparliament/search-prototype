@@ -178,6 +178,9 @@ class SesLookup < ApiClient
 
     # set up the request object
     request = Net::HTTP::Get.new(uri)
+
+    puts "URI: #{uri}" if Rails.env.development?
+
     request_headers.each { |k, v| request[k] = v }
 
     # make the request with or without caching

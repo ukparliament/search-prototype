@@ -15,14 +15,14 @@ class MetaController < ApplicationController
   
   def coverage
     @page_title = 'Coverage'
-    @description = 'Coverage.'
+    @description = 'Information about the content available in Parliamentary Search.'
     @crumb << { label: 'About this website', url: meta_cookies_url }
     @crumb << { label: @page_title, url: nil }
   end
   
   def examples
     @page_title = 'Example object pages'
-    @description = 'Example object pages.'
+    @description = 'Examples of object pages for each of the different content types available in Parliamentary Search.'
     @crumb << { label: 'About this website', url: meta_cookies_url }
     @crumb << { label: @page_title, url: nil }
   end
@@ -36,7 +36,7 @@ class MetaController < ApplicationController
 
   def roadmap
     @page_title = 'Roadmap'
-    @description = 'Roadmap.'
+    @description = 'The roadmap for development of this website.'
     @crumb << { label: 'About this website', url: meta_cookies_url }
     @crumb << { label: @page_title, url: nil }
   end

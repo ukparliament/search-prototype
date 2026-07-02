@@ -4,16 +4,8 @@ class Edm < ContentTypeObject
     super
   end
 
-  def template
-    'content_type_objects/object_pages/edm'
-  end
-
   def edm_number
     get_first_from('edmNumber_t')
-  end
-
-  def search_result_partial
-    'search/results/early_day_motion'
   end
 
   def self.search_result_solr_fields

@@ -15,14 +15,6 @@ class ChurchOfEnglandMeasure < ContentTypeObject
     get_first_as_date_from('dateOfRoyalAssent_dt')
   end
 
-  def template
-    'content_type_objects/object_pages/church_of_england_measure'
-  end
-
-  def search_result_partial
-    'search/results/church_of_england_measure'
-  end
-
   def display_link
     fallback(get_first_from('location_uri'), get_first_from('externalLocation_uri'))
   end

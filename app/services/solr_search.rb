@@ -150,11 +150,11 @@ class SolrSearch < ApiClient
   end
 
   def expanded_query
-    raise QueryExpansionError unless search_query.present?
+    raise MissingParameterError, :query unless search_query.present?
 
     expanded_query = query_expander.new(search_query).expand_query
 
-    raise QueryExpansionError if expanded_query.blank?
+    raise QueryExpansionError, search_query if expanded_query.blank?
 
     expanded_query
   end

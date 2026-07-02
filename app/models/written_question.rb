@@ -52,7 +52,7 @@ class WrittenQuestion < Question
     true
   end
 
-  def prelim_partial
+  def prelim_template
     return '/content_type_objects/preliminary_sentences/written_question_corrected' if corrected?
 
     return '/content_type_objects/preliminary_sentences/written_question_answered_was_holding' if answered_was_holding?

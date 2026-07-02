@@ -6,7 +6,7 @@
   </div>
 <% end %>
 
-<%= render 'content_type_objects/preliminary_sentences/act', object: object, bill: @associated_object_data[object.bill_id] %>
+<%= render object.prelim_template, object: object %>
 <h1 class="reading-width">
   <hr/>
   <%= format_object_title(object.object_title, @ses_data) %>

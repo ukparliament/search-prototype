@@ -11,7 +11,7 @@ RSpec.describe 'ContentTypeObjects', type: :request do
         allow_any_instance_of(SesLookup).to receive(:data).and_return({})
         allow(ContentTypeObject).to receive(:generate).and_return(edm_instance)
         get '/objects', params: { }
-        expect(response).to have_http_status(:not_found)
+        expect(response).to have_http_status(:bad_request)
       end
     end
 

@@ -1,8 +1,8 @@
 class ContentTypeObjectsController < ApplicationController
 
   def show
-    # Raise a 404 if we didn't get an object URL
-    raise ExternalServiceNotFound if params[:object].blank?
+    # Raise a 400 if we didn't get an object URL
+    raise MissingParameterError, :id if params[:object].blank?
 
     # fetch object data
     object_data = SolrQuery.new(object_uri: params[:object]).object_data
@@ -11,10 +11,10 @@ class ContentTypeObjectsController < ApplicationController
     @object = ContentTypeObject.generate(object_data)
 
     # raise a 404 if we didn't successfully generate an object
-    raise ExternalServiceNotFound unless @object
+    raise ObjectNotFoundError, params[:object] unless @object
 
     # check the object is supported
-    raise ObjectNotSupported if @object.is_a?(NotSupported)
+    raise ObjectNotSupportedError, params[:object] if @object.is_a?(NotSupported)
 
     # fetch associated object data
     associated_object_results = AssociatedObjectsForObjectView.new(@object).data
@@ -25,8 +25,19 @@ class ContentTypeObjectsController < ApplicationController
     object_ses_ids = @object.ses_lookup_ids&.pluck(:value)
     all_ses_ids = associated_ses_ids.blank? ? object_ses_ids : object_ses_ids + associated_ses_ids
 
-    # Use SesData class to handle SES retrival from cache / API
+    # Use SesData class to handle SES retrieval from cache / API
     @ses_data = SesData.new(all_ses_ids).combined_ses_data
+
+    ## EXPERIMENTAL
+    # for description meta tag, render out the preliminary sentence partial and convert to plain text
+    html_description = render_to_string(partial: @object.prelim_template, locals: { object: @object })
+    @description = helpers.strip_tags(html_description).squish
+
+    # Alternative approach:
+    # set description based on the object type
+    # unless @object.object_name.blank?
+    #   @description = "A #{helpers.object_display_name(@object.object_name)} record in Parliamentary Search."
+    # end
 
     formatted_object_title = helpers.format_object_title(@object.object_title, @ses_data)
     @page_title = formatted_object_title

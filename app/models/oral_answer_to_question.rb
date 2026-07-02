@@ -10,14 +10,6 @@ class OralAnswerToQuestion < Question
     ids.flatten.compact.uniq
   end
 
-  def template
-    'content_type_objects/object_pages/oral_answer_to_question'
-  end
-
-  def search_result_partial
-    'search/results/oral_answer_to_question'
-  end
-
   def self.search_result_solr_fields
     # fields requested in Solr search for search results page
     super << %w[

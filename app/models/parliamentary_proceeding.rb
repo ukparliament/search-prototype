@@ -10,14 +10,6 @@ class ParliamentaryProceeding < Proceeding
     ids.flatten.compact.uniq
   end
 
-  def template
-    'content_type_objects/object_pages/parliamentary_proceeding'
-  end
-
-  def search_result_partial
-    'search/results/parliamentary_proceeding'
-  end
-
   def self.search_result_solr_fields
     # fields requested in Solr search for search results page
     super << %w[
