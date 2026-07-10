@@ -6,8 +6,9 @@ Rails.application.config.after_initialize do
   missing = []
   missing << :api_host unless credentials.dig(Rails.env.to_sym, :api_host).present?
   missing << :api_subscription_key unless credentials.dig(Rails.env.to_sym, :api_subscription_key).present?
-  missing << :ses_api unless credentials.dig(Rails.env.to_sym, :ses_api, :path).present?
-  missing << :solr_api unless credentials.dig(Rails.env.to_sym, :solr_api, :path).present?
+  missing << :ses_api_path unless credentials.dig(Rails.env.to_sym, :ses_api, :path).present?
+  missing << :ses_api_tbdb unless credentials.dig(Rails.env.to_sym, :ses_api, :tbdb).present?
+  missing << :solr_api_path unless credentials.dig(Rails.env.to_sym, :solr_api, :path).present?
 
   if missing.any?
     raise <<~ERROR

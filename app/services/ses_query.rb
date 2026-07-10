@@ -29,7 +29,8 @@ class SesQuery < SesLookup
     raise_external_service_error(response)
 
     # Extract terms (and original query) from response
-    query_string = response.dig("parameters", "query").downcase
+    # Query string moves from query (v3) to mapping (v5)
+    query_string = response.dig("parameters").has_key?("query") ? response["parameters"]["query"].downcase : response["parameters"]["mapping"].downcase
     terms = response.dig("terms")
 
     SesDataProcessor.new(terms: terms,
@@ -45,14 +46,11 @@ class SesQuery < SesLookup
   end
 
   def ses_search_uri
-    URI::HTTPS.build(
-      host: Rails.application.credentials.dig(Rails.env.to_sym, :api_host),
-      path: Rails.application.credentials.dig(Rails.env.to_sym, :ses_api, :path),
-      query: URI.encode_www_form(TBDB: 'disp_taxonomy',
-                                 TEMPLATE: 'service.json',
-                                 SERVICE: 'conceptmap',
-                                 MATCH: 'exact',
-                                 QUERY: term)
+    URI::HTTPS.build(host: common_api_host_path, path: ses_path,
+                     query: URI.encode_www_form(tbdb: ses_tbdb,
+                                                service: 'search',
+                                                template: 'service.json',
+                                                query: term)
     )
   end
 
