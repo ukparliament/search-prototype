@@ -9,7 +9,7 @@ class HierarchyBuilder
   def get_data_from_ses
     puts "Fetching Hierarchy data..." if Rails.env.development?
     start_time = Time.now
-    ret = SesLookup.new([{ value: 346696 }]).extract_hierarchy_data
+    ret = SesLookup.new([{ value: nil }]).extract_hierarchy_data
     puts "Done in #{(Time.now - start_time).round(2)} seconds" if Rails.env.development?
     ret
   end
@@ -29,9 +29,8 @@ class HierarchyBuilder
     ret = {}
 
     return unless ses_data.is_a?(Hash)
-
     ses_data.each do |k, v|
-      narrower_term_hash = v.select { |h| h["abbr"] == "NT" }.first
+      narrower_term_hash = v.select { |h| h["name"] == "Narrower Term" }.first
       array = []
       children = narrower_term_hash&.dig("fields")
 
@@ -58,7 +57,12 @@ class HierarchyBuilder
     ret = []
 
     # select types that have 'Content Type' as their parent
-    ses_data.select { |k, v| v.first.dig("fields").first.dig("field", "id") == "346696" }.keys.map do |id, name|
+    with_content_type_parent = ses_data.select do |k, v|
+      v.select { |h| h["name"] == "Broader Term" }.dig(0, "fields")&.map { |f| f.dig("field", "name") }&.include?("Content type")
+    end
+
+    # rebuild as a hash
+    with_content_type_parent.keys.map do |id, name|
       ret << { id: id, name: name }
     end
 

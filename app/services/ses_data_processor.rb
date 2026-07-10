@@ -10,7 +10,6 @@
 # then require some pruning.
 # This class performs a number of string-matching checks and removes
 # failing terms from the response before they reach term expansion.
-
 class SesDataProcessor
 
   attr_reader :terms, :query_string, :query_string_processor, :exact_match_required
@@ -49,7 +48,6 @@ class SesDataProcessor
       all_synonyms.each do |term_or_synonym|
         # skip unless the term is present in the query
         next unless processed_query_array.include?(term_or_synonym.downcase)
-
 
         # set the term match boolean flag to true & delete from processed_query_array
         term_matches_query = true
@@ -100,7 +98,8 @@ class SesDataProcessor
   ##
   # Identify topic terms (unwanted) by class string
   def term_is_topic_term(term)
-    term.dig("term", "class") == "TPG"
+    # With SES v3, TPG will be the only class, whereas with SES v5 we need to check 'classes' which can contain multiple values
+    term.dig("term", "class") == "TPG" || term.dig("term", "classes")&.include?("TPG")
   end
 
   ##
@@ -115,9 +114,8 @@ class SesDataProcessor
     term_hash[:preferred_term] = term.dig("term", "name")
     term_hash[:preferred_term_id] = term.dig("term", "id")
 
-    # equivalent terms might not be present
-    if term.dig("term").has_key?("equivalence")
-      term_hash[:equivalent_terms] = term.dig("term", "equivalence").select { |ec| ec["typeId"] == "3" }.dig(0, "fields").map { |f| f.dig("field", "name") }
+    unless term.dig("term", "equivalence").blank?
+      term_hash[:equivalent_terms] = term.dig("term", "equivalence").select { |eqt| eqt["name"] == "Use For" }.dig(0, "fields").map { |f| f.dig("field", "name") }
     end
 
     term_hash

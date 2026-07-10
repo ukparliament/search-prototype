@@ -8,7 +8,6 @@ class SesLookup < ApiClient
   def data
     # for returning all data in a structured format for further querying
     return if input_data.blank?
-
     ret = {}
     responses = evaluated_responses
 
@@ -18,9 +17,11 @@ class SesLookup < ApiClient
     else
       responses.each do |response|
         raise_external_service_error(response)
-
         ret[response['term']['id'].to_i] = response['term']['name']
-        ret["#{response['term']['id'].to_i}_scope_note"] = response['term']['metadata']['Scope note'] unless response['term']['metadata']['Scope note'].blank?
+
+        # Scope note key is lower case in SES v5
+        scope_note = response.dig("term", "metadata", "Scope note") || response.dig("term", "metadata", "scope note")
+        ret["#{response['term']['id'].to_i}_scope_note"] = scope_note unless scope_note.blank?
       end
     end
     ret
@@ -116,25 +117,35 @@ class SesLookup < ApiClient
     output.flatten
   end
 
+  ##
+  # Retrieve hierarchy data (172 results with CLASS="CTP")
   def evaluated_hierarchy_response
     caching_enabled = Rails.env.development? || Rails.env.test? ? false : true
     api_response(ses_browse_service_uri, caching_enabled)
   end
 
+  def ses_tbdb
+    ENV["SES_TBDB"] || Rails.application.credentials.dig(Rails.env.to_sym, :ses_api, :tbdb)
+  end
+
+  def ses_path
+    ENV["SES_PATH"] || Rails.application.credentials.dig(Rails.env.to_sym, :ses_api, :path)
+  end
+
   def ses_term_service_uri(id_group_string)
     # Due to limitations of the SES API we can't encode the query string here - it doesn't like the commas
-    uri = URI::HTTPS.build(
-      host: Rails.application.credentials.dig(Rails.env.to_sym, :api_host),
-      path: Rails.application.credentials.dig(Rails.env.to_sym, :ses_api, :path),
-      query: "TBDB=disp_taxonomy&TEMPLATE=service.json&expand_hierarchy=0&SERVICE=termlite&ID=#{id_group_string}"
+    URI::HTTPS.build(
+      host: common_api_host_path,
+      path: ses_path,
+      query: "tbdb=#{ses_tbdb}&template=service.json&expand_hierarchy=0&service=termlite&id=#{id_group_string}"
     )
   end
 
   def ses_browse_service_uri
     URI::HTTPS.build(
-      host: Rails.application.credentials.dig(Rails.env.to_sym, :api_host),
-      path: Rails.application.credentials.dig(Rails.env.to_sym, :ses_api, :path),
-      query: URI.encode_www_form(TBDB: 'disp_taxonomy', TEMPLATE: 'service.json', SERVICE: 'allterms', expand_hierarchy: '1', CLASS: 'CTP')
+      host: common_api_host_path,
+      path: ses_path,
+      query: URI.encode_www_form(tbdb: ses_tbdb, template: 'service.json', service: 'allterms', expand_hierarchy: '1', filter: "CL=CTP")
     )
   end
 

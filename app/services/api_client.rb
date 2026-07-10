@@ -49,9 +49,10 @@ class ApiClient
   # Establish HTTP & request objects, then make the request (Net::HTTP)
   # Stub response from this method when testing, will error to avoid any test environment requests
   def api_post_request(query)
+    # TODO: this is now Solr specific; should move to Solr subclass
     raise 'Please stub this method to avoid HTTP requests in test environment' if Rails.env.test?
 
-    uri = api_endpoint_uri
+    uri = URI::HTTPS.build(host: common_api_host_path, path: solr_api_path)
     headers = request_headers
 
     puts "POST request from #{self.class.name}: #{uri} with data: #{query} and headers: #{headers}" if Rails.env.development?
@@ -71,15 +72,16 @@ class ApiClient
     response.body
   end
 
-  def api_endpoint_uri
-    URI::HTTPS.build(
-      host: Rails.application.credentials.dig(Rails.env.to_sym, :api_host),
-      path: Rails.application.credentials.dig(Rails.env.to_sym, :solr_api, :path)
-    )
+  def common_api_host_path
+    ENV["API_HOST"] || Rails.application.credentials.dig(Rails.env.to_sym, :api_host)
+  end
+
+  def solr_api_path
+    ENV["SOLR_API_PATH"] || Rails.application.credentials.dig(Rails.env.to_sym, :solr_api, :path)
   end
 
   def api_subscription_key
-    Rails.application.credentials.dig(Rails.env.to_sym, :api_subscription_key)
+    ENV["API_SUBSCRIPTION_KEY"] || Rails.application.credentials.dig(Rails.env.to_sym, :api_subscription_key)
   end
 
   def request_headers

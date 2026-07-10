@@ -10,6 +10,7 @@ RSpec.describe 'SesQuery' do
 
     before do
       allow(Rails.application.credentials).to receive(:dig).with(:test, :api_host).and_return("api.test.url")
+      allow(Rails.application.credentials).to receive(:dig).with(:test, :ses_api, :tbdb).and_return("test_tbdb")
       allow(Rails.application.credentials).to receive(:dig).with(:test, :ses_api, :path).and_return("/ses")
       allow(ses_query).to receive(:api_response).with(formatted_query, false).and_return(mock_response)
     end
@@ -24,7 +25,7 @@ RSpec.describe 'SesQuery' do
 
     context 'where a term is submitted' do
       let!(:input_data) { { value: 'housing' } }
-      let!(:formatted_query) { URI("https://api.test.url/ses?TBDB=disp_taxonomy&TEMPLATE=service.json&SERVICE=conceptmap&MATCH=exact&QUERY=housing") }
+      let!(:formatted_query) { URI("https://api.test.url/ses?tbdb=test_tbdb&service=search&template=service.json&query=housing") }
 
       it 'returns a hash containing equivalent terms, perferred term, preferred term ID' do
         expect(ses_query.data.map(&:keys)).to eq([[:equivalent_terms, :preferred_term, :preferred_term_id]])
@@ -37,7 +38,7 @@ RSpec.describe 'SesQuery' do
     context 'where SES returns an exact match as an equivalent term' do
       let!(:mock_response) { JSON.parse(File.read('spec/fixtures/securities.json')) }
       let!(:input_data) { { value: 'Securities' } }
-      let!(:formatted_query) { URI("https://api.test.url/ses?TBDB=disp_taxonomy&TEMPLATE=service.json&SERVICE=conceptmap&MATCH=exact&QUERY=Securities") }
+      let!(:formatted_query) { URI("https://api.test.url/ses?tbdb=test_tbdb&service=search&template=service.json&query=Securities") }
 
       it 'includes that result' do
         expect(ses_query.data.map { |r| r[:preferred_term] }).to eq(["Stocks and shares"])
@@ -48,7 +49,7 @@ RSpec.describe 'SesQuery' do
     context 'where SES returns an exact match as the preferred term' do
       let!(:mock_response) { JSON.parse(File.read('spec/fixtures/election_observers.json')) }
       let!(:input_data) { { value: 'Election observers' } }
-      let!(:formatted_query) { URI("https://api.test.url/ses?TBDB=disp_taxonomy&TEMPLATE=service.json&SERVICE=conceptmap&MATCH=exact&QUERY=Election+observers") }
+      let!(:formatted_query) { URI("https://api.test.url/ses?tbdb=test_tbdb&service=search&template=service.json&query=Election+observers") }
 
       it 'includes that result' do
         expect(ses_query.data.map { |r| r[:preferred_term] }).to eq(["Election observers"])
@@ -58,7 +59,7 @@ RSpec.describe 'SesQuery' do
     context 'where SES returns no result that matches' do
       let!(:mock_response) { JSON.parse(File.read('spec/fixtures/observers.json')) }
       let!(:input_data) { { value: 'Observers' } }
-      let!(:formatted_query) { URI("https://api.test.url/ses?TBDB=disp_taxonomy&TEMPLATE=service.json&SERVICE=conceptmap&MATCH=exact&QUERY=Observers") }
+      let!(:formatted_query) { URI("https://api.test.url/ses?tbdb=test_tbdb&service=search&template=service.json&query=Observers") }
 
       it 'excludes that result' do
         expect(ses_query.data.map { |r| r[:preferred_term] }).not_to include("The Observer")
@@ -70,7 +71,7 @@ RSpec.describe 'SesQuery' do
     context 'where SES returns multiple matching results' do
       let!(:mock_response) { JSON.parse(File.read('spec/fixtures/army_training_estate.json')) }
       let!(:input_data) { { value: 'Army' } }
-      let!(:formatted_query) { URI("https://api.test.url/ses?TBDB=disp_taxonomy&TEMPLATE=service.json&SERVICE=conceptmap&MATCH=exact&QUERY=Army") }
+      let!(:formatted_query) { URI("https://api.test.url/ses?tbdb=test_tbdb&service=search&template=service.json&query=Army") }
 
       it 'includes the more complex result only' do
         expect(ses_query.data.map { |r| r[:preferred_term] }).to eq(["Army Training Estate"])
@@ -82,7 +83,7 @@ RSpec.describe 'SesQuery' do
     context 'where SES returns a topic result' do
       let!(:mock_response) { JSON.parse(File.read('spec/fixtures/ses_search_service_example_tpg.json')) }
       let!(:input_data) { { value: 'housing' } }
-      let!(:formatted_query) { URI("https://api.test.url/ses?TBDB=disp_taxonomy&TEMPLATE=service.json&SERVICE=conceptmap&MATCH=exact&QUERY=housing") }
+      let!(:formatted_query) { URI("https://api.test.url/ses?tbdb=test_tbdb&service=search&template=service.json&query=housing") }
 
       it 'does not return the topic' do
         expect(ses_query.data).to eq([])
