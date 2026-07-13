@@ -27,6 +27,7 @@ module Middleware
           accept_language: request.headers["Accept-Language"],
           method: request.request_method,
           path: request.path,
+          full_path: request.fullpath,
           status: status,
           duration_ms: duration,
           user_agent: request.user_agent
