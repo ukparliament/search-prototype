@@ -72,7 +72,7 @@ class SesDataProcessor
   # and fragments (by splitting on spaces)
   # Then returns updated version of processed_query_array
   def filter_term(term_to_remove, processed_query_array)
-    puts "Filtering term: #{term_to_remove}"
+    puts "Filtering term: #{term_to_remove}" if Rails.env.development? || Rails.env.test?
 
     # delete the match from the array
     processed_query_array.delete(term_to_remove.downcase)

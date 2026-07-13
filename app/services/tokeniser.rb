@@ -48,7 +48,7 @@ class Tokeniser
     tokens = []
 
     terms.each do |term|
-      puts "Processing scan fragment: #{term}"
+      puts "Processing scan fragment: #{term}" if Rails.env.development? || Rails.env.test?
 
       term.each_with_index do |matched_term, i|
         next if matched_term.nil?
@@ -79,7 +79,7 @@ class Tokeniser
         when 13
           tokens << [:unquoted_word, matched_term]
         else
-          puts "Term not matched by tokeniser: #{matched_term}"
+          puts "Term not matched by tokeniser: #{matched_term}" if Rails.env.development? || Rails.env.test?
           next
         end
       end

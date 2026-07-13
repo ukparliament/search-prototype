@@ -132,7 +132,7 @@ module LinkHelper
       name_string = ses_data.dig(data[:value].to_i)
 
       if name_string.nil?
-        puts "Missing SES name for ID #{data[:value]}" if Rails.env.development?
+        puts "Missing SES name for ID #{data[:value]}" if Rails.env.development? || Rails.env.test?
         name_string = fallback_ses_lookup(data)
       end
     elsif data[:field_name] && data[:field_name] == 'date_month'

@@ -16,7 +16,7 @@ class TermCombiner
       output_string = "#{terms.first}"
     end
 
-    puts "Term combiner, first term: #{terms.first}"
+    puts "Term combiner, first term: #{terms.first}" if Rails.env.development? || Rails.env.test?
 
     # track current end of string as it determines what we do with the next term
     # start with these booleans as false unless the first term was an operator / bracket

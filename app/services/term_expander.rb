@@ -88,7 +88,7 @@ class TermExpander
           terms_to_represent = search_term.split(" ")
         end
 
-        puts "Terms to represent: #{terms_to_represent}"
+        puts "Terms to represent: #{terms_to_represent}" if Rails.env.development? || Rails.env.test?
 
         # Add search terms not represented by SES responses to the query with their specified field
         terms_to_represent.each do |search_word|
@@ -208,12 +208,12 @@ class TermExpander
       terms_to_represent = search_term.split(" ")
     end
 
-    puts "Terms to represent: #{terms_to_represent}"
+    puts "Terms to represent: #{terms_to_represent}" if Rails.env.development? || Rails.env.test?
 
     terms_to_represent.each do |search_word|
       puts "Checking that '#{search_word}' is represented in #{all_expanded_terms.inspect}"
       unless all_expanded_terms.include?(search_word.downcase)
-        puts "Not represented! Adding."
+        puts "Not represented! Adding." if Rails.env.development? || Rails.env.test?
         expanded_terms << [search_word.to_sym, ["#{search_word}"]]
       end
     end
