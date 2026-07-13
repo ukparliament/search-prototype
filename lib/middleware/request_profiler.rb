@@ -18,8 +18,7 @@ module Middleware
         ((Process.clock_gettime(Process::CLOCK_MONOTONIC) - started) * 1000).round(1)
 
       Rails.logger.info(
-        {
-          traffic_profiler: true,
+        "[REQUEST_PROFILER] #{{
           ip: request.remote_ip,
           cf_ip: request.headers["CF-Connecting-IP"],
           forwarded_for: request.headers["X-Forwarded-For"],
@@ -28,7 +27,7 @@ module Middleware
           status: status,
           duration_ms: duration,
           user_agent: request.user_agent
-        }.to_json
+        }.to_json}"
       )
 
       [status, headers, body]
