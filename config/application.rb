@@ -28,6 +28,10 @@ module Search
     # Common ones are `templates`, `generators`, or `middleware`, for example.
     config.autoload_lib(ignore: %w[assets tasks])
 
+    # Require and enable request profiling custom middleware
+    require Rails.root.join("lib/middleware/request_profiler")
+    config.middleware.use Middleware::RequestProfiler
+
     # Configuration for the application, engines, and railties goes here.
     #
     # These settings can be overridden in specific environments using the files
