@@ -28,6 +28,7 @@ module Middleware
           method: request.request_method,
           path: request.path,
           full_path: request.fullpath,
+          query_string: request.query_string,
           status: status,
           duration_ms: duration,
           user_agent: request.user_agent
