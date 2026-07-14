@@ -3,6 +3,10 @@
   <div id="top"></div>
 <% end %>
 
+<% content_for(:robot_meta_tags) do %>
+  <%= render '/shared/robots' %>
+<% end %>
+
 <h1>
   <%= yield :title %>
 </h1>
