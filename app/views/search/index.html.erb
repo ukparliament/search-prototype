@@ -2,6 +2,10 @@
   <%= stylesheet_link_tag "search_results.css" %>
 <% end %>
 
+<% content_for(:robot_meta_tags) do %>
+  <%= render 'shared/navigational_page_robots_tag' %>
+<% end %>
+
 <% if Rails.env.development? %>
   <div class="debug-panel" aria-hidden="true">
     <%#= render 'content_type_objects/fragments/data', data: @objects, title: 'Secondary search objects' %>

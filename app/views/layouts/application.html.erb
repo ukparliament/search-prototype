@@ -2,12 +2,8 @@
 <html lang="en-GB">
 <head>
   <%= render 'layouts/shared/title' %>
-  <% if Rails.env.production? %>
-    <meta name="robots" content="index,follow">
-  <% else %>
-    <meta name="robots" content="noindex,nofollow">
-  <% end %>
   <%= render 'library_design/head/head' %>
+  <%= yield :robot_meta_tags %>
   <%= yield :page_styles %>
   <%= javascript_importmap_tags %>
 </head>
