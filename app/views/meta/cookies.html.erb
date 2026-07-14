@@ -2,5 +2,9 @@
   <%= @page_title %>
 <% end %>
 
+<% content_for(:robot_meta_tags) do %>
+  <%= render '/shared/content_page_robots_tag' %>
+<% end %>
+
 <%= render 'meta/meta_sidebar' %>
 <%= render template: "library_design/meta/cookies" %>
