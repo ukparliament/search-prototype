@@ -1,4 +1,4 @@
-class OralQuestionTimeIntervention < ContentTypeObject
+class OralQuestionTimeIntervention < Question
 
   def initialize(content_type_object_data)
     super
