@@ -37,7 +37,8 @@ class Rack::Attack
 
   # Explicitly block Meta's AI crawler from endlessly poking around search results
   Rack::Attack.blocklist("block Meta AI crawler on search results page") do |req|
-    req.path.start_with?("/search") && req.user_agent&.to_s.downcase.include?("meta-externalagent")
+    req.path.start_with?("/search") &&
+      req.user_agent&.to_s&.downcase&.include?("meta-externalagent")
   end
 
   ### Prevent Brute-Force Login Attacks ###
