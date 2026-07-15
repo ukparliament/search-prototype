@@ -35,6 +35,10 @@ class Rack::Attack
     req.ip # unless req.path.start_with?('/assets')
   end
 
+  throttle('meta_ai', limit: (rate_limit / 10), period: 5.minutes) do |req|
+    "meta-externalagent" if req.user_agent&.to_s&.downcase&.include?("meta-externalagent")
+  end
+
   # Explicitly block Meta's AI crawler from endlessly poking around search results
   Rack::Attack.blocklist("block Meta AI crawler on search results page") do |req|
     req.path.start_with?("/search") &&
