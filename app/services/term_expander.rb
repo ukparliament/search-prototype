@@ -199,9 +199,6 @@ class TermExpander
       expanded_terms << [ses_result[:preferred_term_id], result]
     end
 
-    # create a string of all the expanded terms so far
-    all_expanded_terms = expanded_terms.to_h.values.flatten.join(" ").downcase
-
     if exact_match
       terms_to_represent = [search_term]
     else
@@ -211,11 +208,38 @@ class TermExpander
     puts "Terms to represent: #{terms_to_represent}" if Rails.env.development? || Rails.env.test?
 
     terms_to_represent.each do |search_word|
-      puts "Checking that '#{search_word}' is represented in #{all_expanded_terms.inspect}"
-      unless all_expanded_terms.include?(search_word.downcase)
-        puts "Not represented! Adding." if Rails.env.development? || Rails.env.test?
-        expanded_terms << [search_word.to_sym, ["#{search_word}"]]
+      puts "Checking that '#{search_word}' is represented in query as expanded" if Rails.env.development? || Rails.env.test?
+
+      if exact_match
+        # In exact mode, the term must match exactly with a distinct SES term
+        search_word_matched = false
+
+        # iterate through expanded terms and check each one against the search word
+        expanded_terms.to_h.values.flatten.each do |expanded_term|
+          if search_word.downcase.include?(expanded_term.downcase)
+            search_word_matched = true
+          end
+        end
+
+        # if none of them matched, add the search word back into the query
+        unless search_word_matched
+          puts "Not represented! Adding." if Rails.env.development? || Rails.env.test?
+          expanded_terms << [search_word.to_sym, ["#{search_word}"]]
+        end
+      else
+        # In non-exact mode, we just check that the word is included somewhere in the combined string of SES terms
+
+        # create a string of all the expanded terms so far
+        all_expanded_terms = expanded_terms.to_h.values.flatten.join(" ").downcase
+
+        # if the search word isn't included, add it back into the query
+
+        unless all_expanded_terms.include?(search_word.downcase.delete_prefix('"').delete_suffix('"'))
+          puts "Not represented! Adding." if Rails.env.development? || Rails.env.test?
+          expanded_terms << [search_word.to_sym, ["#{search_word}"]]
+        end
       end
+
     end
 
     expanded_terms
