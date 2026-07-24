@@ -34,7 +34,7 @@ class SesDataProcessor
 
     terms.each do |term|
       # skip topic terms
-      next if term_is_topic_term(term)
+      next if term_is_of_unwanted_class(term)
 
       term_matches_query = false
       term_hash = populate_term_hash(term)
@@ -96,10 +96,13 @@ class SesDataProcessor
   end
 
   ##
-  # Identify topic terms (unwanted) by class string
-  def term_is_topic_term(term)
+  # Identify topic terms and intranet terms (unwanted) by class strings
+  def term_is_of_unwanted_class(term)
     # With SES v3, TPG will be the only class, whereas with SES v5 we need to check 'classes' which can contain multiple values
-    term.dig("term", "class") == "TPG" || term.dig("term", "classes")&.include?("TPG")
+    term.dig("term", "class") == "TPG" ||
+      term.dig("term", "classes")&.include?("TPG") ||
+      term.dig("term", "class") == "INT" ||
+      term.dig("term", "classes")&.include?("INT")
   end
 
   ##
