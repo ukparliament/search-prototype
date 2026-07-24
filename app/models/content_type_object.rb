@@ -465,8 +465,6 @@ class ContentTypeObject
 
   def self.content_type_object_class(type_id, subtype_ids)
     case type_id
-    when 363376
-      'ResearchMaterial'
     when 90996
       'Edm'
     when 346697
@@ -554,16 +552,6 @@ class ContentTypeObject
       'ParliamentaryProceeding'
     when 347226
       'StatutoryInstrument'
-    when 347028
-      'EuropeanDepositedDocument'
-    when 347036
-      'EuropeanScrutinyExplanatoryMemorandum'
-    when 347040
-      'EuropeanScrutinyMinisterialCorrespondence'
-    when 347032
-      'EuropeanScrutinyRecommendation'
-    when 347010
-      'EuropeanMaterial'
     else
       'NotSupported'
     end
