@@ -89,5 +89,15 @@ RSpec.describe 'SesQuery' do
         expect(ses_query.data).to eq([])
       end
     end
+
+    context 'where SES returns an intranet term result' do
+      let!(:mock_response) { JSON.parse(File.read('spec/fixtures/ses_search_service_example_int.json')) }
+      let!(:input_data) { { value: 'housing' } }
+      let!(:formatted_query) { URI("https://api.test.url/ses?tbdb=test_tbdb&service=search&template=service.json&query=housing") }
+
+      it 'does not return the topic' do
+        expect(ses_query.data).to eq([])
+      end
+    end
   end
 end
