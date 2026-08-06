@@ -122,11 +122,19 @@ class QueryExpander
   end
 
   def process_specified_field_no_expansion_token(value)
-    # delete unwanted []; expand fields using blank SES data
-    search_term = value.partition(":").last.delete_prefix("[").delete_suffix("]")
     field_name = value.partition(":").first
-    expanded_fields = field_expander.new(field_name).expand_fields
 
+    # This is also used for date ranges, so we need to differentiate between the two
+    if field_name == 'date' || field_name.last(3) == '_dt'
+      # this is a date range query
+      search_term = value.partition(":").last
+    else
+      # this is a request not to expand the provided term
+      # delete unwanted []; expand fields using blank SES data
+      search_term = value.partition(":").last.delete_prefix("[").delete_suffix("]")
+    end
+
+    expanded_fields = field_expander.new(field_name).expand_fields
     term_expander.new(expanded_fields: expanded_fields, search_term: search_term).expand_terms
   end
 
