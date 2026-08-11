@@ -9,7 +9,16 @@
 <%= render 'meta/meta_sidebar' %>
 <div class="reading-width">
   <p>
-    We are currently focussed on improving how Parliamentary Search handles queries.
+    We are currently focussed on making improvements to results pages and creating targeted search queries. These are
+    known as aliases. For example, the <b>subject</b> alias is used to search by subject:
+  </p>
+
+  <p>
+    <%= link_to('subject:horses', 'https://beta-search.parliament.uk/search?query=subject%3Ahorses') %>
+  </p>
+
+  <p>
+    <%= link_to('subject:"Walsall Leather Museum"', 'https://beta-search.parliament.uk/search?query=subject%3A%22Walsall+Leather+Museum%22') %>
   </p>
 
   <p>
@@ -26,4 +35,8 @@
     The <%= link_to("website code can be found on GitHub", "https://github.com/ukparliament/search-prototype") %>. Pull
     requests are welcome.
   </p>
+
+  <em>
+    Last updated: August 2027
+  </em>
 </div>

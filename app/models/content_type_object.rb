@@ -7,7 +7,8 @@ class ContentTypeObject
   end
 
   ##
-  # takes object data as an argument and returns an instance of the correct object subclass
+  # Class method to evaluate the Solr object data, assign an object class
+  # Returns an instance of the object class
   def self.generate(content_type_object_data)
     # return nil if there's no data
     return unless content_type_object_data
@@ -463,6 +464,11 @@ class ContentTypeObject
     content_type_object_data[field_name].map { |value| { value: value, field_name: field_name } }
   end
 
+  ##
+  # Class method to determine the class name that should be associated with a given combination of type and subtype
+  # IDs.
+  # Subtype is only evaluated in specific cases, where we have defined a distinct object type for that subtype. In
+  # all other cases, the object type assigned will be based on the type_id.
   def self.content_type_object_class(type_id, subtype_ids)
     case type_id
     when 90996
