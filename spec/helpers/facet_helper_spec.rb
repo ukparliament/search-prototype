@@ -13,25 +13,25 @@ RSpec.describe FacetHelper, type: :helper do
 
     context 'where facet is of a type not requiring formatting' do
       it 'returns the input data without change' do
-        expect(helper.format_facets(legislature_facet)).to eq(legislature_facet)
+        expect(helper.format_facet(legislature_facet)).to eq(legislature_facet)
       end
     end
 
     context 'for the month facet' do
       it 'returns the input data with the months ordered by number' do
-        expect(helper.format_facets(month_facet)).to eq(ordered_month_facet)
+        expect(helper.format_facet(month_facet)).to eq(ordered_month_facet)
       end
     end
 
     context 'for the year facet' do
       it 'returns the input data with the year ordered by recency' do
-        expect(helper.format_facets(year_facet)).to eq(ordered_year_facet)
+        expect(helper.format_facet(year_facet)).to eq(ordered_year_facet)
       end
     end
 
     context 'for the session facet' do
       it 'returns the input data with the sessions ordered by recency' do
-        expect(helper.format_facets(session_facet)).to eq(ordered_session_facet)
+        expect(helper.format_facet(session_facet)).to eq(ordered_session_facet)
       end
     end
   end

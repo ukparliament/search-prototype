@@ -1,0 +1,22 @@
+<section class="facet">
+  <h4 class="facet-heading <%= 'inactive' if filters&.size == 0 %>" id="<%= group_name.parameterize %>"><%= group_name %></h4>
+  <div>
+    <div>
+    </div>
+    <% filters[0..4].each do |facet| %>
+      <div>
+        <%= link_to_if(!request.params.dig(:filter, facet["field_name"])&.include?(facet["val"].to_s), "#{object_display_name({ value: facet["val"], field_name: facet["field_name"] }, singular: false, reading_order: false)} (#{number_to_delimited(facet["count"], separator: ",")})", apply_filter_url(request.params, facet["field_name"], facet["val"]), class: "menu-link modifiable-link", title: scope_note("#{facet["val"]}_scope_note")) %>
+      </div>
+    <% end %>
+    <% unless filters[5..].blank? %>
+      <details>
+        <summary>More</summary>
+        <% filters[5...].each do |facet| %>
+          <div>
+            <%= link_to_if(!request.params.dig(:filter, facet["field_name"])&.include?(facet["val"].to_s), "#{object_display_name({ value: facet["val"], field_name: facet["field_name"] }, singular: false, reading_order: false)} (#{number_to_delimited(facet["count"], separator: ",")})", apply_filter_url(request.params, facet["field_name"], facet["val"]), class: "menu-link modifiable-link", title: scope_note("#{facet[:val]}_scope_note")) %>
+          </div>
+        <% end %>
+      </details>
+    <% end %>
+  </div>
+</section>
