@@ -228,7 +228,7 @@ RSpec.describe SearchData, type: :model do
       end
 
       it 'includes facets sorted by count (descending)' do
-        expect(search_data.facets.pluck(:facets)).to eq([[{ "count" => 234, "val" => 90995 }, { "count" => 123, "val" => 90996 }], [{ "count" => 455, "val" => 123456 }, { "count" => 66, "val" => 234556 }]])
+        expect(search_data.facets.pluck(:facets)).to eq([[{ "count" => 234, "field_name" => "legislature_ses", "val" => 90995 }, { "count" => 123, "field_name" => "legislature_ses", "val" => 90996 }], [{ "count" => 455, "field_name" => "subject_ses", "val" => 123456 }, { "count" => 66, "field_name" => "subject_ses", "val" => 234556 }]])
       end
     end
   end
