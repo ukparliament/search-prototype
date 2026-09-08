@@ -77,3 +77,7 @@ blockquote p:last-of-type:after {
     content: close-quote;
     color: #717171;
 }
+
+.font-size-epsilon {
+    line-height: 1.25;
+}
