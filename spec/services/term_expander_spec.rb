@@ -7,13 +7,16 @@ RSpec.describe 'TermExpander' do
   let(:ses_data) { [{ equivalent_terms: [["Accommodation", "Houses"]], preferred_term_id: "91569", preferred_term: "Housing", topic_id: "95629" }] }
   let(:search_term) { 'housing' }
   let(:expanded_fields) { { boolean_fields: boolean_fields, date_fields: date_fields,
-                            ses_fields: ses_fields, ses_id_fields: ses_id_fields,
-                            text_fields: text_fields, process_without_field: process_without_field, } }
+                            fixed_fields: fixed_fields, ses_fields: ses_fields,
+                            ses_id_fields: ses_id_fields, text_fields: text_fields,
+                            transformations: transformations, process_without_field: process_without_field, } }
   let(:boolean_fields) { [] }
   let(:date_fields) { [] }
   let(:ses_fields) { [] }
   let(:ses_id_fields) { [] }
   let(:text_fields) { [] }
+  let(:fixed_fields) { [] }
+  let(:transformations) { [] }
   let(:process_without_field) { false }
 
   describe 'expand_terms' do
