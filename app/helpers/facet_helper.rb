@@ -3,7 +3,6 @@ module FacetHelper
   ##
   # accepts a SES facet param for a single facet and processes it depending on the field name
   def format_facet(facet_data)
-
     case facet_data[:field_name]
     when 'date_month'
       # sort based on month number
@@ -47,6 +46,18 @@ module FacetHelper
     else
       # if we don't have a special case for this group, just return the data unprocessed
       return filter_group
+    end
+  end
+
+  ##
+  # For _s field facets, we need to swap the field name out for _t when applying the filter in order for the
+  # search to work. We can't use _t to fetch the facet in the first place as this results in stemmed values shown
+  # as filtering options.
+  def replace_field_name(field_name)
+    if field_name.last(2) == "_s"
+      "#{field_name[0..-2]}t"
+    else
+      field_name
     end
   end
 end
