@@ -31,7 +31,6 @@ class QueryExpander
     @term_combiner = term_combiner
   end
 
-  # TODO: refactor out basic string processing to private methods
   def expand_query
     tokens = tokeniser.new(search_query).tokenise
     processed_tokens = []
