@@ -2,6 +2,26 @@ class SearchData
 
   attr_reader :search, :hierarchy_builder
 
+  ##
+  # Used to group & label facets into filter groups; fields with the same label will be grouped together on the page
+  FILTER_GROUP_NAMES = {
+    type_sesrollup: 'Type',
+    legislature_ses: 'House',
+    session_s: 'Session',
+    department_ses: 'Department',
+    member_ses: 'Member',
+    primaryMember_ses: 'Primary member',
+    answeringMember_ses: 'Answering member',
+    legislativeStage_ses: 'Legislative stage',
+    legislationTitle_ses: 'Legislation',
+    legislationTitle_s: 'Legislation',
+    subject_ses: 'Subject',
+    subject_s: 'Subject',
+    publisher_ses: 'Publisher',
+    date_year: 'Year',
+    date_month: 'Month'
+  }
+
   def initialize(search)
     # @search is a hash of search parameters and data
     @search = search
@@ -162,20 +182,6 @@ class SearchData
     ids
   end
 
-  def years
-    year_buckets = search&.dig(:data, "facets", "year", "buckets")
-    return [] if year_buckets.blank?
-
-    year_buckets.sort_by { |h| h["val"] }.uniq.reverse
-  end
-
-  def months(year_string)
-    month_buckets = search&.dig(:data, "facets", "month", "buckets")
-    return [] if month_buckets.blank?
-
-    month_buckets.select { |m| m['val'].first(4) == year_string }.sort_by { |h| h["val"] }.uniq
-  end
-
   def hierarchy_data
     hierarchy_builder.hierarchy_data
   end
@@ -209,13 +215,41 @@ class SearchData
     filter.to_h.values.flatten.count
   end
 
+  ##
+  # Returns an array of hashes constructed from Solr facet data:
+  # { :field_name, facets: [ { :field_name, :ses_id, :count },... ]}
   def facets
     return [] unless search
 
     facet_field_data = search.dig(:data, 'facets')
     return [] if facet_field_data.blank?
 
-    facet_field_data.slice(*ordered_facet_fields).map { |k, v| { field_name: k, facets: sort_facets(v['buckets']) } }
+    facet_field_data.slice(*ordered_facet_fields).map do |k, v|
+      { field_name: k, facets: sort_facets(add_field_name_to_facet_hash(k, v['buckets'])) }
+    end
+  end
+
+  ##
+  # Organises facets into groups as defined by FILTER_GROUP_NAMES
+  def filter_groups
+    filter_groups = {}
+
+    facets.each do |filter_hash|
+      # { :field_name (str), facets: [] }
+      # get name string from lookup
+      name = FILTER_GROUP_NAMES.dig(filter_hash[:field_name].to_sym)
+
+      # check whether the return array already has a filter by this name
+      if filter_groups.has_key?(name)
+        # add the data to the existing array
+        filter_groups[name] += filter_hash[:facets]
+      else
+        # add to the return array
+        filter_groups[name] = filter_hash[:facets]
+      end
+    end
+
+    filter_groups
   end
 
   def type_facets
@@ -224,26 +258,28 @@ class SearchData
     ret
   end
 
+  private
+
+  ##
+  # Array of field name strings used to extract Solr returned facet data in the correct order for display
   def ordered_facet_fields
-    # used to extract Solr returned facet data in the correct order for display
-    %w[type_sesrollup legislature_ses date_year date_month session_s department_ses member_ses primaryMember_ses answeringMember_ses legislativeStage_ses legislationTitle_ses subject_ses publisher_ses]
+    %w[type_sesrollup legislature_ses date_year date_month session_s department_ses member_ses primaryMember_ses answeringMember_ses legislativeStage_ses legislationTitle_ses legislationTitle_s subject_ses subject_s publisher_ses]
   end
 
+  ##
+  # Accepts a field name string and an array of hashes
+  # Returns a modified version of the array, where each hash has the field name added
+  def add_field_name_to_facet_hash(field_name, array_of_facets)
+    array_of_facets.map do |facet_hash|
+      facet_hash['field_name'] = field_name
+      facet_hash
+    end
+  end
+
+  ##
+  # Accepts an array of hashes, with each hash representing a facet
+  # Sorts the array by descending count and returns it
   def sort_facets(facet_field)
     facet_field.sort_by { |h| h["count"] }.reverse
-  end
-
-  def single_data_year?
-    data_years.size == 1
-  end
-
-  def data_years
-    return [] unless search
-
-    date_facet = search.dig(:data, 'facets', 'date_dt')
-
-    return [] if date_facet.blank?
-
-    date_facet.dig("buckets").map { |b| b.dig("val").to_date.strftime("%Y") }.uniq
   end
 end
