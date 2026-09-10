@@ -5,6 +5,7 @@ RSpec.describe SearchData, type: :model do
   let!(:facet_data) { {
     "count" => 1234,
     "legislature_ses" => { "buckets" => [{ "val" => 90996, "count" => 123 }, { "val" => 90995, "count" => 234 }] },
+    "subject_s" => { "buckets" => [{ "val" => 'Housing', "count" => 765 }, { "val" => 'Accommodation', "count" => 66 }] },
     "subject_ses" => { "buckets" => [{ "val" => 123456, "count" => 455 }, { "val" => 234556, "count" => 66 }] }
   } }
   let!(:search_output) { { search_parameters: { filter: ['legislature_ses:12345'], query: 'horse' },
@@ -224,11 +225,37 @@ RSpec.describe SearchData, type: :model do
       end
 
       it 'includes the field name string' do
-        expect(search_data.facets.pluck(:field_name)).to match_array(["legislature_ses", "subject_ses"])
+        expect(search_data.facets.pluck(:field_name)).to match_array(["legislature_ses", "subject_ses", "subject_s"])
       end
 
       it 'includes facets sorted by count (descending)' do
-        expect(search_data.facets.pluck(:facets)).to eq([[{ "count" => 234, "field_name" => "legislature_ses", "val" => 90995 }, { "count" => 123, "field_name" => "legislature_ses", "val" => 90996 }], [{ "count" => 455, "field_name" => "subject_ses", "val" => 123456 }, { "count" => 66, "field_name" => "subject_ses", "val" => 234556 }]])
+        expect(search_data.facets.pluck(:facets)).to eq([[{ "count" => 234, "field_name" => "legislature_ses", "val" => 90995 },
+                                                          { "count" => 123, "field_name" => "legislature_ses", "val" => 90996 }],
+                                                         [{ "count" => 455, "field_name" => "subject_ses", "val" => 123456 },
+                                                          { "count" => 66, "field_name" => "subject_ses", "val" => 234556 }],
+                                                         [{ "count" => 765, "field_name" => "subject_s", "val" => "Housing" },
+                                                          { "count" => 66, "field_name" => "subject_s", "val" => "Accommodation" }]])
+      end
+    end
+  end
+
+  describe 'filter_groups' do
+    context 'where facets is empty' do
+      let(:search_data) { SearchData.new(nil) }
+
+      it 'returns an empty hash' do
+        expect(search_data.filter_groups).to eq({})
+      end
+    end
+
+    context 'where facets are present' do
+      it 'returns facets grouped into filter groups with field names' do
+        expect(search_data.filter_groups).to eq({ "House" => [{ "count" => 234, "field_name" => "legislature_ses", "val" => 90995 },
+                                                              { "count" => 123, "field_name" => "legislature_ses", "val" => 90996 }],
+                                                  "Subject" => [{ "count" => 455, "field_name" => "subject_ses", "val" => 123456 },
+                                                                { "count" => 66, "field_name" => "subject_ses", "val" => 234556 },
+                                                                { "count" => 765, "field_name" => "subject_s", "val" => "Housing" },
+                                                                { "count" => 66, "field_name" => "subject_s", "val" => "Accommodation" }] })
       end
     end
   end
