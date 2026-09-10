@@ -2,6 +2,8 @@ class SearchData
 
   attr_reader :search, :hierarchy_builder
 
+  ##
+  # Used to group & label facets into filter groups; fields with the same label will be grouped together on the page
   FILTER_GROUP_NAMES = {
     type_sesrollup: 'Type',
     legislature_ses: 'House',
@@ -227,6 +229,8 @@ class SearchData
     end
   end
 
+  ##
+  # Organises facets into groups as defined by FILTER_GROUP_NAMES
   def filter_groups
     filter_groups = {}
 
