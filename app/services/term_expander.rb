@@ -153,7 +153,7 @@ class TermExpander
           expanded_terms << [:status, "pqStatus_s:#{search_term&.titleize}"]
           expanded_terms << [:status, "status_s:#{search_term&.titleize}"]
         else
-          raise 'unrecognised transformation'
+          raise QueryExpansionError, "Unknown transformation type \"#{tf}\""
         end
       end
 
@@ -178,9 +178,9 @@ class TermExpander
             expanded_terms << [:ses_id, "-member_ses:303704"]
           end
         when 'fromdate'
-          expanded_terms << [:date, "date_dt:#{format_as_utc_time(search_term)} TO *"]
+          expanded_terms << [:date, "date_dt:#{format_as_utc_time(search_term, day_as_range: false)} TO *"]
         when 'todate'
-          expanded_terms << [:date, "* TO date_dt:#{format_as_utc_time(search_term)}"]
+          expanded_terms << [:date, "* TO date_dt:#{format_as_utc_time(search_term, day_as_range: false)}"]
         when 'opqtype'
           if search_term == 'supp'
             expanded_terms << [:text, "contributionType_t:supplementary"]
@@ -348,10 +348,8 @@ class TermExpander
         expanded_terms << [search_term.to_sym, result]
       end
 
-      # add every SES field we've determined should be searched for the preferred term SES ID
-      # TODO: need to differentiate between fields where topics should apply vs where they shouldn't and extract
-      # SES data (having removed the global TPG filter) accordingly? Proceed with caution as there are other uses of the
-      # SES data which will also now need to filter out TPGs.
+      # TODO: some SES fields (e.g. topic_ses!) will require ses_data to include topics
+      #   This will involve modifying our SES API calls to allow conditional retrieval of TPG terms
       unless ses_data.blank?
         ses_data.each_with_index do |ses_result, index|
           # If there's no preferred term ID, don't return anything for this result
@@ -389,7 +387,6 @@ class TermExpander
   end
 
   def expand_session_string(search_term)
-    # TODO: clairification of requirements needed
     case search_term
     when /\A(\d{2})[\/\-&:](\d{2})\z/
       # 19/20
@@ -401,25 +398,29 @@ class TermExpander
     end
   end
 
-  def format_as_utc_time(search_term)
+  def format_as_utc_time(search_term, day_as_range: true)
     if search_term.split("..").size > 1
       # the user provided a date range using ".."
       range_components = search_term.split("..")
       range_start = parse_as_utc_time(range_components.first.strip)
-      range_end = parse_as_utc_time(range_components.last.strip)
-      format_as_solr_date_range(range_start, range_end)
+      range_end = parse_as_utc_time(range_components.last.strip, offset_days: 1.day)
+      format_as_solr_date_range(range_start, range_end, inclusive_end: false)
     elsif search_term.split(" TO ").size > 1
       # the user provided a date range using " TO "
       range_components = search_term.split(" TO ")
       range_start = parse_as_utc_time(range_components.first.strip)
-      range_end = parse_as_utc_time(range_components.last.strip)
-      format_as_solr_date_range(range_start, range_end)
+      range_end = parse_as_utc_time(range_components.last.strip, offset_days: 1.day)
+      format_as_solr_date_range(range_start, range_end, inclusive_end: false)
     else
       # the user provided a single date
-      # we construct a range representing the entire day
-      range_start = parse_as_utc_time(search_term.strip)
-      range_end = parse_as_utc_time(search_term.strip, 1.day)
-      format_as_solr_date_range(range_start, range_end, inclusive_end: false)
+      if day_as_range
+        # we construct a range representing the entire day
+        range_start = parse_as_utc_time(search_term.strip)
+        range_end = parse_as_utc_time(search_term.strip, offset_days: 1.day)
+        format_as_solr_date_range(range_start, range_end, inclusive_end: false)
+      else
+        parse_as_utc_time(search_term.strip)
+      end
     end
   end
 
