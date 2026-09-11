@@ -73,7 +73,7 @@ class QueryExpander
     end
 
     puts "Final Processed tokens: #{processed_tokens}" if Rails.env.development? || Rails.env.test?
-    term_combiner.new(processed_tokens).combine_terms
+    term_combiner.new(processed_tokens.compact).combine_terms
   end
 
   private
