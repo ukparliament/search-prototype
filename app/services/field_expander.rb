@@ -136,7 +136,7 @@ class FieldExpander
       text_fields = %w[abtract_t]
     elsif field_name == "tabledby"
       ses_fields = %w[tablingMember_ses]
-    elsif field_name == "timestamp" # TODO: test behaviour / unit test relevant code
+    elsif field_name == "timestamp"
       transformations = %w[timestamp]
     elsif field_name == "to"
       fixed_fields = %w[todate]
