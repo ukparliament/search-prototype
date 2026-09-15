@@ -14,18 +14,19 @@ class Tokeniser
   #
   # Bucket 1: Brackets
   # Bucket 2: Solr operators
-  # Bucket 3: http://.... or similar
-  # Bucket 4: uri:http://... or similar
-  # Bucket 5: field_name:"term"
-  # Bucket 6: field_name:'term'
-  # Bucket 7: field_name:[phrase in square brackets]
-  # Bucket 8: field_name:*
-  # Bucket 9: field_name:term
-  # Bucket 10: [phrase in square brackets]
-  # Bucket 11: "double-quoted phrase"
-  # Bucket 12: 'single-quoted phrase'
-  # Bucket 13: term
-  TOKEN_REGEX = /([()])|(\bAND|OR|NOT\b)|(\*:\*)|([a-z]+:\/\/\S+)|(uri:[a-z]+:\/\/\S+)|(\w+:"(?:[^"]+)")|(\w+:'(?:[^']+)')|(\w+:\[(?:[^\]]+)\])|(\w+:\*)|(\w+:\S+)|(\[(?:[^\]]+)\])|"([^"]+)"|'([^']+)'|([^\s()\[\]{}:"^~!]+)/
+  # Bucket 3: Wildcards (*) for retrieval of all records
+  # Bucket 4: http://.... or similar
+  # Bucket 5: uri:http://... or similar
+  # Bucket 6: field_name:"term"
+  # Bucket 7: field_name:'term'
+  # Bucket 8: field_name:[phrase in square brackets]
+  # Bucket 9: field_name:*
+  # Bucket 10: field_name:term
+  # Bucket 11: [phrase in square brackets]
+  # Bucket 12: "double-quoted phrase"
+  # Bucket 13: 'single-quoted phrase'
+  # Bucket 14: term
+  TOKEN_REGEX = /([()])|(AND|OR|NOT|-|\+)|(\*:\*)|([a-z]+:\/\/\S+)|(uri:[a-z]+:\/\/\S+)|(\w+:"(?:[^"]+)")|(\w+:'(?:[^']+)')|(\w+:\[(?:[^\]]+)\])|(\w+:\*)|(\w+:\S+)|(\[(?:[^\]]+)\])|"([^"]+)"|'([^']+)'|([^\s()\[\]{}:"^~!]+)/
 
   ##
   # Terms operates on the provided query string, returning an array of separate string 'terms' for tokenisation:

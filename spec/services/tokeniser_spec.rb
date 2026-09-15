@@ -110,12 +110,14 @@ RSpec.describe 'Tokeniser' do
       end
 
       context 'with Solr operators' do
-        let!(:query) { "AND OR NOT" }
+        let!(:query) { "AND OR NOT - +" }
 
         it 'captures them in the expected bucket' do
           expect(tokeniser.terms).to eq([[nil, "AND", nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil],
                                          [nil, "OR", nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil],
-                                         [nil, "NOT", nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil]])
+                                         [nil, "NOT", nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil],
+                                         [nil, "-", nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil],
+                                         [nil, "+", nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil]])
         end
       end
 
