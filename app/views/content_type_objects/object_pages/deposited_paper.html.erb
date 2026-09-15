@@ -26,8 +26,8 @@
   </section>
 <% else %>
   <section class="reading-width">
-    <dl class="reading-width">
-      <dt>Available files</dt>
+    <dl>
+      <dt>Associated files</dt>
       <% object.deposited_file.each do |uri| %>
         <dd>
           <%= link_to(uri, uri.to_s) %>
