@@ -14,6 +14,7 @@ module LinkHelper
     member_ses
     primarySponsor_ses
     publisher_ses
+    section_ses
     subject_ses
     subject_t
     subtype_ses
@@ -67,7 +68,7 @@ module LinkHelper
     return 'house' if ['legislature_ses'].include?(field_name)
     return 'member' if ['member_ses'].include?(field_name)
     return 'primarysponsor' if ['primarySponsor_ses'].include?(field_name)
-    return 'publisher' if ['publisher_ses'].include?(field_name)
+    return 'publisher' if ['publisher_ses', 'section_ses'].include?(field_name)
     return 'subject' if ['subject_ses', 'subject_t'].include?(field_name)
     return 'type' if ['subtype_ses', 'type_ses', 'category_ses'].include?(field_name)
     return 'tabledby' if ['tablingMember_ses'].include?(field_name)
