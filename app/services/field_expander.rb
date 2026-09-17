@@ -22,6 +22,10 @@ class FieldExpander
 
     if field_name == "answeredby"
       ses_fields = %w[answeringMember_ses answeringDept_ses askedToReplyAuthor_ses]
+    elsif field_name == "answeringmember"
+      ses_fields = %w[answeringMember_ses]
+    elsif field_name == "answeringmemberparty"
+      ses_fields = %w[answeringMemberParty_ses]
     elsif field_name == "answertext"
       text_fields = %w[answerText_t]
     elsif field_name == "askedby"
@@ -34,6 +38,8 @@ class FieldExpander
       ses_fields = %w[certifiedCategory_ses]
     elsif field_name == "chair"
       fixed_fields = %w[chair]
+    elsif field_name == "chamberorcommittee"
+      ses_fields = %w[place_ses]
     elsif field_name == "comingintoforce"
       date_fields = %w[comingIntoForce_dt]
     elsif field_name == "commonsapproved"
@@ -77,9 +83,13 @@ class FieldExpander
       boolean_fields = %w[groupedAnswer_b]
     elsif field_name == "holdinganswer"
       boolean_fields = %w[holdingAnswer_b]
+    elsif field_name == "house"
+      ses_fields = %w[legislature_ses]
     elsif field_name == "impactassessment"
       boolean_fields = %w[containsIA_b]
     elsif field_name == "primarymemberparty"
+      ses_fields = %w[leadMemberParty_ses]
+    elsif field_name == "leadmemberparty"
       ses_fields = %w[leadMemberParty_ses]
     elsif field_name == "legislature"
       ses_fields = %w[legislature_ses]
@@ -96,6 +106,8 @@ class FieldExpander
       ses_fields = %w[member_ses]
     elsif field_name == "memberparty"
       ses_fields = %w[memberParty_ses]
+    elsif field_name == "notreached"
+      boolean_fields = %w[failedOral_b]
     elsif field_name == "notes"
       text_fields = %w[searcherNote_t comingIntoForceNotes_t relatedItemNote_t]
     elsif field_name == "opqtype"
@@ -105,9 +117,13 @@ class FieldExpander
       ses_fields = %w[sponsor_ses amendment_sponsor_ses]
     elsif field_name == "place"
       ses_fields = %w[place_ses]
+    elsif field_name == "primarymember"
+      ses_fields = %w[primaryMember_ses]
     elsif field_name == "primarysponsor"
       ses_fields = %w[primarySponsor_ses amendment_primarySponsor_ses]
     elsif field_name == "procedural"
+      ses_fields = %w[procedural_ses]
+    elsif field_name == "procedure"
       ses_fields = %w[procedural_ses]
     elsif field_name == "prorogationanswer"
       boolean_fields = %w[prorogationAnswer_b]
@@ -132,12 +148,17 @@ class FieldExpander
       boolean_fields = %w[containsStatistics_b statisticsIndicated_b hasTable_b]
     elsif field_name == "status"
       transformations = %w[status]
+    elsif field_name == "subject"
+      text_fields = %w[subject_t]
+      ses_fields = %w[subject_ses]
     elsif field_name == "summary"
       text_fields = %w[abtract_t]
     elsif field_name == "tabledby"
       ses_fields = %w[tablingMember_ses]
     elsif field_name == "timestamp"
       transformations = %w[timestamp]
+    elsif field_name == "title"
+      text_fields = %w[title_t]
     elsif field_name == "to"
       fixed_fields = %w[todate]
     elsif field_name == "topic" # TODO: add support for multiple SES queries so we can retrieve topic terms when needed, as is the case here
@@ -171,17 +192,6 @@ class FieldExpander
     else
       text_fields = [field_name]
     end
-
-    # aliases no longer listed in doc ??
-    # elsif field_name == "title"
-    #   text_fields = %w[title_t]
-    # elsif field_name == "subject"  # no longer listed?
-    #   text_fields = %w[subject_t]
-    #   ses_fields = %w[subject_ses]
-    # elsif field_name == "primarymember"
-    #   ses_fields = %w[primaryMember_ses]
-    # elsif field_name == "house"
-    #   ses_fields = %w[legislature_ses]
 
     {
       text_fields: text_fields,
