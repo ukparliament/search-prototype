@@ -1,7 +1,10 @@
-# See https://git-scm.com/docs/gitattributes for more about git attribute files.
-
-# Mark the database schema as having been generated.
-db/schema.rb linguist-generated
-
-# Mark any vendored files as having been vendored.
-vendor/* linguist-vendored
+# Scripts and Dockerfiles must keep LF endings - they run inside Linux containers
+# and on Linux build agents. CRLF breaks shebangs and here-docs.
+*.rb text eol=lf
+*.sh text eol=lf
+*.yml text eol=lf
+Dockerfile text eol=lf
+Dockerfile.* text eol=lf
+Gemfile text eol=lf
+Gemfile.lock text eol=lf
+.ruby-version text eol=lf

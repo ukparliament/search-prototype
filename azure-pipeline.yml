@@ -1,0 +1,219 @@
+# ============================================================
+# odp-search
+# azure-pipeline.yml
+#
+# Builds the application image in ACR and rolls it out as a new
+# Container Apps revision, smoke-testing that revision on its
+# own FQDN before any traffic moves to it.
+#
+# Dev runs on Microsoft-hosted agents: the Dev subscription has
+# no peering to the Test hub, so the self-hosted pool on that
+# VNet is unreachable from there.
+#
+# Prerequisites (one-time, ADO UI):
+#   - Create the pipeline pointing at this file
+#   - Pre-create the "odp-search-dev" environment - a pipeline
+#     referencing an environment that does not exist fails on
+#     its first run
+#   - Branch policy on main: PR required, this pipeline as
+#     build validation, so a direct commit that breaks the
+#     image is caught at PR time rather than at deploy time
+#
+# Prerequisites (infrastructure):
+#   - odp-infra-platform applied to dev  -> acrodpdevuksouth
+#   - odp-infra-network spoke applied to dev
+#   - odp-infra-search applied to dev    -> ca-odp-search-dev
+# ============================================================
+
+trigger:
+  branches:
+    include:
+      - main
+
+pr:
+  branches:
+    include:
+      - main
+
+variables:
+  azureServiceConnection: "Data Platform & Data Services - Development"
+  acrName: "acrodpdevuksouth"
+  containerAppName: "ca-odp-search-dev"
+  resourceGroup: "rg-odp-devops-dev-appservice-uksouth"
+  imageRepository: "odp-search"
+
+  # Switch to "Dockerfile" once real application code lands, and delete
+  # Dockerfile.placeholder. Until then the placeholder proves the pipeline
+  # end to end without pinning a gem set that has not been chosen yet.
+  dockerfile: "Dockerfile.placeholder"
+
+  # Used only when .ruby-version is absent. The application repo is expected
+  # to commit .ruby-version; this is the bootstrap fallback.
+  rubyVersionFallback: "3.3.6"
+
+pool:
+  vmImage: ubuntu-latest
+
+stages:
+
+# ============================================================
+# STAGE 1 - Lint and test
+# ============================================================
+  - stage: Verify
+    displayName: "1 · Verify"
+    jobs:
+      - job: Verify
+        displayName: Lint and test
+        steps:
+          - checkout: self
+
+          - script: |
+              set -e
+              if [ ! -f Gemfile ]; then
+                echo "No Gemfile yet - placeholder image, nothing to lint or test."
+                exit 0
+              fi
+              RUBY_VERSION="$(cat .ruby-version 2>/dev/null || echo "$(rubyVersionFallback)")"
+              echo "Ruby $RUBY_VERSION"
+              docker run --rm -v "$PWD:/app" -w /app "ruby:${RUBY_VERSION}-slim" bash -c '
+                set -e
+                apt-get update -qq
+                apt-get install -y --no-install-recommends build-essential git pkg-config libyaml-dev
+                bundle config set --local frozen true
+                bundle install --quiet
+                if bundle exec rubocop --version >/dev/null 2>&1; then bundle exec rubocop; fi
+                if [ -d spec ]; then bundle exec rspec; elif [ -d test ]; then bundle exec rake test; fi
+              '
+            displayName: Bundle, lint and test
+
+# ============================================================
+# STAGE 2 - Build the image in ACR
+# ============================================================
+  - stage: Build
+    displayName: "2 · Build image"
+    dependsOn: Verify
+    jobs:
+      - job: Build
+        displayName: az acr build
+        steps:
+          - checkout: self
+
+          - task: AzureCLI@2
+            displayName: Build and push image
+            inputs:
+              azureSubscription: $(azureServiceConnection)
+              scriptType: bash
+              scriptLocation: inlineScript
+              addSpnToEnvironment: true
+              inlineScript: |
+                set -euo pipefail
+                RUBY_VERSION="$(cat .ruby-version 2>/dev/null || echo "$(rubyVersionFallback)")"
+                echo "Building $(imageRepository):$(Build.BuildId) on Ruby ${RUBY_VERSION} from $(dockerfile)"
+
+                # ACR Tasks builds server-side, so no Docker daemon is needed on
+                # the agent. This behaves identically on hosted and self-hosted
+                # agents, which matters because Dev must use hosted ones.
+                az acr build \
+                  --registry $(acrName) \
+                  --image $(imageRepository):$(Build.BuildId) \
+                  --image $(imageRepository):latest \
+                  --file $(dockerfile) \
+                  --build-arg RUBY_VERSION="${RUBY_VERSION}" \
+                  .
+
+# ============================================================
+# STAGE 3 - Deploy a new revision, smoke test, then shift traffic
+# ============================================================
+  - stage: Deploy
+    displayName: "3 · Deploy"
+    dependsOn: Build
+    condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
+    jobs:
+      - deployment: DeployApp
+        displayName: New revision and traffic shift
+        environment: odp-search-dev
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - checkout: self
+
+                - task: AzureCLI@2
+                  displayName: Create revision, smoke test, shift traffic
+                  inputs:
+                    azureSubscription: $(azureServiceConnection)
+                    scriptType: bash
+                    scriptLocation: inlineScript
+                    addSpnToEnvironment: true
+                    inlineScript: |
+                      set -euo pipefail
+                      ACR_SERVER="$(az acr show --name $(acrName) --query loginServer -o tsv)"
+                      IMAGE="${ACR_SERVER}/$(imageRepository):$(Build.BuildId)"
+
+                      # odp-infra-search bootstraps the container app from this
+                      # repo's :latest image, so the very first run of this
+                      # pipeline necessarily happens before the app exists.
+                      # Build and push, then stop cleanly rather than failing.
+                      if ! az containerapp show \
+                           --name $(containerAppName) \
+                           --resource-group $(resourceGroup) \
+                           --output none 2>/dev/null; then
+                        echo "Container app $(containerAppName) does not exist yet."
+                        echo "Image ${IMAGE} is pushed and ready; apply odp-infra-search to create the app, then re-run this pipeline to deploy."
+                        exit 0
+                      fi
+
+                      # The new revision takes no traffic yet: the container app
+                      # runs in multiple-revision mode with traffic pinned to the
+                      # revision currently serving.
+                      az containerapp update \
+                        --name $(containerAppName) \
+                        --resource-group $(resourceGroup) \
+                        --image "$IMAGE" \
+                        --revision-suffix "b$(Build.BuildId)" \
+                        --output none
+
+                      REVISION="$(az containerapp revision list \
+                        --name $(containerAppName) \
+                        --resource-group $(resourceGroup) \
+                        --query "sort_by([?properties.active], &properties.createdTime)[-1].name" -o tsv)"
+                      echo "New revision: $REVISION"
+
+                      FQDN="$(az containerapp revision show \
+                        --name $(containerAppName) \
+                        --resource-group $(resourceGroup) \
+                        --revision "$REVISION" \
+                        --query properties.fqdn -o tsv)"
+                      echo "Smoke testing https://${FQDN}/health"
+
+                      # Probe the revision on its own FQDN before any traffic
+                      # moves. A failure here leaves the previous revision
+                      # serving 100% - the deploy safety property the app had on
+                      # Heroku and would have lost on ACI.
+                      HEALTHY=0
+                      for attempt in $(seq 1 30); do
+                        CODE="$(curl -s -o /dev/null -w '%{http_code}' --max-time 10 "https://${FQDN}/health" || echo 000)"
+                        if [ "$CODE" = "200" ]; then
+                          echo "Healthy after ${attempt} attempt(s)"
+                          HEALTHY=1
+                          break
+                        fi
+                        sleep 10
+                      done
+
+                      if [ "$HEALTHY" != "1" ]; then
+                        echo "Revision $REVISION never returned 200 from /health."
+                        echo "Traffic left on the previous revision; deactivating the failed one."
+                        az containerapp revision deactivate \
+                          --name $(containerAppName) \
+                          --resource-group $(resourceGroup) \
+                          --revision "$REVISION" --output none || true
+                        exit 1
+                      fi
+
+                      az containerapp ingress traffic set \
+                        --name $(containerAppName) \
+                        --resource-group $(resourceGroup) \
+                        --revision-weight "${REVISION}=100" \
+                        --output none
+                      echo "100% of traffic now on $REVISION"

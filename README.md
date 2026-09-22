@@ -1,173 +1,112 @@
-# README
+# odp-search
 
-## General notes
+The ODP search application: a Ruby app, previously hosted on Heroku, running as a container on
+Azure Container Apps.
 
-- Ruby 4.1, Rails 8.1
-- We have intentionally kept dependencies to a minimum.
-- This app currrently does not use a database, however future development may necessitate this.
-- Unit test suite uses RSpec
-- Some request specs have been written for particular 'items' (source data variants), however the task of creating these
-  for all object types has not yet been completed.
-- Currently the app is deployed via Heroku
+This repository holds the **application** — source, `Dockerfile`, Puma configuration and the
+build/deploy pipeline. The infrastructure it runs on lives in `odp-infra-search` (Container Apps
+environment, container app, search index, identity) and `odp-infra-platform` (the container
+registry). The full design is in
+[`odp-infra-docs/odp-search-implementation-plan.md`](../odp-infra-docs/odp-search-implementation-plan.md).
 
-## High level overview
+---
 
-This application is the front end for a (Solr 9) search and has two main interfaces: the search page (search#index),
-which also displays search results, and the 'item' view (content_type_objects#show).
+## The image contract
 
-The intended route through the app is for a search to be performed, the results to be viewed, filtered and adjusted,
-then for a single result to be clicked on. This then takes the user to the item view, which displayed more detailed
-information.
+Application code and platform are maintained by different people, so the boundary between them is
+written down rather than assumed. Everything either side relies on is in this table. Change
+anything here and the other side needs to know.
 
-## Standard data format
+| This repository guarantees | The platform guarantees |
+|---|---|
+| Listens on **port 8080**, bound to `0.0.0.0` | Sets `targetPort = 8080` on ingress |
+| Exposes a cheap, auth-exempt **`/health`** (Rails 7.1+ `/up` is also accepted) | Probes it for readiness and liveness, and smoke-tests it before shifting traffic |
+| Commits a **`Gemfile.lock`** in sync with `Gemfile` | Builds with `BUNDLE_FROZEN=1`, so lockfile drift fails the build loudly |
+| Reads all configuration from **environment variables** — no `.env`, no credentials in the image | Injects env vars and Key Vault-backed secrets via Container Apps |
+| Logs to **stdout/stderr**, single-line JSON where practical | Ships logs to Log Analytics |
+| Declares its Ruby version in **`.ruby-version`** | Pins the base image to match |
+| Stores nothing on local disk that must survive a restart | Replicas are ephemeral and may be recycled at any time |
 
-Because the data returned by Solr is often treated differently throughout the application based on the name or type of
-Solr field it originated from, most data passing between various methods is in the form of a hash with the data keyed
-to 'value' and its Solr field name keyed to 'field_name', instead of simply passing a collection of unaccompanied data. 
+Two consequences worth stating plainly:
 
-## Feature details
+- **Replicas are cattle.** Uploads, caches and session state written to the container filesystem
+  disappear on the next deploy or scale event, and are not shared between replicas.
+- **Secrets never enter the image.** `SECRET_KEY_BASE`, search index credentials and anything else
+  sensitive are resolved at runtime from `kv-odp-dev-uksouth` via managed identity.
 
-### Item pages
+---
 
-An object ID is required, and used to retrieve the data for that object from Solr using an instance of SolrQuery. The
-returned data is passed to the ContentTypeObject class, using the 'generate' class method to identify and initialise the
-relevant subclass corresponding to the item type (based on its type and subtype SES IDs, type_ses and subtype_ses).
+## Layout
 
-The class, for example WrittenQuestion, contains instance methods used to extract the necessary data to render the page
-from the returned JSON. The numerous subclasses of ContentTypeObject are organised in several layers where beneficial, for
-example WrittenQuestion inherits from Question, which also has the subclass OralQuestion and holds methods common to
-both subclasses. A number of instance methods belong to ContentTypeObject itself, as their behaviour is common across all
-object types.
+```
+Dockerfile               the real application image - multi-stage, bundler, jemalloc, YJIT
+Dockerfile.placeholder   dependency-free holding image; delete when app code lands
+config/puma.rb           worker and thread sizing, read from the environment
+placeholder/server.rb    stdlib-only server behind Dockerfile.placeholder
+azure-pipeline.yml       verify -> ACR build -> new revision -> smoke test -> traffic shift
+docs/heroku-parity.md    config vars, add-ons, index and baseline numbers - fill during recon
+```
 
-### The search page
+## The placeholder
 
-The search bar on the main search page makes a request to Solr via an interstitial controller action (search#index) that
-does some basic formatting of the query before assembling a Solr query and making a GET request.
+There is no application source here yet. Until it arrives, the pipeline builds
+`Dockerfile.placeholder`: a Ruby image running a standard-library-only HTTP server that answers
+`/health` and a holding page on 8080 as a non-root user. It exists so the whole path —
+ACR build, revision creation, health probe, traffic shift — is proven working before real code
+has to debug it, and because it has no gems it cannot constrain a gem set nobody has chosen yet.
 
-The app forms the search query using the SolrSearch class, which is a subclass of ApiClient, which holds generic API
-request methods. Solr returns results as JSON (as configured) which can then be parsed by the app. This process is
-identical to that described above for the item pages, but a collection of objects is returned instead.
+**When the application lands:**
 
-#### Search expansion (yet to be implemented)
+1. Commit the source, `Gemfile`, `Gemfile.lock` and `.ruby-version`.
+2. Set `dockerfile: "Dockerfile"` in `azure-pipeline.yml`.
+3. Delete `Dockerfile.placeholder` and `placeholder/`.
+4. Check the `TODO(recon)` markers in `Dockerfile` — the Ruby version and the native build
+   dependencies (`libpq-dev` and friends) must match what the gem set actually needs.
+5. Check the `TODO(app)` marker in `config/puma.rb` — anything opened during preload must be
+   re-established per worker.
 
-The search controller will eventually make a request to the SES API ahead of forming the Solr query. This is to perform
-query term expansion using the dictionary of controlled terms.
+## Running it locally
 
-#### Search filters
+```bash
+docker build -f Dockerfile.placeholder -t odp-search:local .
+docker run --rm -p 8080:8080 odp-search:local
+curl localhost:8080/health
+```
 
-Filters are built using a predefined list of facets to request from Solr, that get sent with every query. These can be
-found in the facet_field class method on the SolrSearch class. The returned data then contains facet data (a count of
-results) for each of these, which can then be populated in the side panel. The facets are limited to 100 for performance
-reasons, however a lower number may be appropriate for some fields. Solr documentation details how to configure this
-limit per-field.
+Once real code is in place, swap `-f Dockerfile.placeholder` for `-f Dockerfile`.
 
-Current filter behaviour is via AND, reducing the result set rather than expanding it.
+## Deployment
 
-#### Search type hierarchy
+`main` is deployed automatically. A push builds the image in ACR
+(`acrodpdevuksouth`), creates a new Container Apps revision that takes **no traffic**, probes
+`/health` on that revision's own FQDN, and only then shifts 100% of traffic to it. A revision that
+never becomes healthy is deactivated and the previous one keeps serving.
 
-The first facet-based filter shown on the search results page operates on type_ses & subtype_ses. These types form a
-hierarchy, and are represented as an expanding tree the user can explore when applying filters.
+Pull requests run verify and build but do not deploy.
 
-Unfortunately the structure of the hierarchy is not readily available, and as such it has to be constructed. We used the
-following approach to achieve this:
+### Before the first run
 
-- Include type_sesrollup in the SolrSearch facet fields, so that the data returned by Solr is faceted by the
-  type_sesrollup field, which is an array of SES IDs reflecting the type ID of the item, as well as the type of each of
-  its ancestors in the hierarchy. As an example, "type_sesrollup"=>[346697, 346697, 414033] resolves to 'Research
-  Briefings' -> 'Commons Briefing Papers'.
-- Make a request to SES for all unique SES IDs from all of the returned type_sesrollup fields. This ensures we have
-  every ID needed to construct the hierarchy, without having to request everything. This is done by the hierarchy_data
-  method on SesLookup. The method also restructures the returned data as a hash with keys in the
-  form [<ses_id>, <resolved type name as a string>] and the corresponding hierarchy portion of the SES data as the
-  values.
-- Interrogate the hierarchy data assembled above and create another hash, with each ID against an array of IDs of all of
-  that types children. This information is obtained from the 'narrower terms'. This process is done by the
-  organise_hierarchy_data method on HierarchyBuilder.
-- Using the same assembled hierarchy data as a source, the top_level_types method on HierarchyBuilder creates an array
-  of all types that show the ID 346696 as their parent. 346696 is 'Content Type' and is the root node of the type
-  hierarchy. All types referencing it as their parent are therefore at the highest level we want to display. This method
-  then filters out types that are not present in the returned Solr data by comparing the complete list to those included
-  in the facet data.
-- The search index view then renders the hierarchy_level partial for each item in the top_level_types array, passing in
-  the relevent data and setting 'tier' to 1. This partial renders the clickable name and count of matching items (from
-  facet data) for the given type, and then uses the organise_hierarchy_data hash (loaded as an instance variable) to
-  find the IDs of children belonging to the type. If there are none, the rendering process stops there. If there are
-  children, another hierarchy_layer partial is rendered for each of them, incrementing the value of 'tier' for each
-  level deeper. In this way, a complete tree is constructed from top to bottom, without any additional querying needed.
-- The value of tier is used to determine the styling of the otherwise identical partials: those on tier 1 are always
-  shown.
+- Create the pipeline in ADO against `azure-pipeline.yml`.
+- Pre-create the **`odp-search-dev`** environment in the ADO UI. A pipeline referencing an
+  environment that does not exist fails on its first run.
+- Set a branch policy on `main`: PR required, with this pipeline as build validation.
+- The infrastructure must exist first: ACR from `odp-infra-platform`, the spoke subnets from
+  `odp-infra-network`, and the container app itself from `odp-infra-search`.
 
-At the time of writing, work is underway to refactor a javascript based interactive type hierarchy (using
-expand_types_controller.js) to an HTML5 based approach which uses a series of nested 'details' tags.
+## Performance
 
-## Views, partials and helpers
+The migration is only worth doing if the result beats the Heroku baseline, so the baseline is
+measured **before** anything moves and recorded in `docs/heroku-parity.md`. The levers, in
+expected order of payoff:
 
-Both item and search pages make use of numerous partials. For the most part the approach has been to keep separate
-partials for each item
-type even if the content and/or the underlying data query is the same as that for another object. This is because the
-requirements for the application are generally quite dynamic and it seemed prudent to avoid patterns that would make
-future divergence of what are currently identical views difficult.
+1. **Locality** — the app and the search index sit on the same VNet, so the per-query public
+   internet round trip that a Heroku dyno pays to a hosted addon stops existing.
+2. **YJIT** — `RUBY_YJIT_ENABLE=1`, set in the image.
+3. **jemalloc** — `LD_PRELOAD`ed in the image; typically 20-40% less RSS, which converts into more
+   Puma workers per replica.
+4. **Puma sizing** — `WEB_CONCURRENCY` and `RAILS_MAX_THREADS` re-derived against a 2 vCPU / 4 GB
+   replica rather than inherited from a shared-core dyno.
+5. **Ingress compression and HTTP/2**, at the Container Apps ingress.
+6. **Keep-alive pooling to the index**, avoiding a TCP+TLS handshake per query.
 
-### Helpers
-
-At the time of writing, a number of helper methods in ApplicationHelper are yet to be moved to a more suitable location.
-
-#### Link Helper
-
-Used to generate and format the various links used throughout the app. Also includes methods for formatting titles and
-names, the latter including disambiguation steps. Some links include depluralisation steps, which can be enabled or
-disabled when called.
-
-#### FacetHelper
-
-This helper includes a method to check facets (returned from Solr and used to filter results) and format them if
-necessary. This is done by initialising an instance of the relevant subclass of the Facet class. At the time of writing,
-the framework for formatting session facets has been implemented, but no business logic added as of yet.
-
-## External APIs
-
-### ApiClient and its subclasses
-
-ApiClient is a class containing common methods for making requests to an external API, handling errors and interpreting
-results. It has several subclasses. For each, the object_data method returns the objects as JSON.
-
-- SolrSearch: Performs a Solr search (POST request) and returns all results. Includes all facets supported by the app
-  for every search, which are detailed in the class method facet_fields. Optionally accepts query string, filter,
-  results count, sort by and page.
-- SolrQuery: A simple Solr POST request that accepts an object_uri (primary key in Solr index) and returns the first
-  result.
-- SolrMultiQuery: A simple Solr POST request that accepts any number of object_uris and returns all results.
-- SesLookup: A GET request to the SES API. Accepts any number of integer IDs, and returns a hash of names keyed to their
-  SES IDs.
-
-### API endpoints
-
-The Solr and SES API endpoints are protected via an API key (Azure) which is stored in the app encrypted credentials.
-There are multiple environments within a single credentials file, as a deliberate choice to avoid the complications
-of using environment specific credentials files. The correct key for Solr, for example, is found using:
-
-``` Rails.application.credentials.dig(Rails.env.to_sym, :solr_api, :subscription_key) ```
-
-which will function correctly in any environment, so long as a subsection matching the environment name has been added
-to the credentials file and the correct data added within.
-
-The master key is needed to decrypt the credentials file. This should be provided to anyone developing the application
-and also included on any servers, usually as an environment variable. Please see the Rails credentials documentation
-for more information.
-
-### SES data
-
-Many of the names within the Solr data (Members, Legislatures, Topics etc.) are given as a SES ID (any Solr field name
-ending '_ses') which must be resolved using the SES API. This is a Smartlogic Semaphore service. Because it only accepts
-GET requests, and most of the integer IDs are 5 or 6 characters in length, we encounter limitations in how many IDs can
-be resolved in a single request. The SesLookup class accepts any number of IDs, removes any duplicates, then splits them
-into chunks of 250 to ensure the request does not exceed the 2048 character limit for a GET request.
-
-Each chunk of 250 or fewer IDs is assigned a new thread, as it is significantly quicker to make all requests
-simultaneously.
-
-As part of performance improvement work to the ContentTypeObjectsController show action, used on item pages, the call to SES
-is now only carried out once the SES IDs relevant to items related to the result are collated and added to the list.
-This avoids needing to make further SES requests later on, reducing page load times. A similar change will be made to
-the SearchController index action, used for the search results page, collating the related item IDs needed to present a
-page of results, however this has not yet been implemented.
+Measure after each change, so each one's contribution is known rather than assumed.
