@@ -1,0 +1,30 @@
+# ============================================================
+# Placeholder image — proves the pipeline end to end before any
+# application code exists.
+#
+# Deliberately dependency-free: it uses only the Ruby standard
+# library, so it needs no Gemfile.lock and cannot drift from a
+# gem set that has not been chosen yet. It serves /health and a
+# holding page on 8080 as a non-root user, which is enough to
+# exercise: ACR build -> container app revision -> health probe
+# -> traffic shift.
+#
+# DELETE THIS FILE once real application code lands, and switch
+# the pipeline's dockerfile variable to Dockerfile.
+# ============================================================
+
+ARG RUBY_VERSION=3.3.6
+FROM ruby:${RUBY_VERSION}-slim
+
+ENV PORT=8080
+
+RUN groupadd --system --gid 1000 app \
+    && useradd --system --uid 1000 --gid app --create-home app
+
+WORKDIR /app
+COPY --chown=app:app placeholder/server.rb ./server.rb
+
+USER app
+EXPOSE 8080
+
+CMD ["ruby", "server.rb"]

@@ -1,0 +1,20 @@
+.git
+.gitignore
+.github
+.azuredevops
+azure-pipeline.yml
+docs
+README.md
+Dockerfile
+Dockerfile.placeholder
+.dockerignore
+
+# Never ship local state or secrets into the image.
+.env
+.env.*
+log
+tmp
+node_modules
+vendor/bundle
+coverage
+*.log
