@@ -150,6 +150,19 @@ stages:
                       ACR_SERVER="$(az acr show --name $(acrName) --query loginServer -o tsv)"
                       IMAGE="${ACR_SERVER}/$(imageRepository):$(Build.BuildId)"
 
+                      # odp-infra-search bootstraps the container app from this
+                      # repo's :latest image, so the very first run of this
+                      # pipeline necessarily happens before the app exists.
+                      # Build and push, then stop cleanly rather than failing.
+                      if ! az containerapp show \
+                           --name $(containerAppName) \
+                           --resource-group $(resourceGroup) \
+                           --output none 2>/dev/null; then
+                        echo "Container app $(containerAppName) does not exist yet."
+                        echo "Image ${IMAGE} is pushed and ready; apply odp-infra-search to create the app, then re-run this pipeline to deploy."
+                        exit 0
+                      fi
+
                       # The new revision takes no traffic yet: the container app
                       # runs in multiple-revision mode with traffic pinned to the
                       # revision currently serving.
