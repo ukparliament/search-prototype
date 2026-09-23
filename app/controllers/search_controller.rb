@@ -34,7 +34,6 @@ class SearchController < ApplicationController
       # - SES IDs for associated objects of the results on the page
       ses_ids = [@search_data.facet_ses_ids + @associated_object_results.dig(:ses_ids) + query_ses].flatten.uniq
       @ses_data = SesData.new(ses_ids, @search_data.hierarchy_ses_data).combined_ses_data
-
       @crumb << { label: 'Search results', url: nil }
     end
   end
