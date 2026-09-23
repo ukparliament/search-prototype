@@ -1,10 +1,10 @@
 GIT
   remote: https://github.com/ukparliament/design-assets.git
-  revision: 8204acf7e6525a7681e554fecce663e83242c94d
-  tag: 0.6.10
+  revision: 1638fd2291ea42fe25583a7d1abce9c01c286377
+  tag: 0.6.14
   glob: library_design/*.gemspec
   specs:
-    library_design (0.6.10)
+    library_design (0.6.14)
       rack-cors (~> 3.0.0)
 
 GEM
@@ -277,13 +277,13 @@ GEM
       rspec-mocks (~> 3.13)
       rspec-support (~> 3.13)
     rspec-support (3.13.6)
-    rubyzip (2.4.1)
+    rubyzip (3.7.0)
     securerandom (0.4.1)
-    selenium-webdriver (4.31.0)
+    selenium-webdriver (4.49.0)
       base64 (~> 0.2)
       logger (~> 1.4)
       rexml (~> 3.2, >= 3.2.5)
-      rubyzip (>= 1.2.2, < 3.0)
+      rubyzip (>= 1.2.2, < 4.0)
       websocket (~> 1.0)
     simplecov (0.22.0)
       docile (~> 1.1)
