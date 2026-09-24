@@ -67,9 +67,7 @@ class ApiClient
     headers.each { |k, v| request[k] = v }
 
     # make the request
-    response = http.request(request)
-
-    response.body
+    http.request(request).body
   end
 
   def common_api_host_path

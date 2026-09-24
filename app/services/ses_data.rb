@@ -1,3 +1,7 @@
+##
+# Class for retrieving SES data from cache (preferred) or SES API (fallback)
+# Accepts SES IDs (array of ints) and optionally existing data (array of hashes)
+# Where provided, the existing_ses_data is merged with data retrieved from either source and returned
 class SesData
 
   attr_reader :ses_ids, :existing_ses_data, :ses_cache
@@ -8,30 +12,33 @@ class SesData
     @ses_ids = ses_ids
   end
 
-  # Accepts SES IDs (array of ints) and optionally existing data (array of hashes)
-
   def combined_ses_data
     return {} if ses_ids.blank?
 
-    ids_in_cache = []
     ids_to_fetch = []
+    cached_data = {}
+    fetched_data = {}
 
-    # create two sets of IDs: those in cache & those we need to lookup
     if Rails.env.test?
       # skip cache retrieval in test env
       ids_to_fetch = ses_ids.uniq.sort
     else
+      # create two sets of IDs: those in cache & those we need to lookup
       ses_ids.uniq.sort.each do |ses_id|
-        if ses_cache.exists_in_cache?(ses_id)
-          ids_in_cache << ses_id
+        # attempt to retrieve from cache
+        retrieved_value = ses_cache.read_cached_value(ses_id)
+        retrieved_scope_note = ses_cache.read_cached_value("#{ses_id}_scope_note")
+
+        if retrieved_value.present?
+          # populate cached_data hash if values were retrieved
+          cached_data[ses_id] = retrieved_value
+          cached_data["#{ses_id}_scope_note"] = retrieved_scope_note
         else
+          # otherwise put in fetch from API
           ids_to_fetch << ses_id
         end
       end
     end
-
-    cached_data = {}
-    fetched_data = {}
 
     # go to SES API for IDs we don't have cached
     puts "#{ids_to_fetch.count} SES terms need to be fetched from SES" if Rails.env.development?
@@ -41,15 +48,6 @@ class SesData
 
     # if we fetched new data, write it to the cache
     fetched_data.each { |k, v| ses_cache.write_cached_value(k, v) } unless fetched_data.empty?
-
-    # get cached data for ids left in initial_ids
-    puts "#{ids_in_cache.count} SES terms found in cache" if Rails.env.development?
-    unless ids_in_cache.blank?
-      ids_in_cache.each do |ses_id|
-        cached_data[ses_id] = ses_cache.read_cached_value(ses_id)
-        cached_data["#{ses_id}_scope_note"] = ses_cache.read_cached_value("#{ses_id}_scope_note")
-      end
-    end
 
     # combine cached and fetched data
     combined_data = cached_data.merge(fetched_data)
