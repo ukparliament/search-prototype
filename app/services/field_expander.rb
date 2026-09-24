@@ -57,7 +57,7 @@ class FieldExpander
     elsif field_name == "primarysponsor"
       ses_fields = %w[primarySponsor_ses amendment_primarySponsor_ses]
     elsif field_name == "publisher"
-      ses_fields = %w[publisher_ses]
+      ses_fields = %w[publisher_ses section_ses] # TODO: resolve this wrt. the the alias changes
       text_fields = %w[publisher_t]
     elsif field_name == "type"
       ses_fields = %w[type_sesrollup]
