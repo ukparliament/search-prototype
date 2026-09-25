@@ -1,19 +1,23 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
+include ActiveSupport::Testing::TimeHelpers
 
 RSpec.describe 'TermExpander' do
   let(:term_expander) { TermExpander.new(expanded_fields: expanded_fields, ses_data: ses_data, search_term: search_term) }
   let(:ses_data) { [{ equivalent_terms: [["Accommodation", "Houses"]], preferred_term_id: "91569", preferred_term: "Housing", topic_id: "95629" }] }
   let(:search_term) { 'housing' }
   let(:expanded_fields) { { boolean_fields: boolean_fields, date_fields: date_fields,
-                            ses_fields: ses_fields, ses_id_fields: ses_id_fields,
-                            text_fields: text_fields, process_without_field: process_without_field, } }
+                            fixed_fields: fixed_fields, ses_fields: ses_fields,
+                            ses_id_fields: ses_id_fields, text_fields: text_fields,
+                            transformations: transformations, process_without_field: process_without_field, } }
   let(:boolean_fields) { [] }
   let(:date_fields) { [] }
   let(:ses_fields) { [] }
   let(:ses_id_fields) { [] }
   let(:text_fields) { [] }
+  let(:fixed_fields) { [] }
+  let(:transformations) { [] }
   let(:process_without_field) { false }
 
   describe 'expand_terms' do
@@ -243,6 +247,12 @@ RSpec.describe 'TermExpander' do
   end
 
   describe 'populate_date_fields' do
+    let(:test_date) { Date.new(2025, 06, 01) }
+
+    before do
+      travel_to test_date
+    end
+
     context 'with a single date field' do
       let(:date_fields) { ["date_dt"] }
 
@@ -250,7 +260,7 @@ RSpec.describe 'TermExpander' do
         let(:search_term) { "today" }
 
         it "searches the provided date field for the relevant date range" do
-          expect(term_expander.populate_date_fields).to eq [[:date, "date_dt:NOW/DAY"]]
+          expect(term_expander.populate_date_fields).to eq [[:date, "date_dt:[2025-06-01T00:00:00Z TO 2025-06-02T00:00:00Z}"]]
         end
       end
 
@@ -258,7 +268,7 @@ RSpec.describe 'TermExpander' do
         let(:search_term) { "yesterday" }
 
         it "searches the provided date field for the relevant date range" do
-          expect(term_expander.populate_date_fields).to eq [[:date, "date_dt:NOW/DAY-1DAY"]]
+          expect(term_expander.populate_date_fields).to eq [[:date, "date_dt:[2025-05-31T00:00:00Z TO 2025-06-01T00:00:00Z}"]]
         end
       end
 
@@ -266,7 +276,7 @@ RSpec.describe 'TermExpander' do
         let(:search_term) { "thisweek" }
 
         it "searches the provided date field for the relevant date range" do
-          expect(term_expander.populate_date_fields).to eq [[:date, "date_dt:[NOW/WEEK TO NOW/WEEK+6DAYS]"]]
+          expect(term_expander.populate_date_fields).to eq [[:date, "date_dt:[2025-05-26T00:00:00Z TO 2025-06-02T00:00:00Z}"]]
         end
       end
 
@@ -274,7 +284,7 @@ RSpec.describe 'TermExpander' do
         let(:search_term) { "lastweek" }
 
         it "searches the provided date field for the relevant date range" do
-          expect(term_expander.populate_date_fields).to eq [[:date, "date_dt:[NOW/WEEK-1WEEK TO NOW/WEEK-1DAY]"]]
+          expect(term_expander.populate_date_fields).to eq [[:date, "date_dt:[2025-05-19T00:00:00Z TO 2025-05-26T00:00:00Z}"]]
         end
       end
 
@@ -282,7 +292,7 @@ RSpec.describe 'TermExpander' do
         let(:search_term) { "thismonth" }
 
         it "searches the provided date field for the relevant date range" do
-          expect(term_expander.populate_date_fields).to eq [[:date, "date_dt:[NOW/MONTH TO NOW/MONTH+1MONTH-1MILLISECOND]"]]
+          expect(term_expander.populate_date_fields).to eq [[:date, "date_dt:[2025-06-01T00:00:00Z TO 2025-07-01T00:00:00Z}"]]
         end
       end
 
@@ -290,7 +300,7 @@ RSpec.describe 'TermExpander' do
         let(:search_term) { "lastmonth" }
 
         it "searches the provided date field for the relevant date range" do
-          expect(term_expander.populate_date_fields).to eq [[:date, "date_dt:[NOW/MONTH-1MONTH TO NOW/MONTH-1MILLISECOND]"]]
+          expect(term_expander.populate_date_fields).to eq [[:date, "date_dt:[2025-05-01T00:00:00Z TO 2025-06-01T00:00:00Z}"]]
         end
       end
 
@@ -298,7 +308,7 @@ RSpec.describe 'TermExpander' do
         let(:search_term) { "thisyear" }
 
         it "searches the provided date field for the relevant date range" do
-          expect(term_expander.populate_date_fields).to eq [[:date, "date_dt:[NOW/YEAR TO NOW/YEAR+1YEAR-1MILLISECOND]"]]
+          expect(term_expander.populate_date_fields).to eq [[:date, "date_dt:[2025-01-01T00:00:00Z TO 2026-01-01T00:00:00Z}"]]
         end
       end
 
@@ -306,7 +316,7 @@ RSpec.describe 'TermExpander' do
         let(:search_term) { "lastyear" }
 
         it "searches the provided date field for the relevant date range" do
-          expect(term_expander.populate_date_fields).to eq [[:date, "date_dt:[NOW/YEAR-1YEAR TO NOW/YEAR-1MILLISECOND]"]]
+          expect(term_expander.populate_date_fields).to eq [[:date, "date_dt:[2024-01-01T00:00:00Z TO 2025-01-01T00:00:00Z}"]]
         end
       end
 
@@ -320,11 +330,11 @@ RSpec.describe 'TermExpander' do
     end
 
     context 'with multiple date fields' do
-      let(:date_fields) { ["dateCertified_dt", "certifiedDate_dt"] }
+      let(:date_fields) { ["dateCertified_dt", "dateAnswered_dt"] }
       let(:search_term) { "today" }
 
       it "applies the search across all provided date fields" do
-        expect(term_expander.populate_date_fields).to eq [[:date, "dateCertified_dt:NOW/DAY"], [:date, "certifiedDate_dt:NOW/DAY"]]
+        expect(term_expander.populate_date_fields).to eq [[:date, "dateCertified_dt:[2025-06-01T00:00:00Z TO 2025-06-02T00:00:00Z}"], [:date, "dateAnswered_dt:[2025-06-01T00:00:00Z TO 2025-06-02T00:00:00Z}"]]
       end
     end
   end
@@ -421,6 +431,225 @@ RSpec.describe 'TermExpander' do
 
       it 'returns a field-exists search against the provided field' do
         expect(term_expander.populate_ses_fields).to eq([[:*, ["subject_ses:*"]]])
+      end
+    end
+  end
+
+  describe 'populate_fixed_fields' do
+    context 'for chair' do
+      let!(:fixed_fields) { ["chair"] }
+
+      context 'for true' do
+        let!(:search_term) { 'YES' }
+        it 'returns member_ses:303704' do
+          expect(term_expander.populate_fixed_fields).to eq([[:ses_id, "member_ses:303704"]])
+        end
+      end
+
+      context 'for false' do
+        let!(:search_term) { "0" }
+        it 'returns "-" member_ses:303704' do
+          expect(term_expander.populate_fixed_fields).to eq([[:ses_id, "-member_ses:303704"]])
+        end
+      end
+    end
+
+    context 'for from' do
+      let!(:fixed_fields) { ["fromdate"] }
+      let!(:search_term) { "2022-05-20" }
+      it 'returns an open ended date range beginning with the provided date' do
+        expect(term_expander.populate_fixed_fields).to eq([[:date, "date_dt:2022-05-20T00:00:00Z TO *"]])
+      end
+    end
+
+    context 'for to' do
+      let!(:fixed_fields) { ["todate"] }
+      let!(:search_term) { "2022-05-20" }
+      it 'returns an open ended date range ending with the provided date' do
+        expect(term_expander.populate_fixed_fields).to eq([[:date, "* TO date_dt:2022-05-20T00:00:00Z"]])
+      end
+    end
+
+    context 'for opqtype' do
+      let!(:fixed_fields) { ["opqtype"] }
+
+      context 'for supp' do
+        let!(:search_term) { 'supp' }
+
+        it 'returns a fixed value' do
+          expect(term_expander.populate_fixed_fields).to eq([[:text, "contributionType_t:supplementary"]])
+        end
+      end
+
+      context 'for othersupp' do
+        let!(:search_term) { 'othersupp' }
+
+        it 'returns a fixed value' do
+          expect(term_expander.populate_fixed_fields).to eq([[:text, "contributionType_s:Supplementary"]])
+        end
+      end
+
+      context 'for firstsupp' do
+        let!(:search_term) { 'firstsupp' }
+
+        it 'returns a fixed value' do
+          expect(term_expander.populate_fixed_fields).to eq([[:text, "contributionType_s:\"1st Supplementary\""]])
+        end
+      end
+
+      context 'for lead' do
+        let!(:search_term) { 'lead' }
+
+        it 'returns a fixed value' do
+          expect(term_expander.populate_fixed_fields).to eq([[:text, "contributionType_s:Lead"]])
+        end
+      end
+    end
+
+    context 'for wpqtype' do
+      let!(:fixed_fields) { ["wpqtype"] }
+
+      context 'for ordinary' do
+        let!(:search_term) { 'ordinary' }
+
+        it 'returns a fixed value' do
+          expect(term_expander.populate_fixed_fields).to eq([[:text, "wpqType_s:Ordinary"]])
+        end
+      end
+      context 'for namedday' do
+        let!(:search_term) { 'namedday' }
+
+        it 'returns a fixed value' do
+          expect(term_expander.populate_fixed_fields).to eq([[:text, "wpqType_s:Named Day"]])
+        end
+      end
+      context 'for nextday' do
+        let!(:search_term) { 'nextday' }
+
+        it 'returns a fixed value' do
+          expect(term_expander.populate_fixed_fields).to eq([[:text, "wpqType_s:daily"]])
+        end
+      end
+    end
+  end
+
+  describe 'apply_transformations' do
+    context 'for an unknown transformation name' do
+      let!(:transformations) { ["string"] }
+
+      it 'raises an error' do
+        expect { term_expander.apply_transformations }.to raise_error(QueryExpansionError, "Unknown transformation type \"string\"")
+      end
+    end
+
+    context 'for status' do
+      let!(:transformations) { ["status"] }
+      let!(:search_term) { 'test' }
+
+      it 'titleizes the search term and applies it across three fields' do
+        expect(term_expander.apply_transformations).to eq([[:status, "edmStatus_s:Test"], [:status, "pqStatus_s:Test"], [:status, "status_s:Test"]])
+      end
+    end
+
+    context 'for timestamp' do
+      let!(:transformations) { ["timestamp"] }
+
+      context 'for a single date' do
+        context 'formatted YYYY-MM-DD' do
+          let!(:search_term) { '2022-05-04' }
+          it 'returns a date range for the entire day using an exclusive range end' do
+            expect(term_expander.apply_transformations).to eq([[:timestamp, "timestamp:[2022-05-04T00:00:00Z TO 2022-05-05T00:00:00Z}"]])
+          end
+        end
+        context 'formatted YY-MM-DD' do
+          let!(:search_term) { '22-05-04' }
+          it 'returns a date range for the entire day using an exclusive range end' do
+            expect(term_expander.apply_transformations).to eq([[:timestamp, "timestamp:[2022-05-04T00:00:00Z TO 2022-05-05T00:00:00Z}"]])
+          end
+        end
+        context 'formatted as a full timestamp' do
+          let!(:search_term) { '2022-05-04T00:00:00Z' }
+          it 'returns a date range for the entire day using an exclusive range end' do
+            expect(term_expander.apply_transformations).to eq([[:timestamp, "timestamp:[2022-05-04T00:00:00Z TO 2022-05-05T00:00:00Z}"]])
+          end
+        end
+        context 'formatted as a full timestamp for a time other than midnight' do
+          let!(:search_term) { '2022-05-04T07:28:02Z' }
+          it 'returns a date range for the entire day using an exclusive range end' do
+            expect(term_expander.apply_transformations).to eq([[:timestamp, "timestamp:[2022-05-04T00:00:00Z TO 2022-05-05T00:00:00Z}"]])
+          end
+        end
+      end
+      context 'for a date range' do
+        context 'using ..' do
+          let!(:search_term) { '2022-05-04..2022-05-09' }
+          it 'returns a date range for the entire day using an exclusive range end' do
+            expect(term_expander.apply_transformations).to eq([[:timestamp, "timestamp:[2022-05-04T00:00:00Z TO 2022-05-10T00:00:00Z}"]])
+          end
+        end
+        context 'using TO' do
+          let!(:search_term) { '2022-05-04 TO 2022-05-09' }
+          it 'returns a date range for the entire day using an exclusive range end' do
+            expect(term_expander.apply_transformations).to eq([[:timestamp, "timestamp:[2022-05-04T00:00:00Z TO 2022-05-10T00:00:00Z}"]])
+          end
+        end
+      end
+    end
+
+    context 'for session' do
+      let!(:transformations) { ["session"] }
+      let!(:search_term) { '18/19' }
+
+      it 'returns a session term string with the session name in the correct format' do
+        expect(term_expander.apply_transformations).to eq([[:session, "session_s:2018-19"]])
+      end
+
+      context 'where the search term uses -' do
+        let!(:search_term) { '18-19' }
+
+        it 'returns a session term string with the session name in the correct format' do
+          expect(term_expander.apply_transformations).to eq([[:session, "session_s:2018-19"]])
+        end
+      end
+
+      context 'where the search term uses &' do
+        let!(:search_term) { '18&19' }
+
+        it 'returns a session term string with the session name in the correct format' do
+          expect(term_expander.apply_transformations).to eq([[:session, "session_s:2018-19"]])
+        end
+      end
+
+      context 'where the search term uses :' do
+        let!(:search_term) { '18:19' }
+
+        it 'returns a session term string with the session name in the correct format' do
+          expect(term_expander.apply_transformations).to eq([[:session, "session_s:2018-19"]])
+        end
+      end
+
+      context 'where the search term represents a start year more than a year in the future' do
+        let!(:search_term) { "#{(Date.current.year + 2) % 100}/#{(Date.current.year + 3) % 100}" }
+
+        it 'assumes the search is for a past year' do
+          expect(term_expander.apply_transformations).to eq([[:session, "session_s:#{(Date.current.year - 98)}-#{(Date.current.year - 97) % 100}"]])
+        end
+      end
+
+      context 'where the search term represents a start year less than one year in the future' do
+        let!(:search_term) { "#{(Date.current.year) % 100}/#{(Date.current.year + 1) % 100}" }
+
+        it 'assumes the search is for a future year' do
+          expect(term_expander.apply_transformations).to eq([[:session, "session_s:#{(Date.current.year)}-#{(Date.current.year + 1) % 100}"]])
+        end
+      end
+
+      context 'where the search term represents a start year in the past' do
+        let!(:search_term) { "#{(Date.current.year - 30) % 100}/#{(Date.current.year - 29) % 100}" }
+
+        it 'assumes the search is for a past year' do
+          expect(term_expander.apply_transformations).to eq([[:session, "session_s:#{(Date.current.year - 30)}-#{(Date.current.year - 29) % 100}"]])
+        end
       end
     end
   end

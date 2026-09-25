@@ -7,6 +7,79 @@
 class TermExpander
   attr_reader :expanded_fields, :ses_data, :search_term, :exact_match
 
+  SUPPORTED_DATE_SHORTHANDS = ['today', 'yesterday', 'thisweek', 'this week', 'lastweek', 'last week', 'thismonth',
+                               'this month', 'lastmonth', 'last month', 'thisyear', 'this year', 'lastyear',
+                               'last year']
+
+  ##
+  # Method to interpret date range shorthand and return the appropriate date range relative to the current date
+  def parse_date(shorthand_or_date)
+    return shorthand_or_date unless SUPPORTED_DATE_SHORTHANDS.include?(shorthand_or_date)
+
+    # Set sensible default values
+    start_year = Date.current.year
+    end_year = Date.current.year
+    start_month, start_day, end_month, end_day = 1, 1, 1, 1
+
+    # evaluate shorthand provided
+    case shorthand_or_date
+    when "today"
+      start_month = Date.current.month
+      start_day = Date.current.day
+      end_month = Date.tomorrow.month
+      end_day = Date.tomorrow.day
+
+    when "yesterday"
+      start_year = Date.yesterday.year
+      start_month = Date.yesterday.month
+      start_day = Date.yesterday.day
+      end_month = Date.current.month
+      end_day = Date.today.day
+
+    when "thisweek", "this week"
+      start_year = Date.current.beginning_of_week.year
+      start_month = Date.current.beginning_of_week.month
+      start_day = Date.current.beginning_of_week.day
+
+      end_year = Date.current.next_week.year
+      end_month = Date.current.next_week.month
+      end_day = Date.current.next_week.day
+
+    when "lastweek", "last week"
+      start_year = Date.current.last_week.year
+      start_month = Date.current.last_week.month
+      start_day = Date.current.last_week.day
+
+      end_year = Date.current.beginning_of_week.year
+      end_month = Date.current.beginning_of_week.month
+      end_day = Date.current.beginning_of_week.day
+
+    when "thismonth", "this month"
+      start_month = Date.current.month
+      end_year = Date.current.month == 12 ? Date.current.year + 1 : Date.current.year
+      end_month = Date.current.month == 12 ? 1 : Date.current.month + 1
+
+    when "lastmonth", "last month"
+      start_year = Date.current.month == 1 ? Date.current.year - 1 : Date.current.year
+      start_month = Date.current.month == 1 ? 12 : Date.current.month - 1
+      end_month = Date.current.month
+
+    when "thisyear", "this year"
+      end_year = Date.current.year + 1
+
+    when "lastyear", "last year"
+      start_year = Date.current.year - 1
+
+    else
+      # Raise an error if a supposedly supported shorthand doesn't have any supporting logic here
+      raise QueryExpansionError
+    end
+
+    range_start = Time.utc(start_year, start_month, start_day)
+    range_end = Time.utc(end_year, end_month, end_day)
+    format_as_solr_date_range(range_start, range_end, inclusive_end: false)
+  end
+
   def initialize(expanded_fields: {}, ses_data: [], search_term: nil, exact_match: false)
     @expanded_fields = expanded_fields
     @ses_data = ses_data
@@ -26,6 +99,8 @@ class TermExpander
     expanded_terms << populate_boolean_fields unless expanded_fields[:boolean_fields].empty?
     expanded_terms << populate_date_fields unless expanded_fields[:date_fields].empty?
     expanded_terms << populate_ses_fields unless expanded_fields[:ses_fields].empty?
+    expanded_terms << populate_fixed_fields unless expanded_fields[:fixed_fields].empty?
+    expanded_terms << apply_transformations unless expanded_fields[:transformations].empty?
 
     process_expanded_terms(expanded_terms)
   end
@@ -122,6 +197,82 @@ class TermExpander
   end
 
   ##
+  # Simple input transformations (field specific)
+  def apply_transformations
+    puts "TermExpander#apply_transformations" if Rails.env.development? || Rails.env.test?
+    expanded_terms = []
+
+    unless expanded_fields[:transformations].blank?
+
+      expanded_fields[:transformations].flatten.each do |tf|
+        case tf
+        when 'session'
+          expanded_terms << [:session, "session_s:#{expand_session_string(search_term)}"]
+        when 'timestamp'
+          expanded_terms << [:timestamp, "timestamp:#{format_as_utc_time(search_term)}"]
+        when 'status'
+          expanded_terms << [:status, "edmStatus_s:#{search_term&.titleize}"]
+          expanded_terms << [:status, "pqStatus_s:#{search_term&.titleize}"]
+          expanded_terms << [:status, "status_s:#{search_term&.titleize}"]
+        else
+          raise QueryExpansionError, "Unknown transformation type \"#{tf}\""
+        end
+      end
+
+      expanded_terms
+    end
+
+  end
+
+  ##
+  # Arbitrary logic for a few odd fields
+  def populate_fixed_fields
+    puts "TermExpander#populate_fixed_fields" if Rails.env.development? || Rails.env.test?
+    expanded_terms = []
+
+    unless expanded_fields[:fixed_fields].blank?
+      expanded_fields[:fixed_fields].flatten.each do |ff|
+        case ff
+        when 'chair'
+          if search_term_is_true?
+            expanded_terms << [:ses_id, "member_ses:303704"] # TODO: expose in config
+          elsif search_term_is_false?
+            expanded_terms << [:ses_id, "-member_ses:303704"]
+          end
+        when 'fromdate'
+          expanded_terms << [:date, "date_dt:#{format_as_utc_time(search_term, day_as_range: false).iso8601} TO *"]
+        when 'todate'
+          expanded_terms << [:date, "* TO date_dt:#{format_as_utc_time(search_term, day_as_range: false).iso8601}"]
+        when 'opqtype'
+          if search_term == 'supp'
+            expanded_terms << [:text, "contributionType_t:supplementary"]
+          elsif search_term == 'othersupp'
+            expanded_terms << [:text, "contributionType_s:Supplementary"]
+          elsif search_term == 'firstsupp'
+            expanded_terms << [:text, "contributionType_s:\"1st Supplementary\""]
+          elsif search_term == 'lead'
+            expanded_terms << [:text, "contributionType_s:Lead"]
+          end
+        when 'wpqtype'
+          if search_term == 'ordinary'
+            expanded_terms << [:text, "wpqType_s:Ordinary"]
+          elsif search_term == 'namedday'
+            expanded_terms << [:text, "wpqType_s:Named Day"]
+          elsif search_term == 'nextday'
+            expanded_terms << [:text, "wpqType_s:daily"]
+          end
+        else
+          next
+        end
+
+      end
+
+      # Return expanded terms
+      expanded_terms
+    end
+  end
+
+  ##
   # Search all boolean fields with '1' or '0' depending on entered term
   def populate_boolean_fields
     puts "TermExpander#populate_boolean_fields" if Rails.env.development? || Rails.env.test?
@@ -129,9 +280,9 @@ class TermExpander
 
     unless expanded_fields[:boolean_fields].blank?
       expanded_fields[:boolean_fields].flatten.each do |bf|
-        if %w[true yes y 1].include?(search_term)
+        if search_term_is_true?
           expanded_terms << [:boolean, "#{bf}:1"]
-        elsif %w[false no n 0].include?(search_term)
+        elsif search_term_is_false?
           expanded_terms << [:boolean, "#{bf}:0"]
         elsif search_term == "*"
           expanded_terms << [:boolean, "#{bf}:*"]
@@ -150,20 +301,8 @@ class TermExpander
     expanded_terms = []
 
     unless expanded_fields[:date_fields].blank?
-      date_lookup = {
-        today: "NOW/DAY",
-        yesterday: "NOW/DAY-1DAY",
-        thisweek: "[NOW/WEEK TO NOW/WEEK+6DAYS]",
-        lastweek: "[NOW/WEEK-1WEEK TO NOW/WEEK-1DAY]",
-        thismonth: "[NOW/MONTH TO NOW/MONTH+1MONTH-1MILLISECOND]",
-        lastmonth: "[NOW/MONTH-1MONTH TO NOW/MONTH-1MILLISECOND]",
-        thisyear: "[NOW/YEAR TO NOW/YEAR+1YEAR-1MILLISECOND]",
-        lastyear: "[NOW/YEAR-1YEAR TO NOW/YEAR-1MILLISECOND]"
-      }
-
-      parsed_date = date_lookup[search_term&.to_sym].nil? ? search_term : date_lookup[search_term&.to_sym]
       expanded_fields[:date_fields].flatten.each do |df|
-        expanded_terms << [:date, "#{df}:#{parsed_date}"]
+        expanded_terms << [:date, "#{df}:#{parse_date(search_term)}"]
       end
     end
 
@@ -267,7 +406,8 @@ class TermExpander
         expanded_terms << [search_term.to_sym, result]
       end
 
-      # add every SES field we've determined should be searched for the preferred term SES ID
+      # TODO: some SES fields (e.g. topic_ses!) will require ses_data to include topics
+      #   This will involve modifying our SES API calls to allow conditional retrieval of TPG terms
       unless ses_data.blank?
         ses_data.each_with_index do |ses_result, index|
           # If there's no preferred term ID, don't return anything for this result
@@ -288,7 +428,91 @@ class TermExpander
 
   private
 
+  def search_term_is_true?
+    return unless search_term.present?
+
+    %w[true yes y 1].include?(search_term.downcase)
+  end
+
+  def search_term_is_false?
+    return unless search_term.present?
+
+    %w[false no n 0].include?(search_term.downcase)
+  end
+
   def conditionally_quoted(string)
     string.include?(" ") ? "\"#{string}\"" : string
+  end
+
+  def expand_session_string(search_term)
+    case search_term
+    when /\A(\d{2})[\/\-&:](\d{2})\z/
+      # 19/20
+      if search_term.first(2).to_i < (Date.current.year + 1) % 100
+        "20#{search_term.first(2)}-#{search_term.last(2)}"
+      else
+        "19#{search_term.first(2)}-#{search_term.last(2)}"
+      end
+    end
+  end
+
+  ##
+  # Accepts a date string
+  # Can be a range using ".." or " TO " as the separator
+  # Also works with single dates, however this will return the string unaltered unless day_as_range is true, in
+  # which a range is constructed representing the entire day
+  def format_as_utc_time(date_string, day_as_range: true)
+    if date_string.split("..").size > 1
+      # the user provided a date range using ".."
+      range_components = date_string.split("..")
+      range_start = parse_as_utc_time(range_components.first.strip)
+      range_end = parse_as_utc_time(range_components.last.strip, offset_days: 1.day)
+      format_as_solr_date_range(range_start, range_end, inclusive_end: false)
+    elsif date_string.split(" TO ").size > 1
+      # the user provided a date range using " TO "
+      range_components = date_string.split(" TO ")
+      range_start = parse_as_utc_time(range_components.first.strip)
+      range_end = parse_as_utc_time(range_components.last.strip, offset_days: 1.day)
+      format_as_solr_date_range(range_start, range_end, inclusive_end: false)
+    else
+      # the user provided a single date
+      if day_as_range
+        # we construct a range representing the entire day
+        range_start = parse_as_utc_time(date_string.strip)
+        range_end = parse_as_utc_time(date_string.strip, offset_days: 1.day)
+        format_as_solr_date_range(range_start, range_end, inclusive_end: false)
+      else
+        parse_as_utc_time(date_string.strip)
+      end
+    end
+  end
+
+  def parse_as_utc_time(date_string, offset_days: 0.days)
+    if date_string == "*"
+      # don't apply time formatting to a wildcard
+      date_string
+    elsif SUPPORTED_DATE_SHORTHANDS.include?(date_string)
+      # support for Solr date-adjacent terminology, e.g. "YESTERDAY TO TODAY"
+      # don't apply time formatting to these
+      parse_date(date_string)
+    else
+      # format the provided string as a datetime
+      date = Date.iso8601(date_string)
+      Time.utc(date.year, date.month, date.day) + offset_days
+    end
+  end
+
+  ##
+  # Method to generate a date range string for Solr queries
+  # Allows for inclusive or exclusive start/end
+  # Must be given a Ruby Time for start/end dates
+  def format_as_solr_date_range(start_date, end_date, inclusive_start: true, inclusive_end: true)
+    raise "Start date must be a Time object (given #{start_date.class.name})" unless start_date.is_a?(Time)
+    raise "End date must be a Time object (given #{end_date.class.name})" unless end_date.is_a?(Time)
+
+    opening_bracket = inclusive_start ? "[" : "{"
+    closing_bracket = inclusive_end ? "]" : "}"
+
+    "#{opening_bracket}#{start_date.iso8601} TO #{end_date.iso8601}#{closing_bracket}"
   end
 end
