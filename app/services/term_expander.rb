@@ -75,8 +75,11 @@ class TermExpander
       raise QueryExpansionError
     end
 
-    range_start = Time.utc(start_year, start_month, start_day)
-    range_end = Time.utc(end_year, end_month, end_day)
+    # Dates in Solr are in London time zone, so search ranges should be too
+    zone = ActiveSupport::TimeZone["Europe/London"]
+    range_start = zone.local(start_year, start_month, start_day)
+    range_end = zone.local(end_year, end_month, end_day)
+
     format_as_solr_date_range(range_start, range_end, inclusive_end: false)
   end
 
@@ -506,6 +509,7 @@ class TermExpander
   # Method to generate a date range string for Solr queries
   # Allows for inclusive or exclusive start/end
   # Must be given a Ruby Time for start/end dates
+  # Solr times are recorded in the London time zone but expressed as UTC, so we convert to UTC here
   def format_as_solr_date_range(start_date, end_date, inclusive_start: true, inclusive_end: true)
     raise "Start date must be a Time object (given #{start_date.class.name})" unless start_date.is_a?(Time)
     raise "End date must be a Time object (given #{end_date.class.name})" unless end_date.is_a?(Time)
@@ -513,6 +517,6 @@ class TermExpander
     opening_bracket = inclusive_start ? "[" : "{"
     closing_bracket = inclusive_end ? "]" : "}"
 
-    "#{opening_bracket}#{start_date.iso8601} TO #{end_date.iso8601}#{closing_bracket}"
+    "#{opening_bracket}#{start_date.utc.iso8601} TO #{end_date.utc.iso8601}#{closing_bracket}"
   end
 end

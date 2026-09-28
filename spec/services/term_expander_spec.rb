@@ -260,7 +260,7 @@ RSpec.describe 'TermExpander' do
         let(:search_term) { "today" }
 
         it "searches the provided date field for the relevant date range" do
-          expect(term_expander.populate_date_fields).to eq [[:date, "date_dt:[2025-06-01T00:00:00Z TO 2025-06-02T00:00:00Z}"]]
+          expect(term_expander.populate_date_fields).to eq [[:date, "date_dt:[2025-05-31T23:00:00Z TO 2025-06-01T23:00:00Z}"]]
         end
       end
 
@@ -268,7 +268,7 @@ RSpec.describe 'TermExpander' do
         let(:search_term) { "yesterday" }
 
         it "searches the provided date field for the relevant date range" do
-          expect(term_expander.populate_date_fields).to eq [[:date, "date_dt:[2025-05-31T00:00:00Z TO 2025-06-01T00:00:00Z}"]]
+          expect(term_expander.populate_date_fields).to eq [[:date, "date_dt:[2025-05-30T23:00:00Z TO 2025-05-31T23:00:00Z}"]]
         end
       end
 
@@ -276,7 +276,7 @@ RSpec.describe 'TermExpander' do
         let(:search_term) { "thisweek" }
 
         it "searches the provided date field for the relevant date range" do
-          expect(term_expander.populate_date_fields).to eq [[:date, "date_dt:[2025-05-26T00:00:00Z TO 2025-06-02T00:00:00Z}"]]
+          expect(term_expander.populate_date_fields).to eq [[:date, "date_dt:[2025-05-25T23:00:00Z TO 2025-06-01T23:00:00Z}"]]
         end
       end
 
@@ -284,7 +284,7 @@ RSpec.describe 'TermExpander' do
         let(:search_term) { "lastweek" }
 
         it "searches the provided date field for the relevant date range" do
-          expect(term_expander.populate_date_fields).to eq [[:date, "date_dt:[2025-05-19T00:00:00Z TO 2025-05-26T00:00:00Z}"]]
+          expect(term_expander.populate_date_fields).to eq [[:date, "date_dt:[2025-05-18T23:00:00Z TO 2025-05-25T23:00:00Z}"]]
         end
       end
 
@@ -292,7 +292,7 @@ RSpec.describe 'TermExpander' do
         let(:search_term) { "thismonth" }
 
         it "searches the provided date field for the relevant date range" do
-          expect(term_expander.populate_date_fields).to eq [[:date, "date_dt:[2025-06-01T00:00:00Z TO 2025-07-01T00:00:00Z}"]]
+          expect(term_expander.populate_date_fields).to eq [[:date, "date_dt:[2025-05-31T23:00:00Z TO 2025-06-30T23:00:00Z}"]]
         end
       end
 
@@ -300,7 +300,7 @@ RSpec.describe 'TermExpander' do
         let(:search_term) { "lastmonth" }
 
         it "searches the provided date field for the relevant date range" do
-          expect(term_expander.populate_date_fields).to eq [[:date, "date_dt:[2025-05-01T00:00:00Z TO 2025-06-01T00:00:00Z}"]]
+          expect(term_expander.populate_date_fields).to eq [[:date, "date_dt:[2025-04-30T23:00:00Z TO 2025-05-31T23:00:00Z}"]]
         end
       end
 
@@ -334,7 +334,7 @@ RSpec.describe 'TermExpander' do
       let(:search_term) { "today" }
 
       it "applies the search across all provided date fields" do
-        expect(term_expander.populate_date_fields).to eq [[:date, "dateCertified_dt:[2025-06-01T00:00:00Z TO 2025-06-02T00:00:00Z}"], [:date, "dateAnswered_dt:[2025-06-01T00:00:00Z TO 2025-06-02T00:00:00Z}"]]
+        expect(term_expander.populate_date_fields).to eq [[:date, "dateCertified_dt:[2025-05-31T23:00:00Z TO 2025-06-01T23:00:00Z}"], [:date, "dateAnswered_dt:[2025-05-31T23:00:00Z TO 2025-06-01T23:00:00Z}"]]
       end
     end
   end
