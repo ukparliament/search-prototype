@@ -155,8 +155,8 @@ class DateProcessor
     raise "Start date must be a Time or * (given #{start_date.class.name})" unless start_date.is_a?(Time) || start_date == "*"
     raise "End date must be a Time or * (given #{end_date.class.name})" unless end_date.is_a?(Time) || end_date == "*"
 
-    formatted_start_date = start_date.is_a?(Time) ? start_date.utc.iso8601 : start_date
-    formatted_end_date = end_date.is_a?(Time) ? end_date.utc.iso8601 : end_date
+    formatted_start_date = start_date.is_a?(Time) ? start_date.utc.iso8601(3) : start_date
+    formatted_end_date = end_date.is_a?(Time) ? end_date.utc.iso8601(3) : end_date
 
     "[#{formatted_start_date} TO #{formatted_end_date}]"
   end
