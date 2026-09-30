@@ -17,12 +17,13 @@ RSpec.describe 'QueryExpander' do
   let(:field_expander_test_class) { class_double(FieldExpander, new: field_expander_test_instance) }
   let(:field_expander_test_instance) { instance_double(FieldExpander, expand_fields: expanded_fields) }
   let(:expanded_fields) { {
-    'text_fields' => [],
-    'ses_fields' => [],
-    'ses_id_fields' => [],
-    'boolean_fields' => [],
-    'date_fields' => [],
-    'non_aliased_fields' => []
+    :text_fields => [],
+    :ses_fields => [],
+    :ses_id_fields => [],
+    :boolean_fields => [],
+    :date_fields => [],
+    :non_aliased_fields => [],
+    :requires_ses_data => true
   } }
 
   let(:term_expander_test_class) { class_double(TermExpander, new: term_expander_test_instance) }
@@ -87,14 +88,14 @@ RSpec.describe 'QueryExpander' do
         # The search term has the secondary quote marks removed
         expect(ses_test_class).to receive(:new).with({ value: "housing crisis" }, exact_match: true)
 
-        # SES query instance receives call for data
-        expect(ses_test_instance).to receive(:data).and_return(ses_response)
-
         # field expander class is initialised with the field name (only)
         expect(field_expander_test_class).to receive(:new).with('subject')
 
         # field expander instance receives call to expand_fields
         expect(field_expander_test_instance).to receive(:expand_fields).and_return(expanded_fields)
+
+        # SES query instance receives call for data
+        expect(ses_test_instance).to receive(:data).and_return(ses_response)
 
         # the term expander is initialised with the result of the field expansion & ses data, as well as the search
         # term
@@ -124,17 +125,17 @@ RSpec.describe 'QueryExpander' do
         # tokeniser instance receives call to tokenise
         expect(tokeniser_test_instance).to receive(:tokenise).and_return([[:specified_field_with_quoted_phrase, "subject:'housing crisis'"]])
 
-        # SES query class is initialised with the search term (only)
-        expect(ses_test_class).to receive(:new).with({ value: "'housing crisis'" }, exact_match: true)
-
-        # SES query instance receives call for data
-        expect(ses_test_instance).to receive(:data).and_return(ses_response)
-
         # field expander class is initialised with the field name (only)
         expect(field_expander_test_class).to receive(:new).with('subject')
 
         # field expander instance receives call to expand_fields
         expect(field_expander_test_instance).to receive(:expand_fields).and_return(expanded_fields)
+
+        # SES query class is initialised with the search term (only)
+        expect(ses_test_class).to receive(:new).with({ value: "'housing crisis'" }, exact_match: true)
+
+        # SES query instance receives call for data
+        expect(ses_test_instance).to receive(:data).and_return(ses_response)
 
         # the term expander is initialised with the result of the field expansion & ses data, as well as the search
         # term

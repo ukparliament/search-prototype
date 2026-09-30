@@ -19,6 +19,7 @@ class FieldExpander
   def expand_fields
     text_fields, ses_fields, ses_id_fields, boolean_fields, date_fields, fixed_fields, transformations = [], [], [], [], [], [], []
     process_without_field = false
+    requires_ses_data = true
 
     if field_name == "answeredby"
       ses_fields = %w[answeringMember_ses answeringDept_ses askedToReplyAuthor_ses]
@@ -38,36 +39,50 @@ class FieldExpander
       ses_fields = %w[certifiedCategory_ses]
     elsif field_name == "chair"
       fixed_fields = %w[chair]
+      requires_ses_data = false
     elsif field_name == "chamberorcommittee"
       ses_fields = %w[place_ses]
     elsif field_name == "comingintoforce"
       date_fields = %w[comingIntoForce_dt]
+      requires_ses_data = false
     elsif field_name == "commonsapproved"
       date_fields = %w[dateApproved_dt]
+      requires_ses_data = false
     elsif field_name == "contributor"
       ses_fields = %w[contributor_ses]
     elsif field_name == "corrected"
       boolean_fields = %w[correctedWmsMc_b]
+      requires_ses_data = false
     elsif field_name == "date"
       date_fields = %w[date_dt]
+      requires_ses_data = false
     elsif field_name == "dateanswered"
       date_fields = %w[dateOfAnswer_dt]
+      requires_ses_data = false
     elsif field_name == "datecertified"
       date_fields = %w[dateCertified_dt]
+      requires_ses_data = false
     elsif field_name == "dateforanswer"
       date_fields = %w[dateForAnswer_dt]
+      requires_ses_data = false
     elsif field_name == "datemade"
       date_fields = %w[dateMade_dt]
+      requires_ses_data = false
     elsif field_name == "dateoriginated"
       date_fields = %w[dateOfOrigin_dt]
+      requires_ses_data = false
     elsif field_name == "datereceived"
       date_fields = %w[dateReceived_dt]
+      requires_ses_data = false
     elsif field_name == "datesigned"
       date_fields = %w[dateSigned_dt amendment_dateSigned_dt]
+      requires_ses_data = false
     elsif field_name == "datesponsored"
       date_fields = %w[dateSponsored_dt amendment_dateSponsored_dt]
+      requires_ses_data = false
     elsif field_name == "datetabled"
-      date_fields = %w[dateTabled_dt, amendment_dateTabled_dt ]
+      date_fields = %w[dateTabled_dt, amendment_dateTabled_dt]
+      requires_ses_data = false
     elsif field_name == "dept"
       date_fields = %w[department_ses answeringDept_ses]
       text_fields = %w[department_t]
@@ -75,18 +90,24 @@ class FieldExpander
       text_fields = %w[eCDocument_t]
     elsif field_name == "explanatorymemorandum"
       boolean_fields = %w[containsEM_b]
+      requires_ses_data = false
     elsif field_name == "failedoral"
       boolean_fields = %w[failedOral_b]
+      requires_ses_data = false
     elsif field_name == "from"
       fixed_fields = %w[fromdate]
+      requires_ses_data = false
     elsif field_name == "groupedanswer"
       boolean_fields = %w[groupedAnswer_b]
+      requires_ses_data = false
     elsif field_name == "holdinganswer"
       boolean_fields = %w[holdingAnswer_b]
+      requires_ses_data = false
     elsif field_name == "house"
       ses_fields = %w[legislature_ses]
     elsif field_name == "impactassessment"
       boolean_fields = %w[containsIA_b]
+      requires_ses_data = false
     elsif field_name == "primarymemberparty"
       ses_fields = %w[leadMemberParty_ses]
     elsif field_name == "leadmemberparty"
@@ -102,12 +123,14 @@ class FieldExpander
       text_fields = %w[lordsLibraryLocation_t commonsLibraryLocation_t physicalLocationCommons_t physicalLocationLords_t]
     elsif field_name == "lordsapproved"
       date_fields = %w[lordsApprovedDate_dt]
+      requires_ses_data = false
     elsif field_name == "member"
       ses_fields = %w[member_ses]
     elsif field_name == "memberparty"
       ses_fields = %w[memberParty_ses]
     elsif field_name == "notreached"
       boolean_fields = %w[failedOral_b]
+      requires_ses_data = false
     elsif field_name == "notes"
       text_fields = %w[searcherNote_t comingIntoForceNotes_t relatedItemNote_t]
     elsif field_name == "opqtype"
@@ -127,6 +150,7 @@ class FieldExpander
       ses_fields = %w[procedural_ses]
     elsif field_name == "prorogationanswer"
       boolean_fields = %w[prorogationAnswer_b]
+      requires_ses_data = false
     elsif field_name == "publisher"
       ses_fields = %w[publisher_ses]
       text_fields = %w[publisher_t]
@@ -136,18 +160,22 @@ class FieldExpander
       text_fields = %w[identifier_t, uin_t, reference_t]
     elsif field_name == "reginterest"
       boolean_fields = %w[registeredInterest_b]
+      requires_ses_data = false
     elsif field_name == "resolutionprocedure"
       text_fields = %w[procedure_s]
     elsif field_name == "section"
       ses_fields = %w[section_ses]
     elsif field_name == "session"
       transformations = %w[session]
+      requires_ses_data = false
     elsif field_name == "signedby"
       ses_fields = %w[signedMember_ses amendment_signedMember_ses]
     elsif field_name == "stats"
       boolean_fields = %w[containsStatistics_b statisticsIndicated_b hasTable_b]
+      requires_ses_data = false
     elsif field_name == "status"
       transformations = %w[status]
+      requires_ses_data = false
     elsif field_name == "subject"
       text_fields = %w[subject_t]
       ses_fields = %w[subject_ses]
@@ -157,30 +185,37 @@ class FieldExpander
       ses_fields = %w[tablingMember_ses]
     elsif field_name == "timestamp"
       transformations = %w[timestamp]
+      requires_ses_data = false
     elsif field_name == "title"
       text_fields = %w[title_t]
     elsif field_name == "to"
       fixed_fields = %w[todate]
+      requires_ses_data = false
     elsif field_name == "topic" # TODO: add support for multiple SES queries so we can retrieve topic terms when needed, as is the case here
       ses_fields = %w[topic_ses]
     elsif field_name == "transferred"
       boolean_fields = %w[transferredQuestion_b]
+      requires_ses_data = false
     elsif field_name == "type"
       ses_fields = %w[type_sesrollup]
     elsif field_name == "uin"
       text_fields = %w[uin_t]
     elsif field_name == "unprintedlead"
       boolean_fields = %w[unprintedLead_b]
+      requires_ses_data = false
     elsif field_name == "unstarred"
       boolean_fields = %w[unstarredQuestion_b]
+      requires_ses_data = false
     elsif field_name == "witness"
       ses_fields = %w[witness_ses]
       text_fields = %w[witness_t]
     elsif field_name == "wpqtype"
       fixed_fields = %w[wpqtype]
+      requires_ses_data = false
     elsif field_name.match(/\w+_dt/)
       # if searching a _dt field specifically, treat it as a date field so that 'lastweek' etc. all work
       date_fields = [field_name]
+      requires_ses_data = false
     elsif field_name.match(/\w+_ses/)
       # SES ID fields are minimally processed (the user is expected to provide a SES ID)
       ses_id_fields = [field_name]
@@ -201,7 +236,8 @@ class FieldExpander
       date_fields: date_fields,
       fixed_fields: fixed_fields,
       transformations: transformations,
-      process_without_field: process_without_field
+      process_without_field: process_without_field,
+      requires_ses_data: requires_ses_data
     }
   end
 end

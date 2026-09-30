@@ -105,8 +105,12 @@ class QueryExpander
   def process_specified_field_token(value)
     search_term = value.partition(":").last
     field_name = value.partition(":").first
+
     expanded_fields = field_expander.new(field_name).expand_fields
-    ses_data = ses_query.new({ value: search_term }).data
+
+    # Only fetch SES data if field expansion has left us with fields that would need it (e.g. text or SES fields)
+    ses_data = expanded_fields[:requires_ses_data] ? ses_query.new({ value: search_term }).data : nil
+
     term_expander.new(expanded_fields: expanded_fields, ses_data: ses_data, search_term: search_term).expand_terms
   end
 
@@ -145,11 +149,10 @@ class QueryExpander
     search_term = value.partition(":").last.delete_prefix('"').delete_suffix('"')
     field_name = value.partition(":").first
 
-    ses_data = ses_query.new({ value: search_term }, exact_match: true).data
     expanded_fields = field_expander.new(field_name).expand_fields
 
-    # we stripped the quotes to facilitate querying SES, so we need to add them back in again here
-    quoted_search_term = "\"#{search_term}\""
+    # Only fetch SES data if field expansion has left us with fields that would need it (e.g. text or SES fields)
+    ses_data = expanded_fields[:requires_ses_data] ? ses_query.new({ value: search_term }, exact_match: true).data : nil
 
     term_expander.new(expanded_fields: expanded_fields, ses_data: ses_data, search_term: search_term, exact_match: true).expand_terms
   end

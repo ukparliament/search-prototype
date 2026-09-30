@@ -260,7 +260,7 @@ RSpec.describe 'TermExpander' do
         let(:search_term) { "today" }
 
         it "searches the provided date field for the relevant date range" do
-          expect(term_expander.populate_date_fields).to eq [[:date, "date_dt:[2025-05-31T23:00:00Z TO 2025-06-01T23:00:00Z}"]]
+          expect(term_expander.populate_date_fields).to eq [[:date, "date_dt:[2025-05-31T23:00:00Z TO 2025-06-01T22:59:59Z]"]]
         end
       end
 
@@ -268,7 +268,7 @@ RSpec.describe 'TermExpander' do
         let(:search_term) { "yesterday" }
 
         it "searches the provided date field for the relevant date range" do
-          expect(term_expander.populate_date_fields).to eq [[:date, "date_dt:[2025-05-30T23:00:00Z TO 2025-05-31T23:00:00Z}"]]
+          expect(term_expander.populate_date_fields).to eq [[:date, "date_dt:[2025-05-30T23:00:00Z TO 2025-05-31T22:59:59Z]"]]
         end
       end
 
@@ -276,7 +276,7 @@ RSpec.describe 'TermExpander' do
         let(:search_term) { "thisweek" }
 
         it "searches the provided date field for the relevant date range" do
-          expect(term_expander.populate_date_fields).to eq [[:date, "date_dt:[2025-05-25T23:00:00Z TO 2025-06-01T23:00:00Z}"]]
+          expect(term_expander.populate_date_fields).to eq [[:date, "date_dt:[2025-05-25T23:00:00Z TO 2025-06-01T22:59:59Z]"]]
         end
       end
 
@@ -284,7 +284,7 @@ RSpec.describe 'TermExpander' do
         let(:search_term) { "lastweek" }
 
         it "searches the provided date field for the relevant date range" do
-          expect(term_expander.populate_date_fields).to eq [[:date, "date_dt:[2025-05-18T23:00:00Z TO 2025-05-25T23:00:00Z}"]]
+          expect(term_expander.populate_date_fields).to eq [[:date, "date_dt:[2025-05-18T23:00:00Z TO 2025-05-25T22:59:59Z]"]]
         end
       end
 
@@ -292,7 +292,7 @@ RSpec.describe 'TermExpander' do
         let(:search_term) { "thismonth" }
 
         it "searches the provided date field for the relevant date range" do
-          expect(term_expander.populate_date_fields).to eq [[:date, "date_dt:[2025-05-31T23:00:00Z TO 2025-06-30T23:00:00Z}"]]
+          expect(term_expander.populate_date_fields).to eq [[:date, "date_dt:[2025-05-31T23:00:00Z TO 2025-06-30T22:59:59Z]"]]
         end
       end
 
@@ -300,7 +300,7 @@ RSpec.describe 'TermExpander' do
         let(:search_term) { "lastmonth" }
 
         it "searches the provided date field for the relevant date range" do
-          expect(term_expander.populate_date_fields).to eq [[:date, "date_dt:[2025-04-30T23:00:00Z TO 2025-05-31T23:00:00Z}"]]
+          expect(term_expander.populate_date_fields).to eq [[:date, "date_dt:[2025-04-30T23:00:00Z TO 2025-05-31T22:59:59Z]"]]
         end
       end
 
@@ -308,7 +308,7 @@ RSpec.describe 'TermExpander' do
         let(:search_term) { "thisyear" }
 
         it "searches the provided date field for the relevant date range" do
-          expect(term_expander.populate_date_fields).to eq [[:date, "date_dt:[2025-01-01T00:00:00Z TO 2026-01-01T00:00:00Z}"]]
+          expect(term_expander.populate_date_fields).to eq [[:date, "date_dt:[2025-01-01T00:00:00Z TO 2025-12-31T23:59:59Z]"]]
         end
       end
 
@@ -316,7 +316,7 @@ RSpec.describe 'TermExpander' do
         let(:search_term) { "lastyear" }
 
         it "searches the provided date field for the relevant date range" do
-          expect(term_expander.populate_date_fields).to eq [[:date, "date_dt:[2024-01-01T00:00:00Z TO 2025-01-01T00:00:00Z}"]]
+          expect(term_expander.populate_date_fields).to eq [[:date, "date_dt:[2024-01-01T00:00:00Z TO 2024-12-31T23:59:59Z]"]]
         end
       end
 
@@ -324,7 +324,7 @@ RSpec.describe 'TermExpander' do
         let!(:search_term) { '*' }
 
         it 'returns a search for the wildcard operator against the provided field' do
-          expect(term_expander.populate_date_fields).to eq([[:date, "date_dt:*"]])
+          expect(term_expander.populate_date_fields).to eq([[:date, "date_dt:[* TO *]"]])
         end
       end
     end
@@ -334,7 +334,7 @@ RSpec.describe 'TermExpander' do
       let(:search_term) { "today" }
 
       it "applies the search across all provided date fields" do
-        expect(term_expander.populate_date_fields).to eq [[:date, "dateCertified_dt:[2025-05-31T23:00:00Z TO 2025-06-01T23:00:00Z}"], [:date, "dateAnswered_dt:[2025-05-31T23:00:00Z TO 2025-06-01T23:00:00Z}"]]
+        expect(term_expander.populate_date_fields).to eq [[:date, "dateCertified_dt:[2025-05-31T23:00:00Z TO 2025-06-01T22:59:59Z]"], [:date, "dateAnswered_dt:[2025-05-31T23:00:00Z TO 2025-06-01T22:59:59Z]"]]
       end
     end
   end
@@ -458,7 +458,7 @@ RSpec.describe 'TermExpander' do
       let!(:fixed_fields) { ["fromdate"] }
       let!(:search_term) { "2022-05-20" }
       it 'returns an open ended date range beginning with the provided date' do
-        expect(term_expander.populate_fixed_fields).to eq([[:date, "date_dt:2022-05-20T00:00:00Z TO *"]])
+        expect(term_expander.populate_fixed_fields).to eq([[:date, "date_dt:[2022-05-19T23:00:00Z TO *]"]])
       end
     end
 
@@ -466,7 +466,7 @@ RSpec.describe 'TermExpander' do
       let!(:fixed_fields) { ["todate"] }
       let!(:search_term) { "2022-05-20" }
       it 'returns an open ended date range ending with the provided date' do
-        expect(term_expander.populate_fixed_fields).to eq([[:date, "* TO date_dt:2022-05-20T00:00:00Z"]])
+        expect(term_expander.populate_fixed_fields).to eq([[:date, "date_dt:[* TO 2022-05-20T22:59:59Z]"]])
       end
     end
 
@@ -557,40 +557,40 @@ RSpec.describe 'TermExpander' do
       context 'for a single date' do
         context 'formatted YYYY-MM-DD' do
           let!(:search_term) { '2022-05-04' }
-          it 'returns a date range for the entire day using an exclusive range end' do
-            expect(term_expander.apply_transformations).to eq([[:timestamp, "timestamp:[2022-05-04T00:00:00Z TO 2022-05-05T00:00:00Z}"]])
+          it 'returns a date range for the entire day' do
+            expect(term_expander.apply_transformations).to eq([[:timestamp, "timestamp:[2022-05-03T23:00:00Z TO 2022-05-04T22:59:59Z]"]])
           end
         end
         context 'formatted YY-MM-DD' do
           let!(:search_term) { '22-05-04' }
-          it 'returns a date range for the entire day using an exclusive range end' do
-            expect(term_expander.apply_transformations).to eq([[:timestamp, "timestamp:[2022-05-04T00:00:00Z TO 2022-05-05T00:00:00Z}"]])
+          it 'returns a date range for the entire day' do
+            expect(term_expander.apply_transformations).to eq([[:timestamp, "timestamp:[2022-05-03T23:00:00Z TO 2022-05-04T22:59:59Z]"]])
           end
         end
         context 'formatted as a full timestamp' do
           let!(:search_term) { '2022-05-04T00:00:00Z' }
-          it 'returns a date range for the entire day using an exclusive range end' do
-            expect(term_expander.apply_transformations).to eq([[:timestamp, "timestamp:[2022-05-04T00:00:00Z TO 2022-05-05T00:00:00Z}"]])
+          it 'returns a date range for the entire day' do
+            expect(term_expander.apply_transformations).to eq([[:timestamp, "timestamp:[2022-05-03T23:00:00Z TO 2022-05-04T22:59:59Z]"]])
           end
         end
         context 'formatted as a full timestamp for a time other than midnight' do
           let!(:search_term) { '2022-05-04T07:28:02Z' }
-          it 'returns a date range for the entire day using an exclusive range end' do
-            expect(term_expander.apply_transformations).to eq([[:timestamp, "timestamp:[2022-05-04T00:00:00Z TO 2022-05-05T00:00:00Z}"]])
+          it 'returns a date range for the entire day' do
+            expect(term_expander.apply_transformations).to eq([[:timestamp, "timestamp:[2022-05-03T23:00:00Z TO 2022-05-04T22:59:59Z]"]])
           end
         end
       end
       context 'for a date range' do
         context 'using ..' do
           let!(:search_term) { '2022-05-04..2022-05-09' }
-          it 'returns a date range for the entire day using an exclusive range end' do
-            expect(term_expander.apply_transformations).to eq([[:timestamp, "timestamp:[2022-05-04T00:00:00Z TO 2022-05-10T00:00:00Z}"]])
+          it 'returns a date range for the entire range' do
+            expect(term_expander.apply_transformations).to eq([[:timestamp, "timestamp:[2022-05-03T23:00:00Z TO 2022-05-09T22:59:59Z]"]])
           end
         end
         context 'using TO' do
           let!(:search_term) { '2022-05-04 TO 2022-05-09' }
-          it 'returns a date range for the entire day using an exclusive range end' do
-            expect(term_expander.apply_transformations).to eq([[:timestamp, "timestamp:[2022-05-04T00:00:00Z TO 2022-05-10T00:00:00Z}"]])
+          it 'returns a date range for the entire range' do
+            expect(term_expander.apply_transformations).to eq([[:timestamp, "timestamp:[2022-05-03T23:00:00Z TO 2022-05-09T22:59:59Z]"]])
           end
         end
       end

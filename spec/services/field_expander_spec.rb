@@ -6,7 +6,7 @@ RSpec.describe 'FieldExpander' do
   let(:field_expander) { FieldExpander.new(field_name) }
 
   describe 'expand_fields' do
-    xcontext 'field name is title' do
+    context 'field name is title' do
       let(:field_name) { 'title' }
       it 'populates text_fields' do
         expect(field_expander.expand_fields).to eq(
@@ -17,11 +17,12 @@ RSpec.describe 'FieldExpander' do
                                                     ses_id_fields: [],
                                                     text_fields: ["title_t"],
                                                     transformations: [],
-                                                    process_without_field: false })
+                                                    process_without_field: false,
+                                                    requires_ses_data: true})
       end
     end
 
-    xcontext 'field name is subject' do
+    context 'field name is subject' do
       let(:field_name) { 'subject' }
       it 'populates text_fields and ses_fields' do
         expect(field_expander.expand_fields).to eq(
@@ -32,7 +33,8 @@ RSpec.describe 'FieldExpander' do
                                                     ses_id_fields: [],
                                                     text_fields: ["subject_t"],
                                                     transformations: [],
-                                                    process_without_field: false })
+                                                    process_without_field: false,
+                                                    requires_ses_data: true})
       end
     end
 
@@ -47,7 +49,8 @@ RSpec.describe 'FieldExpander' do
                                                     ses_id_fields: [],
                                                     text_fields: ["creator_t", "contributor_t", "corporateAuthor_t", "department_t"],
                                                     transformations: [],
-                                                    process_without_field: false })
+                                                    process_without_field: false,
+                                                    requires_ses_data: true})
       end
     end
 
@@ -62,7 +65,8 @@ RSpec.describe 'FieldExpander' do
                                                     ses_id_fields: [],
                                                     text_fields: [],
                                                     transformations: [],
-                                                    process_without_field: false })
+                                                    process_without_field: false,
+                                                    requires_ses_data: false})
       end
     end
 
@@ -77,7 +81,8 @@ RSpec.describe 'FieldExpander' do
                                                     ses_id_fields: [],
                                                     text_fields: [],
                                                     transformations: [],
-                                                    process_without_field: false })
+                                                    process_without_field: false,
+                                                    requires_ses_data: false})
       end
     end
 
@@ -92,7 +97,8 @@ RSpec.describe 'FieldExpander' do
                                                     ses_id_fields: [],
                                                     text_fields: [],
                                                     transformations: [],
-                                                    process_without_field: false })
+                                                    process_without_field: false,
+                                                    requires_ses_data: false})
       end
     end
 
@@ -107,7 +113,8 @@ RSpec.describe 'FieldExpander' do
                                                     ses_id_fields: [],
                                                     text_fields: [],
                                                     transformations: [],
-                                                    process_without_field: false })
+                                                    process_without_field: false,
+                                                    requires_ses_data: false})
       end
     end
 
@@ -122,7 +129,8 @@ RSpec.describe 'FieldExpander' do
                                                     ses_id_fields: ["anything_ses"],
                                                     text_fields: [],
                                                     transformations: [],
-                                                    process_without_field: false })
+                                                    process_without_field: false,
+                                                    requires_ses_data: true})
       end
     end
 
@@ -137,7 +145,8 @@ RSpec.describe 'FieldExpander' do
                                                     ses_id_fields: [],
                                                     text_fields: [],
                                                     transformations: [],
-                                                    process_without_field: true })
+                                                    process_without_field: true,
+                                                    requires_ses_data: true})
       end
     end
     context 'field name is other text' do
@@ -151,7 +160,8 @@ RSpec.describe 'FieldExpander' do
                                                     ses_id_fields: [],
                                                     text_fields: ["unrecognised_field_name"],
                                                     transformations: [],
-                                                    process_without_field: false })
+                                                    process_without_field: false,
+                                                    requires_ses_data: true})
       end
     end
   end
