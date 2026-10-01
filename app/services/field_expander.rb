@@ -81,10 +81,10 @@ class FieldExpander
       date_fields = %w[dateSponsored_dt amendment_dateSponsored_dt]
       requires_ses_data = false
     elsif field_name == "datetabled"
-      date_fields = %w[dateTabled_dt, amendment_dateTabled_dt]
+      date_fields = %w[dateTabled_dt amendment_dateTabled_dt]
       requires_ses_data = false
     elsif field_name == "dept"
-      date_fields = %w[department_ses answeringDept_ses]
+      ses_fields = %w[department_ses answeringDept_ses]
       text_fields = %w[department_t]
     elsif field_name == "ecno"
       text_fields = %w[eCDocument_t]
