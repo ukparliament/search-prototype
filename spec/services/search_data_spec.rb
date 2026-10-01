@@ -242,7 +242,7 @@ RSpec.describe SearchData, type: :model do
       end
     end
     context 'where search is not nil' do
-      let!(:facet_data) { { "date_dt" => { "buckets" => [{ "val" => "2020-10-22T23:00:00Z", "count" => 12 }, { "val" => "2020-07-06T23:00:00Z", "count" => 9 }] } } }
+      let!(:facet_data) { { "date_dt" => { "buckets" => [{ "val" => "2020-10-22T23:00:00.000Z", "count" => 12 }, { "val" => "2020-07-06T23:00:00.000Z", "count" => 9 }] } } }
 
       it 'extracts unique years from the date facet' do
         expect(search_data.data_years).to eq(["2020"])
@@ -260,7 +260,7 @@ RSpec.describe SearchData, type: :model do
 
     context 'where search is not nil' do
       context 'where all data falls within a single year' do
-        let!(:facet_data) { { "date_dt" => { "buckets" => [{ "val" => "2020-10-22T23:00:00Z", "count" => 12 }, { "val" => "2020-07-06T23:00:00Z", "count" => 9 }] } } }
+        let!(:facet_data) { { "date_dt" => { "buckets" => [{ "val" => "2020-10-22T23:00:00.000Z", "count" => 12 }, { "val" => "2020-07-06T23:00:00.000Z", "count" => 9 }] } } }
 
         it 'returns true' do
           expect(search_data.single_data_year?).to be true
@@ -268,7 +268,7 @@ RSpec.describe SearchData, type: :model do
       end
 
       context 'where there are multiple years represented by the data' do
-        let!(:facet_data) { { "date_dt" => { "buckets" => [{ "val" => "2017-10-22T23:00:00Z", "count" => 12 }, { "val" => "2020-07-06T23:00:00Z", "count" => 9 }] } } }
+        let!(:facet_data) { { "date_dt" => { "buckets" => [{ "val" => "2017-10-22T23:00:00.000Z", "count" => 12 }, { "val" => "2020-07-06T23:00:00.000Z", "count" => 9 }] } } }
 
         it 'returns false' do
           expect(search_data.single_data_year?).to be false
@@ -285,9 +285,9 @@ RSpec.describe SearchData, type: :model do
       end
     end
     context 'where search is not nil' do
-      let!(:facet_data) { { "year" => { "buckets" => [{ "val" => "2017-01-01T00:00:00Z", "count" => 12 }, { "val" => "2020-01-01T00:00:00Z", "count" => 9 }] } } }
+      let!(:facet_data) { { "year" => { "buckets" => [{ "val" => "2017-01-01T00:00:00.000Z", "count" => 12 }, { "val" => "2020-01-01T00:00:00.000Z", "count" => 9 }] } } }
       it 'returns years as date strings' do
-        expect(search_data.years).to eq([{ "count" => 9, "val" => "2020-01-01T00:00:00Z" }, { "count" => 12, "val" => "2017-01-01T00:00:00Z" }])
+        expect(search_data.years).to eq([{ "count" => 9, "val" => "2020-01-01T00:00:00.000Z" }, { "count" => 12, "val" => "2017-01-01T00:00:00.000Z" }])
       end
     end
   end
@@ -300,9 +300,9 @@ RSpec.describe SearchData, type: :model do
       end
     end
     context 'where search is not nil' do
-      let!(:facet_data) { { "month" => { "buckets" => [{ "val" => "2017-01-03T00:00:00Z", "count" => 12 }, { "val" => "2020-01-03T00:00:00Z", "count" => 9 }] } } }
+      let!(:facet_data) { { "month" => { "buckets" => [{ "val" => "2017-01-03T00:00:00.000Z", "count" => 12 }, { "val" => "2020-01-03T00:00:00.000Z", "count" => 9 }] } } }
       it 'returns months for the given year as date strings' do
-        expect(search_data.months("2017")).to eq([{ "val" => "2017-01-03T00:00:00Z", "count" => 12 }])
+        expect(search_data.months("2017")).to eq([{ "val" => "2017-01-03T00:00:00.000Z", "count" => 12 }])
       end
     end
   end
