@@ -174,21 +174,21 @@ class TermExpander
           expanded_terms << [:date, "date_dt:#{date_processor.new("* TO #{search_term}").generate_date_string}"]
         when 'opqtype'
           if search_term == 'supp'
-            expanded_terms << [:text, "contributionType_t:supplementary"]
+            expanded_terms << [:supp, "contributionType_t:supplementary"]
           elsif search_term == 'othersupp'
-            expanded_terms << [:text, "contributionType_s:Supplementary"]
+            expanded_terms << [:othersupp, "contributionType_s:Supplementary"]
           elsif search_term == 'firstsupp'
-            expanded_terms << [:text, "contributionType_s:\"1st Supplementary\""]
+            expanded_terms << [:firstsupp, "contributionType_s:\"1st Supplementary\""]
           elsif search_term == 'lead'
-            expanded_terms << [:text, "contributionType_s:Lead"]
+            expanded_terms << [:lead, "contributionType_s:Lead"]
           end
         when 'wpqtype'
           if search_term == 'ordinary'
-            expanded_terms << [:text, "wpqType_s:Ordinary"]
+            expanded_terms << [:ordinary, "wpqType_s:Ordinary"]
           elsif search_term == 'namedday'
-            expanded_terms << [:text, "wpqType_s:Named Day"]
+            expanded_terms << [:namedday, "wpqType_s:Named Day"]
           elsif search_term == 'nextday'
-            expanded_terms << [:text, "wpqType_s:daily"]
+            expanded_terms << [:nextday, "wpqType_s:daily"]
           end
         else
           next

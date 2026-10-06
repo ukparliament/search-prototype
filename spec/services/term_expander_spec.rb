@@ -476,32 +476,32 @@ RSpec.describe 'TermExpander' do
       context 'for supp' do
         let!(:search_term) { 'supp' }
 
-        it 'returns a fixed value' do
-          expect(term_expander.populate_fixed_fields).to eq([[:text, "contributionType_t:supplementary"]])
+        it 'returns a fixed value tagged with the search term' do
+          expect(term_expander.populate_fixed_fields).to eq([[:supp, "contributionType_t:supplementary"]])
         end
       end
 
       context 'for othersupp' do
         let!(:search_term) { 'othersupp' }
 
-        it 'returns a fixed value' do
-          expect(term_expander.populate_fixed_fields).to eq([[:text, "contributionType_s:Supplementary"]])
+        it 'returns a fixed value tagged with the search term' do
+          expect(term_expander.populate_fixed_fields).to eq([[:othersupp, "contributionType_s:Supplementary"]])
         end
       end
 
       context 'for firstsupp' do
         let!(:search_term) { 'firstsupp' }
 
-        it 'returns a fixed value' do
-          expect(term_expander.populate_fixed_fields).to eq([[:text, "contributionType_s:\"1st Supplementary\""]])
+        it 'returns a fixed value tagged with the search term' do
+          expect(term_expander.populate_fixed_fields).to eq([[:firstsupp, "contributionType_s:\"1st Supplementary\""]])
         end
       end
 
       context 'for lead' do
         let!(:search_term) { 'lead' }
 
-        it 'returns a fixed value' do
-          expect(term_expander.populate_fixed_fields).to eq([[:text, "contributionType_s:Lead"]])
+        it 'returns a fixed value tagged with the search term' do
+          expect(term_expander.populate_fixed_fields).to eq([[:lead, "contributionType_s:Lead"]])
         end
       end
     end
@@ -512,22 +512,22 @@ RSpec.describe 'TermExpander' do
       context 'for ordinary' do
         let!(:search_term) { 'ordinary' }
 
-        it 'returns a fixed value' do
-          expect(term_expander.populate_fixed_fields).to eq([[:text, "wpqType_s:Ordinary"]])
+        it 'returns a fixed value tagged with the search term' do
+          expect(term_expander.populate_fixed_fields).to eq([[:ordinary, "wpqType_s:Ordinary"]])
         end
       end
       context 'for namedday' do
         let!(:search_term) { 'namedday' }
 
-        it 'returns a fixed value' do
-          expect(term_expander.populate_fixed_fields).to eq([[:text, "wpqType_s:Named Day"]])
+        it 'returns a fixed value tagged with the search term' do
+          expect(term_expander.populate_fixed_fields).to eq([[:namedday, "wpqType_s:Named Day"]])
         end
       end
       context 'for nextday' do
         let!(:search_term) { 'nextday' }
 
-        it 'returns a fixed value' do
-          expect(term_expander.populate_fixed_fields).to eq([[:text, "wpqType_s:daily"]])
+        it 'returns a fixed value tagged with the search term' do
+          expect(term_expander.populate_fixed_fields).to eq([[:nextday, "wpqType_s:daily"]])
         end
       end
     end
