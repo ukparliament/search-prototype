@@ -11,24 +11,31 @@
 #   - The above information is passed to the term_expander class to obtain an expanded query string for the term
 #     represented by the token.
 #   - The token is added to a processed_tokens array.
+#   - In some cases, complex queries will require the processing of sub queries; a sub_query_tokeniser and
+#     sub_query_expander are used for this purpose. These are the same class as the standard tokeniser and query
+#     expander (this class) broken out (primarily) for ease of testing.
 #
 # - Finally, the processed tokens array is passed to the term_combiner class to combine all terms into a fully
 # assembled expanded query string, which is then returned.
 
 class QueryExpander
-  attr_reader :search_query, :ses_query, :tokeniser, :field_expander, :term_expander, :term_combiner
+  attr_reader :search_query, :ses_query, :tokeniser, :field_expander, :term_expander, :term_combiner,
+              :sub_query_tokeniser, :sub_query_expander
 
   # matches Lucene query characters, captured as group 1
   SPECIAL_CHARS = /([+\-!(){}\[\]^"~:\\\/]|&&|\|\|)/
 
   def initialize(search_query, ses_query = SesQuery, tokeniser = Tokeniser,
-                 field_expander = FieldExpander, term_expander = TermExpander, term_combiner = TermCombiner)
+                 field_expander = FieldExpander, term_expander = TermExpander, term_combiner = TermCombiner,
+                 sub_query_tokeniser = Tokeniser, sub_query_expander = QueryExpander)
     @search_query = search_query
     @ses_query = ses_query
     @tokeniser = tokeniser
     @field_expander = field_expander
     @term_expander = term_expander
     @term_combiner = term_combiner
+    @sub_query_tokeniser = sub_query_tokeniser
+    @sub_query_expander = sub_query_expander
   end
 
   # TODO: refactor out basic string processing to private methods
@@ -51,6 +58,8 @@ class QueryExpander
         processed_tokens << process_url_token(value)
       elsif label == :uri_field
         processed_tokens << process_uri_field_token(value)
+      elsif label == :specified_field_multiple_values
+        processed_tokens << process_specified_field_multiple_values(value)
       elsif label == :specified_field_with_quoted_phrase
         processed_tokens << process_specified_field_with_quoted_phrase_token(value)
       elsif label == :specified_field_no_expansion
@@ -140,6 +149,44 @@ class QueryExpander
 
     expanded_fields = field_expander.new(field_name).expand_fields
     term_expander.new(expanded_fields: expanded_fields, search_term: search_term).expand_terms
+  end
+
+  ##
+  # This processing step captures multi-value inputs
+  # e.g.: field_name:("A value" OR "Another value")
+  # The sub query tokeniser class is used to produce a restructured version of this query, in the following format:
+  # "field_name:\"A value\" OR field_name:\"Another value\""
+  # This is then passed to the sub query expander, effectively starting over with the new query format
+  def process_specified_field_multiple_values(value)
+    search_terms = value.partition(":").last.delete_prefix('(').delete_suffix(')')
+    field_name = value.partition(":").first
+
+    # generate tokens from the search terms
+    tokens = sub_query_tokeniser.new(search_terms).tokenise
+    puts "Sub query tokens: #{tokens}" if Rails.env.test?
+
+    # restructure tokens to include field name before each search term
+    sub_query_components = tokens.map do |token|
+      case token.first
+      when :operator, :parenthesis
+        # return unchanged
+        token.last
+      when :unquoted_phrase
+        # prepend with field name
+        "#{field_name}:#{token.last}"
+      when :quoted_phrase
+        # prepend with field name
+        # wrap search term in quotes
+        "#{field_name}:\"#{token.last}\""
+      else
+        raise QueryExpansionError, msg: "Unsupported token type: #{token.first}"
+      end
+    end
+
+    restructured_query = sub_query_components.join(" ")
+    puts "Multi-value handler restructured the tokens as the following sub query: #{restructured_query}" if Rails.env.development? || Rails.env.test?
+
+    sub_query_expander.new(restructured_query).expand_query
   end
 
   def process_specified_field_with_quoted_phrase_token(value)

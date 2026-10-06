@@ -6,6 +6,8 @@ class TermCombiner
     @terms = terms
   end
 
+  ##
+  # Constructs a query string by combining provided terms array
   def combine_terms
     # basis of string is first search term
     # apply wrapping (parentheses) to first term if required

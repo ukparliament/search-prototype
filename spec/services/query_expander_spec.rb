@@ -5,14 +5,21 @@ require 'rails_helper'
 RSpec.describe 'QueryExpander' do
   let(:query_expander) { QueryExpander.new(search_query, ses_test_class, tokeniser_test_class,
                                            field_expander_test_class, term_expander_test_class,
-                                           term_combiner_test_class) }
+                                           term_combiner_test_class, sub_query_tokeniser_test_class,
+                                           sub_query_expander_test_class) }
+
+  let(:sub_query_expander_test_class) { class_double(QueryExpander, new: sub_query_expander_test_instance) }
+  let(:sub_query_expander_test_instance) { instance_double(QueryExpander, expand_query: 'secondary expanded query') }
+
+  let(:tokeniser_test_class) { class_double(Tokeniser, new: tokeniser_test_instance) }
+  let(:tokeniser_test_instance) { instance_double(Tokeniser) }
+
+  let(:sub_query_tokeniser_test_class) { class_double(Tokeniser, new: sub_query_tokeniser_test_instance) }
+  let(:sub_query_tokeniser_test_instance) { instance_double(Tokeniser, tokenise: 'returned tokens') }
 
   let(:ses_test_class) { class_double(SesQuery, new: ses_test_instance) }
   let(:ses_test_instance) { instance_double(SesQuery, data: ses_response) }
   let(:ses_response) { 'test ses response' }
-
-  let(:tokeniser_test_class) { class_double(Tokeniser, new: tokeniser_test_instance) }
-  let(:tokeniser_test_instance) { instance_double(Tokeniser) }
 
   let(:field_expander_test_class) { class_double(FieldExpander, new: field_expander_test_instance) }
   let(:field_expander_test_instance) { instance_double(FieldExpander, expand_fields: expanded_fields) }
@@ -74,6 +81,30 @@ RSpec.describe 'QueryExpander' do
         expect(term_combiner_test_class).to receive(:new).with(["http\\:\\/\\/example.com"])
         expect(term_combiner_test_instance).to receive(:combine_terms).and_return("combined terms")
         expect(query_expander.expand_query).to eq("combined terms")
+      end
+    end
+
+    context 'where the term is a subquery with multiple terms' do
+      let(:search_query) { "subject:(cats OR (dogs AND horses))" }
+      let(:secondary_query) { "subject:cats OR ( subject:dogs AND subject:horses )" }
+
+      it 'expands on fields and terms' do
+        # initial tokenisation step as part of main query expander; returns the entire subject query
+        expect(tokeniser_test_class).to receive(:new).with(search_query)
+        expect(tokeniser_test_instance).to receive(:tokenise).and_return([[:specified_field_multiple_values, 'subject:(cats OR (dogs AND horses))']])
+
+        # A second tokenisation is requested to deconstruct the query, then used to produce a secondary query with a different structure
+        expect(sub_query_tokeniser_test_class).to receive(:new).with("cats OR (dogs AND horses)")
+        expect(sub_query_tokeniser_test_instance).to receive(:tokenise).and_return([[:unquoted_phrase, "cats"], [:operator, "OR"], [:parenthesis, "("], [:unquoted_phrase, "dogs"], [:operator, "AND"], [:unquoted_phrase, "horses"], [:parenthesis, ")"]])
+
+        # Set up a second query expander and run through as though the user had submitted the restructured query
+        expect(sub_query_expander_test_class).to receive(:new).with(secondary_query)
+        expect(sub_query_expander_test_instance).to receive(:expand_query).and_return('expanded query')
+
+        # Whatever the sub query expander (which runs through field expansion, SES querying and term expansion as
+        # normal for the other token types - see those tests) is passed to the term combiner after collation
+        expect(term_combiner_test_class).to receive(:new).with(['expanded query'])
+        expect(query_expander.expand_query).to eq(expanded_query_string)
       end
     end
 

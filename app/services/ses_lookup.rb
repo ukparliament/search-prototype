@@ -182,6 +182,7 @@ class SesLookup < ApiClient
   end
 
   def api_get_request(uri, cached = false)
+    puts "API get request for #{uri}" if Rails.env.test?
     raise 'Please stub this method to avoid HTTP requests in test environment' if Rails.env.test?
 
     http = Net::HTTP.new(uri.host, uri.port)
