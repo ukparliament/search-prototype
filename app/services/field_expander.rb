@@ -157,7 +157,7 @@ class FieldExpander
     elsif field_name == "questiontext"
       text_fields = %w[questionText_t]
     elsif field_name == "ref"
-      text_fields = %w[identifier_t, uin_t, reference_t]
+      text_fields = %w[identifier_t uin_t reference_t]
     elsif field_name == "reginterest"
       boolean_fields = %w[registeredInterest_b]
       requires_ses_data = false
