@@ -110,6 +110,8 @@ class FieldExpander
       requires_ses_data = false
     elsif field_name == "primarymemberparty"
       ses_fields = %w[leadMemberParty_ses]
+    elsif field_name == "leadmember"
+      ses_fields = %w[leadMember_ses]
     elsif field_name == "leadmemberparty"
       ses_fields = %w[leadMemberParty_ses]
     elsif field_name == "legislature"
