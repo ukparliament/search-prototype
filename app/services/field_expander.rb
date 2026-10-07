@@ -180,7 +180,7 @@ class FieldExpander
       text_fields = %w[subject_t]
       ses_fields = %w[subject_ses]
     elsif field_name == "summary"
-      text_fields = %w[abtract_t]
+      text_fields = %w[abstract_t]
     elsif field_name == "tabledby"
       ses_fields = %w[tablingMember_ses]
     elsif field_name == "timestamp"
