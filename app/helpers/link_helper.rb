@@ -21,13 +21,14 @@ module LinkHelper
     tablingMember_ses
     type_ses]
 
-  def object_show_link(string, uri)
+  def object_show_link(label, uri)
     # used where we have the title of an object and the link to that object in a source system
     # returns a titled link to the object show page for that url
 
-    return if string.blank? || uri.blank?
+    return if label.blank? || uri.blank?
 
-    link_to(string, object_show_url(object: uri[:value]))
+    display_name = label.is_a?(Hash) ? formatted_name(label, ses_data, true, true) : label
+    link_to(display_name, object_show_url(object: uri[:value]))
   end
 
   def search_link(data, singular: false, reading_order: true, html_class: nil)
