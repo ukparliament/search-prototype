@@ -12,20 +12,22 @@ class Tokeniser
   ##
   # TOKEN_REGEX is used to scan query strings and put matches into buckets we can add token labels to:
   #
-  # Bucket 1: Brackets
-  # Bucket 2: Solr operators
+  # Bucket 0: Brackets
+  # Bucket 1: Solr operators
+  # Bucket 2: Double-wildcard "everything" *:*
   # Bucket 3: http://.... or similar
   # Bucket 4: uri:http://... or similar
-  # Bucket 5: field_name:"term"
-  # Bucket 6: field_name:'term'
-  # Bucket 7: field_name:[phrase in square brackets]
-  # Bucket 8: field_name:*
-  # Bucket 9: field_name:term
-  # Bucket 10: [phrase in square brackets]
-  # Bucket 11: "double-quoted phrase"
-  # Bucket 12: 'single-quoted phrase'
-  # Bucket 13: term
-  TOKEN_REGEX = /([()])|(\bAND|OR|NOT\b)|(\*:\*)|([a-z]+:\/\/\S+)|(uri:[a-z]+:\/\/\S+)|(\w+:"(?:[^"]+)")|(\w+:'(?:[^']+)')|(\w+:\[(?:[^\]]+)\])|(\w+:\*)|(\w+:\S+)|(\[(?:[^\]]+)\])|"([^"]+)"|'([^']+)'|([^\s()\[\]{}:"^~!]+)/
+  # Bucket 5: field_name:(multiple values in brackets)
+  # Bucket 6: field_name:"term"
+  # Bucket 7: field_name:'term'
+  # Bucket 8: field_name:[phrase in square brackets]
+  # Bucket 9: field_name:*
+  # Bucket 10: field_name:term
+  # Bucket 11: [phrase in square brackets]
+  # Bucket 12: "double-quoted phrase"
+  # Bucket 13: 'single-quoted phrase'
+  # Bucket 14: term
+  TOKEN_REGEX = /([()])|(\bAND|OR|NOT\b)|(\*:\*)|([a-z]+:\/\/\S+)|(uri:[a-z]+:\/\/\S+)|(\w+:\((?:[^()]|\((?:[^()]|\([^()]*\))*\))*\))|(\w+:"(?:[^"]+)")|(\w+:'(?:[^']+)')|(\w+:\[(?:[^\]]+)\])|(\w+:\*)|(\w+:\S+)|(\[(?:[^\]]+)\])|"([^"]+)"|'([^']+)'|([^\s()\[\]{}:"^~!]+)/
 
   ##
   # Terms operates on the provided query string, returning an array of separate string 'terms' for tokenisation:
@@ -33,9 +35,9 @@ class Tokeniser
   def terms
     return if query.blank?
 
-    puts "query: #{query}" if Rails.env.development? || Rails.env.test?
+    # puts "query: #{query}" if Rails.env.development? || Rails.env.test?
     ret = query.to_s.scan(TOKEN_REGEX)
-    puts "scan results: #{ret}" if Rails.env.development? || Rails.env.test?
+    # puts "scan results: #{ret}" if Rails.env.development? || Rails.env.test?
     ret
   end
 
@@ -48,7 +50,7 @@ class Tokeniser
     tokens = []
 
     terms.each do |term|
-      puts "Processing scan fragment: #{term}" if Rails.env.development? || Rails.env.test?
+      # puts "Processing scan fragment: #{term}" if Rails.env.development? || Rails.env.test?
 
       term.each_with_index do |matched_term, i|
         next if matched_term.nil?
@@ -64,19 +66,21 @@ class Tokeniser
           tokens << [:url, matched_term]
         when 4
           tokens << [:uri_field, matched_term]
-        when 5, 6
+        when 5
+          tokens << [:specified_field_multiple_values, matched_term]
+        when 6, 7
           tokens << [:specified_field_with_quoted_phrase, matched_term]
-        when 7
-          tokens << [:specified_field_no_expansion, matched_term]
         when 8
-          tokens << [:specified_field_wildcard, matched_term]
+          tokens << [:specified_field_no_expansion, matched_term]
         when 9
-          tokens << [:specified_field, matched_term]
+          tokens << [:specified_field_wildcard, matched_term]
         when 10
+          tokens << [:specified_field, matched_term]
+        when 11
           tokens << [:no_expansion, matched_term]
-        when 11, 12
+        when 12, 13
           tokens << [:quoted_phrase, matched_term]
-        when 13
+        when 14
           tokens << [:unquoted_word, matched_term]
         else
           puts "Term not matched by tokeniser: #{matched_term}" if Rails.env.development? || Rails.env.test?

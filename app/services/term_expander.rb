@@ -5,13 +5,15 @@
 # An instance of this class is initialised for each processed token that requires expansion.
 # Returns a string that can substitute for the provided search term in a Solr query, returning expanded results.
 class TermExpander
-  attr_reader :expanded_fields, :ses_data, :search_term, :exact_match
+  attr_reader :expanded_fields, :ses_data, :search_term, :exact_match, :date_processor
 
-  def initialize(expanded_fields: {}, ses_data: [], search_term: nil, exact_match: false)
+  def initialize(expanded_fields: {}, ses_data: [], search_term: nil, exact_match: false,
+                 date_processor: DateProcessor)
     @expanded_fields = expanded_fields
     @ses_data = ses_data
     @search_term = search_term
     @exact_match = exact_match
+    @date_processor = date_processor
   end
 
   ##
@@ -26,6 +28,8 @@ class TermExpander
     expanded_terms << populate_boolean_fields unless expanded_fields[:boolean_fields].empty?
     expanded_terms << populate_date_fields unless expanded_fields[:date_fields].empty?
     expanded_terms << populate_ses_fields unless expanded_fields[:ses_fields].empty?
+    expanded_terms << populate_fixed_fields unless expanded_fields[:fixed_fields].empty?
+    expanded_terms << apply_transformations unless expanded_fields[:transformations].empty?
 
     process_expanded_terms(expanded_terms)
   end
@@ -122,6 +126,82 @@ class TermExpander
   end
 
   ##
+  # Simple input transformations (field specific)
+  def apply_transformations
+    puts "TermExpander#apply_transformations" if Rails.env.development? || Rails.env.test?
+    expanded_terms = []
+
+    unless expanded_fields[:transformations].blank?
+
+      expanded_fields[:transformations].flatten.each do |tf|
+        case tf
+        when 'session'
+          expanded_terms << [:session, "session_s:#{expand_session_string(search_term)}"]
+        when 'timestamp'
+          expanded_terms << [:timestamp, "timestamp:#{date_processor.new(search_term).generate_date_string}"]
+        when 'status'
+          expanded_terms << [:status, "edmStatus_s:#{search_term&.titleize}"]
+          expanded_terms << [:status, "pqStatus_s:#{search_term&.titleize}"]
+          expanded_terms << [:status, "status_s:#{search_term&.titleize}"]
+        else
+          raise QueryExpansionError, "Unknown transformation type \"#{tf}\""
+        end
+      end
+
+      expanded_terms
+    end
+
+  end
+
+  ##
+  # Arbitrary logic for a few odd fields
+  def populate_fixed_fields
+    puts "TermExpander#populate_fixed_fields" if Rails.env.development? || Rails.env.test?
+    expanded_terms = []
+
+    unless expanded_fields[:fixed_fields].blank?
+      expanded_fields[:fixed_fields].flatten.each do |ff|
+        case ff
+        when 'chair'
+          if search_term_is_true?
+            expanded_terms << [:ses_id, "member_ses:303704"]
+          elsif search_term_is_false?
+            expanded_terms << [:ses_id, "-member_ses:303704"]
+          end
+        when 'fromdate'
+          expanded_terms << [:date, "date_dt:#{date_processor.new("#{search_term} TO *").generate_date_string}"]
+        when 'todate'
+          expanded_terms << [:date, "date_dt:#{date_processor.new("* TO #{search_term}").generate_date_string}"]
+        when 'opqtype'
+          if search_term == 'supp'
+            expanded_terms << [:supp, "contributionType_t:supplementary"]
+          elsif search_term == 'othersupp'
+            expanded_terms << [:othersupp, "contributionType_s:Supplementary"]
+          elsif search_term == 'firstsupp'
+            expanded_terms << [:firstsupp, "contributionType_s:\"1st Supplementary\""]
+          elsif search_term == 'lead'
+            expanded_terms << [:lead, "contributionType_s:Lead"]
+          end
+        when 'wpqtype'
+          if search_term == 'ordinary'
+            expanded_terms << [:ordinary, "wpqType_s:Ordinary"]
+          elsif search_term == 'namedday'
+            expanded_terms << [:namedday, "wpqType_s:Named Day"]
+          elsif search_term == 'nextday'
+            expanded_terms << [:nextday, "wpqType_s:daily"]
+          end
+        else
+          next
+        end
+
+      end
+
+      # Return expanded terms
+      expanded_terms
+    end
+  end
+
+  ##
   # Search all boolean fields with '1' or '0' depending on entered term
   def populate_boolean_fields
     puts "TermExpander#populate_boolean_fields" if Rails.env.development? || Rails.env.test?
@@ -129,9 +209,9 @@ class TermExpander
 
     unless expanded_fields[:boolean_fields].blank?
       expanded_fields[:boolean_fields].flatten.each do |bf|
-        if %w[true yes y 1].include?(search_term)
+        if search_term_is_true?
           expanded_terms << [:boolean, "#{bf}:1"]
-        elsif %w[false no n 0].include?(search_term)
+        elsif search_term_is_false?
           expanded_terms << [:boolean, "#{bf}:0"]
         elsif search_term == "*"
           expanded_terms << [:boolean, "#{bf}:*"]
@@ -150,20 +230,8 @@ class TermExpander
     expanded_terms = []
 
     unless expanded_fields[:date_fields].blank?
-      date_lookup = {
-        today: "NOW/DAY",
-        yesterday: "NOW/DAY-1DAY",
-        thisweek: "[NOW/WEEK TO NOW/WEEK+6DAYS]",
-        lastweek: "[NOW/WEEK-1WEEK TO NOW/WEEK-1DAY]",
-        thismonth: "[NOW/MONTH TO NOW/MONTH+1MONTH-1MILLISECOND]",
-        lastmonth: "[NOW/MONTH-1MONTH TO NOW/MONTH-1MILLISECOND]",
-        thisyear: "[NOW/YEAR TO NOW/YEAR+1YEAR-1MILLISECOND]",
-        lastyear: "[NOW/YEAR-1YEAR TO NOW/YEAR-1MILLISECOND]"
-      }
-
-      parsed_date = date_lookup[search_term&.to_sym].nil? ? search_term : date_lookup[search_term&.to_sym]
       expanded_fields[:date_fields].flatten.each do |df|
-        expanded_terms << [:date, "#{df}:#{parsed_date}"]
+        expanded_terms << [:date, "#{df}:#{date_processor.new(search_term).generate_date_string}"]
       end
     end
 
@@ -267,7 +335,8 @@ class TermExpander
         expanded_terms << [search_term.to_sym, result]
       end
 
-      # add every SES field we've determined should be searched for the preferred term SES ID
+      # TODO: some SES fields (e.g. topic_ses!) will require ses_data to include topics
+      #   This will involve modifying our SES API calls to allow conditional retrieval of TPG terms
       unless ses_data.blank?
         ses_data.each_with_index do |ses_result, index|
           # If there's no preferred term ID, don't return anything for this result
@@ -288,7 +357,31 @@ class TermExpander
 
   private
 
+  def search_term_is_true?
+    return unless search_term.present?
+
+    %w[true yes y 1].include?(search_term.downcase)
+  end
+
+  def search_term_is_false?
+    return unless search_term.present?
+
+    %w[false no n 0].include?(search_term.downcase)
+  end
+
   def conditionally_quoted(string)
     string.include?(" ") ? "\"#{string}\"" : string
+  end
+
+  def expand_session_string(search_term)
+    case search_term
+    when /\A(\d{2})[\/\-&:](\d{2})\z/
+      # 19/20
+      if search_term.first(2).to_i < (Date.current.year + 1) % 100
+        "20#{search_term.first(2)}-#{search_term.last(2)}"
+      else
+        "19#{search_term.first(2)}-#{search_term.last(2)}"
+      end
+    end
   end
 end

@@ -12,10 +12,13 @@ RSpec.describe 'FieldExpander' do
         expect(field_expander.expand_fields).to eq(
                                                   { boolean_fields: [],
                                                     date_fields: [],
+                                                    fixed_fields: [],
                                                     ses_fields: [],
                                                     ses_id_fields: [],
                                                     text_fields: ["title_t"],
-                                                    process_without_field: false })
+                                                    transformations: [],
+                                                    process_without_field: false,
+                                                    requires_ses_data: true})
       end
     end
 
@@ -25,10 +28,13 @@ RSpec.describe 'FieldExpander' do
         expect(field_expander.expand_fields).to eq(
                                                   { boolean_fields: [],
                                                     date_fields: [],
+                                                    fixed_fields: [],
                                                     ses_fields: ["subject_ses"],
                                                     ses_id_fields: [],
                                                     text_fields: ["subject_t"],
-                                                    process_without_field: false })
+                                                    transformations: [],
+                                                    process_without_field: false,
+                                                    requires_ses_data: true})
       end
     end
 
@@ -38,10 +44,13 @@ RSpec.describe 'FieldExpander' do
         expect(field_expander.expand_fields).to eq(
                                                   { boolean_fields: [],
                                                     date_fields: [],
-                                                    ses_fields: ["creator_ses", "contributor_ses", "corporateAuthor_ses", "mep_ses", "section_ses", "tablingMember_ses", "askingMember_ses", "answeringMember_ses", "department_ses", "member_ses", "leadMember_ses", "correspondingMinister_ses"],
+                                                    fixed_fields: [],
+                                                    ses_fields: ["creator_ses", "contributor_ses", "corporateAuthor_ses", "section_ses", "tablingMember_ses", "askingMember_ses", "answeringMember_ses", "department_ses", "member_ses", "leadMember_ses"],
                                                     ses_id_fields: [],
-                                                    text_fields: ["creator_t", "contributor_t", "corporateAuthor_t", "epCommittee_t", "department_t", "correspondingMinister_t"],
-                                                    process_without_field: false })
+                                                    text_fields: ["creator_t", "contributor_t", "corporateAuthor_t", "department_t"],
+                                                    transformations: [],
+                                                    process_without_field: false,
+                                                    requires_ses_data: true})
       end
     end
 
@@ -51,10 +60,13 @@ RSpec.describe 'FieldExpander' do
         expect(field_expander.expand_fields).to eq(
                                                   { boolean_fields: ["containsEM_b"],
                                                     date_fields: [],
+                                                    fixed_fields: [],
                                                     ses_fields: [],
                                                     ses_id_fields: [],
                                                     text_fields: [],
-                                                    process_without_field: false })
+                                                    transformations: [],
+                                                    process_without_field: false,
+                                                    requires_ses_data: false})
       end
     end
 
@@ -63,11 +75,14 @@ RSpec.describe 'FieldExpander' do
       it 'populates date_fields' do
         expect(field_expander.expand_fields).to eq(
                                                   { boolean_fields: [],
-                                                    date_fields: ["dateCertified_dt", "certifiedDate_dt"],
+                                                    date_fields: ["dateCertified_dt"],
+                                                    fixed_fields: [],
                                                     ses_fields: [],
                                                     ses_id_fields: [],
                                                     text_fields: [],
-                                                    process_without_field: false })
+                                                    transformations: [],
+                                                    process_without_field: false,
+                                                    requires_ses_data: false})
       end
     end
 
@@ -77,10 +92,13 @@ RSpec.describe 'FieldExpander' do
         expect(field_expander.expand_fields).to eq(
                                                   { boolean_fields: [],
                                                     date_fields: ["date_dt"],
+                                                    fixed_fields: [],
                                                     ses_fields: [],
                                                     ses_id_fields: [],
                                                     text_fields: [],
-                                                    process_without_field: false })
+                                                    transformations: [],
+                                                    process_without_field: false,
+                                                    requires_ses_data: false})
       end
     end
 
@@ -90,10 +108,13 @@ RSpec.describe 'FieldExpander' do
         expect(field_expander.expand_fields).to eq(
                                                   { boolean_fields: [],
                                                     date_fields: ["anything_dt"],
+                                                    fixed_fields: [],
                                                     ses_fields: [],
                                                     ses_id_fields: [],
                                                     text_fields: [],
-                                                    process_without_field: false })
+                                                    transformations: [],
+                                                    process_without_field: false,
+                                                    requires_ses_data: false})
       end
     end
 
@@ -103,10 +124,13 @@ RSpec.describe 'FieldExpander' do
         expect(field_expander.expand_fields).to eq(
                                                   { boolean_fields: [],
                                                     date_fields: [],
+                                                    fixed_fields: [],
                                                     ses_fields: [],
                                                     ses_id_fields: ["anything_ses"],
                                                     text_fields: [],
-                                                    process_without_field: false })
+                                                    transformations: [],
+                                                    process_without_field: false,
+                                                    requires_ses_data: true})
       end
     end
 
@@ -116,10 +140,13 @@ RSpec.describe 'FieldExpander' do
         expect(field_expander.expand_fields).to eq(
                                                   { boolean_fields: [],
                                                     date_fields: [],
+                                                    fixed_fields: [],
                                                     ses_fields: ['all_ses'],
                                                     ses_id_fields: [],
                                                     text_fields: [],
-                                                    process_without_field: true })
+                                                    transformations: [],
+                                                    process_without_field: true,
+                                                    requires_ses_data: true})
       end
     end
     context 'field name is other text' do
@@ -128,10 +155,13 @@ RSpec.describe 'FieldExpander' do
         expect(field_expander.expand_fields).to eq(
                                                   { boolean_fields: [],
                                                     date_fields: [],
+                                                    fixed_fields: [],
                                                     ses_fields: [],
                                                     ses_id_fields: [],
                                                     text_fields: ["unrecognised_field_name"],
-                                                    process_without_field: false })
+                                                    transformations: [],
+                                                    process_without_field: false,
+                                                    requires_ses_data: true})
       end
     end
   end

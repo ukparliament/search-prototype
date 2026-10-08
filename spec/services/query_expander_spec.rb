@@ -5,24 +5,32 @@ require 'rails_helper'
 RSpec.describe 'QueryExpander' do
   let(:query_expander) { QueryExpander.new(search_query, ses_test_class, tokeniser_test_class,
                                            field_expander_test_class, term_expander_test_class,
-                                           term_combiner_test_class) }
+                                           term_combiner_test_class, sub_query_tokeniser_test_class,
+                                           sub_query_expander_test_class) }
+
+  let(:sub_query_expander_test_class) { class_double(QueryExpander, new: sub_query_expander_test_instance) }
+  let(:sub_query_expander_test_instance) { instance_double(QueryExpander, expand_query: 'secondary expanded query') }
+
+  let(:tokeniser_test_class) { class_double(Tokeniser, new: tokeniser_test_instance) }
+  let(:tokeniser_test_instance) { instance_double(Tokeniser) }
+
+  let(:sub_query_tokeniser_test_class) { class_double(Tokeniser, new: sub_query_tokeniser_test_instance) }
+  let(:sub_query_tokeniser_test_instance) { instance_double(Tokeniser, tokenise: 'returned tokens') }
 
   let(:ses_test_class) { class_double(SesQuery, new: ses_test_instance) }
   let(:ses_test_instance) { instance_double(SesQuery, data: ses_response) }
   let(:ses_response) { 'test ses response' }
 
-  let(:tokeniser_test_class) { class_double(Tokeniser, new: tokeniser_test_instance) }
-  let(:tokeniser_test_instance) { instance_double(Tokeniser) }
-
   let(:field_expander_test_class) { class_double(FieldExpander, new: field_expander_test_instance) }
   let(:field_expander_test_instance) { instance_double(FieldExpander, expand_fields: expanded_fields) }
   let(:expanded_fields) { {
-    'text_fields' => [],
-    'ses_fields' => [],
-    'ses_id_fields' => [],
-    'boolean_fields' => [],
-    'date_fields' => [],
-    'non_aliased_fields' => []
+    :text_fields => [],
+    :ses_fields => [],
+    :ses_id_fields => [],
+    :boolean_fields => [],
+    :date_fields => [],
+    :non_aliased_fields => [],
+    :requires_ses_data => true
   } }
 
   let(:term_expander_test_class) { class_double(TermExpander, new: term_expander_test_instance) }
@@ -76,6 +84,30 @@ RSpec.describe 'QueryExpander' do
       end
     end
 
+    context 'where the term is a subquery with multiple terms' do
+      let(:search_query) { "subject:(cats OR (dogs AND horses))" }
+      let(:secondary_query) { "subject:cats OR ( subject:dogs AND subject:horses )" }
+
+      it 'expands on fields and terms' do
+        # initial tokenisation step as part of main query expander; returns the entire subject query
+        expect(tokeniser_test_class).to receive(:new).with(search_query)
+        expect(tokeniser_test_instance).to receive(:tokenise).and_return([[:specified_field_multiple_values, 'subject:(cats OR (dogs AND horses))']])
+
+        # A second tokenisation is requested to deconstruct the query, then used to produce a secondary query with a different structure
+        expect(sub_query_tokeniser_test_class).to receive(:new).with("cats OR (dogs AND horses)")
+        expect(sub_query_tokeniser_test_instance).to receive(:tokenise).and_return([[:unquoted_phrase, "cats"], [:operator, "OR"], [:parenthesis, "("], [:unquoted_phrase, "dogs"], [:operator, "AND"], [:unquoted_phrase, "horses"], [:parenthesis, ")"]])
+
+        # Set up a second query expander and run through as though the user had submitted the restructured query
+        expect(sub_query_expander_test_class).to receive(:new).with(secondary_query)
+        expect(sub_query_expander_test_instance).to receive(:expand_query).and_return('expanded query')
+
+        # Whatever the sub query expander (which runs through field expansion, SES querying and term expansion as
+        # normal for the other token types - see those tests) is passed to the term combiner after collation
+        expect(term_combiner_test_class).to receive(:new).with(['expanded query'])
+        expect(query_expander.expand_query).to eq(expanded_query_string)
+      end
+    end
+
     context 'where the term is a double-quoted phrase with a specified field' do
       let(:search_query) { ['subject:"housing crisis"'] }
       it 'expands on fields and terms' do
@@ -87,14 +119,14 @@ RSpec.describe 'QueryExpander' do
         # The search term has the secondary quote marks removed
         expect(ses_test_class).to receive(:new).with({ value: "housing crisis" }, exact_match: true)
 
-        # SES query instance receives call for data
-        expect(ses_test_instance).to receive(:data).and_return(ses_response)
-
         # field expander class is initialised with the field name (only)
         expect(field_expander_test_class).to receive(:new).with('subject')
 
         # field expander instance receives call to expand_fields
         expect(field_expander_test_instance).to receive(:expand_fields).and_return(expanded_fields)
+
+        # SES query instance receives call for data
+        expect(ses_test_instance).to receive(:data).and_return(ses_response)
 
         # the term expander is initialised with the result of the field expansion & ses data, as well as the search
         # term
@@ -124,17 +156,17 @@ RSpec.describe 'QueryExpander' do
         # tokeniser instance receives call to tokenise
         expect(tokeniser_test_instance).to receive(:tokenise).and_return([[:specified_field_with_quoted_phrase, "subject:'housing crisis'"]])
 
-        # SES query class is initialised with the search term (only)
-        expect(ses_test_class).to receive(:new).with({ value: "'housing crisis'" }, exact_match: true)
-
-        # SES query instance receives call for data
-        expect(ses_test_instance).to receive(:data).and_return(ses_response)
-
         # field expander class is initialised with the field name (only)
         expect(field_expander_test_class).to receive(:new).with('subject')
 
         # field expander instance receives call to expand_fields
         expect(field_expander_test_instance).to receive(:expand_fields).and_return(expanded_fields)
+
+        # SES query class is initialised with the search term (only)
+        expect(ses_test_class).to receive(:new).with({ value: "'housing crisis'" }, exact_match: true)
+
+        # SES query instance receives call for data
+        expect(ses_test_instance).to receive(:data).and_return(ses_response)
 
         # the term expander is initialised with the result of the field expansion & ses data, as well as the search
         # term
@@ -158,13 +190,13 @@ RSpec.describe 'QueryExpander' do
     context "where the term is a phrase wrapped in square brackets with a specified field" do
       context 'for a date range query' do
         context 'the "date" alias' do
-          let(:search_query) { ["date:[2026-04-30T00:00:00Z TO *]"] }
+          let(:search_query) { ["date:[2026-04-30T00:00:00.000Z TO *]"] }
           it 'expands the date alias but leaves the date range unmodified' do
             # tokeniser is initialised with the query string
-            expect(tokeniser_test_class).to receive(:new).with(["date:[2026-04-30T00:00:00Z TO *]"])
+            expect(tokeniser_test_class).to receive(:new).with(["date:[2026-04-30T00:00:00.000Z TO *]"])
 
             # tokeniser instance receives call to tokenise
-            expect(tokeniser_test_instance).to receive(:tokenise).and_return([[:specified_field_no_expansion, 'date:[2026-04-30T00:00:00Z TO *]']])
+            expect(tokeniser_test_instance).to receive(:tokenise).and_return([[:specified_field_no_expansion, 'date:[2026-04-30T00:00:00.000Z TO *]']])
 
             # field expander class is initialised with the alias
             expect(field_expander_test_class).to receive(:new).with('date')
@@ -174,7 +206,7 @@ RSpec.describe 'QueryExpander' do
 
             # the term expander is initialised with the result of the field expansion & blank ses data, as well as the search
             # term. Note that the square brackets required by the range query syntax remain intact.
-            expect(term_expander_test_class).to receive(:new).with(expanded_fields: expanded_fields, search_term: "[2026-04-30T00:00:00Z TO *]")
+            expect(term_expander_test_class).to receive(:new).with(expanded_fields: expanded_fields, search_term: "[2026-04-30T00:00:00.000Z TO *]")
 
             # term expander receives call to expand terms
             expect(term_expander_test_instance).to receive(:expand_terms).and_return('processed tokens')
@@ -190,13 +222,13 @@ RSpec.describe 'QueryExpander' do
           end
         end
         context 'a date field name ending _dt' do
-          let(:search_query) { ["anything_dt:[2026-04-30T00:00:00Z TO *]"] }
+          let(:search_query) { ["anything_dt:[2026-04-30T00:00:00.000Z TO *]"] }
           it 'handles _dt fields by expecting a date range, which is then left unmodified' do
             # tokeniser is initialised with the query string
-            expect(tokeniser_test_class).to receive(:new).with(["anything_dt:[2026-04-30T00:00:00Z TO *]"])
+            expect(tokeniser_test_class).to receive(:new).with(["anything_dt:[2026-04-30T00:00:00.000Z TO *]"])
 
             # tokeniser instance receives call to tokenise
-            expect(tokeniser_test_instance).to receive(:tokenise).and_return([[:specified_field_no_expansion, 'anything_dt:[2026-04-30T00:00:00Z TO *]']])
+            expect(tokeniser_test_instance).to receive(:tokenise).and_return([[:specified_field_no_expansion, 'anything_dt:[2026-04-30T00:00:00.000Z TO *]']])
 
             # field expander class is initialised with the field name (only)
             expect(field_expander_test_class).to receive(:new).with('anything_dt')
@@ -206,7 +238,7 @@ RSpec.describe 'QueryExpander' do
 
             # the term expander is initialised with the result of the field expansion & blank ses data, as well as the search
             # term. Note that the square brackets required by the range query syntax remain intact.
-            expect(term_expander_test_class).to receive(:new).with(expanded_fields: expanded_fields, search_term: "[2026-04-30T00:00:00Z TO *]")
+            expect(term_expander_test_class).to receive(:new).with(expanded_fields: expanded_fields, search_term: "[2026-04-30T00:00:00.000Z TO *]")
 
             # term expander receives call to expand terms
             expect(term_expander_test_instance).to receive(:expand_terms).and_return('processed tokens')
