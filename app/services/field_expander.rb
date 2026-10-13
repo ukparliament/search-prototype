@@ -164,7 +164,7 @@ class FieldExpander
       boolean_fields = %w[registeredInterest_b]
       requires_ses_data = false
     elsif field_name.downcase == "resolutionprocedure"
-      text_fields = %w[procedure_s]
+      transformations = %w[resolutionprocedure]
     elsif field_name.downcase == "section"
       ses_fields = %w[section_ses]
     elsif field_name.downcase == "session"

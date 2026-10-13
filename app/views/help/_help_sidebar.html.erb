@@ -1,0 +1,15 @@
+<% content_for :sidebar do %>
+  <nav id="sidebar" aria-labelledby="nav--meta">
+    <h2 class="doc-list-heading" id="nav--about">
+      Search help
+    </h2>
+
+    <ul class="doc-list">
+      <li>
+        <a href="<%= aliases_url %>" class="doc-list__link" aria-current="<%= current_page?(aliases_url) ? "page" : "false" %>">
+          Using aliases
+        </a>
+      </li>
+    </ul>
+  </nav>
+<% end %>

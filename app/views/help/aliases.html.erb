@@ -1,0 +1,13 @@
+<% content_for(:heading) do %>
+  <%= @page_title %>
+<% end %>
+
+<% content_for(:robot_meta_tags) do %>
+  <%= render '/shared/content_page_robots_tag' %>
+<% end %>
+
+<%= render 'help/help_sidebar' %>
+<div>
+  <%= @markdown_content.html %>
+</div>
+<%= render 'shared/table_of_contents' %>

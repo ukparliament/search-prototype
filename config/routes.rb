@@ -15,6 +15,9 @@ Rails.application.routes.draw do
   get 'meta/librarian-tools' => 'meta#librarian_tools', as: :meta_librarian_tools
   get 'meta/roadmap' => 'meta#roadmap', as: :meta_roadmap
 
+  # Help pages
+  get 'help/aliases' => 'help#aliases', as: :aliases
+
   # Error routing enabled
   # Bespoke error pages
   match "403", to: "errors#forbidden", via: [:get, :post]

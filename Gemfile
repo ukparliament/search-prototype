@@ -6,6 +6,7 @@ ruby file: '.ruby-version'
 gem "rails", "8.1.3.1"
 gem 'bundler-audit'
 gem 'cgi'
+gem 'commonmarker'
 gem 'fiddle'
 gem "pg"
 gem "propshaft"

@@ -135,6 +135,8 @@ class TermExpander
 
       expanded_fields[:transformations].flatten.each do |tf|
         case tf
+        when 'resolutionprocedure'
+          expanded_terms << [:resolutionprocedure, "procedure_s:#{search_term&.titleize}"]
         when 'session'
           expanded_terms << [:session, "session_s:#{expand_session_string(search_term)}"]
         when 'timestamp'
@@ -173,21 +175,21 @@ class TermExpander
         when 'todate'
           expanded_terms << [:date, "date_dt:#{date_processor.new("* TO #{search_term}").generate_date_string}"]
         when 'opqtype'
-          if search_term == 'supp'
+          if search_term.downcase == 'supp'
             expanded_terms << [:supp, "contributionType_t:supplementary"]
-          elsif search_term == 'othersupp'
+          elsif search_term.downcase == 'othersupp'
             expanded_terms << [:othersupp, "contributionType_s:Supplementary"]
-          elsif search_term == 'firstsupp'
+          elsif search_term.downcase == 'firstsupp'
             expanded_terms << [:firstsupp, "contributionType_s:\"1st Supplementary\""]
-          elsif search_term == 'lead'
+          elsif search_term.downcase == 'lead'
             expanded_terms << [:lead, "contributionType_s:Lead"]
           end
         when 'wpqtype'
-          if search_term == 'ordinary'
+          if search_term.downcase == 'ordinary'
             expanded_terms << [:ordinary, "wpqType_s:Ordinary"]
-          elsif search_term == 'namedday'
+          elsif search_term.downcase == 'namedday'
             expanded_terms << [:namedday, "wpqType_s:Named Day"]
-          elsif search_term == 'nextday'
+          elsif search_term.downcase == 'nextday'
             expanded_terms << [:nextday, "wpqType_s:daily"]
           end
         else

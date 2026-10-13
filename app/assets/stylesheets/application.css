@@ -81,3 +81,16 @@ blockquote p:last-of-type:after {
 .font-size-epsilon {
     line-height: 1.25;
 }
+
+.doc-list.doc-list-small li {
+    font-size: medium;
+    margin-top: 2px;
+}
+
+.help-toc {
+    position: sticky;
+    top: 1.5rem;
+    align-self: start;
+    max-height: calc(100vh - 3rem);
+    overflow-y: auto;
+}

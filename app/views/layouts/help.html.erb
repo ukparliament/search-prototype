@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <%= render 'layouts/shared/title' %>
+  <%= render 'library_design/head/head' %>
+  <%= yield :robot_meta_tags %>
+  <%= yield :page_styles %>
+  <%= javascript_importmap_tags %>
+</head>
+<body class="brand-bicameral">
+<%= render 'layouts/header/header' %>
+<main id="main-content" class="block block-page">
+  <div class="inner-content container">
+    <div class="row">
+      <% if content_for(:sidebar) %>
+        <div class="col-lg-2">
+          <%= yield :sidebar %>
+        </div>
+      <% end %>
+      <div class="col-lg-7">
+        <%#= render 'library_design/debug/debug' %>
+        <% if content_for?(:heading) %>
+          <h1 class="reading-width">
+            <%= yield :heading %>
+          </h1>
+        <% end %>
+        <%= yield %>
+      </div>
+      <% if content_for(:table_of_contents) %>
+        <div class="col-lg-3">
+          <%= yield :table_of_contents %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</main>
+<%= render 'layouts/footer/footer' %>
+</body>
+</html>

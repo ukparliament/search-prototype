@@ -504,6 +504,14 @@ RSpec.describe 'TermExpander' do
           expect(term_expander.populate_fixed_fields).to eq([[:lead, "contributionType_s:Lead"]])
         end
       end
+
+      context 'with an upper case search term' do
+        let!(:search_term) { 'Lead' }
+
+        it 'returns a fixed value tagged with the search term' do
+          expect(term_expander.populate_fixed_fields).to eq([[:lead, "contributionType_s:Lead"]])
+        end
+      end
     end
 
     context 'for wpqtype' do
@@ -530,6 +538,13 @@ RSpec.describe 'TermExpander' do
           expect(term_expander.populate_fixed_fields).to eq([[:nextday, "wpqType_s:daily"]])
         end
       end
+      context 'with an upper case search term' do
+        let!(:search_term) { 'Nextday' }
+
+        it 'returns a fixed value tagged with the search term' do
+          expect(term_expander.populate_fixed_fields).to eq([[:nextday, "wpqType_s:daily"]])
+        end
+      end
     end
   end
 
@@ -539,6 +554,15 @@ RSpec.describe 'TermExpander' do
 
       it 'raises an error' do
         expect { term_expander.apply_transformations }.to raise_error(QueryExpansionError, "Unknown transformation type \"string\"")
+      end
+    end
+
+    context 'for resolutionprocedure' do
+      let!(:transformations) { ["resolutionprocedure"] }
+      let!(:search_term) { 'test' }
+
+      it 'titleizes the search term and applies it to one field' do
+        expect(term_expander.apply_transformations).to eq([[:resolutionprocedure, "procedure_s:Test"]])
       end
     end
 
