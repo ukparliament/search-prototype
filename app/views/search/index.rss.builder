@@ -3,12 +3,15 @@ xml.instruct! :xml, :version => "1.0", encoding: "utf-8"
 xml.rss version: "2.0" do
   xml.channel do
     xml.title "Search Results"
+    xml.description "Search Results for #{@search_data.query}"
     xml.link search_url
-    xml.description "Search Results for..."
+    xml.copyright "https://www.parliament.uk/site-information/copyright-parliament/open-parliament-licence/"
+    xml.language "en-uk"
     xml.lastBuildDate Time.current.rfc2822
 
     @objects.each do |object|
       xml.item do
+        xml.guid object.object_uri.dig(:value)
         xml.title format_object_title(object.object_title, @ses_data)
         xml.link object.object_uri.dig(:value)
         xml.date object.standard_date.dig(:value)
