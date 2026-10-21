@@ -10,8 +10,8 @@ xml.rss version: "2.0" do
     @objects.each do |object|
       xml.item do
         xml.title format_object_title(object.object_title, @ses_data)
-        xml.link object.object_uri
-        xml.date object.standard_date
+        xml.link object.object_uri.dig(:value)
+        xml.date object.standard_date.dig(:value)
         xml.description strip_tags(render(partial: object.prelim_template, locals: { object: object })).squish
       end
     end
