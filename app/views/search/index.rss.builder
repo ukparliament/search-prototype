@@ -14,7 +14,7 @@ xml.rss version: "2.0" do
         xml.guid object.object_uri.dig(:value)
         xml.title format_object_title(object.object_title, @ses_data)
         xml.link object.external_location_uri&.dig(:value)
-        xml.date object.standard_date.dig(:value)
+        xml.date object.standard_date.dig(:value).rfc2822
         xml.description strip_tags(render(partial: object.prelim_template, locals: { object: object })).squish
       end
     end
