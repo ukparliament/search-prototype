@@ -1,4 +1,5 @@
 require 'rails_helper'
+require 'rss'
 
 RSpec.describe 'Search', type: :request do
   describe 'GET /search' do
@@ -6,10 +7,10 @@ RSpec.describe 'Search', type: :request do
     let!(:item1_initial) { { 'type_ses' => [90996], 'uri' => 'QZH4EFc_uri' } }
     let!(:item2_initial) { { 'type_ses' => [90996], 'uri' => 'SL9RT6y_uri' } }
     let!(:item3_initial) { { 'type_ses' => [90996], 'uri' => 'BZ34eDD_uri' } }
-    let!(:initial_search_data) { { search_parameters: { "query" => 'item 2' }, data: { 'response' => { 'start' => 0, 'numFound' => 3, 'docs' => [item1_initial, item2_initial, item3_initial] }, 'facets' => { "count" => 5, 'type_sesrollup' => { "buckets" => [{ "val" => 90996, "count" => 123 }, { "val" => 90995, "count" => 234 }] } } } } }
-    let!(:item1) { { 'type_ses' => [90996], 'title_t' => 'QZH4EFc', 'uri' => 'QZH4EFc_uri', 'all_ses' => [90996, 12345] } }
-    let!(:item2) { { 'type_ses' => [90996], 'title_t' => 'SL9RT6y', 'uri' => 'SL9RT6y_uri', 'all_ses' => [90996, 56789] } }
-    let!(:item3) { { 'type_ses' => [90996], 'title_t' => 'BZ34eDD', 'uri' => 'BZ34eDD_uri', 'all_ses' => [90996, 34567] } }
+    let!(:initial_search_data) { { search_parameters: { query: 'item 2' }, data: { 'response' => { 'start' => 0, 'numFound' => 3, 'docs' => [item1_initial, item2_initial, item3_initial] }, 'facets' => { "count" => 5, 'type_sesrollup' => { "buckets" => [{ "val" => 90996, "count" => 123 }, { "val" => 90995, "count" => 234 }] } } } } }
+    let!(:item1) { { 'type_ses' => [90996], 'title_t' => 'QZH4EFc', 'uri' => 'QZH4EFc_uri', 'all_ses' => [90996, 12345], 'date_dt' => "2019-10-10T00:00:00Z", 'externalLocation_uri' => ['www.example.com'] } }
+    let!(:item2) { { 'type_ses' => [90996], 'title_t' => 'SL9RT6y', 'uri' => 'SL9RT6y_uri', 'all_ses' => [90996, 56789], 'date_dt' => "2019-10-10T00:00:00Z", 'externalLocation_uri' => ['www.example.com'] } }
+    let!(:item3) { { 'type_ses' => [90996], 'title_t' => 'BZ34eDD', 'uri' => 'BZ34eDD_uri', 'all_ses' => [90996, 34567], 'date_dt' => "2019-10-10T00:00:00Z", 'externalLocation_uri' => ['www.example.com'] } }
     let!(:solr_multi_query_instance) { SolrMultiQuery.new({ object_uris: ['QZH4EFc_uri', 'SL9RT6y_uri', 'BZ34eDD_uri', 'BZ34eDD_uri'], solr_fields: Edm.search_result_solr_fields }) }
     let!(:secondary_query_response) { [item1, item2, item3] }
     let!(:associated_objects_instance) { AssociatedObjectsForSearchResults.new([item1, item2, item3]) }
@@ -68,6 +69,41 @@ RSpec.describe 'Search', type: :request do
         expect(response.parsed_body.inner_html).to include('http://www.example.com/objects?object=SL9RT6y_uri')
         expect(response.parsed_body.inner_html).to include('BZ34eDD')
         expect(response.parsed_body.inner_html).to include('http://www.example.com/objects?object=BZ34eDD_uri')
+      end
+    end
+
+    context 'a request for RSS' do
+      let!(:solr_search_instance) { SolrSearch.new(query: "test", filter: { "type_ses" => ["90996"] }) }
+
+      it 'returns http success' do
+        get '/search.rss?query=test&filter%5Btype_ses%5D%5B%5D=90996'
+        expect(response).to have_http_status(:ok)
+      end
+
+      it 'returns RSS XML' do
+        get '/search.rss?query=test&filter%5Btype_ses%5D%5B%5D=90996'
+        expect(response.media_type).to eq('application/rss+xml')
+      end
+
+      it 'returns a valid RSS feed' do
+        get '/search.rss?query=test&filter%5Btype_ses%5D%5B%5D=90996'
+
+        feed = RSS::Parser.parse(response.body)
+
+        expect(feed.version).to eq('1.0')
+        expect(feed.rss_version).to eq('2.0')
+        expect(feed.channel.title).to eq("Search Results for item 2")
+        expect(feed.channel.description).to eq("Results from Parliamentary Search for the query: item 2")
+        expect(feed.channel.link).to eq("http://www.example.com/search.rss?query=test&filter%5Btype_ses%5D%5B%5D=90996")
+        expect(feed.channel.copyright).to eq("https://www.parliament.uk/site-information/copyright-parliament/open-parliament-licence/")
+        expect(feed.channel.language).to eq('en-uk')
+        expect(feed.channel.pubDate).to eq(Date.parse('2019-10-10').rfc822)
+        expect(feed.items.size).to eq(3)
+        expect(feed.items.first.guid.content).to eq("QZH4EFc_uri")
+        expect(feed.items.first.title).to eq("QZH4EFc")
+        expect(feed.items.first.link).to eq("www.example.com")
+        expect(feed.items.first.pubDate).to eq(Date.parse('2019-10-10').rfc822)
+        expect(feed.items.first.description).to eq("Unknown, on , in the")
       end
     end
 
