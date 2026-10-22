@@ -2,9 +2,9 @@ xml.instruct! :xml, :version => "1.0", encoding: "utf-8"
 
 xml.rss version: "2.0" do
   xml.channel do
-    xml.title "Search Results"
-    xml.description "Search Results for #{@search_data.query}"
-    xml.link search_url
+    xml.title "Search Results for #{@search_data.query}"
+    xml.description "Results from Parliamentary Search for the query: #{@search_data.query}"
+    xml.link request.original_url
     xml.copyright "https://www.parliament.uk/site-information/copyright-parliament/open-parliament-licence/"
     xml.language "en-uk"
     xml.pubDate @objects.first.standard_date.dig(:value).rfc2822
