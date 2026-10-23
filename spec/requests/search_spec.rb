@@ -73,20 +73,20 @@ RSpec.describe 'Search', type: :request do
     end
 
     context 'a request for RSS' do
-      let!(:solr_search_instance) { SolrSearch.new(query: "test", filter: { "type_ses" => ["90996"] }) }
+      let!(:solr_search_instance) { SolrSearch.new(query: "item 2", filter: { "type_ses" => ["90996"] }) }
 
       it 'returns http success' do
-        get '/search.rss?query=test&filter%5Btype_ses%5D%5B%5D=90996'
+        get '/search.rss?query=item+2&filter%5Btype_ses%5D%5B%5D=90996'
         expect(response).to have_http_status(:ok)
       end
 
       it 'returns RSS XML' do
-        get '/search.rss?query=test&filter%5Btype_ses%5D%5B%5D=90996'
+        get '/search.rss?query=item+2&filter%5Btype_ses%5D%5B%5D=90996'
         expect(response.media_type).to eq('application/rss+xml')
       end
 
       it 'returns a valid RSS feed' do
-        get '/search.rss?query=test&filter%5Btype_ses%5D%5B%5D=90996'
+        get '/search.rss?query=item+2&filter%5Btype_ses%5D%5B%5D=90996'
 
         feed = RSS::Parser.parse(response.body)
 
@@ -94,7 +94,7 @@ RSpec.describe 'Search', type: :request do
         expect(feed.rss_version).to eq('2.0')
         expect(feed.channel.title).to eq("Search Results for item 2")
         expect(feed.channel.description).to eq("Results from Parliamentary Search for the query: item 2")
-        expect(feed.channel.link).to eq("http://www.example.com/search.rss?query=test&filter%5Btype_ses%5D%5B%5D=90996")
+        expect(feed.channel.link).to eq("http://www.example.com/search?query=item+2&results_per_page=20")
         expect(feed.channel.copyright).to eq("https://www.parliament.uk/site-information/copyright-parliament/open-parliament-licence/")
         expect(feed.channel.language).to eq('en-uk')
         expect(feed.channel.pubDate).to eq(Date.parse('2019-10-10').rfc822)
