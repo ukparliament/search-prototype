@@ -6,7 +6,7 @@ xml.rss version: "2.0" do
     xml.description "Results from Parliamentary Search for the query: #{@search_data.query}"
     xml.link search_url(query: @search_data.query, filter: @search_data.filter, results_per_page: @search_data.results_per_page)
     xml.copyright "https://www.parliament.uk/site-information/copyright-parliament/open-parliament-licence/"
-    xml.language "en-uk"
+    xml.language "en-gb"
     xml.pubDate @objects.first.standard_date&.dig(:value)&.rfc2822
 
     @objects.each do |object|
