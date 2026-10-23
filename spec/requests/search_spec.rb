@@ -96,7 +96,7 @@ RSpec.describe 'Search', type: :request do
         expect(feed.channel.description).to eq("Results from Parliamentary Search for the query: item 2")
         expect(feed.channel.link).to eq("http://www.example.com/search?query=item+2&results_per_page=20")
         expect(feed.channel.copyright).to eq("https://www.parliament.uk/site-information/copyright-parliament/open-parliament-licence/")
-        expect(feed.channel.language).to eq('en-uk')
+        expect(feed.channel.language).to eq('en-gb')
         expect(feed.channel.pubDate).to eq(Date.parse('2019-10-10').rfc822)
         expect(feed.items.size).to eq(3)
         expect(feed.items.first.guid.content).to eq("QZH4EFc_uri")
