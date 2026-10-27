@@ -11,7 +11,9 @@ class ParliamentaryPaperLaid < Paper
     commonsLibraryLocation_t
     corporateAuthor_ses
     corporateAuthor_t
+    dateApproved_dt
     dateLaid_dt
+    dateMade_dt
     dateOfOrderToPrint_dt
     dateWithdrawn_dt
     date_dt
@@ -29,6 +31,7 @@ class ParliamentaryPaperLaid < Paper
     subject_t
     title_t
     uri
+    withdrawn_b
     ]
   end
 

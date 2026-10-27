@@ -37,9 +37,15 @@ class ContentTypeObject
 
   def self.search_result_solr_fields
     # Type & Subtype are always required for assigning a content type
-    %w[timestamp
-      type_ses subtype_ses
-      location_uri externalLocation_uri location_t externalLocation_t]
+    %w[
+      externalLocation_t
+      externalLocation_uri
+      location_t
+      location_uri
+      subtype_ses
+      timestamp
+      type_ses
+    ]
   end
 
   def self.search_result_ses_fields
