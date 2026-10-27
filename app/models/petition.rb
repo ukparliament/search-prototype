@@ -27,10 +27,11 @@ class Petition < ContentTypeObject
   def self.search_result_solr_fields
     # fields requested in Solr search for search results page
     super << %w[
-    title_t
-    uri
     leadMember_ses
     subject_ses
+    subject_t
+    title_t
+    uri
     ]
   end
 

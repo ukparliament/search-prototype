@@ -11,8 +11,11 @@ class ResearchBriefing < ContentTypeObject
     htmlsummary_t
     description_t
     creator_ses creator_t
+    created_dt
     category_ses
+    contributor_ses contributor_t
     legislationTitle_ses legislationTitle_t
+    modified_dt
     subject_ses subject_t
     searcherNote_t
     date_dt identifier_t legislature_ses

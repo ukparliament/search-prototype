@@ -37,7 +37,9 @@ class ContentTypeObject
 
   def self.search_result_solr_fields
     # Type & Subtype are always required for assigning a content type
-    %w[timestamp type_ses subtype_ses location_uri externalLocation_uri location_t externalLocation_t]
+    %w[timestamp
+      type_ses subtype_ses
+      location_uri externalLocation_uri location_t externalLocation_t]
   end
 
   def self.search_result_ses_fields
@@ -371,7 +373,7 @@ class ContentTypeObject
     false
   end
 
-  def ministerial_correction?
+  def written_correction?
     false
   end
 
@@ -486,7 +488,7 @@ class ContentTypeObject
     when 347135
       'PublicAct'
     when 92034
-      'MinisterialCorrection'
+      'WrittenCorrection'
     when 91613
       'ImpactAssessment'
     when 347163

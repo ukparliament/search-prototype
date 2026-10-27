@@ -5,8 +5,8 @@ xml.rss :version => "2.0", "xmlns:dc" => "http://purl.org/dc/elements/1.1/", "xm
     xml.title "Search Results for #{@search_data.query}"
     xml.description "Results from Parliamentary Search for the query: #{@search_data.query}"
     xml.link search_url(query: @search_data.query, filter: @search_data.filter, results_per_page: @search_data.results_per_page)
-	xml.tag!('atom:link', :href => search_url(query: @search_data.query, filter: @search_data.filter, results_per_page: @search_data.results_per_page, :format => 'rss'), :rel => 'self', :type => "application/rss+xml")
-	xml.copyright "https://www.parliament.uk/site-information/copyright-parliament/open-parliament-licence/"
+    xml.tag!('atom:link', :href => search_url(query: @search_data.query, filter: @search_data.filter, results_per_page: @search_data.results_per_page, :format => 'rss'), :rel => 'self', :type => "application/rss+xml")
+    xml.copyright "https://www.parliament.uk/site-information/copyright-parliament/open-parliament-licence/"
     xml.language "en-gb"
     xml.pubDate @objects.first.standard_date&.dig(:value)&.rfc2822
 
@@ -17,7 +17,7 @@ xml.rss :version => "2.0", "xmlns:dc" => "http://purl.org/dc/elements/1.1/", "xm
         xml.link object.display_link&.dig(:value)
         xml.pubDate object.standard_date&.dig(:value)&.rfc2822
         xml.description strip_tags(render(partial: object.prelim_template, locals: { object: object })).squish
-		    xml.tag!('dc:identifier', object.standard_reference&.reject{|ref| ref.dig(:value) == "."}&.pluck(:value)&.join('; ') )
+        xml.tag!('dc:identifier', object.standard_reference&.reject { |ref| ref.dig(:value) == "." }&.pluck(:value)&.join('; '))
       end
     end
   end

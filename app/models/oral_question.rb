@@ -13,21 +13,37 @@ class OralQuestion < Question
   def self.search_result_solr_fields
     # fields requested in Solr search for search results page
     super << %w[
-    title_t uri
-    questionText_t
-    askingMember_ses askingMemberParty_ses tablingMember_ses tablingMemberParty_ses
-    answeringMember_ses answeringMemberParty_ses
+    answerFor_uri
     answeringDept_ses
+    answeringMemberParty_ses
+    answeringMember_ses
+    askedToReplyAuthor_ses
+    askingMemberParty_ses
+    askingMember_ses
     contributionType_t
+    correctingItem_uri
+    correctingItem_t
+    correctedWmsMc_b
+    dateForAnswer_dt
+    dateOfAnswer_dt
+    dateTabled_dt
+    date_dt
+    department_ses
+    identifier_t
+    legislationTitle_ses
+    legislationTitle_t
+    legislature_ses
+    place_ses
     pqStatus_t
     procedural_ses
-    dateTabled_dt dateForAnswer_dt dateOfAnswer_dt
-    legislationTitle_ses legislationTitle_t
-    subject_ses subject_t
+    questionText_t
     searcherNote_t
-    place_ses
-    date_dt identifier_t legislature_ses
-    answerFor_uri
+    subject_ses
+    subject_t
+    tablingMemberParty_ses
+    tablingMember_ses
+    title_t
+    uri
     ]
   end
 

@@ -1,5 +1,4 @@
-class MinisterialCorrection < ContentTypeObject
-  # TODO: rename to written correction for clarity
+class WrittenCorrection < ContentTypeObject
 
   def initialize(content_type_object_data)
     super
@@ -18,14 +17,23 @@ class MinisterialCorrection < ContentTypeObject
   def self.search_result_solr_fields
     # fields requested in Solr search for search results page
     super << %w[
-    title_t uri
     correctionText_t
-    member_ses memberParty_ses
-    department_ses department_t
-    legislationTitle_ses legislationTitle_t
-    subject_ses subject_t
+    date_dt
+    department_ses
+    department_t
+    identifier_t
+    leadMember_ses
+    leadMemberParty_ses
+    legislationTitle_ses
+    legislationTitle_t
+    legislature_ses
+    memberParty_ses
+    member_ses
     searcherNote_t
-    date_dt identifier_t legislature_ses
+    subject_ses
+    subject_t
+    title_t
+    uri
     ]
   end
 
@@ -45,7 +53,7 @@ class MinisterialCorrection < ContentTypeObject
     date
   end
 
-  def ministerial_correction?
+  def written_correction?
     true
   end
 
