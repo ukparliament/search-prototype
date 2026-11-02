@@ -7,9 +7,12 @@ class ResearchMaterial < ContentTypeObject
   def self.search_result_solr_fields
     # fields requested in Solr search for search results page
     super << %w[
-    title_t uri
+    date_dt
+    identifier_t
+    legislature_ses
     searcherNote_t
-    date_dt identifier_t legislature_ses
+    title_t
+    uri
     ]
   end
 end

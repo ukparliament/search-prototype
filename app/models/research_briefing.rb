@@ -7,18 +7,25 @@ class ResearchBriefing < ContentTypeObject
   def self.search_result_solr_fields
     # fields requested in Solr search for search results page
     super << %w[
-    title_t uri
-    htmlsummary_t
-    description_t
-    creator_ses creator_t
-    created_dt
     category_ses
-    contributor_ses contributor_t
-    legislationTitle_ses legislationTitle_t
+    contributor_ses
+    contributor_t
+    created_dt
+    creator_ses
+    creator_t
+    date_dt
+    description_t
+    htmlsummary_t
+    identifier_t
+    legislationTitle_ses
+    legislationTitle_t
+    legislature_ses
     modified_dt
-    subject_ses subject_t
     searcherNote_t
-    date_dt identifier_t legislature_ses
+    subject_ses
+    subject_t
+    title_t
+    uri
     ]
   end
 

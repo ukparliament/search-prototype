@@ -17,6 +17,7 @@ class WrittenCorrection < ContentTypeObject
   def self.search_result_solr_fields
     # fields requested in Solr search for search results page
     super << %w[
+    askedToReplyAuthor_ses
     correctionText_t
     date_dt
     department_ses

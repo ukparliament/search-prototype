@@ -7,14 +7,24 @@ class TransportAndWorksActOrderApplication < ContentTypeObject
   def self.search_result_solr_fields
     # fields requested in Solr search for search results page
     super << %w[
-    title_t uri
     abstract_t
-    applicant_ses applicant_t
-    legislationTitle_ses legislationTitle_t
-    subject_ses subject_t
-    commonsLibraryLocation_t lordsLibraryLocation_t
+    agent_ses
+    agent_t
+    applicant_ses
+    applicant_t
+    commonsLibraryLocation_t
+    date_dt
+    dateOfOrigin_dt
+    identifier_t
+    legislationTitle_ses
+    legislationTitle_t
+    legislature_ses
+    lordsLibraryLocation_t
     searcherNote_t
-    date_dt identifier_t legislature_ses
+    subject_ses
+    subject_t
+    title_t
+    uri
     ]
   end
 
