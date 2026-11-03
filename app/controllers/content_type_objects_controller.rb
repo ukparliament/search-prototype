@@ -28,7 +28,6 @@ class ContentTypeObjectsController < ApplicationController
     # Use SesData class to handle SES retrieval from cache / API
     @ses_data = SesData.new(all_ses_ids).combined_ses_data
 
-    ## EXPERIMENTAL
     # for description meta tag, render out the preliminary sentence partial and convert to plain text
     html_description = render_to_string(partial: @object.prelim_template, locals: { object: @object })
     @description = helpers.strip_tags(html_description).squish
