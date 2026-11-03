@@ -15,21 +15,37 @@ class WrittenQuestion < Question
   def self.search_result_solr_fields
     # fields requested in Solr search for search results page
     super << %w[
-    title_t uri
-    questionText_t
-    askingMember_ses tablingMember_ses askingMemberParty_ses tablingMemberParty_ses
-    answeringMember_ses answeringMemberParty_ses
-    departmentPrinted_t
-    pqStatus_t
-    askedToReplyAuthor_ses
-    procedural_ses
-    dateTabled_dt dateForAnswer_dt dateOfHoldingAnswer_dt dateOfAnswer_dt
     answerText_t
-    correctingItem_uri correctingItem_t correctedWmsMc_b
-    legislationTitle_ses legislationTitle_t
-    subject_ses subject_t
+    answeringDept_ses
+    answeringMemberParty_ses
+    answeringMember_ses
+    askedToReplyAuthor_ses
+    askingMemberParty_ses
+    askingMember_ses
+    correctedWmsMc_b
+    correctingItem_t
+    correctingItem_uri
+    dateForAnswer_dt
+    dateOfAnswer_dt
+    dateOfHoldingAnswer_dt
+    dateTabled_dt
+    date_dt
+    departmentPrinted_t
+    identifier_t
+    legislationTitle_ses
+    legislationTitle_t
+    legislature_ses
+    pqStatus_t
+    procedural_ses
+    questionText_t
     searcherNote_t
-    date_dt identifier_t legislature_ses
+    subject_ses
+    subject_t
+    tablingMemberParty_ses
+    tablingMember_ses
+    title_t
+    uri
+    wpqType_t
     ]
   end
 

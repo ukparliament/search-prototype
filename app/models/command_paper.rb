@@ -7,19 +7,11 @@ class CommandPaper < ParliamentaryPaperLaid
   def self.search_result_solr_fields
     # fields requested in Solr search for search results page
     super << %w[
-    title_t uri
+    comingIntoForceNotes_t
+    comingIntoForce_dt
     member_ses
-    department_ses department_t
-    corporateAuthor_ses corporateAuthor_t
-    procedure_t
-    dateLaid_dt dateWithdrawn_dt
-    comingIntoForceNotes_t comingIntoForce_dt
-    legislationTitle_ses legislationTitle_t
-    witness_ses witness_t
-    subject_ses subject_t
-    searcherNote_t
-    commonsLibraryLocation_t lordsLibraryLocation_t
-    date_dt identifier_t legislature_ses
+    witness_ses
+    witness_t
     ]
   end
 end

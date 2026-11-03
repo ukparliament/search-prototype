@@ -7,14 +7,23 @@ class WrittenStatement < ContentTypeObject
   def self.search_result_solr_fields
     # fields requested in Solr search for search results page
     super << %w[
-    title_t uri
-    statementText_t
-    member_ses memberParty_ses
-    department_ses department_t
-    legislationTitle_ses legislationTitle_t
-    subject_ses subject_t
+    askedToReplyAuthor_ses
+    correctedWmsMc_b
+    date_dt
+    department_ses
+    department_t
+    identifier_t
+    legislationTitle_ses
+    legislationTitle_t
+    legislature_ses
+    memberParty_ses
+    member_ses
     searcherNote_t
-    date_dt identifier_t legislature_ses
+    statementText_t
+    subject_ses
+    subject_t
+    title_t
+    uri
     ]
   end
 

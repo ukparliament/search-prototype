@@ -7,13 +7,20 @@ class PublicAct < Act
   def self.search_result_solr_fields
     # fields requested in Solr search for search results page
     super << %w[
-    title_t uri
+    commonsLibraryLocation_t
+    date_dt
+    identifier_t
+    isVersionOf_t
+    legislationTitle_ses
+    legislationTitle_t
+    legislature_ses
     longTitle_t
-    legislationTitle_ses legislationTitle_t
-    subject_ses subject_t
-    commonsLibraryLocation_t lordsLibraryLocation_t
+    lordsLibraryLocation_t
     searcherNote_t
-    date_dt identifier_t legislature_ses
+    subject_ses
+    subject_t
+    title_t
+    uri
     ]
   end
 end
