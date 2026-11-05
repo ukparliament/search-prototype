@@ -186,11 +186,11 @@ class TermExpander
           end
         when 'wpqtype'
           if search_term.downcase == 'ordinary'
-            expanded_terms << [:ordinary, "wpqType_s:Ordinary"]
+            expanded_terms << [:ordinary, "wpqType_t:Ordinary"]
           elsif search_term.downcase == 'namedday'
-            expanded_terms << [:namedday, "wpqType_s:Named Day"]
+            expanded_terms << [:namedday, "wpqType_t:Named Day"]
           elsif search_term.downcase == 'nextday'
-            expanded_terms << [:nextday, "wpqType_s:daily"]
+            expanded_terms << [:nextday, "wpqType_t:daily"]
           end
         else
           next
@@ -337,8 +337,6 @@ class TermExpander
         expanded_terms << [search_term.to_sym, result]
       end
 
-      # TODO: some SES fields (e.g. topic_ses!) will require ses_data to include topics
-      #   This will involve modifying our SES API calls to allow conditional retrieval of TPG terms
       unless ses_data.blank?
         ses_data.each_with_index do |ses_result, index|
           # If there's no preferred term ID, don't return anything for this result

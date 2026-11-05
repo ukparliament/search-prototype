@@ -1,10 +1,18 @@
-class SolrSearch < ApiClient
-  # TODO: consider refactor to include ApiClient via composition rather than inheritance
+# frozen_string_literal: true
 
-  attr_reader :query, :page, :results_per_page, :filter, :sort_by, :expanded_types, :show_detailed, :query_expander
+class SolrQuery::Search < SolrQuery
+
+  attr_reader :query, :page, :results_per_page, :filter, :sort_by, :expanded_types, :show_detailed, :query_expander,
+              :api_client, :api_error_handler
+
+  FACETS = ['type_sesrollup', 'legislature_ses', 'date_year', 'date_month', 'session_s', 'department_ses',
+            'member_ses', 'primaryMember_ses', 'answeringMember_ses', 'legislativeStage_ses',
+            'legislationTitle_ses', 'publisher_ses', 'subject_ses'].freeze
 
   def initialize(query: nil, page: nil, results_per_page: nil, filter: {}, sort_by: nil,
-                 expanded_types: nil, show_detailed: nil, query_expander: QueryExpander)
+                 expanded_types: nil, show_detailed: nil, query_expander: QueryExpander,
+                 api_client: ApiClient::Post, api_error_handler: ApiErrorHandler)
+    super(api_client: api_client, api_error_handler: api_error_handler)
     @query = query
     @page = page
     @results_per_page = results_per_page&.to_i
@@ -15,38 +23,14 @@ class SolrSearch < ApiClient
     @query_expander = query_expander
   end
 
-  def self.facet_fields
-    [
-      'type_sesrollup',
-      'legislature_ses',
-      'date_year',
-      'date_month',
-      'session_s',
-      'department_ses',
-      'member_ses',
-      'primaryMember_ses',
-      'answeringMember_ses',
-      'legislativeStage_ses',
-      'legislationTitle_ses',
-      'publisher_ses',
-      'subject_ses'
-    ]
-  end
-
   def data
-    ret = {}
-    search_params = {}
-    search_params[:query] = query unless query.nil?
-    search_params[:page] = page unless page.nil?
-    search_params[:results_per_page] = results_per_page unless results_per_page.nil?
-    search_params[:filter] = filter unless filter.nil?
-    search_params[:sort_by] = sort_by unless sort_by.nil?
-    search_params[:show_detailed] = show_detailed unless show_detailed.nil?
-    search_params[:expanded_types] = expanded_types unless expanded_types.nil?
+    # set up request
+    request = api_client.new(uri: build_uri, params: search_params, headers: request_headers)
 
-    ret[:search_parameters] = search_params
-    ret[:data] = all_data
-    ret
+    # make request & handle any errors in response
+    response = api_error_handler.new(response: request.response).handle_errors
+
+    process_response(response)
   end
 
   def start
@@ -109,7 +93,7 @@ class SolrSearch < ApiClient
     # hash with keys as names of facets
 
     ret = {}
-    SolrSearch.facet_fields.each do |field_name|
+    SolrQuery::Search::FACETS.each do |field_name|
       ret[field_name] = {
         "type" => facet_type(field_name),
         "field" => field_name,
@@ -160,6 +144,22 @@ class SolrSearch < ApiClient
   end
 
   private
+
+  def process_response(response)
+    ret = {}
+    search_params = {}
+    search_params[:query] = query unless query.nil?
+    search_params[:page] = page unless page.nil?
+    search_params[:results_per_page] = results_per_page unless results_per_page.nil?
+    search_params[:filter] = filter unless filter.nil?
+    search_params[:sort_by] = sort_by unless sort_by.nil?
+    search_params[:show_detailed] = show_detailed unless show_detailed.nil?
+    search_params[:expanded_types] = expanded_types unless expanded_types.nil?
+
+    ret[:search_parameters] = search_params
+    ret[:data] = response
+    ret
+  end
 
   def search_params
     {

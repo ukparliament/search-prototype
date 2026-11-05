@@ -36,7 +36,7 @@ class SesData
     # go to SES API for IDs we don't have cached
     puts "#{ids_to_fetch.count} SES terms need to be fetched from SES" if Rails.env.development?
     unless ids_to_fetch.empty?
-      fetched_data = SesLookup.new([{ value: ids_to_fetch }]).data
+      fetched_data = SesQuery::Lookup.new(ses_ids: ids_to_fetch).data
     end
 
     # if we fetched new data, write it to the cache

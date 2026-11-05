@@ -521,28 +521,28 @@ RSpec.describe 'TermExpander' do
         let!(:search_term) { 'ordinary' }
 
         it 'returns a fixed value tagged with the search term' do
-          expect(term_expander.populate_fixed_fields).to eq([[:ordinary, "wpqType_s:Ordinary"]])
+          expect(term_expander.populate_fixed_fields).to eq([[:ordinary, "wpqType_t:Ordinary"]])
         end
       end
       context 'for namedday' do
         let!(:search_term) { 'namedday' }
 
         it 'returns a fixed value tagged with the search term' do
-          expect(term_expander.populate_fixed_fields).to eq([[:namedday, "wpqType_s:Named Day"]])
+          expect(term_expander.populate_fixed_fields).to eq([[:namedday, "wpqType_t:Named Day"]])
         end
       end
       context 'for nextday' do
         let!(:search_term) { 'nextday' }
 
         it 'returns a fixed value tagged with the search term' do
-          expect(term_expander.populate_fixed_fields).to eq([[:nextday, "wpqType_s:daily"]])
+          expect(term_expander.populate_fixed_fields).to eq([[:nextday, "wpqType_t:daily"]])
         end
       end
       context 'with an upper case search term' do
         let!(:search_term) { 'Nextday' }
 
         it 'returns a fixed value tagged with the search term' do
-          expect(term_expander.populate_fixed_fields).to eq([[:nextday, "wpqType_s:daily"]])
+          expect(term_expander.populate_fixed_fields).to eq([[:nextday, "wpqType_t:daily"]])
         end
       end
     end

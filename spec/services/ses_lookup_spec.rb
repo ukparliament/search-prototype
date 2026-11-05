@@ -66,7 +66,7 @@ RSpec.describe SesLookup, type: :model do
       let!(:mock_response) { { 'error' => { 'code' => 401, 'message' => 'Not authorized' } } }
 
       it 'returns the appropriate error' do
-        expect { ses_lookup.extract_hierarchy_data }.to raise_error(UnauthorizedError)
+        expect { ses_lookup.process_response }.to raise_error(UnauthorizedError)
       end
     end
 
@@ -77,7 +77,7 @@ RSpec.describe SesLookup, type: :model do
 
       it 'returns nil' do
         allow(ses_lookup).to receive(:api_get_request).with(formatted_query, true).and_return(mock_response)
-        expect(ses_lookup.extract_hierarchy_data).to be_nil
+        expect(ses_lookup.process_response).to be_nil
       end
     end
 
@@ -88,7 +88,7 @@ RSpec.describe SesLookup, type: :model do
       let!(:processed_response) { eval(File.read("spec/fixtures/ses_hierarchy_processed_example.rb")) }
 
       it 'returns a hash of with arrays of ids & names as keys and hierarchy arrays as values' do
-        expect(ses_lookup.extract_hierarchy_data).to eq(processed_response)
+        expect(ses_lookup.process_response).to eq(processed_response)
       end
     end
   end

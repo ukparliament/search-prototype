@@ -2,108 +2,48 @@ class ApiClient
   require 'open-uri'
   require 'net/http'
 
-  attr_reader :object_uri
+  attr_reader :uri, :params, :headers, :cache_response
 
-  def initialize(params, query_expander = nil)
-    @object_uri = params[:object_uri]
+  def initialize(uri:, params: {}, headers:, cache_response: false)
+    @uri = uri
+    @params = params
+    @headers = headers
+    @cache_response = cache_response
   end
 
-  def object_data
-    all_data.dig('response', 'docs')
-  end
+  def response
+    http_response = request
 
-  def all_data
-    # get Solr response as JSON
-    response = evaluated_response
-
-    # check for / raise errors
-    raise_external_service_error(response)
-
-    puts "Query as parsed by Solr: #{response.dig('debug', 'parsedquery')}" if Rails.env.development?
-
-    # return response
-    response
-  end
-
-  private
-
-  ##
-  # Processes response from API
-  # - Gets response from POST method
-  # - Force UTF-8 encoding on response body
-  # - Parse body as JSON
-  def evaluated_response
-    # start timer
-    start_time = Time.now
-
-    # call request method, passing in search parameters
-    response = api_post_request(search_params)
-
-    # stop timer & report time taken
-    puts "Received Solr response in #{Time.now - start_time} seconds" if Rails.env.development?
-
-    JSON.parse(response.force_encoding('UTF-8'))
-  end
-
-  ##
-  # Establish HTTP & request objects, then make the request (Net::HTTP)
-  # Stub response from this method when testing, will error to avoid any test environment requests
-  def api_post_request(query)
-    # TODO: this is now Solr specific; should move to Solr subclass
-    raise 'Please stub this method to avoid HTTP requests in test environment' if Rails.env.test?
-
-    uri = URI::HTTPS.build(host: common_api_host_path, path: solr_api_path)
-    headers = request_headers
-
-    puts "POST request from #{self.class.name}: #{uri} with data: #{query} and headers: #{headers}" if Rails.env.development?
-
-    # set up HTTP instance
-    http = Net::HTTP.new(uri.host, uri.port)
-    http.use_ssl = uri.scheme == 'https'
-
-    # set up the request object
-    request = Net::HTTP::Post.new(uri)
-    request.set_form_data(query)
-    headers.each { |k, v| request[k] = v }
-
-    # make the request
-    response = http.request(request)
-
-    response.body
-  end
-
-  def common_api_host_path
-    ENV["API_HOST"] || Rails.application.credentials.dig(Rails.env.to_sym, :api_host)
-  end
-
-  def solr_api_path
-    ENV["SOLR_API_PATH"] || Rails.application.credentials.dig(Rails.env.to_sym, :solr_api, :path)
-  end
-
-  def api_subscription_key
-    ENV["API_SUBSCRIPTION_KEY"] || Rails.application.credentials.dig(Rails.env.to_sym, :api_subscription_key)
-  end
-
-  def request_headers
-    { 'Ocp-Apim-Subscription-Key' => api_subscription_key }
-  end
-
-  def raise_external_service_error(response)
-    return unless response.has_key?('error')
-
-    error_message = response.dig('error', 'message') || response.dig('error', 'msg')
-
-    case response.dig('error', 'code')&.to_i
-    when 400
-      raise(ExternalServiceError, error_message)
-    when 401
-      raise(UnauthorizedError, error_message)
-    when 403
-      raise(UnauthorizedError, error_message)
-    when 404
-      raise(ObjectNotFoundError, error_message)
+    if http_response.is_a?(Net::HTTPSuccess)
+      parse_response_body(http_response)
     else
-      raise(ExternalServiceError, error_message)
+      ExternalServiceError.new(status: http_response.code.to_i, body: http_response.body)
+    end
+  end
+
+  ##
+  # Method to parse result of a request
+  # Supports JSON, XML or HTML responses
+  # Returns Ruby hash containing the body of the response
+  # Where response is nil or of an unsupported content type, returns a Ruby hash containing an error message
+  def parse_response_body(http_response)
+    puts "ApiClient - Parse response"
+
+    return { 'error' => { 'message' => 'No response from API' } } if http_response.nil?
+
+    case http_response.content_type
+    when 'application/json'
+      # Ruby hash from JSON
+      JSON.parse(http_response.body.force_encoding('UTF-8'))
+    when 'text/xml'
+      # Ruby hash from XML
+      Hash.from_xml(http_response.body)
+    when 'text/html'
+      # Nokogiri XML document from HTML -> Ruby hash from XML
+      doc = Nokogiri::HTML(http_response.body)
+      Hash.from_xml(doc)
+    else
+      return { 'error' => { 'message' => "Could not parse response from API (#{http_response.content_type})" } }
     end
   end
 end

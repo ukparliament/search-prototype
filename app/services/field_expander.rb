@@ -20,6 +20,7 @@ class FieldExpander
     text_fields, ses_fields, ses_id_fields, boolean_fields, date_fields, fixed_fields, transformations = [], [], [], [], [], [], []
     process_without_field = false
     requires_ses_data = true
+    requires_topics = false
 
     if field_name.downcase == "answeredby"
       ses_fields = %w[answeringMember_ses answeringDept_ses askedToReplyAuthor_ses]
@@ -171,7 +172,7 @@ class FieldExpander
       transformations = %w[session]
       requires_ses_data = false
     elsif field_name.downcase == "signedby"
-      ses_fields = %w[signedMember_ses amendment_signedMember_ses]
+      ses_fields = %w[signedMember_ses]
     elsif field_name.downcase == "stats"
       boolean_fields = %w[containsStatistics_b statisticsIndicated_b hasTable_b]
       requires_ses_data = false
@@ -193,8 +194,9 @@ class FieldExpander
     elsif field_name.downcase == "to"
       fixed_fields = %w[todate]
       requires_ses_data = false
-    elsif field_name.downcase == "topic" # TODO: add support for multiple SES queries so we can retrieve topic terms when needed, as is the case here
+    elsif field_name.downcase == "topic"
       ses_fields = %w[topic_ses]
+      requires_topics = true
     elsif field_name.downcase == "transferred"
       boolean_fields = %w[transferredQuestion_b]
       requires_ses_data = false
@@ -239,7 +241,8 @@ class FieldExpander
       fixed_fields: fixed_fields,
       transformations: transformations,
       process_without_field: process_without_field,
-      requires_ses_data: requires_ses_data
+      requires_ses_data: requires_ses_data,
+      requires_topics: requires_topics
     }
   end
 end

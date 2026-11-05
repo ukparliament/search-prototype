@@ -8,7 +8,7 @@ class SearchController < ApplicationController
     # prevent searching without a query
     return redirect_back(fallback_location: home_path) if search_params[:query].blank?
 
-    search = SolrSearch.new(**search_params.to_h.symbolize_keys)
+    search = SolrQuery::Search.new(**search_params.to_h.symbolize_keys)
     @search_data = SearchData.new(search.data)
 
     # filter out unsupported objects - may move this elsewhere
@@ -59,7 +59,7 @@ class SearchController < ApplicationController
     # Not currently used
 
     hash = {}
-    SolrSearch.facet_fields.each do |field|
+    SolrQuery::Search::FACETS.each do |field|
       hash[field.to_sym] = []
     end
 

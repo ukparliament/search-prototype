@@ -35,7 +35,7 @@ RSpec.describe SearchData, type: :model do
   let!(:item3_data) { { 'type_ses' => [90996], 'title_t' => 'BZ34eDD', 'uri' => 'BZ34eDD_uri', 'all_ses' => [90996, 34567] } }
 
   before do
-    allow_any_instance_of(SesLookup).to receive(:extract_hierarchy_data).and_return(hierarchy_test_response)
+    allow_any_instance_of(SesLookup).to receive(:process_response).and_return(hierarchy_test_response)
     allow(SolrMultiQuery).to receive(:new).and_return(solr_multi_query_instance)
     allow(solr_multi_query_instance).to receive(:object_data).and_return(secondary_query_response)
   end

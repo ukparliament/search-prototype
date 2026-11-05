@@ -46,7 +46,7 @@ class SearchData
 
     # perform a second Solr query, requesting the exact objects being loaded on this results page via their URIs
     # request only the fields we need using the solr_fields_string previously constructed
-    unsorted_items = SolrQueryWrapper.new(object_uris: object_uris, solr_fields: solr_fields_string).get_objects.dig(:items)
+    unsorted_items = SolrQuery::Lookup.new(uris: object_uris, solr_fields: solr_fields_string).data
 
     # build unsorted items into a uri-keyed hash
     unsorted_items_hash = {}

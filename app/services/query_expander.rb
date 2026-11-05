@@ -25,7 +25,7 @@ class QueryExpander
   # matches Lucene query characters, captured as group 1
   SPECIAL_CHARS = /([+\-!(){}\[\]^"~:\\\/]|&&|\|\|)/
 
-  def initialize(search_query, ses_query = SesQuery, tokeniser = Tokeniser,
+  def initialize(search_query, ses_query = SesQuery::Search, tokeniser = Tokeniser,
                  field_expander = FieldExpander, term_expander = TermExpander, term_combiner = TermCombiner,
                  sub_query_tokeniser = Tokeniser, sub_query_expander = QueryExpander)
     @search_query = search_query
@@ -90,7 +90,7 @@ class QueryExpander
   def process_unquoted_phrase_token(value)
     search_term = value
     expanded_fields = field_expander.new("none").expand_fields
-    ses_data = ses_query.new({ value: search_term }).data
+    ses_data = ses_query.new(term: search_term).data
     term_expander.new(expanded_fields: expanded_fields, ses_data: ses_data, search_term: search_term).expand_terms
   end
 
@@ -101,11 +101,12 @@ class QueryExpander
   def process_quoted_phrase_token(value)
     puts "Processing quoted phrase token: #{value}" if Rails.env.development? || Rails.env.test?
 
+    search_term = value
     expanded_fields = field_expander.new("none").expand_fields
-    ses_data = ses_query.new({ value: value }, exact_match: true).data
+    ses_data = ses_query.new(term: search_term, exact_match: true).data
 
     # the value will have been stripped of its quotes, so we need to reintroduce those
-    search_term = "\"#{value}\""
+    search_term = "\"#{search_term}\""
 
     # Exact match should be true for quoted phrases
     term_expander.new(expanded_fields: expanded_fields, ses_data: ses_data, search_term: search_term, exact_match: true).expand_terms
@@ -116,9 +117,10 @@ class QueryExpander
     field_name = value.partition(":").first
 
     expanded_fields = field_expander.new(field_name).expand_fields
+    include_topics = expanded_fields[:requires_topics]
 
     # Only fetch SES data if field expansion has left us with fields that would need it (e.g. text or SES fields)
-    ses_data = expanded_fields[:requires_ses_data] ? ses_query.new({ value: search_term }).data : nil
+    ses_data = expanded_fields[:requires_ses_data] ? ses_query.new(term: search_term, include_topics: include_topics).data : nil
 
     term_expander.new(expanded_fields: expanded_fields, ses_data: ses_data, search_term: search_term).expand_terms
   end
@@ -197,9 +199,10 @@ class QueryExpander
     field_name = value.partition(":").first
 
     expanded_fields = field_expander.new(field_name).expand_fields
+    include_topics = expanded_fields[:requires_topics]
 
     # Only fetch SES data if field expansion has left us with fields that would need it (e.g. text or SES fields)
-    ses_data = expanded_fields[:requires_ses_data] ? ses_query.new({ value: search_term }, exact_match: true).data : nil
+    ses_data = expanded_fields[:requires_ses_data] ? ses_query.new(term: search_term, include_topics: include_topics, exact_match: true).data : nil
 
     term_expander.new(expanded_fields: expanded_fields, ses_data: ses_data, search_term: search_term, exact_match: true).expand_terms
   end

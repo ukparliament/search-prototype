@@ -16,7 +16,7 @@ RSpec.describe 'Search', type: :request do
     let!(:associated_objects_response) { { object_data: { 'QZH4EFc_uri' => item1, 'SL9RT6y_uri' => item2, 'BZ34eDD_uri' => item3 }, ses_ids: [12345, 56789, 55555] } }
 
     before do
-      allow(SolrSearch).to receive(:new).and_return(solr_search_instance)
+      allow(SolrQuery::Search).to receive(:new).and_return(solr_search_instance)
       allow(solr_search_instance).to receive(:data).and_return(initial_search_data)
       allow(SolrMultiQuery).to receive(:new).and_return(solr_multi_query_instance)
       allow(solr_multi_query_instance).to receive(:object_data).and_return(secondary_query_response)
@@ -25,11 +25,11 @@ RSpec.describe 'Search', type: :request do
       allow(associated_objects_instance).to receive(:data).and_return(associated_objects_response)
       allow(SesLookup).to receive(:new).and_return(ses_lookup_instance)
       allow(ses_lookup_instance).to receive(:data).and_return({ 45678 => 'string', 67890 => 'string' })
-      allow(ses_lookup_instance).to receive(:extract_hierarchy_data).and_return({ [92424, "Personal statements"] => [{ "typeId" => "1", "qty" => "1", "name" => "Broader Term", "abbr" => "BT", "fields" => [{ "field" => { "name" => "Oral statements", "id" => "350073", "zid" => "52566919", "class" => "CTP", "freq" => "0", "facets" => [{ "id" => "346696", "name" => "Content type" }] } }] }] })
+      allow(ses_lookup_instance).to receive(:process_response).and_return({ [92424, "Personal statements"] => [{ "typeId" => "1", "qty" => "1", "name" => "Broader Term", "abbr" => "BT", "fields" => [{ "field" => { "name" => "Oral statements", "id" => "350073", "zid" => "52566919", "class" => "CTP", "freq" => "0", "facets" => [{ "id" => "346696", "name" => "Content type" }] } }] }] })
     end
 
     context 'a search that returns an unsupported object type' do
-      let!(:solr_search_instance) { SolrSearch.new(query: "test") }
+      let!(:solr_search_instance) { SolrQuery::Search.new(query: "test") }
       let!(:item1) { { 'type_ses' => [12345], 'title_t' => 'QZH4EFc', 'uri' => 'QZH4EFc_uri', 'all_ses' => [90996, 12345] } }
 
       it 'still returns http success' do
@@ -51,7 +51,7 @@ RSpec.describe 'Search', type: :request do
     end
 
     context 'a search using filters' do
-      let!(:solr_search_instance) { SolrSearch.new(query: { "filter" => { "type_ses" => ["90996"] } }) }
+      let!(:solr_search_instance) { SolrQuery::Search.new(query: { "filter" => { "type_ses" => ["90996"] } }) }
 
       it 'returns http success' do
         get '/search', params: { "query" => "test", "filter" => { "type_ses" => ["90996"] } }
@@ -72,7 +72,7 @@ RSpec.describe 'Search', type: :request do
     end
 
     context 'a search for an empty string' do
-      let!(:solr_search_instance) { SolrSearch.new(query: { "query" => '' }) }
+      let!(:solr_search_instance) { SolrQuery::Search.new(query: { "query" => '' }) }
 
       it 'redirects to home' do
         # note that this is only seen in practice where someone submits an empty query via the url, as the search
@@ -83,7 +83,7 @@ RSpec.describe 'Search', type: :request do
     end
 
     context 'a search using a query string' do
-      let!(:solr_search_instance) { SolrSearch.new(query: { "query" => 'BZ34eDD' }) }
+      let!(:solr_search_instance) { SolrQuery::Search.new(query: { "query" => 'BZ34eDD' }) }
 
       it 'returns http success' do
         get '/search', params: { "query" => 'Test search string' }

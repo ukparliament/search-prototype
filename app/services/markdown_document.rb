@@ -26,7 +26,7 @@ class MarkdownDocument
     headings = []
 
     @document.walk do |node|
-      next unless node.type == :heading
+      next unless node.type == :heading && node.header_level == 2
 
       headings << heading_text(node)
     end

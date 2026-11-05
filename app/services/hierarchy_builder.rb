@@ -1,15 +1,16 @@
 class HierarchyBuilder
 
-  attr_reader :ses_data
+  attr_reader :data_source, :ses_data
 
-  def initialize
+  def initialize(data_source: SesQuery::TypeHierarchy)
+    @data_source = data_source
     @ses_data = get_data_from_ses
   end
 
   def get_data_from_ses
     puts "Fetching Hierarchy data..." if Rails.env.development?
     start_time = Time.now
-    ret = SesLookup.new([{ value: nil }]).extract_hierarchy_data
+    ret = data_source.new.data
     puts "Done in #{(Time.now - start_time).round(2)} seconds" if Rails.env.development?
     ret
   end

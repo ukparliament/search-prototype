@@ -117,7 +117,7 @@ RSpec.describe 'QueryExpander' do
 
         # SES query class is initialised with the search term (only)
         # The search term has the secondary quote marks removed
-        expect(ses_test_class).to receive(:new).with({ value: "housing crisis" }, exact_match: true)
+        expect(ses_test_class).to receive(:new).with({ value: "housing crisis" }, exact_match: true, include_topics: false)
 
         # field expander class is initialised with the field name (only)
         expect(field_expander_test_class).to receive(:new).with('subject')

@@ -1,62 +1,105 @@
-class SesQuery < SesLookup
+# frozen_string_literal: true
 
-  attr_reader :exact_match
+##
+# Service class for querying the SES API
+# Used via three subclasses: browse, lookup and search.
+# API client dependency for generic API interactivity code
 
-  def initialize(input_data, exact_match: false)
-    super(input_data)
-    @exact_match = exact_match
-  end
+class SesQuery
+  attr_reader :api_client, :api_error_handler
 
-  ##
-  # Returns query expansion data from SES as an array, which may contain one or more terms in the form of a hash:
-  # {
-  #   equivalent_terms: ['equivalent term 1', 'equivalent term 2', '...'],
-  #   preferred_term_id: '23456',
-  #   preferred_term: 'preferred term'
-  # }
-  #
-  # Name values under 'equivalence' are extracted into the equivalent_terms array. The preferred term name and
-  # SES ID are assigned :preferred_term_id and :preferred_term respectively.
-  #
-  # Terms with the 'TPG' (topic) class are excluded.
-  def data
-    return if input_data.blank?
+  SES_ID_GROUP_SIZE = 250.freeze
 
-    # get parsed response
-    response = evaluated_response
-
-    # If the response is an error, raise it
-    raise_external_service_error(response)
-
-    # Extract terms (and original query) from response
-    # Query string moves from query (v3) to mapping (v5)
-    query_string = response.dig("parameters").has_key?("query") ? response["parameters"]["query"].downcase : response["parameters"]["mapping"].downcase
-    terms = response.dig("terms")
-
-    SesDataProcessor.new(terms: terms,
-                         query_string: query_string,
-                         query_string_processor: QueryStringProcessor,
-                         exact_match_required: exact_match).process_terms
+  def initialize(api_client: ApiClient::Get, api_error_handler: ApiErrorHandler)
+    @api_client = api_client
+    @api_error_handler = api_error_handler
   end
 
   private
 
-  def evaluated_response
-    api_response(ses_search_uri, false)
+  def common_api_host_path
+    ENV["API_HOST"] || Rails.application.credentials.dig(Rails.env.to_sym, :api_host)
   end
 
-  def ses_search_uri
-    URI::HTTPS.build(host: common_api_host_path, path: ses_path,
-                     query: URI.encode_www_form(tbdb: ses_tbdb,
-                                                service: 'search',
-                                                template: 'service.json',
-                                                query: term)
-    )
+  def api_subscription_key
+    ENV["API_SUBSCRIPTION_KEY"] || Rails.application.credentials.dig(Rails.env.to_sym, :api_subscription_key)
   end
 
-  def term
+  def request_headers
+    { 'Ocp-Apim-Subscription-Key' => api_subscription_key }
+  end
+
+  def lookup_ids
+    # extract all sub arrays from the hashes
     return if input_data.blank?
 
-    input_data[:value]
+    input_data.map { |h| h[:value] }.flatten.uniq.compact.sort
+  end
+
+  def lookup_id_groups
+    # The SES API does not support POST, so we have to make multiple get requests
+    return if input_data.blank?
+
+    ret = []
+
+    lookup_ids.each_slice(SES_ID_GROUP_SIZE) do |slice|
+      ret << slice.join(',')
+    end
+
+    ret
+  end
+
+  def evaluated_responses
+    # for each chunk, make a new request, then combine the results
+    # returns a (flattened) array
+    output = []
+    threads = []
+
+    start_time = Time.now
+
+    lookup_id_groups.each do |id_group|
+      # one request per group of IDs; one thread per request
+      threads << Thread.new do
+        puts "Begin thread" if Rails.env.development?
+
+        # build uri
+        uri = ses_term_service_uri(id_group)
+
+        # fetch response
+        response = api_response(uri)
+
+        if response.has_key?('error')
+          # if response is { "error" => {} }, return it
+          output << response
+        else
+          # extract terms
+          terms = response.dig('terms')
+          # collate terms from all responses
+          output << terms
+        end
+      end
+    end
+
+    # wait for all threads to have finished executing
+    threads.each(&:join)
+    puts "All requests completed in #{Time.now - start_time} seconds" if Rails.env.development?
+
+    # flatten responses
+    output.flatten
+  end
+
+  ##
+  # Retrieve hierarchy data (172 results with CLASS="CTP")
+  def evaluated_hierarchy_response
+    caching_enabled = Rails.env.development? || Rails.env.test? ? false : true
+    api_response(ses_browse_service_uri, caching_enabled)
+  end
+
+  def ses_tbdb
+    ENV["SES_TBDB"] || Rails.application.credentials.dig(Rails.env.to_sym, :ses_api, :tbdb)
+  end
+
+  def ses_path
+    ENV["SES_PATH"] || Rails.application.credentials.dig(Rails.env.to_sym, :ses_api, :path)
   end
 end

@@ -12,13 +12,15 @@
 # failing terms from the response before they reach term expansion.
 class SesDataProcessor
 
-  attr_reader :terms, :query_string, :query_string_processor, :exact_match_required
+  attr_reader :terms, :query_string, :query_string_processor, :exact_match_required, :include_topics
 
-  def initialize(terms: [], query_string: nil, query_string_processor: QueryStringProcessor, exact_match_required: false)
+  def initialize(terms: [], query_string: nil, query_string_processor: QueryStringProcessor,
+                 exact_match_required: false, include_topics: false)
     @terms = terms
     @query_string = query_string
     @query_string_processor = query_string_processor
     @exact_match_required = exact_match_required
+    @include_topics = include_topics
   end
 
   ##
@@ -33,8 +35,8 @@ class SesDataProcessor
     return returned_terms unless terms.present?
 
     terms.each do |term|
-      # skip topic terms
-      next if term_is_of_unwanted_class(term)
+      # skip topic terms unless required
+      next if term_is_of_unwanted_class(term, include_topics: include_topics)
 
       term_matches_query = false
       term_hash = populate_term_hash(term)
@@ -97,12 +99,19 @@ class SesDataProcessor
 
   ##
   # Identify topic terms and intranet terms (unwanted) by class strings
-  def term_is_of_unwanted_class(term)
+  def term_is_of_unwanted_class(term, include_topics: false)
     # With SES v3, TPG will be the only class, whereas with SES v5 we need to check 'classes' which can contain multiple values
-    term.dig("term", "class") == "TPG" ||
-      term.dig("term", "classes")&.include?("TPG") ||
-      term.dig("term", "class") == "INT" ||
-      term.dig("term", "classes")&.include?("INT")
+    # When we do want topics:
+
+    if include_topics
+      # return only topics
+      return true unless term.dig("term", "class") == "TPG" || term.dig("term", "classes")&.include?("TPG")
+    else
+      term.dig("term", "class") == "TPG" ||
+        term.dig("term", "classes")&.include?("TPG") ||
+        term.dig("term", "class") == "INT" ||
+        term.dig("term", "classes")&.include?("INT")
+    end
   end
 
   ##
