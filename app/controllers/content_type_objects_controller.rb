@@ -1,17 +1,18 @@
 class ContentTypeObjectsController < ApplicationController
 
+  # TODO: refactor into orchestration class
   def show
     # Raise a 400 if we didn't get an object URL
     raise MissingParameterError, :id if params[:object].blank?
 
     # fetch object data
-    object_data = SolrQuery.new(object_uri: params[:object]).object_data
+    object_data = SolrQuery::Fetch.new(uri: params[:object]).data
 
     # construct the object
     @object = ContentTypeObject.generate(object_data)
 
     # raise a 404 if we didn't successfully generate an object
-    raise ObjectNotFoundError, params[:object] unless @object
+    raise ObjectNotFoundError.new(status: 404, body: "Could not generate an object for: #{params[:object]}") unless @object
 
     # check the object is supported
     raise ObjectNotSupportedError, params[:object] if @object.is_a?(NotSupported)

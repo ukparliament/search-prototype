@@ -17,8 +17,8 @@ RSpec.describe 'QueryExpander' do
   let(:sub_query_tokeniser_test_class) { class_double(Tokeniser, new: sub_query_tokeniser_test_instance) }
   let(:sub_query_tokeniser_test_instance) { instance_double(Tokeniser, tokenise: 'returned tokens') }
 
-  let(:ses_test_class) { class_double(SesQuery, new: ses_test_instance) }
-  let(:ses_test_instance) { instance_double(SesQuery, data: ses_response) }
+  let(:ses_test_class) { class_double(SesQuery::Search, new: ses_test_instance) }
+  let(:ses_test_instance) { instance_double(SesQuery::Search, data: ses_response) }
   let(:ses_response) { 'test ses response' }
 
   let(:field_expander_test_class) { class_double(FieldExpander, new: field_expander_test_instance) }
@@ -117,7 +117,7 @@ RSpec.describe 'QueryExpander' do
 
         # SES query class is initialised with the search term (only)
         # The search term has the secondary quote marks removed
-        expect(ses_test_class).to receive(:new).with({ value: "housing crisis" }, exact_match: true, include_topics: false)
+        expect(ses_test_class).to receive(:new).with(term: "housing crisis", exact_match: true, include_topics: false)
 
         # field expander class is initialised with the field name (only)
         expect(field_expander_test_class).to receive(:new).with('subject')
@@ -163,7 +163,7 @@ RSpec.describe 'QueryExpander' do
         expect(field_expander_test_instance).to receive(:expand_fields).and_return(expanded_fields)
 
         # SES query class is initialised with the search term (only)
-        expect(ses_test_class).to receive(:new).with({ value: "'housing crisis'" }, exact_match: true)
+        expect(ses_test_class).to receive(:new).with(term: "'housing crisis'", exact_match: true, include_topics: false)
 
         # SES query instance receives call for data
         expect(ses_test_instance).to receive(:data).and_return(ses_response)
@@ -306,7 +306,7 @@ RSpec.describe 'QueryExpander' do
         expect(tokeniser_test_instance).to receive(:tokenise).and_return([[:specified_field, 'subject:housing']])
 
         # SES query class is initialised with the search term (only)
-        expect(ses_test_class).to receive(:new).with({ value: "housing" })
+        expect(ses_test_class).to receive(:new).with(term: "housing", include_topics: false)
 
         # SES query instance receives call for data
         expect(ses_test_instance).to receive(:data).and_return(ses_response)
@@ -346,7 +346,7 @@ RSpec.describe 'QueryExpander' do
         expect(tokeniser_test_instance).to receive(:tokenise).and_return([[:quoted_phrase, "housing crisis"]])
 
         # SES query class is initialised with the search term (only)
-        expect(ses_test_class).to receive(:new).with({ value: "housing crisis" }, exact_match: true)
+        expect(ses_test_class).to receive(:new).with(term: "housing crisis", exact_match: true)
 
         # SES query instance receives call for data
         expect(ses_test_instance).to receive(:data).and_return(ses_response)
@@ -386,7 +386,7 @@ RSpec.describe 'QueryExpander' do
         expect(tokeniser_test_instance).to receive(:tokenise).and_return([[:quoted_phrase, "housing crisis"]])
 
         # SES query class is initialised with the search term (only)
-        expect(ses_test_class).to receive(:new).with({ value: "housing crisis" }, exact_match: true)
+        expect(ses_test_class).to receive(:new).with(term: "housing crisis", exact_match: true)
 
         # SES query instance receives call for data
         expect(ses_test_instance).to receive(:data).and_return(ses_response)
@@ -427,7 +427,7 @@ RSpec.describe 'QueryExpander' do
         expect(tokeniser_test_instance).to receive(:tokenise).and_return([[:unquoted_phrase, 'housing crisis']])
 
         # SES query class is initialised with the search term (only)
-        expect(ses_test_class).to receive(:new).with({ value: "housing crisis" })
+        expect(ses_test_class).to receive(:new).with(term: "housing crisis")
 
         # SES query instance receives call for data
         expect(ses_test_instance).to receive(:data).and_return(ses_response)

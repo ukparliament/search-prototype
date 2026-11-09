@@ -32,7 +32,7 @@ class SolrQuery::Fetch < SolrQuery
 
   def search_params
     {
-      "q": "uri:#{object_uri}"
+      "q": "uri:#{uri}"
     }
   end
 

@@ -155,7 +155,7 @@ RSpec.describe LinkHelper, type: :helper do
       let!(:input_data_member_ses) { { value: 234, field_name: 'answeringMember_ses' } }
 
       it 'performs a new SES lookup and returns the name correctly formatted' do
-        allow_any_instance_of(SesLookup).to receive(:data).and_return(fallback_ses_data)
+        allow_any_instance_of(SesQuery::Lookup).to receive(:data).and_return(fallback_ses_data)
         expect(helper.send(:format_name, input_data_member_ses, mock_ses_data, true)).to eq("Another Name")
       end
     end
@@ -166,7 +166,7 @@ RSpec.describe LinkHelper, type: :helper do
       let!(:input_data_member_ses) { { value: 456, field_name: 'answeringMember_ses' } }
 
       it 'returns "Unknown"' do
-        allow_any_instance_of(SesLookup).to receive(:data).and_return(fallback_ses_data)
+        allow_any_instance_of(SesQuery::Lookup).to receive(:data).and_return(fallback_ses_data)
         expect(helper.send(:format_name, input_data_member_ses, mock_ses_data, true)).to eq("Unknown")
       end
     end

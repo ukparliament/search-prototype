@@ -117,7 +117,7 @@ class QueryExpander
     field_name = value.partition(":").first
 
     expanded_fields = field_expander.new(field_name).expand_fields
-    include_topics = expanded_fields[:requires_topics]
+    include_topics = expanded_fields[:requires_topics] ? true : false
 
     # Only fetch SES data if field expansion has left us with fields that would need it (e.g. text or SES fields)
     ses_data = expanded_fields[:requires_ses_data] ? ses_query.new(term: search_term, include_topics: include_topics).data : nil
@@ -199,7 +199,7 @@ class QueryExpander
     field_name = value.partition(":").first
 
     expanded_fields = field_expander.new(field_name).expand_fields
-    include_topics = expanded_fields[:requires_topics]
+    include_topics = expanded_fields[:requires_topics] ? true : false
 
     # Only fetch SES data if field expansion has left us with fields that would need it (e.g. text or SES fields)
     ses_data = expanded_fields[:requires_ses_data] ? ses_query.new(term: search_term, include_topics: include_topics, exact_match: true).data : nil

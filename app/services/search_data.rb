@@ -1,15 +1,16 @@
+# frozen_string_literal: true
+
 class SearchData
+  attr_reader :search, :hierarchy_builder, :solr_query
 
-  attr_reader :search, :hierarchy_builder
+  # used to extract Solr returned facet data in the correct order for display
+  ORDERED_FACET_FIELDS = %w[type_sesrollup legislature_ses date_year date_month session_s department_ses member_ses primaryMember_ses answeringMember_ses legislativeStage_ses legislationTitle_ses subject_ses publisher_ses].freeze
 
-  def initialize(search)
+  def initialize(search, hierarchy_builder: HierarchyBuilder, solr_query: SolrQuery::Lookup)
     # @search is a hash of search parameters and data
     @search = search
-    @hierarchy_builder = initialise_hierarchy
-  end
-
-  def initialise_hierarchy
-    HierarchyBuilder.new
+    @hierarchy_builder = hierarchy_builder.new
+    @solr_query = solr_query
   end
 
   def initial_query_data
@@ -46,11 +47,12 @@ class SearchData
 
     # perform a second Solr query, requesting the exact objects being loaded on this results page via their URIs
     # request only the fields we need using the solr_fields_string previously constructed
-    unsorted_items = SolrQuery::Lookup.new(uris: object_uris, solr_fields: solr_fields_string).data
+    unsorted_items = solr_query.new(uris: object_uris, solr_fields: solr_fields_string).data
 
     # build unsorted items into a uri-keyed hash
     unsorted_items_hash = {}
     unsorted_items.each do |unsorted_item|
+      puts "Unsorted item: #{unsorted_item}"
       key = unsorted_item.object_uri.dig(:value)
       unsorted_items_hash[key] = unsorted_item
     end
@@ -177,14 +179,14 @@ class SearchData
   end
 
   def hierarchy_data
-    hierarchy_builder.hierarchy_data
+    hierarchy_builder.data
   end
 
   def hierarchy_ses_data
-    # The hierarchy builder has to make a seperate SES request to a different serivce in order to retrieve the
+    # The hierarchy builder has to make a seperate SES request to a different service in order to retrieve the
     # hierarchy. We assemble the type name lookup from that request, rather than adding the IDs to the main bundled
     # request.
-    hierarchy_builder.formatted_ses_data
+    hierarchy_builder.data
   end
 
   def content_type_rollup_ids
@@ -215,18 +217,13 @@ class SearchData
     facet_field_data = search.dig(:data, 'facets')
     return [] if facet_field_data.blank?
 
-    facet_field_data.slice(*ordered_facet_fields).map { |k, v| { field_name: k, facets: sort_facets(v['buckets']) } }
+    facet_field_data.slice(*ORDERED_FACET_FIELDS).map { |k, v| { field_name: k, facets: sort_facets(v['buckets']) } }
   end
 
   def type_facets
     ret = {}
     facets.select { |facet| facet.dig(:field_name) == "type_sesrollup" }.first&.dig(:facets)&.each { |h| ret[h.dig("val")] = h.dig("count") }
     ret
-  end
-
-  def ordered_facet_fields
-    # used to extract Solr returned facet data in the correct order for display
-    %w[type_sesrollup legislature_ses date_year date_month session_s department_ses member_ses primaryMember_ses answeringMember_ses legislativeStage_ses legislationTitle_ses subject_ses publisher_ses]
   end
 
   def sort_facets(facet_field)

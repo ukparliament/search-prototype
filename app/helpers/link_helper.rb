@@ -126,14 +126,15 @@ module LinkHelper
     return if data.blank?
 
     if data[:field_name] && ["ses", "sesrollup"].include?(data[:field_name]&.split('_')&.last)
-      # if data[:field_name]&.last(3) == 'ses'
       # we need to get the string from the page SES data
       raise "No SES data available to dereference SES ID" unless ses_data
-      name_string = ses_data.dig(data[:value].to_i)
+
+      ses_id = data[:value].to_i
+      name_string = ses_data.dig(ses_id)
 
       if name_string.nil?
-        puts "Missing SES name for ID #{data[:value]}" if Rails.env.development? || Rails.env.test?
-        name_string = fallback_ses_lookup(data)
+        puts "Missing SES name for ID #{ses_id}" if Rails.env.development? || Rails.env.test?
+        name_string = fallback_ses_lookup(ses_id)
       end
     elsif data[:field_name] && data[:field_name] == 'date_month'
       # month numbers need to be converted to names
@@ -230,32 +231,27 @@ module LinkHelper
     ]
   end
 
-  def fallback_ses_lookup(ses_data_hash)
-    # an inefficient method that a SES name for a single ID, used as a last resort if names are still missing when
-    # links / names are being formatted.
-
-    # raise an error in development instead
-    # raise 'fallback SES lookup attempted' if Rails.env.development?
-
-    # WIP
-
-    custom_ses_lookup = SesLookup.new([ses_data_hash]).data
+  ##
+  # an inefficient method that a SES name for a single ID, used as a last resort if names are still missing when
+  # links / names are being formatted.
+  def fallback_ses_lookup(ses_id)
+    custom_ses_lookup = SesQuery::Lookup.new(ses_ids: [ses_id]).data
 
     # cache the returned SES data
     ses_cache = SesCache.new(Rails.cache)
     custom_ses_lookup.each { |k, v| ses_cache.write_cached_value(k, v) } unless custom_ses_lookup.empty?
 
-    name_string = custom_ses_lookup[ses_data_hash[:value].to_i]
+    name_string = custom_ses_lookup[ses_id.to_i]
 
     # where we still don't have a string (e.g. if SES is missing an entry for this ID) then
     # present the SES ID itself as a string (in development), or "Unknown" in other environments.
 
-    puts "Fallback SES looked assigned name #{name_string} to SES ID #{ses_data_hash[:value]}" if Rails.env.development? && name_string.present?
+    puts "Fallback SES looked assigned name #{name_string} to SES ID #{ses_id}" if Rails.env.development? && name_string.present?
     return name_string unless name_string.blank?
 
-    puts "Fallback SES lookup could not resolve name for #{ses_data_hash[:value]}" if Rails.env.development?
+    puts "Fallback SES lookup could not resolve name for #{ses_id}" if Rails.env.development?
 
-    Rails.env.development? ? ses_data_hash[:value].to_s : "Unknown"
+    Rails.env.development? ? ses_id.to_s : "Unknown"
   end
 
 end

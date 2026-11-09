@@ -1,12 +1,18 @@
 require 'rails_helper'
 
 RSpec.describe SearchData, type: :model do
-  let(:search_data) { SearchData.new(search_output) }
-  let!(:facet_data) { {
-    "count" => 1234,
-    "legislature_ses" => { "buckets" => [{ "val" => 90996, "count" => 123 }, { "val" => 90995, "count" => 234 }] },
-    "subject_ses" => { "buckets" => [{ "val" => 123456, "count" => 455 }, { "val" => 234556, "count" => 66 }] }
-  } }
+  let(:search_data) { SearchData.new(search_output, hierarchy_builder: hierarchy_builder_class, solr_query: solr_query_class) }
+  let!(:hierarchy_builder_class) { class_double(HierarchyBuilder, new: hierarchy_builder_instance) }
+  let!(:hierarchy_builder_instance) { instance_double(HierarchyBuilder, data: hierarchy_data, data_source: ses_query_type_hierarchy_class) }
+  let!(:hierarchy_data) { { [92424, "Personal statements"] => [{ "typeId" => "1", "qty" => "1", "name" => "Broader Term", "abbr" => "BT", "fields" => [{ "field" => { "name" => "Oral statements", "id" => "350073", "zid" => "52566919", "class" => "CTP", "freq" => "0", "facets" => [{ "id" => "346696", "name" => "Content type" }] } }] }] } }
+  let!(:solr_query_class) { class_double(SolrQuery::Lookup, new: solr_query_instance) }
+  let!(:solr_query_instance) { instance_double(SolrQuery::Lookup, data: solr_query_data) }
+  let!(:solr_query_data) { [item1, item2, item3] }
+  let!(:ses_query_type_hierarchy_class) { class_double(SesQuery::TypeHierarchy, new: ses_query_type_hierarchy_instance) }
+  let!(:ses_query_type_hierarchy_instance) { instance_double(SesQuery::TypeHierarchy, data: 'type hierarchy test response') }
+  let!(:item1) { Edm.new({ 'type_ses' => [90996], 'title_t' => 'QZH4EFc', 'uri' => 'QZH4EFc_uri', 'all_ses' => [90996, 12345] }) }
+  let!(:item2) { Edm.new({ 'type_ses' => [90996], 'title_t' => 'SL9RT6y', 'uri' => 'SL9RT6y_uri', 'all_ses' => [90996, 56789] }) }
+  let!(:item3) { Edm.new({ 'type_ses' => [90996], 'title_t' => 'BZ34eDD', 'uri' => 'BZ34eDD_uri', 'all_ses' => [90996, 34567] }) }
   let!(:search_output) { { search_parameters: { filter: ['legislature_ses:12345'], query: 'horse' },
                            data: {
                              "responseHeader" => {
@@ -24,28 +30,21 @@ RSpec.describe SearchData, type: :model do
                                ]
                              },
                              "highlighting" => { "test_url" => {} },
-                             "facets" => facet_data
+                             "facets" => search_facet_data
                            },
   } }
-  let!(:hierarchy_test_response) { { [92424, "Personal statements"] => [{ "typeId" => "1", "qty" => "1", "name" => "Broader Term", "abbr" => "BT", "fields" => [{ "field" => { "name" => "Oral statements", "id" => "350073", "zid" => "52566919", "class" => "CTP", "freq" => "0", "facets" => [{ "id" => "346696", "name" => "Content type" }] } }] }] } }
-  let!(:solr_multi_query_instance) { SolrMultiQuery.new({ object_uris: ['QZH4EFc_uri', 'SL9RT6y_uri', 'BZ34eDD_uri'], solr_fields: Edm.search_result_solr_fields }) }
-  let!(:secondary_query_response) { [item1_data, item2_data, item3_data] }
-  let!(:item1_data) { { 'type_ses' => [90996], 'title_t' => 'QZH4EFc', 'uri' => 'QZH4EFc_uri', 'all_ses' => [90996, 12345] } }
-  let!(:item2_data) { { 'type_ses' => [90996], 'title_t' => 'SL9RT6y', 'uri' => 'SL9RT6y_uri', 'all_ses' => [90996, 56789] } }
-  let!(:item3_data) { { 'type_ses' => [90996], 'title_t' => 'BZ34eDD', 'uri' => 'BZ34eDD_uri', 'all_ses' => [90996, 34567] } }
-
-  before do
-    allow_any_instance_of(SesLookup).to receive(:process_response).and_return(hierarchy_test_response)
-    allow(SolrMultiQuery).to receive(:new).and_return(solr_multi_query_instance)
-    allow(solr_multi_query_instance).to receive(:object_data).and_return(secondary_query_response)
-  end
+  let!(:search_facet_data) { {
+    "count" => 1234,
+    "legislature_ses" => { "buckets" => [{ "val" => 90996, "count" => 123 }, { "val" => 90995, "count" => 234 }] },
+    "subject_ses" => { "buckets" => [{ "val" => 123456, "count" => 455 }, { "val" => 234556, "count" => 66 }] }
+  } }
 
   describe 'object_data' do
     context 'where data is present' do
       it 'returns the array of inflated objects' do
         expect(search_data.object_data).to be_a(Array)
         expect(search_data.object_data.map(&:class)).to eq([Edm, Edm, Edm])
-        expect(search_data.object_data.map(&:content_type_object_data)).to eq([item1_data, item2_data, item3_data])
+        expect(search_data.object_data.map(&:content_type_object_data)).to eq([item1.content_type_object_data, item2.content_type_object_data, item3.content_type_object_data])
       end
     end
   end
@@ -208,7 +207,8 @@ RSpec.describe SearchData, type: :model do
 
   describe 'facets' do
     context 'where search is nil' do
-      let(:search_data) { SearchData.new(nil) }
+      let(:search_data) { SearchData.new(nil, hierarchy_builder: hierarchy_builder_class, solr_query: solr_query_class) }
+
       it 'returns an empty array' do
         expect(search_data.facets).to eq([])
       end
@@ -235,14 +235,14 @@ RSpec.describe SearchData, type: :model do
 
   describe 'data years' do
     context 'where search is nil' do
-      let(:search_data) { SearchData.new(nil) }
+      let(:search_data) { SearchData.new(nil, hierarchy_builder: hierarchy_builder_class, solr_query: solr_query_class) }
 
       it 'returns an empty array' do
         expect(search_data.data_years).to eq([])
       end
     end
     context 'where search is not nil' do
-      let!(:facet_data) { { "date_dt" => { "buckets" => [{ "val" => "2020-10-22T23:00:00.000Z", "count" => 12 }, { "val" => "2020-07-06T23:00:00.000Z", "count" => 9 }] } } }
+      let!(:search_facet_data) { { "date_dt" => { "buckets" => [{ "val" => "2020-10-22T23:00:00.000Z", "count" => 12 }, { "val" => "2020-07-06T23:00:00.000Z", "count" => 9 }] } } }
 
       it 'extracts unique years from the date facet' do
         expect(search_data.data_years).to eq(["2020"])
@@ -252,7 +252,8 @@ RSpec.describe SearchData, type: :model do
 
   describe 'single_data_year?' do
     context 'where search is nil' do
-      let(:search_data) { SearchData.new(nil) }
+      let(:search_data) { SearchData.new(nil, hierarchy_builder: hierarchy_builder_class, solr_query: solr_query_class) }
+
       it 'returns false' do
         expect(search_data.single_data_year?).to be false
       end
@@ -260,7 +261,7 @@ RSpec.describe SearchData, type: :model do
 
     context 'where search is not nil' do
       context 'where all data falls within a single year' do
-        let!(:facet_data) { { "date_dt" => { "buckets" => [{ "val" => "2020-10-22T23:00:00.000Z", "count" => 12 }, { "val" => "2020-07-06T23:00:00.000Z", "count" => 9 }] } } }
+        let!(:search_facet_data) { { "date_dt" => { "buckets" => [{ "val" => "2020-10-22T23:00:00.000Z", "count" => 12 }, { "val" => "2020-07-06T23:00:00.000Z", "count" => 9 }] } } }
 
         it 'returns true' do
           expect(search_data.single_data_year?).to be true
@@ -268,7 +269,7 @@ RSpec.describe SearchData, type: :model do
       end
 
       context 'where there are multiple years represented by the data' do
-        let!(:facet_data) { { "date_dt" => { "buckets" => [{ "val" => "2017-10-22T23:00:00.000Z", "count" => 12 }, { "val" => "2020-07-06T23:00:00.000Z", "count" => 9 }] } } }
+        let!(:search_facet_data) { { "date_dt" => { "buckets" => [{ "val" => "2017-10-22T23:00:00.000Z", "count" => 12 }, { "val" => "2020-07-06T23:00:00.000Z", "count" => 9 }] } } }
 
         it 'returns false' do
           expect(search_data.single_data_year?).to be false
@@ -279,13 +280,14 @@ RSpec.describe SearchData, type: :model do
 
   describe 'years' do
     context 'where search is nil' do
-      let(:search_data) { SearchData.new(nil) }
+      let(:search_data) { SearchData.new(nil, hierarchy_builder: hierarchy_builder_class, solr_query: solr_query_class) }
+
       it 'returns an empty array' do
         expect(search_data.years).to eq([])
       end
     end
     context 'where search is not nil' do
-      let!(:facet_data) { { "year" => { "buckets" => [{ "val" => "2017-01-01T00:00:00.000Z", "count" => 12 }, { "val" => "2020-01-01T00:00:00.000Z", "count" => 9 }] } } }
+      let!(:search_facet_data) { { "year" => { "buckets" => [{ "val" => "2017-01-01T00:00:00.000Z", "count" => 12 }, { "val" => "2020-01-01T00:00:00.000Z", "count" => 9 }] } } }
       it 'returns years as date strings' do
         expect(search_data.years).to eq([{ "count" => 9, "val" => "2020-01-01T00:00:00.000Z" }, { "count" => 12, "val" => "2017-01-01T00:00:00.000Z" }])
       end
@@ -294,13 +296,14 @@ RSpec.describe SearchData, type: :model do
 
   describe 'months' do
     context 'where search is nil' do
-      let(:search_data) { SearchData.new(nil) }
+      let(:search_data) { SearchData.new(nil, hierarchy_builder: hierarchy_builder_class, solr_query: solr_query_class) }
+
       it 'returns an empty array' do
         expect(search_data.months("2017")).to eq([])
       end
     end
     context 'where search is not nil' do
-      let!(:facet_data) { { "month" => { "buckets" => [{ "val" => "2017-01-03T00:00:00.000Z", "count" => 12 }, { "val" => "2020-01-03T00:00:00.000Z", "count" => 9 }] } } }
+      let!(:search_facet_data) { { "month" => { "buckets" => [{ "val" => "2017-01-03T00:00:00.000Z", "count" => 12 }, { "val" => "2020-01-03T00:00:00.000Z", "count" => 9 }] } } }
       it 'returns months for the given year as date strings' do
         expect(search_data.months("2017")).to eq([{ "val" => "2017-01-03T00:00:00.000Z", "count" => 12 }])
       end
