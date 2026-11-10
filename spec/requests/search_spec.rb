@@ -39,7 +39,6 @@ RSpec.describe 'Search', type: :request do
       let!(:item1) { NotSupported.new({ 'type_ses' => [12345], 'title_t' => 'QZH4EFc', 'uri' => 'QZH4EFc_uri', 'all_ses' => [90996, 12345] }) }
 
       before do
-        expect(hierarchy_builder_instance).to receive(:top_level_types)
         expect(search_data_instance).to receive(:type_facets)
         expect(search_data_instance).to receive(:hierarchy_data)
         expect(search_data_instance).to receive(:hierarchy_ses_data)
@@ -84,7 +83,6 @@ RSpec.describe 'Search', type: :request do
       let!(:solr_search_instance) { SolrQuery::Search.new(query: { "filter" => { "type_ses" => ["90996"] } }) }
 
       before do
-        expect(hierarchy_builder_instance).to receive(:top_level_types)
         expect(search_data_instance).to receive(:type_facets)
         expect(search_data_instance).to receive(:hierarchy_data)
         expect(search_data_instance).to receive(:hierarchy_ses_data)
@@ -140,7 +138,6 @@ RSpec.describe 'Search', type: :request do
       let!(:solr_search_instance) { SolrQuery::Search.new(query: { "query" => 'BZ34eDD' }) }
 
       before do
-        expect(hierarchy_builder_instance).to receive(:top_level_types)
         expect(search_data_instance).to receive(:type_facets)
         expect(search_data_instance).to receive(:hierarchy_data)
         expect(search_data_instance).to receive(:hierarchy_ses_data)

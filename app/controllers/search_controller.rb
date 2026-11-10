@@ -3,7 +3,6 @@ class SearchController < ApplicationController
 
   def index
     # TODO: refactor into testable service class
-
     @page_title = "Search Results"
     @description = "Results in Parliamentary Search for the query #{search_params[:query]}." unless search_params[:query].blank?
 
