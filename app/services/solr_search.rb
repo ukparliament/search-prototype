@@ -28,8 +28,10 @@ class SolrSearch < ApiClient
       'answeringMember_ses',
       'legislativeStage_ses',
       'legislationTitle_ses',
+      'legislationTitle_s',
       'publisher_ses',
-      'subject_ses'
+      'subject_ses',
+      'subject_s'
     ]
   end
 
@@ -105,6 +107,9 @@ class SolrSearch < ApiClient
     'date_dt desc'
   end
 
+  ##
+  # Returns the fields listed by SolrSearch.facet_fields in JSON format as required by the JSON facet,
+  # see: https://solr.apache.org/guide/solr/9_2/query-guide/json-facet-api.html
   def facet_hash
     # hash with keys as names of facets
 
