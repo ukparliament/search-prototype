@@ -2,21 +2,23 @@
 
 require 'rails_helper'
 
-RSpec.describe 'SesQuery' do
-  let!(:ses_query) { SesQuery.new(input_data) }
+RSpec.describe 'SesQuery::Search' do
+  let!(:ses_query) { SesQuery::Search.new(term: term, api_client: api_client_class) }
+  let!(:api_client_class) { class_double(ApiClient::Get, new: api_client_instance) }
+  let!(:api_client_instance) { instance_double(ApiClient::Get, response: mock_response) }
+
+  before do
+    allow(Rails.application.credentials).to receive(:dig).with(:test, :api_host).and_return("api.test.url")
+    allow(Rails.application.credentials).to receive(:dig).with(:test, :ses_api, :tbdb).and_return("test_tbdb")
+    allow(Rails.application.credentials).to receive(:dig).with(:test, :ses_api, :path).and_return("/ses")
+    allow(Rails.application.credentials).to receive(:dig).with(:test, :api_subscription_key).and_return("12345")
+  end
 
   describe 'data' do
     let!(:mock_response) { JSON.parse(File.read('spec/fixtures/ses_search_service_example.json')) }
 
-    before do
-      allow(Rails.application.credentials).to receive(:dig).with(:test, :api_host).and_return("api.test.url")
-      allow(Rails.application.credentials).to receive(:dig).with(:test, :ses_api, :tbdb).and_return("test_tbdb")
-      allow(Rails.application.credentials).to receive(:dig).with(:test, :ses_api, :path).and_return("/ses")
-      allow(ses_query).to receive(:api_response).with(formatted_query, false).and_return(mock_response)
-    end
-
     context 'where input data is nil' do
-      let!(:input_data) { nil }
+      let!(:term) { nil }
       let!(:formatted_query) { nil }
       it 'returns nil' do
         expect(ses_query.data).to be_nil
@@ -24,10 +26,10 @@ RSpec.describe 'SesQuery' do
     end
 
     context 'where a term is submitted' do
-      let!(:input_data) { { value: 'housing' } }
+      let!(:term) { { value: 'housing' } }
       let!(:formatted_query) { URI("https://api.test.url/ses?tbdb=test_tbdb&service=search&template=service.json&query=housing") }
 
-      it 'returns a hash containing equivalent terms, perferred term, preferred term ID' do
+      it 'returns a hash containing equivalent terms, preferred term, preferred term ID' do
         expect(ses_query.data.map(&:keys)).to eq([[:equivalent_terms, :preferred_term, :preferred_term_id]])
         expect(ses_query.data[0][:equivalent_terms]).to eq(["Accommodation", "Houses"])
         expect(ses_query.data[0][:preferred_term]).to eq("Housing")
@@ -37,7 +39,7 @@ RSpec.describe 'SesQuery' do
 
     context 'where SES returns an exact match as an equivalent term' do
       let!(:mock_response) { JSON.parse(File.read('spec/fixtures/securities.json')) }
-      let!(:input_data) { { value: 'Securities' } }
+      let!(:term) { { value: 'Securities' } }
       let!(:formatted_query) { URI("https://api.test.url/ses?tbdb=test_tbdb&service=search&template=service.json&query=Securities") }
 
       it 'includes that result' do
@@ -48,7 +50,7 @@ RSpec.describe 'SesQuery' do
 
     context 'where SES returns an exact match as the preferred term' do
       let!(:mock_response) { JSON.parse(File.read('spec/fixtures/election_observers.json')) }
-      let!(:input_data) { { value: 'Election observers' } }
+      let!(:term) { { value: 'Election observers' } }
       let!(:formatted_query) { URI("https://api.test.url/ses?tbdb=test_tbdb&service=search&template=service.json&query=Election+observers") }
 
       it 'includes that result' do
@@ -58,7 +60,7 @@ RSpec.describe 'SesQuery' do
 
     context 'where SES returns no result that matches' do
       let!(:mock_response) { JSON.parse(File.read('spec/fixtures/observers.json')) }
-      let!(:input_data) { { value: 'Observers' } }
+      let!(:term) { { value: 'Observers' } }
       let!(:formatted_query) { URI("https://api.test.url/ses?tbdb=test_tbdb&service=search&template=service.json&query=Observers") }
 
       it 'excludes that result' do
@@ -70,7 +72,7 @@ RSpec.describe 'SesQuery' do
 
     context 'where SES returns multiple matching results' do
       let!(:mock_response) { JSON.parse(File.read('spec/fixtures/army_training_estate.json')) }
-      let!(:input_data) { { value: 'Army' } }
+      let!(:term) { { value: 'Army' } }
       let!(:formatted_query) { URI("https://api.test.url/ses?tbdb=test_tbdb&service=search&template=service.json&query=Army") }
 
       it 'includes the more complex result only' do
@@ -82,7 +84,7 @@ RSpec.describe 'SesQuery' do
 
     context 'where SES returns a topic result' do
       let!(:mock_response) { JSON.parse(File.read('spec/fixtures/ses_search_service_example_tpg.json')) }
-      let!(:input_data) { { value: 'housing' } }
+      let!(:term) { { value: 'housing' } }
       let!(:formatted_query) { URI("https://api.test.url/ses?tbdb=test_tbdb&service=search&template=service.json&query=housing") }
 
       it 'does not return the topic' do
@@ -92,7 +94,7 @@ RSpec.describe 'SesQuery' do
 
     context 'where SES returns an intranet term result' do
       let!(:mock_response) { JSON.parse(File.read('spec/fixtures/ses_search_service_example_int.json')) }
-      let!(:input_data) { { value: 'housing' } }
+      let!(:term) { { value: 'housing' } }
       let!(:formatted_query) { URI("https://api.test.url/ses?tbdb=test_tbdb&service=search&template=service.json&query=housing") }
 
       it 'does not return the topic' do

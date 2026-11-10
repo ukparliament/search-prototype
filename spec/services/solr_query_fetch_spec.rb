@@ -1,7 +1,9 @@
 require 'rails_helper'
 
-RSpec.describe SolrQuery, type: :model do
-  let!(:solr_query) { SolrQuery::Fetch.new(uri: 'test_uri') }
+RSpec.describe SolrQuery::Fetch, type: :model do
+  let!(:solr_query) { SolrQuery::Fetch.new(uri: 'test_uri', api_client: api_client_class) }
+  let!(:api_client_class) { class_double(ApiClient::Post, new: api_client_instance) }
+  let!(:api_client_instance) { instance_double(ApiClient::Post, response: mock_response) }
   let!(:mock_response) { {
     "responseHeader" => {
       "status" => 0,
@@ -17,22 +19,10 @@ RSpec.describe SolrQuery, type: :model do
   } }
   let!(:formatted_query) { { q: "uri:test_uri" } }
 
-  before do
-    allow(solr_query).to receive(:api_post_request).with(formatted_query).and_return(mock_response.to_json)
-  end
-
-  describe 'object_data' do
-    context 'where type_ses is present for the first result' do
-      it 'returns data from the first doc within the response from data' do
-        expect(solr_query.object_data).to eq({ 'type_ses' => [12345] })
-      end
-    end
-  end
-
   describe 'data' do
     context 'where response is not an error' do
-      it 'returns the result of evaluated_response' do
-        expect(solr_query.data).to eq(mock_response)
+      it 'returns the first object from the response' do
+        expect(solr_query.data).to eq({ 'type_ses' => [12345] })
       end
     end
 
