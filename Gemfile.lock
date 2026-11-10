@@ -199,7 +199,7 @@ GEM
       rack
     public_suffix (7.0.5)
     racc (1.8.1)
-    rack (3.2.6)
+    rack (3.2.8)
     rack-attack (6.8.0)
       rack (>= 1.0, < 4)
     rack-cors (3.0.0)
