@@ -116,6 +116,44 @@ RSpec.describe ApplicationHelper, type: :helper do
     end
   end
 
+  describe 'format object title' do
+    context 'when given nil' do
+      let(:object_title) { nil }
+      let(:ses_data) { nil }
+      it 'returns Untitled' do
+        expect(helper.format_object_title(object_title, ses_data)).to eq('Untitled')
+      end
+    end
+    context 'when given a string' do
+      let(:object_title) { 'A string title' }
+      let(:ses_data) { nil }
+      it 'returns the string' do
+        expect(helper.format_object_title(object_title, ses_data)).to eq('A string title')
+      end
+    end
+    context 'when given a SES ID' do
+      let(:object_title) { { :value => 91910, :field_name => "subtype_ses" } }
+      let(:ses_data) { { 91910 => "Debates on bills" } }
+      it 'returns the string, singularised' do
+        expect(helper.format_object_title(object_title, ses_data)).to eq('Debate on bill')
+      end
+    end
+    context 'when given a malformed data array' do
+      let(:object_title) { { :not_value => 91910, :field_name => "subtype_ses" } }
+      let(:ses_data) { { 91910 => "Debates on bills" } }
+      it 'returns Untitled' do
+        expect(helper.format_object_title(object_title, ses_data)).to eq('Untitled')
+      end
+    end
+    context 'when given an unsupported data type' do
+      let(:object_title) { ['An array', 'of strings'] }
+      let(:ses_data) { { 91910 => "Debates on bills" } }
+      it 'returns Untitled' do
+        expect(helper.format_object_title(object_title, ses_data)).to eq('Untitled')
+      end
+    end
+  end
+
   describe 'singularize phrase' do
     context 'with a known phrase' do
       it 'swaps in the replacement phrase' do

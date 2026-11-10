@@ -155,7 +155,7 @@ class FieldExpander
       boolean_fields = %w[prorogationAnswer_b]
       requires_ses_data = false
     elsif field_name.downcase == "publisher"
-      ses_fields = %w[publisher_ses]
+      ses_fields = %w[publisher_ses section_ses]
       text_fields = %w[publisher_t]
     elsif field_name.downcase == "questiontext"
       text_fields = %w[questionText_t]

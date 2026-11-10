@@ -14,19 +14,21 @@ module LinkHelper
     member_ses
     primarySponsor_ses
     publisher_ses
+    section_ses
     subject_ses
     subject_t
     subtype_ses
     tablingMember_ses
     type_ses]
 
-  def object_show_link(string, uri)
+  def object_show_link(label, uri)
     # used where we have the title of an object and the link to that object in a source system
     # returns a titled link to the object show page for that url
 
-    return if string.blank? || uri.blank?
+    return if label.blank? || uri.blank?
 
-    link_to(string, object_show_url(object: uri[:value]))
+    display_name = label.is_a?(Hash) ? formatted_name(label, ses_data, true, true) : label
+    link_to(display_name, object_show_url(object: uri[:value]))
   end
 
   def search_link(data, singular: false, reading_order: true, html_class: nil)
@@ -67,7 +69,7 @@ module LinkHelper
     return 'house' if ['legislature_ses'].include?(field_name)
     return 'member' if ['member_ses'].include?(field_name)
     return 'primarysponsor' if ['primarySponsor_ses'].include?(field_name)
-    return 'publisher' if ['publisher_ses'].include?(field_name)
+    return 'publisher' if ['publisher_ses', 'section_ses'].include?(field_name)
     return 'subject' if ['subject_ses', 'subject_t'].include?(field_name)
     return 'type' if ['subtype_ses', 'type_ses', 'category_ses'].include?(field_name)
     return 'tabledby' if ['tablingMember_ses'].include?(field_name)
@@ -133,7 +135,7 @@ module LinkHelper
       name_string = ses_data.dig(ses_id)
 
       if name_string.nil?
-        puts "Missing SES name for ID #{ses_id}" if Rails.env.development? || Rails.env.test?
+        puts "Missing SES name for ID #{ses_id}" if Rails.env.development?
         name_string = fallback_ses_lookup(ses_id)
       end
     elsif data[:field_name] && data[:field_name] == 'date_month'

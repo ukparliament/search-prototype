@@ -94,7 +94,7 @@ module ApplicationHelper
       ses_id = object_title.dig(:value)
       type = ses_data.dig(ses_id)&.singularize
 
-      return type.blank? ? "Untitled" : "Untitled #{type}"
+      return type.blank? ? "Untitled" : type
     end
 
     # in development, raise an error if we have any other data type
