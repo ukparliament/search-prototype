@@ -531,6 +531,13 @@ RSpec.describe 'TermExpander' do
           expect(term_expander.populate_fixed_fields).to eq([[:namedday, "wpqType_t:Named Day"]])
         end
       end
+      context 'for named day' do
+        let!(:search_term) { 'named day' }
+
+        it 'returns a fixed value tagged with the search term' do
+          expect(term_expander.populate_fixed_fields).to eq([[:namedday, "wpqType_t:Named Day"]])
+        end
+      end
       context 'for nextday' do
         let!(:search_term) { 'nextday' }
 

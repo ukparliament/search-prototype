@@ -177,9 +177,9 @@ class TermExpander
         when 'opqtype'
           if search_term.downcase == 'supp'
             expanded_terms << [:supp, "contributionType_t:supplementary"]
-          elsif search_term.downcase == 'othersupp'
+          elsif ['othersupp', 'other supp'].include?(search_term.downcase)
             expanded_terms << [:othersupp, "contributionType_s:Supplementary"]
-          elsif search_term.downcase == 'firstsupp'
+          elsif ['firstsupp', 'first supp'].include?(search_term.downcase)
             expanded_terms << [:firstsupp, "contributionType_s:\"1st Supplementary\""]
           elsif search_term.downcase == 'lead'
             expanded_terms << [:lead, "contributionType_s:Lead"]
@@ -187,9 +187,9 @@ class TermExpander
         when 'wpqtype'
           if search_term.downcase == 'ordinary'
             expanded_terms << [:ordinary, "wpqType_t:Ordinary"]
-          elsif search_term.downcase == 'namedday'
+          elsif ['namedday', 'named day'].include?(search_term.downcase)
             expanded_terms << [:namedday, "wpqType_t:Named Day"]
-          elsif search_term.downcase == 'nextday'
+          elsif ['nextday', 'next day'].include?(search_term.downcase)
             expanded_terms << [:nextday, "wpqType_t:daily"]
           end
         else
