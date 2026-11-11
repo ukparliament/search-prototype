@@ -16,16 +16,26 @@
         <div class="col-lg-3">
           <%= yield :sidebar %>
         </div>
+        <div class="col-lg-9">
+          <%#= render 'library_design/debug/debug' %>
+          <% if content_for?(:heading) %>
+            <h1 class="reading-width">
+              <%= yield :heading %>
+            </h1>
+          <% end %>
+          <%= yield %>
+        </div>
+      <% else %>
+        <div class="col">
+          <%#= render 'library_design/debug/debug' %>
+          <% if content_for?(:heading) %>
+            <h1 class="reading-width">
+              <%= yield :heading %>
+            </h1>
+          <% end %>
+          <%= yield %>
+        </div>
       <% end %>
-      <div class="col-lg-9">
-        <%#= render 'library_design/debug/debug' %>
-        <% if content_for?(:heading) %>
-          <h1 class="reading-width">
-            <%= yield :heading %>
-          </h1>
-        <% end %>
-        <%= yield %>
-      </div>
     </div>
   </div>
 </main>

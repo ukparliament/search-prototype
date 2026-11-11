@@ -112,7 +112,7 @@
           <% @objects.each do |object| %>
             <div class="row">
               <div class="col">
-                <%= render object.search_result_partial, object: object unless object.class == NotSupported %>
+                <%= render '/search/results/template', object: object unless object.class == NotSupported %>
                 <%= render 'content_type_objects/fragments/search_claw', object: object %>
               </div>
             </div>
