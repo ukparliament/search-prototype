@@ -41,7 +41,9 @@ class QueryExpander
     tokens.each do |label, value|
       puts "Processing token: #{label}: #{value}" if Rails.env.development? || Rails.env.test?
 
-      if label == :operator
+      if label == :boolean_operator
+        processed_tokens << process_operator_token(value)
+      elsif label == :modifier_operator
         processed_tokens << process_operator_token(value)
       elsif label == :all_records
         processed_tokens << process_all_records_token(value)
