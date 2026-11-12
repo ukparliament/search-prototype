@@ -34,19 +34,23 @@ RSpec.describe 'QueryExpander' do
   let(:expanded_query_string) { 'this OR that AND they OR them' }
 
   describe 'expand_query' do
-    context 'where the term is a solr query operator' do
-      let(:search_query) { "OR NOT AND" }
+    context 'where the term is a solr boolean operator' do
+      let(:search_query) { "OR NOT AND + -" }
       it 'adds the term to returned_terms as-is' do
         # tokeniser is initialised with the query string
-        expect(tokeniser_test_class).to receive(:new).with("OR NOT AND")
+        expect(tokeniser_test_class).to receive(:new).with("OR NOT AND + -")
 
         # tokeniser instance receives call to tokenise
-        expect(tokeniser_test_instance).to receive(:tokenise).and_return([[:operator, 'OR'], [:operator, 'NOT'], [:operator, 'AND']])
+        expect(tokeniser_test_instance).to receive(:tokenise).and_return([[:boolean_operator, 'OR'],
+                                                                          [:modifier_operator, 'NOT'],
+                                                                          [:boolean_operator, 'AND'],
+                                                                          [:modifier_operator, '+'],
+                                                                          [:modifier_operator, '-']])
 
         # the term combiner is initialised with the unmodified operators returned from the tokeniser
-        expect(term_combiner_test_class).to receive(:new).with(["OR", "NOT", "AND"])
+        expect(term_combiner_test_class).to receive(:new).with(["OR", "NOT", "AND", "+", "-"])
 
-        # the term combiner recieves call to combine the terms
+        # the term combiner receives call to combine the terms
         expect(term_combiner_test_instance).to receive(:combine_terms).and_return("combined terms")
 
         # the method returns the result from the term combiner
