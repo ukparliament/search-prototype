@@ -109,10 +109,17 @@ RSpec.describe 'Tokeniser' do
         end
       end
 
-      context 'where modifier operators are included' do
+      context 'where the "-" modifier operator is used' do
         let!(:query) { "-cats dogs AND subject:rats OR pigeons -birds" }
         it 'does not combine unquoted terms where one is modified by an operator that does not modify the other' do
           expect(tokeniser.tokenise).to eq([[:modifier_operator, "-"], [:unquoted_phrase, "cats"], [:unquoted_phrase, "dogs"], [:boolean_operator, "AND"], [:specified_field, "subject:rats"], [:boolean_operator, "OR"], [:unquoted_phrase, "pigeons"], [:modifier_operator, "-"], [:unquoted_phrase, "birds"]])
+        end
+      end
+
+      context 'where the "+" modifier operator is used' do
+        let!(:query) { "+cats dogs AND subject:rats OR pigeons +birds" }
+        it 'does not combine unquoted terms where one is modified by an operator that does not modify the other' do
+          expect(tokeniser.tokenise).to eq([[:modifier_operator, "+"], [:unquoted_phrase, "cats"], [:unquoted_phrase, "dogs"], [:boolean_operator, "AND"], [:specified_field, "subject:rats"], [:boolean_operator, "OR"], [:unquoted_phrase, "pigeons"], [:modifier_operator, "+"], [:unquoted_phrase, "birds"]])
         end
       end
 
@@ -127,6 +134,20 @@ RSpec.describe 'Tokeniser' do
         let!(:query) { "NOT cats dogs AND subject:rats OR pigeons AND NOT birds" }
         it 'includes the AND operator' do
           expect(tokeniser.tokenise).to eq([[:modifier_operator, "NOT"], [:unquoted_phrase, "cats"], [:unquoted_phrase, "dogs"], [:boolean_operator, "AND"], [:specified_field, "subject:rats"], [:boolean_operator, "OR"], [:unquoted_phrase, "pigeons"], [:boolean_operator, "AND"], [:modifier_operator, "NOT"], [:unquoted_phrase, "birds"]])
+        end
+      end
+
+      context 'where brackets are used in combination with a NOT operator' do
+        let!(:query) { "NOT (cats dogs) AND subject:rats OR pigeons AND NOT birds" }
+        it 'takes the brackets into account' do
+          expect(tokeniser.tokenise).to eq([[:modifier_operator, "NOT"], [:parenthesis, "("], [:unquoted_phrase, "cats dogs"], [:parenthesis, ")"], [:boolean_operator, "AND"], [:specified_field, "subject:rats"], [:boolean_operator, "OR"], [:unquoted_phrase, "pigeons"], [:boolean_operator, "AND"], [:modifier_operator, "NOT"], [:unquoted_phrase, "birds"]])
+        end
+      end
+
+      context 'where brackets are used in combination with the "-" operator' do
+        let!(:query) { "-(cats dogs) AND subject:rats OR pigeons AND NOT birds" }
+        it 'takes the brackets into account' do
+          expect(tokeniser.tokenise).to eq([[:modifier_operator, "-"], [:parenthesis, "("], [:unquoted_phrase, "cats dogs"], [:parenthesis, ")"], [:boolean_operator, "AND"], [:specified_field, "subject:rats"], [:boolean_operator, "OR"], [:unquoted_phrase, "pigeons"], [:boolean_operator, "AND"], [:modifier_operator, "NOT"], [:unquoted_phrase, "birds"]])
         end
       end
     end
