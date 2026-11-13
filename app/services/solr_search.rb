@@ -99,10 +99,10 @@ class SolrSearch < ApiClient
   end
 
   def sort
-    return 'date_dt desc' if sort_by == "date_desc"
-    return 'date_dt asc' if sort_by == "date_asc"
+    return 'date_dt, identifier_t desc' if sort_by == "date_desc"
+    return 'date_dt, identifier_t asc' if sort_by == "date_asc"
 
-    'date_dt desc'
+    'date_dt, identifier_t desc'
   end
 
   def facet_hash
