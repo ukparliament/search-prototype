@@ -150,6 +150,13 @@ RSpec.describe 'Tokeniser' do
           expect(tokeniser.tokenise).to eq([[:modifier_operator, "-"], [:parenthesis, "("], [:unquoted_phrase, "cats dogs"], [:parenthesis, ")"], [:boolean_operator, "AND"], [:specified_field, "subject:rats"], [:boolean_operator, "OR"], [:unquoted_phrase, "pigeons"], [:boolean_operator, "AND"], [:modifier_operator, "NOT"], [:unquoted_phrase, "birds"]])
         end
       end
+
+      context 'where the "-" operator is used with two consecutive terms' do
+        let!(:query) { "-cats - dogs" }
+        it 'takes the brackets into account' do
+          expect(tokeniser.tokenise).to eq([[:modifier_operator, "-"], [:unquoted_phrase, "cats"], [:modifier_operator, "-"], [:unquoted_phrase, "dogs"]])
+        end
+      end
     end
   end
 
