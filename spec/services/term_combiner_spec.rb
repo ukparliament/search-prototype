@@ -17,6 +17,12 @@ RSpec.describe TermCombiner, type: :model do
       expect(term_combiner.combine_terms).to eq("fish AND NOT chips")
     end
   end
+  context 'with modifier operators' do
+    let(:terms) { ['fish', '-', 'chips'] }
+    it 'combines into a query string without adding a space after the modifier symbol' do
+      expect(term_combiner.combine_terms).to eq("fish -chips")
+    end
+  end
   context 'where no operators are provided by the user' do
     let(:terms) { ['fish', 'chips'] }
     it 'combines into a query string' do

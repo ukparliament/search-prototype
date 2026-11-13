@@ -2,6 +2,9 @@ class TermCombiner
 
   attr_reader :terms
 
+  SOLR_OPERATORS = %w[AND OR NOT - +].freeze
+  SOLR_MODIFIERS = %w[- +].freeze
+
   def initialize(terms)
     @terms = terms
   end
@@ -20,7 +23,8 @@ class TermCombiner
 
     # track current end of string as it determines what we do with the next term
     # start with these booleans as false unless the first term was an operator / bracket
-    previous_term_is_operator = %w[AND OR NOT].include?(terms.first.upcase)
+    previous_term_is_operator = SOLR_OPERATORS.include?(terms.first.upcase)
+    previous_term_is_modifier = SOLR_MODIFIERS.include?(terms.first.upcase)
     previous_term_is_opening_bracket = %w[(].include?(terms.first.upcase)
     previous_term_is_closing_bracket = %w[)].include?(terms.first.upcase)
 
@@ -29,13 +33,13 @@ class TermCombiner
       # iteration begins with the second term, but we need to check the previous term (via the boolean flags) in
       # order to know how to process & format this one
 
-      if %w[AND OR NOT].include?(term)
+      if SOLR_OPERATORS.include?(term)
         puts "Term is an operator" if Rails.env.development? || Rails.env.test?
         # term is actually an operator, so just add it to the string without doing anything else to it
         # this outcome can stack, e.g. 'term AND NOT term'
 
-        if previous_term_is_opening_bracket
-          # don't add a space if previous term was opening bracket
+        if previous_term_is_opening_bracket || previous_term_is_modifier
+          # don't add a space if previous term was opening bracket or a +/- symbol
           output_string += "#{term}"
         else
           output_string += " #{term}"
@@ -43,6 +47,7 @@ class TermCombiner
 
         # set flags to show this term was an operator
         previous_term_is_operator = true
+        previous_term_is_modifier = SOLR_MODIFIERS.include?(term)
         previous_term_is_opening_bracket = false
         previous_term_is_closing_bracket = false
 
@@ -50,8 +55,8 @@ class TermCombiner
         puts "Term is an opening bracket" if Rails.env.development? || Rails.env.test?
         # term is actually a "(" bracket, so just add it to the string without doing anything else to it
 
-        if previous_term_is_opening_bracket
-          # don't add a space if previous term was opening bracket
+        if previous_term_is_opening_bracket || previous_term_is_modifier
+          # don't add a space if previous term was opening bracket or a +/- symbol
           output_string += "#{term}"
         else
           output_string += " #{term}"
@@ -60,11 +65,12 @@ class TermCombiner
         # set flags to show this term was an opening bracket
         previous_term_is_opening_bracket = true
         previous_term_is_operator = false
+        previous_term_is_modifier = false
         previous_term_is_closing_bracket = false
 
       elsif %w[)].include?(term)
         puts "Term is a closing bracket" if Rails.env.development? || Rails.env.test?
-        # term is actually a ")" bracket, so just add it to the string without doing anything else to it
+        # term is actually a ")" bracket, so just add it to the string without doing anything else
         # we don't need to add a space before a closing bracket under any conditions
         output_string += "#{term}"
 
@@ -79,11 +85,13 @@ class TermCombiner
 
         if previous_term_is_operator
           puts "...but previous term was an operator" if Rails.env.development? || Rails.env.test?
-          # previous term was an operator already, so just append the term
-          # add () if not already present
-          output_string += wrapping_required?(term) ? " (#{term})" : " #{term}"
-
-          # If wrapping _is_ required, then the 'previous term' becomes a closing bracket?
+          if previous_term_is_modifier
+            # don't leave a space after a modifier-type operator (+/-), add () if necessary
+            output_string += wrapping_required?(term) ? "(#{term})" : "#{term}"
+          else
+            # previous term was an operator so append the term with spaces and add () if necessary
+            output_string += wrapping_required?(term) ? " (#{term})" : " #{term}"
+          end
 
         elsif previous_term_is_opening_bracket
           puts "...but previous term was an opening bracket" if Rails.env.development? || Rails.env.test?
