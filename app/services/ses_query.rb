@@ -22,7 +22,7 @@ class SesQuery
   end
 
   def api_subscription_key
-    ENV["API_SUBSCRIPTION_KEY"] || Rails.application.credentials.dig(Rails.env.to_sym, :api_subscription_key)
+    ENV["API_SUBSCRIPTION_KEY"] || Rails.application.credentials.dig(Rails.env.to_sym, :ses_api, :api_subscription_key)
   end
 
   def request_headers

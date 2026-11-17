@@ -5,7 +5,7 @@ RSpec.describe SesQuery::Lookup, type: :model do
     allow(Rails.application.credentials).to receive(:dig).with(:test, :api_host).and_return("api.test.url")
     allow(Rails.application.credentials).to receive(:dig).with(:test, :ses_api, :tbdb).and_return("test_tbdb")
     allow(Rails.application.credentials).to receive(:dig).with(:test, :ses_api, :path).and_return("/ses")
-    allow(Rails.application.credentials).to receive(:dig).with(:test, :api_subscription_key).and_return("12345")
+    allow(Rails.application.credentials).to receive(:dig).with(:test, :ses_api, :api_subscription_key).and_return("12345")
   end
 
   describe 'data' do
