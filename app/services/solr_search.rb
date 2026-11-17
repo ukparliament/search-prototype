@@ -175,4 +175,8 @@ class SolrSearch < ApiClient
       debug: 'query'
     }
   end
+
+  def request_headers
+    { 'Ocp-Apim-Subscription-Key' => solr_api_subscription_key }
+  end
 end

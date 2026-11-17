@@ -29,4 +29,8 @@ class SolrMultiQuery < ApiClient
       rows: 500
     }
   end
+
+  def request_headers
+    { 'Ocp-Apim-Subscription-Key' => ses_api_subscription_key }
+  end
 end

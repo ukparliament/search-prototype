@@ -204,4 +204,8 @@ class SesLookup < ApiClient
     end
   end
 
+  def request_headers
+    { 'Ocp-Apim-Subscription-Key' => ses_api_subscription_key }
+  end
+
 end
