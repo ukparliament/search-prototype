@@ -1,9 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe FacetHelper, type: :helper do
-  ##
-  # This will need @search_data.filter_groups (or rather, one of those, as we grab it using the name when passing into this helper method)
-
   describe 'format_filter_group' do
     let!(:house) { [{ "val" => 25277, "count" => 15, "field_name" => "legislature_ses" }, { "val" => 25259, "count" => 70, "field_name" => "legislature_ses" }] }
     let!(:month) { [{ "val" => 11, "count" => 86, "field_name" => "date_month" }, { "val" => 3, "count" => 70, "field_name" => "date_month" }, { "val" => 5, "count" => 50, "field_name" => "date_month" }] }
