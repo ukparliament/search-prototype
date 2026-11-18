@@ -235,6 +235,8 @@ class SearchData
     filter_groups = {}
 
     facets.each do |filter_hash|
+      pp field_name = filter_hash[:field_name]
+
       # { :field_name (str), facets: [] }
       # get name string from lookup
       name = FILTER_GROUP_NAMES.dig(filter_hash[:field_name].to_sym)

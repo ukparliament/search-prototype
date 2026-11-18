@@ -18,7 +18,7 @@ module FacetHelper
       filter_group.sort_by { |h| h["val"] }.reverse
     else
       # if we don't have a special case for this group, just return the data unprocessed
-      filter_group
+      filter_group.sort_by { |h| h["count"] }.reverse
     end
   end
 
