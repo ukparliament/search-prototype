@@ -17,9 +17,9 @@ gem 'cloudflare-rails'
 gem "turbo-rails"
 gem "stimulus-rails"
 gem "jbuilder"
-gem "tzinfo-data", platforms: %i[ mingw mswin x64_mingw jruby ]
+gem "tzinfo-data", platforms: %i[ windows jruby ]
 gem "bootsnap", require: false
-gem "passenger", ">= 6", require: "phusion_passenger/rack_handler"
+gem "puma"
 gem "appsignal"
 
 group :development, :test do
