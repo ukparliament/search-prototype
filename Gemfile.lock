@@ -183,11 +183,6 @@ GEM
       racc (~> 1.4)
     nokogiri (1.19.7-x86_64-linux-gnu)
       racc (~> 1.4)
-    passenger (6.2.2)
-      logger (>= 1.7.0)
-      rack (>= 1.6.13)
-      rackup (>= 1.0.1)
-      rake (>= 12.3.3)
     pg (1.7.0-arm64-darwin)
     pg (1.7.0-x86_64-linux)
     pp (0.6.4)
@@ -200,6 +195,8 @@ GEM
       activesupport (>= 7.0.0)
       rack
     public_suffix (7.0.5)
+    puma (8.1.2)
+      nio4r (~> 2.0)
     racc (1.8.1)
     rack (3.2.8)
     rack-attack (6.8.0)
@@ -336,9 +333,9 @@ DEPENDENCIES
   importmap-rails
   jbuilder
   library_design!
-  passenger (>= 6)
   pg
   propshaft
+  puma
   rack-attack
   rails (= 8.1.4.1)
   rails-controller-testing
@@ -355,4 +352,4 @@ RUBY VERSION
    ruby 4.0.10p0
 
 BUNDLED WITH
-   2.6.8
+   4.0.24
