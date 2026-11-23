@@ -18,7 +18,7 @@ RSpec.describe 'Search', type: :request do
     let!(:test_api_client_class) { class_double(ApiClient::Post, new: test_api_client_instance) }
     let!(:test_api_client_instance) { instance_double(ApiClient::Post, response: 'test api response') }
     let!(:example_object) { Edm.new({ [92424, "Personal statements"] => [{ "typeId" => "1", "qty" => "1", "name" => "Broader Term", "abbr" => "BT", "fields" => [{ "field" => { "name" => "Oral statements", "id" => "350073", "zid" => "52566919", "class" => "CTP", "freq" => "0", "facets" => [{ "id" => "346696", "name" => "Content type" }] } }] }] }) }
-    let!(:search_data_instance) { instance_double(SearchData, search: initial_search_data, hierarchy_builder: hierarchy_builder_instance, solr_query: solr_query_lookup_instance, object_data: secondary_query_response, facet_ses_ids: [], filter_count: 0, facets: []) }
+    let!(:search_data_instance) { instance_double(SearchData, search: initial_search_data, hierarchy_builder: hierarchy_builder_instance, solr_query: solr_query_lookup_instance, object_data: secondary_query_response, facet_ses_ids: [], filter_count: 0, facets: [], query: 'test query') }
     let!(:hierarchy_builder_instance) { instance_double(HierarchyBuilder, data: 'hierarchy_data_response', formatted_ses_data: { '12345' => 'name' }) }
 
     before do
@@ -125,28 +125,39 @@ RSpec.describe 'Search', type: :request do
     end
 
     context 'a request for RSS' do
-      let!(:solr_search_instance) { SolrSearch.new(query: "item 2", filter: { "type_ses" => ["90996"] }) }
+      let!(:solr_search_instance) { SolrQuery::Search.new(query: { "query" => 'BZ34eDD', "filter" => { "type_ses" => ["90996"] } }) }
+
+      before do
+        expect(search_data_instance).to receive(:type_facets)
+        expect(search_data_instance).to receive(:hierarchy_data)
+        expect(search_data_instance).to receive(:hierarchy_ses_data)
+        expect(search_data_instance).to receive(:query).exactly(4).times
+        expect(search_data_instance).to receive(:results_per_page).exactly(2).times
+        expect(search_data_instance).to receive(:filter).exactly(2).times
+        expect(search_data_instance).to receive(:facet_ses_ids)
+        expect(search_data_instance).to receive(:expanded_types)
+      end
 
       it 'returns http success' do
-        get '/search.rss?query=item+2&filter%5Btype_ses%5D%5B%5D=90996'
+        get '/search.rss', params: { "query" => 'Test search string' }
         expect(response).to have_http_status(:ok)
       end
 
       it 'returns RSS XML' do
-        get '/search.rss?query=item+2&filter%5Btype_ses%5D%5B%5D=90996'
+        get '/search.rss', params: { "query" => 'Test search string' }
         expect(response.media_type).to eq('application/rss+xml')
       end
 
       it 'returns a valid RSS feed' do
-        get '/search.rss?query=item+2&filter%5Btype_ses%5D%5B%5D=90996'
+        get '/search.rss', params: { "query" => 'Test search string' }
 
         feed = RSS::Parser.parse(response.body)
 
         expect(feed.version).to eq('1.0')
         expect(feed.rss_version).to eq('2.0')
-        expect(feed.channel.title).to eq("Search Results for item 2")
-        expect(feed.channel.description).to eq("Results from Parliamentary Search for the query: item 2")
-        expect(feed.channel.link).to eq("http://www.example.com/search?query=item+2&results_per_page=20")
+        expect(feed.channel.title).to eq("Search Results for test query")
+        expect(feed.channel.description).to eq("Results from Parliamentary Search for the query: test query")
+        expect(feed.channel.link).to eq("http://www.example.com/search?query=test+query")
         expect(feed.channel.copyright).to eq("https://www.parliament.uk/site-information/copyright-parliament/open-parliament-licence/")
         expect(feed.channel.language).to eq('en-gb')
         expect(feed.channel.pubDate).to eq(Date.parse('2019-10-10').rfc822)

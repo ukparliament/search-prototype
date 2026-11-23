@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe SearchData, type: :model do
-  let(:search_data) { SearchData.new(search_output, hierarchy_builder: hierarchy_builder_class, solr_query: solr_query_class) }
+  let(:search_data) { SearchData.new(search: search_output, hierarchy_builder: hierarchy_builder_class, solr_query: solr_query_class) }
   let!(:hierarchy_builder_class) { class_double(HierarchyBuilder, new: hierarchy_builder_instance) }
   let!(:hierarchy_builder_instance) { instance_double(HierarchyBuilder, data: hierarchy_data, data_source: ses_query_type_hierarchy_class) }
   let!(:hierarchy_data) { { [92424, "Personal statements"] => [{ "typeId" => "1", "qty" => "1", "name" => "Broader Term", "abbr" => "BT", "fields" => [{ "field" => { "name" => "Oral statements", "id" => "350073", "zid" => "52566919", "class" => "CTP", "freq" => "0", "facets" => [{ "id" => "346696", "name" => "Content type" }] } }] }] } }
@@ -207,7 +207,7 @@ RSpec.describe SearchData, type: :model do
 
   describe 'facets' do
     context 'where search is nil' do
-      let(:search_data) { SearchData.new(nil, hierarchy_builder: hierarchy_builder_class, solr_query: solr_query_class) }
+      let(:search_data) { SearchData.new(search: nil, hierarchy_builder: hierarchy_builder_class, solr_query: solr_query_class) }
 
       it 'returns an empty array' do
         expect(search_data.facets).to eq([])
@@ -235,7 +235,7 @@ RSpec.describe SearchData, type: :model do
 
   describe 'data years' do
     context 'where search is nil' do
-      let(:search_data) { SearchData.new(nil, hierarchy_builder: hierarchy_builder_class, solr_query: solr_query_class) }
+      let(:search_data) { SearchData.new(search: nil, hierarchy_builder: hierarchy_builder_class, solr_query: solr_query_class) }
 
       it 'returns an empty array' do
         expect(search_data.data_years).to eq([])
@@ -252,7 +252,7 @@ RSpec.describe SearchData, type: :model do
 
   describe 'single_data_year?' do
     context 'where search is nil' do
-      let(:search_data) { SearchData.new(nil, hierarchy_builder: hierarchy_builder_class, solr_query: solr_query_class) }
+      let(:search_data) { SearchData.new(search: nil, hierarchy_builder: hierarchy_builder_class, solr_query: solr_query_class) }
 
       it 'returns false' do
         expect(search_data.single_data_year?).to be false
@@ -280,7 +280,7 @@ RSpec.describe SearchData, type: :model do
 
   describe 'years' do
     context 'where search is nil' do
-      let(:search_data) { SearchData.new(nil, hierarchy_builder: hierarchy_builder_class, solr_query: solr_query_class) }
+      let(:search_data) { SearchData.new(search: nil, hierarchy_builder: hierarchy_builder_class, solr_query: solr_query_class) }
 
       it 'returns an empty array' do
         expect(search_data.years).to eq([])
@@ -296,7 +296,7 @@ RSpec.describe SearchData, type: :model do
 
   describe 'months' do
     context 'where search is nil' do
-      let(:search_data) { SearchData.new(nil, hierarchy_builder: hierarchy_builder_class, solr_query: solr_query_class) }
+      let(:search_data) { SearchData.new(search: nil, hierarchy_builder: hierarchy_builder_class, solr_query: solr_query_class) }
 
       it 'returns an empty array' do
         expect(search_data.months("2017")).to eq([])

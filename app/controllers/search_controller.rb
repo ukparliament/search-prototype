@@ -10,7 +10,7 @@ class SearchController < ApplicationController
     return redirect_back(fallback_location: home_path) if search_params[:query].blank?
 
     search = SolrQuery::Search.new(**search_params.to_h.symbolize_keys)
-    @search_data = SearchData.new(search.data)
+    @search_data = SearchData.new(search: search.data)
 
     # filter out unsupported objects - may move this elsewhere
     @objects = @search_data.object_data.reject { |o| o.is_a?(NotSupported) }

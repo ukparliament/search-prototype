@@ -6,7 +6,7 @@ class SearchData
   # used to extract Solr returned facet data in the correct order for display
   ORDERED_FACET_FIELDS = %w[type_sesrollup legislature_ses date_year date_month session_s department_ses member_ses primaryMember_ses answeringMember_ses legislativeStage_ses legislationTitle_ses subject_ses publisher_ses].freeze
 
-  def initialize(search, hierarchy_builder: HierarchyBuilder, solr_query: SolrQuery::Lookup)
+  def initialize(search:, hierarchy_builder: HierarchyBuilder, solr_query: SolrQuery::Lookup)
     # @search is a hash of search parameters and data
     @search = search
     @hierarchy_builder = hierarchy_builder.new
