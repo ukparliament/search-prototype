@@ -8,7 +8,7 @@
     %span>= render 'content_type_objects/fragments/list', items: object.legislature, terminator: ',', singular: false
   - unless object.tabling_member.blank?
     %span= " by "
-    %span= search_link(object.member)
+    %span= search_link(object.tabling_member)
     - unless object.tabling_member_party.blank?
       %span<="("
       %span>= search_link(object.tabling_member_party)

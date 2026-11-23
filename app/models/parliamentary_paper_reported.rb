@@ -4,6 +4,14 @@ class ParliamentaryPaperReported < Paper
     super
   end
 
+  def self.search_result_solr_fields
+    # fields requested in Solr search for search results page
+    super << %w[
+      corporateAuthor_ses
+      corporateAuthor_t
+    ]
+  end
+
   def object_name
     # subtype, but not if it's 91561, 81563, 51288
     # there will be multiple subtypes to look through, but we're using the first remaining one

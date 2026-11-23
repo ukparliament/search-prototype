@@ -11,26 +11,29 @@ class Edm < ContentTypeObject
   def self.search_result_solr_fields
     # fields requested in Solr search for search results page
     super << %w[
-    title_t
-    uri
-    motionText_t
-    primarySponsor_ses
-    primarySponsorParty_ses
     amendmentText_t
-    amendment_numberOfSignatures_s
-    amendment_primarySponsor_ses
-    amendment_primarySponsorPrinted_t
-    amendment_primarySponsorParty_ses
-    identifier_t
     amendment_dateTabled_dt
+    amendment_numberOfSignatures_s
+    amendment_primarySponsorParty_ses
+    amendment_primarySponsorPrinted_t
+    amendment_primarySponsor_ses
+    date_dt
+    dateTabled_dt
+    edmStatus_t
+    identifier_t
+    identifier_t
     legislationTitle_ses
     legislationTitle_t
+    legislature_ses
+    motionText_t
+    numberOfSignatures_t
+    primarySponsorParty_ses
+    primarySponsor_ses
+    searcherNote_t
     subject_ses
     subject_t
-    searcherNote_t
-    date_dt
-    identifier_t
-    legislature_ses
+    title_t
+    uri
     ]
   end
 

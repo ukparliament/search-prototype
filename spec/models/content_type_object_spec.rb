@@ -32,7 +32,7 @@ RSpec.describe ContentTypeObject, type: :model do
       let!(:church_of_england_measure) { { "type_ses" => [347125] } }
       let!(:private_act) { { "type_ses" => [352234] } }
       let!(:public_act) { { "type_ses" => [347135] } }
-      let!(:ministerial_correction) { { "type_ses" => [92034] } }
+      let!(:written_correction) { { "type_ses" => [92034] } }
       let!(:impact_assessment) { { "type_ses" => [91613] } }
       let!(:deposited_paper) { { "type_ses" => [347163] } }
       let!(:transport_and_works_act_order_application) { { "type_ses" => [360977] } }
@@ -74,7 +74,7 @@ RSpec.describe ContentTypeObject, type: :model do
         expect(ContentTypeObject.generate(church_of_england_measure)).to be_an_instance_of(ChurchOfEnglandMeasure)
         expect(ContentTypeObject.generate(private_act)).to be_an_instance_of(PrivateAct)
         expect(ContentTypeObject.generate(public_act)).to be_an_instance_of(PublicAct)
-        expect(ContentTypeObject.generate(ministerial_correction)).to be_an_instance_of(MinisterialCorrection)
+        expect(ContentTypeObject.generate(written_correction)).to be_an_instance_of(WrittenCorrection)
         expect(ContentTypeObject.generate(impact_assessment)).to be_an_instance_of(ImpactAssessment)
         expect(ContentTypeObject.generate(deposited_paper)).to be_an_instance_of(DepositedPaper)
         expect(ContentTypeObject.generate(transport_and_works_act_order_application)).to be_an_instance_of(TransportAndWorksActOrderApplication)
@@ -938,7 +938,7 @@ RSpec.describe ContentTypeObject, type: :model do
 
   describe 'ministerial correction' do
     it 'returns false' do
-      expect(content_type_object.ministerial_correction?).to eq(false)
+      expect(content_type_object.written_correction?).to eq(false)
     end
   end
 

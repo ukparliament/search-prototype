@@ -7,15 +7,19 @@ class ObservationsOnPetitions < Petition
   def self.associated_objects
     # fields requested in Solr search for search results page
     %w[
-    title_t uri
-    petitionText_t
-    leadMember_ses
-    department_ses department_t
-    legislationTitle_ses legislationTitle_t
-    subject_ses subject_t
-    searcherNote_t
+    askedToReplyAuthor_ses
     commonsLibraryLocation_t
-    date_dt identifier_t legislature_ses
+    date_dt
+    department_ses
+    department_t
+    identifier_t
+    leadMember_ses
+    leadMemberParty_ses
+    legislationTitle_ses
+    legislationTitle_t
+    legislature_ses
+    petitionText_t
+    searcherNote_t
     ]
   end
 

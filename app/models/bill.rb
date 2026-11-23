@@ -18,10 +18,30 @@ class Bill < ContentTypeObject
 
   def self.search_result_solr_fields
     # fields requested in Solr search for search results page
-    super << %w[title_t uri member_ses memberParty_ses department_ses department_t
-      corporateAuthor_ses corporateAuthor_t legislationTitle_ses
-      legislationTitle_t witness_ses witness_t subject_ses subject_t searcherNote_t
-      commonsLibraryLocation_t lordsLibraryLocation_t date_dt identifier_t legislature_ses]
+    super << %w[
+    askedToReplyAuthor_ses
+    commonsLibraryLocation_t
+    corporateAuthor_ses
+    corporateAuthor_t
+    dateOfOrderToPrint_dt
+    date_dt
+    department_ses
+    department_t
+    identifier_t
+    legislationTitle_ses
+    legislationTitle_t
+    legislature_ses
+    lordsLibraryLocation_t
+    memberParty_ses
+    member_ses
+    searcherNote_t
+    subject_ses
+    subject_t
+    title_t
+    uri
+    witness_ses
+    witness_t
+  ]
   end
 
   def object_name
