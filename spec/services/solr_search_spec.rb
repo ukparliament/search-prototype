@@ -29,7 +29,7 @@ RSpec.describe SolrSearch, type: :model do
                              defType: 'edismax',
                              debug: 'query',
                              rows: 20,
-                             sort: "date_dt desc",
+                             sort: "date_dt, identifier_t desc",
                              start: 0 } }
 
   before do
@@ -137,20 +137,20 @@ RSpec.describe SolrSearch, type: :model do
 
   describe 'sort' do
     context 'sort parameter is blank' do
-      it 'defaults to date desc' do
-        expect(solr_search.sort).to eq('date_dt desc')
+      it 'defaults to date desc, secondary sort by identifier' do
+        expect(solr_search.sort).to eq('date_dt, identifier_t desc')
       end
     end
     context 'sort is date desc' do
       let!(:solr_search) { SolrSearch.new(sort_by: 'date_desc') }
-      it 'returns date desc' do
-        expect(solr_search.sort).to eq('date_dt desc')
+      it 'returns date desc, secondary sort by identifier' do
+        expect(solr_search.sort).to eq('date_dt, identifier_t desc')
       end
     end
     context 'sort is date asc' do
       let!(:solr_search) { SolrSearch.new(sort_by: 'date_asc') }
-      it 'returns date asc' do
-        expect(solr_search.sort).to eq('date_dt asc')
+      it 'returns date asc, secondary sort by identifier' do
+        expect(solr_search.sort).to eq('date_dt, identifier_t asc')
       end
     end
   end
