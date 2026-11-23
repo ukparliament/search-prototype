@@ -16,7 +16,7 @@ Rails.application.configure do
   config.action_controller.perform_caching = true
 
   # Configure caching
-  config.cache_store = :file_store
+  config.cache_store = :file_store, Rails.root.join("tmp/cache")
 
   # Cache assets for far-future expiry since they are all digest stamped.
   config.public_file_server.headers = { "cache-control" => "public, max-age=#{1.year.to_i}" }
