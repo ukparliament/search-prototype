@@ -1,0 +1,1 @@
+<%= render 'multi_select_group', group_name: name, filters: format_filter_group(name, @search_data.filter_groups.dig(name)) unless @search_data.filter_groups.dig(name).blank? %>

@@ -28,6 +28,12 @@ module FilterHelper
     params[:filter]
   end
 
+  def current_year_filter_value
+    return unless applied_filters
+
+    applied_filters.dig('date_year')&.first
+  end
+
   def current_month_filter_value
     return unless applied_filters
 
