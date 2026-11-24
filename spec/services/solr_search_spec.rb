@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe SolrSearch, type: :model do
-  let!(:solr_search) { SolrSearch.new(query_expander: expand_query_class) }
-  let(:expand_query_class) { class_double(QueryExpander, new: expand_query_instance) }
-  let(:expand_query_instance) { instance_double(QueryExpander) }
+  let!(:solr_search) { SolrSearch.new(query_expander: query_expander_class) }
+  let(:query_expander_class) { class_double(QueryExpander, new: query_expander_instance) }
+  let(:query_expander_instance) { instance_double(QueryExpander, search_query: 'test query') }
   let!(:mock_response) { {
     "responseHeader" => {
       "status" => 0,
@@ -275,9 +275,9 @@ RSpec.describe SolrSearch, type: :model do
 
   describe 'expanded_query' do
     context 'with no query' do
-      let!(:solr_search) { SolrSearch.new(query: '', filter: { "answeringMember_ses" => ["304301"] }, query_expander: expand_query_class) }
-      let(:expand_query_class) { class_double(QueryExpander, new: expand_query_instance) }
-      let(:expand_query_instance) { instance_double(QueryExpander) }
+      let!(:solr_search) { SolrSearch.new(query: '', filter: { "answeringMember_ses" => ["304301"] }, query_expander: query_expander_class) }
+      let(:query_expander_class) { class_double(QueryExpander, new: query_expander_instance) }
+      let(:query_expander_instance) { instance_double(QueryExpander, search_query: 'test query') }
 
       it 'raises a MissingParameterError' do
         expect { solr_search.expanded_query }.to raise_error(MissingParameterError)
@@ -285,24 +285,23 @@ RSpec.describe SolrSearch, type: :model do
     end
 
     context 'where query expansion fails' do
-      let!(:solr_search) { SolrSearch.new(query: 'horse', filter: { "answeringMember_ses" => ["304301"] }, query_expander: expand_query_class) }
+      let!(:solr_search) { SolrSearch.new(query: 'horse', filter: { "answeringMember_ses" => ["304301"] }, query_expander: query_expander_class) }
 
       it 'raises a QueryExpansionError' do
-        expect(expand_query_instance).to receive(:expand_query).and_return('')
+        expect(query_expander_instance).to receive(:expand_query).and_return('')
         expect { solr_search.expanded_query }.to raise_error(QueryExpansionError)
       end
     end
 
     context 'with a query' do
-      let(:solr_search) { SolrSearch.new(query: 'horse', query_expander: expand_query_class) }
-      let(:expand_query_instance) { instance_double(QueryExpander, expand_query: 'test') }
+      let(:solr_search) { SolrSearch.new(query: 'horse', query_expander: query_expander_class) }
 
       it 'returns an expanded query' do
         # initialises QueryExpander with the search query
-        expect(expand_query_class).to receive(:new).with('horse')
+        expect(query_expander_class).to receive(:new).with(search_query: 'horse')
 
         # calls expand query on the instance of QueryExpander
-        expect(expand_query_instance).to receive(:expand_query).and_return('expanded query string')
+        expect(query_expander_instance).to receive(:expand_query).and_return('expanded query string')
 
         # result is the response from expand query method
         expect(solr_search.expanded_query).to eq('expanded query string')

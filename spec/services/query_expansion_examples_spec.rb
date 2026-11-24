@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe 'QueryExpander' do
-  let(:query_expander) { QueryExpander.new(search_query, ses_test_class) }
+  let(:query_expander) { QueryExpander.new(search_query: search_query, ses_query: ses_test_class) }
   let(:ses_test_class) { class_double(SesQuery, new: ses_test_instance) }
   let(:ses_test_instance) { instance_double(SesQuery, data: []) }
 

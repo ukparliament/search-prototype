@@ -16,16 +16,25 @@
 # assembled expanded query string, which is then returned.
 
 class QueryExpander
-  attr_reader :search_query, :ses_query, :tokeniser, :field_expander, :term_expander, :term_combiner
+  attr_reader :search_query, :ses_query, :tokeniser, :query_validator, :query_pre_processor, :field_expander,
+              :term_expander, :term_combiner
 
   # matches Lucene query characters, captured as group 1
   SPECIAL_CHARS = /([+\-!(){}\[\]^"~:\\\/]|&&|\|\|)/
 
-  def initialize(search_query, ses_query = SesQuery, tokeniser = Tokeniser,
-                 field_expander = FieldExpander, term_expander = TermExpander, term_combiner = TermCombiner)
+  def initialize(search_query:,
+                 ses_query: SesQuery,
+                 tokeniser: Tokeniser,
+                 query_validator: QueryValidator,
+                 query_pre_processor: QueryPreProcessor,
+                 field_expander: FieldExpander,
+                 term_expander: TermExpander,
+                 term_combiner: TermCombiner)
     @search_query = search_query
     @ses_query = ses_query
     @tokeniser = tokeniser
+    @query_validator = query_validator
+    @query_pre_processor = query_pre_processor
     @field_expander = field_expander
     @term_expander = term_expander
     @term_combiner = term_combiner
@@ -33,41 +42,48 @@ class QueryExpander
 
   # TODO: refactor out basic string processing to private methods
   def expand_query
-    tokens = tokeniser.new(search_query).tokenise
+    unprocessed_tokens = tokeniser.new(search_query).tokenise
+
+    # TODO: temp removed validation from the loop so we can keep on top of everything else via passing tests
+    # validation_results = query_validator.new(unprocessed_tokens).validate
+
+    tokens = query_pre_processor.new(unprocessed_tokens).process
+
     processed_tokens = []
 
     puts "Tokens: #{tokens}" if Rails.env.development? || Rails.env.test?
 
-    tokens.each do |label, value|
-      puts "Processing token: #{label}: #{value}" if Rails.env.development? || Rails.env.test?
+    tokens.each do |token|
+      puts "Processing token: #{token.type}: #{token.value}" if Rails.env.development? || Rails.env.test?
 
-      if label == :operator
-        processed_tokens << process_operator_token(value)
-      elsif label == :all_records
-        processed_tokens << process_all_records_token(value)
-      elsif label == :parenthesis
-        processed_tokens << process_parenthesis_token(value)
-      elsif label == :url
-        processed_tokens << process_url_token(value)
-      elsif label == :uri_field
-        processed_tokens << process_uri_field_token(value)
-      elsif label == :specified_field_with_quoted_phrase
-        processed_tokens << process_specified_field_with_quoted_phrase_token(value)
-      elsif label == :specified_field_no_expansion
-        processed_tokens << process_specified_field_no_expansion_token(value)
-      elsif label == :specified_field_wildcard
-        processed_tokens << process_specified_field_wildcard_token(value)
-      elsif label == :specified_field
-        processed_tokens << process_specified_field_token(value)
-      elsif label == :quoted_phrase
-        processed_tokens << process_quoted_phrase_token(value)
-      elsif label == :no_expansion
-        processed_tokens << process_no_expansion_token(value)
-      elsif label == :unquoted_phrase
-        processed_tokens << process_unquoted_phrase_token(value)
+      if [:opening_parenthesis, :closing_parenthesis, :opening_bracket, :closing_bracket].include?(token.type)
+        processed_tokens << process_parenthesis_token(token.value)
+      elsif token.type == :boolean_operator
+        processed_tokens << process_operator_token(token.value)
+      elsif token.type == :modifier_operator
+        processed_tokens << process_operator_token(token.value)
+      elsif token.type == :all_records
+        processed_tokens << process_all_records_token(token.value)
+      elsif token.type == :url
+        processed_tokens << process_url_token(token.value)
+      elsif token.type == :uri_field
+        processed_tokens << process_uri_field_token(token.value)
+      elsif token.type == :specified_field_with_quoted_phrase
+        processed_tokens << process_specified_field_with_quoted_phrase_token(token.value)
+      elsif token.type == :specified_field_no_expansion
+        processed_tokens << process_specified_field_no_expansion_token(token.value)
+      elsif token.type == :specified_field_wildcard
+        processed_tokens << process_specified_field_wildcard_token(token.value)
+      elsif token.type == :specified_field
+        processed_tokens << process_specified_field_token(token.value)
+      elsif token.type == :quoted_phrase
+        processed_tokens << process_quoted_phrase_token(token.value)
+      elsif token.type == :no_expansion
+        processed_tokens << process_no_expansion_token(token.value)
+      elsif token.type == :unquoted_phrase
+        processed_tokens << process_unquoted_phrase_token(token.value)
       else
-        puts "Unmatched token type #{label} for #{value}" if Rails.env.development? || Rails.env.test?
-        next
+        raise "Unmatched token type: #{token.type} for #{token.value}"
       end
       puts "Processed tokens: #{processed_tokens}" if Rails.env.development? || Rails.env.test?
     end

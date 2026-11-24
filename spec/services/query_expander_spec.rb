@@ -3,9 +3,10 @@
 require 'rails_helper'
 
 RSpec.describe 'QueryExpander' do
-  let(:query_expander) { QueryExpander.new(search_query, ses_test_class, tokeniser_test_class,
-                                           field_expander_test_class, term_expander_test_class,
-                                           term_combiner_test_class) }
+  let(:query_expander) { QueryExpander.new(search_query: search_query, ses_query: ses_test_class,
+                                           tokeniser: tokeniser_test_class, field_expander: field_expander_test_class,
+                                           term_expander: term_expander_test_class,
+                                           term_combiner: term_combiner_test_class) }
 
   let(:ses_test_class) { class_double(SesQuery, new: ses_test_instance) }
   let(:ses_test_instance) { instance_double(SesQuery, data: ses_response) }
@@ -34,19 +35,23 @@ RSpec.describe 'QueryExpander' do
   let(:expanded_query_string) { 'this OR that AND they OR them' }
 
   describe 'expand_query' do
-    context 'where the term is a solr query operator' do
-      let(:search_query) { "OR NOT AND" }
+    context 'where the term is a solr boolean operator' do
+      let(:search_query) { "OR NOT AND + -" }
       it 'adds the term to returned_terms as-is' do
         # tokeniser is initialised with the query string
-        expect(tokeniser_test_class).to receive(:new).with("OR NOT AND")
+        expect(tokeniser_test_class).to receive(:new).with("OR NOT AND + -")
 
         # tokeniser instance receives call to tokenise
-        expect(tokeniser_test_instance).to receive(:tokenise).and_return([[:operator, 'OR'], [:operator, 'NOT'], [:operator, 'AND']])
+        expect(tokeniser_test_instance).to receive(:tokenise).and_return([QueryToken.new(type: :boolean_operator, value: 'OR'),
+                                                                          QueryToken.new(type: :modifier_operator, value: 'NOT'),
+                                                                          QueryToken.new(type: :boolean_operator, value: 'AND'),
+                                                                          QueryToken.new(type: :modifier_operator, value: '+'),
+                                                                          QueryToken.new(type: :modifier_operator, value: '-')])
 
         # the term combiner is initialised with the unmodified operators returned from the tokeniser
-        expect(term_combiner_test_class).to receive(:new).with(["OR", "NOT", "AND"])
+        expect(term_combiner_test_class).to receive(:new).with(["OR", "NOT", "AND", "+", "-"])
 
-        # the term combiner recieves call to combine the terms
+        # the term combiner receives call to combine the terms
         expect(term_combiner_test_instance).to receive(:combine_terms).and_return("combined terms")
 
         # the method returns the result from the term combiner
@@ -58,7 +63,7 @@ RSpec.describe 'QueryExpander' do
       let(:search_query) { "*:*" }
       it 'adds the term to returned_terms as-is' do
         expect(tokeniser_test_class).to receive(:new).with("*:*")
-        expect(tokeniser_test_instance).to receive(:tokenise).and_return([[:all_records, '*:*']])
+        expect(tokeniser_test_instance).to receive(:tokenise).and_return([QueryToken.new(type: :all_records, value: '*:*')])
         expect(term_combiner_test_class).to receive(:new).with(["*:*"])
         expect(term_combiner_test_instance).to receive(:combine_terms).and_return("combined terms")
         expect(query_expander.expand_query).to eq("combined terms")
@@ -69,7 +74,7 @@ RSpec.describe 'QueryExpander' do
       let(:search_query) { "http://example.com" }
       it 'adds the term to returned_terms having escaped special characters in the url' do
         expect(tokeniser_test_class).to receive(:new).with("http://example.com")
-        expect(tokeniser_test_instance).to receive(:tokenise).and_return([[:url, 'http://example.com']])
+        expect(tokeniser_test_instance).to receive(:tokenise).and_return([QueryToken.new(type: :url, value: 'http://example.com')])
         expect(term_combiner_test_class).to receive(:new).with(["http\\:\\/\\/example.com"])
         expect(term_combiner_test_instance).to receive(:combine_terms).and_return("combined terms")
         expect(query_expander.expand_query).to eq("combined terms")
@@ -81,7 +86,7 @@ RSpec.describe 'QueryExpander' do
       it 'expands on fields and terms' do
         expect(tokeniser_test_class).to receive(:new).with(["subject:\"housing crisis\""])
         # tokeniser instance receives call to tokenise
-        expect(tokeniser_test_instance).to receive(:tokenise).and_return([[:specified_field_with_quoted_phrase, 'subject:"housing crisis"']])
+        expect(tokeniser_test_instance).to receive(:tokenise).and_return([QueryToken.new(type: :specified_field_with_quoted_phrase, value: 'subject:"housing crisis"')])
 
         # SES query class is initialised with the search term (only)
         # The search term has the secondary quote marks removed
@@ -122,7 +127,7 @@ RSpec.describe 'QueryExpander' do
         expect(tokeniser_test_class).to receive(:new).with(["subject:'housing crisis'"])
 
         # tokeniser instance receives call to tokenise
-        expect(tokeniser_test_instance).to receive(:tokenise).and_return([[:specified_field_with_quoted_phrase, "subject:'housing crisis'"]])
+        expect(tokeniser_test_instance).to receive(:tokenise).and_return([QueryToken.new(type: :specified_field_with_quoted_phrase, value: "subject:'housing crisis'")])
 
         # SES query class is initialised with the search term (only)
         expect(ses_test_class).to receive(:new).with({ value: "'housing crisis'" }, exact_match: true)
@@ -164,7 +169,7 @@ RSpec.describe 'QueryExpander' do
             expect(tokeniser_test_class).to receive(:new).with(["date:[2026-04-30T00:00:00Z TO *]"])
 
             # tokeniser instance receives call to tokenise
-            expect(tokeniser_test_instance).to receive(:tokenise).and_return([[:specified_field_no_expansion, 'date:[2026-04-30T00:00:00Z TO *]']])
+            expect(tokeniser_test_instance).to receive(:tokenise).and_return([QueryToken.new(type: :specified_field_no_expansion, value: 'date:[2026-04-30T00:00:00Z TO *]')])
 
             # field expander class is initialised with the alias
             expect(field_expander_test_class).to receive(:new).with('date')
@@ -196,7 +201,7 @@ RSpec.describe 'QueryExpander' do
             expect(tokeniser_test_class).to receive(:new).with(["anything_dt:[2026-04-30T00:00:00Z TO *]"])
 
             # tokeniser instance receives call to tokenise
-            expect(tokeniser_test_instance).to receive(:tokenise).and_return([[:specified_field_no_expansion, 'anything_dt:[2026-04-30T00:00:00Z TO *]']])
+            expect(tokeniser_test_instance).to receive(:tokenise).and_return([QueryToken.new(type: :specified_field_no_expansion, value: 'anything_dt:[2026-04-30T00:00:00Z TO *]')])
 
             # field expander class is initialised with the field name (only)
             expect(field_expander_test_class).to receive(:new).with('anything_dt')
@@ -231,7 +236,7 @@ RSpec.describe 'QueryExpander' do
           expect(tokeniser_test_class).to receive(:new).with(["subject:[housing crisis]"])
 
           # tokeniser instance receives call to tokenise
-          expect(tokeniser_test_instance).to receive(:tokenise).and_return([[:specified_field_no_expansion, "subject:[housing crisis]"]])
+          expect(tokeniser_test_instance).to receive(:tokenise).and_return([QueryToken.new(type: :specified_field_no_expansion, value: "subject:[housing crisis]")])
 
           # SES query class is not initialised
           expect(ses_test_class).not_to receive(:new)
@@ -271,7 +276,7 @@ RSpec.describe 'QueryExpander' do
         expect(tokeniser_test_class).to receive(:new).with(["subject:housing"])
 
         # tokeniser instance receives call to tokenise
-        expect(tokeniser_test_instance).to receive(:tokenise).and_return([[:specified_field, 'subject:housing']])
+        expect(tokeniser_test_instance).to receive(:tokenise).and_return([QueryToken.new(type: :specified_field, value: 'subject:housing')])
 
         # SES query class is initialised with the search term (only)
         expect(ses_test_class).to receive(:new).with({ value: "housing" })
@@ -311,7 +316,7 @@ RSpec.describe 'QueryExpander' do
 
         # tokeniser instance receives call to tokenise
         # Note that the tokeniser strips the additional quotes, which will be added back in later
-        expect(tokeniser_test_instance).to receive(:tokenise).and_return([[:quoted_phrase, "housing crisis"]])
+        expect(tokeniser_test_instance).to receive(:tokenise).and_return([QueryToken.new(type: :quoted_phrase, value: "housing crisis")])
 
         # SES query class is initialised with the search term (only)
         expect(ses_test_class).to receive(:new).with({ value: "housing crisis" }, exact_match: true)
@@ -351,7 +356,7 @@ RSpec.describe 'QueryExpander' do
         expect(tokeniser_test_class).to receive(:new).with(["'housing crisis'"])
 
         # tokeniser instance receives call to tokenise
-        expect(tokeniser_test_instance).to receive(:tokenise).and_return([[:quoted_phrase, "housing crisis"]])
+        expect(tokeniser_test_instance).to receive(:tokenise).and_return([QueryToken.new(type: :quoted_phrase, value: "housing crisis")])
 
         # SES query class is initialised with the search term (only)
         expect(ses_test_class).to receive(:new).with({ value: "housing crisis" }, exact_match: true)
@@ -392,7 +397,7 @@ RSpec.describe 'QueryExpander' do
         expect(tokeniser_test_class).to receive(:new).with(["housing crisis"])
 
         # tokeniser instance receives call to tokenise
-        expect(tokeniser_test_instance).to receive(:tokenise).and_return([[:unquoted_phrase, 'housing crisis']])
+        expect(tokeniser_test_instance).to receive(:tokenise).and_return([QueryToken.new(type: :unquoted_phrase, value: 'housing crisis')])
 
         # SES query class is initialised with the search term (only)
         expect(ses_test_class).to receive(:new).with({ value: "housing crisis" })
@@ -431,7 +436,7 @@ RSpec.describe 'QueryExpander' do
         expect(tokeniser_test_class).to receive(:new).with(["[housing crisis]"])
 
         # tokeniser instance receives call to tokenise
-        expect(tokeniser_test_instance).to receive(:tokenise).and_return([[:no_expansion, "[housing crisis]"]])
+        expect(tokeniser_test_instance).to receive(:tokenise).and_return([QueryToken.new(type: :no_expansion, value: "[housing crisis]")])
 
         # SES query class is not initialised
         expect(ses_test_class).not_to receive(:new)

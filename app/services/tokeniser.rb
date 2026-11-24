@@ -12,20 +12,25 @@ class Tokeniser
   ##
   # TOKEN_REGEX is used to scan query strings and put matches into buckets we can add token labels to:
   #
-  # Bucket 1: Brackets
-  # Bucket 2: Solr operators
-  # Bucket 3: http://.... or similar
-  # Bucket 4: uri:http://... or similar
-  # Bucket 5: field_name:"term"
-  # Bucket 6: field_name:'term'
-  # Bucket 7: field_name:[phrase in square brackets]
-  # Bucket 8: field_name:*
-  # Bucket 9: field_name:term
-  # Bucket 10: [phrase in square brackets]
-  # Bucket 11: "double-quoted phrase"
-  # Bucket 12: 'single-quoted phrase'
-  # Bucket 13: term
-  TOKEN_REGEX = /([()])|(\bAND|OR|NOT\b)|(\*:\*)|([a-z]+:\/\/\S+)|(uri:[a-z]+:\/\/\S+)|(\w+:"(?:[^"]+)")|(\w+:'(?:[^']+)')|(\w+:\[(?:[^\]]+)\])|(\w+:\*)|(\w+:\S+)|(\[(?:[^\]]+)\])|"([^"]+)"|'([^']+)'|([^\s()\[\]{}:"^~!]+)/
+  # Bucket 0: Opening parenthesis (
+  # Bucket 1: Closing parenthesis )
+  # Bucket 2: Solr boolean operators AND OR
+  # Bucket 3: Solr modifier operators NOT + -
+  # Bucket 4: Wildcards (*) for retrieval of all records
+  # Bucket 5: http://.... or similar
+  # Bucket 6: uri:http://... or similar
+  # Bucket 7: field_name:"term"
+  # Bucket 8: field_name:'term'
+  # Bucket 9: field_name:[phrase in square brackets]
+  # Bucket 10: field_name:*
+  # Bucket 11: field_name:term
+  # Bucket 12: [phrase in square brackets]
+  # Bucket 13: Opening bracket [
+  # Bucket 14: Closing bracket ]
+  # Bucket 15: "double-quoted phrase"
+  # Bucket 16: 'single-quoted phrase'
+  # Bucket 17: unquoted term
+  TOKEN_REGEX = /(\()|(\))|(AND|OR)|(NOT|-|\+)|(\*:\*)|([a-z]+:\/\/\S+)|(uri:[a-z]+:\/\/\S+)|(\w+:"(?:[^"]+)")|(\w+:'(?:[^']+)')|(\w+:\[(?:[^\]]+)\])|(\w+:\*)|(\w+:\S+)|(\[(?:[^\]]+)\])|(\[)|(\])|"([^"]+)"|'([^']+)'|([^\s()\[\]{}:"^~!]+)/
 
   ##
   # Terms operates on the provided query string, returning an array of separate string 'terms' for tokenisation:
@@ -55,29 +60,37 @@ class Tokeniser
 
         case i
         when 0
-          tokens << [:parenthesis, matched_term]
+          tokens << QueryToken.new(type: :opening_parenthesis, value: matched_term)
         when 1
-          tokens << [:operator, matched_term]
+          tokens << QueryToken.new(type: :closing_parenthesis, value: matched_term)
         when 2
-          tokens << [:all_records, matched_term]
+          tokens << QueryToken.new(type: :boolean_operator, value: matched_term)
         when 3
-          tokens << [:url, matched_term]
+          tokens << QueryToken.new(type: :modifier_operator, value: matched_term)
         when 4
-          tokens << [:uri_field, matched_term]
-        when 5, 6
-          tokens << [:specified_field_with_quoted_phrase, matched_term]
-        when 7
-          tokens << [:specified_field_no_expansion, matched_term]
-        when 8
-          tokens << [:specified_field_wildcard, matched_term]
+          tokens << QueryToken.new(type: :all_records, value: matched_term)
+        when 5
+          tokens << QueryToken.new(type: :url, value: matched_term)
+        when 6
+          tokens << QueryToken.new(type: :uri_field, value: matched_term)
+        when 7, 8
+          tokens << QueryToken.new(type: :specified_field_with_quoted_phrase, value: matched_term)
         when 9
-          tokens << [:specified_field, matched_term]
+          tokens << QueryToken.new(type: :specified_field_no_expansion, value: matched_term)
         when 10
-          tokens << [:no_expansion, matched_term]
-        when 11, 12
-          tokens << [:quoted_phrase, matched_term]
+          tokens << QueryToken.new(type: :specified_field_wildcard, value: matched_term)
+        when 11
+          tokens << QueryToken.new(type: :specified_field, value: matched_term)
+        when 12
+          tokens << QueryToken.new(type: :no_expansion, value: matched_term)
         when 13
-          tokens << [:unquoted_word, matched_term]
+          tokens << QueryToken.new(type: :opening_bracket, value: matched_term)
+        when 14
+          tokens << QueryToken.new(type: :closing_bracket, value: matched_term)
+        when 15, 16
+          tokens << QueryToken.new(type: :quoted_phrase, value: matched_term)
+        when 17
+          tokens << QueryToken.new(type: :unquoted_word, value: matched_term)
         else
           puts "Term not matched by tokeniser: #{matched_term}" if Rails.env.development? || Rails.env.test?
           next
@@ -85,35 +98,6 @@ class Tokeniser
       end
     end
 
-    group_unquoted_words_as_phrases(tokens)
-  end
-
-  private
-
-  ##
-  # Groups adjacent unquoted words into phrases. This is to allow the terms to be sent to SES for term expansion as
-  # a phrase, so that multi-word concepts are detected, but avoids combining words that weren't adjacent in the user's
-  # query, which can lead to overexpansion.
-  def group_unquoted_words_as_phrases(tokens)
-    # iterates through tokens and groups all :unquoted_word tokens as :unquoted_phrases
-    # while respecting the structure of the query relative to other terms
-    ret = []
-    unquoted_words = []
-
-    tokens.each do |label, value|
-      if label == :unquoted_word
-        unquoted_words << value
-      else
-        # if the current token is not an unquoted word, merge all unquoted words in the buffer (if any) & label
-        ret << [:unquoted_phrase, unquoted_words.join(" ")] unless unquoted_words.empty?
-        unquoted_words = []
-        # no operation necessary on other token types
-        ret << [label, value]
-      end
-    end
-
-    # finally, if there are any unquoted words left, combine them as a phrase
-    ret << [:unquoted_phrase, unquoted_words.join(" ")] unless unquoted_words.empty?
-    ret
+    tokens
   end
 end
