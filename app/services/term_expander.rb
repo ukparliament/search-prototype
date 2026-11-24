@@ -188,7 +188,7 @@ class TermExpander
           if search_term.downcase == 'ordinary'
             expanded_terms << [:ordinary, "wpqType_t:Ordinary"]
           elsif ['namedday', 'named day'].include?(search_term.downcase)
-            expanded_terms << [:namedday, "wpqType_t:Named Day"]
+            expanded_terms << [:namedday, "wpqType_t:\"Named Day\""]
           elsif ['nextday', 'next day'].include?(search_term.downcase)
             expanded_terms << [:nextday, "wpqType_t:daily"]
           end
