@@ -5,9 +5,11 @@
     %span= format_date(object.date_of_question)
   - unless object.legislature.blank?
     %span= " in the "
-    %span>= render 'content_type_objects/fragments/list', items: object.legislature, terminator: ',', singular: false
-  - unless object.tabling_member.blank?
-    %span= " by "
+    %span>= render 'content_type_objects/fragments/list', items: object.legislature, terminator: '', singular: false
+  - if object.tabling_member.blank?
+    %span= "."
+  - else object.tabling_member.blank?
+    %span= ", by "
     %span= search_link(object.tabling_member)
     - unless object.tabling_member_party.blank?
       %span<="("
@@ -16,5 +18,5 @@
   - unless object.department.blank?
     %span=" to the "
     %span>= search_link(object.department)
-  %span= "."
+    %span= "."
   %span= " It has been withdrawn."
