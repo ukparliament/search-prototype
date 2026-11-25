@@ -1,6 +1,6 @@
 <% unless description.blank? %>
   <div class="item-details">
-    <span>
+    <span class="external-html">
       <% if full_text == true %>
         <%= raw format_html(description[:value], false) %>
       <% else %>

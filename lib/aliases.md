@@ -94,7 +94,7 @@ Search for contributions or proceedings by place. The available values are Gener
 
 ## comingintoforce
 
-Search for statutory instruments and parliamentary papers by the date on which they come into force. Search for a specific date, a relative date range such as 'this month', or within a date range. See \*\*date\*\* for more examples.
+Search for statutory instruments and parliamentary papers by the date on which they come into force. Search for a specific date, a relative date range such as 'this month', or within a date range. See **date** for more examples.
 
 > comingintoforce:17/03/2025
 >
@@ -104,7 +104,7 @@ Search for statutory instruments and parliamentary papers by the date on which t
 
 ## commonsapproved
 
-Search for statutory instruments and parliamentary papers by the date on which they were approved in the Commons. Search for a specific date, a relative date range such as 'this month', or within a date range. See \*\*date\*\* for more examples.
+Search for statutory instruments and parliamentary papers by the date on which they were approved in the Commons. Search for a specific date, a relative date range such as 'this month', or within a date range. See **date** for more examples.
 
 > commonsapproved:2024
 >
@@ -128,41 +128,41 @@ Search for a specific date, a relative date range such as 'this month', or withi
 
 > date:31/01/2012
 >
-> date:01/04/2016..31/04/2016 \_(between two dates)\_
+> date:01/04/2016..31/04/2016 _(between two dates)_
 >
-> date:\*..09/2021 \_(up to a date)\_
+> date:\*..09/2021 _(up to a date)_
 >
-> date:01/2026..\* \_(from a date)\_
+> date:01/2026..\* _(from a date)_
 
 ### relative date ranges
 
 > date:yesterday
 >
-> date:thisweek \_(from Monday of this week to today)\_
+> date:thisweek _(from Monday of this week to today)_
 >
-> date:lastweek \_(from the previous Monday to Friday)\_
+> date:lastweek _(from the previous Monday to Friday)_
 >
-> date:thismonth \_(from the first of this month to today)\_
+> date:thismonth _(from the first of this month to today)_
 >
-> date:lastmonth \_(anytime during the last calendar month)\_
+> date:lastmonth _(anytime during the last calendar month)_
 >
-> date:thisyear \_(from the 1st of January this year to today)\_
+> date:thisyear _(from the 1st of January this year to today)_
 >
-> date:lastyear \_(from the 1st of January to 31st of December of last year)\_
+> date:lastyear _(from the 1st of January to 31st of December of last year)_
 
 ### custom relative date ranges 
 
-The query values are case sensitive.
+The query values are case-sensitive.
 
-> date\_dt:\\\[NOW-6MONTHS TO NOW\\] \_(during the last 6 months)\_
+> date_dt:\[NOW-6MONTHS TO NOW\] _(during the last 6 months)_
 >
-> dateTabled\_dt:\\\[NOW-10DAYS TO NOW\\] \_(tabled during the last 10 days)\_
+> dateTabled_dt:\[NOW-10DAYS TO NOW\] _(tabled during the last 10 days)_
 >
-> dateForAnswer\_dt:\\\[NOW TO "NOW+10DAYS"\\] \_(due for answer in the next 10 days)\_
+> dateForAnswer_dt:\[NOW TO "NOW+10DAYS"\] _(due for answer in the next 10 days)_
 
 ## dateanswered
 
-Search for oral or written questions by the date of answer. Search for a specific date, a relative date range such as 'this month', or within a date range. See \*\*date\*\* for more examples.
+Search for oral or written questions by the date of answer. Search for a specific date, a relative date range such as 'this month', or within a date range. See **date** for more examples.
 
 > dateanswered:19/03/2025
 >
@@ -170,7 +170,7 @@ Search for oral or written questions by the date of answer. Search for a specifi
 
 ## datecertified 
 
-Search for public bills certified by the Speaker as money bills by the date of certification. Search for a specific date, a relative date range such as 'this month', or within a date range. See \*\*date\*\* for more examples. 
+Search for public bills certified by the Speaker as money bills by the date of certification. Search for a specific date, a relative date range such as 'this month', or within a date range. See **date** for more examples. 
 
 > datecertified:last year 
 >
@@ -178,7 +178,7 @@ Search for public bills certified by the Speaker as money bills by the date of c
 
 ## dateforanswer
 
-Search for oral or written questions by the date on which the answer is expected. Search for a specific date, a relative date range such as 'this month', or within a date range. See \*\*date\*\* for more examples.
+Search for oral or written questions by the date on which the answer is expected. Search for a specific date, a relative date range such as 'this month', or within a date range. See **date** for more examples.
 
 > dateforanswered:19/03/2025
 >
@@ -186,7 +186,7 @@ Search for oral or written questions by the date on which the answer is expected
 
 ## datemade
 
-Search for statutory instruments and parliamentary papers by the date on which they were made. Search for a specific date, a relative date range such as 'this month', or within a date range. See \*\*date\*\* for more examples.
+Search for statutory instruments and parliamentary papers by the date on which they were made. Search for a specific date, a relative date range such as 'this month', or within a date range. See **date** for more examples.
 
 > datemade:24/02/2025
 >
@@ -194,13 +194,13 @@ Search for statutory instruments and parliamentary papers by the date on which t
 
 ## dateoriginated
 
-Search for deposited papers and Transport and Works Act order applications by the date the paper was written. Search for a specific date, a relative date range such as 'this month', or within a date range. See \*\*date\*\* for more examples.
+Search for deposited papers and Transport and Works Act order applications by the date the paper was written. Search for a specific date, a relative date range such as 'this month', or within a date range. See **date** for more examples.
 
 > dateoriginated:01/01/2025..31/01/2025
 
 ## datereceived
 
-Search for deposited papers by the date the Commons and Lords Libraries received the paper. Search for a specific date, a relative date range such as 'this month', or within a date range. See \*\*date\*\* for more examples.
+Search for deposited papers by the date the Commons and Lords Libraries received the paper. Search for a specific date, a relative date range such as 'this month', or within a date range. See **date** for more examples.
 
 > datereceived:01/01/2025..31/01/2025
 
@@ -218,7 +218,7 @@ Search for early day motions signed on a date, within a date range, or within a 
 
 ## datetabled
 
-Search by date of tabling for early day motions, written or oral questions tabled in the Commons, and from the 14/15 session for written questions tabled in the Lords. Search for a specific date, a relative date range such as 'this month', or within a date range. See \*\*date\*\* for more examples.
+Search by date of tabling for early day motions, written or oral questions tabled in the Commons, and from the 14/15 session for written questions tabled in the Lords. Search for a specific date, a relative date range such as 'this month', or within a date range. See **date** for more examples.
 
 > datetabled:lastmonth
 
@@ -536,7 +536,7 @@ Search for members tabling early day motions, or oral or written questions.
 
 Timestamp refers to the date a record in Parliamentary Search was last indexed or updated. Search for a specific date, a relative date range such as 'this month', or within a date range.
 
-> timestamp:06/07/2026..\\\*
+> timestamp:06/07/2026..\*
 
 ## title
 

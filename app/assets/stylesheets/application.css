@@ -54,16 +54,17 @@ p {
     overflow-wrap: anywhere;
 }
 
+/* Styling for external-html only */
 /* Styling for blockquotes */
 
-blockquote {
+.external-html blockquote {
     position: relative;
     margin: 1rem;
     padding-left: 2rem;
     font-size: 1.25rem;
 }
 
-blockquote::before {
+.external-html blockquote::before {
     content: open-quote;
     position: absolute;
     left: 0.5rem;
@@ -73,9 +74,20 @@ blockquote::before {
     color: #717171;
 }
 
-blockquote p:last-of-type:after {
+.external-html blockquote p:last-of-type:after {
     content: close-quote;
     color: #717171;
+}
+
+.markdown-content blockquote {
+    margin: 1rem 0;
+    padding: 0.75rem 1rem;
+    background: #f8f9fa;
+    border-left: 3px solid #dee2e6;
+    color: #495057;
+    line-height: 2;
+
+    p { margin-bottom: 0; }
 }
 
 .font-size-epsilon {

@@ -12,7 +12,7 @@
 </h1>
 
 <% unless object.content.blank? %>
-  <div class="reading-width">
+  <div class="reading-width external-html">
     <%= raw format_html(object.content[:value], false) %>
   </div>
 <% end %>
