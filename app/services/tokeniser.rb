@@ -9,28 +9,24 @@ class Tokeniser
     @query = query
   end
 
+  # TODO: break down complex tokens into simple ones
   ##
   # TOKEN_REGEX is used to scan query strings and put matches into buckets we can add token labels to:
-  #
+
   # Bucket 0: Opening parenthesis (
   # Bucket 1: Closing parenthesis )
   # Bucket 2: Solr boolean operators AND OR
   # Bucket 3: Solr modifier operators NOT + -
-  # Bucket 4: Wildcards (*) for retrieval of all records
-  # Bucket 5: http://.... or similar
-  # Bucket 6: uri:http://... or similar
-  # Bucket 7: field_name:"term"
-  # Bucket 8: field_name:'term'
-  # Bucket 9: field_name:[phrase in square brackets]
-  # Bucket 10: field_name:*
-  # Bucket 11: field_name:term
-  # Bucket 12: [phrase in square brackets]
-  # Bucket 13: Opening bracket [
-  # Bucket 14: Closing bracket ]
-  # Bucket 15: "double-quoted phrase"
-  # Bucket 16: 'single-quoted phrase'
-  # Bucket 17: unquoted term
-  TOKEN_REGEX = /(\()|(\))|(AND|OR)|(NOT|-|\+)|(\*:\*)|([a-z]+:\/\/\S+)|(uri:[a-z]+:\/\/\S+)|(\w+:"(?:[^"]+)")|(\w+:'(?:[^']+)')|(\w+:\[(?:[^\]]+)\])|(\w+:\*)|(\w+:\S+)|(\[(?:[^\]]+)\])|(\[)|(\])|"([^"]+)"|'([^']+)'|([^\s()\[\]{}:"^~!]+)/
+  # Bucket 4: HTTPS scheme
+  # Bucket 5: HTTP scheme
+  # Bucket 6: Wildcard *
+  # Bucket 7: Colon :
+  # Bucket 8: Opening bracket [
+  # Bucket 9: Closing bracket ]
+  # Bucket 10: Double quote "
+  # Bucket 11: Single quote '
+  # Bucket 12: Strings excluding various symbols (allows _)
+  TOKEN_REGEX = /(\()|(\))|(AND|OR)|(NOT|-|\+)|(https:\/\/)|(http:\/\/)|(\*)|(:)|(\[)|(\])|(")|(')|([^\s()\[\]{}:"'^~!]+)/
 
   ##
   # Terms operates on the provided query string, returning an array of separate string 'terms' for tokenisation:
@@ -68,31 +64,25 @@ class Tokeniser
         when 3
           tokens << QueryToken.new(type: :modifier_operator, value: matched_term)
         when 4
-          tokens << QueryToken.new(type: :all_records, value: matched_term)
+          tokens << QueryToken.new(type: :https_scheme, value: matched_term)
         when 5
-          tokens << QueryToken.new(type: :url, value: matched_term)
+          tokens << QueryToken.new(type: :http_scheme, value: matched_term)
         when 6
-          tokens << QueryToken.new(type: :uri_field, value: matched_term)
-        when 7, 8
-          tokens << QueryToken.new(type: :specified_field_with_quoted_phrase, value: matched_term)
-        when 9
-          tokens << QueryToken.new(type: :specified_field_no_expansion, value: matched_term)
-        when 10
-          tokens << QueryToken.new(type: :specified_field_wildcard, value: matched_term)
-        when 11
-          tokens << QueryToken.new(type: :specified_field, value: matched_term)
-        when 12
-          tokens << QueryToken.new(type: :no_expansion, value: matched_term)
-        when 13
+          tokens << QueryToken.new(type: :wildcard, value: matched_term)
+        when 7
+          tokens << QueryToken.new(type: :colon, value: matched_term)
+        when 8
           tokens << QueryToken.new(type: :opening_bracket, value: matched_term)
-        when 14
+        when 9
           tokens << QueryToken.new(type: :closing_bracket, value: matched_term)
-        when 15, 16
-          tokens << QueryToken.new(type: :quoted_phrase, value: matched_term)
-        when 17
-          tokens << QueryToken.new(type: :unquoted_word, value: matched_term)
+        when 10
+          tokens << QueryToken.new(type: :double_quote, value: matched_term)
+        when 11
+          tokens << QueryToken.new(type: :single_quote, value: matched_term)
+        when 12
+          tokens << QueryToken.new(type: :string, value: matched_term)
         else
-          puts "Term not matched by tokeniser: #{matched_term}" if Rails.env.development? || Rails.env.test?
+          puts "Tokeniser was not able to assign a token to: #{matched_term}" if Rails.env.development? || Rails.env.test?
           next
         end
       end

@@ -11,23 +11,18 @@ RSpec.describe 'Tokeniser' do
     let!(:position_one_token) { QueryToken.new(type: :closing_parenthesis, value: 'one') }
     let!(:position_two_token) { QueryToken.new(type: :boolean_operator, value: 'two') }
     let!(:position_three_token) { QueryToken.new(type: :modifier_operator, value: 'three') }
-    let!(:position_four_token) { QueryToken.new(type: :all_records, value: 'four') }
-    let!(:position_five_token) { QueryToken.new(type: :url, value: 'five') }
-    let!(:position_six_token) { QueryToken.new(type: :uri_field, value: 'six') }
-    let!(:position_seven_token) { QueryToken.new(type: :specified_field_with_quoted_phrase, value: 'seven') }
-    let!(:position_eight_token) { QueryToken.new(type: :specified_field_with_quoted_phrase, value: 'eight') }
-    let!(:position_nine_token) { QueryToken.new(type: :specified_field_no_expansion, value: 'nine') }
-    let!(:position_ten_token) { QueryToken.new(type: :specified_field_wildcard, value: 'ten') }
-    let!(:position_eleven_token) { QueryToken.new(type: :specified_field, value: 'eleven') }
-    let!(:position_twelve_token) { QueryToken.new(type: :no_expansion, value: 'twelve') }
-    let!(:position_thirteen_token) { QueryToken.new(type: :opening_bracket, value: 'thirteen') }
-    let!(:position_fourteen_token) { QueryToken.new(type: :closing_bracket, value: 'fourteen') }
-    let!(:position_fifteen_token) { QueryToken.new(type: :quoted_phrase, value: 'fifteen') }
-    let!(:position_sixteen_token) { QueryToken.new(type: :quoted_phrase, value: 'sixteen') }
-    let!(:position_seventeen_token) { QueryToken.new(type: :unquoted_word, value: 'seventeen') }
+    let!(:position_four_token) { QueryToken.new(type: :https_scheme, value: 'four') }
+    let!(:position_five_token) { QueryToken.new(type: :http_scheme, value: 'five') }
+    let!(:position_six_token) { QueryToken.new(type: :wildcard, value: 'six') }
+    let!(:position_seven_token) { QueryToken.new(type: :colon, value: 'seven') }
+    let!(:position_eight_token) { QueryToken.new(type: :opening_bracket, value: 'eight') }
+    let!(:position_nine_token) { QueryToken.new(type: :closing_bracket, value: 'nine') }
+    let!(:position_ten_token) { QueryToken.new(type: :double_quote, value: 'ten') }
+    let!(:position_eleven_token) { QueryToken.new(type: :single_quote, value: 'eleven') }
+    let!(:position_twelve_token) { QueryToken.new(type: :string, value: 'twelve') }
 
     context 'with a single scan array' do
-      let(:terms) { [["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen"]] }
+      let(:terms) { [["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve"]] }
 
       before do
         allow(tokeniser).to receive(:terms).and_return(terms)
@@ -47,18 +42,13 @@ RSpec.describe 'Tokeniser' do
                                            position_nine_token,
                                            position_ten_token,
                                            position_eleven_token,
-                                           position_twelve_token,
-                                           position_thirteen_token,
-                                           position_fourteen_token,
-                                           position_fifteen_token,
-                                           position_sixteen_token,
-                                           position_seventeen_token
+                                           position_twelve_token
                                          ])
       end
     end
 
     context 'where the scan array includes nil values' do
-      let(:terms) { [["zero", nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil]] }
+      let(:terms) { [["zero", nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil]] }
 
       before do
         allow(tokeniser).to receive(:terms).and_return(terms)
@@ -70,7 +60,7 @@ RSpec.describe 'Tokeniser' do
     end
 
     context 'with multiple scan arrays' do
-      let(:terms) { [["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen"], ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen"]] }
+      let(:terms) { [["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve"], ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve"]] }
 
       before do
         allow(tokeniser).to receive(:terms).and_return(terms)
@@ -90,11 +80,6 @@ RSpec.describe 'Tokeniser' do
                                           position_ten_token,
                                           position_eleven_token,
                                           position_twelve_token,
-                                          position_thirteen_token,
-                                          position_fourteen_token,
-                                          position_fifteen_token,
-                                          position_sixteen_token,
-                                          position_seventeen_token,
                                           position_zero_token,
                                           position_one_token,
                                           position_two_token,
@@ -107,12 +92,7 @@ RSpec.describe 'Tokeniser' do
                                           position_nine_token,
                                           position_ten_token,
                                           position_eleven_token,
-                                          position_twelve_token,
-                                          position_thirteen_token,
-                                          position_fourteen_token,
-                                          position_fifteen_token,
-                                          position_sixteen_token,
-                                          position_seventeen_token
+                                          position_twelve_token
                                          ])
       end
     end
@@ -137,7 +117,7 @@ RSpec.describe 'Tokeniser' do
         let!(:query) { "housing" }
 
         it 'returns the term in a scan result array' do
-          expect(tokeniser.terms).to eq([[nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, "housing"]])
+          expect(tokeniser.terms).to eq([[nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, "housing"]])
         end
       end
 
@@ -145,10 +125,10 @@ RSpec.describe 'Tokeniser' do
         let!(:query) { "()[]" }
 
         it 'captures them in the expected bucket' do
-          expect(tokeniser.terms).to eq([["(", nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil],
-                                         [nil, ")", nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil],
-                                         [nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, "[", nil, nil, nil, nil],
-                                         [nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, "]", nil, nil, nil]])
+          expect(tokeniser.terms).to eq([["(", nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil],
+                                         [nil, ")", nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil],
+                                         [nil, nil, nil, nil, nil, nil, nil, nil, "[", nil, nil, nil, nil],
+                                         [nil, nil, nil, nil, nil, nil, nil, nil, nil, "]", nil, nil, nil]])
         end
       end
 
@@ -156,43 +136,51 @@ RSpec.describe 'Tokeniser' do
         let!(:query) { "AND OR NOT - +" }
 
         it 'captures them in the expected bucket' do
-          expect(tokeniser.terms).to eq([[nil, nil, "AND", nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil],
-                                         [nil, nil, "OR", nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil],
-                                         [nil, nil, nil, "NOT", nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil],
-                                         [nil, nil, nil, "-", nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil],
-                                         [nil, nil, nil, "+", nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil]])
+          expect(tokeniser.terms).to eq([[nil, nil, "AND", nil, nil, nil, nil, nil, nil, nil, nil, nil, nil],
+                                         [nil, nil, "OR", nil, nil, nil, nil, nil, nil, nil, nil, nil, nil],
+                                         [nil, nil, nil, "NOT", nil, nil, nil, nil, nil, nil, nil, nil, nil],
+                                         [nil, nil, nil, "-", nil, nil, nil, nil, nil, nil, nil, nil, nil],
+                                         [nil, nil, nil, "+", nil, nil, nil, nil, nil, nil, nil, nil, nil]])
         end
       end
 
-      context 'with urls' do
+      context 'with https urls' do
         let!(:query) { "https://www.google.com" }
 
-        it 'captures them in the expected bucket' do
-          expect(tokeniser.terms).to eq([[nil, nil, nil, nil, nil, "https://www.google.com", nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil]])
+        it 'captures the https:// separately' do
+          expect(tokeniser.terms).to eq([[nil, nil, nil, nil, "https://", nil, nil, nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, "www.google.com"]])
+        end
+      end
+
+      context 'with http urls' do
+        let!(:query) { "http://www.google.com" }
+
+        it 'captures the http:// separately' do
+          expect(tokeniser.terms).to eq([[nil, nil, nil, nil, nil, "http://", nil, nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, "www.google.com"]])
         end
       end
 
       context 'with the *:* selector' do
         let!(:query) { "*:*" }
 
-        it 'captures them in the expected bucket' do
-          expect(tokeniser.terms).to eq([[nil, nil, nil, nil, "*:*", nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil]])
+        it 'captures them all individually' do
+          expect(tokeniser.terms).to eq([[nil, nil, nil, nil, nil, nil, "*", nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil, nil, ":", nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil, "*", nil, nil, nil, nil, nil, nil]])
         end
       end
 
       context 'with the uri field' do
         let!(:query) { "uri:https://www.google.com" }
 
-        it 'captures them in the expected bucket' do
-          expect(tokeniser.terms).to eq([[nil, nil, nil, nil, nil, nil, "uri:https://www.google.com", nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil]])
+        it 'captures the components separately' do
+          expect(tokeniser.terms).to eq([[nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, "uri"], [nil, nil, nil, nil, nil, nil, nil, ":", nil, nil, nil, nil, nil], [nil, nil, nil, nil, "https://", nil, nil, nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, "www.google.com"]])
         end
       end
 
       context "with a specified field and a quoted phrase (double quotes)" do
         let!(:query) { "subject:\"cats\"" }
 
-        it 'captures them in the expected bucket' do
-          expect(tokeniser.terms).to eq([[nil, nil, nil, nil, nil, nil, nil, "subject:\"cats\"", nil, nil, nil, nil, nil, nil, nil, nil, nil, nil]])
+        it 'captures the components individually' do
+          expect(tokeniser.terms).to eq([[nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, "subject"], [nil, nil, nil, nil, nil, nil, nil, ":", nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, "\"", nil, nil], [nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, "cats"], [nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, "\"", nil, nil]])
         end
       end
 
@@ -200,7 +188,7 @@ RSpec.describe 'Tokeniser' do
         let!(:query) { "subject:'cats'" }
 
         it 'captures them in the expected bucket' do
-          expect(tokeniser.terms).to eq([[nil, nil, nil, nil, nil, nil, nil, nil, "subject:'cats'", nil, nil, nil, nil, nil, nil, nil, nil, nil]])
+          expect(tokeniser.terms).to eq([[nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, "subject"], [nil, nil, nil, nil, nil, nil, nil, ":", nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, "'", nil], [nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, "cats"], [nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, "'", nil]])
         end
       end
 
@@ -208,7 +196,7 @@ RSpec.describe 'Tokeniser' do
         let!(:query) { "subject:[cats]" }
 
         it 'captures them in the expected bucket' do
-          expect(tokeniser.terms).to eq([[nil, nil, nil, nil, nil, nil, nil, nil, nil, "subject:[cats]", nil, nil, nil, nil, nil, nil, nil, nil]])
+          expect(tokeniser.terms).to eq([[nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, "subject"], [nil, nil, nil, nil, nil, nil, nil, ":", nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil, nil, nil, "[", nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, "cats"], [nil, nil, nil, nil, nil, nil, nil, nil, nil, "]", nil, nil, nil]])
         end
       end
 
@@ -216,7 +204,7 @@ RSpec.describe 'Tokeniser' do
         let!(:query) { "subject:*" }
 
         it 'captures them in the expected bucket' do
-          expect(tokeniser.terms).to eq([[nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, "subject:*", nil, nil, nil, nil, nil, nil, nil]])
+          expect(tokeniser.terms).to eq([[nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, "subject"], [nil, nil, nil, nil, nil, nil, nil, ":", nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil, "*", nil, nil, nil, nil, nil, nil]])
         end
       end
 
@@ -224,7 +212,7 @@ RSpec.describe 'Tokeniser' do
         let!(:query) { "subject:cats" }
 
         it 'captures them in the expected bucket' do
-          expect(tokeniser.terms).to eq([[nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, "subject:cats", nil, nil, nil, nil, nil, nil]])
+          expect(tokeniser.terms).to eq([[nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, "subject"], [nil, nil, nil, nil, nil, nil, nil, ":", nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, "cats"]])
         end
       end
 
@@ -232,7 +220,7 @@ RSpec.describe 'Tokeniser' do
         let!(:query) { "[cats]" }
 
         it 'captures them in the expected bucket' do
-          expect(tokeniser.terms).to eq([[nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, "[cats]", nil, nil, nil, nil, nil]])
+          expect(tokeniser.terms).to eq([[nil, nil, nil, nil, nil, nil, nil, nil, "[", nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, "cats"], [nil, nil, nil, nil, nil, nil, nil, nil, nil, "]", nil, nil, nil]])
         end
       end
 
@@ -240,7 +228,7 @@ RSpec.describe 'Tokeniser' do
         let!(:query) { "[big cats]" }
 
         it 'captures them in the expected bucket' do
-          expect(tokeniser.terms).to eq([[nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, "[big cats]", nil, nil, nil, nil, nil]])
+          expect(tokeniser.terms).to eq([[nil, nil, nil, nil, nil, nil, nil, nil, "[", nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, "big"], [nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, "cats"], [nil, nil, nil, nil, nil, nil, nil, nil, nil, "]", nil, nil, nil]])
         end
       end
 
@@ -248,7 +236,7 @@ RSpec.describe 'Tokeniser' do
         let!(:query) { "\"cats\"" }
 
         it 'captures them in the expected bucket' do
-          expect(tokeniser.terms).to eq([[nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, "cats", nil, nil]])
+          expect(tokeniser.terms).to eq([[nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, "\"", nil, nil], [nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, "cats"], [nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, "\"", nil, nil]])
         end
       end
 
@@ -256,7 +244,7 @@ RSpec.describe 'Tokeniser' do
         let!(:query) { "'cats'" }
 
         it 'captures them in the expected bucket' do
-          expect(tokeniser.terms).to eq([[nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, "cats", nil]])
+          expect(tokeniser.terms).to eq([[nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, "'", nil], [nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, "cats"], [nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, "'", nil]])
         end
       end
 
@@ -264,7 +252,7 @@ RSpec.describe 'Tokeniser' do
         let!(:query) { "cats" }
 
         it 'captures them in the expected bucket' do
-          expect(tokeniser.terms).to eq([[nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, "cats"]])
+          expect(tokeniser.terms).to eq([[nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, "cats"]])
         end
       end
 
@@ -272,12 +260,28 @@ RSpec.describe 'Tokeniser' do
         let!(:query) { "subject:housing subject:\"old houses\" subject:\"houses\" houses \"old houses\" \"houses\"" }
 
         it 'extracts the individual terms into an array of scan result arrays' do
-          expect(tokeniser.terms).to eq([[nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, "subject:housing", nil, nil, nil, nil, nil, nil],
-                                         [nil, nil, nil, nil, nil, nil, nil, "subject:\"old houses\"", nil, nil, nil, nil, nil, nil, nil, nil, nil, nil],
-                                         [nil, nil, nil, nil, nil, nil, nil, "subject:\"houses\"", nil, nil, nil, nil, nil, nil, nil, nil, nil, nil],
-                                         [nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, "houses"],
-                                         [nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, "old houses", nil, nil],
-                                         [nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, "houses", nil, nil]])
+          expect(tokeniser.terms).to eq([[nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, "subject"],
+                                         [nil, nil, nil, nil, nil, nil, nil, ":", nil, nil, nil, nil, nil],
+                                         [nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, "housing"],
+                                         [nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, "subject"],
+                                         [nil, nil, nil, nil, nil, nil, nil, ":", nil, nil, nil, nil, nil],
+                                         [nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, "\"", nil, nil],
+                                         [nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, "old"],
+                                         [nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, "houses"],
+                                         [nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, "\"", nil, nil],
+                                         [nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, "subject"],
+                                         [nil, nil, nil, nil, nil, nil, nil, ":", nil, nil, nil, nil, nil],
+                                         [nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, "\"", nil, nil],
+                                         [nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, "houses"],
+                                         [nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, "\"", nil, nil],
+                                         [nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, "houses"],
+                                         [nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, "\"", nil, nil],
+                                         [nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, "old"],
+                                         [nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, "houses"],
+                                         [nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, "\"", nil, nil],
+                                         [nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, "\"", nil, nil],
+                                         [nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, "houses"],
+                                         [nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, "\"", nil, nil]])
         end
       end
     end

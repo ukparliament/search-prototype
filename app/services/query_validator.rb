@@ -12,7 +12,12 @@ class QueryValidator
   # Tokens are now a data class with a type (symbol, e.g. :boolean_operator) and a value (various data types)
 
   def validate
-    validate_brackets(tokens)
+    if validate_brackets(tokens).any?
+      # we have errors
+      raise 'halt'
+    else
+      tokens
+    end
   end
 
   private
