@@ -2,17 +2,22 @@ Aliases, or power search commands, enable you to target your query against speci
 
 The syntax for a power search is **alias:queryvalue**. An alias is a label for the field. The data or text you want to search for is known as the query value. 
 
-> date:17/03/2010
+> [date:17/03/2010](/search?query=date%3A17%2F03%2F2010)
 
 The alias is always lowercase. There should be no space between the colon at the end of the alias and the query value. Query values made up of more than one word should be enclosed in quotation marks.
 
-> summary:"school meals"
+> [summary:"school meals"](/search?query=summary%3A%22school%20meals%22)
 
 Aliases can be used in combination with each other. Boolean queries are supported.
 
-> type:"research briefings" title:("election timetables" OR "election results")
+> [type:"research briefings" title:("election timetables" OR "election results")](/search?query=type%3A%22research%20briefings%22%20title%3A%28%22election%20timetables%22%20OR%20%22election%20results%22%29)
 
 This query could also be written as:
+
+
+
+
+
 
 > type:"research briefings" (title:"election timetables" OR title:"election results")
 
