@@ -14,74 +14,70 @@ Aliases can be used in combination with each other. Boolean queries are supporte
 
 This query could also be written as:
 
-
-
-
-
-
-> type:"research briefings" (title:"election timetables" OR title:"election results")
-
-The [Librarian tools](https://beta-search.parliament.uk/meta/librarian-tools) feature provides information about how the search query was executed. Please refer to [Coverage](https://beta-search.parliament.uk/meta/coverage) to find out more about the available data.
-
-## answeredby
+> [type:"research briefings" (title:"election timetables" OR title:"election results")](/search?query=type%3A%22research%20briefings%22%20%28title%3A%22election%20timetables%22%20OR%20title%3A%22election%20results%22%29)
 
 Search for members, departments or arm's length bodies answering oral or written questions, or responding to debates.
 
-> answeredby:"Home Office"
+> [answeredby:"Home Office"](/search?query=answeredby%3A%22Home%20Office%22)
 >
-> answeredby:"Vince Cable"
+> [answeredby:"Vince Cable"](/search?query=answeredby%3A%22Vince%20Cable%22)
 >
-> answeredby:"UK Statistics Authority"
+> [answeredby:"UK Statistics Authority"](/search?query=answeredby%3A%22UK%20Statistics%20Authority%22)
 
 ## answeringmember
 
 Search for members answering oral or written questions, or responding to debates.
 
-> answeringmember:"Blunkett, David"
+> [answeringmember:"Blunkett, David"](/search?query=answeringmember%3A%22Blunkett%2C%20David%22)
 
 ## answeringmemberparty
 
 Search by the party of members answering oral or written questions, or responding to debates.
 
-> answeringmemberparty:"Liberal Democrat"
+> [answeringmemberparty:"Liberal Democrat"](/search?query=answeringmemberparty%3A%22Liberal%20Democrat%22)
 
 ## answertext
 
 Search for words or phrases within the answers to oral or written questions.
 
-> answertext:motorways
+> [answertext:motorways](/search?query=answertext%3Amotorways)
 >
-> answertext:("common land" NOT "village greens")
+> [answertext:("common land" NOT "village greens")](/search?query=answertext%3A%28%22common%20land%22%20NOT%20%22village%20greens%22%29)
 
 ## askedby
 
 Search for members asking oral or written questions.
 
-> askedby:"Bradshaw, Ben"
+> [askedby:"Bradshaw, Ben"](/search?query=askedby%3A%22Bradshaw%2C%20Ben%22)
 
 ## author
 
 Search for documents, questions, contributions, early day motions or proceedings by personal or corporate author.
 
-> author:DWP
+> [author:DWP](/search?query=author%3ADWP)
 >
-> author:"Baroness Primarolo"
+> [author:"Baroness Primarolo"](/search?query=author%3A%22Baroness%20Primarolo%22)
 
 ## certifiedcategory
 
 Search for bills or statutory instruments certified by the Speaker, by the type of certification.
 
-> certifiedcategory:"Money bills"
+> [certifiedcategory:"Money bills"](/search?query=certifiedcategory%3A%22Money%20bills%22)
 >
-> certifiedcategory:"Applies to England and Wales"
+> [certifiedcategory:"Applies to England and Wales"](/search?query=certifiedcategory%3A%22Applies%20to%20England%20and%20Wales%22)
 >
-> certifiedcategory:"Applies to England only"
+> [certifiedcategory:"Applies to England only"](/search?query=certifiedcategory%3A%22Applies%20to%20England%20only%22)
 >
-> certifiedcategory:"Applies to England, Wales and Northern Ireland "
+> [certifiedcategory:"Applies to England, Wales and Northern Ireland"](/search?query=certifiedcategory%3A%22Applies%20to%20England%2C%20Wales%20and%20Northern%20Ireland%22)
 >
-> certifiedcategory:"Applies to Scotland only"
+> [certifiedcategory:"Applies to Scotland only"](/search?query=certifiedcategory%3A%22Applies%20to%20Scotland%20only%22)
 >
-> certifiedcategory:"Not certified under English Votes for English Law"
+> [certifiedcategory:"Not certified under English Votes for English Law"](/search?query=certifiedcategory%3A%22Not%20certified%20under%20English%20Votes%20for%20English%20Law%22)
+
+
+
+
+
 
 ## chair
 
