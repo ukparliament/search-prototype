@@ -6,10 +6,12 @@
 
     <ul class="doc-list doc-list-small">
       <% @alphabetised_headings.each do |group| %>
-        <h3 id="<%= group.first %>" class="doc-list-heading"><%= group.first.titleize %></h3>
+        <% if alphabetical_dividers %>
+          <h3 id="<%= group.first %>" class="doc-list-heading"><%= group.first.titleize %></h3>
+        <% end %>
         <% group.last.each do |heading| %>
           <li>
-            <a href="<%= aliases_url %>#<%= heading %>" class="doc-list__link">
+            <a href="<%= page_base_url %>#<%= heading.parameterize %>" class="doc-list__link">
               <%= heading %>
             </a>
           </li>

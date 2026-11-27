@@ -8,6 +8,8 @@ class HelpController < ApplicationController
     @crumb << { label: @page_title, url: nil }
 
     @markdown_content = MarkdownDocument.new('lib/help.md')
+    @headings = @markdown_content.headings
+    @alphabetised_headings = @markdown_content.alphabetised_headings
   end
 
   def aliases

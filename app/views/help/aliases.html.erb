@@ -10,4 +10,4 @@
 <div class="markdown-content">
   <%= @markdown_content.html %>
 </div>
-<%= render 'shared/table_of_contents' %>
+<%= render 'shared/table_of_contents', alphabetical_dividers: true, page_base_url: aliases_url %>
