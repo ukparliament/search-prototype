@@ -186,6 +186,14 @@ RSpec.describe 'Tokeniser' do
         end
       end
 
+      context "with a date field specified and the * operator used as a Solr date wildcard" do
+        let!(:query) { "date:*..1/1/2001" }
+
+        it "doesn't pick up the * as a wildcard operator separately from the rest of the range" do
+          expect(tokeniser.terms).to eq([[nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, "date:*..1/1/2001", nil, nil, nil, nil]])
+        end
+      end
+
       context 'with field queries' do
         let!(:query) { "subject:cats" }
 

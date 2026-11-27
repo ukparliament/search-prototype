@@ -27,7 +27,7 @@ class Tokeniser
   # Bucket 12: "double-quoted phrase"
   # Bucket 13: 'single-quoted phrase'
   # Bucket 14: term
-  TOKEN_REGEX = /([()])|(\bAND|OR|NOT\b)|(\*:\*)|([a-z]+:\/\/\S+)|(uri:[a-z]+:\/\/\S+)|(\w+:\((?:[^()]|\((?:[^()]|\([^()]*\))*\))*\))|(\w+:"(?:[^"]+)")|(\w+:'(?:[^']+)')|(\w+:\[(?:[^\]]+)\])|(\w+:\*)|(\w+:\S+)|(\[(?:[^\]]+)\])|"([^"]+)"|'([^']+)'|([^\s()\[\]{}:"^~!]+)/
+  TOKEN_REGEX = /([()])|(\bAND|OR|NOT\b)|(\*:\*)|([a-z]+:\/\/\S+)|(uri:[a-z]+:\/\/\S+)|(\w+:\((?:[^()]|\((?:[^()]|\([^()]*\))*\))*\))|(\w+:"(?:[^"]+)")|(\w+:'(?:[^']+)')|(\w+:\[(?:[^\]]+)\])|(\w+:\*(?!..))|(\w+:\S+)|(\[(?:[^\]]+)\])|"([^"]+)"|'([^']+)'|([^\s()\[\]{}:"^~!]+)/
 
   ##
   # Terms operates on the provided query string, returning an array of separate string 'terms' for tokenisation:
@@ -35,9 +35,9 @@ class Tokeniser
   def terms
     return if query.blank?
 
-    # puts "query: #{query}" if Rails.env.development? || Rails.env.test?
+    puts "query: #{query}" if Rails.env.development? || Rails.env.test?
     ret = query.to_s.scan(TOKEN_REGEX)
-    # puts "scan results: #{ret}" if Rails.env.development? || Rails.env.test?
+    puts "scan results: #{ret}" if Rails.env.development? || Rails.env.test?
     ret
   end
 
