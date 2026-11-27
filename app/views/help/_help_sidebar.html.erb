@@ -6,6 +6,11 @@
 
     <ul class="doc-list">
       <li>
+        <a href="<%= help_url %>" class="doc-list__link" aria-current="<%= current_page?(help_url) ? "page" : "false" %>">
+		  Search basics
+        </a>
+      </li>
+      <li>
         <a href="<%= aliases_url %>" class="doc-list__link" aria-current="<%= current_page?(aliases_url) ? "page" : "false" %>">
           Using aliases
         </a>

@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   get 'meta/roadmap' => 'meta#roadmap', as: :meta_roadmap
 
   # Help pages
+  get 'help' => 'help#index', as: :help
   get 'help/aliases' => 'help#aliases', as: :aliases
 
   # Error routing enabled

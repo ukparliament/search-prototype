@@ -3,9 +3,11 @@ class HelpController < ApplicationController
   layout 'help'
 
   def index
-    @page_title = 'Search Help'
+    @page_title = 'Search basics'
     @description = 'Useful information for using the Search application.'
     @crumb << { label: @page_title, url: nil }
+
+    @markdown_content = MarkdownDocument.new('lib/help.md')
   end
 
   def aliases
