@@ -79,6 +79,9 @@ Search for bills or statutory instruments certified by the Speaker, by the type 
 
 
 
+
+
+
 ## chair
 
 Search for contributions and proceedings made by the Speaker and members acting as chair.
@@ -91,7 +94,7 @@ Search for contributions or proceedings by place. The available values are Gener
 
 > chamberorcommittee:"Westminster Hall"
 >
-> chamberorcommittee: ("House of Lords chamber" NOT "House of Lords Grand Committee")
+> chamberorcommittee:(“House of Lords chamber” NOT “House of Lords Grand Committee”)
 
 ## comingintoforce
 
@@ -173,7 +176,7 @@ Search for oral or written questions by the date of answer. Search for a specifi
 
 Search for public bills certified by the Speaker as money bills by the date of certification. Search for a specific date, a relative date range such as 'this month', or within a date range. See **date** for more examples. 
 
-> datecertified:last year 
+> datecertified:lastyear
 >
 > datecertified:2020  
 
@@ -181,7 +184,7 @@ Search for public bills certified by the Speaker as money bills by the date of c
 
 Search for oral or written questions by the date on which the answer is expected. Search for a specific date, a relative date range such as 'this month', or within a date range. See **date** for more examples.
 
-> dateforanswered:19/03/2025
+> dateforanswer:19/03/2025 
 >
 > dateforanswer:thismonth
 
@@ -363,7 +366,7 @@ Search for contributions or proceedings by place. The available values are Gener
 
 > place:"Westminster Hall"
 >
-> place: ("House of Lords chamber" NOT "House of Lords Grand Committee")
+> place:(“House of Lords chamber” NOT “House of Lords Grand Committee”)
 
 ## primarymember
 
@@ -388,8 +391,6 @@ Search for early day motions or amendments by primary sponsor.
 Search for parliamentary business where certain procedures, events or conventions have occurred.
 
 > procedure:"Allocation of time motions"
->
-> procedure:"Maiden speeches"
 >
 > procedure:"Time limits on speeches"
 
@@ -421,7 +422,7 @@ Search for words or phrases within oral or written questions.
 
 > questiontext:horses
 >
-> questionText:"impact of traffic levels"
+> questiontext:“Impact of traffic levels”
 
 ## ref
 
@@ -433,7 +434,9 @@ Search by reference number, including Hansard volume and column number.
 >
 > ref:HCWS346
 >
-> ref:"59 cc76-1036"
+> ref:“726 c456”
+
+replace: ref:“59 cc76-1036"
 >
 > ref:"HL Bill 76 2023-24"
 
