@@ -136,7 +136,8 @@ class TermExpander
       expanded_fields[:transformations].flatten.each do |tf|
         case tf
         when 'resolutionprocedure'
-          expanded_terms << [:resolutionprocedure, "procedure_s:#{search_term&.titleize}"]
+          processed_search_term = conditionally_quoted(search_term)
+          expanded_terms << [:resolutionprocedure, "procedure_s:#{processed_search_term}"]
         when 'session'
           expanded_terms << [:session, "session_s:#{expand_session_string(search_term)}"]
         when 'timestamp'
@@ -388,4 +389,11 @@ class TermExpander
       raise QueryExpansionError, "Unrecognised Session format"
     end
   end
+
+  ##
+  # Attempt to standardise a string to match the format used in most Solr fields
+  # Mostly title case, but preserves hyphens
+  # Custom acronyms will need to be added to inflections in order for various bunches of capital letters to survive
+  # the process.
+  def standardise_string(string) end
 end

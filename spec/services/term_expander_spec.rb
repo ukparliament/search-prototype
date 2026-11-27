@@ -566,10 +566,20 @@ RSpec.describe 'TermExpander' do
 
     context 'for resolutionprocedure' do
       let!(:transformations) { ["resolutionprocedure"] }
-      let!(:search_term) { 'test' }
 
-      it 'titleizes the search term and applies it to one field' do
-        expect(term_expander.apply_transformations).to eq([[:resolutionprocedure, "procedure_s:Test"]])
+      context 'with a single word search term' do
+        let!(:search_term) { 'test' }
+
+        it 'applies the search term to the procedure field with case unchanged' do
+          expect(term_expander.apply_transformations).to eq([[:resolutionprocedure, "procedure_s:test"]])
+        end
+      end
+
+      context "with a multi-word search term" do
+        let!(:search_term) { 'A test' }
+        it 'wraps multi-word terms in quotes' do
+          expect(term_expander.apply_transformations).to eq([[:resolutionprocedure, "procedure_s:\"A test\""]])
+        end
       end
     end
 
