@@ -459,147 +459,140 @@ Search for statutory instruments and parliamentary papers by procedure.
 > 
 > [resolutionprocedure:"Special"](/search?query=resolutionprocedure%3A%22Special%22)
 
-
-
-
-
-
-
-
 ## section
 
 Search for briefings published by the Commons Library by team name.
 
-> section:"International Affairs and Defence Section"
+> [section:"International Affairs and Defence Section"](/search?query=section%3A%22International%20Affairs%20and%20Defence%20Section%22)
 >
-> section:"Science and Environment Section"
+> [section:"Science and Environment Section"](/search?query=section%3A%22Science%20and%20Environment%20Section%22)
 
 ## session
 
 Search for parliamentary business by session. Query values can be entered in the format 08/09, 08-09, 2008/09, 2008-09, 2008/2009, 2008-2009.
 
-> session:19/21
+> [session:19/21](/search?query=session%3A19%2F21)
 >
-> session:2010-12
+> [session:2010-12](/search?query=session%3A2010-12)
 >
-> session:(19/19 OR 17/19)
+> [session:(19/19 OR 17/19)](/search?query=session%3A%2819%2F19%20OR%2017%2F19%29)
 
 ## signedby
 
 Search for early day motions or amendments signed by a member.
 
-> signedby:"Andrew Rosindell"
+> [signedby:"Andrew Rosindell"](/search?query=signedby%3A%22Andrew%20Rosindell%22)
 
 ## stats
 
 Search for parliamentary business or research which includes statistical information.
 
-> stats:yes
+> [stats:yes](/search?query=stats%3Ayes)
 
 ## status
 
 Search for early day motions or parliamentary questions by status.
 
-> status:answered
+> [status:answered](/search?query=status%3Aanswered)
 >
-> status:holding
+> [status:holding](/search?query=status%3Aholding)
 >
-> status:open
+> [status:open](/search?query=status%3Aopen)
 > 
-> status:tabled
+> [status:tabled](/search?query=status%3Atabled)
 >
-> status:withdrawn
+> [status:withdrawn](/search?query=status%3Awithdrawn)
 
 ## subject
 
 Search by subject.
 
-> subject:housing
+> [subject:housing](/search?query=subject%3Ahousing)
 >
-> subject:("Interest rates" "economic growth")
+> [subject:("Interest rates" "economic growth")](/search?query=subject%3A%28%22Interest%20rates%22%20%22economic%20growth%22%29)
 
 ## summary
 
 Search for words or phrases within the summary of parliamentary proceedings, deposited papers and briefings and research published by the Commons Library, the Lords Library or the Parliamentary Office of Science and Technology (POST).
 
-> summary:"privilege amendment"
+> [summary:"privilege amendment"](/search?query=summary%3A%22privilege%20amendment%22)
 >
-> summary:"deferred divisions"
+> [summary:"deferred divisions"](/search?query=summary%3A%22deferred%20divisions%22)
 
 ## tabledby
 
 Search for members tabling early day motions, or oral or written questions.
 
-> tabledby:"Shirley Williams"
+> [tabledby:"Shirley Williams"](/search?query=tabledby%3A%22Shirley%20Williams%22)
 >
-> tabledby:"Baroness Afshar"
+> [tabledby:"Baroness Afshar"](/search?query=tabledby%3A%22Baroness%20Afshar%22)
 
 ## timestamp
 
 Timestamp refers to the date a record in Parliamentary Search was last indexed or updated. Search for a specific date, a relative date range such as 'this month', or within a date range.
 
-> timestamp:06/07/2026..\*
+> [timestamp:06/07/2026..*](/search?query=timestamp%3A06%2F07%2F2026..%2A)
 
 ## title
 
 Search for words or phrases within a title.
 
-> title:"dairy farms"
+> [title:"dairy farms"](/search?query=title%3A%22dairy%20farms%22)
 >
-> title:("mobile phones" AND schools)
+> [title:("mobile phones" AND schools)](/search?query=title%3A%28%22mobile%20phones%22%20AND%20schools%29)
 
 ## to
 
 Search for content before a date.
 
-> to:01/01/2017
+> [to:01/01/2017](/search?query=to%3A01%2F01%2F2017)
 
 ## topic
 
 Search for briefings and research published by the Commons Library, the Lords Library or the Parliamentary Office of Science and Technology (POST) by topic.
 
-> topic:charities
+> [topic:charities](/search?query=topic%3Acharities)
 
 ## transferred
 
 Search for written questions which have been transferred by the answering body to be answered by another answering body.
 
-> transferred:yes
+> [transferred:yes](/search?query=transferred%3Ayes)
 
 ## type
 
 Search by content type.
 
-> type:(edms OR opqs)
+> [type:(edms OR opqs)](/search?query=type%3A%28edms%20OR%20opqs%29)
 >
-> type:"Questions for short debate"
+> [type:"Questions for short debate"](/search?query=type%3A%22Questions%20for%20short%20debate%22)
 >
-> type:"Speaker's statements"
+> [type:"Speaker's statements"](/search?query=type%3A%22Speaker%27s%20statements%22)
 
 ## uin
 
 Search for written statements or oral or written questions by UIN.
 
-> uin:903481
+> [uin:903481](/search?query=uin%3A903481)
 >
-> uin:HLWS156
+> [uin:HLWS156](/search?query=uin%3AHLWS156)
 
 ## unstarred
 
 Search for questions in the House of Commons originally selected for oral answer for which a written answer was subsequently requested.
 
-> unstarred:yes
+> [unstarred:yes](/search?query=unstarred%3Ayes)
 
 ## witness
 
 Search for witnesses providing oral evidence to select and public bill committees.
 
-> witness:"News International"
+> [witness:"News International"](/search?query=witness%3A%22News%20International%22)
 >
-> witness:"Tony Blair"
+> [witness:"Tony Blair"](/search?query=witness%3A%22Tony%20Blair%22)
 
 ## wpqtype
 
 Search for Commons written questions by type. Ordinary questions are usually answered between five and 10 working days after the question has been tabled. Named day refers to priority questions, to be answered on the third sitting day after they are tabled.
 
-> wpqtype:"named day"
+> [wpqtype:"named day"](/search?query=wpqtype%3A%22named%20day%22)
