@@ -1,31 +1,41 @@
+# frozen_string_literal: true
+
 class HierarchyBuilder
 
-  attr_reader :ses_data
+  attr_reader :data_source, :ses_data
 
-  def initialize
+  def initialize(data_source: SesQuery::TypeHierarchy)
+    @data_source = data_source
     @ses_data = get_data_from_ses
   end
 
-  def get_data_from_ses
-    puts "Fetching Hierarchy data..." if Rails.env.development?
-    start_time = Time.now
-    ret = SesLookup.new([{ value: nil }]).extract_hierarchy_data
-    puts "Done in #{(Time.now - start_time).round(2)} seconds" if Rails.env.development?
+  def data
+    process_response(ses_data)
+  end
+
+  def top_level_types
+    return unless ses_data.is_a?(Hash)
+
+    return [] if ses_data.has_key?("error")
+
+    ret = []
+
+    # select types that have 'Content Type' as their parent
+    with_content_type_parent = ses_data.select do |k, v|
+      v.select { |h| h["name"] == "Broader Term" }.dig(0, "fields")&.map { |f| f.dig("field", "name") }&.include?("Content type")
+    end
+
+    # rebuild as a hash
+    with_content_type_parent.keys.map do |id, name|
+      ret << { id: id, name: name }
+    end
+
     ret
   end
 
-  def hierarchy_data
-    organise_hierarchy_data(ses_data)
-  end
+  private
 
-  def formatted_ses_data
-    ret = {}
-    ses_data.keys.each { |a| ret[a.first] = a.last }
-
-    ret
-  end
-
-  def organise_hierarchy_data(ses_data)
+  def process_response(ses_data)
     ret = {}
 
     return unless ses_data.is_a?(Hash)
@@ -49,22 +59,17 @@ class HierarchyBuilder
     ret
   end
 
-  def top_level_types
-    return unless ses_data.is_a?(Hash)
+  def get_data_from_ses
+    puts "Fetching Hierarchy data..." if Rails.env.development?
+    start_time = Time.now
+    ret = data_source.new.data
+    puts "Done in #{(Time.now - start_time).round(2)} seconds" if Rails.env.development?
+    ret
+  end
 
-    return [] if ses_data.has_key?("error")
-
-    ret = []
-
-    # select types that have 'Content Type' as their parent
-    with_content_type_parent = ses_data.select do |k, v|
-      v.select { |h| h["name"] == "Broader Term" }.dig(0, "fields")&.map { |f| f.dig("field", "name") }&.include?("Content type")
-    end
-
-    # rebuild as a hash
-    with_content_type_parent.keys.map do |id, name|
-      ret << { id: id, name: name }
-    end
+  def formatted_ses_data
+    ret = {}
+    ses_data.keys.each { |a| ret[a.first] = a.last }
 
     ret
   end

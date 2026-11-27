@@ -1,7 +1,9 @@
 require 'rails_helper'
 
-RSpec.describe SolrQuery, type: :model do
-  let!(:solr_query) { SolrQuery.new({ object_uri: 'test_uri' }) }
+RSpec.describe SolrQuery::Fetch, type: :model do
+  let!(:solr_query) { SolrQuery::Fetch.new(uri: 'test_uri', api_client: api_client_class) }
+  let!(:api_client_class) { class_double(ApiClient::Post, new: api_client_instance) }
+  let!(:api_client_instance) { instance_double(ApiClient::Post, response: mock_response) }
   let!(:mock_response) { {
     "responseHeader" => {
       "status" => 0,
@@ -17,22 +19,10 @@ RSpec.describe SolrQuery, type: :model do
   } }
   let!(:formatted_query) { { q: "uri:test_uri" } }
 
-  before do
-    allow(solr_query).to receive(:api_post_request).with(formatted_query).and_return(mock_response.to_json)
-  end
-
-  describe 'object_data' do
-    context 'where type_ses is present for the first result' do
-      it 'returns data from the first doc within the response from all_data' do
-        expect(solr_query.object_data).to eq({ 'type_ses' => [12345] })
-      end
-    end
-  end
-
-  describe 'all_data' do
+  describe 'data' do
     context 'where response is not an error' do
-      it 'returns the result of evaluated_response' do
-        expect(solr_query.all_data).to eq(mock_response)
+      it 'returns the first object from the response' do
+        expect(solr_query.data).to eq({ 'type_ses' => [12345] })
       end
     end
 
@@ -40,7 +30,7 @@ RSpec.describe SolrQuery, type: :model do
       let!(:mock_response) { { 'error' => { 'msg' => 'an error', 'code' => 500 } } }
 
       it 'raises an ExternalServiceError' do
-        expect { solr_query.all_data }.to raise_error(ExternalServiceError)
+        expect { solr_query.data }.to raise_error(ExternalServiceError)
       end
     end
 
@@ -48,7 +38,7 @@ RSpec.describe SolrQuery, type: :model do
       let!(:mock_response) { { 'error' => { 'msg' => 'an error', 'code' => 401 } } }
 
       it 'raises an ExternalServiceUnauthorized' do
-        expect { solr_query.all_data }.to raise_error(UnauthorizedError)
+        expect { solr_query.data }.to raise_error(UnauthorizedError)
       end
     end
 
@@ -56,7 +46,7 @@ RSpec.describe SolrQuery, type: :model do
       let!(:mock_response) { { 'error' => { 'msg' => 'an error', 'code' => 403 } } }
 
       it 'raises an ExternalServiceUnauthorized' do
-        expect { solr_query.all_data }.to raise_error(UnauthorizedError)
+        expect { solr_query.data }.to raise_error(UnauthorizedError)
       end
     end
 
@@ -64,7 +54,7 @@ RSpec.describe SolrQuery, type: :model do
       let!(:mock_response) { { 'error' => { 'msg' => 'an error', 'code' => 404 } } }
 
       it 'raises an ExternalServiceNotFound' do
-        expect { solr_query.all_data }.to raise_error(ObjectNotFoundError)
+        expect { solr_query.data }.to raise_error(ObjectNotFoundError)
       end
     end
   end

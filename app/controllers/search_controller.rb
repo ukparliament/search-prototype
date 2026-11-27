@@ -2,14 +2,15 @@ class SearchController < ApplicationController
   before_action :begin_timer
 
   def index
+    # TODO: refactor into testable service class
     @page_title = "Search Results"
     @description = "Results in Parliamentary Search for the query #{search_params[:query]}." unless search_params[:query].blank?
 
     # prevent searching without a query
     return redirect_back(fallback_location: home_path) if search_params[:query].blank?
 
-    search = SolrSearch.new(**search_params.to_h.symbolize_keys)
-    @search_data = SearchData.new(search.data)
+    search = SolrQuery::Search.new(**search_params.to_h.symbolize_keys)
+    @search_data = SearchData.new(search: search.data)
 
     # filter out unsupported objects - may move this elsewhere
     @objects = @search_data.object_data.reject { |o| o.is_a?(NotSupported) }
@@ -63,7 +64,7 @@ class SearchController < ApplicationController
     # Not currently used
 
     hash = {}
-    SolrSearch.facet_fields.each do |field|
+    SolrQuery::Search::FACETS.each do |field|
       hash[field.to_sym] = []
     end
 

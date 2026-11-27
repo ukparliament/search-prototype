@@ -1,6 +1,6 @@
 <% unless object.answer_text.blank? %>
   <dt><%= object.answer_title %></dt>
-  <dd>
+  <dd class="external-html">
     <%= raw format_html(object.answer_text[:value], false) %>
   </dd>
 <% end %>

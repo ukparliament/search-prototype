@@ -1,0 +1,22 @@
+<% content_for :table_of_contents do %>
+  <nav id="table-of-contents" class="help-toc" aria-labelledby="nav--meta">
+    <h2 class="doc-list-heading" id="nav--about">
+      On this page
+    </h2>
+
+    <ul class="doc-list doc-list-small">
+      <% @alphabetised_headings.each do |group| %>
+        <% if alphabetical_dividers %>
+          <h3 id="<%= group.first %>" class="doc-list-heading"><%= group.first.titleize %></h3>
+        <% end %>
+        <% group.last.each do |heading| %>
+          <li>
+            <a href="<%= page_base_url %>#<%= heading.parameterize %>" class="doc-list__link">
+              <%= heading %>
+            </a>
+          </li>
+        <% end %>
+      <% end %>
+    </ul>
+  </nav>
+<% end %>
