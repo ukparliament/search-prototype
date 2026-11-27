@@ -629,57 +629,92 @@ RSpec.describe 'TermExpander' do
 
     context 'for session' do
       let!(:transformations) { ["session"] }
-      let!(:search_term) { '18/19' }
 
-      it 'returns a session term string with the session name in the correct format' do
-        expect(term_expander.apply_transformations).to eq([[:session, "session_s:2018-19"]])
-      end
-
-      context 'where the search term uses -' do
-        let!(:search_term) { '18-19' }
+      context 'with a long form session string' do
+        let!(:search_term) { '2018/19' }
 
         it 'returns a session term string with the session name in the correct format' do
           expect(term_expander.apply_transformations).to eq([[:session, "session_s:2018-19"]])
         end
+
+        context 'where the search term uses -' do
+          let!(:search_term) { '2018-19' }
+
+          it 'returns a session term string with the session name in the correct format' do
+            expect(term_expander.apply_transformations).to eq([[:session, "session_s:2018-19"]])
+          end
+        end
+
+        context 'where the search term uses &' do
+          let!(:search_term) { '2018&19' }
+
+          it 'returns a session term string with the session name in the correct format' do
+            expect(term_expander.apply_transformations).to eq([[:session, "session_s:2018-19"]])
+          end
+        end
+
+        context 'where the search term uses :' do
+          let!(:search_term) { '2018:19' }
+
+          it 'returns a session term string with the session name in the correct format' do
+            expect(term_expander.apply_transformations).to eq([[:session, "session_s:2018-19"]])
+          end
+        end
       end
 
-      context 'where the search term uses &' do
-        let!(:search_term) { '18&19' }
+      context 'for a short form session string' do
+        let!(:search_term) { '18/19' }
 
         it 'returns a session term string with the session name in the correct format' do
           expect(term_expander.apply_transformations).to eq([[:session, "session_s:2018-19"]])
         end
-      end
 
-      context 'where the search term uses :' do
-        let!(:search_term) { '18:19' }
+        context 'where the search term uses -' do
+          let!(:search_term) { '18-19' }
 
-        it 'returns a session term string with the session name in the correct format' do
-          expect(term_expander.apply_transformations).to eq([[:session, "session_s:2018-19"]])
+          it 'returns a session term string with the session name in the correct format' do
+            expect(term_expander.apply_transformations).to eq([[:session, "session_s:2018-19"]])
+          end
         end
-      end
 
-      context 'where the search term represents a start year more than a year in the future' do
-        let!(:search_term) { "#{(Date.current.year + 2) % 100}/#{(Date.current.year + 3) % 100}" }
+        context 'where the search term uses &' do
+          let!(:search_term) { '18&19' }
 
-        it 'assumes the search is for a past year' do
-          expect(term_expander.apply_transformations).to eq([[:session, "session_s:#{(Date.current.year - 98)}-#{(Date.current.year - 97) % 100}"]])
+          it 'returns a session term string with the session name in the correct format' do
+            expect(term_expander.apply_transformations).to eq([[:session, "session_s:2018-19"]])
+          end
         end
-      end
 
-      context 'where the search term represents a start year less than one year in the future' do
-        let!(:search_term) { "#{(Date.current.year) % 100}/#{(Date.current.year + 1) % 100}" }
+        context 'where the search term uses :' do
+          let!(:search_term) { '18:19' }
 
-        it 'assumes the search is for a future year' do
-          expect(term_expander.apply_transformations).to eq([[:session, "session_s:#{(Date.current.year)}-#{(Date.current.year + 1) % 100}"]])
+          it 'returns a session term string with the session name in the correct format' do
+            expect(term_expander.apply_transformations).to eq([[:session, "session_s:2018-19"]])
+          end
         end
-      end
 
-      context 'where the search term represents a start year in the past' do
-        let!(:search_term) { "#{(Date.current.year - 30) % 100}/#{(Date.current.year - 29) % 100}" }
+        context 'where the search term represents a start year more than a year in the future' do
+          let!(:search_term) { "#{(Date.current.year + 2) % 100}/#{(Date.current.year + 3) % 100}" }
 
-        it 'assumes the search is for a past year' do
-          expect(term_expander.apply_transformations).to eq([[:session, "session_s:#{(Date.current.year - 30)}-#{(Date.current.year - 29) % 100}"]])
+          it 'assumes the search is for a past year' do
+            expect(term_expander.apply_transformations).to eq([[:session, "session_s:#{(Date.current.year - 98)}-#{(Date.current.year - 97) % 100}"]])
+          end
+        end
+
+        context 'where the search term represents a start year less than one year in the future' do
+          let!(:search_term) { "#{(Date.current.year) % 100}/#{(Date.current.year + 1) % 100}" }
+
+          it 'assumes the search is for a future year' do
+            expect(term_expander.apply_transformations).to eq([[:session, "session_s:#{(Date.current.year)}-#{(Date.current.year + 1) % 100}"]])
+          end
+        end
+
+        context 'where the search term represents a start year in the past' do
+          let!(:search_term) { "#{(Date.current.year - 30) % 100}/#{(Date.current.year - 29) % 100}" }
+
+          it 'assumes the search is for a past year' do
+            expect(term_expander.apply_transformations).to eq([[:session, "session_s:#{(Date.current.year - 30)}-#{(Date.current.year - 29) % 100}"]])
+          end
         end
       end
     end

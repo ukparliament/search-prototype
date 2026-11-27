@@ -374,14 +374,18 @@ class TermExpander
   end
 
   def expand_session_string(search_term)
-    case search_term
+    # remove the century, if included
+    truncated_term = search_term.last(5)
+
+    case truncated_term
     when /\A(\d{2})[\/\-&:](\d{2})\z/
-      # 19/20
-      if search_term.first(2).to_i < (Date.current.year + 1) % 100
-        "20#{search_term.first(2)}-#{search_term.last(2)}"
+      if truncated_term.first(2).to_i < (Date.current.year + 1) % 100
+        "20#{truncated_term.first(2)}-#{truncated_term.last(2)}"
       else
-        "19#{search_term.first(2)}-#{search_term.last(2)}"
+        "19#{truncated_term.first(2)}-#{truncated_term.last(2)}"
       end
+    else
+      raise QueryExpansionError, "Unrecognised Session format"
     end
   end
 end
