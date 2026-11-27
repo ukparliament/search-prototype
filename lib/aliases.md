@@ -321,151 +321,150 @@ Search for parliamentary material by party.
 >
 > [memberparty:"Independent (affiliation)"](/search?query=memberparty%3A%22Independent%20%28affiliation%29%22)
 
-
-
-
-
-
-
 ## notes
 
 Search the text of notes added to items, including 'coming into force' notes for statutory instruments and parliamentary papers.
 
-> notes:corrected
+> [notes:corrected](/search?query=notes%3Acorrected)
 >
-> notes:"Coming into force in accordance with regulation 1"
+> [notes:"Coming into force in accordance with regulation 1"](/search?query=notes%3A%22Coming%20into%20force%20in%20accordance%20with%20regulation%201%22)
 
 ## notreached
 
 Search for Commons questions not reached during oral question time, for which a written answer has been provided.
 
-> notreached:yes
+> [notreached:yes](/search?query=notreached%3Ayes)
 
 ## opqtype
 
 Search for lead, first supplementary, other supplementary or all supplementary oral questions.
 
-> opqtype:lead
+> [opqtype:lead](/search?query=opqtype%3Alead)
 >
-> opqtype:firstsupp
+> [opqtype:firstsupp](/search?query=opqtype%3Afirstsupp)
 >
-> opqtype:othersupp
+> [opqtype:othersupp](/search?query=opqtype%3Aothersupp)
 > 
-> opqtype:supp
+> [opqtype:supp](/search?query=opqtype%3Asupp)
 
 ## othersponsor
 
 Search for early day motions or amendments by members sponsoring, other than the primary sponsor.
 
-> othersponsor:"Jim Shannon"
+> [othersponsor:"Jim Shannon"](/search?query=othersponsor%3A%22Jim%20Shannon%22)
 
 ## place
 
 Search for contributions or proceedings by place. The available values are General committees, House of Commons chamber, House of Commons Grand Committees, House of Lords chamber, House of Lords Grand Committee, Standing committees, and Westminster Hall.
 
-> place:"Westminster Hall"
+> [place:"Westminster Hall"](/search?query=place%3A%22Westminster%20Hall%22)
 >
-> place:(“House of Lords chamber” NOT “House of Lords Grand Committee”)
+> [place:(“House of Lords chamber” NOT “House of Lords Grand Committee”)](/search?query=place%3A%28%E2%80%9CHouse%20of%20Lords%20chamber%E2%80%9D%20NOT%20%E2%80%9CHouse%20of%20Lords%20Grand%20Committee%E2%80%9D%29)
 
 ## primarymember
 
 Search for members asking oral or written questions, tabling early day motions, making statements or leading proceedings.
 
-> primarymember:"Kemi Badenoch"
+> [primarymember:"Kemi Badenoch"](/search?query=primarymember%3A%22Kemi%20Badenoch%22)
 
 ## primarymemberparty
 
 Search by the party of members asking oral or written questions, tabling early day motions, making statements or leading proceedings.
 
-> primarymemberparty:"Cooperative Party"
+> [primarymemberparty:"Cooperative Party"](/search?query=primarymemberparty%3A%22Cooperative%20Party%22)
 
 ## primarysponsor
 
 Search for early day motions or amendments by primary sponsor.
 
-> primarysponsor:"Caroline Lucas"
+> [primarysponsor:"Caroline Lucas"](/search?query=primarysponsor%3A%22Caroline%20Lucas%22)
 
 ## procedure
 
 Search for parliamentary business where certain procedures, events or conventions have occurred.
 
-> procedure:"Allocation of time motions"
+> [procedure:"Allocation of time motions"](/search?query=procedure%3A%22Allocation%20of%20time%20motions%22)
 >
-> procedure:"Time limits on speeches"
+> [procedure:"Time limits on speeches"](/search?query=procedure%3A%22Time%20limits%20on%20speeches%22)
 
 ## prorogationanswer
 
 Search for, or exclude, prorogation answers to a written question. These are answers which may be provided if it has not been possible to provide a substantive answer in the time available before prorogation.
 
-> prorogationanswer:yes
+> [prorogationanswer:yes](/search?query=prorogationanswer%3Ayes)
 >
-> type:"written questions" prorogationanswer:no
+> [type:"written questions" prorogationanswer:no](/search?query=type%3A%22written%20questions%22%20prorogationanswer%3Ano)
 
 ## publisher
 
 Search by publisher.
 
-> publisher:"House of Commons"
+> [publisher:"House of Commons"](/search?query=publisher%3A%22House%20of%20Commons%22)
 >
-> publisher:"House of Commons Library"
+> [publisher:"House of Commons Library"](/search?query=publisher%3A%22House%20of%20Commons%20Library%22)
 >
-> publisher:"House of Lords"
+> [publisher:"House of Lords"](/search?query=publisher%3A%22House%20of%20Lords%22)
 >
-> publisher:"House of Lords Library"
+> [publisher:"House of Lords Library"](/search?query=publisher%3A%22House%20of%20Lords%20Library%22)
 >
-> publisher:POST
+> [publisher:POST](/search?query=publisher%3APOST)
 
 ## questiontext
 
 Search for words or phrases within oral or written questions.
 
-> questiontext:horses
+> [questiontext:horses](/search?query=questiontext%3Ahorses)
 >
-> questiontext:“Impact of traffic levels”
+> [questiontext:“Impact of traffic levels”](/search?query=questiontext%3A%E2%80%9CImpact%20of%20traffic%20levels%E2%80%9D)
 
 ## ref
 
 Search by reference number, including Hansard volume and column number.
 
-> ref:"SI 2016/983"
+> [ref:"SI 2016/983"](/search?query=ref%3A%22SI%202016%2F983%22)
 >
-> ref:"CP 1677"
+> [ref:"CP 1677"](/search?query=ref%3A%22CP%201677%22)
 >
-> ref:HCWS346
+> [ref:HCWS346](/search?query=ref%3AHCWS346)
 >
-> ref:“726 c456”
-
-replace: ref:“59 cc76-1036"
+> [ref:“726 c456”](/search?query=ref%3A%E2%80%9C726%20c456%E2%80%9D)
 >
-> ref:"HL Bill 76 2023-24"
+> [ref:"HL Bill 76 2023-24"](/search?query=ref%3A%22HL%20Bill%2076%202023-24%22)
 
 ## reginterest
 
 Search for questions, contributions and early day motions where a member has declared an interest which may be relevant to the subject matter. Data for EDMs is only available until October 2018.
 
-> reginterest:yes
+> [reginterest:yes](/search?query=reginterest%3Ayes)
 
 ## resolutionprocedure
 
 Search for statutory instruments and parliamentary papers by procedure.
 
-> resolutionprocedure:Affirmative
+> [resolutionprocedure:Affirmative](/search?query=resolutionprocedure%3AAffirmative)
 >
-> resolutionprocedure:"LRO Affirmative"
+> [resolutionprocedure:"LRO Affirmative"](/search?query=resolutionprocedure%3A%22LRO%20Affirmative%22)
 >
-> resolutionprocedure:"LRO Negative"
+> [resolutionprocedure:"LRO Negative"](/search?query=resolutionprocedure%3A%22LRO%20Negative%22)
 >
-> resolutionprocedure:"LRO Super-Affirmative"
+> [resolutionprocedure:"LRO Super-Affirmative"](/search?query=resolutionprocedure%3A%22LRO%20Super-Affirmative%22)
 >
-> resolutionprocedure:Negative
+> [resolutionprocedure:Negative](/search?query=resolutionprocedure%3ANegative)
 >
-> resolutionprocedure:None
+> [resolutionprocedure:None](/search?query=resolutionprocedure%3ANone)
 > 
-> resolutionprocedure:"Not for Appendix"
+> [resolutionprocedure:"Not for Appendix"](/search?query=resolutionprocedure%3A%22Not%20for%20Appendix%22)
 > 
-> resolutionprocedure:"Regulatory Reform"
+> [resolutionprocedure:"Regulatory Reform"](/search?query=resolutionprocedure%3A%22Regulatory%20Reform%22)
 > 
-> resolutionprocedure:"Special"
+> [resolutionprocedure:"Special"](/search?query=resolutionprocedure%3A%22Special%22)
+
+
+
+
+
+
+
 
 ## section
 
